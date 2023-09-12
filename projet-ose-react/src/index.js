@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './tailwind.css';
+import ConnectPage from "./pages/ConnectPage";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
