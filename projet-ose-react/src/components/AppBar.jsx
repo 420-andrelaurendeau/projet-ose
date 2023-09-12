@@ -1,5 +1,7 @@
 import React from "react";
 import "../Style.css";
+import Buttons, {ButtonVariants} from "./Button";
+import logo from "../assets/images/internship.png";
 const NavBar = () => {
     return (
         <>
