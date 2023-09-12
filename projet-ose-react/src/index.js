@@ -8,12 +8,12 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 
 const router = createBrowserRouter([
     {
-        path: "/main",
+        path: "/connect",
         element: <ConnectPage/>,
     },
     {
         path: "/",
-        element: <Navigate to='/main'/>,
+        element: <Navigate to='/connect'/>,
     },
 ]);
 

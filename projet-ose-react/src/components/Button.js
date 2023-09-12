@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types'
-
-const Button = ({color, text, onClick, disabled}) => {
+import { Button } from "@material-tailwind/react";
+const Buttons = ({color, text, onClick, disabled}) => {
     return (
-        <button
+        <Button
             onClick={onClick}
             style={{backgroundColor: color }}
             disabled={disabled}
-            className={'btn text-white'}>{text}</button>
+            className={'btn text-white'}>{text}</Button>
     )
 }
 
-Button.defaultProps = {
+Buttons.defaultProps = {
     color: 'steelblue'
 }
 
 //impt pour importer les PropTypes
-Button.propTypes = {
+Buttons.propTypes = {
     text: PropTypes.string,
     color: PropTypes.string,
     onClick: PropTypes.func
 }
 
-export default Button
+export default Buttons
