@@ -1,6 +1,6 @@
 import React from "react";
 import './i18n';
-import img from './assets/images/internship.png';
+import img from './assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 function App() {
   return (
     <div className="">
