@@ -1,4 +1,4 @@
-import {Component, useState} from "react";
+import {Component} from "react";
 import axios from "axios";
 
 class EtudiantInscription extends Component {
@@ -50,36 +50,35 @@ class EtudiantInscription extends Component {
     }
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <h1>Inscription de l'etudiant</h1>
-                    <label>
-                        <input type="text" name={"matricule"} value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br></br>
-                    <label>
-                        Nom:
-                        <input type="text" name={"nom"} value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br></br>
-                    <label>
-                        Prenom:
-                        <input type="text" name={"prenom"} value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br></br>
-                    <label>
-                        Courriel:
-                        <input type="text" name={"courriel"} value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br></br>
-                    <label>
-                        telephonne:
-                        <input type="text" name={"telephonne"} value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <br></br>
-                    <button type="submit">Inscription</button>
+            <div className={"flex flex-col items-center justify-center h-screen bg-white"}>
+                <div className={"mb-10"}>
+                    <h1 className={"scale-150 text-orange"}>Inscription de l'etudiant</h1>
                 </div>
-            </form>
+                <form className={"bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"} onSubmit={this.handleSubmit}>
+                    <div className={"mb-4"}>
+                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Matricule:</label>
+                        <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} type="text" name={"matricule"} value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <div className={"mb-4"}>
+                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Nom:</label>
+                        <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} type="text" name={"nom"} value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <div className={"mb-4"}>
+                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Prenom:</label>
+                        <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} type="text" name={"prenom"} value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <div className={"mb-4"}>
+                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Courriel:</label>
+                        <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} type="text" name={"courriel"} value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <div className={"mb-4"}>
+                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Telephonne:</label>
+                        <input className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} type="text" name={"telephonne"} value={this.state.value} onChange={this.handleChange} />
+                    </div>
+                    <br></br>
+                    <button className={"text-orange border hover:bg-orange hover:text-white text-black py-2 px-4 rounded"} type="submit">Inscription</button>
+                </form>
+            </div>
         )
     }
 }
