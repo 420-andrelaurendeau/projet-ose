@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../components/Button";
-import ResponsiveAppBar from "../components/AppBar";
-import NavBar from "../components/AppBar";
+import ResponsiveAppBar from "../components/common/AppBar";
+import NavBar from "../components/common/AppBar";
 
 function ConnectPage() {
 
