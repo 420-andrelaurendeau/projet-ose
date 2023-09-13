@@ -18216,6 +18216,7 @@ video {
     background-color: rgba(18, 20, 32, var(--bg-opacity));
   }
 
+
   .sm\:hover\:bg-transparent:hover {
     background-color: transparent;
   }

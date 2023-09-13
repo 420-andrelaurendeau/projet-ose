@@ -98,8 +98,29 @@ i18n
                     submitButton: {
                         text : 'Submit',
                     },
+                },
+                ConnectForm : {
+                    email: {
+                        name : 'email',
+                        text : 'Email address',
+                        placeholder : 'signIn@123.com',
+                        validation : {
+                            required : 'The email address is required',
+                            emailRequired : 'The email address must be a valid email address',
+                        }
+                    },
+                    password: {
+                        name : 'password',
+                        text : 'Password',
+                        placeholder : '*******',
+                        validation : {
+                            required : 'The password is required',
+                            minLenght : 'The password must contain at least 5 characters',
+                        }
+                    }
                 }
             },
+
         }
       },
       fr: {
