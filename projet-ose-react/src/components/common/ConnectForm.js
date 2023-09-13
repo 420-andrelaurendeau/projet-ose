@@ -71,8 +71,8 @@ const ConnectForm = (props) => {
                                 <div className="text-sm">
                                     <a href="#" className=
                                         {props.darkMode ?
-                                            "block text-sm font-medium leading-6 text-white"
-                                            : "block text-sm font-medium leading-6 text-black"}>
+                                            "block text-sm font-medium leading-6 text-orange"
+                                            : "block text-sm font-medium leading-6 text-blue"}>
                                         Forgot password?
                                     </a>
                                 </div>
@@ -111,7 +111,7 @@ const ConnectForm = (props) => {
                         {props.darkMode ?
                             "mt-10 text-center text-sm text-white"
                            : "mt-10 text-center text-sm text-black"}>
-                        Not register already?{' '}
+                        Not register already ?{' '}
                         <a href="#" className=
                             {props.darkMode ?
                                 "font-semibold leading-6 text-orange hover:text-amber-500"
