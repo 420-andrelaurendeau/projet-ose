@@ -59,6 +59,14 @@ function InscriptionEmployeur() {
       erreurs.nom = "Le nom est incorrect";
     }
 
+    if(inputValues.nomEntreprise.length == 0){
+      erreurs.nomEntreprise = "Le nom de l'entreprise ne peux pas etre vide"
+    }
+    else if(inputValues.nomEntreprise.length < 5) {
+      erreurs.nomEntreprise = "Le nom de l'entreprise est incorrect";
+    }
+
+
     if(inputValues.prenom.length == 0){
       erreurs.prenom = "Le prenom ne peux pas etre vide"
     }
@@ -67,11 +75,10 @@ function InscriptionEmployeur() {
     }
 
     if(inputValues.telephone.length == 0){
-      erreurs.email = "Le telephone ne peux pas etre vide"
+      erreurs.telephone = "Le telephone ne peux pas etre vide"
     }
     else if(inputValues.telephone.length != 10 ){
-
-      erreurs.telephone = "le telephone doit avoir 10 caractere"
+      erreurs.telephone = "Le telephone doit avoir 10 caractere"
     }
 
     console.log(erreurs)
@@ -100,17 +107,17 @@ function InscriptionEmployeur() {
 
             <form className="p-5 m-4" onSubmit={handleSubmit} >
 
-
-                <label className="col-span-2 font-medium" htmlFor="prenom">
+              <div className="flex justify-evenly ">
+                <label className="block w-full text-start text-grey-darker text-sm font-bold mb-2 mr-2" htmlFor="prenom">
                   Prénom :
                 </label>
-                <label className="col-span-2 font-medium" htmlFor="nom">
+                <label className="block w-full text-grey-darker text-sm font-bold mb-2" htmlFor="nom">
                   Nom :
                 </label>
-
-
+              </div>
+              <div className="flex">
                 <input
-                    className="col-span-2 p-1 rounded shadow-lg"
+                    className="block p-1 rounded w-full shadow-lg mr-2"
                     type={"text"}
                     id="prenom"
                     placeholder="Votre Prénom ..."
@@ -119,7 +126,7 @@ function InscriptionEmployeur() {
                     onChange={handleChange}
                 />
                 <input
-                    className="col-span-2 p-1 rounded shadow-lg"
+                    className="block p-1  rounded w-full shadow-lg "
                     type="text"
                     id="nom"
                     placeholder="Votre Nom ..."
@@ -127,14 +134,37 @@ function InscriptionEmployeur() {
                     value={formData.nom}
                     onChange={handleChange}
                 />
+              </div>
+
+              <div className={"flex justify-between"}>
                 {errors.prenom ? (
-                    <p className="error col-span-2">
+                    <p className="error text-sm block w-full bg-red-600 rounded items-center mr-2">
                       {errors.prenom}
                     </p>
                 ) : null}
                 {errors.nom ? (
-                    <p className="error col-span-2">
+                    <p className="error text-sm block w-full bg-red-600 rounded ">
                       {errors.nom}
+                    </p>
+                ) : null}
+              </div>
+
+
+              <label className="inline-block font-medium w-full" htmlFor="nomEntreprise">
+                Nom de l'entreprise :
+              </label>
+              <input
+                    className="p-1 rounded w-full shadow-lg"
+                    type="text"
+                    id="nomEntreprise"
+                    placeholder="nom Inc."
+                    name={"nomEntreprise"}
+                    value={formData.nomEntreprise}
+                    onChange={handleChange}
+              />
+                {errors.nomEntreprise ? (
+                    <p className="error bg-red-600 rounded">
+                      {errors.nomEntreprise}
                     </p>
                 ) : null}
 
@@ -144,62 +174,42 @@ function InscriptionEmployeur() {
 
 
 
-
-              {/*<label className="col-span-4 font-medium" htmlFor="nomEntreprise">*/}
-              {/*  Nom de l'entreprise :*/}
-              {/*</label>*/}
-              {/*<input*/}
-              {/*    className="col-span-4 p-1 rounded shadow-lg"*/}
-              {/*    type="text"*/}
-              {/*    id="nomEntreprise"*/}
-              {/*    placeholder="nom Inc."*/}
-              {/*    name={"nomEntreprise"}*/}
-              {/*    value={formData.nomEntreprise}*/}
-              {/*    onChange={handleChange}*/}
-              {/*/>*/}
-              {/*/!*{errors.nomEntreprise ? (*!/*/}
-              {/*/!*    <p className="error">*!/*/}
-              {/*/!*      {errors.nomEntreprise}*!/*/}
-              {/*/!*    </p>*!/*/}
-              {/*/!*) : null}*!/*/}
-
-
-              {/*<label className="col-span-4 font-medium" htmlFor="email">*/}
-              {/*  Email :*/}
-              {/*</label>*/}
-              {/*<input*/}
-              {/*    className="col-span-4 p-1 rounded shadow-lg"*/}
-              {/*    type="email"*/}
-              {/*    id="email"*/}
-              {/*    placeholder="nom@email.com ..."*/}
-              {/*    name={"email"}*/}
-              {/*    value={formData.email}*/}
-              {/*    onChange={handleChange}*/}
-              {/*/>*/}
-              {/*/!*{errors.email ? (*!/*/}
-              {/*/!*    <p className="error">*!/*/}
-              {/*/!*      {errors.email}*!/*/}
-              {/*/!*    </p>*!/*/}
-              {/*/!*) : null}*!/*/}
+              <label className="font-medium" htmlFor="email">
+                Email :
+              </label>
+              <input
+                  className=" w-full p-1 rounded shadow-lg"
+                  type="email"
+                  id="email"
+                  placeholder="nom@email.com ..."
+                  name={"email"}
+                  value={formData.email}
+                  onChange={handleChange}
+              />
+              {errors.email ? (
+                  <p className="error bg-red-600 rounded">
+                    {errors.email}
+                  </p>
+              ) : null}
 
 
-              {/*<label className="col-span-4 font-medium" htmlFor="telephone">*/}
-              {/*  Téléphone :*/}
-              {/*</label>*/}
-              {/*<input*/}
-              {/*    className="col-span-4 p-1 rounded shadow-lg"*/}
-              {/*    type="tel"*/}
-              {/*    id="telephone"*/}
-              {/*    placeholder="Votre numéro de téléphone ..."*/}
-              {/*    name={"telephone"}*/}
-              {/*    value={formData.telephone}*/}
-              {/*    onChange={handleChange}*/}
-              {/*/>*/}
-              {/*/!*{errors.telephone ? (*!/*/}
-              {/*/!*    <p className="error">*!/*/}
-              {/*/!*      {errors.telephone}*!/*/}
-              {/*/!*    </p>*!/*/}
-              {/*/!*) : null}*!/*/}
+              <label className=" font-medium" htmlFor="telephone">
+                Téléphone :
+              </label>
+              <input
+                  className="w-full p-1 rounded shadow-lg"
+                  type="tel"
+                  id="telephone"
+                  placeholder="Votre numéro de téléphone ..."
+                  name={"telephone"}
+                  value={formData.telephone}
+                  onChange={handleChange}
+              />
+              {errors.telephone ? (
+                  <p className="error bg-red-600 rounded">
+                    {errors.telephone}
+                  </p>
+              ) : null}
 
               {/*<label className="col-span-4 font-medium" htmlFor="file_input">*/}
               {/*  Televerser un document :*/}
@@ -217,7 +227,7 @@ function InscriptionEmployeur() {
               {/*    <input id="file_input" type="file" name="file_upload" className="hidden"></input>*/}
               {/*  </label>*/}
               {/*</div>*/}
-              <button type="submit" className="my-4 p-1 bg-blue text-white rounded col-span-4">
+              <button type="submit" className="my-4 p-1 bg-blue text-white w-full rounded col-span-4">
                 Soumettre
               </button>
             </form>
