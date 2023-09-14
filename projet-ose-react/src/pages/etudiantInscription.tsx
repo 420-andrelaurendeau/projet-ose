@@ -10,14 +10,6 @@ function EtudiantInscription() {
         telephonne: "",
     });
 
-    const [errors, setErrors] = useState({
-        nom: "",
-        prenom: "",
-        courriel: "",
-        motDePasse: "",
-        telephonne: "",
-    });
-
     const handleChange = (event:any) => {
         const { name, value } = event.target;
         console.log(name + " " + value);
@@ -55,6 +47,7 @@ function EtudiantInscription() {
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}>Nom:</label>
                     <input
+                        required={true}
                         placeholder={"Jean"}
                         className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
                         type="text"
@@ -66,6 +59,7 @@ function EtudiantInscription() {
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}>Prenom:</label>
                     <input
+                        required={true}
                         placeholder={"Pierre"}
                         className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
                         type="text"
@@ -77,9 +71,11 @@ function EtudiantInscription() {
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}>Courriel:</label>
                     <input
+                        required={true}
                         placeholder={"email@email.com"}
+                        title={"Exemple: email@email.com"}
                         className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
-                        type="text"
+                        type="email"
                         name={"courriel"}
                         value={formData.courriel}
                         onChange={handleChange}
@@ -88,7 +84,11 @@ function EtudiantInscription() {
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}>Mot de passe:</label>
                     <input
+                        required={true}
                         placeholder={"abc123"}
+                        pattern={"^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"}
+                        minLength={8}
+                        title={"8 caractères minimum, au moins une lettre et un chiffre"}
                         className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
                         type="text"
                         name={"motDePasse"}
@@ -99,6 +99,9 @@ function EtudiantInscription() {
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}>Telephonne:</label>
                     <input
+                        required={true}
+                        pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
+                        title={"Exemple: 450-450-4500"}
                         placeholder={"450-450-4500"}
                         className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
                         type="text"
