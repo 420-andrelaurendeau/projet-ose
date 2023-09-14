@@ -5,6 +5,7 @@ import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
 root.render(

@@ -1,20 +1,35 @@
 import React from "react";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import toggleOn from "../../assets/images/toggle-on-solid.svg";
 import toggleOff from "../../assets/images/toggle-off-solid.svg";
 import { useTranslation } from 'react-i18next';
 
-const ConnectForm = (props) => {
+const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
-    console.log(fields["email"]);
+    const [connectUser, setConnectUser] = React.useState({
+        email: "",
+        password: ""
+    });
+    console.log(fields);
+
+    const connect = async (e:any) => {
+        e.preventDefault();
+        const response = await fetch("http://localhost:8080/api/auth/signin", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(connectUser)
+        });
+        const data = await response.json();
+        console.log(data);
+    }
+
     return (
            <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className=" justify-center items-center">
                     <img onClick={props.toggleDarkMode}
-
                          className="self-left justify-self-end w-8 h-auto"
                          src={props.darkMode ? toggleOn : toggleOff}
                          alt="toggle"/>
@@ -56,6 +71,8 @@ const ConnectForm = (props) => {
                                             "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                             : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
                                         }
+                                    defaultValue={connectUser.email}
+                                    onChange={(e) => setConnectUser({...connectUser, email: e.target.value})}
                                 />
                             </div>
                         </div>
@@ -90,6 +107,8 @@ const ConnectForm = (props) => {
                                             "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm  sm:text-sm sm:leading-6 pl-2"
                                             : "block w-full bg-white rounded-md py-2 text-blue shadow-sm  sm:text-sm sm:leading-6 pl-2"
                                         }
+                                    defaultValue={connectUser.password}
+                                    onChange={(e) => setConnectUser({...connectUser, password: e.target.value})}
                                 />
                             </div>
                         </div>
