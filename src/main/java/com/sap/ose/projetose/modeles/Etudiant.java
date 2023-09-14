@@ -1,7 +1,6 @@
 package com.sap.ose.projetose.modeles;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Etudiant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String nom;
     private String prenom;
-    private String email;
+    private String motDePasse;
+    @Column(unique = true)
     private String courriel;
-    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "matricule_generator")
     private int matricule;
+
+    public Etudiant(String nom, String prenom, String courriel, String motDePasse) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.courriel = courriel;
+        this.motDePasse = motDePasse;
+    }
 }
