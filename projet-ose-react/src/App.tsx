@@ -1,10 +1,11 @@
 import './App.css';
+import Field from "./components/common/field";
+import EmailValidator from "./components/common/validators/EmailValidator";
 
 function App() {
   return (
     <div className="">
-      <h1 className="text-orange">Bienvenue à React avec TailwindCSS!</h1>
-      <h1 className="text-blue">Bienvenue à React avec TailwindCSS!</h1>
+        {Field("Email", "email", "email", new EmailValidator())}
     </div>
   );
 }
