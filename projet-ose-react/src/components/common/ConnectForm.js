@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 const ConnectForm = (props) => {
     const {i18n} = useTranslation();
-    const fields= i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
     console.log(fields["email"]);
     return (
            <>
@@ -53,8 +53,8 @@ const ConnectForm = (props) => {
                                     required
                                     className=
                                         {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6"
+                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
+                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
                                         }
                                 />
                             </div>
@@ -87,8 +87,8 @@ const ConnectForm = (props) => {
                                     required
                                     className=
                                         {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm  sm:text-sm sm:leading-6"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm  sm:text-sm sm:leading-6"
+                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm  sm:text-sm sm:leading-6 pl-2"
+                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm  sm:text-sm sm:leading-6 pl-2"
                                         }
                                 />
                             </div>
