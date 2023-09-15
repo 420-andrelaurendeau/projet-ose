@@ -1,12 +1,18 @@
 import './App.css';
+import {useState} from "react";
+import EtudiantInscription from "./pages/etudiantInscription";
 
 function App() {
-  return (
-    <div className="">
-      <h1 className="text-orange">Bienvenue à React avec TailwindCSS!</h1>
-      <h1 className="text-blue">Bienvenue à React avec TailwindCSS!</h1>
-    </div>
-  );
+    const [darkMode, setDarkMode] = useState(false);
+    function toggleDarkMode() {
+        setDarkMode(!darkMode)
+    }
+
+    return (
+        <>
+            <EtudiantInscription darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+        </>
+    );
 }
 
 
