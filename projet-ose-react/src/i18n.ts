@@ -100,6 +100,10 @@ i18n
                     },
                 },
                 InscriptionFormEtudiant : {
+                    title : {
+                        name : 'title',
+                        text : 'Registration for students',
+                    },
                     firstName: {
                         name : 'firstName',
                         text : 'First name :',
@@ -138,6 +142,14 @@ i18n
                         placeholder : '123-456-7890',
                         validation : {
                             required : 'The phone is required',
+                        }
+                    },
+                    programme: {
+                        name : 'programme',
+                        text : 'Program :',
+                        placeholder : 'Choose a program',
+                        validation : {
+                            required : 'The program is required',
                         }
                     },
                     submitButton: {
@@ -231,6 +243,10 @@ i18n
                     },
                 },
                 InscriptionFormEtudiant : {
+                    title : {
+                        name : 'title',
+                        text : 'Inscription de l\'étudiant',
+                    },
                     firstName: {
                         name : 'firstName',
                         text : 'Prénom :',

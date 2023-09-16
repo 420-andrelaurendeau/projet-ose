@@ -8,7 +8,8 @@ import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
-    //const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
+
     const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
@@ -87,7 +88,7 @@ function EtudiantInscription(props: any) {
                         {props.darkMode ?
                             "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white"
                             : "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black"}>
-                    Inscription de l'etudiant
+                    {fields.title.text}
                 </h2>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -95,12 +96,12 @@ function EtudiantInscription(props: any) {
                     <div>
                         <label className={props.darkMode ?
                             "block text-sm font-medium leading-6 text-white"
-                            : "block text-sm font-medium leading-6 text-black"}> Nom:
+                            : "block text-sm font-medium leading-6 text-black"}> {fields.lastName.text}
                         </label>
                         <div className="mt-2">
                             <input
                                 required={true}
-                                placeholder={"Jean"}
+                                placeholder={fields.lastName.placeholder}
                                 className={props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
@@ -113,11 +114,13 @@ function EtudiantInscription(props: any) {
                         </div>
                     </div>
                     <div>
-                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Prenom:</label>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.firstName.text}</label>
                         <div className="mt-2">
                             <input
                                 required={true}
-                                placeholder={"Pierre"}
+                                placeholder={fields.firstName.placeholder}
                                 className={props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
@@ -130,11 +133,13 @@ function EtudiantInscription(props: any) {
                         </div>
                    </div>
                     <div>
-                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Courriel:</label>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.email.text}</label>
                         <div className="mt-2">
                             <input
                                 required={true}
-                                placeholder={"email@email.com"}
+                                placeholder={fields.email.placeholder}
                                 title={"Exemple: email@email.com"}
                                 className={props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
@@ -148,11 +153,13 @@ function EtudiantInscription(props: any) {
                         </div>
                     </div>
                     <div>
-                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Mot de passe:</label>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.password.text}</label>
                         <div className="mt-2">
                             <input
                                 required={true}
-                                placeholder={"abc123"}
+                                placeholder={fields.password.placeholder}
                                 pattern={"^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"}
                                 minLength={8}
                                 title={"8 caractères minimum, au moins une lettre et un chiffre"}
@@ -168,13 +175,15 @@ function EtudiantInscription(props: any) {
                         </div>
                     </div>
                     <div>
-                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Telephonne:</label>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.phone.text}</label>
                         <div className="mt-2">
                             <input
                                 required={true}
                                 pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
                                 title={"Exemple: 450-450-4500"}
-                                placeholder={"450-450-4500"}
+                                placeholder={fields.phone.placeholder}
                                 className={props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
@@ -187,7 +196,9 @@ function EtudiantInscription(props: any) {
                         </div>
                     </div>
                     <div>
-                        <label className={"block text-gray-700 text-sm font-bold mb-2"}>Programme:</label>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.programme.text}</label>
                         <div className="mt-2">
                             <select
                                 required={true}
@@ -199,7 +210,7 @@ function EtudiantInscription(props: any) {
                                 name={"programme"}
                                 onChange={handleChange}
                             >
-                                <option value={"DEFAULT"} disabled>Choisir un programme</option>
+                                <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
                                     <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
                                 ))}
@@ -214,7 +225,7 @@ function EtudiantInscription(props: any) {
                                     "flex w-full justify-center rounded-md bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
                                     :"flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                                 }>
-                            Creer un compte
+                            {fields.submitButton.text}
                         </button>
                     </div>
                 </form>
