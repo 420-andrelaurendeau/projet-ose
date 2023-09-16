@@ -1,6 +1,17 @@
-package com.sap.ose.projetose.Employeur;
+package com.sap.ose.projetose.modeles;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employeur {
+    @Id
     private Long id;
     private String nom;
     private String prenom;
@@ -8,17 +19,5 @@ public class Employeur {
     private int telephone;
     private String email;
     private int documents;
-
-    public Employeur() {
-    }
-
-    public Employeur(Long id, String nom, String prenom, String nomEntreprise, int telephone, String email, int documents) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.nomEntreprise = nomEntreprise;
-        this.telephone = telephone;
-        this.email = email;
-        this.documents = documents;
-    }
+cd
 }
