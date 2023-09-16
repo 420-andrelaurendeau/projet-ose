@@ -13,6 +13,5 @@ public class EmployeurDto {
     private String prenom;
     private String telephone;
     private String courriel;
-    private String typeUtilisateur;
     private String entreprise;
 }

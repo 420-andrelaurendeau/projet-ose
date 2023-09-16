@@ -1,5 +1,6 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
+import TestBackEndConnection from "../components/common/testBackEndConnection";
 
 function ConnectPage() {
     const [darkMode, setDarkMode] = React.useState(false)
@@ -14,10 +15,8 @@ function ConnectPage() {
         </head>
         <body className={darkMode ? "h-screen bg-dark" : "h-screen bg-white"}>
         <div className="items-center">
-            <ConnectForm
-                darkMode={darkMode}
-                toggleDarkMode={toggleDarkMode}
-            />
+
+            <TestBackEndConnection/>
         </div>
         </body>
         </html>

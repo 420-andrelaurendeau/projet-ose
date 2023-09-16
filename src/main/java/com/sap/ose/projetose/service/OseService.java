@@ -1,11 +1,16 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.model.Employeur;
 import com.sap.ose.projetose.model.Etudiant;
+import com.sap.ose.projetose.model.Utilisateur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,4 +39,16 @@ public class OseService {
         }
         return "erreur";
     }
+
+    //get all Utilisateurs
+    public List<Utilisateur> getAllUsers() {
+        Optional<List<Employeur>> employeurs = Optional.of(employeurRepository.findAll());
+        Optional<List<Etudiant>> etudiants = Optional.of(etudiantRepository.findAll());
+        List<Utilisateur> utilisateurs = new ArrayList<>(employeurs.get());
+        utilisateurs.addAll(etudiants.get());
+        return utilisateurs;
+    }
+
+
+
 }

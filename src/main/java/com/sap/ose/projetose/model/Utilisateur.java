@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.Getter;
 
 
-@Getter
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "UTILISATEUR_TYPE")
@@ -19,10 +18,9 @@ public abstract class Utilisateur {
     private String nom;
     private String prenom;
     private String phone;
-    private String email;
-
     private String password;
-
+    @Column(unique = true)
+    private String email;
 
 
     public Utilisateur(){

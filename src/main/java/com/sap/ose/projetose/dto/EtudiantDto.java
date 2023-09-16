@@ -8,12 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EtudiantDto {
-    private int id;
     private String nom;
     private String prenom;
-    private String telephone;
-    private String courriel;
-    private String typeUtilisateur;
+    private String phone;
+    private String email;
+    private String matricule;
     private String programme;
     private String cv;
 
