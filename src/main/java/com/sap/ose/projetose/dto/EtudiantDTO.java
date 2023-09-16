@@ -5,32 +5,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class EtudiantDTO {
-    private long id;
+    private int id;
     private String nom;
     private String prenom;
     private String email;
-    private String motDePasse;
-    private String courriel;
+    private String phone;
+    private String password;
     private int matricule;
+    private int programme;
+    private String cv;
 
     public EtudiantDTO(Etudiant etudiant) {
         this.id = etudiant.getId();
         this.nom = etudiant.getNom();
         this.prenom = etudiant.getPrenom();
-        this.email = etudiant.getCourriel();
-        this.motDePasse = etudiant.getMotDePasse();
-        this.courriel = etudiant.getCourriel();
+        this.email = etudiant.getEmail();
+        this.password = etudiant.getPassword();
+        this.phone = etudiant.getPhone();
         this.matricule = etudiant.getMatricule();
+        this.programme = etudiant.getProgramme();
+        this.cv = etudiant.getCv();
     }
 
-
     public Etudiant fromDto() {
-        return new Etudiant(id, nom, prenom, courriel, motDePasse, matricule);
+        return new Etudiant(id, nom, prenom, phone, email, password, programme, cv);
     }
 }

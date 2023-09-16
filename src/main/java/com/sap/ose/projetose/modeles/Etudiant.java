@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Etudiant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String nom;
-    private String prenom;
-    private String motDePasse;
-    @Column(unique = true)
-    private String courriel;
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "matricule_generator")
+@DiscriminatorValue("ETUDIANT")
+public class Etudiant extends Utilisateur {
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int matricule;
+    private int programme;
+    private String cv;
 
-    public Etudiant(String nom, String prenom, String courriel, String motDePasse) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.courriel = courriel;
-        this.motDePasse = motDePasse;
+    public Etudiant(int id, String nom, String prenom, String phone, String email, String password, int programme, String cv) {
+        super(id, nom, prenom, phone, email, password);
+        this.programme = programme;
+        this.cv = cv;
+    }
+
+    public Etudiant(String nom, String prenom, String phone, String email, String password, int programme, String cv) {
+        super(nom, prenom, phone, email, password);
+        this.programme = programme;
+        this.cv = cv;
     }
 }

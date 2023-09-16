@@ -28,4 +28,10 @@ public class EtudiantController {
     public List<EtudiantDTO> getEtudiants() {
         return oseService.getEtudiants();
     }
+
+    @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public EtudiantDTO getEtudiant(@PathVariable int id) {
+        return oseService.getEtudiantById(id);
+    }
 }

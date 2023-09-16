@@ -98,7 +98,52 @@ i18n
                     submitButton: {
                         text : 'Submit',
                     },
-                }
+                },
+                InscriptionFormEtudiant : {
+                    firstName: {
+                        name : 'firstName',
+                        text : 'First name :',
+                        placeholder : 'Jack',
+                        validation : {
+                            required : 'The first name is required',
+                        }
+                    },
+                    lastName : {
+                        name : 'lastName',
+                        text : 'Last name :',
+                        placeholder : 'Sparrow',
+                        validation : {
+                            required : 'The last name is required',
+                        }
+                    },
+                    email : {
+                        name : 'email',
+                        text : 'Email :',
+                        placeholder : 'email@email.com',
+                        validation : {
+                            required : 'The email is required',
+                        }
+                    },
+                    password : {
+                        name : 'password',
+                        text : 'Password :',
+                        placeholder : 'abcas123',
+                        validation : {
+                            required : 'The password is required',
+                        }
+                    },
+                    phone: {
+                        name : 'phone',
+                        text : 'Phone :',
+                        placeholder : '123-456-7890',
+                        validation : {
+                            required : 'The phone is required',
+                        }
+                    },
+                    submitButton: {
+                        text : 'Create account',
+                    },
+                },
             },
         }
       },
@@ -184,6 +229,61 @@ i18n
                     submitButton: {
                         text : 'Soumettre',
                     },
+                },
+                InscriptionFormEtudiant : {
+                    firstName: {
+                        name : 'firstName',
+                        text : 'Prénom :',
+                        placeholder : 'Jean',
+                        validation : {
+                            required : 'Le prénom est requis',
+                        }
+
+                    },
+                    lastName: {
+                        name : 'lastName',
+                        text : 'Nom :',
+                        placeholder : 'Pierre',
+                        validation : {
+                            required : 'Le nom est requis',
+                        }
+                    },
+                    email: {
+                        name : 'email',
+                        text : 'Courriel :',
+                        placeholder : 'email@email.com',
+                        validation : {
+                            required : 'Le courriel est requis',
+                        }
+                    },
+                    password: {
+                        name : 'password',
+                        text : 'Mot de passe :',
+                        placeholder : 'abc123',
+                        validation : {
+                            required : 'Le mot de passe est requis',
+                        }
+                    },
+                    phone: {
+                        name : 'phone',
+                        text : 'Téléphone :',
+                        placeholder : '514-123-4567',
+                        validation : {
+                            required : 'Le téléphone est requis',
+                        }
+                    },
+                    programme: {
+                        name : 'programme',
+                        text : 'Programme :',
+                        placeholder : 'Choisir un programme',
+                        validation : {
+                            required : 'Le programme est requis',
+                        }
+                    },
+                    submitButton: {
+                        name : 'submitButton',
+                        text : 'Cree un compte',
+                    }
                 }
             },
         }
