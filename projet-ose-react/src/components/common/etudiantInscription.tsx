@@ -16,6 +16,7 @@ function EtudiantInscription(props: any) {
         email: "",
         password: "",
         phone: "",
+        matricule: "",
         programme: null,
         cv: null,
     });
@@ -33,11 +34,11 @@ function EtudiantInscription(props: any) {
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        const { password, nom, prenom, email, phone, cv, programme } = formData;
+        const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
         console.log(formData)
         console.log(password, nom, prenom, email, phone, cv, programme);
         if (programme == null) {
-            alert("Veuillez choisir un programme");
+            alert(fields.programme.validation.required);
             return;
         }
         axios
@@ -47,6 +48,7 @@ function EtudiantInscription(props: any) {
                 email: email,
                 password: password,
                 phone: phone,
+                matricule: matricule,
                 programme: programme,
                 cv: cv,
             })
@@ -182,7 +184,7 @@ function EtudiantInscription(props: any) {
                             <input
                                 required={true}
                                 pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
-                                title={"Exemple: 450-450-4500"}
+                                title={fields.phone.validation.pattern}
                                 placeholder={fields.phone.placeholder}
                                 className={props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
@@ -191,6 +193,27 @@ function EtudiantInscription(props: any) {
                                 type="text"
                                 name={"phone"}
                                 value={formData.phone}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label className={props.darkMode ?
+                            "block text-sm font-medium leading-6 text-white"
+                            : "block text-sm font-medium leading-6 text-black"}>{fields.matricule.text}</label>
+                        <div className="mt-2">
+                            <input
+                                required={true}
+                                pattern={"[0-9]{7}"}
+                                title={fields.matricule.validation.pattern}
+                                placeholder={fields.matricule.placeholder}
+                                className={props.darkMode ?
+                                    "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
+                                    : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
+                                }
+                                type="text"
+                                name={"matricule"}
+                                value={formData.matricule}
                                 onChange={handleChange}
                             />
                         </div>

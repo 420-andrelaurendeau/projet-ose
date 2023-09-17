@@ -142,6 +142,15 @@ i18n
                         placeholder : '123-456-7890',
                         validation : {
                             required : 'The phone is required',
+                            pattern: 'Example: 514-123-4567',
+                        }
+                    },
+                    matricule: {
+                        name : 'matricule',
+                        text : 'Matricule :',
+                        placeholder : '1236789',
+                        validation : {
+                            required : 'The matricule is required',
                         }
                     },
                     programme: {
@@ -286,6 +295,15 @@ i18n
                         placeholder : '514-123-4567',
                         validation : {
                             required : 'Le téléphone est requis',
+                            pattern: 'Exemple: 514-123-4567',
+                        }
+                    },
+                    matricule: {
+                        name : 'matricule',
+                        text : 'Matricule :',
+                        placeholder : '1236789',
+                        validation : {
+                            pattern : 'Le matricule est compose de 7 chiffres',
                         }
                     },
                     programme: {

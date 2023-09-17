@@ -32,6 +32,6 @@ public class EtudiantDTO {
     }
 
     public Etudiant fromDto() {
-        return new Etudiant(id, nom, prenom, phone, email, password, programme, cv);
+        return new Etudiant(id, nom, prenom, phone, email, password, matricule, programme, cv);
     }
 }
