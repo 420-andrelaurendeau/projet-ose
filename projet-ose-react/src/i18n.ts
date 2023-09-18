@@ -164,6 +164,9 @@ i18n
                     submitButton: {
                         text : 'Create account',
                     },
+                    reussite: {
+                        name : 'Registration successful',
+                    }
                 },
             },
         }
@@ -317,6 +320,9 @@ i18n
                     submitButton: {
                         name : 'submitButton',
                         text : 'Cree un compte',
+                    },
+                    reussite: {
+                        name : 'Inscription réussie',
                     }
                 }
             },

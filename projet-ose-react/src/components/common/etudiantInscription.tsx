@@ -22,7 +22,7 @@ function EtudiantInscription(props: any) {
     });
 
     const [programmes, setProgrammes] = useState([]);
-
+    const [reussite, setReussite] = useState(false);
     const handleChange = (event:any) => {
         const { name, value } = event.target;
         console.log(name + " " + value);
@@ -35,7 +35,6 @@ function EtudiantInscription(props: any) {
     const handleSubmit = (event:any) => {
         event.preventDefault();
         const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
-        console.log(formData)
         console.log(password, nom, prenom, email, phone, cv, programme);
         if (programme == null) {
             alert(fields.programme.validation.required);
@@ -58,7 +57,20 @@ function EtudiantInscription(props: any) {
             .catch((error) => {
                 console.log(error);
                 alert("Erreur lors de l'inscription")
-            });
+            }).then(() => {
+                setReussite(true);
+                setFormData({
+                    nom: "",
+                    prenom: "",
+                    email: "",
+                    password: "",
+                    phone: "",
+                    matricule: "",
+                    programme: null,
+                    cv: null,
+                });
+                event.target.reset();
+             });
     };
 
     const fetchProgrammes = () => {
@@ -94,7 +106,7 @@ function EtudiantInscription(props: any) {
                 </h2>
             </div>
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className={"space-y-6"} onSubmit={handleSubmit} action={"#"}>
+                <form className={"space-y-6"} onSubmit={handleSubmit}>
                     <div>
                         <label className={props.darkMode ?
                             "block text-sm font-medium leading-6 text-white"
@@ -250,6 +262,7 @@ function EtudiantInscription(props: any) {
                                 }>
                             {fields.submitButton.text}
                         </button>
+                        {reussite && <p className="text-green-500 scale-150 text-center">{fields.reussite.name}</p>}
                     </div>
                 </form>
             </div>
