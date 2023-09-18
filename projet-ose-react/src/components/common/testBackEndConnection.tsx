@@ -1,20 +1,23 @@
 import React, {useEffect} from "react";
+import img from "../../assets/icons/user-solid.svg";
 
 const TestBackEndConnection = () => {
 
-    const [utilisateur, setUtilisateur] = React.useState([])
+    const [utilisateurs, setUtilisateurs] = React.useState([])
 
     interface FormData {
         nom: string;
         prenom: string;
         email: string;
         telephone: string;
+        entreprise: string;
+        programme: string;
     }
 
     useEffect(() => {
         const getUtilisateurs = async () => {
             const utilisateursFromServer = await fetchUtilisateurs()
-            setUtilisateur(utilisateursFromServer)
+            setUtilisateurs(utilisateursFromServer)
 
         }
         getUtilisateurs().then(r => console.log(r))
@@ -25,28 +28,32 @@ const TestBackEndConnection = () => {
         return await res.json()
     }
 return (
-    <div className="flex flex-col items-center">
-        <div className="w-full md:w-1/2 flex flex-col items-center h-64">
-            <div className="w-full px-4">
-                <div className="flex flex-col items-center relative">
-                    <div className="absolute shadow bg-white top-100 z-40 w-full lef-0 rounded max-h-select overflow-y-auto svelte-5uyqqj">
-                        {utilisateur.map((utilisateur: FormData) => (
-                            <div className="flex flex-col w-full">
-                                <div className="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
-                                    <div className="w-6 flex flex-col items-center">
-                                        <div className="flex relative w-5 h-5 bg-orange-500 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full "><img className="rounded-full" alt="A" src="https://randomuser.me/api/portraits/men/62.jpg"></img> </div>
-                                    </div>
-                                    <div className="w-full items-center flex">
-                                        <div className="mx-2 -mt-1  ">{utilisateur.nom} {utilisateur.prenom}
-                                            <div className="text-xs truncate w-full normal-case font-normal -mt-1 text-gray-500">{utilisateur.telephone} &amp; {utilisateur.email}</div>
-                                        </div>
-                                    </div>
-                                </div>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-md">
+            <ul role="list" className="divide-y divide-gray-100">
+                {utilisateurs.map((utilisateur:FormData) => (
+                    <li key={utilisateur.email} className="flex justify-between gap-x-6 py-5">
+                        <div className="flex min-w-0 gap-x-4">
+                            <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={img} alt="" />
+                            <div className="min-w-0 flex-auto">
+                                <p className="text-sm font-semibold leading-6 text-gray-900">{utilisateur.prenom + ' ' + utilisateur.nom}</p>
+                                <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                                    {utilisateur.email}
+                                    {' - '}
+                                    {utilisateur.programme? <i>{utilisateur.programme}</i>: <i>{utilisateur.entreprise}</i>}
+                                </p>
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
+                        </div>
+                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                            <button
+                                type="submit"
+                                className="bg-blue hover:bg-cyan-900 text-white font-bold py-2 px-4 border border-blue rounded">
+                                Sign in
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
         </div>
     </div>
     );
