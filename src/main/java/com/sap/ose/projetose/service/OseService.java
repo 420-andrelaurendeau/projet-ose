@@ -5,13 +5,11 @@ import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.model.Employeur;
 import com.sap.ose.projetose.model.Etudiant;
-import com.sap.ose.projetose.model.Utilisateur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,22 +22,6 @@ public class OseService {
     public OseService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
         this.employeurRepository = employeurRepository;
         this.etudiantRepository = etudiantRepository;
-    }
-
-    public String connection(String email, String password) {
-        Optional<Employeur> employeur = employeurRepository.findByCourriel(email);
-        if (employeur.isPresent()) {
-            if (employeur.get().getPassword().equals(password)) {
-                return employeur.get().getEmail();
-            }
-        }
-        Optional<Etudiant> etudiant = etudiantRepository.findByCourriel(email);
-        if (etudiant.isPresent()) {
-            if (etudiant.get().getPassword().equals(password)) {
-                return etudiant.get().getEmail();
-            }
-        }
-        return "erreur";
     }
 
     //get all Utilisateurs
@@ -76,5 +58,30 @@ public class OseService {
     }
 
 
+    public void saveEtudiant(Etudiant etudiant) {
+        etudiantRepository.save(etudiant);
+    }
+
+    public Etudiant getEtudiantById(Long id) {
+        return etudiantRepository.findById(id).orElse(null);
+    }
+
+    public Etudiant getEtudiantByCourriel(String courriel) {
+        return etudiantRepository.findByCourriel(courriel).orElse(null);
+    }
+
+    public List<EtudiantDto> getAllEtudiants() {
+        List<Etudiant> etudiants = etudiantRepository.findAll();
+        List<EtudiantDto> etudiantDtos = new ArrayList<>();
+        for (Etudiant etudiant : etudiants) {
+            EtudiantDto etudiantDto = new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme(), etudiant.getCv());
+            etudiantDtos.add(etudiantDto);
+        }
+        return etudiantDtos;
+    }
+
+    public void saveEmployeur(Employeur employeur) {
+        employeurRepository.save(employeur);
+    }
 
 }

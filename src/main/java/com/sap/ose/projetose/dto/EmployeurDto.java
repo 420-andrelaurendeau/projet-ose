@@ -12,4 +12,9 @@ import lombok.NoArgsConstructor;
 public class EmployeurDto extends UtilisateurDto {
 
     private String entreprise;
+
+    public EmployeurDto(String nom, String prenom, String phone, String email, String entreprise) {
+        super(nom, prenom, phone, email);
+        this.entreprise = entreprise;
+    }
 }
