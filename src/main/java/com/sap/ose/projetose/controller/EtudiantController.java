@@ -1,8 +1,6 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.model.Utilisateur;
-import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.OseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,22 +10,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/etudiant")
+@RequestMapping("/api/etudiant")
 public class EtudiantController {
 
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    private final EtudiantService etudiantService;
+    private final OseService oseService;
 
-    public EtudiantController(EtudiantService etudiantService) {
-        this.etudiantService = etudiantService;
+    public EtudiantController(OseService oseService) {
+        this.oseService = oseService;
     }
 
     @GetMapping("/etudiants")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
-        return ResponseEntity.ok().body(etudiantService.getAllEtudiants());
+        return ResponseEntity.ok().body(oseService.getAllEtudiants());
     }
 
 

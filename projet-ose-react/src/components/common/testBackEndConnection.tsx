@@ -26,7 +26,7 @@ const TestBackEndConnection = (props:any) => {
     }, [])
 
     const fetchUtilisateurs = async () => {
-        const res = await fetch('http://localhost:8080/apiUtilisateur/utilisateurs')
+        const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
         return await res.json()
     }
 
@@ -54,7 +54,7 @@ return (
                                 </p>
                             </div>
                         </div>
-                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                        <div className="shrink-0 sm:flex sm:flex-col sm:items-end">
                             <button
                                 type="button"
                                 onClick={(e) => handleSubmit(utilisateur)}
