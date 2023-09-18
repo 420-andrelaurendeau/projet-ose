@@ -4,7 +4,7 @@ import EmailValidator from "./components/common/validators/EmailValidator";
 
 function App() {
   return (
-    <div className="">
+    <div className="m-5">
         {Field("Email", "email", "email", new EmailValidator())}
     </div>
   );

@@ -1,0 +1,7 @@
+label.empty {
+    top: 1.925rem;
+}
+
+label.empty:not(.text-red-500) {
+    color: lightgray;
+}
