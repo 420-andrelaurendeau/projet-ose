@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.model.Utilisateur;
 import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.OseService;
@@ -26,7 +27,7 @@ public class UtilisateurController {
 
     @GetMapping("/utilisateurs")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<Utilisateur>> getAllUsers() {
+    public ResponseEntity<List<UtilisateurDto>> getAllUsers() {
         logger.info("getAllUsers");
         return ResponseEntity.ok().body(oseService.getAllUsers());
     }

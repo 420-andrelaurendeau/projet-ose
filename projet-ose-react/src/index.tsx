@@ -4,13 +4,30 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+import ErrorPage from "./pages/ErrorPage";
 
 
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
+const router = createBrowserRouter([
+    {
+        path: "/signIn",
+        element: <App/>
+    },
+    {
+        path: "/",
+        element: <Navigate to={"/signIn"}/>,
+    },
+    {
+        path: "/home",
+        element: <ErrorPage/>
+    }
+])
+
 root.render(
     <React.StrictMode>
-        <App/>
+        <RouterProvider router={router}/>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

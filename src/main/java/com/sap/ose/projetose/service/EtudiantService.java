@@ -32,7 +32,7 @@ public class EtudiantService {
         List<Etudiant> etudiants = etudiantRepository.findAll();
         List<EtudiantDto> etudiantDtos = new ArrayList<>();
         for (Etudiant etudiant : etudiants) {
-            EtudiantDto etudiantDto = new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(),etudiant.getPhone(), etudiant.getEmail(),etudiant.getMatricule(),etudiant.getProgramme(),etudiant.getCv());
+            EtudiantDto etudiantDto = new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme(), etudiant.getCv());
             etudiantDtos.add(etudiantDto);
         }
         return etudiantDtos;

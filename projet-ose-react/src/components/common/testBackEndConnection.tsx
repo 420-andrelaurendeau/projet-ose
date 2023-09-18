@@ -1,10 +1,12 @@
 import React, {useEffect} from "react";
 import img from "../../assets/icons/user-solid.svg";
+import {useNavigate} from "react-router-dom";
 
-const TestBackEndConnection = () => {
+
+const TestBackEndConnection = (props:any) => {
 
     const [utilisateurs, setUtilisateurs] = React.useState([])
-
+    const navigate = useNavigate()
     interface FormData {
         nom: string;
         prenom: string;
@@ -27,6 +29,14 @@ const TestBackEndConnection = () => {
         const res = await fetch('http://localhost:8080/apiUtilisateur/utilisateurs')
         return await res.json()
     }
+
+    const handleSubmit = (user:FormData) => {
+        navigate('/home', {
+            state: user,
+
+        });
+    }
+
 return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className=" sm:mx-auto sm:w-full sm:max-w-md">
@@ -46,7 +56,8 @@ return (
                         </div>
                         <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
                             <button
-                                type="submit"
+                                type="button"
+                                onClick={(e) => handleSubmit(utilisateur)}
                                 className="bg-blue hover:bg-cyan-900 text-white font-bold py-2 px-4 border border-blue rounded">
                                 Sign in
                             </button>
