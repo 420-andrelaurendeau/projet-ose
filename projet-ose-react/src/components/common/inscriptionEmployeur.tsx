@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 function InscriptionEmployeur(props: any) {
   interface FormData {
@@ -8,7 +8,7 @@ function InscriptionEmployeur(props: any) {
     nomEntreprise: string;
     email: string;
     telephone: string;
-    fileNumber: string;
+    fileNumber: File | null;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -17,19 +17,42 @@ function InscriptionEmployeur(props: any) {
     nomEntreprise: "",
     email: "",
     telephone: "",
-    fileNumber: "",
+    fileNumber: null,
   });
   const [submitting, setSubmitting] = useState(false);
+  const [binaryData, setBinaryData] = useState<any>(null);
 
-  function handleChange(event: any) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    console.log(name + "= " + value);
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = event.target;
+
+    if (name === "fileNumber") {
+      const fileInput = event.target as HTMLInputElement;
+      if (fileInput.files && fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const binaryData = e.target?.result;
+          setBinaryData(binaryData);
+        };
+
+        reader.readAsBinaryString(file);
+
+        setFormData({
+          ...formData,
+          [name]: file,
+        });
+        console.log(name + "= " + file);
+      }
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+      console.log(name + "= " + value);
+    }
   }
 
   const handleSubmit = (event: any) => {
@@ -191,6 +214,31 @@ function InscriptionEmployeur(props: any) {
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
+          />
+        </div>
+        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+          <label
+            htmlFor="televersement"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            Televerser un fichier :
+          </label>
+          <input
+            className={
+              props.darkMode
+                ? "w-full border-dashed border-2 text-center file:bg-orange file:rounded file:border-solid file:border-transparent file:text-white cursor-pointer rounded p-1 text-orange font-bold"
+                : "w-full border-dashed border-2 text-center file:bg-blue file:rounded file:border-solid file:border-transparent file:text-white cursor-pointer rounded p-1 text-black font-bold"
+            }
+            required={true}
+            accept=".pdf"
+            name="fileNumber"
+            id="televersement"
+            type="file"
+            onChange={handleChange}
           />
         </div>
         <button

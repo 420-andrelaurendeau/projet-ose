@@ -511,11 +511,26 @@ video {
     max-width: 1536px;
   }
 }
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.inset-0 {
+  inset: 0px;
+}
+.z-50 {
+  z-index: 50;
+}
 .col-span-12 {
   grid-column: span 12 / span 12;
 }
 .col-span-6 {
   grid-column: span 6 / span 6;
+}
+.m-0 {
+  margin: 0px;
 }
 .mx-auto {
   margin-left: auto;
@@ -530,8 +545,14 @@ video {
 .grid {
   display: grid;
 }
+.h-32 {
+  height: 8rem;
+}
 .h-auto {
   height: auto;
+}
+.h-full {
+  height: 100%;
 }
 .h-screen {
   height: 100vh;
@@ -541,6 +562,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -563,6 +587,12 @@ video {
 .border {
   border-width: 1px;
 }
+.border-2 {
+  border-width: 2px;
+}
+.border-dashed {
+  border-style: dashed;
+}
 .bg-blue {
   --tw-bg-opacity: 1;
   background-color: rgb(48 107 172 / var(--tw-bg-opacity));
@@ -571,9 +601,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(18 20 32 / var(--tw-bg-opacity));
 }
+.bg-offwhite {
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 252 255 / var(--tw-bg-opacity));
+}
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.p-0 {
+  padding: 0px;
 }
 .p-1 {
   padding: 0.25rem;
@@ -603,6 +640,24 @@ video {
   --tw-text-opacity: 1;
   color: rgb(245 122 0 / var(--tw-text-opacity));
 }
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.opacity-0 {
+  opacity: 0;
+}
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+@media (prefers-color-scheme: dark) {
+
+  .dark\:border-gray {
+    --tw-border-opacity: 1;
+    border-color: rgb(208 204 208 / var(--tw-border-opacity));
+  }
+}
 @media (min-width: 640px) {
 
   .sm\:col-span-3 {
@@ -629,15 +684,11 @@ video {
     grid-column: span 4 / span 4;
   }
 
-  .lg\:col-start-2 {
-    grid-column-start: 2;
-  }
-
   .lg\:col-start-3 {
     grid-column-start: 3;
   }
 
-  .lg\:col-start-4 {
-    grid-column-start: 4;
+  .lg\:col-start-5 {
+    grid-column-start: 5;
   }
 }

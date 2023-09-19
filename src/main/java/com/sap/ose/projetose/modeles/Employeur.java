@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.modeles;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@DiscriminatorValue("EMPLOYEUR")
 public class Employeur {
     @Id
     private Long id;
@@ -19,5 +21,4 @@ public class Employeur {
     private int telephone;
     private String email;
     private int documents;
-cd
 }
