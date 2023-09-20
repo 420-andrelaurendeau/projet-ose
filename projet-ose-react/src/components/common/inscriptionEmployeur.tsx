@@ -5,54 +5,38 @@ function InscriptionEmployeur(props: any) {
   interface FormData {
     nom: string;
     prenom: string;
-    nomEntreprise: string;
-    email: string;
     telephone: string;
-    fileNumber: File | null;
+    email: string;
+    password: string;
+    nomEntreprise: string;
+    programme: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
     nom: "",
     prenom: "",
-    nomEntreprise: "",
-    email: "",
     telephone: "",
-    fileNumber: null,
+    email: "",
+    password: "",
+    nomEntreprise: "",
+    programme: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [binaryData, setBinaryData] = useState<any>(null);
+  const [showPassword, setShowPasswprd] = useState(false);
 
-  function handleChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
+  const tooglePasswordVisibility = () => {
+    setShowPasswprd(!showPassword);
+  };
+
+  function handleChange(event: any) {
     const { name, value } = event.target;
 
-    if (name === "fileNumber") {
-      const fileInput = event.target as HTMLInputElement;
-      if (fileInput.files && fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          const binaryData = e.target?.result;
-          setBinaryData(binaryData);
-        };
-
-        reader.readAsBinaryString(file);
-
-        setFormData({
-          ...formData,
-          [name]: file,
-        });
-        console.log(name + "= " + file);
-      }
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-      console.log(name + "= " + value);
-    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    console.log(name + "= " + value);
   }
 
   const handleSubmit = (event: any) => {
@@ -211,12 +195,84 @@ function InscriptionEmployeur(props: any) {
             type="tel"
             className={
               props.darkMode
-                ? "w-full border border-gray-300 rounded p-1 text-orange"
+                ? "w-full border rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
           />
         </div>
         <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+          <label
+            htmlFor="password"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            Mot de passe :
+          </label>
+          <div className="flex flex-row">
+            <input
+              name={"password"}
+              value={formData.password}
+              onChange={handleChange}
+              required={true}
+              minLength={5}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Mot de passe ..."
+              className={
+                props.darkMode
+                  ? "basis-3/4 mr-2 border rounded p-1 text-orange"
+                  : "basis-3/4 mr-2 border rounded p-1 text-blue"
+              }
+            />
+            <button
+              type="button"
+              onClick={tooglePasswordVisibility}
+              className={
+                props.darkMode
+                  ? "basis-1/4 mx-auto border rounded p-1 text-white bg-orange"
+                  : "basis-1/4 mx-auto border rounded p-1 text-white bg-blue"
+              }
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+        </div>
+        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+          <label
+            htmlFor="programme"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            Selectectionner une option
+          </label>
+          <select
+            value={formData.programme}
+            onChange={handleChange}
+            name={"programme"}
+            id="programme"
+            required={true}
+            className={
+              props.darkMode
+                ? "border border-orange text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
+                : "border border-blue text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
+            }
+          >
+            <option selected value="">
+              Choisir un programme
+            </option>
+            <option value="informatique">Technique informatique</option>
+            <option value="soins">Soins infirmier</option>
+            <option value="electrique">Technique electrique</option>
+            <option value="construction">Genie Civile</option>
+          </select>
+        </div>
+        {/* <div className="col-span-6 lg:col-start-3 lg:col-span-4">
           <label
             htmlFor="televersement"
             className={
@@ -240,7 +296,7 @@ function InscriptionEmployeur(props: any) {
             type="file"
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <button
           className="col-span-6 lg:col-start-3 lg:col-span-4 bg-blue rounded text-white"
           type="submit"
