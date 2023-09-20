@@ -4,12 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './tailwind.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
 root.render(
   <React.StrictMode>
-    <App />
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" Component={App} />
+              <Route path="/etudiantInscription" Component={EtudiantInscriptionPage} />
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>
 );
 

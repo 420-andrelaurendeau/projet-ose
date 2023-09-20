@@ -1,16 +1,10 @@
 import './App.css';
-import {useState} from "react";
-import EtudiantInscription from "./pages/etudiantInscription";
+import './i18n';
 
 function App() {
-    const [darkMode, setDarkMode] = useState(false);
-    function toggleDarkMode() {
-        setDarkMode(!darkMode)
-    }
-
     return (
         <>
-            <EtudiantInscription darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+            <h1 className="text-4xl text-center text-blue-500">Hello World</h1>
         </>
     );
 }
