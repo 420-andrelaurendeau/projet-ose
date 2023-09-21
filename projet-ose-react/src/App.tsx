@@ -1,13 +1,11 @@
 import "./App.css";
-import EmployeurInscription from "./pages/PageEmployeurInscription";
 import "./i18n"
+import EmployeurInscriptionPage from "./pages/PageEmployeurInscription";
 
 function App() {
   return (
     <div className="">
-      {/* <h1 className="text-orange">Bienvenue à React avec TailwindCSS!</h1>
-      <h1 className="text-blue">Bienvenue à React avec TailwindCSS!</h1> */}
-      <EmployeurInscription></EmployeurInscription>
+      <EmployeurInscriptionPage></EmployeurInscriptionPage>
     </div>
   );
 }

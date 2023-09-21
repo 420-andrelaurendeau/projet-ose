@@ -1,7 +1,7 @@
 import React from "react";
 import InscriptionEmployeur from "../components/common/inscriptionEmployeur";
 
-function EmployeurInscription() {
+function EmployeurInscriptionPage() {
   const [darkMode, setDarkMode] = React.useState(false);
   function toggleDarkMode() {
     setDarkMode((prevDarkMode) => !prevDarkMode);
@@ -15,4 +15,4 @@ function EmployeurInscription() {
     </div>
   );
 }
-export default EmployeurInscription;
+export default EmployeurInscriptionPage;

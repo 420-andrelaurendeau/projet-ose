@@ -312,31 +312,6 @@ function InscriptionEmployeur(props: any) {
             <option value="construction">Genie Civile</option>
           </select>
         </div>
-        {/* <div className="col-span-6 lg:col-start-3 lg:col-span-4">
-          <label
-            htmlFor="televersement"
-            className={
-              props.darkMode
-                ? "block font-bold text-white"
-                : "block font-bold text-black"
-            }
-          >
-            Televerser un fichier :
-          </label>
-          <input
-            className={
-              props.darkMode
-                ? "w-full border-dashed border-2 text-center file:bg-orange file:rounded file:border-solid file:border-transparent file:text-white cursor-pointer rounded p-1 text-orange font-bold"
-                : "w-full border-dashed border-2 text-center file:bg-blue file:rounded file:border-solid file:border-transparent file:text-white cursor-pointer rounded p-1 text-black font-bold"
-            }
-            required={true}
-            accept=".pdf"
-            name="fileNumber"
-            id="televersement"
-            type="file"
-            onChange={handleChange}
-          />
-        </div> */}
         <button
           className="col-span-6 lg:col-start-3 lg:col-span-4 bg-blue rounded text-white"
           type="submit"
