@@ -69,7 +69,7 @@ function InscriptionEmployeur(props: any) {
     const email = formData.email;
     const phone = formData.phone;
     const password = formData.password;
-    const nomEntreprise = formData.entreprise;
+    const entreprise = formData.entreprise;
     const programme = formData.programme;
 
     if (programme == null) {
@@ -84,7 +84,7 @@ function InscriptionEmployeur(props: any) {
         phone: phone,
         email: email,
         password: password,
-        entreprise: nomEntreprise,
+        entreprise: entreprise,
         programme: programme,
       })
       .then((response) => {
@@ -187,28 +187,28 @@ function InscriptionEmployeur(props: any) {
         </div>
         <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
-            htmlFor={fields.nomEntreprise.name}
+            htmlFor={fields.entreprise.name}
             className={
               props.darkMode
                 ? "block font-bold text-white"
                 : "block font-bold text-black"
             }
           >
-            {fields.nomEntreprise.text}
+            {fields.entreprise.text}
           </label>
           <input
-            name={"nomEntreprise"}
+            name={"entreprise"}
             value={formData.entreprise}
             onChange={handleChange}
             required={true}
             type="text"
-            id={fields.nomEntreprise.name}
+            id="entreprise"
             className={
               props.darkMode
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
-            placeholder={fields.nomEntreprise.placeholder}
+            placeholder={fields.entreprise.placeholder}
           />
         </div>
         <div className="col-span-6 lg:col-start-2 lg:col-span-4">

@@ -199,7 +199,7 @@ i18n
                         text:'First Name :',
                         placeholder:'Your first name ..'
                     },
-                    nomEntreprise:{
+                    entreprise:{
                         name:'nomEntreprise',
                         text:'Entreprise Name :',
                         placeholder:'Your entreprise name ..'
@@ -437,7 +437,7 @@ i18n
                         text:'Prenom :',
                         placeholder:'Votre prénom ..'
                     },
-                    nomEntreprise:{
+                    entreprise:{
                         name:'nomEntreprise',
                         text:'Nom de l\'entreprise :',
                         placeholder:'Nom de l\'entreprise ..'
