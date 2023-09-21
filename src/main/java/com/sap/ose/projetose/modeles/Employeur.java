@@ -1,4 +1,4 @@
-package com.sap.ose.projetose.model;
+package com.sap.ose.projetose.modeles;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

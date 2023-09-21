@@ -3,15 +3,11 @@ package com.sap.ose.projetose.controller;
 import static org.mockito.Mockito.when;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.model.Employeur;
-import com.sap.ose.projetose.model.Etudiant;
 import com.sap.ose.projetose.service.OseService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

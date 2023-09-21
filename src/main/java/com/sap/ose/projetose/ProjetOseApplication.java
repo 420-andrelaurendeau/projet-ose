@@ -1,7 +1,7 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.model.Employeur;
-import com.sap.ose.projetose.model.Etudiant;
+import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

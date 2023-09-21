@@ -1,8 +1,7 @@
-package com.sap.ose.projetose.model;
+package com.sap.ose.projetose.modeles;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 
 
 @Entity

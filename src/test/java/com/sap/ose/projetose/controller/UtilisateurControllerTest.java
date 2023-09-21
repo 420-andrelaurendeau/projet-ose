@@ -5,8 +5,6 @@ import static org.mockito.Mockito.when;
 import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
-import com.sap.ose.projetose.model.Employeur;
-import com.sap.ose.projetose.model.Etudiant;
 import com.sap.ose.projetose.service.OseService;
 
 import java.util.ArrayList;
