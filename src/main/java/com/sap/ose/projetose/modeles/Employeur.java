@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 public class Employeur extends Utilisateur {
     @Column(unique = true)
     private String nomEntreprise;
-    private String programme;
+    private int programme;
 
-    public Employeur(int id, String nom, String prenom, String email,String phone, String password, String nomEntreprise, String programme) {
+    public Employeur(int id, String nom, String prenom, String email,String phone, String password, String nomEntreprise, int programme) {
         super(id, nom, prenom, email, phone, password);
         this.nomEntreprise = nomEntreprise;
         this.programme = programme;
     }
 
-    public Employeur(String nom, String prenom, String email,String phone, String password, String nomEntreprise, String programme) {
+    public Employeur(String nom, String prenom, String email,String phone, String password, String nomEntreprise, int programme) {
         super(nom, prenom, email, phone, password);
         this.nomEntreprise = nomEntreprise;
         this.programme = programme;

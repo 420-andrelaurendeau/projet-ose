@@ -16,7 +16,7 @@ public class EmployeurDTO {
     private String phone;
     private String password;
     private String nomEntreprise;
-    private String programme;
+    private int programme;
 
     public EmployeurDTO(Employeur employeur){
         this.id = employeur.getId();

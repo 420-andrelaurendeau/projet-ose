@@ -15,7 +15,7 @@ function InscriptionEmployeur(props: any) {
     phone: string;
     password: string;
     nomEntreprise: string;
-    programme: string;
+    programme: any;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -25,13 +25,31 @@ function InscriptionEmployeur(props: any) {
     email: "",
     password: "",
     nomEntreprise: "",
-    programme: "",
+    programme: null,
   });
   const [showPassword, setShowPasswprd] = useState(false);
+  const [programmes, setProgrammes] = useState([]);
 
   const tooglePasswordVisibility = () => {
     setShowPasswprd(!showPassword);
   };
+
+  const fetchProgrammes = () => {
+    axios
+        .get("http://localhost:8080/api/programme/programmes")
+        .then((response) => {
+          console.log(response);
+          setProgrammes(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
+
+  React.useEffect(() => {
+        fetchProgrammes();
+      }
+      , []);
 
   function handleChange(event: any) {
     const { name, value } = event.target;
@@ -54,6 +72,11 @@ function InscriptionEmployeur(props: any) {
     const password = formData.password;
     const nomEntreprise = formData.nomEntreprise;
     const programme = formData.programme;
+
+    if (programme == null) {
+      alert("ohh");
+      return;
+    }
 
     axios
       .post("http://localhost:8080/api/employeur/ajouter", {
@@ -81,11 +104,12 @@ function InscriptionEmployeur(props: any) {
           phone: "",
           password: "",
           nomEntreprise: "",
-          programme: "",
+          programme: 0,
         });
         event.target.reset();
       });
   };
+
 
   return (
     <div className="container mx-auto ">
@@ -107,10 +131,10 @@ function InscriptionEmployeur(props: any) {
         {fields.titre.text}
       </h1>
       <form
-        className="grid grid-cols-6 gap-3 md:grid-cols-8 md:col-span-10 p-3"
+        className="grid grid-cols-6 gap-3 p-3"
         onSubmit={handleSubmit}
       >
-        <div className="col-span-6 lg:col-start-3 lg:col-span-2 sm:col-span-3">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-2 sm:col-span-3">
           <label
             htmlFor="nom"
             className={
@@ -136,7 +160,7 @@ function InscriptionEmployeur(props: any) {
             placeholder={fields.nom.placeholder}
           />
         </div>
-        <div className="col-span-6 lg:col-start-5 lg:col-span-2 sm:col-span-3">
+        <div className="col-span-6 lg:col-span-2 sm:col-span-3">
           <label
             htmlFor="prenom"
             className={
@@ -162,7 +186,7 @@ function InscriptionEmployeur(props: any) {
             placeholder= {fields.prenom.placeholder}
           />
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4 ">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
             htmlFor={fields.nomEntreprise.name}
             className={
@@ -188,7 +212,7 @@ function InscriptionEmployeur(props: any) {
             placeholder={fields.nomEntreprise.placeholder}
           />
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
             htmlFor="email"
             className={
@@ -214,7 +238,7 @@ function InscriptionEmployeur(props: any) {
             placeholder={fields.email.placeholder}
           />
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
             htmlFor="telephone"
             className={
@@ -242,7 +266,7 @@ function InscriptionEmployeur(props: any) {
             }
           />
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
             htmlFor="password"
             className={
@@ -282,7 +306,7 @@ function InscriptionEmployeur(props: any) {
             </button>
           </div>
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
           <label
             htmlFor="programme"
             className={
@@ -297,6 +321,7 @@ function InscriptionEmployeur(props: any) {
             value={formData.programme}
             onChange={handleChange}
             name={"programme"}
+            defaultValue={"DEFAULT"}
             id="programme"
             required={true}
             className={
@@ -305,15 +330,14 @@ function InscriptionEmployeur(props: any) {
                 : "border border-blue text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
             }
           >
-            <option value="">Choisir un programme</option>
-            <option value="informatique">Technique informatique</option>
-            <option value="soins">Soins infirmier</option>
-            <option value="electrique">Technique electrique</option>
-            <option value="construction">Genie Civile</option>
+            <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
+            {programmes.map((programme) => (
+                <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+            ))}
           </select>
         </div>
         <button
-          className="col-span-6 lg:col-start-3 lg:col-span-4 bg-blue rounded text-white"
+          className="col-span-6 lg:col-start-2 lg:col-span-4 bg-blue rounded text-white"
           type="submit"
         >
           {fields.soumettre.text}
