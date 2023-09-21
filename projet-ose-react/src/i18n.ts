@@ -187,6 +187,67 @@ i18n
                     reussite: {
                         name : 'Registration successful',
                     }
+                },
+                InscriptionEmployeur:{
+                    nom:{
+                        name:'nom',
+                        text:'Last Name :',
+                        placeholder:'Your last name ..'
+                    },
+                    prenom:{
+                        name:'prenom',
+                        text:'First Name :',
+                        placeholder:'Your first name ..'
+                    },
+                    nomEntreprise:{
+                        name:'nomEntreprise',
+                        text:'Entreprise Name :',
+                        placeholder:'Your entreprise name ..'
+                    },
+                    email:{
+                        name:'email',
+                        text:'Email :',
+                        placeholder:'Your email ..'
+                    },
+                    telephone:{
+                        name:'telephone',
+                        text:'Phone Number :',
+                        placeholder:'ex : 450-450-4500'
+                    },
+                    password:{
+                        name:'password',
+                        text:'Password : ',
+                        placeholder:'Password ...'
+
+                    },
+                    programme:{
+                        name:'programme',
+                        text:'Select one programme :',
+                        validation:{
+                            required:'An error occured, please try again'
+                        }
+                    },
+                    passWordShown:{
+                        name:'passWordShown',
+                        text:'Show'
+                    },
+                    passWordNotShown:{
+                        name:'passWordNotShown',
+                        text:'Hide'
+                    },
+                    soumettre:{
+                        name:'soumettre',
+                        text:'Submit'
+                    },
+                    erreur:{
+                        name:'erreur',
+                        text:"An error occured, while registering try again"
+                    },
+                    titre:{
+                        name:'titre',
+                        text:'Registration employer'
+                    }
+
                 }
             },
         }
@@ -364,6 +425,67 @@ i18n
                             minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                         }
                     }
+                },
+                InscriptionEmployeur:{
+                    nom:{
+                        name:'nom',
+                        text:'Nom :',
+                        placeholder:'Votre nom ..'
+                    },
+                    prenom:{
+                        name:'prenom',
+                        text:'Prenom :',
+                        placeholder:'Votre prénom ..'
+                    },
+                    nomEntreprise:{
+                        name:'nomEntreprise',
+                        text:'Nom de l\'entreprise :',
+                        placeholder:'Nom de l\'entreprise ..'
+                    },
+                    email:{
+                        name:'email',
+                        text:'Email :',
+                        placeholder:'Email ...'
+                    },
+                    telephone:{
+                        name:'telephone',
+                        text:'Téléphone :',
+                        placeholder:'ex : 450-450-4500'
+                    },
+                    password:{
+                        name:'password',
+                        text:'Mot de passe :',
+                        placeholder:'Mot de passe ...'
+
+                    },
+                    programme:{
+                        name:'programme',
+                        text:'Selectionner un programme',
+                        validation:{
+                                required:'Une erreur est survenu'
+                        }
+                    },
+                    passWordShown:{
+                        name:'passWordShown',
+                        text:'Voir'
+                    },
+                    passWordNotShown:{
+                        name:'passWordNotShown',
+                        text:'Cachée'
+                    },
+                    soumettre:{
+                        name:'soumettre',
+                        text:'Soumettre'
+                    },
+                    erreur:{
+                        name:'erreur',
+                        text:"Une erreur c'est produite lors de l'inscription veuillez réessayer"
+                    },
+                    titre:{
+                        name:'titre',
+                        text:'Inscription Employeur'
+                    }
+
                 }
             },
         }

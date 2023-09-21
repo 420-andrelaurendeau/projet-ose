@@ -136,7 +136,33 @@ class OseServiceTest {
      * Method under test: {@link OseService#saveProgramme(ProgrammeDTO)}
      */
     @Test
+<<<<<<< HEAD
     void testSaveProgramme2() {
+=======
+    @Disabled("TODO: Complete this test")
+    void testSaveProgramme2() {
+        // TODO: Complete this test.
+        //   Reason: R013 No inputs found that don't throw a trivial exception.
+        //   Diffblue Cover tried to run the arrange/act section, but the method under
+        //   test threw
+        //   java.lang.NullPointerException: Cannot invoke "com.sap.ose.projetose.dto.ProgrammeDTO.fromDto()" because "programmeDTO" is null
+        //       at com.sap.ose.projetose.service.OseService.saveProgramme(OseService.java:51)
+        //   See https://diff.blue/R013 to resolve this issue.
+
+        Programme programme = new Programme();
+        programme.setDescription("The characteristics of someone or something");
+        programme.setId(1);
+        programme.setNom("Nom");
+        when(programmeRepository.save(Mockito.<Programme>any())).thenReturn(programme);
+        oseService.saveProgramme(null);
+    }
+
+    /**
+     * Method under test: {@link OseService#saveProgramme(ProgrammeDTO)}
+     */
+    @Test
+    void testSaveProgramme3() {
+>>>>>>> origin/EQ5-12_EmpInscris
         Programme programme = new Programme();
         programme.setDescription("The characteristics of someone or something");
         programme.setId(1);
@@ -208,6 +234,7 @@ class OseServiceTest {
         assertEquals(1, getResult.getId());
         verify(programmeRepository).findAll();
     }
+<<<<<<< HEAD
 
     /**
      * Method under test: {@link OseService#getAllUsers()}
@@ -513,5 +540,7 @@ class OseServiceTest {
         assertEquals(1, employeur2.getId());
         assertEquals("Entreprise", employeur2.getEntreprise());
     }
+=======
+>>>>>>> origin/EQ5-12_EmpInscris
 }
 

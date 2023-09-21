@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+<<<<<<< HEAD
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.ProgrammeDTO;
 import com.sap.ose.projetose.modeles.Etudiant;
@@ -11,6 +12,15 @@ import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 
+=======
+import com.sap.ose.projetose.dto.EmployeurDTO;
+import com.sap.ose.projetose.dto.ProgrammeDTO;
+import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.EmployeurRepositary;
+import com.sap.ose.projetose.repository.ProgrammeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> origin/EQ5-12_EmpInscris
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -115,4 +125,23 @@ public class OseService {
         employeurRepository.save(employeur);
     }
 
+    public EmployeurDTO saveEmployeur(String nom, String prenom, String phone,String email,String password,String nomEntreprise,int programme ){
+        return new EmployeurDTO(employeurRepositary.save(new Employeur(nom,prenom,phone,email,password,nomEntreprise,programme)));
+    }
+
+    public Optional<EmployeurDTO> saveEmployeur(EmployeurDTO employeurDTO){
+        return Optional.of(new EmployeurDTO(employeurRepositary.save(employeurDTO.fromDTO())));
+    }
+
+    public List<EmployeurDTO> getAllEmployeur(){
+        List<EmployeurDTO> employeurDTOS = new ArrayList<>();
+        for(Employeur employeur : employeurRepositary.findAll()){
+            employeurDTOS.add(new EmployeurDTO(employeur));
+        }
+        return employeurDTOS;
+    }
+
+    public EmployeurDTO getEmployeurById(int id){
+        return new EmployeurDTO(employeurRepositary.findById(id).orElse(null));
+    }
 }

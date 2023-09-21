@@ -7,6 +7,7 @@ import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -37,6 +38,5 @@ public class ProjetOseApplication implements CommandLineRunner {
         oseService.saveEtudiant(etudiant3);
         oseService.saveEmployeur(employeur);
         oseService.saveEmployeur(employeur2);
-
     }
 }
