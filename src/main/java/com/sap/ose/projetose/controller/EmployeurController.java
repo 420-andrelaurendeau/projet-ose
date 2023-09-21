@@ -16,7 +16,6 @@ public class EmployeurController {
         this.oseService = oseService;
     }
 
-
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<EmployeurDTO> saveEmployeur(@RequestBody EmployeurDTO employeurDTO){
