@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
 
@@ -11,10 +10,10 @@ function InscriptionEmployeur(props: any) {
   interface FormData {
     nom: string;
     prenom: string;
-    email: string;
     phone: string;
+    email: string;
     password: string;
-    nomEntreprise: string;
+    entreprise: string;
     programme: any;
   }
 
@@ -24,7 +23,7 @@ function InscriptionEmployeur(props: any) {
     phone: "",
     email: "",
     password: "",
-    nomEntreprise: "",
+    entreprise: "",
     programme: null,
   });
   const [showPassword, setShowPasswprd] = useState(false);
@@ -67,10 +66,10 @@ function InscriptionEmployeur(props: any) {
 
     const nom = formData.nom;
     const prenom = formData.prenom;
-    const email = formData.phone;
-    const phone = formData.email;
+    const email = formData.email;
+    const phone = formData.phone;
     const password = formData.password;
-    const nomEntreprise = formData.nomEntreprise;
+    const nomEntreprise = formData.entreprise;
     const programme = formData.programme;
 
     if (programme == null) {
@@ -82,10 +81,10 @@ function InscriptionEmployeur(props: any) {
       .post("http://localhost:8080/api/employeur/ajouter", {
         nom: nom,
         prenom: prenom,
-        email: email,
         phone: phone,
+        email: email,
         password: password,
-        nomEntreprise: nomEntreprise,
+        entreprise: nomEntreprise,
         programme: programme,
       })
       .then((response) => {
@@ -100,10 +99,10 @@ function InscriptionEmployeur(props: any) {
         setFormData({
           nom: "",
           prenom: "",
-          email: "",
           phone: "",
+          email: "",
           password: "",
-          nomEntreprise: "",
+          entreprise: "",
           programme: 0,
         });
         event.target.reset();
@@ -199,7 +198,7 @@ function InscriptionEmployeur(props: any) {
           </label>
           <input
             name={"nomEntreprise"}
-            value={formData.nomEntreprise}
+            value={formData.entreprise}
             onChange={handleChange}
             required={true}
             type="text"

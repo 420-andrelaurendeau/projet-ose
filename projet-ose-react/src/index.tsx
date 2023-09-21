@@ -10,6 +10,7 @@ import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
+import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 
 
 const portalDiv = document.getElementById('root')!;
@@ -34,7 +35,12 @@ const router = createBrowserRouter([
     {
         path: "/etudiantInscription",
         element: <EtudiantInscriptionPage/>
-    }
+    },
+    {
+        path: "/employeurInscription",
+        element: <PageEmployeurInscription/>
+    },
+
 ])
 
 root.render(
