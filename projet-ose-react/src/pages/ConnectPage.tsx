@@ -12,7 +12,10 @@ function ConnectPage() {
 
         <div className={darkMode ? "h-screen w-full bg-dark" : "h-screen w-full bg-white"}>
             <div className="items-center">
-                <TestBackEndConnection/>
+                <ConnectForm
+                    darkMode={darkMode}
+                    toggleDarkMode={toggleDarkMode}
+                />
             </div>
         </div>
     );
