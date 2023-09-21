@@ -1,5 +1,6 @@
 import "./App.css";
 import EmployeurInscription from "./pages/PageEmployeurInscription";
+import "./i18n"
 
 function App() {
   return (

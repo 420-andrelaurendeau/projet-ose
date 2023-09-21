@@ -1,12 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 function InscriptionEmployeur(props: any) {
+  const {i18n} = useTranslation();
+  const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionEmployeur");
+
+
   interface FormData {
     nom: string;
     prenom: string;
-    telephone: string;
     email: string;
+    phone: string;
     password: string;
     nomEntreprise: string;
     programme: string;
@@ -15,14 +21,12 @@ function InscriptionEmployeur(props: any) {
   const [formData, setFormData] = useState<FormData>({
     nom: "",
     prenom: "",
-    telephone: "",
+    phone: "",
     email: "",
     password: "",
     nomEntreprise: "",
     programme: "",
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [binaryData, setBinaryData] = useState<any>(null);
   const [showPassword, setShowPasswprd] = useState(false);
 
   const tooglePasswordVisibility = () => {
@@ -41,12 +45,50 @@ function InscriptionEmployeur(props: any) {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    setSubmitting(true);
-    alert("Bravo!");
+    console.log(formData.email);
+
+    const nom = formData.nom;
+    const prenom = formData.prenom;
+    const email = formData.phone;
+    const phone = formData.email;
+    const password = formData.password;
+    const nomEntreprise = formData.nomEntreprise;
+    const programme = formData.programme;
+
+    axios
+      .post("http://localhost:8080/api/employeur/ajouter", {
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        phone: phone,
+        password: password,
+        nomEntreprise: nomEntreprise,
+        programme: programme,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(fields.erreur.text);
+      })
+      .then(() => {
+        alert("Bravo!");
+        setFormData({
+          nom: "",
+          prenom: "",
+          email: "",
+          phone: "",
+          password: "",
+          nomEntreprise: "",
+          programme: "",
+        });
+        event.target.reset();
+      });
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <div className=" justify-center items-center">
         <img
           onClick={props.toggleDarkMode}
@@ -62,10 +104,10 @@ function InscriptionEmployeur(props: any) {
             : "text-center text-2xl font-bold mb-4 col-span-12 text-black"
         }
       >
-        Inscription Employeur
+        {fields.titre.text}
       </h1>
       <form
-        className="grid grid-cols-6 gap-3  md:grid-cols-8 md:col-span-10 p-3"
+        className="grid grid-cols-6 gap-3 md:grid-cols-8 md:col-span-10 p-3"
         onSubmit={handleSubmit}
       >
         <div className="col-span-6 lg:col-start-3 lg:col-span-2 sm:col-span-3">
@@ -77,7 +119,7 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Nom :
+            {fields.nom.text}
           </label>
           <input
             name={"nom"}
@@ -91,7 +133,7 @@ function InscriptionEmployeur(props: any) {
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
-            placeholder="Votre nom .."
+            placeholder={fields.nom.placeholder}
           />
         </div>
         <div className="col-span-6 lg:col-start-5 lg:col-span-2 sm:col-span-3">
@@ -103,7 +145,7 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Prénom :
+            {fields.prenom.text}
           </label>
           <input
             name={"prenom"}
@@ -117,19 +159,19 @@ function InscriptionEmployeur(props: any) {
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
-            placeholder="Votre prénom .."
+            placeholder= {fields.prenom.placeholder}
           />
         </div>
-        <div className="col-span-6 lg:col-start-3 lg:col-span-4">
+        <div className="col-span-6 lg:col-start-3 lg:col-span-4 ">
           <label
-            htmlFor="nomEntreprise"
+            htmlFor={fields.nomEntreprise.name}
             className={
               props.darkMode
                 ? "block font-bold text-white"
                 : "block font-bold text-black"
             }
           >
-            Nom de l'entreprise :
+            {fields.nomEntreprise.text}
           </label>
           <input
             name={"nomEntreprise"}
@@ -137,13 +179,13 @@ function InscriptionEmployeur(props: any) {
             onChange={handleChange}
             required={true}
             type="text"
-            id="nomEntreprise"
+            id={fields.nomEntreprise.name}
             className={
               props.darkMode
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
-            placeholder="Nom de l'entreprise .."
+            placeholder={fields.nomEntreprise.placeholder}
           />
         </div>
         <div className="col-span-6 lg:col-start-3 lg:col-span-4">
@@ -155,7 +197,7 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Email :
+            {fields.email.text}
           </label>
           <input
             name={"email"}
@@ -169,7 +211,7 @@ function InscriptionEmployeur(props: any) {
                 ? "w-full border border-gray-300 rounded p-1 text-orange"
                 : "w-full border border-gray-300 rounded p-1 text-blue"
             }
-            placeholder="Email .."
+            placeholder={fields.email.placeholder}
           />
         </div>
         <div className="col-span-6 lg:col-start-3 lg:col-span-4">
@@ -181,16 +223,16 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Téléphone :
+            {fields.telephone.text}
           </label>
           <input
-            name={"telephone"}
-            value={formData.telephone}
+            name={"phone"}
+            value={formData.phone}
             onChange={handleChange}
             required={true}
             pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
             title={"Exemple: 450-450-4500"}
-            placeholder={"ex : 450-450-4500"}
+            placeholder={fields.telephone.placeholder}
             id="telephone"
             type="tel"
             className={
@@ -209,7 +251,7 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Mot de passe :
+            {fields.password.text}
           </label>
           <div className="flex flex-row">
             <input
@@ -220,7 +262,7 @@ function InscriptionEmployeur(props: any) {
               minLength={5}
               id="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Mot de passe ..."
+              placeholder={fields.password.placeholder}
               className={
                 props.darkMode
                   ? "basis-3/4 mr-2 border rounded p-1 text-orange"
@@ -236,7 +278,7 @@ function InscriptionEmployeur(props: any) {
                   : "basis-1/4 mx-auto border rounded p-1 text-white bg-blue"
               }
             >
-              {showPassword ? "Hide" : "Show"}
+              {showPassword ? fields.passWordNotShown.text : fields.passWordShown.text }
             </button>
           </div>
         </div>
@@ -249,7 +291,7 @@ function InscriptionEmployeur(props: any) {
                 : "block font-bold text-black"
             }
           >
-            Selectectionner une option
+            {fields.programme.text}
           </label>
           <select
             value={formData.programme}
@@ -263,9 +305,7 @@ function InscriptionEmployeur(props: any) {
                 : "border border-blue text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
             }
           >
-            <option selected value="">
-              Choisir un programme
-            </option>
+            <option value="">Choisir un programme</option>
             <option value="informatique">Technique informatique</option>
             <option value="soins">Soins infirmier</option>
             <option value="electrique">Technique electrique</option>
@@ -301,7 +341,7 @@ function InscriptionEmployeur(props: any) {
           className="col-span-6 lg:col-start-3 lg:col-span-4 bg-blue rounded text-white"
           type="submit"
         >
-          Soumettre
+          {fields.soumettre.text}
         </button>
       </form>
     </div>

@@ -524,8 +524,14 @@ video {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
 .block {
   display: block;
+}
+.flex {
+  display: flex;
 }
 .grid {
   display: grid;
@@ -542,11 +548,20 @@ video {
 .w-full {
   width: 100%;
 }
+.basis-1\/4 {
+  flex-basis: 25%;
+}
+.basis-3\/4 {
+  flex-basis: 75%;
+}
 .cursor-pointer {
   cursor: pointer;
 }
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.flex-row {
+  flex-direction: row;
 }
 .items-center {
   align-items: center;
@@ -590,6 +605,10 @@ video {
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(18 20 32 / var(--tw-bg-opacity));
+}
+.bg-orange {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 122 0 / var(--tw-bg-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
