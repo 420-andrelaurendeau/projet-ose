@@ -107,7 +107,7 @@ i18n
                     },
                     prenom:{
                         name:'prenom',
-                        text:'First Na,e :',
+                        text:'First Name :',
                         placeholder:'Your first name ..'
                     },
                     nomEntreprise:{
@@ -127,13 +127,16 @@ i18n
                     },
                     password:{
                         name:'password',
-                        text:'Password',
+                        text:'Password : ',
                         placeholder:'Password ...'
 
                     },
                     programme:{
                         name:'programme',
-                        text:'Select one programme'
+                        text:'Select one programme :',
+                        validation:{
+                            required:'An error occured, please try again'
+                        }
                     },
                     passWordShown:{
                         name:'passWordShown',
@@ -146,7 +149,8 @@ i18n
                     soumettre:{
                         name:'soumettre',
                         text:'Submit'
-                    }, erreur:{
+                    },
+                    erreur:{
                         name:'erreur',
                         text:"An error occured, while registering try again"
                     },
@@ -276,7 +280,10 @@ i18n
                     },
                     programme:{
                         name:'programme',
-                        text:'Selectionner un programme'
+                        text:'Selectionner un programme',
+                        validation:{
+                                required:'Une erreur est survenu'
+                        }
                     },
                     passWordShown:{
                         name:'passWordShown',

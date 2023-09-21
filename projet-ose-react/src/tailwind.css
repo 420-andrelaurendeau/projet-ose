@@ -666,18 +666,4 @@ video {
   .lg\:col-start-2 {
     grid-column-start: 2;
   }
-
-  .lg\:col-start-3 {
-    grid-column-start: 3;
-  }
-
-  .lg\:col-start-5 {
-    grid-column-start: 5;
-  }
-}
-@media (min-width: 1280px) {
-
-  .xl\:grid-cols-8 {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
 }

@@ -74,7 +74,7 @@ function InscriptionEmployeur(props: any) {
     const programme = formData.programme;
 
     if (programme == null) {
-      alert("ohh");
+      alert(fields.programme.validation.required);
       return;
     }
 
