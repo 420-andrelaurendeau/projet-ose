@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.ProgrammeDTO;
+import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ public class ProgrammeController {
 
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<ProgrammeDTO> saveProgramme(@RequestBody ProgrammeDTO programmeDTO) {
+    public ResponseEntity<ProgrammeDto> saveProgramme(@RequestBody ProgrammeDto programmeDTO) {
         return oseService.saveProgramme(programmeDTO).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/programmes")
     @CrossOrigin(origins = "http://localhost:3000")
-    public List<ProgrammeDTO> getProgrammes() {
+    public List<ProgrammeDto> getProgrammes() {
         return oseService.getProgrammes();
     }
 

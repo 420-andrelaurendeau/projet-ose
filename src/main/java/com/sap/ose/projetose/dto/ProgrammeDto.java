@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProgrammeDTO {
+public class ProgrammeDto {
     private int id;
     private String nom;
     private String description;
 
 
-    public ProgrammeDTO(Programme programme) {
+    public ProgrammeDto(Programme programme) {
         this.id = programme.getId();
         this.nom = programme.getNom();
         this.description = programme.getDescription();

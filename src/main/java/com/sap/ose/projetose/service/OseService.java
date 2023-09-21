@@ -1,30 +1,20 @@
 package com.sap.ose.projetose.service;
 
-<<<<<<< HEAD
+import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.ProgrammeDTO;
+import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
-import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
-
-=======
-import com.sap.ose.projetose.dto.EmployeurDTO;
-import com.sap.ose.projetose.dto.ProgrammeDTO;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Programme;
-import com.sap.ose.projetose.repository.EmployeurRepositary;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> origin/EQ5-12_EmpInscris
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -52,18 +42,18 @@ public class OseService {
         return dtos;
     }
 
-    public ProgrammeDTO saveProgramme(String nom, String description) {
-        return new ProgrammeDTO(programmeRepository.save(new Programme(nom, description)));
+    public ProgrammeDto saveProgramme(String nom, String description) {
+        return new ProgrammeDto(programmeRepository.save(new Programme(nom, description)));
     }
 
-    public Optional<ProgrammeDTO> saveProgramme(ProgrammeDTO programmeDTO) {
-        return Optional.of(new ProgrammeDTO(programmeRepository.save(programmeDTO.fromDto())));
+    public Optional<ProgrammeDto> saveProgramme(ProgrammeDto programmeDTO) {
+        return Optional.of(new ProgrammeDto(programmeRepository.save(programmeDTO.fromDto())));
     }
 
-    public List<ProgrammeDTO> getProgrammes() {
-        List<ProgrammeDTO> dtos = new ArrayList<>();
+    public List<ProgrammeDto> getProgrammes() {
+        List<ProgrammeDto> dtos = new ArrayList<>();
         for (Programme programme : programmeRepository.findAll()) {
-            dtos.add(new ProgrammeDTO(programme));
+            dtos.add(new ProgrammeDto(programme));
         }
         return dtos;
     }
@@ -121,27 +111,23 @@ public class OseService {
         return etudiantDtos;
     }
 
-    public void saveEmployeur(Employeur employeur) {
-        employeurRepository.save(employeur);
+    public Employeur saveEmployeur(String nom, String prenom, String phone, String email, String password, String nomEntreprise, int programme ){
+        return employeurRepository.save(new Employeur(nom,prenom,phone,email,password,nomEntreprise,programme));
     }
 
-    public EmployeurDTO saveEmployeur(String nom, String prenom, String phone,String email,String password,String nomEntreprise,int programme ){
-        return new EmployeurDTO(employeurRepositary.save(new Employeur(nom,prenom,phone,email,password,nomEntreprise,programme)));
+    public Optional<Employeur> saveEmployeur(Employeur employeur){
+        return Optional.of(employeurRepository.save(employeur));
     }
 
-    public Optional<EmployeurDTO> saveEmployeur(EmployeurDTO employeurDTO){
-        return Optional.of(new EmployeurDTO(employeurRepositary.save(employeurDTO.fromDTO())));
-    }
-
-    public List<EmployeurDTO> getAllEmployeur(){
-        List<EmployeurDTO> employeurDTOS = new ArrayList<>();
-        for(Employeur employeur : employeurRepositary.findAll()){
-            employeurDTOS.add(new EmployeurDTO(employeur));
+    public List<EmployeurDto> getAllEmployeur(){
+        List<EmployeurDto> employeurDTOS = new ArrayList<>();
+        for(Employeur employeur : employeurRepository.findAll()){
+            employeurDTOS.add(new EmployeurDto(employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail(),employeur.getEntreprise()));
         }
         return employeurDTOS;
     }
 
-    public EmployeurDTO getEmployeurById(int id){
-        return new EmployeurDTO(employeurRepositary.findById(id).orElse(null));
+    public EmployeurDto getEmployeurById(Long id){
+        return new EmployeurDto(Objects.requireNonNull(employeurRepository.findById(id).orElse(null))) ;
     }
 }
