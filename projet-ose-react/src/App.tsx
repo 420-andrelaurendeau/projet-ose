@@ -6,7 +6,7 @@ import "./i18n"
 
 function App() {
   return (
-        <ConnectPage/>
+        <h1>Hello World</h1>
   );
 }
 
