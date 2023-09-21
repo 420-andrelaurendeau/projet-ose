@@ -1,21 +1,16 @@
 package com.sap.ose.projetose.service;
 
-<<<<<<< HEAD
-import com.sap.ose.projetose.dto.EtudiantDTO;
+import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.ProgrammeDTO;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
-=======
 import com.sap.ose.projetose.dto.EmployeurDto;
-import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.repository.EmployeurRepository;
-import com.sap.ose.projetose.repository.EtudiantRepository;
->>>>>>> EQ5-30
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,27 +19,25 @@ import java.util.Optional;
 
 @Service
 public class OseService {
-<<<<<<< HEAD
+
     private final EtudiantRepository etudiantRepository;
     private final ProgrammeRepository programmeRepository;
+    private final EmployeurRepository employeurRepository;
 
-    public OseService(EtudiantRepository etudiantRepository, ProgrammeRepository programmeRepository) {
+    public OseService(EtudiantRepository etudiantRepository, ProgrammeRepository programmeRepository, EmployeurRepository employeurRepository) {
         this.etudiantRepository = etudiantRepository;
         this.programmeRepository = programmeRepository;
+        this.employeurRepository = employeurRepository;
     }
 
-    public EtudiantDTO saveEtudiant(String nom, String prenom, String email, String password, String phone, int programme, String cv) {
-        return new EtudiantDTO(etudiantRepository.save(new Etudiant(nom, prenom, phone, email, password ,programme, cv)));
+    public Optional<Etudiant> saveEtudiant(Etudiant etudiant) {
+        return Optional.of(etudiantRepository.save(etudiant));
     }
 
-    public Optional<EtudiantDTO> saveEtudiant(EtudiantDTO etudiantDTO) {
-        return Optional.of(new EtudiantDTO(etudiantRepository.save(etudiantDTO.fromDto())));
-    }
-
-    public List<EtudiantDTO> getEtudiants() {
-        List<EtudiantDTO> dtos = new ArrayList<>();
+    public List<EtudiantDto> getEtudiants() {
+        List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
-            dtos.add(new EtudiantDTO(etudiant));
+            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme(), etudiant.getCv()));
         }
         return dtos;
     }
@@ -65,18 +58,6 @@ public class OseService {
         return dtos;
     }
 
-    public EtudiantDTO getEtudiantById(int id) {
-        return new EtudiantDTO(etudiantRepository.findById(id).orElse(null));
-    }
-=======
-
-    private final EmployeurRepository employeurRepository;
-    private final EtudiantRepository etudiantRepository;
-
-    public OseService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
-        this.employeurRepository = employeurRepository;
-        this.etudiantRepository = etudiantRepository;
-    }
 
     //get all Utilisateurs
     public List<UtilisateurDto> getAllUsers() {
@@ -111,13 +92,9 @@ public class OseService {
         return utilisateurs;
     }
 
-
-    public void saveEtudiant(Etudiant etudiant) {
-        etudiantRepository.save(etudiant);
-    }
-
-    public Etudiant getEtudiantById(Long id) {
-        return etudiantRepository.findById(id).orElse(null);
+    public EtudiantDto getEtudiantById(Long id) {
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme(), value.getCv())).orElse(null);
     }
 
     public Etudiant getEtudiantByCourriel(String courriel) {
@@ -138,5 +115,4 @@ public class OseService {
         employeurRepository.save(employeur);
     }
 
->>>>>>> EQ5-30
 }

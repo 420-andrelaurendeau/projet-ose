@@ -8,6 +8,8 @@ import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
+import './i18n.ts';
+import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 
 
 const portalDiv = document.getElementById('root')!;
@@ -28,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/home",
         element: <ErrorPage/>
+    },
+    {
+        path: "/etudiantInscription",
+        element: <EtudiantInscriptionPage/>
     }
 ])
 

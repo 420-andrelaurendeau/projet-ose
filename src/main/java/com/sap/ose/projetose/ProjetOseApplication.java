@@ -1,5 +1,6 @@
 package com.sap.ose.projetose;
 
+import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.ProgrammeRepository;

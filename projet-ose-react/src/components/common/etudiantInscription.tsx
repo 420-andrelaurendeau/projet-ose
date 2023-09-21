@@ -9,6 +9,7 @@ import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
+    console.log(fields)
 
     const [formData, setFormData] = useState({
         nom: "",

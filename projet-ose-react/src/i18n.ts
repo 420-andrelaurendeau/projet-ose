@@ -99,75 +99,6 @@ i18n
                         text : 'Submit',
                     },
                 },
-            InscriptionFormEtudiant : {
-                title : {
-                    name : 'title',
-                    text : 'Registration for students',
-                },
-                firstName: {
-                    name : 'firstName',
-                    text : 'First name :',
-                    placeholder : 'Jack',
-                    validation : {
-                        required : 'The first name is required',
-                    }
-                },
-                lastName : {
-                    name : 'lastName',
-                    text : 'Last name :',
-                    placeholder : 'Sparrow',
-                    validation : {
-                        required : 'The last name is required',
-                    }
-                },
-                email : {
-                    name : 'email',
-                    text : 'Email :',
-                    placeholder : 'email@email.com',
-                    validation : {
-                        required : 'The email is required',
-                    }
-                },
-                password : {
-                    name : 'password',
-                    text : 'Password :',
-                    placeholder : 'abcas123',
-                    validation : {
-                        required : 'The password is required',
-                    }
-                },
-                phone: {
-                    name : 'phone',
-                    text : 'Phone :',
-                    placeholder : '123-456-7890',
-                    validation : {
-                        required : 'The phone is required',
-                        pattern: 'Example: 514-123-4567',
-                    }
-                },
-                matricule: {
-                    name : 'matricule',
-                    text : 'Matricule :',
-                    placeholder : '1236789',
-                    validation : {
-                        required : 'The matricule is required',
-                    }
-                },
-                programme: {
-                    name : 'programme',
-                    text : 'Program :',
-                    placeholder : 'Choose a program',
-                    validation : {
-                        required : 'The program is required',
-                    }
-                },
-                submitButton: {
-                    text : 'Create account',
-                },
-                reussite: {
-                    name : 'Registration successful',
-                }
-            },
                 ConnectForm : {
                     email: {
                         name : 'email',
@@ -186,6 +117,75 @@ i18n
                             required : 'The password is required',
                             minLenght : 'The password must contain at least 5 characters',
                         }
+                    }
+                },
+                InscriptionFormEtudiant : {
+                    title : {
+                        name : 'title',
+                        text : 'Registration for students',
+                    },
+                    firstName: {
+                        name : 'firstName',
+                        text : 'First name :',
+                        placeholder : 'Jack',
+                        validation : {
+                            required : 'The first name is required',
+                        }
+                    },
+                    lastName : {
+                        name : 'lastName',
+                        text : 'Last name :',
+                        placeholder : 'Sparrow',
+                        validation : {
+                            required : 'The last name is required',
+                        }
+                    },
+                    email : {
+                        name : 'email',
+                        text : 'Email :',
+                        placeholder : 'email@email.com',
+                        validation : {
+                            required : 'The email is required',
+                        }
+                    },
+                    password : {
+                        name : 'password',
+                        text : 'Password :',
+                        placeholder : 'abcas123',
+                        validation : {
+                            required : 'The password is required',
+                        }
+                    },
+                    phone: {
+                        name : 'phone',
+                        text : 'Phone :',
+                        placeholder : '123-456-7890',
+                        validation : {
+                            required : 'The phone is required',
+                            pattern: 'Example: 514-123-4567',
+                        }
+                    },
+                    matricule: {
+                        name : 'matricule',
+                        text : 'Matricule :',
+                        placeholder : '1236789',
+                        validation : {
+                            required : 'The matricule is required',
+                        }
+                    },
+                    programme: {
+                        name : 'programme',
+                        text : 'Program :',
+                        placeholder : 'Choose a program',
+                        validation : {
+                            required : 'The program is required',
+                        }
+                    },
+                    submitButton: {
+                        text : 'Create account',
+                    },
+                    reussite: {
+                        name : 'Registration successful',
                     }
                 }
             },

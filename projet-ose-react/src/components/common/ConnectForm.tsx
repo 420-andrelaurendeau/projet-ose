@@ -5,6 +5,7 @@ import toggleOn from "../../assets/images/toggle-on-solid.svg";
 import toggleOff from "../../assets/images/toggle-off-solid.svg";
 import { useTranslation } from 'react-i18next';
 
+
 const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
