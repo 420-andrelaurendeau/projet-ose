@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.modeles;
 
-
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -12,18 +11,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorValue("ETUDIANT")
+@DiscriminatorValue("EMPLOYEUR")
 @Data
-public class Etudiant extends Utilisateur{
+public class Employeur extends Utilisateur{
 
-    private String matricule;
-    private String programme;
-    private String cv;
+    private String entreprise;
 
-    public Etudiant(String nom, String prenom, String telephone, String email, String password, String matricule, String programme) {
+    public Employeur(String nom, String prenom, String telephone, String email, String password, String entreprise) {
         super(nom, prenom, telephone, email, password);
-        this.matricule = matricule;
-        this.programme = programme;
-        this.cv = "";
+        this.entreprise = entreprise;
     }
 }

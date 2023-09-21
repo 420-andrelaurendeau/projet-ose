@@ -99,75 +99,6 @@ i18n
                         text : 'Submit',
                     },
                 },
-            InscriptionFormEtudiant : {
-                title : {
-                    name : 'title',
-                    text : 'Registration for students',
-                },
-                firstName: {
-                    name : 'firstName',
-                    text : 'First name :',
-                    placeholder : 'Jack',
-                    validation : {
-                        required : 'The first name is required',
-                    }
-                },
-                lastName : {
-                    name : 'lastName',
-                    text : 'Last name :',
-                    placeholder : 'Sparrow',
-                    validation : {
-                        required : 'The last name is required',
-                    }
-                },
-                email : {
-                    name : 'email',
-                    text : 'Email :',
-                    placeholder : 'email@email.com',
-                    validation : {
-                        required : 'The email is required',
-                    }
-                },
-                password : {
-                    name : 'password',
-                    text : 'Password :',
-                    placeholder : 'abcas123',
-                    validation : {
-                        required : 'The password is required',
-                    }
-                },
-                phone: {
-                    name : 'phone',
-                    text : 'Phone :',
-                    placeholder : '123-456-7890',
-                    validation : {
-                        required : 'The phone is required',
-                        pattern: 'Example: 514-123-4567',
-                    }
-                },
-                matricule: {
-                    name : 'matricule',
-                    text : 'Matricule :',
-                    placeholder : '1236789',
-                    validation : {
-                        required : 'The matricule is required',
-                    }
-                },
-                programme: {
-                    name : 'programme',
-                    text : 'Program :',
-                    placeholder : 'Choose a program',
-                    validation : {
-                        required : 'The program is required',
-                    }
-                },
-                submitButton: {
-                    text : 'Create account',
-                },
-                reussite: {
-                    name : 'Registration successful',
-                }
-            },
                 ConnectForm : {
                     email: {
                         name : 'email',
@@ -189,6 +120,7 @@ i18n
                     }
                 }
             },
+
         }
       },
       fr: {
@@ -273,97 +205,6 @@ i18n
                     submitButton: {
                         text : 'Soumettre',
                     },
-                },
-                InscriptionFormEtudiant : {
-                    title : {
-                        name : 'title',
-                        text : 'Inscription de l\'étudiant',
-                    },
-                    firstName: {
-                        name : 'firstName',
-                        text : 'Prénom :',
-                        placeholder : 'Jean',
-                        validation : {
-                            required : 'Le prénom est requis',
-                        }
-
-                    },
-                    lastName: {
-                        name : 'lastName',
-                        text : 'Nom :',
-                        placeholder : 'Pierre',
-                        validation : {
-                            required : 'Le nom est requis',
-                        }
-                    },
-                    email: {
-                        name : 'email',
-                        text : 'Courriel :',
-                        placeholder : 'email@email.com',
-                        validation : {
-                            required : 'Le courriel est requis',
-                        }
-                    },
-                    password: {
-                        name : 'password',
-                        text : 'Mot de passe :',
-                        placeholder : 'abc123',
-                        validation : {
-                            required : 'Le mot de passe est requis',
-                        }
-                    },
-                    phone: {
-                        name : 'phone',
-                        text : 'Téléphone :',
-                        placeholder : '514-123-4567',
-                        validation : {
-                            required : 'Le téléphone est requis',
-                            pattern: 'Exemple: 514-123-4567',
-                        }
-                    },
-                    matricule: {
-                        name : 'matricule',
-                        text : 'Matricule :',
-                        placeholder : '1236789',
-                        validation : {
-                            pattern : 'Le matricule est compose de 7 chiffres',
-                        }
-                    },
-                    programme: {
-                        name : 'programme',
-                        text : 'Programme :',
-                        placeholder : 'Choisir un programme',
-                        validation : {
-                            required : 'Le programme est requis',
-                        }
-                    },
-                    submitButton: {
-                        name : 'submitButton',
-                        text : 'Cree un compte',
-                    },
-                    reussite: {
-                        name : 'Inscription réussie',
-                    }
-                },
-                ConnectForm: {
-                    email: {
-                        name: 'email',
-                        text: 'Adresse e-mail',
-                        placeholder: 'saisir@123.com',
-                        validation: {
-                            required: 'L\'adresse e-mail est obligatoire',
-                            emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
-                        }
-                    },
-                    password: {
-                        name: 'password',
-                        text: 'Mot de passe',
-                        placeholder: '*******',
-                        validation: {
-                            required: 'Le mot de passe est requis',
-                            minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
-                        }
-                    }
                 }
             },
         }
