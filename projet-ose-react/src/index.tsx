@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
+import TestBackEndConnection from "./components/common/testBackEndConnection";
 
 
 const portalDiv = document.getElementById('root')!;
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     {
         path: "/signIn",
         element: <App/>
+    },
+    {
+        path: "/signInTemp",
+        element: <TestBackEndConnection/>
     },
     {
         path: "/",
