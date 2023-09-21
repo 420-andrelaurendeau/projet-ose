@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start Backend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ALTERNATIVE_JRE_PATH" value="BUNDLED" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <module name="projet-ose" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.sap.ose.projetose.ProjetOseApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Start Database" run_configuration_type="docker-deploy" />
+    </method>
+  </configuration>
+</component>
