@@ -24,7 +24,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({}) => {
+const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, handleOpenModal}) => {
     const {t} = useTranslation();
 
     const [errors, setErrors] = useState<{
@@ -38,7 +38,7 @@ const InternshipOfferForm: React.FC<any> = ({}) => {
         file?: string
     }>({});
     const [formState, setFormState] = useState<InterOfferJob>(initialFormState);
-    const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
+
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     useEffect(() => {
@@ -178,13 +178,6 @@ const InternshipOfferForm: React.FC<any> = ({}) => {
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
-
-            <Switcher/>
-            {/* Ajouter un bouton pour ouvrir le modal */}
-            <button onClick={handleOpenModal} className="w-full bg-bleu text-white font-bold p-2 rounded-md">
-                Open Form
-            </button>
-
             {/* Modal */}
             {isModalOpen && (
 

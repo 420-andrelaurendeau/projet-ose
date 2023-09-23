@@ -1,4 +1,3 @@
-import {InterOfferJob} from "../../model/IntershipOffer";
 import {FileEntity} from "../../model/FileEntity";
 
 export const validateTitle = (title: string, t: Function) => {
@@ -103,7 +102,7 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
 
 export const validateFile = (file: FileEntity, t: Function) => {
     const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
-    const allowedExtensions = [".jpg", ".jpeg", ".png", ".pdf"]; // Vous pouvez ajuster ceci selon vos besoins
+    const allowedExtensions = [".pdf"]; // Vous pouvez ajuster ceci selon vos besoins
     let errorMsg = "";
 
     if (!file || !file.fileName) {
@@ -112,7 +111,7 @@ export const validateFile = (file: FileEntity, t: Function) => {
     }
     const ext = "." + file.fileName.split(".").pop();
 
-    // Vérifier la taille du fichier
+    // TODO Vérifier la taille du fichier
     /*
 
      */

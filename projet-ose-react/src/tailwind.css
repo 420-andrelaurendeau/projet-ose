@@ -558,6 +558,10 @@ video {
   margin: 0px;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1008,6 +1012,10 @@ video {
 
 .py-5 {
   padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.pb-5 {
   padding-bottom: 1.25rem;
 }
 

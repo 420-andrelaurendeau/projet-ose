@@ -11,7 +11,8 @@ import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
-import InternshipOfferForm from "./components/common/InternshipOfferForm";
+import InternOfferPage from "./pages/InternOfferPage";
+
 
 
 const portalDiv = document.getElementById('root')!;
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/InternOffer",
-        element: <InternshipOfferForm/>
+        element: <InternOfferPage/>
     },
 
 ])
