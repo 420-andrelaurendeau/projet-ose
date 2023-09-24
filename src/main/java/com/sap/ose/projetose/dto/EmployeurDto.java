@@ -19,6 +19,6 @@ public class EmployeurDto extends UtilisateurDto {
 
     public EmployeurDto(Employeur employeur){
         super(employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail());
-        employeur.getEntreprise();
+        this.entreprise = employeur.getEntreprise();
     }
 }
