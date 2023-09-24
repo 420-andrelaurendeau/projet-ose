@@ -31,7 +31,7 @@ export const validateLocation = (location: string, t: Function) => {
 }
 
 export const validateDescription = (description: string, t: Function) => {
-description = description.trim();
+    description = description.trim();
     let errorMsg = "";
 
     if (description.length < 10) {
@@ -49,8 +49,6 @@ export const validateSalary = (salary: number, t: Function) => {
     let errorMsg = "";
 
     const isNumber = !isNaN(salary) && isFinite(salary);
-
-
 
     if (!isNumber) {
         console.log(isNumber);

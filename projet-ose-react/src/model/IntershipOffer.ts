@@ -2,7 +2,7 @@ import {FileEntity} from "./FileEntity";
 import {Programme} from "./Programme";
 
 export interface InterOfferJob {
-    id?: number; // Si vous avez un champ d'identifiant
+    id?: number;
     title: string;
     location: string;
     description: string;
