@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class InternOffer {
     private LocalDate endDate;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "internshipCandidates_id")
     private List<InternshipCandidates> internshipCandidates;
 
     @OneToOne()
@@ -35,9 +37,14 @@ public class InternOffer {
     @JoinColumn(name = "file_id")
     private File file;
 
+    @ManyToOne()
+    @JoinColumn(name = "employeur_id")
+    private Employeur employeur;
 
 
-    public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, List<InternshipCandidates> internshipCandidates, Programme programme, File files) {
+    public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
+                       LocalDate endDate, List<InternshipCandidates> internshipCandidates,
+                       Programme programme, File files, Employeur enployeur) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -47,6 +54,7 @@ public class InternOffer {
         this.internshipCandidates = internshipCandidates;
         this.programme = programme;
         this.file = files;
+        this.employeur = employeur;
     }
 }
 

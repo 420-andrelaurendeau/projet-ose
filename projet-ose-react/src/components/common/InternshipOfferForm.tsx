@@ -22,7 +22,8 @@ const initialFormState: InterOfferJob = {
     salaryByHour: 0,
     startDate: undefined,
     endDate: undefined,
-    programme: undefined,
+    programmeId: 0,
+    employeurId: 0,
     file: undefined,
 };
 
@@ -59,17 +60,11 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target;
 
-        if (name === "programme") {
-            const selectedProgramme = programmes.find(p => p.id === Number(value));
-            console.log(selectedProgramme);
-            setFormState(prevState => ({
-                ...prevState, programme: selectedProgramme || {} as Programme
-            }));
-        } else {
+
             setFormState(prevState => ({
                 ...prevState, [name]: value
             }));
-        }
+
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +108,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
     const isFormValid = () => {
         const hasErrors = Object.values(errors).some(errorMsg => !!errorMsg);
 
-        const areFieldsFilled = formState.title && formState.location && formState.description && formState.salaryByHour !== 0 && formState.startDate && formState.endDate && formState.programme && formState.file;
+        const areFieldsFilled = formState.title && formState.location && formState.description && formState.salaryByHour !== 0 && formState.startDate && formState.endDate && formState.programmeId !== 0 && formState.file;
 
         return !hasErrors && areFieldsFilled;
     }
@@ -214,7 +209,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                             <div className='sm:w-1/2 sm:w-1/2'>
                                 <label className="block text-xs font-bold dark:text-offwhite"
                                        htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
-                                <select name="programme"
+                                <select name="programmeId"
                                         className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
                                         onChange={(e) => handleFormChange(e)} defaultValue={"default"}
                                         id="categories_placeholder">
