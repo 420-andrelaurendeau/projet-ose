@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import InternshipOfferModal from "./components/common/InternshipOfferModal";
 
 i18n
   // detect user language
@@ -202,6 +203,14 @@ i18n
                         name : 'Registration successful',
                     }
                 },
+                InternshipOfferModal: {
+                    commentary: "Commentary",
+                    placeholder: "Add a comment",
+                    button: {
+                        approved: "Approved",
+                        refused: "Refused",
+                    }
+                },
                 InscriptionEmployeur:{
                     nom:{
                         name:'nom',
@@ -365,7 +374,15 @@ i18n
                     button: {
                         sumbit : 'Soumettre',
                         close : 'Fermer',
+                        button: {
+                            approved: "Approuvé",
+                            refused: "Refusé",
+                        }
                     },
+                },
+                InternshipOfferModal: {
+                    commentary: "Commentaire",
+                    placeholder: "Ajouter un commentaire",
                 },
                 InscriptionFormEtudiant : {
                     title : {

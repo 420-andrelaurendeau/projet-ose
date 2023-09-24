@@ -11,7 +11,7 @@ function GSInternOfferList() {
             id: 1,
             title: "Développeur Frontend",
             location: "Paris",
-            description: "Développer des applications web modernes avec React et Tailwind CSS.",
+            description: "Concevoir des interfaces utilisateur intuitives et esthétiques. hoijiojvb iusd  i qiuhoiyu y ytf giu h iuh uh iu hiuh iuh ihiuh ihiuhihi hiuhihih iuhih ih hihihih ihihihi hihi hihihiuuig gyuguyguyg ytfyfytf yfytfytfy tfytfyt fyfyfy fytfytfyiuhoij hiuhih hihi hihih ihihi hih",
             salaryByHour: 25,
             startDate: new Date('2023-10-01'),
             endDate: new Date('2024-10-01'),
@@ -19,6 +19,9 @@ function GSInternOfferList() {
             programmeId: 1,
             programmeNom: "Génie logiciel",
             employeurId: 1,
+            employeurNom: "Jean",
+            employeurPrenom: "Dupont",
+            employeurEntreprise: "Google",
             file: {
                 id: 1,
                 fileName: "offre1.pdf",
@@ -30,13 +33,16 @@ function GSInternOfferList() {
             id: 2,
             title: "Designer UI/UX",
             location: "Lyon",
-            description: "Concevoir des interfaces utilisateur intuitives et esthétiques.",
+            description: "Concevoir des interfaces utilisateur intuitives et esthétiques. hoijiojvb iusd  i qiuhoiyu y ytf giu h iuh uh iu hiuh iuh ihiuh ihiuhihi hiuhihih iuhih ih hihihih ihihihi hihi hihihiuuig gyuguyguyg ytfyfytf yfytfytfy tfytfyt fyfyfy fytfytfyiuhoij hiuhih hihi hihih ihihi hih",
             salaryByHour: 30,
             startDate: new Date('2023-11-15'),
             endDate: new Date('2024-11-15'),
             programmeId: 1,
             programmeNom: "Génie logiciel",
             employeurId: 1,
+            employeurNom: "Jean",
+            employeurPrenom: "Dupont",
+            employeurEntreprise: "Google",
             file: {
                 id: 2,
                 fileName: "offre2.pdf",
@@ -50,6 +56,8 @@ function GSInternOfferList() {
     const [idInternOffer, setIdInternOffer] = React.useState<Number>(0);
     const handleClick = (id: Number) => {
         setIdInternOffer(id);
+
+        console.log()
         handleOpenModal();
 
     }
