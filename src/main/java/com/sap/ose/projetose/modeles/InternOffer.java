@@ -24,7 +24,7 @@ public class InternOffer {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    @OneToMany(mappedBy = "interOfferJob", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InternshipCandidates> internshipCandidates;
 
     @OneToOne()
