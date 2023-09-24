@@ -1,34 +1,33 @@
 package com.sap.ose.projetose.controller;
 
-import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.ProgrammeDto;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.exception.GlobalExceptionHandler;
 import com.sap.ose.projetose.service.InternOfferService;
-
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = {InternOfferController.class})
 @ExtendWith(SpringExtension.class)
@@ -39,103 +38,103 @@ class InternOfferControllerTest {
     @MockBean
     private InternOfferService internOfferService;
 
-    private File file;
-    private Programme programme;
-    private InternOffer internOffer;
+    private InternOfferDto internOfferDto = new InternOfferDto();
 
     @BeforeEach
-    void setUp() throws UnsupportedEncodingException {
-        // Initialisation de File
-        file = new File();
-        file.setAccepted(true);
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
-        file.setFileName("foo.txt");
-        file.setId(1L);
-
-        // Initialisation de Programme
-        programme = new Programme();
-        programme.setDescription("The characteristics of someone or something");
-        programme.setId(1);
-        programme.setNom("Nom");
-
-        // Initialisation de InterOfferJob
-        internOffer = new InternOffer();
-        internOffer.setDescription("The characteristics of someone or something");
-        internOffer.setEndDate(LocalDate.of(1970, 1, 1));
-        internOffer.setFile(file);
-        internOffer.setId(1L);
-        internOffer.setInternshipCandidates(new ArrayList<>());
-        internOffer.setLocation("Location");
-        internOffer.setProgramme(programme);
-        internOffer.setSalaryByHour(10.0d);
-        internOffer.setStartDate(LocalDate.of(1970, 1, 1));
-        internOffer.setTitle("Dr");
+    public void setUp() {
+        this.internOfferDto.setDescription("The characteristics of someone or something");
+        this.internOfferDto.setEmployeurEntreprise("Employeur Entreprise");
+        this.internOfferDto.setEmployeurId(1L);
+        this.internOfferDto.setEmployeurNom("Employeur Nom");
+        this.internOfferDto.setEmployeurPrenom("Employeur Prenom");
+        this.internOfferDto.setEndDate("2020-03-01");
+        this.internOfferDto.setFile(new FileDto());
+        this.internOfferDto.setId(1L);
+        this.internOfferDto.setInternshipCandidates(new ArrayList<>());
+        this.internOfferDto.setLocation("Location");
+        this.internOfferDto.setProgrammeId(1);
+        this.internOfferDto.setProgrammeNom("Programme Nom");
+        this.internOfferDto.setSalaryByHour(10.0d);
+        this.internOfferDto.setStartDate("2020-03-01");
+        this.internOfferDto.setTitle("Dr");
     }
 
     @Test
-    void testSaveInterOfferJob() throws Exception {
+    void testSaveInterOfferJob_NullPointerException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new NullPointerException("Programme non trouvé"));
 
-        when(internOfferService.saveInterOfferJob(Mockito.<InternOfferDto>any())).thenReturn(internOffer);
-
-        InternOfferDto internOfferDto = new InternOfferDto();
-        internOfferDto.setDescription("The characteristics of someone or something");
-        internOfferDto.setEndDate("2020-03-01");
-        internOfferDto.setFile(new FileDto());
-        internOfferDto.setId(1L);
-        internOfferDto.setInternshipCandidates(new ArrayList<>());
-        internOfferDto.setLocation("Location");
-        internOfferDto.setProgramme(new ProgrammeDto(1, "Nom", "The characteristics of someone or something"));
-        internOfferDto.setSalaryByHour(10.0d);
-        internOfferDto.setStartDate("2020-03-01");
-        internOfferDto.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(internOfferController)
+
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"location\":\"Location\",\"description\":\"The characteristics of someone or"
-                                        + " something\",\"salaryByHour\":0.0,\"startDate\":\"1970-01-01\",\"endDate\":\"1970-01-01\",\"internshipCandidates"
-                                        + "\":[],\"programme\":{\"id\":1,\"nom\":\"Nom\",\"description\":\"The characteristics of someone or something\"},"
-                                        + "\"file\":{\"id\":1,\"content\":\"QVhBWEFYQVg=\",\"fileName\":\"foo.txt\",\"accepted\":true}}"));
+
+        resultActions.andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Programme non trouvé")));
     }
 
     @Test
-    void testSaveInterOfferJob2() throws Exception {
+    void testSaveInterOfferJob_DataIntegrityViolationException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi."));
 
-        when(internOfferService.saveInterOfferJob(Mockito.<InternOfferDto>any())).thenReturn(internOffer);
 
-        InternOfferDto internOfferDto = new InternOfferDto();
-        internOfferDto.setDescription("The characteristics of someone or something");
-        internOfferDto.setEndDate("2020-03-01");
-        internOfferDto.setFile(new FileDto());
-        internOfferDto.setId(1L);
-        internOfferDto.setInternshipCandidates(new ArrayList<>());
-        internOfferDto.setLocation("Location");
-        internOfferDto.setProgramme(null);
-        internOfferDto.setSalaryByHour(10.0d);
-        internOfferDto.setStartDate("2020-03-01");
-        internOfferDto.setTitle("Dr");
         String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(internOfferController)
+
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string(
-                                "{\"id\":1,\"title\":\"Dr\",\"location\":\"Location\",\"description\":\"The characteristics of someone or"
-                                        + " something\",\"salaryByHour\":0.0,\"startDate\":\"1970-01-01\",\"endDate\":\"1970-01-01\",\"internshipCandidates"
-                                        + "\":[],\"programme\":{\"id\":1,\"nom\":\"Nom\",\"description\":\"The characteristics of someone or something\"},"
-                                        + "\"file\":{\"id\":1,\"content\":\"QVhBWEFYQVg=\",\"fileName\":\"foo.txt\",\"accepted\":true}}"));
+        ;
+
+        resultActions.andExpect(status().isBadRequest())
+                .andExpect(content().string("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi."));
     }
+
+    @Test
+    void testSaveInterOfferJob_DataAccessException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DataAccessException("Erreur d'accès aux données") {
+        });
+
+
+        String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build()
+                .perform(requestBuilder);
+
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().string("Erreur d'accès aux données"));
+    }
+
+    @Test
+    void testSaveInterOfferJob_RuntimeException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new RuntimeException("Erreur inconnue"));
+
+
+        String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build()
+                .perform(requestBuilder);
+
+        resultActions.andExpect(status().isInternalServerError())
+                .andExpect(content().string("Erreur inconnue"));
+    }
+
 }
 

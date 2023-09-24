@@ -25,9 +25,9 @@ public class InternOfferController {
     public ResponseEntity<InternOfferDto> saveInterOfferJob(@RequestBody InternOfferDto internOfferJobdto) {
 
         System.out.println(internOfferJobdto.toString());
-        InternOffer savedOfferJob = offerJobService.saveInterOfferJob(internOfferJobdto);
+        InternOfferDto savedOfferJobDto = offerJobService.saveInterOfferJob(internOfferJobdto);
 
-        return new ResponseEntity<>(new InternOfferDto(savedOfferJob), HttpStatus.CREATED);
+        return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
     }
 }
 
