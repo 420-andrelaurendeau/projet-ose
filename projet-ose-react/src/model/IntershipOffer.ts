@@ -10,6 +10,11 @@ export interface InterOfferJob {
     startDate?: Date;
     endDate?: Date;
     internshipCandidates?: any[]; //TODO à remplacer par le bon type
-    programme?: Programme;
-    file?: FileEntity,
+    file?: FileEntity;
+    programmeId: number;
+    programmeNom?: String;
+    employeurId: number;
+    employeurNom?: String;
+    employeurPrenom?: String;
+    employeurEntreprise?: String;
 }
