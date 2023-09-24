@@ -2,6 +2,7 @@ import React from "react";
 import {InterOfferJob} from "../../model/IntershipOffer";
 import useModal from "../../hooks/useModal";
 import InternshipOfferModal from "./InternshipOfferModal";
+import Switcher from "../../utils/switcher";
 
 function GSInternOfferList() {
 
@@ -67,6 +68,8 @@ function GSInternOfferList() {
             {
                 listInternOffer.map((item: InterOfferJob) => {
                     return (
+                        <>
+                            <Switcher/>
                         <div className="flex items-start border border-red" onClick={() => handleClick(item.id!)}>
                             <div
                                 className="flex flex-col border border-orange w-64 md:w-128 lg:w-192 h-48 justify-between pl-2">
@@ -88,6 +91,7 @@ function GSInternOfferList() {
                                 <p className="font-bold dark:text-offwhite"> {item.description} </p>
                             </div>
                         </div>
+                        </>
                     )
                 })
             }
