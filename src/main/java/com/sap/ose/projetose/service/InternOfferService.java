@@ -73,4 +73,15 @@ public class InternOfferService {
         return internOfferAcceptedDtos;
     }
 
+
+    public InternOfferDto getById(long id) {
+         try {
+             InternOffer internOffer = offerJobRepository.findById(id).orElseThrow(() -> new NullPointerException("Offre non trouvée"));
+             return new InternOfferDto(internOffer);
+         } catch (NullPointerException e) {
+             logger.info(e.getMessage());
+             throw new NullPointerException(e.getMessage());
+         }
+    }
+
 }

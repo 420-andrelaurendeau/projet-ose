@@ -42,6 +42,9 @@ public class InternOffer {
     @JoinColumn(name = "employeur_id")
     private Employeur employeur;
 
+    @OneToOne
+    @JoinColumn(name = "offerReviewRequest_id")
+    private OfferReviewRequest offerReviewRequest;
 
     public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
                        LocalDate endDate, List<InternshipCandidates> internshipCandidates,
@@ -58,5 +61,19 @@ public class InternOffer {
         this.employeur = employeur;
         this.isAccepted = isAccepted;
     }
-}
 
+    public InternOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, boolean isAccepted, List<InternshipCandidates> internshipCandidates, Programme programme, File file, Employeur employeur) {
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.salaryByHour = salaryByHour;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.isAccepted = isAccepted;
+        this.internshipCandidates = internshipCandidates;
+        this.programme = programme;
+        this.file = file;
+        this.employeur = employeur;
+    }
+}
