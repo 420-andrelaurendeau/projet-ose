@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.InternOffer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +29,7 @@ public class InternOfferDto {
     private String employeurPrenom;
     private String employeurNom;
     private String employeurEntreprise;
+    private boolean isAccepted;
 
     public InternOfferDto(InternOffer internOffer) {
         this.id = internOffer.getId();
@@ -42,17 +42,17 @@ public class InternOfferDto {
         this.programmeId = internOffer.getProgramme().getId();
         this.file = new FileDto(internOffer.getFile());
         this.employeurId = internOffer.getEmployeur().getId();
-
         this.programmeNom = internOffer.getProgramme().getNom();
         this.employeurPrenom = internOffer.getEmployeur().getPrenom();
         this.employeurNom = internOffer.getEmployeur().getNom();
         this.employeurEntreprise = internOffer.getEmployeur().getEntreprise();
+        this.isAccepted = internOffer.isAccepted();
     }
 
     public InternOffer fromDto() {
         if (this.internshipCandidates == null) {
-            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null);
+            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,isAccepted);
         }
-        return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null);
+        return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null,isAccepted);
     }
 }
