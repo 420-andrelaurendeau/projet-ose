@@ -1,14 +1,12 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class InternOfferService {
@@ -62,6 +61,16 @@ public class InternOfferService {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
+    }
+
+    public List<InternOfferDto> getInternOfferAccepted(){
+        List<InternOfferDto> internOfferAcceptedDtos = new ArrayList<>();
+        for(InternOffer internOffer : offerJobRepository.findAll()){
+            if (internOffer.isAccepted()){
+                internOfferAcceptedDtos.add(new InternOfferDto());
+            }
+        }
+        return internOfferAcceptedDtos;
     }
 
 }

@@ -25,6 +25,7 @@ function InscriptionEmployeur(props: any) {
     password: "",
     entreprise: "",
     programme: null,
+
   });
   const [showPassword, setShowPasswprd] = useState(false);
   const [programmes, setProgrammes] = useState([]);
@@ -86,6 +87,7 @@ function InscriptionEmployeur(props: any) {
         password: password,
         entreprise: entreprise,
         programme: programme,
+
       })
       .then((response) => {
         console.log(response);
@@ -104,6 +106,7 @@ function InscriptionEmployeur(props: any) {
           password: "",
           entreprise: "",
           programme: 0,
+
         });
         event.target.reset();
       });

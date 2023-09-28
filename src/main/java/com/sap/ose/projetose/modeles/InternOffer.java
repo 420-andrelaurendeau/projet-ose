@@ -24,6 +24,7 @@ public class InternOffer {
     private double salaryByHour;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean isAccepted;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "internshipCandidates_id")
@@ -44,7 +45,7 @@ public class InternOffer {
 
     public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
                        LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur enployeur) {
+                       Programme programme, File files, Employeur employeur,boolean isAccepted) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -55,6 +56,7 @@ public class InternOffer {
         this.programme = programme;
         this.file = files;
         this.employeur = employeur;
+        this.isAccepted = isAccepted;
     }
 }
 
