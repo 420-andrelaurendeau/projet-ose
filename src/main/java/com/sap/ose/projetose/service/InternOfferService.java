@@ -33,7 +33,6 @@ public class InternOfferService {
         this.programmeService = programmeService;
     }
 
-
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
 
@@ -64,13 +63,36 @@ public class InternOfferService {
     }
 
     public List<InternOfferDto> getInternOfferAccepted(){
-        List<InternOfferDto> internOfferAcceptedDtos = new ArrayList<>();
-        for(InternOffer internOffer : offerJobRepository.findAll()){
-            if (internOffer.isAccepted()){
-                internOfferAcceptedDtos.add(new InternOfferDto());
-            }
+        List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+
+        for (InternOffer offre : internOfferList){
+            InternOfferDto internOfferDto = new InternOfferDto(offre);
+            internOfferDtoList.add(internOfferDto);
         }
-        return internOfferAcceptedDtos;
+        return internOfferDtoList;
+    }
+
+    public List<InternOfferDto> getInternOfferPending(){
+        List<InternOffer> internOfferList = offerJobRepository.findAllPending();
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+
+        for (InternOffer offre : internOfferList){
+            InternOfferDto internOfferDto = new InternOfferDto(offre);
+            internOfferDtoList.add(internOfferDto);
+        }
+        return internOfferDtoList;
+    }
+
+    public List<InternOfferDto> getInternOfferDeclined(){
+        List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+
+        for (InternOffer offre : internOfferList){
+            InternOfferDto internOfferDto = new InternOfferDto(offre);
+            internOfferDtoList.add(internOfferDto);
+        }
+        return internOfferDtoList;
     }
 
 

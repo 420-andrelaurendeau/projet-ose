@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.modeles;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class InternOffer {
     private double salaryByHour;
     private LocalDate startDate;
     private LocalDate endDate;
-    private boolean isAccepted;
+    private State state;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "internshipCandidates_id")
@@ -48,7 +49,7 @@ public class InternOffer {
 
     public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
                        LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur employeur,boolean isAccepted) {
+                       Programme programme, File files, Employeur employeur,State state) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -59,7 +60,7 @@ public class InternOffer {
         this.programme = programme;
         this.file = files;
         this.employeur = employeur;
-        this.isAccepted = isAccepted;
+        this.state = state ;
     }
 
     public InternOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, boolean isAccepted, List<InternshipCandidates> internshipCandidates, Programme programme, File file, Employeur employeur) {

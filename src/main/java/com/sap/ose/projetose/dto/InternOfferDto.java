@@ -29,7 +29,8 @@ public class InternOfferDto {
     private String employeurPrenom;
     private String employeurNom;
     private String employeurEntreprise;
-    private boolean isAccepted;
+
+    private State state;
 
     public InternOfferDto(InternOffer internOffer) {
         this.id = internOffer.getId();
@@ -46,13 +47,26 @@ public class InternOfferDto {
         this.employeurPrenom = internOffer.getEmployeur().getPrenom();
         this.employeurNom = internOffer.getEmployeur().getNom();
         this.employeurEntreprise = internOffer.getEmployeur().getEntreprise();
-        this.isAccepted = internOffer.isAccepted();
+        this.state = internOffer.getState();
+    }
+
+    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, int programmeId, FileDto file,State state) {
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.salaryByHour = salaryByHour;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.internshipCandidates = internshipCandidates;
+        this.programmeId = programmeId;
+        this.file = file;
+        this.state = state;
     }
 
     public InternOffer fromDto() {
         if (this.internshipCandidates == null) {
-            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,isAccepted);
+            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state);
         }
-        return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), isAccepted,internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null);
+        return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null,state);
     }
 }

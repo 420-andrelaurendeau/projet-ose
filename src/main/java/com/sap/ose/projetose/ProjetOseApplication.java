@@ -1,13 +1,10 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
-import com.sap.ose.projetose.service.InternshipmanagerService;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,16 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
+    private OseService oseService;
+    @Autowired
+    private InternOfferService internOfferService;
+    @Autowired
     ProgrammeRepository programmeRepository;
     @Autowired
-    private OseService oseService;
+    InternOfferRepository internOfferRepository;
 
-    @Autowired
-    private InternshipmanagerService internshipmanagerService;
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
 	}
@@ -39,13 +43,17 @@ public class ProjetOseApplication implements CommandLineRunner {
         Etudiant etudiant3 = new Etudiant("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", "Informatique");
         Employeur employeur = new Employeur("Patrique", "Lemieux", "4383006589", "lemieux@gmail.com", "popo", "SAaP");
         Employeur employeur2 = new Employeur("Pierre", "Lacroix", "4387996589", "lacroix@gmail.com", "popo", "SAP");
-
-
         oseService.saveEtudiant(etudiant);
         oseService.saveEtudiant(etudiant2);
         oseService.saveEtudiant(etudiant3);
         oseService.saveEmployeur(employeur);
         oseService.saveEmployeur(employeur2);
-        internshipmanagerService.save(new InternshipmanagerDto("Jean", "Dupont", "4387996589", "email", 1, 1));
+
+        File file = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",true);
+        List<InternshipCandidates> internshipCandidates = new ArrayList<>();
+        InternOffer internOffer = new InternOffer("ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING);
+        InternOfferDto internOfferDto = new InternOfferDto(internOffer);
+        internOfferService.saveInterOfferJob(internOfferDto);
+        System.out.println("Done");
     }
 }
