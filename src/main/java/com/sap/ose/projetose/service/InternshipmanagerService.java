@@ -37,6 +37,14 @@ public class InternshipmanagerService {
         }
     }
 
+    Internshipmanager findById(long id) {
+        try {
+            return  internshipmanagerRepository.findById(id).orElseThrow(() -> new NullPointerException("Internshipmanager non trouvé"));
+        } catch (NullPointerException e) {
+            throw new NullPointerException(e.getMessage());
+        }
+    }
+
     public void save(InternshipmanagerDto internshipmanagerDto){
         try {
             Programme program = programmeService.getProgrammeById(internshipmanagerDto.getProgrammeId()).orElseThrow(() -> new NullPointerException("Programme non trouvé"));

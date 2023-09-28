@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,10 +97,10 @@ public class InternOfferService {
     }
 
 
-    public InternOfferDto getById(long id) {
+    InternOffer getById(long id) {
          try {
              InternOffer internOffer = offerJobRepository.findById(id).orElseThrow(() -> new NullPointerException("Offre non trouvée"));
-             return new InternOfferDto(internOffer);
+             return internOffer;
          } catch (NullPointerException e) {
              logger.info(e.getMessage());
              throw new NullPointerException(e.getMessage());

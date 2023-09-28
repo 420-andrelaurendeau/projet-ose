@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class InternOfferDto {
     private String employeurPrenom;
     private String employeurNom;
     private String employeurEntreprise;
+    private long offerReviewRequestId;
 
     private State state;
 
@@ -48,9 +50,10 @@ public class InternOfferDto {
         this.employeurNom = internOffer.getEmployeur().getNom();
         this.employeurEntreprise = internOffer.getEmployeur().getEntreprise();
         this.state = internOffer.getState();
+        this.offerReviewRequestId = internOffer.getOfferReviewRequest() == null ? 0 : internOffer.getOfferReviewRequest().getId();
     }
 
-    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, int programmeId, FileDto file,State state) {
+    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, int programmeId, FileDto file,State state, long offerReviewRequestId) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -61,12 +64,13 @@ public class InternOfferDto {
         this.programmeId = programmeId;
         this.file = file;
         this.state = state;
+        this.offerReviewRequestId = offerReviewRequestId;
     }
 
     public InternOffer fromDto() {
         if (this.internshipCandidates == null) {
-            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state);
+            return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
         }
-        return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null,state);
+        return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null,state, null);
     }
 }

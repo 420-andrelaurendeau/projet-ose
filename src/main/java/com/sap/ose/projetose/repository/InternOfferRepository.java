@@ -19,7 +19,5 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.DECLINED")
     List<InternOffer> findAllDeclined();
 
-    @Query("select i from InternOffer  i where i.isAccepted = true")
-    List<InternOffer> findAllApproved();
 }
 

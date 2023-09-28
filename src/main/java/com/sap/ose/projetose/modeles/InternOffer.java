@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.modeles;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,7 +48,7 @@ public class InternOffer {
 
     public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
                        LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur employeur,State state) {
+                       Programme programme, File files, Employeur employeur, State state, OfferReviewRequest offerReviewRequest) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -60,10 +59,11 @@ public class InternOffer {
         this.programme = programme;
         this.file = files;
         this.employeur = employeur;
-        this.state = state ;
+        this.state = state;
+        this.offerReviewRequest = offerReviewRequest;
     }
 
-    public InternOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, boolean isAccepted, List<InternshipCandidates> internshipCandidates, Programme programme, File file, Employeur employeur) {
+    public InternOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, List<InternshipCandidates> internshipCandidates, Programme programme, File file, Employeur employeur, State state, OfferReviewRequest offerReviewRequest) {
         this.id = id;
         this.title = title;
         this.location = location;
@@ -71,10 +71,11 @@ public class InternOffer {
         this.salaryByHour = salaryByHour;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.isAccepted = isAccepted;
         this.internshipCandidates = internshipCandidates;
         this.programme = programme;
         this.file = file;
         this.employeur = employeur;
+        this.state = state;
+        this.offerReviewRequest = offerReviewRequest;
     }
 }

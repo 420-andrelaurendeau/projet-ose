@@ -13,7 +13,7 @@ public class OfferReviewRequestDto {
     private long id;
     private String comment;
     private long internOfferId;
-    private int internshipmanagerId;
+    private long internshipmanagerId;
 
     public OfferReviewRequestDto(OfferReviewRequest offerReviewRequest){
         this.id = offerReviewRequest.getId();
