@@ -11,6 +11,10 @@ tache
 
 1. Wiki de nomanclature (Back-end, Base de donnee, Structure), UML, Style
 2. Daily plus recurrent au maximum au 3 jours
-3. Etre present et a l'heure lors du lundi et jeudi
+
+
+*Pont negatif*
+
+1. Tout les membres ne sont pas present lors des periodes disponible
 
 
