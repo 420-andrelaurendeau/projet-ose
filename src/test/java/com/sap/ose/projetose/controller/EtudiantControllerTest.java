@@ -1,15 +1,9 @@
 package com.sap.ose.projetose.controller;
 
-import static org.mockito.Mockito.when;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.OseService;
-
-import java.util.ArrayList;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -24,6 +18,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {EtudiantController.class})
 @ExtendWith(SpringExtension.class)
@@ -67,7 +66,7 @@ class EtudiantControllerTest {
         etudiant.setPrenom("Prenom");
         etudiant.setProgramme("Programme");
         Optional<Etudiant> ofResult = Optional.of(etudiant);
-        when(oseService.saveEtudiant(Mockito.<Etudiant>any())).thenReturn(ofResult);
+        when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
 
         Etudiant etudiant2 = new Etudiant();
         etudiant2.setCv("Cv");

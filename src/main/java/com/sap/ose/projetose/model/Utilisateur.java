@@ -8,12 +8,12 @@ import lombok.Getter;
 @Entity
 @Getter
 public class Utilisateur {
-    @Id
-    @GeneratedValue
-    private Long id;
     String nom;
     String email;
     String motDePasse;
+    @Id
+    @GeneratedValue
+    private Long id;
 
     public void setId(Long id) {
         this.id = id;

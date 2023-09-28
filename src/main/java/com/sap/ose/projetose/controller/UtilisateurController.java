@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/utilisateur")
 public class UtilisateurController {
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
     private final OseService oseService;
+    final Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public UtilisateurController( OseService oseService) {
+    public UtilisateurController(OseService oseService) {
         this.oseService = oseService;
     }
 

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @DiscriminatorValue("ETUDIANT")
 @Data
-public class Etudiant extends Utilisateur{
+public class Etudiant extends Utilisateur {
 
     private String matricule;
     private String programme;

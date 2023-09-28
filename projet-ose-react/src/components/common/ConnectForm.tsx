@@ -3,19 +3,19 @@ import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import toggleOn from "../../assets/images/toggle-on-solid.svg";
 import toggleOff from "../../assets/images/toggle-off-solid.svg";
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 
 
-const ConnectForm = (props:any) => {
+const ConnectForm = (props: any) => {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.ConnectForm");
     const [connectUser, setConnectUser] = React.useState({
         email: "",
         password: ""
     });
     console.log(fields);
 
-    const connect = async (e:any) => {
+    const connect = async (e: any) => {
         e.preventDefault();
         const response = await fetch("http://localhost:8080/api/auth/signin", {
             method: "POST",
@@ -27,7 +27,7 @@ const ConnectForm = (props:any) => {
     }
 
     return (
-           <>
+        <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className=" justify-center items-center">
                     <img onClick={props.toggleDarkMode}
@@ -120,7 +120,7 @@ const ConnectForm = (props:any) => {
                                 className=
                                     {props.darkMode ?
                                         "flex w-full justify-center rounded-md bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-                                        :"flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+                                        : "flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                                     }>
                                 Sign in
                             </button>
@@ -128,14 +128,14 @@ const ConnectForm = (props:any) => {
                     </form>
 
                     <p className=
-                        {props.darkMode ?
-                            "mt-10 text-center text-sm text-white"
-                           : "mt-10 text-center text-sm text-black"}>
+                           {props.darkMode ?
+                               "mt-10 text-center text-sm text-white"
+                               : "mt-10 text-center text-sm text-black"}>
                         Not register already ?{' '}
                         <a href="#" className=
                             {props.darkMode ?
                                 "font-semibold leading-6 text-orange hover:text-amber-500"
-                                :"font-semibold leading-6 text-blue hover:text-indigo-500"}>
+                                : "font-semibold leading-6 text-blue hover:text-indigo-500"}>
                             Contact us
                         </a>
                     </p>

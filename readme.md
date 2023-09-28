@@ -1,7 +1,7 @@
 *Definition de done*
 
-- Mergeable, Testes roulent, Demo pret, Repond au besoin demande dans la 
-tache
+- Mergeable, Testes roulent, Demo pret, Repond au besoin demande dans la
+  tache
 
 - Approbation des autres membre sur ton code
 

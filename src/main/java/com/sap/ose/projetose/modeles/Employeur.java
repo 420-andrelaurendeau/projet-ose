@@ -1,9 +1,14 @@
 package com.sap.ose.projetose.modeles;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,13 +19,13 @@ public class Employeur extends Utilisateur {
     private String entreprise;
     private int programme;
 
-    public Employeur(int id, String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
+    public Employeur(int id, String nom, String prenom, String email, String phone, String password, String entreprise, int programme) {
         super(id, nom, prenom, email, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;
     }
 
-    public Employeur(String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
+    public Employeur(String nom, String prenom, String email, String phone, String password, String entreprise, int programme) {
         super(nom, prenom, email, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;

@@ -5,7 +5,6 @@ import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.OseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +15,8 @@ import java.util.List;
 public class EtudiantController {
 
 
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
-
-
     private final OseService oseService;
+     final Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     public EtudiantController(OseService oseService) {
         this.oseService = oseService;
@@ -44,8 +41,6 @@ public class EtudiantController {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(oseService.getAllEtudiants());
     }
-
-
 
 
 }

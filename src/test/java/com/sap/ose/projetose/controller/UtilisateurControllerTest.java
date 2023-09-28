@@ -1,15 +1,9 @@
 package com.sap.ose.projetose.controller;
 
-import static org.mockito.Mockito.when;
-
 import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.service.OseService;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +16,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {UtilisateurController.class})
 @ExtendWith(SpringExtension.class)

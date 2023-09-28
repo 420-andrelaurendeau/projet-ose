@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 // @ts-ignore
 import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
@@ -8,7 +8,7 @@ import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InscriptionFormEtudiant");
     console.log(fields)
 
     const [formData, setFormData] = useState({
@@ -24,8 +24,8 @@ function EtudiantInscription(props: any) {
 
     const [programmes, setProgrammes] = useState([]);
     const [reussite, setReussite] = useState(false);
-    const handleChange = (event:any) => {
-        const { name, value } = event.target;
+    const handleChange = (event: any) => {
+        const {name, value} = event.target;
         console.log(name + " " + value);
         setFormData({
             ...formData,
@@ -33,9 +33,9 @@ function EtudiantInscription(props: any) {
         });
     };
 
-    const handleSubmit = (event:any) => {
+    const handleSubmit = (event: any) => {
         event.preventDefault();
-        const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
+        const {password, nom, prenom, email, phone, matricule, cv, programme} = formData;
         console.log(password, nom, prenom, email, phone, cv, programme);
         if (programme == null) {
             alert(fields.programme.validation.required);
@@ -59,19 +59,19 @@ function EtudiantInscription(props: any) {
                 console.log(error);
                 alert("Erreur lors de l'inscription")
             }).then(() => {
-                setReussite(true);
-                setFormData({
-                    nom: "",
-                    prenom: "",
-                    email: "",
-                    password: "",
-                    phone: "",
-                    matricule: "",
-                    programme: null,
-                    cv: null,
-                });
-                event.target.reset();
-             });
+            setReussite(true);
+            setFormData({
+                nom: "",
+                prenom: "",
+                email: "",
+                password: "",
+                phone: "",
+                matricule: "",
+                programme: null,
+                cv: null,
+            });
+            event.target.reset();
+        });
     };
 
     const fetchProgrammes = () => {
@@ -87,9 +87,9 @@ function EtudiantInscription(props: any) {
     }
 
     React.useEffect(() => {
-        fetchProgrammes();
-    }
-    , []);
+            fetchProgrammes();
+        }
+        , []);
 
     return (
         <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
@@ -146,7 +146,7 @@ function EtudiantInscription(props: any) {
                                 onChange={handleChange}
                             />
                         </div>
-                   </div>
+                    </div>
                     <div>
                         <label className={props.darkMode ?
                             "block text-sm font-medium leading-6 text-white"
@@ -259,7 +259,7 @@ function EtudiantInscription(props: any) {
                             className=
                                 {props.darkMode ?
                                     "flex w-full justify-center rounded-md bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-                                    :"flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+                                    : "flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                                 }>
                             {fields.submitButton.text}
                         </button>

@@ -1,13 +1,13 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
-import TestBackEndConnection from "../components/common/testBackEndConnection";
-import ErrorPage from "./ErrorPage";
 
 function ConnectPage() {
     const [darkMode, setDarkMode] = React.useState(false)
+
     function toggleDarkMode() {
         setDarkMode(prevDarkMode => !prevDarkMode)
     }
+
     return (
 
         <div className={darkMode ? "h-screen w-full bg-dark" : "h-screen w-full bg-white"}>
@@ -20,4 +20,5 @@ function ConnectPage() {
         </div>
     );
 }
+
 export default ConnectPage;
