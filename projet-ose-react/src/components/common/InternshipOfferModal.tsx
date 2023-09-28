@@ -1,9 +1,6 @@
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import fileIconLight from "../../assets/icons/file_icon.svg";
-import fileIconDark from "../../assets/icons/file_icon_solid.svg"
-import useDarkSide from "../../hooks/useDarkSide";
-import theme from "tailwindcss/defaultTheme";
+
 
 const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, handleCloseModal}) => {
     const {t} = useTranslation();
