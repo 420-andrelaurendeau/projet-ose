@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.modeles.Etudiant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,17 @@ public class EtudiantDto extends UtilisateurDto {
         this.matricule = matricule;
         this.programme = programme;
         this.cv = cv;
+    }
+
+    public EtudiantDto(Etudiant etudiant) {
+        super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
+        this.matricule = etudiant.getMatricule();
+        this.programme = etudiant.getProgramme();
+        this.cv = etudiant.getCv();
+    }
+
+    public Etudiant fromDto() {
+        return new Etudiant(getNom(), getPrenom(), getPhone(), getEmail(), matricule, programme, cv);
     }
 
 }
