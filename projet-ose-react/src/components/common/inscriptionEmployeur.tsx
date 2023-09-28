@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 
 function InscriptionEmployeur(props: any) {
   const {i18n} = useTranslation();
@@ -27,6 +25,7 @@ function InscriptionEmployeur(props: any) {
     password: "",
     entreprise: "",
     programme: null,
+
   });
   const [showPassword, setShowPasswprd] = useState(false);
   const [programmes, setProgrammes] = useState([]);
@@ -71,7 +70,7 @@ function InscriptionEmployeur(props: any) {
     const email = formData.email;
     const phone = formData.phone;
     const password = formData.password;
-    const nomEntreprise = formData.entreprise;
+    const entreprise = formData.entreprise;
     const programme = formData.programme;
 
     if (programme == null) {
@@ -80,272 +79,273 @@ function InscriptionEmployeur(props: any) {
     }
 
     axios
-        .post("http://localhost:8080/api/employeur/ajouter", {
-          nom: nom,
-          prenom: prenom,
-          phone: phone,
-          email: email,
-          password: password,
-          entreprise: nomEntreprise,
-          programme: programme,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-          alert(fields.erreur.text);
-        })
-        .then(() => {
-          alert("Bravo!");
-          setFormData({
-            nom: "",
-            prenom: "",
-            phone: "",
-            email: "",
-            password: "",
-            entreprise: "",
-            programme: 0,
-          });
-          event.target.reset();
+      .post("http://localhost:8080/api/employeur/ajouter", {
+        nom: nom,
+        prenom: prenom,
+        phone: phone,
+        email: email,
+        password: password,
+        entreprise: entreprise,
+        programme: programme,
+
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(fields.erreur.text);
+      })
+      .then(() => {
+        alert("Bravo!");
+        setFormData({
+          nom: "",
+          prenom: "",
+          phone: "",
+          email: "",
+          password: "",
+          entreprise: "",
+          programme: 0,
+
         });
+        event.target.reset();
+      });
   };
 
 
   return (
-      <div>
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
-                className="mx-auto h-16 w-auto"
-                src={props.darkMode ? imgDark : img}
-                alt="Your Company"
+    <div className="container mx-auto ">
+      <div className=" justify-center items-center">
+        <img
+          onClick={props.toggleDarkMode}
+          className="self-left justify-self-end w-8 h-auto"
+          src={props.darkMode ? props.toggleOn : props.toggleOff}
+          alt="toggle"
+        />
+      </div>
+      <h1
+        className={
+          props.darkMode
+            ? "text-center text-2xl font-bold mb-4 col-span-12 text-white"
+            : "text-center text-2xl font-bold mb-4 col-span-12 text-black"
+        }
+      >
+        {fields.titre.text}
+      </h1>
+      <form
+        className="grid grid-cols-6 gap-3 p-3"
+        onSubmit={handleSubmit}
+      >
+        <div className="col-span-6 lg:col-start-2 lg:col-span-2 sm:col-span-3">
+          <label
+            htmlFor="nom"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.nom.text}
+          </label>
+          <input
+            name={"nom"}
+            value={formData.nom}
+            onChange={handleChange}
+            required={true}
+            type="text"
+            id="nom"
+            className={
+              props.darkMode
+                ? "w-full border border-gray-300 rounded p-1 text-orange"
+                : "w-full border border-gray-300 rounded p-1 text-blue"
+            }
+            placeholder={fields.nom.placeholder}
+          />
+        </div>
+        <div className="col-span-6 lg:col-span-2 sm:col-span-3">
+          <label
+            htmlFor="prenom"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.prenom.text}
+          </label>
+          <input
+            name={"prenom"}
+            value={formData.prenom}
+            onChange={handleChange}
+            required={true}
+            type="text"
+            id="prenom"
+            className={
+              props.darkMode
+                ? "w-full border border-gray-300 rounded p-1 text-orange"
+                : "w-full border border-gray-300 rounded p-1 text-blue"
+            }
+            placeholder= {fields.prenom.placeholder}
+          />
+        </div>
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
+          <label
+            htmlFor={fields.entreprise.name}
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.entreprise.text}
+          </label>
+          <input
+            name={"entreprise"}
+            value={formData.entreprise}
+            onChange={handleChange}
+            required={true}
+            type="text"
+            id="entreprise"
+            className={
+              props.darkMode
+                ? "w-full border border-gray-300 rounded p-1 text-orange"
+                : "w-full border border-gray-300 rounded p-1 text-blue"
+            }
+            placeholder={fields.entreprise.placeholder}
+          />
+        </div>
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
+          <label
+            htmlFor="email"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.email.text}
+          </label>
+          <input
+            name={"email"}
+            value={formData.email}
+            onChange={handleChange}
+            required={true}
+            id="email"
+            type="email"
+            className={
+              props.darkMode
+                ? "w-full border border-gray-300 rounded p-1 text-orange"
+                : "w-full border border-gray-300 rounded p-1 text-blue"
+            }
+            placeholder={fields.email.placeholder}
+          />
+        </div>
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
+          <label
+            htmlFor="telephone"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.telephone.text}
+          </label>
+          <input
+            name={"phone"}
+            value={formData.phone}
+            onChange={handleChange}
+            required={true}
+            pattern={"[0-9]{3}-[0-9]{3}-[0-9]{4}"}
+            title={"Exemple: 450-450-4500"}
+            placeholder={fields.telephone.placeholder}
+            id="telephone"
+            type="tel"
+            className={
+              props.darkMode
+                ? "w-full border rounded p-1 text-orange"
+                : "w-full border border-gray-300 rounded p-1 text-blue"
+            }
+          />
+        </div>
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
+          <label
+            htmlFor="password"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.password.text}
+          </label>
+          <div className="flex flex-row">
+            <input
+              name={"password"}
+              value={formData.password}
+              onChange={handleChange}
+              required={true}
+              minLength={5}
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder={fields.password.placeholder}
+              className={
+                props.darkMode
+                  ? "basis-3/4 mr-2 border rounded p-1 text-orange"
+                  : "basis-3/4 mr-2 border rounded p-1 text-blue"
+              }
             />
-            <h2 className=
-                    {props.darkMode ?
-                        "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white"
-                        : "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black"}>
-              {fields.titre.text}
-            </h2>
-          </div>
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
-              <div className="flex justify-between ">
-                <div>
-                  <label htmlFor="prenom" className=
-                      {props.darkMode ?
-                          "block text-sm font-medium leading-6 text-white"
-                          : "block text-sm font-medium leading-6 text-black"}>
-                    {fields.prenom.text}
-                  </label>
-                  <div className="mt-2">
-                    <input
-                        id="prenom"
-                        name="prenom"
-                        type="text"
-                        autoComplete="text"
-                        placeholder={fields.prenom.placeholder}
-                        required
-                        className=
-                            {props.darkMode ?
-                                "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                            }
-                        value={formData.prenom}
-                        onChange={handleChange}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="nom" className=
-                      {props.darkMode ?
-                          "block text-sm font-medium leading-6 text-white"
-                          : "block text-sm font-medium leading-6 text-black"}>
-                    {fields.nom.text}
-                  </label>
-                  <div className="mt-2">
-                    <input
-                        id="nom"
-                        name="nom"
-                        type="text"
-                        autoComplete="text"
-                        placeholder={fields.nom.placeholder}
-                        required
-                        className=
-                            {props.darkMode ?
-                                "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                            }
-                        value={formData.nom}
-                        onChange={handleChange}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="entreprise" className=
-                    {props.darkMode ?
-                        "block text-sm font-medium leading-6 text-white"
-                        : "block text-sm font-medium leading-6 text-black"}>
-                  {fields.entreprise.text}
-                </label>
-                <div className="mt-2">
-                  <input
-                      id="entreprise"
-                      name="entreprise"
-                      type="text"
-                      autoComplete="text"
-                      placeholder={fields.entreprise.placeholder}
-                      required
-                      className=
-                          {props.darkMode ?
-                              "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                              : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                          }
-                      value={formData.entreprise}
-                      onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className=
-                    {props.darkMode ?
-                        "block text-sm font-medium leading-6 text-white"
-                        : "block text-sm font-medium leading-6 text-black"}>
-                  {fields.email.text}
-                </label>
-                <div className="mt-2">
-                  <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      placeholder={fields.email.placeholder}
-                      required
-                      className=
-                          {props.darkMode ?
-                              "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                              : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                          }
-                      value={formData.email}
-                      onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="phone" className=
-                    {props.darkMode ?
-                        "block text-sm font-medium leading-6 text-white"
-                        : "block text-sm font-medium leading-6 text-black"}>
-                  {fields.telephone.text}
-                </label>
-                <div className="mt-2">
-                  <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      autoComplete="email"
-                      placeholder={fields.telephone.placeholder}
-                      required
-                      className=
-                          {props.darkMode ?
-                              "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                              : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                          }
-                      value={formData.phone}
-                      onChange={handleChange}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between ">
-                  <label htmlFor="password" className=
-                      {props.darkMode ?
-                          "block text-sm font-medium leading-6 text-white"
-                          : "block text-sm font-medium leading-6 text-black"}>
-                    {fields.password.text}
-                  </label>
-                  <div className="justify-center">
-                    <button
-                        type="button"
-                        onClick={tooglePasswordVisibility}
-                        className={
-                          props.darkMode
-                              ? "basis-1/4 mx-auto border rounded p-1 text-white bg-orange"
-                              : "basis-1/4 mx-auto border rounded p-1 text-white bg-blue"
-                        }
-                    >
-                      {showPassword ? fields.passWordNotShown.text : fields.passWordShown.text }
-                    </button>
-                  </div>
-                </div>
-                <div className="mt-2">
-                  <input
-                      name="password"
-                      required
-                      minLength={5}
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder={fields.password.placeholder}
-                      className=
-                          {props.darkMode ?
-                              "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                              : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                          }
-                      value={formData.password}
-                      onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label
-                    htmlFor="programme"
-                    className={
-                      props.darkMode ?
-                          "block text-sm font-medium leading-6 text-white"
-                          : "block text-sm font-medium leading-6 text-black"
-                    }
-                >
-                  {fields.programme.text}
-                </label>
-                <select
-                    value={formData.programme}
-                    onChange={handleChange}
-                    name={"programme"}
-                    defaultValue={"DEFAULT"}
-                    id="programme"
-                    required={true}
-                    className={
-                      props.darkMode ?
-                          "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                          : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                    }
-                >
-                  <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
-                  {programmes.map((programme) => (
-                      <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
-                  ))}
-                </select>
-              </div>
-
-              <button
-                  type="submit"
-                  className=
-                      {props.darkMode ?
-                          "flex w-full justify-center rounded-md bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-                          :"flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
-                      }>
-                {fields.soumettre.text}
-              </button>
-            </form>
+            <button
+              type="button"
+              onClick={tooglePasswordVisibility}
+              className={
+                props.darkMode
+                  ? "basis-1/4 mx-auto border rounded p-1 text-white bg-orange"
+                  : "basis-1/4 mx-auto border rounded p-1 text-white bg-blue"
+              }
+            >
+              {showPassword ? fields.passWordNotShown.text : fields.passWordShown.text }
+            </button>
           </div>
         </div>
-      </div>
+        <div className="col-span-6 lg:col-start-2 lg:col-span-4">
+          <label
+            htmlFor="programme"
+            className={
+              props.darkMode
+                ? "block font-bold text-white"
+                : "block font-bold text-black"
+            }
+          >
+            {fields.programme.text}
+          </label>
+          <select
+            value={formData.programme}
+            onChange={handleChange}
+            name={"programme"}
+            defaultValue={"DEFAULT"}
+            id="programme"
+            required={true}
+            className={
+              props.darkMode
+                ? "border border-orange text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
+                : "border border-blue text-black text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 "
+            }
+          >
+            <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
+            {programmes.map((programme) => (
+                <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+            ))}
+          </select>
+        </div>
+        <button
+          className="col-span-6 lg:col-start-2 lg:col-span-4 bg-blue rounded text-white"
+          type="submit"
+        >
+          {fields.soumettre.text}
+        </button>
+      </form>
+    </div>
   );
 }
 

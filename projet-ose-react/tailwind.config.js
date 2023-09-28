@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: 'media', // Utilise le mode sombre en fonction des préférences du système
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -11,6 +11,16 @@ module.exports = {
         'offwhite': '#FBFCFF',
         'dark': '#121420',
         'softdark': '#1A1C23',
+        'red' : '#FF0000',
+      },
+      backgroundColor: {
+        'bleu': '#306bac',
+        'red' : '#FF0000',
+        'gray': '#727172',
+      },
+      placeholderColor: {
+        'gray': '#727172',
+        'orange': '#F57A00',
       },
     },
   },
