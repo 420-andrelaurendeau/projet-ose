@@ -4,13 +4,14 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
-import ErrorPage from "./pages/ErrorPage";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
+import EtudiantStagePage from "./pages/EtudiantStagePage";
+import HomePage from "./pages/HomePage";
 
 
 const portalDiv = document.getElementById('root')!;
@@ -26,11 +27,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <Navigate to={"/signIn"}/>,
+        element: <App/>,
     },
     {
         path: "/home",
-        element: <ErrorPage/>
+        element: <HomePage/>
     },
     {
         path: "/etudiantInscription",
@@ -40,12 +41,16 @@ const router = createBrowserRouter([
         path: "/employeurInscription",
         element: <PageEmployeurInscription/>
     },
+    {
+        path: "/etudiantStage",
+        element: <EtudiantStagePage/>
+    }
 
 ])
 
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+            <RouterProvider router={router}/>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function
