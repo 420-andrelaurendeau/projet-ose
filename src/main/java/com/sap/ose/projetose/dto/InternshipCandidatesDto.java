@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 
 public class InternshipCandidatesDto {
 
-    private long id;
-    private EtudiantDto etudiant;
-    private InternOfferDto interOfferJob;
-    private List<FileDto> files;
+    private final long id;
+    private final EtudiantDto etudiant;
+    private final InternOfferDto interOfferJob;
+    private final List<FileDto> files;
 
 
     public InternshipCandidatesDto(long id, EtudiantDto etudiant, InternOfferDto interOfferJob, List<FileDto> files) {
