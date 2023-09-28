@@ -1,8 +1,12 @@
 import './App.css';
-import EvaluerCV from "./pages/gestion/etudiants/cv";
+
 
 function App() {
-  return EvaluerCV();
+    return (
+        <>
+            <h1 className="text-4xl text-center text-blue-500">Hello World</h1>
+        </>
+    );
 }
 
 
