@@ -12,6 +12,7 @@ module.exports = {
         'dark': '#121420',
         'softdark': '#1A1C23',
         'red' : '#FF0000',
+        'darkwhite': '#F0F0F0',
       },
       backgroundColor: {
         'bleu': '#306bac',
