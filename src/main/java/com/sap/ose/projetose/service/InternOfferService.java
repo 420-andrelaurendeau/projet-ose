@@ -11,6 +11,7 @@ import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,7 @@ public class InternOfferService {
 
     public List<InternOfferDto> getInternOfferAccepted(){
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
         for (InternOffer offre : internOfferList){
             InternOfferDto internOfferDto = new InternOfferDto(offre);
@@ -78,9 +79,10 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    @Transactional
     public List<InternOfferDto> getInternOfferPending(){
         List<InternOffer> internOfferList = offerJobRepository.findAllPending();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
         for (InternOffer offre : internOfferList){
             InternOfferDto internOfferDto = new InternOfferDto(offre);
@@ -91,7 +93,7 @@ public class InternOfferService {
 
     public List<InternOfferDto> getInternOfferDeclined(){
         List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
         for (InternOffer offre : internOfferList){
             InternOfferDto internOfferDto = new InternOfferDto(offre);
