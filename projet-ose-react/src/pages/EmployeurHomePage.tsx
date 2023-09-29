@@ -4,7 +4,7 @@ import Switcher from "../utils/switcher";
 import React from "react";
 import Nav from "../components/common/Nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
 
 function EmployeurHomePage() {
 
@@ -23,66 +23,81 @@ function EmployeurHomePage() {
                     <div className="hidden md:block">
                         <div className="w-full justify-center lg:flex lg:space-x-4 md:space-y-4 lg:space-y-0">
                             <div className="md:justify-center  flex space-x-4">
-                            <a
-                                href="#"
-                                className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                            >
-                                <div className="flex space-x-2 items-center h-16 w-44">
-                                    <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
+                                <a
+                                    href="#"
+                                    className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    <div className="flex space-x-2 items-center h-16 w-44">
+                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                            <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
+                                        </div>
+                                        <div className="pl-2">
+                                            <p className="text-gray">Total candidature</p>
+                                            <p className="text-xl font-bold">150</p>
+                                        </div>
                                     </div>
-                                    <div className="pl-2">
-                                        <p className="text-gray">Total condidature</p>
-                                        <p className="text-xl font-bold">150</p>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
 
-                            <a
-                                href="#"
-                                className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                            >
-                                <div className="flex space-x-2 items-center h-16 w-44">
-                                    <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
+                                <a
+                                    href="#"
+                                    className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    <div className="flex space-x-2 items-center h-16 w-44">
+                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                            <FontAwesomeIcon icon={faFileLines} color="white" size="lg" />
+                                        </div>
+                                        <div className="pl-2">
+                                            <p className="text-gray">Total offer</p>
+                                            <p className="text-xl font-bold">150</p>
+                                        </div>
                                     </div>
-                                    <div className="pl-2">
-                                        <p className="text-gray">Total offre</p>
-                                        <p className="text-xl font-bold">150</p>
+                                </a>
+
+                                <a
+                                    href="#"
+                                    className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    <div className="flex space-x-2 items-center h-16 w-44">
+                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                            <FontAwesomeIcon icon={faPencil} color="white" size="lg" />
+                                        </div>
+                                        <div className="pl-2">
+                                            <p className="text-gray">New offer</p>
+                                            <p className="text-xl font-bold">None</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
                             </div>
                             <div className="md:justify-center flex space-x-4">
-                            <a
-                                href="#"
-                                className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                            >
-                                <div className="flex space-x-2 items-center h-16 w-44">
-                                    <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
+                                <a
+                                    href="#"
+                                    className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    <div className="flex space-x-2 items-center h-16 w-44">
+                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                            <FontAwesomeIcon icon={faSpinner} color="white" size="lg" />
+                                        </div>
+                                        <div className="pl-2">
+                                            <p className="text-gray">Pending offer</p>
+                                            <p className="text-xl font-bold">150</p>
+                                        </div>
                                     </div>
-                                    <div className="pl-2">
-                                        <p className="text-gray">Pending offer</p>
-                                        <p className="text-xl font-bold">150</p>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
 
-                            <a
-                                href="#"
-                                className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                            >
-                                <div className="flex space-x-2 items-center h-16 w-44">
-                                    <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
-                                        <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
+                                <a
+                                    href="#"
+                                    className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                >
+                                    <div className="flex space-x-2 items-center h-16 w-44">
+                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                            <FontAwesomeIcon icon={faSignature} color="white" size="lg" />
+                                        </div>
+                                        <div className="pl-2">
+                                            <p className="text-gray">Total contract</p>
+                                            <p className="text-xl font-bold">150</p>
+                                        </div>
                                     </div>
-                                    <div className="pl-2">
-                                        <p className="text-gray">Total contract</p>
-                                        <p className="text-xl font-bold">150</p>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
                             </div>
                         </div>
                     </div>
