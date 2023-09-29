@@ -21,8 +21,10 @@ public class InternshipmanagerDto extends UtilisateurDto {
         this.programmeId = programmeId;
     }
 
-    public InternshipmanagerDto(long id) {
-        this.id = id;
+    public InternshipmanagerDto(Internshipmanager internshipmanager) {
+        super(internshipmanager.getNom(), internshipmanager.getPrenom(), internshipmanager.getPhone(), internshipmanager.getEmail());
+        this.id = internshipmanager.getId();
+        this.programmeId = internshipmanager.getProgramme().getId();
     }
 
     public Internshipmanager fromDto() {

@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.modeles.Programme;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.repository.EmployeurRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,26 +10,26 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProgrammeService {
+public class EmployeurService {
 
-    ProgrammeRepository programmeRepository;
-    private final Logger logger = LoggerFactory.getLogger(ProgrammeService.class);
+    private final EmployeurRepository employeurRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
 
     @Autowired
-    public ProgrammeService(ProgrammeRepository programmeRepository) {
-        this.programmeRepository = programmeRepository;
+    public EmployeurService(EmployeurRepository employeurRepository) {
+        this.employeurRepository = employeurRepository;
     }
 
-    Programme findById(int id) {
+    Employeur findById(int id) {
         try {
-            return programmeRepository.findById(id).orElseThrow(() -> new NullPointerException("Programme non trouvé"));
+            return employeurRepository.findById((long) id).orElseThrow(() -> new NullPointerException("Employeur non trouvé"));
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
-            };
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {};
         } catch (NullPointerException e) {
             logger.info(e.getMessage());
             throw new NullPointerException(e.getMessage());
@@ -38,5 +38,6 @@ public class ProgrammeService {
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
+
 
 }

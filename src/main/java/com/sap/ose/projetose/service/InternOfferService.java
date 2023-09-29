@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.InternOffer;
@@ -24,36 +23,36 @@ public class InternOfferService {
     private final InternOfferRepository offerJobRepository;
 
     private final ProgrammeService programmeService;
-    private final EmployeurRepository employeurRepository;
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
+    private final EmployeurService employeurService;
+    private final Logger logger = LoggerFactory.getLogger(InternOfferService.class);
 
     @Autowired
-    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService) {
+    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService, EmployeurService employeurService) {
         this.offerJobRepository = offerJobRepository;
-        this.employeurRepository = employeurRepository;
+        this.employeurService = employeurService;
         this.programmeService = programmeService;
     }
 
+    @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
 
-            Programme programme = programmeService.getProgrammeById(internOfferDto.getProgrammeId()).orElseThrow(() -> new NullPointerException("Programme non trouvé"));
-            Employeur employeur = employeurRepository.findById(internOfferDto.getEmployeurId()).orElseThrow(() -> new NullPointerException("Employeur non trouvé"));
+            Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
+            Employeur employeur = employeurService.findById((int) internOfferDto.getEmployeurId());
 
             InternOffer internOffer = internOfferDto.fromDto();
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
 
-            InternOffer internOfferSuccess = offerJobRepository.save(internOffer);
-
-            return new InternOfferDto(internOfferSuccess);
+            return new InternOfferDto(offerJobRepository.save(internOffer));
 
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {};
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            };
         } catch (NullPointerException e) {
             logger.info(e.getMessage());
             throw new NullPointerException(e.getMessage());
@@ -63,33 +62,36 @@ public class InternOfferService {
         }
     }
 
-    public List<InternOfferDto> getInternOfferAccepted(){
+    public List<InternOfferDto> getInternOfferAccepted() {
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+        ;
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
         return internOfferDtoList;
     }
 
-    public List<InternOfferDto> getInternOfferPending(){
+    public List<InternOfferDto> getInternOfferPending() {
         List<InternOffer> internOfferList = offerJobRepository.findAllPending();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+        ;
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
         return internOfferDtoList;
     }
 
-    public List<InternOfferDto> getInternOfferDeclined(){
+    public List<InternOfferDto> getInternOfferDeclined() {
         List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+        ;
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
@@ -98,13 +100,22 @@ public class InternOfferService {
 
 
     InternOffer getById(long id) {
-         try {
-             InternOffer internOffer = offerJobRepository.findById(id).orElseThrow(() -> new NullPointerException("Offre non trouvée"));
-             return internOffer;
-         } catch (NullPointerException e) {
-             logger.info(e.getMessage());
-             throw new NullPointerException(e.getMessage());
-         }
+        try {
+            return offerJobRepository.findById(id).orElseThrow(() -> new NullPointerException("Offre non trouvée"));
+        } catch (DataIntegrityViolationException e) {
+            logger.info(e.getMessage());
+            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            };
+        } catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
     }
 
 }
