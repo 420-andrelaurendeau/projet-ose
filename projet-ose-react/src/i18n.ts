@@ -295,6 +295,12 @@ i18n
                             text : 'Apply',
                         }
                     }
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Intership Offer',
+                    }
                 }
             },
         }
@@ -583,6 +589,12 @@ i18n
                             name : 'apply',
                             text : 'Postuler',
                         }
+                    }
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Offre stages',
                     }
                 }
             },
