@@ -5,7 +5,7 @@ import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
-import ErrorPage from "./pages/ErrorPage";
+import SidebarOptionSwitcher from "./pages/SidebarOptionSwitcher";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/home",
-        element: <ErrorPage/>
+        element: <SidebarOptionSwitcher/>
     },
     {
         path: "/etudiantInscription",
@@ -44,7 +44,13 @@ const router = createBrowserRouter([
     },
     {
         path: "/homeEmployeur",
-        element: <EmployeurHomePage/>
+        element: <EmployeurHomePage/>,
+        children: [
+            {
+                path: "/homeEmployeur/:option",
+                element: <SidebarOptionSwitcher/>,
+            },
+        ]
     },
 
 ])

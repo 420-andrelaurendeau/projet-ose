@@ -1,7 +1,7 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
 import TestBackEndConnection from "../components/common/testBackEndConnection";
-import ErrorPage from "./ErrorPage";
+import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 
 function ConnectPage() {
     const [darkMode, setDarkMode] = React.useState(false)

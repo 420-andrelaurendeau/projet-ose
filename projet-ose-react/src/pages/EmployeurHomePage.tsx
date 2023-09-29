@@ -5,14 +5,27 @@ import React from "react";
 import Nav from "../components/common/Nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {Outlet, Route, useLocation} from "react-router-dom";
 
 function EmployeurHomePage() {
+    const location = useLocation();
+    const user = location.state;
 
+    const user1 = {
+        "nom": "Doe",
+        "prenom": "John",
+        "email": "john@gmail.com",
+        "telephone": "514-123-4567",
+        "entreprise": "Google",
+        "programme": "Génie logiciel",
+    }
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
 
     return (
-        <div className="h-screen bg-darkwhite">
-            <Nav/>
+        <div className="min-h-screen h-full bg-darkwhite">
+            <Nav
+                user={user1}
+            />
             <header className="">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
@@ -102,8 +115,8 @@ function EmployeurHomePage() {
                         </div>
                     </div>
                     {/* <!-- Replace with your content --> */}
-                    <div className="px-4 py-6 sm:px-0">
-                        <div className="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+                    <div className="w-full">
+                        <Outlet />
                     </div>
                     {/* <!-- /End replace --> */}
                 </div>
@@ -118,7 +131,7 @@ function EmployeurHomePage() {
         </head>
         <body>
         <div className="items-center">
-            <Switcher/>
+            <SidebarOptionSwitcher/>
 
             <button onClick={handleOpenModal} className="w-full bg-bleu text-white font-bold p-2 rounded-md">
                 Open Form

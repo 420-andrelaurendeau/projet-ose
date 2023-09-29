@@ -6,11 +6,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faCircleUser, faXmark} from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 
-const Nav = () => {
+const Nav = (props:any) => {
     const [isOpen, setIsOpen] = useState(false);
+    interface FormData {
+        nom: string;
+        prenom: string;
+        email: string;
+        telephone: string;
+        entreprise: string;
+        programme: string;
+    }
     return (
-        <div>
-            <nav className="bg-white shadow">
+        <div className="relative">
+            <nav className="bg-white shadow sticky top-0">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center">
@@ -54,7 +62,9 @@ const Nav = () => {
                 >
                     {(ref) => (
                         <div className="md:hidden" id="mobile-menu">
-                            <Sidebar/>
+                            <Sidebar
+                                user={props.user}
+                            />
                         </div>
                     )}
                 </Transition>
