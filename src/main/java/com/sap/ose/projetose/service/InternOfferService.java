@@ -1,9 +1,7 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
@@ -13,13 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class InternOfferService {
@@ -42,7 +39,7 @@ public class InternOfferService {
         try {
 
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
-            Employeur employeur = employeurService.findById((int) internOfferDto.getEmployeurId());
+            Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
 
             InternOffer internOffer = internOfferDto.fromDto();
             internOffer.setProgramme(programme);
@@ -51,17 +48,16 @@ public class InternOfferService {
             return new InternOfferDto(offerJobRepository.save(internOffer));
 
         } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
+            logger.error(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        }  catch (EmptyResultDataAccessException e) {
+            logger.error(e.getMessage());
+            throw new EmptyResultDataAccessException(1);
         } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
-            };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
+            logger.error(e.getMessage());
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {};
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            logger.error(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
@@ -100,22 +96,21 @@ public class InternOfferService {
     }
 
 
-    InternOffer getById(long id) {
+    InternOffer findById(long id) {
         try {
-            return offerJobRepository.findById(id).orElseThrow(() -> new NullPointerException("Offre non trouvée"));
+            return offerJobRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
         } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+            logger.error(e.getMessage());
+            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la récupération de l'offre d'emploi.");
+        }  catch (EmptyResultDataAccessException e) {
+            logger.error(e.getMessage());
+            throw new EmptyResultDataAccessException(1);
         } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
-            };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
+            logger.error(e.getMessage());
+            throw new DataAccessException("Erreur d'accès aux données lors de la récupération de l'offre d'emploi.") {};
         } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.error(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la récupération de l'offre d'emploi.");
         }
     }
 

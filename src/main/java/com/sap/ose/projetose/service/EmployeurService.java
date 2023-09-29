@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,9 +22,9 @@ public class EmployeurService {
         this.employeurRepository = employeurRepository;
     }
 
-    Employeur findById(int id) {
+    Employeur findById(long id) {
         try {
-            return employeurRepository.findById((long) id).orElseThrow(() -> new NullPointerException("Employeur non trouvé"));
+            return employeurRepository.findById((long) id).orElseThrow(() -> new EmptyResultDataAccessException(1));
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");

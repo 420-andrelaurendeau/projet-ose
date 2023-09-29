@@ -1,64 +1,12 @@
 package com.sap.ose.projetose.service;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyDouble;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.controller.InternOfferController;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.exception.GlobalExceptionHandler;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
-import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
-
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.*;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.exception.GlobalExceptionHandler;
-import com.sap.ose.projetose.service.InternOfferService;
+import com.sap.ose.projetose.repository.ProgrammeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,42 +14,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.MediaType;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = {InternOfferService.class})
 @ExtendWith(SpringExtension.class)
 class InternOfferServiceTest {
-    @MockBean
-    private EmployeurRepository employeurRepository;
 
-    @MockBean
-    private InternOfferRepository internOfferRepository;
-
+    private static final long VALID_ID = 1L;
+    private static final long INVALID_ID = 99L;
     @Autowired
     private InternOfferService internOfferService;
-
     @MockBean
     private ProgrammeService programmeService;
-
-
-    private InternOfferDto internOfferDto = new InternOfferDto();
+    @MockBean
+    private ProgrammeRepository programmeRepository;
+    @MockBean
+    private EmployeurService employeurService;
+    @MockBean
+    private EmployeurRepository employeurRepository;
+    @MockBean
+    private InternOfferRepository internOfferRepository;
+    private final InternOfferDto internOfferDto = new InternOfferDto();
 
     @BeforeEach
     public void setUp() {
+        this.internOfferDto.setId(0);
         this.internOfferDto.setDescription("The characteristics of someone or something");
         this.internOfferDto.setEmployeurEntreprise("Employeur Entreprise");
         this.internOfferDto.setEmployeurId(1L);
@@ -121,49 +68,79 @@ class InternOfferServiceTest {
 
     @Test
     public void saveInterOfferJob_ProgrammeNotFound() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.empty());
+        when(programmeService.findById(anyLong())).thenThrow(new EmptyResultDataAccessException(1));
 
-        assertThrows(NullPointerException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
     }
 
     @Test
     public void saveInterOfferJob_EmployeurNotFound() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(employeurService.findById(anyLong())).thenThrow(new EmptyResultDataAccessException(1));
 
-        assertThrows(NullPointerException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
     }
 
     @Test
     public void saveInterOfferJob_DataIntegrityError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
-
-        when(internOfferRepository.save(any())).thenThrow(DataIntegrityViolationException.class);
+        when(internOfferRepository.save(any())).thenThrow(new DataIntegrityViolationException("Test case") {
+        });
 
         assertThrows(DataIntegrityViolationException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
     }
 
     @Test
     public void saveInterOfferJob_DataAccessError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
-
-        when(internOfferRepository.save(any())).thenThrow(EmptyResultDataAccessException.class);
-
+        when(internOfferRepository.save(any())).thenThrow(new DataAccessException("Test case") {
+        });
 
         assertThrows(DataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
     }
 
     @Test
     public void saveInterOfferJob_UnknownError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
+        when(internOfferRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
 
-        when(internOfferRepository.save(any())).thenThrow(IllegalArgumentException.class);
-
-        // Act & Assert
         assertThrows(RuntimeException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+    }
+
+
+    @Test
+    public void getById_Success() {
+        InternOffer mockOffer = internOfferDto.fromDto();
+        when(internOfferRepository.findById(VALID_ID)).thenReturn(Optional.of(mockOffer));
+
+        InternOffer result = internOfferService.findById(VALID_ID);
+
+        Assertions.assertEquals(mockOffer, result);
+    }
+
+    @Test
+    public void getById_NotFound() {
+        when(internOfferRepository.findById(INVALID_ID)).thenReturn(Optional.empty());
+
+        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.findById(INVALID_ID));
+    }
+
+    @Test
+    public void getById_DataIntegrityViolation() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(new DataIntegrityViolationException("Test exception"));
+
+        assertThrows(DataIntegrityViolationException.class, () -> internOfferService.findById(VALID_ID));
+    }
+
+    @Test
+    public void getById_DataAccessError() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(new DataAccessException("Test exception") {
+        });
+
+        assertThrows(DataAccessException.class, () -> internOfferService.findById(VALID_ID));
+    }
+
+    @Test
+    public void getById_UnknownError() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(new RuntimeException("Test exception"));
+
+        assertThrows(RuntimeException.class, () -> internOfferService.findById(VALID_ID));
     }
 }
 
