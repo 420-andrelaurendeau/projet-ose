@@ -17,7 +17,7 @@ public class ProgrammeService {
         this.programmeRepository = programmeRepository;
     }
 
-    public Optional<Programme> getProgrammeById(int id) {
+    public Optional<Programme> getProgrammeById(long id) {
         return programmeRepository.findById(id);
     }
 }

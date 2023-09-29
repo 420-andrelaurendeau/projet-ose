@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Programme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String nom;
     private String description;
 
