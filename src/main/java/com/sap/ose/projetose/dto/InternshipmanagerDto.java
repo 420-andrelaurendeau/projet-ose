@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class InternshipmanagerDto extends UtilisateurDto {
 
     private long id;
-    private int programmeId;
+    private long programmeId;
 
     public InternshipmanagerDto(String nom, String prenom, String phone, String email, long id, int programmeId) {
         super(nom, prenom, phone, email);

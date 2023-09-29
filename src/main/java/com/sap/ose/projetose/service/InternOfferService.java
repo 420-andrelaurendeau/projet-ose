@@ -37,6 +37,7 @@ public class InternOfferService {
         this.programmeService = programmeService;
     }
 
+    @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
 
