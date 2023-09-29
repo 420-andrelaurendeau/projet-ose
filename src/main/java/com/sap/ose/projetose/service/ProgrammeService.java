@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProgrammeService {
 
-    ProgrammeRepository programmeRepository;
+    private final ProgrammeRepository programmeRepository;
     private final Logger logger = LoggerFactory.getLogger(ProgrammeService.class);
 
     @Autowired
