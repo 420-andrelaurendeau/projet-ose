@@ -50,7 +50,6 @@ function etudiantStage(props: any) {
                                 : "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black"}>
                         {fields.titre.text}
                     </h1>
-                    <p className="mt-2 text-center text-sm leading-5 text-gray-600 max-w">{user.nom}</p>
                     {offers.map((offer: any) => (
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                             <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
