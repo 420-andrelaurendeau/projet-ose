@@ -13,8 +13,9 @@ function Header(props: any) {
                     src={props.darkMode ? imgDark : img}
                     alt="Cegep Andre Laurendeau"
                 />
-                <div className="container px-6 py-3 mx-auto md:flex md:justify-between md:items-center w-full">
-                    <h1>Bonjour, {props.user.prenom}</h1>
+                <h1 className={"w-full mx-10"}>Bonjour, {props.user.prenom}</h1>
+                <div className="container px-6 py-3 mx-auto md:flex md:justify-end md:items-center w-full">
+                    <Link to={'/home'} state={props.user} className={"text-red-600"}>Home</Link>
                     <Link to={'/etudiantStage'} state={props.user} className={"text-red-600"}>Stage</Link>
                 </div>
             </div>
