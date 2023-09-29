@@ -15,12 +15,11 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("ETUDIANT")
 @Data
 public class Etudiant extends Utilisateur{
-
     private String matricule;
-    private String programme;
+    private Programme programme;
     private String cv;
 
-    public Etudiant(String nom, String prenom, String telephone, String email, String password, String matricule, String programme) {
+    public Etudiant(String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme) {
         super(nom, prenom, telephone, email, password);
         this.matricule = matricule;
         this.programme = programme;
