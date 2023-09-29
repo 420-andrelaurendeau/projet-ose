@@ -14,7 +14,7 @@ public class Employeur extends Utilisateur {
     private String entreprise;
     private int programme;
 
-    public Employeur(int id, String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
+    public Employeur(long id, String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
         super(id, nom, prenom, email, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;

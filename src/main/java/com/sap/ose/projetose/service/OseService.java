@@ -57,6 +57,10 @@ public class OseService {
         }
         return dtos;
     }
+    public ProgrammeDto getProgrammeById(Long id) {
+        Optional<Programme> programme = programmeRepository.findById(id);
+        return programme.map(value -> new ProgrammeDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
+    }
 
 
     //get all Utilisateurs

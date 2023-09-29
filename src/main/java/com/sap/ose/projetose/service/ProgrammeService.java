@@ -9,6 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProgrammeService {
 
@@ -20,7 +22,7 @@ public class ProgrammeService {
         this.programmeRepository = programmeRepository;
     }
 
-    Programme findById(int id) {
+    Programme findById(long id) {
         try {
             return programmeRepository.findById(id).orElseThrow(() -> new NullPointerException("Programme non trouvé"));
         } catch (DataIntegrityViolationException e) {
@@ -38,5 +40,4 @@ public class ProgrammeService {
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
-
 }

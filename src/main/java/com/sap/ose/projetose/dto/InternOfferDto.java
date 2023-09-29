@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public class InternOfferDto {
     private String startDate;
     private String endDate;
     private List<InternshipCandidatesDto> internshipCandidates;
-    private int programmeId;
+    private long programmeId;
     private FileDto file;
     private long employeurId;
     private String programmeNom;
@@ -53,7 +54,7 @@ public class InternOfferDto {
         this.offerReviewRequestId = internOffer.getOfferReviewRequest() == null ? 0 : internOffer.getOfferReviewRequest().getId();
     }
 
-    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, int programmeId, FileDto file,State state, long offerReviewRequestId) {
+    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file,State state, long offerReviewRequestId) {
         this.title = title;
         this.location = location;
         this.description = description;

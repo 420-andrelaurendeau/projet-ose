@@ -15,7 +15,7 @@ public abstract class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    private int id;
+    private long id;
     private String nom;
     private String prenom;
     private String phone;
