@@ -21,82 +21,96 @@ i18n
         translation: {
             formField: {
                 InternshipOfferForm : {
+                    titleForm: 'Iternship offer form',
                     title: {
                         name : 'title',
-                        text : 'Title of the job :',
-                        placeholder : 'Title of the job',
+                        text : 'Title of the job ',
+                        placeholder : 'developper',
                         validation : {
                             required : 'The title of the job is required',
                             minLenght : 'The title of the job must contain at least 5 characters',
-                            maxLenght : 'The title of the job must contain at most 100 characters'
+                            maxLenght : 'The title of the job must contain at most 50 characters',
+                            badCharactere : 'The title of the job contains unauthorized characters'
                         }
                     },
                     description: {
                         name : 'description',
-                        text : 'Description of the job :',
-                        placeholder : 'Description of the job',
+                        text : 'Description of the job',
+                        placeholder : 'a long description',
                         validation : {
                             required : 'The description of the job is required',
-                            minLenght : 'The description of the job must contain at least 20 characters',
-                            maxLenght : 'The description of the job must contain at most 1000 characters'
+                            minLenght : 'The description of the job must contain at least 10 characters',
+                            maxLenght : 'The description of the job must contain at most 1000 characters',
+                            badCharactere: "The description of the job contains unauthorized characters"
                         }
                     },
                     location: {
                         name : 'location',
-                        text : 'Location :',
-                        placeholder : 'Location',
+                        text : 'Location',
+                        placeholder : 'Montréal',
                         validation : {
                             required : 'The location is required',
                             minLenght : 'The location must contain at least 5 characters',
-                            maxLenght : 'The location must contain at most 60 characters'
+                            maxLenght : 'The location must contain at most 100 characters',
+                            badCharactere: "The location contains unauthorized characters"
                         }
                     },
-                    categories: {
-                        name : 'categories',
-                        text : 'Categories :',
-                        placeholder : 'Categories',
+                    program: {
+                        name : 'Program',
+                        text : 'Program',
+                        placeholder : 'Choose a program',
                         validation : {
-                            required : 'The categories are required',
-                        }
-                    },
-                    contract: {
-                        name : 'contract',
-                        text : 'Contract :',
-                        placeholder : 'Contract',
-                        validation : {
-                            required : 'The contract is required',
-                            minLenght : 'The contract must contain at least 5 characters',
-                            maxLenght : 'The contract must contain at most 60 characters'
+                            required : 'Please select a valid category',
+                            badSelect: "The selected category is not valid"
                         }
                     },
                     salary: {
                         name : 'salary',
-                        text : 'Salary :',
-                        placeholder : 'Salary',
+                        text : 'Salary ($/h)',
+                        placeholder : '18',
                         validation : {
                             required : 'The salary is required',
-                            numberRequired : 'The salary must be a valid number (you can include 2 digits after the comma)',
+                            numberRequired : 'Please enter a valid number',
+                            minLenght: 'The salary must be greater than 0',
+                            maxLenght: "The salary must be less than or equal to 100$ per hour"
                         }
                     },
                     startDate: {
                         name : 'startDate',
-                        text : 'Start date :',
+                        text : 'Start date',
                         placeholder : 'Start date',
                         validation : {
                             required : 'The start date is required',
-                            dateRequired : 'The start date must be a valid date and greater than the current date',
+                            dateNotValid : 'Please enter a valid date',
+                            dateToLow : "The start date must be today or a future date"
+                        }
+                    },
+                    endDate: {
+                        name : 'endDate',
+                        text : 'End date',
+                        placeholder : 'End date',
+                        validation : {
+                            required : 'The end date is required',
+                            dateNotValid: 'Please enter a valid date',
+                            dateToHigh: 'The end date must be today or a future date' ,
+                            dateToLow: 'The end date must be after the start date'
                         }
                     },
                     file: {
                         name : 'file',
-                        text : 'Upload files :',
+                        text : 'Drag & drop your files here',
+                        smallText: 'or',
+                        span : 'browse',
                         placeholder : 'Upload files',
                         validation : {
-                            required : 'The files are required',
+                            required : 'Files are required',
+                            toMuchFile: 'You can only upload 5 files maximum',
+                            BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB',
                         }
                     },
-                    submitButton: {
-                        text : 'Submit',
+                    button: {
+                        sumbit : 'Submit',
+                        close : 'Close',
                     },
                 },
                 ConnectForm : {
@@ -262,62 +276,61 @@ i18n
         translation: {
             formField: {
                 InternshipOfferForm : {
+                    titleForm: 'Formulaire d\'offre de stage',
                     title: {
                         name : 'title',
                         text : 'Titre de l\'offre d\'emploi :',
-                        placeholder : 'Titre de l\'offre d\'emploi',
+                        placeholder : 'Developpeur',
                         validation : {
                             required : 'Le titre de l\'offre d\'emploi est requis',
-                            minLenght : 'Le titre de l\'offre d\'emploi doit contenir au moins 5 caractères',
-                            maxLenght : 'Le titre de l\'offre d\'emploi doit contenir au maximum 100 caractères'
-                      }
+                            minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                            maxLenght : 'Le titre ne doit pas dépasser 50 caractères.',
+                            badCharactere : 'Le titre contient des caractères non autorisés.'
+                        }
                     },
                     description: {
                         name : 'description',
                         text : 'Description de l\'offre d\'emploi :',
-                        placeholder : 'Description de l\'offre d\'emploi',
+                        placeholder : 'Une longue description',
                         validation : {
                             required : 'La description de l\'offre d\'emploi est requise',
-                            minLenght : 'La description de l\'offre d\'emploi doit contenir au moins 20 caractères',
-                            maxLenght : 'La description de l\'offre d\'emploi doit contenir au maximum 1000 caractères'
+                            minLenght : 'La description doit comporter au moins 10 caractères.',
+                            maxLenght : 'La description ne doit pas dépasser 1000 caractères.',
+                            badCharactere: "La localisation contient des caractères non autorisés."
 
                         }
                     },
                     location: {
                         name : 'location',
                         text : 'Lieu :',
-                        placeholder : 'Lieu',
+                        placeholder : 'Montreal',
                         validation : {
                             required : 'Le lieu est requis',
-                            minLenght : 'Le lieu doit contenir au moins 5 caractères',
-                            maxLenght : 'Le lieu doit contenir au maximum 60 caractères'
+                            minLenght : 'La localisation doit comporter au moins 5 caractères.',
+                            maxLenght : 'La localisation ne doit pas dépasser 100 caractères.',
+                            badCharactere: "La localisation contient des caractères non autorisés."
                         }
                     },
-                    categories: {
-                        name : 'categories',
-                        text : 'Catégories :',
-                        placeholder : 'Catégories',
+                    program: {
+                        name : 'programme',
+                        text : 'Programmes :',
+                        placeholder : 'Choisi un porgramme',
                         validation : {
-                            required : 'Les catégories sont requises',
-                        }
-                    },
-                    contract: {
-                        name : 'contract',
-                        text : 'Contrat :',
-                        placeholder : 'Contrat',
-                        validation : {
-                            required : 'Le contrat est requis',
-                            minLenght : 'Le contrat doit contenir au moins 5 caractères',
-                            maxLenght : 'Le contrat doit contenir au maximum 60 caractères'
+                            required : 'Veuillez sélectionner une catégorie valide.',
+                            badSelect: "La catégorie sélectionnée n'est pas valide."
+
+
                         }
                     },
                     salary: {
                         name : 'salary',
-                        text : 'Salaire :',
-                        placeholder : 'Salaire',
+                        text : 'Salaire ($/h):',
+                        placeholder : '18',
                         validation : {
                             required : 'Le salaire est requis',
-                            numberRequired : 'Le salaire doit être un nombre  valide (vous pouvez inclure 2 chiffres après la virgule)',
+                            numberRequired : 'Veuillez entrer un nombre valide.',
+                            minLenght: 'Le salaire doit être supérieur à 0.',
+                            maxLenght: "Le salaire doit être inférieur ou égal à 100$ par heure."
                         }
                     },
                     startDate: {
@@ -326,19 +339,38 @@ i18n
                         placeholder : 'Date de début',
                         validation : {
                             required : 'La date de début est requise',
-                            dateRequired : 'La date de début doit être une date valide et supérieure à la date du jour',
+                            dateNotValid : 'Veuillez entrer une date valide.',
+                            dateToLow : "La date de début doit être aujourd'hui ou une date future."
+                        }
+                    },
+                    endDate: {
+                        name : 'endDate',
+                        text : 'Date de fin :',
+                        placeholder : 'Date de fin',
+                        validation : {
+                            required : 'La date de fin est requise',
+                            dateNotValid: 'Veuillez entrer une date valide.',
+                            dateToHigh: 'La date de fin doit être aujourd\'hui ou une date future.' ,
+                            dateToLow: 'La date de fin doit être postérieure à la date de début.'
+
                         }
                     },
                     file: {
                         name : 'file',
-                        text : 'Télécharger des fichiers :',
+                        text : 'Glissez et déposez vos fichiers ici',
+                        smallText: 'ou',
+                        span: 'parcourir',
                         placeholder : 'Télécharger des fichiers',
                         validation : {
                             required : 'Les fichiers sont requis',
+                            toMuchFile: 'Vous ne pouvez télécharger que 5 fichiers au maximum.',
+                            BigSizeFile: 'Le fichier {{name}} dépasse la taille maximale de 5 Mo.',
+                            BadTypeFile: 'Le fichier {{name}} a une extension non autorisée.'
                         }
                     },
-                    submitButton: {
-                        text : 'Soumettre',
+                    button: {
+                        sumbit : 'Soumettre',
+                        close : 'Fermer',
                     },
                 },
                 InscriptionFormEtudiant : {

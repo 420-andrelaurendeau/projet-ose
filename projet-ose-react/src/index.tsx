@@ -12,6 +12,8 @@ import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
 import HomePage from "./pages/HomePage";
+import InternOfferPage from "./pages/InternOfferPage";
+
 
 
 const portalDiv = document.getElementById('root')!;
@@ -44,7 +46,11 @@ const router = createBrowserRouter([
     {
         path: "/etudiantStage",
         element: <EtudiantStagePage/>
-    }
+    },
+    {
+        path: "/InternOffer",
+        element: <InternOfferPage/>
+    },
 
 ])
 
