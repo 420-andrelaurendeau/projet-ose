@@ -1,5 +1,8 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.ProgramNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import org.slf4j.Logger;
@@ -23,20 +26,17 @@ public class ProgrammeService {
 
     Programme findById(long id) {
         try {
-            return programmeRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
-        } catch (DataIntegrityViolationException e) {
-            logger.error(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
-        } catch (EmptyResultDataAccessException e) {
-            logger.error(e.getMessage());
-            throw new EmptyResultDataAccessException(1);
+            return programmeRepository.findById(id).orElseThrow(() -> {
+                logger.error("Programme non trouvé avec l'Id"+ id);
+                return new ProgramNotFoundException();
+            });
         } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            logger.error("Erreur d'accès aux données lors de la récupération du programme avec l'ID :" + id, e);
+            throw new DatabaseException("Erreur lors de la récupération du programme") {
             };
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.error("Erreur inconnue lors de la récupération du programme avec l'ID :" + id, e);
+            throw new ServiceException("Erreur lors de la récupération du programme");
         }
     }
 }

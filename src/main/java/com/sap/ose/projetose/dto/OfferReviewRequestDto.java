@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.OfferReviewRequest;
+import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ public class OfferReviewRequestDto {
 
     private long id;
     private String comment;
+    private State state;
     private long internOfferId;
     private long internshipmanagerId;
 

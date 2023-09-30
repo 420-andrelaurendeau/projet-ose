@@ -41,8 +41,6 @@ public class InternshipmanagerServiceTest {
     private ProgrammeRepository programmeRepository;
     private InternshipmanagerDto internshipmanagerDto = new InternshipmanagerDto();
 
-    private final long INVALID_ID = 99L;
-    private final long VALID_ID = 1L;
 
     @BeforeEach
     public void setUp() {

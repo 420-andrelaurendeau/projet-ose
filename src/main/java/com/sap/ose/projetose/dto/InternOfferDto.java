@@ -32,7 +32,6 @@ public class InternOfferDto {
     private String employeurNom;
     private String employeurEntreprise;
     private long offerReviewRequestId;
-
     private State state;
 
     public InternOfferDto(InternOffer internOffer) {

@@ -1,17 +1,17 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,57 +38,63 @@ public class InternOfferService {
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
 
+            if (isApprovedById(internOfferDto.getId()))
+                throw new OfferAlreadyApprovedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
+
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
             Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
 
             InternOffer internOffer = internOfferDto.fromDto();
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
+            internOffer.setState(State.PENDING);
 
-            return new InternOfferDto(offerJobRepository.save(internOffer));
+            InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
-        } catch (DataIntegrityViolationException e) {
-            logger.error(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
-        }  catch (EmptyResultDataAccessException e) {
-            logger.error(e.getMessage());
-            throw new EmptyResultDataAccessException(1);
+            return new InternOfferDto(savedOfferDto);
+        } catch (OfferAlreadyApprovedException e) {
+            logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internOfferDto.getId(), e);
+            throw e;
+        } catch (ProgramNotFoundException e) {
+            throw new ProgramNotFoundException();
+        } catch (EmployerNotFoundException e) {
+            throw new EmployerNotFoundException();
         } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {};
+            logger.error("Erreur d'accès à la base de données lors de la sauvegarde de l'offre d'emploi.", e);
+            throw new DatabaseException("Erreur lors de la sauvegarde de l'offre d'emploi.");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.error("Erreur inconnu lors de la sauvegarde de l'offre d'emploi.", e);
+            throw new ServiceException("Erreur lors de la sauvegarde de l'offre d'emploi.");
         }
     }
 
-    public List<InternOfferDto> getInternOfferAccepted(){
+    public List<InternOfferDto> getInternOfferAccepted() {
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
         return internOfferDtoList;
     }
 
-    public List<InternOfferDto> getInternOfferPending(){
+    public List<InternOfferDto> getInternOfferPending() {
         List<InternOffer> internOfferList = offerJobRepository.findAllPending();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
         return internOfferDtoList;
     }
 
-    public List<InternOfferDto> getInternOfferDeclined(){
+    public List<InternOfferDto> getInternOfferDeclined() {
         List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
-        for (InternOffer offre : internOfferList){
+        for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
             internOfferDtoList.add(internOfferDto);
         }
@@ -98,20 +104,23 @@ public class InternOfferService {
 
     InternOffer findById(long id) {
         try {
-            return offerJobRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
-        } catch (DataIntegrityViolationException e) {
-            logger.error(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la récupération de l'offre d'emploi.");
-        }  catch (EmptyResultDataAccessException e) {
-            logger.error(e.getMessage());
-            throw new EmptyResultDataAccessException(1);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la récupération de l'offre d'emploi.") {};
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la récupération de l'offre d'emploi.");
+            return offerJobRepository.findById(id).orElseThrow(OfferNotFoundException::new);
+        } catch (OfferNotFoundException e) {
+            logger.error("Offre d'emploi non trouvée pour l'Id : " + id);
+            throw new OfferNotFoundException();
         }
+        catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération de l'offre d'emploi avec l'ID : " + id, e);
+            throw new DatabaseException("Erreur lors de la récupération de l'offre d'emploi.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération de l'offre d'emploi avec l'ID : " + id, e);
+            throw new ServiceException("Erreur lors de la récupération de l'offre d'emploi.");
+        }
+    }
+
+
+    boolean isApprovedById(long id) {
+        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED).isPresent();
     }
 
 }

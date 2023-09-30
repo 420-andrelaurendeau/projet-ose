@@ -22,4 +22,8 @@ public class Internshipmanager extends Utilisateur{
         super(nom, prenom, phone, email, password);
         this.programme = programme;
     }
+    public Internshipmanager(long id, String nom, String prenom, String phone, String email, String password, Programme programme) {
+        super(id, nom, prenom, phone, email, password);
+        this.programme = programme;
+    }
 }

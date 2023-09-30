@@ -1,5 +1,8 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.EmployerNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import org.slf4j.Logger;
@@ -24,19 +27,16 @@ public class EmployeurService {
 
     Employeur findById(long id) {
         try {
-            return employeurRepository.findById((long) id).orElseThrow(() -> new EmptyResultDataAccessException(1));
-        } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+            return employeurRepository.findById((long) id).orElseThrow(() -> {
+                logger.error("Employeur non trouvé avec l'id" + id);
+                return new EmployerNotFoundException();
+            });
         } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {};
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
+            logger.info("Erreur d'accès a la base de donné lors de la récupération de l'employeuravec l'Id :" + id, e);
+            throw new DatabaseException("Erreur d'accès a la base de donné lors de la récupération de l'employeur");
         } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.info("Erreur inconnue lors de la récupération de l'employé avec l'Id : " + id, e);
+            throw new ServiceException("Erreur inconnue lors de la récupération de l'employeur");
         }
     }
 

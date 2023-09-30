@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
@@ -51,7 +52,10 @@ public class InternshipmanagerService {
 
     Internshipmanager findById(long id) {
         try {
-            return internshipmanagerRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+            return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
+        } catch (InternshipmanagerNotFoundException e) {
+            logger.info("Gestionnaire de stage non trouvée pour l'Id : " + id);
+            throw e;
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
