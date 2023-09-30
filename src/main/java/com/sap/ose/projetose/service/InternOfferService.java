@@ -73,4 +73,20 @@ public class InternOfferService {
         return internOfferAcceptedDtos;
     }
 
+    public List<InternOfferDto> getInternOffer(){
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer internOffer : offerJobRepository.findAll()){
+            internOfferDtos.add(new InternOfferDto());
+        }
+        return internOfferDtos;
+    }
+
+    public List<InternOfferDto> getInternOfferByEmployeurId(){
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer internOffer : offerJobRepository.findAll()){
+            internOfferDtos.add(new InternOfferDto());
+        }
+        return internOfferDtos;
+    }
+
 }
