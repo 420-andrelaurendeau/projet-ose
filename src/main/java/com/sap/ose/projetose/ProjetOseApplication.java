@@ -40,9 +40,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         File file = new File("test.pdf".getBytes(), "pdf",true);
         File file2 = new File("test2.pdf".getBytes(), "pdf",true);
         File file3 = new File("test3.pdf".getBytes(), "pdf",true);
-        InternOffer internOffer = new InternOffer(1,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), false ,null ,programme1,file,employeur);
-        InternOffer internOffer2 = new InternOffer(2,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), false, null, programme2,file2,employeur);
-        InternOffer internOffer3 = new InternOffer(3,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), false, null, programme3,file3,employeur2);
+        InternOffer internOffer = new InternOffer(1,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), Etats.Pending.toString() ,null ,programme1,file,employeur);
+        InternOffer internOffer2 = new InternOffer(2,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), Etats.Pending.toString(), null, programme2,file2,employeur);
+        InternOffer internOffer3 = new InternOffer(3,"Stage en informatique", "Montreal", "the great job of the time", 15.5, LocalDate.parse("2021-05-02"), LocalDate.parse("2021-08-02"), Etats.Pending.toString(), null, programme3,file3,employeur2);
 
         oseService.saveEtudiant(etudiant);
         oseService.saveEtudiant(etudiant2);

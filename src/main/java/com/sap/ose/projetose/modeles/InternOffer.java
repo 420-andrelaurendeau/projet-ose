@@ -1,9 +1,11 @@
 package com.sap.ose.projetose.modeles;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,13 +26,13 @@ public class InternOffer {
     private double salaryByHour;
     private LocalDate startDate;
     private LocalDate endDate;
-    private boolean isAccepted;
+    private String status;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "internshipCandidates_id")
     private List<InternshipCandidates> internshipCandidates;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "program_id")
     private Programme programme;
 
@@ -45,7 +47,7 @@ public class InternOffer {
 
     public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
                        LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur employeur,boolean isAccepted) {
+                       Programme programme, File files, Employeur employeur,String status) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -56,7 +58,14 @@ public class InternOffer {
         this.programme = programme;
         this.file = files;
         this.employeur = employeur;
-        this.isAccepted = isAccepted;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "InternOffer{" +
+                "id=" + id +
+                '}';
     }
 }
 

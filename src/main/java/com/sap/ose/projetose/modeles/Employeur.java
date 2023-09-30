@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -13,6 +16,9 @@ public class Employeur extends Utilisateur {
     @Column(unique = true)
     private String entreprise;
     private int programme;
+
+    @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<InternOffer> internOffers;
 
     public Employeur(int id, String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
         super(id, nom, prenom, email, phone, password);
@@ -24,6 +30,7 @@ public class Employeur extends Utilisateur {
         super(nom, prenom, email, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;
+        this.internOffers = new ArrayList<>();
     }
 
     public Employeur(String nom, String prenom, String telephone, String email, String password, String entreprise) {

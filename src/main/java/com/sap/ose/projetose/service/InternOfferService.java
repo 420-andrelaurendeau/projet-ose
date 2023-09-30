@@ -3,6 +3,7 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.modeles.Etats;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InternOfferService {
@@ -43,6 +45,8 @@ public class InternOfferService {
             InternOffer internOffer = internOfferDto.fromDto();
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
+            internOffer.setStatus(Etats.Pending.toString());
+            internOffer.setInternshipCandidates(new ArrayList<>());
 
             InternOffer internOfferSuccess = offerJobRepository.save(internOffer);
 
@@ -66,8 +70,8 @@ public class InternOfferService {
     public List<InternOfferDto> getInternOfferAccepted(){
         List<InternOfferDto> internOfferAcceptedDtos = new ArrayList<>();
         for(InternOffer internOffer : offerJobRepository.findAll()){
-            if (internOffer.isAccepted()){
-                internOfferAcceptedDtos.add(new InternOfferDto());
+            if (internOffer.getStatus().equals(Etats.Accepted.toString())){
+                internOfferAcceptedDtos.add(new InternOfferDto(internOffer));
             }
         }
         return internOfferAcceptedDtos;
@@ -83,13 +87,10 @@ public class InternOfferService {
 
     public List<InternOfferDto> getInternOfferByEmployeurId(Long id){
         List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        List<InternOffer> internOffers = offerJobRepository.findAll();
+        List<InternOffer> internOffers = employeurRepository.findById(id).get().getInternOffers();
         for(InternOffer internOffer : internOffers){
-            if (internOffer.getEmployeur().getId() == id){
                 internOfferDtos.add(new InternOfferDto(internOffer));
-            }
         }
-
         return internOfferDtos;
     }
 
