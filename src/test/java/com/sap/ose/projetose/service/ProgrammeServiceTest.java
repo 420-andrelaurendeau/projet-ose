@@ -1,7 +1,9 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.ProgrammeDto;
-import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.ProgramNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,13 +13,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -26,18 +27,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class ProgrammeServiceTest {
 
-
-    private static final long VALID_ID = 1L;
-    private static final long INVALID_ID = 99L;
+    private final ProgrammeDto programmeDto = new ProgrammeDto();
     @Autowired
     private ProgrammeService programmeService;
     @MockBean
     private ProgrammeRepository programmeRepository;
-    private final ProgrammeDto programmeDto = new ProgrammeDto();
 
     @BeforeEach
     public void setUp() {
-        this.programmeDto.setId(VALID_ID);
+        this.programmeDto.setId(1L);
         this.programmeDto.setNom("Nom");
         this.programmeDto.setDescription("Description");
     }
@@ -45,40 +43,36 @@ class ProgrammeServiceTest {
     @Test
     public void findById_Success() {
         Programme mockprog = programmeDto.fromDto();
-        when(programmeRepository.findById(VALID_ID)).thenReturn(Optional.of(mockprog));
+        when(programmeRepository.findById(anyLong())).thenReturn(Optional.of(mockprog));
 
-        Programme result = programmeService.findById(VALID_ID);
+        Programme result = programmeService.findById(anyLong());
 
         Assertions.assertEquals(mockprog, result);
     }
 
     @Test
-    public void getById_NotFound() {
-        when(programmeRepository.findById(INVALID_ID)).thenReturn(Optional.empty());
+    public void findById_NotFound() {
+        when(programmeRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(EmptyResultDataAccessException.class, () -> programmeService.findById(INVALID_ID));
+        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> programmeService.findById(anyLong()));
+        assertEquals("Programme non trouvé", result.getMessage());
     }
 
     @Test
-    public void getById_DataIntegrityViolation() {
-        when(programmeRepository.findById(anyLong())).thenThrow(new DataIntegrityViolationException("Test exception"));
-
-        assertThrows(DataIntegrityViolationException.class, () -> programmeService.findById(VALID_ID));
-    }
-
-    @Test
-    public void getById_DataAccessError() {
-        when(programmeRepository.findById(anyLong())).thenThrow(new DataAccessException("Test exception") {
+    public void findById_DataAccessError() {
+        when(programmeRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
         });
 
-        assertThrows(DataAccessException.class, () -> programmeService.findById(VALID_ID));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> programmeService.findById(anyLong()));
+        assertEquals("Erreur lors de la récupération du programme", result.getMessage());
     }
 
     @Test
-    public void getById_UnknownError() {
+    public void findById_UnknownError() {
         when(programmeRepository.findById(anyLong())).thenThrow(new RuntimeException("Test exception"));
 
-        assertThrows(RuntimeException.class, () -> programmeService.findById(VALID_ID));
+        ServiceException result = assertThrows(ServiceException.class, () -> programmeService.findById(anyLong()));
+        assertEquals("Erreur lors de la récupération du programme", result.getMessage());
     }
 
 }

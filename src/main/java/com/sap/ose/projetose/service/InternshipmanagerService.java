@@ -1,7 +1,9 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
@@ -32,21 +34,18 @@ public class InternshipmanagerService {
     @Transactional
     public InternshipmanagerDto getById(long id) {
         try {
-            Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+            Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
             return new InternshipmanagerDto(internshipmanager);
-        } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
-        } catch (EmptyResultDataAccessException e) {
-            logger.info(e.getMessage());
-            throw new EmptyResultDataAccessException(1);
+        } catch (InternshipmanagerNotFoundException e) {
+            logger.error("Gestionnaire de stage non trouvée pour l'Id : " + id);
+            throw e;
         } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage avec l'Id : " + id, e);
+            throw new DatabaseException("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage") {
             };
         } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.error("Erreur inconnue lors de la récupération du gestionnaire de stage avec l'Id : " + id, e);
+            throw new ServiceException("Erreur inconnue lors de la récupération du gestionnaire de stage");
         }
     }
 
@@ -54,21 +53,15 @@ public class InternshipmanagerService {
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
         } catch (InternshipmanagerNotFoundException e) {
-            logger.info("Gestionnaire de stage non trouvée pour l'Id : " + id);
+            logger.error("Gestionnaire de stage non trouvée pour l'Id : " + id);
             throw e;
-        } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
-        } catch (EmptyResultDataAccessException e) {
-            logger.info(e.getMessage());
-            throw new EmptyResultDataAccessException(e.getExpectedSize());
         } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage avec l'Id : " + id, e);
+            throw new DatabaseException("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage") {
             };
         } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            logger.error("Erreur inconnue lors de la récupération du gestionnaire de stage avec l'Id : " + id, e);
+            throw new ServiceException("Erreur inconnue lors de la récupération du gestionnaire de stage");
         }
     }
 

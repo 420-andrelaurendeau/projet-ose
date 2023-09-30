@@ -26,10 +26,11 @@ public class ProgrammeService {
 
     Programme findById(long id) {
         try {
-            return programmeRepository.findById(id).orElseThrow(() -> {
-                logger.error("Programme non trouvé avec l'Id"+ id);
-                return new ProgramNotFoundException();
-            });
+            return programmeRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
+
+        } catch (ProgramNotFoundException e) {
+            logger.error("Programme non trouvé avec l'Id" + id);
+            throw e;
         } catch (DataAccessException e) {
             logger.error("Erreur d'accès aux données lors de la récupération du programme avec l'ID :" + id, e);
             throw new DatabaseException("Erreur lors de la récupération du programme") {
