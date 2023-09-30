@@ -2,7 +2,7 @@ package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.service.OseService;
+import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,34 +15,31 @@ import java.util.List;
 @RequestMapping("/api/etudiant")
 public class EtudiantController {
 
-
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
+    private final EtudiantService etudiantService;
 
-    private final OseService oseService;
-
-    public EtudiantController(OseService oseService) {
-        this.oseService = oseService;
+    public EtudiantController(EtudiantService etudiantService) {
+        this.etudiantService = etudiantService;
     }
-
 
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-        return oseService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public EtudiantDto getEtudiant(@PathVariable Long id) {
-        return oseService.getEtudiantById(id);
+        return etudiantService.getEtudiantById(id);
     }
 
     @GetMapping("/etudiants")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
-        return ResponseEntity.ok().body(oseService.getAllEtudiants());
+        return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
 

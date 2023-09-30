@@ -1,9 +1,14 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +19,7 @@ import java.util.Optional;
 public class ProgrammeService {
 
     ProgrammeRepository programmeRepository;
+    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     @Autowired
     public ProgrammeService(ProgrammeRepository programmeRepository) {
@@ -24,10 +30,18 @@ public class ProgrammeService {
         return programmeRepository.findById(id);
     }
 
+    @Transactional
     public ProgrammeDto saveProgramme(String nom, String description) {
-        return new ProgrammeDto(programmeRepository.save(new Programme(nom, description)));
+        try{
+            return new ProgrammeDto(programmeRepository.save(new Programme(nom, description)));
+
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du programme") {};
+        }
     }
 
+    @Transactional
     public Optional<ProgrammeDto> saveProgramme(ProgrammeDto programmeDTO) {
         return Optional.of(new ProgrammeDto(programmeRepository.save(programmeDTO.fromDto())));
     }

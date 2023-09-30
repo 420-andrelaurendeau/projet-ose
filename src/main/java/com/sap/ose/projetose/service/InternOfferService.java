@@ -11,6 +11,7 @@ import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class InternOfferService {
         this.programmeService = programmeService;
     }
 
+    @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
             Programme programme = programmeService.getProgrammeById(internOfferDto.getProgrammeId()).orElseThrow(() -> new NullPointerException("Programme non trouvé"));
@@ -100,7 +102,7 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
-    public InternOfferDto getInterOfferById(Long id) {
+    InternOfferDto getInterOfferById(Long id) {
         Optional<InternOffer> internOffer = offerJobRepository.findById(id);
 
         return internOffer.map(value -> new InternOfferDto(value.getTitle(), value.getLocation(), value.getDescription(), value.getSalaryByHour(), value.getStartDate().toString(), value.getEndDate().toString(), value.getInternshipCandidates().stream().map(InternshipCandidatesDto::new).collect(Collectors.toList()), value.getProgramme().getId(),new FileDto(value.getFile()),value.getState())).orElse(null);

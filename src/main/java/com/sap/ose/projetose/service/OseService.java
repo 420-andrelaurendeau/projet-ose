@@ -21,12 +21,12 @@ import java.util.Optional;
 public class OseService {
 
     private final EtudiantRepository etudiantRepository;
-    private final ProgrammeRepository programmeRepository;
+
     private final EmployeurRepository employeurRepository;
 
-    public OseService(EtudiantRepository etudiantRepository, ProgrammeRepository programmeRepository, EmployeurRepository employeurRepository) {
+    public OseService(EtudiantRepository etudiantRepository, EmployeurRepository employeurRepository) {
         this.etudiantRepository = etudiantRepository;
-        this.programmeRepository = programmeRepository;
+
         this.employeurRepository = employeurRepository;
     }
 
