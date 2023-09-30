@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,18 +31,18 @@ public class InternshipmanagerService {
     @Transactional
     public InternshipmanagerDto getById(long id) {
         try {
-            Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(() -> new NullPointerException("Internshipmanager non trouvé"));
+            Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
             return new InternshipmanagerDto(internshipmanager);
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        } catch (EmptyResultDataAccessException e) {
+            logger.info(e.getMessage());
+            throw new EmptyResultDataAccessException(1);
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
             };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
@@ -50,17 +51,17 @@ public class InternshipmanagerService {
 
     Internshipmanager findById(long id) {
         try {
-            return internshipmanagerRepository.findById(id).orElseThrow(() -> new NullPointerException("Internshipmanager non trouvé"));
+            return internshipmanagerRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
         } catch (DataIntegrityViolationException e) {
             logger.info(e.getMessage());
             throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        } catch (EmptyResultDataAccessException e) {
+            logger.info(e.getMessage());
+            throw new EmptyResultDataAccessException(e.getExpectedSize());
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
             };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");

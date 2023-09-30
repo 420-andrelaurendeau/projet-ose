@@ -34,7 +34,7 @@ public class OfferReviewRequestService {
 
 
     @Transactional
-    public void saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
+    public OfferReviewRequestDto saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
 
         try {
             InternOffer internOffer = internOfferService.findById(offerReviewRequestDto.getInternOfferId());
@@ -44,20 +44,19 @@ public class OfferReviewRequestService {
             offerReviewRequest.setInternOffer(internOffer);
             offerReviewRequest.setInternshipmanager(internshipmanager);
             internOffer.setOfferReviewRequest(offerReviewRequest);
-            offerReviewRequestRepository.save(offerReviewRequest);
+            return new OfferReviewRequestDto(offerReviewRequestRepository.save(offerReviewRequest));
         } catch (DataIntegrityViolationException e) {
             logger.error(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de la revue de l'offre d'emploi.");
         } catch (EmptyResultDataAccessException e) {
             logger.error(e.getMessage());
             throw new EmptyResultDataAccessException(1);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
-            };
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de la revue de l'offre d'emploi.") {};
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+                logger.error(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de la revue de l'offre d'emploi.");
         }
     }
 }

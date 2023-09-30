@@ -2,6 +2,7 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
@@ -21,6 +22,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.anyLong;
@@ -30,8 +32,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 class InternOfferServiceTest {
 
-    private static final long VALID_ID = 1L;
-    private static final long INVALID_ID = 99L;
+    private final long VALID_ID = 1L;
+    private final long INVALID_ID = 99L;
     @Autowired
     private InternOfferService internOfferService;
     @MockBean
@@ -70,14 +72,16 @@ class InternOfferServiceTest {
     public void saveInterOfferJob_ProgrammeNotFound() {
         when(programmeService.findById(anyLong())).thenThrow(new EmptyResultDataAccessException(1));
 
-        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        EmptyResultDataAccessException result = assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals(0, result.getActualSize());
     }
 
     @Test
     public void saveInterOfferJob_EmployeurNotFound() {
         when(employeurService.findById(anyLong())).thenThrow(new EmptyResultDataAccessException(1));
 
-        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        EmptyResultDataAccessException result = assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals(0, result.getActualSize());
     }
 
     @Test
@@ -85,7 +89,8 @@ class InternOfferServiceTest {
         when(internOfferRepository.save(any())).thenThrow(new DataIntegrityViolationException("Test case") {
         });
 
-        assertThrows(DataIntegrityViolationException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        DataIntegrityViolationException result = assertThrows(DataIntegrityViolationException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
@@ -93,19 +98,21 @@ class InternOfferServiceTest {
         when(internOfferRepository.save(any())).thenThrow(new DataAccessException("Test case") {
         });
 
-        assertThrows(DataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        DataAccessException result = assertThrows(DataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
     public void saveInterOfferJob_UnknownError() {
         when(internOfferRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
 
-        assertThrows(RuntimeException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        RuntimeException result = assertThrows(RuntimeException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 
 
     @Test
-    public void getById_Success() {
+    public void findById_Success() {
         InternOffer mockOffer = internOfferDto.fromDto();
         when(internOfferRepository.findById(VALID_ID)).thenReturn(Optional.of(mockOffer));
 
@@ -115,32 +122,36 @@ class InternOfferServiceTest {
     }
 
     @Test
-    public void getById_NotFound() {
+    public void findById_NotFound() {
         when(internOfferRepository.findById(INVALID_ID)).thenReturn(Optional.empty());
 
-        assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.findById(INVALID_ID));
+        EmptyResultDataAccessException result = assertThrows(EmptyResultDataAccessException.class, () -> internOfferService.findById(INVALID_ID));
+        assertEquals(0, result.getActualSize());
     }
 
     @Test
-    public void getById_DataIntegrityViolation() {
+    public void findById_DataIntegrityViolation() {
         when(internOfferRepository.findById(anyLong())).thenThrow(new DataIntegrityViolationException("Test exception"));
 
-        assertThrows(DataIntegrityViolationException.class, () -> internOfferService.findById(VALID_ID));
+        DataIntegrityViolationException result = assertThrows(DataIntegrityViolationException.class, () -> internOfferService.findById(VALID_ID));
+        assertEquals("Erreur d'intégrité des données lors de la récupération de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
-    public void getById_DataAccessError() {
+    public void findById_DataAccessError() {
         when(internOfferRepository.findById(anyLong())).thenThrow(new DataAccessException("Test exception") {
         });
 
-        assertThrows(DataAccessException.class, () -> internOfferService.findById(VALID_ID));
+        DataAccessException result = assertThrows(DataAccessException.class, () -> internOfferService.findById(VALID_ID));
+        assertEquals("Erreur d'accès aux données lors de la récupération de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
-    public void getById_UnknownError() {
+    public void findById_UnknownError() {
         when(internOfferRepository.findById(anyLong())).thenThrow(new RuntimeException("Test exception"));
 
-        assertThrows(RuntimeException.class, () -> internOfferService.findById(VALID_ID));
+        RuntimeException result = assertThrows(RuntimeException.class, () -> internOfferService.findById(VALID_ID));
+        assertEquals("Erreur inconnue lors de la récupération de l'offre d'emploi.", result.getMessage());
     }
 }
 
