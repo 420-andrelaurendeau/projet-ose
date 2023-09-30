@@ -13,6 +13,7 @@ import {
     validateStartDate,
     validateTitle
 } from "../../utils/validation/validationInteOfferForm";
+import {NavLink} from "react-router-dom";
 
 
 const initialFormState: InterOfferJob = {
@@ -290,12 +291,17 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
                             <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5">
                                 <button
                                     className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
-                                    type="submit" disabled={!isFormValid()}>Submit
+                                    type="submit" disabled={!isFormValid()}>
+                                    Submit
+
                                 </button>
-                                <button
-                                    className="max-md:hidden w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
-                                    type="button" onClick= {() => setIsModalOpen(false)}>Close
-                                </button> :
+                                <NavLink to="/homeEmployeur/offer"
+                                         className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
+                                    type="button" onClick= {() => setIsModalOpen(false)}>
+
+                                        Close
+
+                                </NavLink>
 
                             </div>
                         </form>

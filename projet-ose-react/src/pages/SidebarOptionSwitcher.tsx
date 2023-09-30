@@ -8,7 +8,14 @@ function SidebarOptionSwitcher() {
     const props:any = useOutletContext()
 
     return (
+
         <div className="bg-darkwhite w-full">
+            <div className={option != "offer" ? "max-md:hidden":"hidden"}>
+                <EmployeurOffer
+                    offers={props[2]}
+                />
+            </div>
+
             {
                 option === "offer" ?
                     <EmployeurOffer

@@ -8,6 +8,7 @@ import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortaweso
 import {NavLink, Outlet, Route, useLocation} from "react-router-dom";
 import {getProgrammes} from "../api/ProgrammeAPI";
 import {getInterOfferJob} from "../api/InterOfferJobAPI";
+import EmployeurOffer from "../components/common/EmployeurOffer";
 
 function EmployeurHomePage() {
     const location = useLocation();
@@ -79,7 +80,7 @@ function EmployeurHomePage() {
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray">Total offer</p>
-                                            <p className="text-xl font-bold">150</p>
+                                            <p className="text-xl font-bold">{offers.length}</p>
                                         </div>
                                     </div>
                                 </NavLink>
@@ -95,7 +96,7 @@ function EmployeurHomePage() {
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray">New offer</p>
-                                            <p className="text-xl font-bold">None</p>
+
                                         </div>
                                     </div>
                                 </NavLink>
@@ -126,30 +127,6 @@ function EmployeurHomePage() {
             </main>
         </div>
     );
-
-    /*return (
-        <html lang="en">
-        <head>
-            <title>Offre d'emploie</title>
-        </head>
-        <body>
-        <div className="items-center">
-            <SidebarOptionSwitcher/>
-
-            <button onClick={handleOpenModal} className="w-full bg-bleu text-white font-bold p-2 rounded-md">
-                Open Form
-            </button>
-
-
-            <InternshipOfferForm
-                isModalOpen={isModalOpen}
-                handleCloseModal={handleCloseModal}
-                handleOpenModal={handleOpenModal}
-            />
-        </div>
-        </body>
-        </html>
-    )*/
 }
 
 export default EmployeurHomePage;
