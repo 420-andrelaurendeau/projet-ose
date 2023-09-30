@@ -1,30 +1,3 @@
-const people = [
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Admin',
-        email: 'jane.cooper@example.com',
-        image: 'https://bit.ly/33HnjK0',
-    },
-    {
-        name: 'John Doe',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: 'Tester',
-        email: 'john.doe@example.com',
-        image: 'https://bit.ly/3I9nL2D',
-    },
-    {
-        name: 'Veronica Lodge',
-        title: 'Regional Paradigm Technician',
-        department: 'Optimization',
-        role: ' Software Engineer',
-        email: 'veronica.lodge@example.com',
-        image: 'https://bit.ly/3vaOTe1',
-    },
-    // More people...
-];
 
 export default function EmployeurOffer(props:any) {
     return (
@@ -79,10 +52,14 @@ export default function EmployeurOffer(props:any) {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
-                          className="px-2 inline-flex text-xs leading-5
-                      font-semibold rounded-full bg-green-100 text-green-800"
+                          className={
+                          offer.status == "Pending" ?
+                              "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange text-white"
+                              : offer.status === "Rejected" ?
+                                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red text-white"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green text-white"}
                       >
-                        Active
+                        {offer.status}
                       </span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

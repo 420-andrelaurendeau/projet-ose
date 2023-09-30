@@ -1,14 +1,9 @@
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
-import useModal from "../hooks/useModal";
-import Switcher from "../utils/switcher";
 import React, {useEffect, useState} from "react";
 import Nav from "../components/common/Nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, Route, useLocation} from "react-router-dom";
-import {getProgrammes} from "../api/ProgrammeAPI";
 import {getInterOfferJob} from "../api/InterOfferJobAPI";
-import EmployeurOffer from "../components/common/EmployeurOffer";
 
 function EmployeurHomePage() {
     const location = useLocation();

@@ -7,8 +7,8 @@ export default function Sidebar(props: any) {
     let { option } = useParams()
 
     return (
-        <div className="fixed shadow">
-            <div className="flex flex-col w-60 h-screen p-3 bg-white ">
+        <div className="fixed shadow h-full min-h-screen">
+            <div className="flex flex-col w-60 h-full  p-3 bg-white ">
                 <div className="space-y-3">
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-3 text-sm">

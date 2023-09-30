@@ -13,7 +13,6 @@ const apiClient = axios.create({
 
 export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
     const interOfferJobDto = {
-        id: interOfferJob.id,
         title: interOfferJob.title,
         location: interOfferJob.location,
         description: interOfferJob.description,
