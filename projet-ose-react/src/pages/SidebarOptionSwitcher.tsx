@@ -1,8 +1,7 @@
 import React from "react";
-import {useLocation, useOutletContext, useParams} from "react-router-dom";
+import {useOutletContext, useParams} from "react-router-dom";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
-import useModal from "../hooks/useModal";
-import {list} from "postcss";
+import EmployeurOffer from "../components/common/EmployeurOffer";
 
 function SidebarOptionSwitcher() {
     let { option } = useParams()
@@ -12,7 +11,9 @@ function SidebarOptionSwitcher() {
         <div className="bg-darkwhite w-full">
             {
                 option === "offer" ?
-                    <p className="text-black">Offer</p>
+                    <EmployeurOffer
+                        offers={props[2]}
+                    />
                     :
                     option === "candidature" ?
                         <p>Candidature</p>

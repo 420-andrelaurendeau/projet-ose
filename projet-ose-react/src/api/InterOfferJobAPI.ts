@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {InterOfferJob} from "../model/IntershipOffer";
+import {webcrypto} from "crypto";
 
 const API_BASE_URL = 'http://localhost:8080/api/interOfferJob';
 
@@ -34,6 +35,16 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
     }
 };
 
-export const getInterOfferJob = async () => {
+export const getInterOfferJob = async (id: number) => {
+    try {
+        const response = await apiClient.get('/OffersEmp/' + id);
+        console.log(response.data);
+        return response.data;
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres', error);
+        throw error;
+    }
+
 
 }

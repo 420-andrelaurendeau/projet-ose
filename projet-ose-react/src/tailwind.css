@@ -550,10 +550,6 @@ video {
   inset: 0px;
 }
 
-.left-0 {
-  left: 0px;
-}
-
 .top-0 {
   top: 0px;
 }
@@ -635,6 +631,10 @@ video {
   display: inline-flex;
 }
 
+.table {
+  display: table;
+}
+
 .grid {
   display: grid;
 }
@@ -711,10 +711,6 @@ video {
   width: 11rem;
 }
 
-.w-5\/6 {
-  width: 83.333333%;
-}
-
 .w-6 {
   width: 1.5rem;
 }
@@ -783,6 +779,10 @@ video {
   flex-basis: 75%;
 }
 
+.table-fixed {
+  table-layout: fixed;
+}
+
 .scale-100 {
   --tw-scale-x: 1;
   --tw-scale-y: 1;
@@ -827,10 +827,6 @@ video {
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.items-start {
-  align-items: flex-start;
 }
 
 .items-center {
@@ -921,10 +917,6 @@ video {
   justify-self: end;
 }
 
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -986,11 +978,6 @@ video {
   border-color: rgb(245 122 0 / var(--tw-border-opacity));
 }
 
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
-}
-
 .bg-bleu {
   --tw-bg-opacity: 1;
   background-color: rgb(48 107 172 / var(--tw-bg-opacity));
@@ -1039,10 +1026,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-opacity-50 {
-  --tw-bg-opacity: 0.5;
 }
 
 .p-0 {
@@ -1461,6 +1444,17 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+@media not all and (min-width: 768px) {
+
+  .max-md\:hidden {
+    display: none;
+  }
+
+  .max-md\:w-5\/6 {
+    width: 83.333333%;
+  }
+}
+
 @media (min-width: 640px) {
 
   .sm\:col-span-3 {
@@ -1529,12 +1523,44 @@ video {
 
 @media (min-width: 768px) {
 
+  .md\:fixed {
+    position: fixed;
+  }
+
+  .md\:left-0 {
+    left: 0px;
+  }
+
+  .md\:top-0 {
+    top: 0px;
+  }
+
+  .md\:z-50 {
+    z-index: 50;
+  }
+
   .md\:block {
     display: block;
   }
 
+  .md\:flex {
+    display: flex;
+  }
+
   .md\:hidden {
     display: none;
+  }
+
+  .md\:h-full {
+    height: 100%;
+  }
+
+  .md\:w-full {
+    width: 100%;
+  }
+
+  .md\:items-start {
+    align-items: flex-start;
   }
 
   .md\:justify-center {
@@ -1545,6 +1571,23 @@ video {
     --tw-space-y-reverse: 0;
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+  }
+
+  .md\:overflow-y-auto {
+    overflow-y: auto;
+  }
+
+  .md\:bg-black {
+    --tw-bg-opacity: 1;
+    background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  }
+
+  .md\:bg-opacity-50 {
+    --tw-bg-opacity: 0.5;
+  }
+
+  .md\:p-3 {
+    padding: 0.75rem;
   }
 }
 
