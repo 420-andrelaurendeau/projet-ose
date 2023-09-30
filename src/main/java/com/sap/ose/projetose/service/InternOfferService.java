@@ -81,11 +81,15 @@ public class InternOfferService {
         return internOfferDtos;
     }
 
-    public List<InternOfferDto> getInternOfferByEmployeurId(){
+    public List<InternOfferDto> getInternOfferByEmployeurId(Long id){
         List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        for(InternOffer internOffer : offerJobRepository.findAll()){
-            internOfferDtos.add(new InternOfferDto());
+        List<InternOffer> internOffers = offerJobRepository.findAll();
+        for(InternOffer internOffer : internOffers){
+            if (internOffer.getEmployeur().getId() == id){
+                internOfferDtos.add(new InternOfferDto(internOffer));
+            }
         }
+
         return internOfferDtos;
     }
 
