@@ -1,11 +1,11 @@
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import useModal from "../hooks/useModal";
 import Switcher from "../utils/switcher";
-import React from "react";
+import React, {useState} from "react";
 import Nav from "../components/common/Nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
-import {Outlet, Route, useLocation} from "react-router-dom";
+import {NavLink, Outlet, Route, useLocation} from "react-router-dom";
 
 function EmployeurHomePage() {
     const location = useLocation();
@@ -19,14 +19,14 @@ function EmployeurHomePage() {
         "entreprise": "Google",
         "programme": "Génie logiciel",
     }
-    const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
+    const [isModalOpen, setIsModalOpen] = useState(true)
 
     return (
         <div className="min-h-screen h-full bg-darkwhite">
             <Nav
                 user={user1}
             />
-            <header className="">
+            <header className="max-md:hidden ">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
                 </div>
@@ -66,9 +66,10 @@ function EmployeurHomePage() {
                                     </div>
                                 </a>
 
-                                <a
-                                    href="#"
+                                <NavLink
+                                    to="/homeEmployeur/newOffer"
                                     className="bg-white text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    onClick={() => setIsModalOpen(true)}
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-44">
                                         <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
@@ -79,7 +80,7 @@ function EmployeurHomePage() {
                                             <p className="text-xl font-bold">None</p>
                                         </div>
                                     </div>
-                                </a>
+                                </NavLink>
                             </div>
                             <div className="md:justify-center flex space-x-4">
                                 <a
@@ -116,7 +117,9 @@ function EmployeurHomePage() {
                     </div>
                     {/* <!-- Replace with your content --> */}
                     <div className="w-full">
-                        <Outlet />
+                        <Outlet
+                            context={[isModalOpen, setIsModalOpen]}
+                        />
                     </div>
                     {/* <!-- /End replace --> */}
                 </div>

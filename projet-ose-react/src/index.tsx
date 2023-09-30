@@ -4,7 +4,7 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, redirect, RouterProvider, useNavigate} from "react-router-dom";
 import SidebarOptionSwitcher from "./pages/SidebarOptionSwitcher";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
@@ -14,6 +14,10 @@ import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 
 
+if(window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/"){
+    window.location.pathname = "/homeEmployeur/offer"
+    console.log(1)
+}
 
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);

@@ -33,3 +33,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
         throw error;
     }
 };
+
+export const getInterOfferJob = async () => {
+
+}

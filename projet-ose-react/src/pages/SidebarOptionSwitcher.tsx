@@ -1,14 +1,15 @@
 import React from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useOutletContext, useParams} from "react-router-dom";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import useModal from "../hooks/useModal";
+import {list} from "postcss";
 
 function SidebarOptionSwitcher() {
     let { option } = useParams()
-    const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
+    const props:any = useOutletContext()
 
     return (
-        <div className="bg-darkwhite md:hidden w-full">
+        <div className="bg-darkwhite w-full">
             {
                 option === "offer" ?
                     <p className="text-black">Offer</p>
@@ -24,10 +25,8 @@ function SidebarOptionSwitcher() {
                                 :
                                 option === "newOffer" ?
                                     <InternshipOfferForm
-                                        isModalOpen={true}
-                                        handleCloseModal={handleCloseModal}
-                                        handleOpenModal={handleOpenModal}
-                                        isModal={false}
+                                        isModalOpen={props[0]}
+                                        setIsModalOpen={props[1]}
                                     />
                                     :
                                     <p>Home</p>

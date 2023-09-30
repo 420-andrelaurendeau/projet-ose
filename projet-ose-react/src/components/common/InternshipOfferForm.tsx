@@ -27,7 +27,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, handleOpenModal, isModal}) => {
+const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
     const {t} = useTranslation();
 
     const [errors, setErrors] = useState<{
@@ -93,7 +93,6 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
             console.log(formState);
             const savedInterOfferJob = await saveInterOfferJob(formState);
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
-            handleCloseModal()
             setFormState(initialFormState);
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);
@@ -154,10 +153,9 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
 
 
     return (
-        <div className='flex justify-center items-center min-h-screen'>
-            {isModalOpen && (
+        <div className={ isModalOpen ? "flex justify-center items-center min-h-screen " : "md:hidden flex justify-center items-center min-h-screen "}>
                 <div
-                    className={isModal == true ? "fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-start p-3 overflow-y-auto": "w-5/6"}>
+                    className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 md:overflow-y-auto max-md:w-5/6">
 
                     <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark">
 
@@ -207,7 +205,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
 
                             <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
                                 {/* Categories field */}
-                                <div className='sm:w-1/2 sm:w-1/2'>
+                                <div className='sm:w-1/2'>
                                     <label className="block text-xs font-bold dark:text-offwhite"
                                            htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
                                     <select name="programmeId"
@@ -224,7 +222,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                                 </div>
 
                                 {/* Salary field */}
-                                <div className='sm:w-1/2 sm:w-1/2'>
+                                <div className='sm:w-1/2'>
                                     <label className="block text-xs font-bold dark:text-offwhite"
                                            htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
                                     <input name='salaryByHour'
@@ -294,18 +292,15 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                                     className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
                                     type="submit" disabled={!isFormValid()}>Submit
                                 </button>
-                                {
-                                    isModal == true ?
-                                        <button
-                                            className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
-                                            type="button" onClick={handleCloseModal}>Close
-                                        </button> :
-                                        null
-                                }
+                                <button
+                                    className="max-md:hidden w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
+                                    type="button" onClick= {() => setIsModalOpen(false)}>Close
+                                </button> :
+
                             </div>
                         </form>
                     </div>
-                </div>)}
+                </div>
         </div>
     );
 }
