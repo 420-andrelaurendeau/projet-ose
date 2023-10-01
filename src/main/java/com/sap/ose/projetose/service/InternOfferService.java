@@ -122,8 +122,7 @@ public class InternOfferService {
         } catch (OfferNotFoundException e) {
             logger.error("Offre d'emploi non trouvée pour l'Id : " + id);
             throw new OfferNotFoundException();
-        }
-        catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error("Erreur d'accès à la base de données lors de la récupération de l'offre d'emploi avec l'ID : " + id, e);
             throw new DatabaseException("Erreur lors de la récupération de l'offre d'emploi.");
         } catch (Exception e) {
@@ -134,9 +133,7 @@ public class InternOfferService {
 
 
     boolean isApprovedOrDeclineById(long id) {
-        return offerJobRepository.findById(id)
-                .filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED)
-                .isPresent();
+        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
 
 }

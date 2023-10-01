@@ -21,7 +21,7 @@ public class InternshipCandidatesService {
         this.internOfferService = internOfferService;
     }
 
-    public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
+    public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
 
         EtudiantDto etudiantDto = oseService.getEtudiantById(internshipCandidatesDto.getEtudiant_id());

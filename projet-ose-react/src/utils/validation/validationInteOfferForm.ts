@@ -100,7 +100,7 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
 
 export const validateFile = (file: FileEntity, t: Function) => {
     const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
-    const allowedExtensions = [".pdf"]; // Vous pouvez ajuster ceci selon vos besoins
+    const allowedExtensions = [".pdf"];
     let errorMsg = "";
 
     if (!file || !file.fileName) {

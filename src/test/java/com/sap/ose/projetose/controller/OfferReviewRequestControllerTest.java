@@ -33,7 +33,7 @@ public class OfferReviewRequestControllerTest {
     @MockBean
     private OfferReviewRequestService offerReviewRequestService;
 
-    private OfferReviewRequestDto offerReviewRequestDto = new OfferReviewRequestDto();
+    private final OfferReviewRequestDto offerReviewRequestDto = new OfferReviewRequestDto();
 
     @BeforeEach
     public void setUp() {
@@ -48,17 +48,11 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyReviewException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
-        resultActions.andExpect(status().isConflict())
-                .andExpect(content().string(containsString("L'offre a déjà été revue")));
+        resultActions.andExpect(status().isConflict()).andExpect(content().string(containsString("L'offre a déjà été revue")));
     }
 
     @Test
@@ -66,17 +60,11 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
-        resultActions.andExpect(status().isNotFound())
-                .andExpect(content().string(containsString("Offre d'emploi non trouvée.")));
+        resultActions.andExpect(status().isNotFound()).andExpect(content().string(containsString("Offre d'emploi non trouvée.")));
     }
 
     @Test
@@ -84,34 +72,23 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new InternshipmanagerNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
-        resultActions.andExpect(status().isNotFound())
-                .andExpect(content().string(containsString("Gestionnaire de stage non trouvé.")));
+        resultActions.andExpect(status().isNotFound()).andExpect(content().string(containsString("Gestionnaire de stage non trouvé.")));
     }
+
     @Test
     void testSaveOfferReviewRequest_DatabaseException() throws Exception {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new DatabaseException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
-        resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().string(containsString("Erreur d'accès a la base de données")));
+        resultActions.andExpect(status().isInternalServerError()).andExpect(content().string(containsString("Erreur d'accès a la base de données")));
     }
 
     @Test
@@ -119,17 +96,11 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new ServiceException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
-        resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().string(containsString("Erreur au niveau du service")));
+        resultActions.andExpect(status().isInternalServerError()).andExpect(content().string(containsString("Erreur au niveau du service")));
     }
 
 }
