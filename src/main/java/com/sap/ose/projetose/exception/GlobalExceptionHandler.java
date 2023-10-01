@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(OfferAlreadyApprovedException.class)
-    public ResponseEntity<String> handleOfferAlreadyApprovedException(OfferAlreadyApprovedException e) {
+    @ExceptionHandler(OfferAlreadyReviewException.class)
+    public ResponseEntity<String> handleOfferAlreadyApprovedException(OfferAlreadyReviewException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 

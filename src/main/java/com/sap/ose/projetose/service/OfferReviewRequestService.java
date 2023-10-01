@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.InternOffer;
@@ -32,10 +33,10 @@ public class OfferReviewRequestService {
 
 
     @Transactional
-    public OfferReviewRequestDto saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
+    public InternOfferDto saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
         try {
-            if (internOfferService.isApprovedById(offerReviewRequestDto.getInternOfferId()))
-                throw new OfferAlreadyApprovedException();
+            if (internOfferService.isApprovedOrDeclineById(offerReviewRequestDto.getInternOfferId()))
+                throw new OfferAlreadyReviewException();
 
             InternOffer internOffer = internOfferService.findById(offerReviewRequestDto.getInternOfferId());
             Internshipmanager internshipmanager = internshipmanagerService.findById(offerReviewRequestDto.getInternshipmanagerId());
@@ -47,8 +48,10 @@ public class OfferReviewRequestService {
             internOffer.setState(offerReviewRequestDto.getState());
             internOffer.setOfferReviewRequest(offerReviewRequest);
 
-            return new OfferReviewRequestDto(offerReviewRequestRepository.save(offerReviewRequest));
-        } catch (OfferAlreadyApprovedException e) {
+            offerReviewRequestRepository.save(offerReviewRequest);
+
+            return new InternOfferDto(internOffer);
+        } catch (OfferAlreadyReviewException e) {
             logger.error("L'offre a déjà été approuvée pour l'Id" + offerReviewRequestDto.getInternOfferId(), e);
             throw e;
         } catch (OfferNotFoundException e) {

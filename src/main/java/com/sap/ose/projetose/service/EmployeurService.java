@@ -27,10 +27,11 @@ public class EmployeurService {
 
     Employeur findById(long id) {
         try {
-            return employeurRepository.findById((long) id).orElseThrow(() -> {
-                logger.error("Employeur non trouvé avec l'id" + id);
-                return new EmployerNotFoundException();
-            });
+            System.out.println(id);
+            return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
+        } catch (EmployerNotFoundException e) {
+            logger.error("Employeur non trouvé avec l'id" + id);
+            throw e;
         } catch (DataAccessException e) {
             logger.info("Erreur d'accès a la base de donné lors de la récupération de l'employeuravec l'Id :" + id, e);
             throw new DatabaseException("Erreur d'accès a la base de donné lors de la récupération de l'employeur");

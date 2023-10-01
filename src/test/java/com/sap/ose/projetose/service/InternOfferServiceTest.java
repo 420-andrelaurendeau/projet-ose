@@ -97,7 +97,7 @@ class InternOfferServiceTest {
         mockOffer.setState(State.ACCEPTED);
         when(internOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockOffer));
 
-        OfferAlreadyApprovedException result = assertThrows(OfferAlreadyApprovedException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        OfferAlreadyReviewException result = assertThrows(OfferAlreadyReviewException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
         assertEquals("L'offre a déjà été approuvée et ne peut pas être modifiée.", result.getMessage());
     }
 

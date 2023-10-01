@@ -37,9 +37,10 @@ public class InternOfferService {
     @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
+            System.out.println(internOfferDto.getEmployeurId());
 
-            if (isApprovedById(internOfferDto.getId()))
-                throw new OfferAlreadyApprovedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
+            if (isApprovedOrDeclineById(internOfferDto.getId()))
+                throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
             Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
@@ -52,7 +53,7 @@ public class InternOfferService {
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
             return new InternOfferDto(savedOfferDto);
-        } catch (OfferAlreadyApprovedException e) {
+        } catch (OfferAlreadyReviewException e) {
             logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internOfferDto.getId(), e);
             throw e;
         } catch (ProgramNotFoundException e) {
@@ -79,8 +80,21 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    @Transactional
     public List<InternOfferDto> getInternOfferPending() {
         List<InternOffer> internOfferList = offerJobRepository.findAllPending();
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer offre : internOfferList) {
+            InternOfferDto internOfferDto = new InternOfferDto(offre);
+            internOfferDtoList.add(internOfferDto);
+        }
+        return internOfferDtoList;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getInternOffers() {
+        List<InternOffer> internOfferList = offerJobRepository.findAll();
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
         for (InternOffer offre : internOfferList) {
@@ -119,8 +133,10 @@ public class InternOfferService {
     }
 
 
-    boolean isApprovedById(long id) {
-        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED).isPresent();
+    boolean isApprovedOrDeclineById(long id) {
+        return offerJobRepository.findById(id)
+                .filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED)
+                .isPresent();
     }
 
 }

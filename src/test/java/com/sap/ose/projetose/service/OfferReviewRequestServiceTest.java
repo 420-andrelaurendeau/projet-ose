@@ -1,22 +1,24 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.OfferReviewRequest;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,35 +56,46 @@ public class OfferReviewRequestServiceTest {
     }
 
     @Test
-    public void saveInterOfferJob_Creation() {
-        InternOffer mockedInterOffer = new InternOffer("fdf", "title", "location", 1, null, null, null, null, null, null, null, null);
+    public void saveOfferReviewRequest_Test() throws Exception {
+        // Préparation des mocks
+
+        Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
+        Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", 1);
+        File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",true);
+        InternOffer mockedInternOffer = new InternOffer("ff","ff","ff",20.50, LocalDate.now(),LocalDate.now(), new ArrayList<>(), mockedProgramme ,mockedFile,mockedEmployeur, State.PENDING, null);
         Internshipmanager mockedInternshipmanager = new Internshipmanager(1L, "nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
-        mockedOfferReviewRequest.setInternOffer(mockedInterOffer);
+        mockedOfferReviewRequest.setInternOffer(mockedInternOffer);
         mockedOfferReviewRequest.setInternshipmanager(mockedInternshipmanager);
 
-        when(internOfferService.findById(anyLong())).thenReturn(mockedInterOffer);
+        when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(false);
+        when(internOfferService.findById(anyLong())).thenReturn(mockedInternOffer);
         when(internshipmanagerService.findById(anyLong())).thenReturn(mockedInternshipmanager);
         when(offerReviewRequestRepository.save(any(OfferReviewRequest.class))).thenReturn(mockedOfferReviewRequest);
 
-        ArgumentCaptor<OfferReviewRequest> captor = ArgumentCaptor.forClass(OfferReviewRequest.class);
-        offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        // Appel à la méthode
+        InternOfferDto returnedDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
 
-        verify(offerReviewRequestRepository).save(captor.capture());
-        OfferReviewRequest savedOffer = captor.getValue();
+        // Vérification des appels aux mocks
+        verify(offerReviewRequestRepository).save(any(OfferReviewRequest.class));
+        verify(internOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternOfferId());
+        verify(internOfferService).findById(offerReviewRequestDto.getInternOfferId());
+        verify(internshipmanagerService).findById(offerReviewRequestDto.getInternshipmanagerId());
 
-        assertEquals(offerReviewRequestDto.getId(), savedOffer.getId());
-        assertEquals(offerReviewRequestDto.getInternOfferId(), savedOffer.getInternOffer().getId());
-        assertEquals(offerReviewRequestDto.getInternshipmanagerId(), savedOffer.getInternshipmanager().getId());
+        // Vérification des objets
+        assertEquals(offerReviewRequestDto.getInternOfferId(), returnedDto.getId());
+        assertEquals(offerReviewRequestDto.getState(), returnedDto.getState());
 
+        // TODO: Vous pouvez ajouter d'autres assertions pour vérifier d'autres champs si nécessaire.
     }
+
 
     @Test
     public void saveOfferReviewRequest_OfferAlreadyApprovedException() {
-        when(internOfferService.isApprovedById(anyLong())).thenReturn(true);
+        when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(true);
 
-        OfferAlreadyApprovedException result = assertThrows(OfferAlreadyApprovedException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
-        assertEquals("L'offre déjà approuvée.", result.getMessage());
+        OfferAlreadyReviewException result = assertThrows(OfferAlreadyReviewException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        assertEquals("L'offre déjà review.", result.getMessage());
     }
 
     @Test

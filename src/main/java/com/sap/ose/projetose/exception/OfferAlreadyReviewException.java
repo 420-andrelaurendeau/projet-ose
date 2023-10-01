@@ -1,11 +1,11 @@
 package com.sap.ose.projetose.exception;
 
-public class OfferAlreadyApprovedException extends RuntimeException {
-    public OfferAlreadyApprovedException(String message) {
+public class OfferAlreadyReviewException extends RuntimeException {
+    public OfferAlreadyReviewException(String message) {
         super(message);
     }
 
-    public OfferAlreadyApprovedException() {
-        super("L'offre déjà approuvée.");
+    public OfferAlreadyReviewException() {
+        super("L'offre déjà review.");
     }
 }

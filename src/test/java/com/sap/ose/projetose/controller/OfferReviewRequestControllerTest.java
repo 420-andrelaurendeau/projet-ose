@@ -1,11 +1,8 @@
 package com.sap.ose.projetose.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OfferReviewRequestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +16,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
@@ -50,7 +45,7 @@ public class OfferReviewRequestControllerTest {
 
     @Test
     void testSaveOfferReviewRequest_OfferAlreadyApprovedException() throws Exception {
-        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyApprovedException());
+        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyReviewException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save")

@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.controller;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.service.OfferReviewRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class OfferReviewRequestController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<OfferReviewRequestDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
-        offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
-        return new ResponseEntity<>(offerReviewRequestDto, HttpStatus.CREATED);
+    public ResponseEntity<InternOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
+        InternOfferDto internOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
     }
 }

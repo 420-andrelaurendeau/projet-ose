@@ -50,6 +50,7 @@ public class InternshipmanagerService {
     }
 
     Internshipmanager findById(long id) {
+
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
         } catch (InternshipmanagerNotFoundException e) {
