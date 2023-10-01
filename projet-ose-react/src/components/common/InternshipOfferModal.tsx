@@ -63,7 +63,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
     }
 
     async function handleDecline() {
-        // Validation pour le champ de commentaire
+
         if (!formStateOffer.comment.trim()) {
             setErrors(prevErrors => ({
                 ...prevErrors, description: 'Veuillez fournir un commentaire pour refuser l\'offre.'
@@ -71,7 +71,6 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
             return;
         }
 
-        // Validation de la description (commentaire)
         const descriptionError = validateDescription(formStateOffer.comment, t);
         if (descriptionError) {
             setErrors(prevErrors => ({
@@ -79,7 +78,6 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
             }));
             return;
         } else {
-            // Réinitialisez l'erreur de description si la validation est passée
             setErrors(prevErrors => ({
                 ...prevErrors, description: undefined
             }));

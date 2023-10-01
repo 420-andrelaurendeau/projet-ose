@@ -40,7 +40,7 @@ function GSInternOfferList() {
         setListInternOffer(prevList => prevList.map(offer =>
             offer.id === updatedOffer.id ? updatedOffer : offer
         ));
-        setForceUpdate(!forceUpdate); // Force un re-rendu
+        setForceUpdate(!forceUpdate);
     };
 
 
@@ -75,7 +75,7 @@ function GSInternOfferList() {
                 isModalOpen={isModalOpen}
                 handleCloseModal={handleCloseModal}
                 internshipOffer={listInternOffer.find((item: InterOfferJob) => item.id === idInternOffer)}
-                onUpdateInternshipOffer={updateInternshipOffer} // Passez la fonction ici
+                onUpdateInternshipOffer={updateInternshipOffer}
             />
 
         </div>
