@@ -57,12 +57,11 @@ public class OfferReviewRequestServiceTest {
 
     @Test
     public void saveOfferReviewRequest_Test() throws Exception {
-        // Préparation des mocks
 
         Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
         Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", 1);
-        File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",true);
-        InternOffer mockedInternOffer = new InternOffer("ff","ff","ff",20.50, LocalDate.now(),LocalDate.now(), new ArrayList<>(), mockedProgramme ,mockedFile,mockedEmployeur, State.PENDING, null);
+        File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8), "Test", true);
+        InternOffer mockedInternOffer = new InternOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedProgramme, mockedFile, mockedEmployeur, State.PENDING, null);
         Internshipmanager mockedInternshipmanager = new Internshipmanager(1L, "nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
         mockedOfferReviewRequest.setInternOffer(mockedInternOffer);
@@ -73,20 +72,20 @@ public class OfferReviewRequestServiceTest {
         when(internshipmanagerService.findById(anyLong())).thenReturn(mockedInternshipmanager);
         when(offerReviewRequestRepository.save(any(OfferReviewRequest.class))).thenReturn(mockedOfferReviewRequest);
 
-        // Appel à la méthode
+
         InternOfferDto returnedDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
 
-        // Vérification des appels aux mocks
+
         verify(offerReviewRequestRepository).save(any(OfferReviewRequest.class));
         verify(internOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternOfferId());
         verify(internOfferService).findById(offerReviewRequestDto.getInternOfferId());
         verify(internshipmanagerService).findById(offerReviewRequestDto.getInternshipmanagerId());
 
-        // Vérification des objets
+
         assertEquals(offerReviewRequestDto.getInternOfferId(), returnedDto.getId());
         assertEquals(offerReviewRequestDto.getState(), returnedDto.getState());
 
-        // TODO: Vous pouvez ajouter d'autres assertions pour vérifier d'autres champs si nécessaire.
+
     }
 
 

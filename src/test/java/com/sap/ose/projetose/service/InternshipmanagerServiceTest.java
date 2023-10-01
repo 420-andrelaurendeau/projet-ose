@@ -30,17 +30,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class InternshipmanagerServiceTest {
 
+    private final InternshipmanagerDto internshipmanagerDto = new InternshipmanagerDto();
     @Autowired
     private InternshipmanagerService internshipmanagerService;
-
     @MockBean
     private InternshipmanagerRepository internshipmanagerRepository;
     @MockBean
     private ProgrammeService programmeService;
     @MockBean
     private ProgrammeRepository programmeRepository;
-    private final InternshipmanagerDto internshipmanagerDto = new InternshipmanagerDto();
-
 
     @BeforeEach
     public void setUp() {
