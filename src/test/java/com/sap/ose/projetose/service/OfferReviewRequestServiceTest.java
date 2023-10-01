@@ -95,7 +95,7 @@ public class OfferReviewRequestServiceTest {
         when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(true);
 
         OfferAlreadyReviewException result = assertThrows(OfferAlreadyReviewException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
-        assertEquals("L'offre déjà review.", result.getMessage());
+        assertEquals("L'offre a déjà été revue", result.getMessage());
     }
 
     @Test

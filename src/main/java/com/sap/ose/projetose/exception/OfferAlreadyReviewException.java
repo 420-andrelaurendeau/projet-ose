@@ -6,6 +6,6 @@ public class OfferAlreadyReviewException extends RuntimeException {
     }
 
     public OfferAlreadyReviewException() {
-        super("L'offre déjà review.");
+        super("L'offre a déjà été revue");
     }
 }

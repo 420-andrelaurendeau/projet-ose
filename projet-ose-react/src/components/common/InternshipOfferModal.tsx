@@ -4,6 +4,17 @@ import {saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
 import {validateDescription} from "../../utils/validation/validationInteOfferForm";
 import {InterOfferJob} from "../../model/IntershipOffer";
 
+const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({ errorMessage, onClose }) => {
+    return (
+        <div className="fixed z-60 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white rounded-lg p-6 w-full max-w-md dark:bg-dark">
+                <h2 className='font-bold text-center text-red-600 text-xl dark:text-offwhite'>Erreur</h2>
+                <p className="mt-4">{errorMessage}</p>
+                <button onClick={onClose} className="mt-4 p-2 w-full bg-blue-500 text-white rounded-md">Fermer</button>
+            </div>
+        </div>
+    );
+}
 
 const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, handleCloseModal, onUpdateInternshipOffer}) => {
     const {t} = useTranslation();
@@ -11,6 +22,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
         comment: "", state: "", internOfferId: 0, internshipmanagerId: 1,
     });
 
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const [theme, setTheme] = useState("light");
     const [errors, setErrors] = useState<{
@@ -57,9 +69,12 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
             console.log(response)
             onUpdateInternshipOffer(response);
             handleCloseModal();
-        } catch (error) {
+        } catch (error : any) {
             console.error('Erreur lors de l\'approbation de l\'offre:', error);
+            handleCloseModal();
+            setErrorMessage(error.response.data);
         }
+
     }
 
     async function handleDecline() {
@@ -94,8 +109,10 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
             onUpdateInternshipOffer(response);
             handleCloseModal();
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Erreur lors du refus de l\'offre:', error);
+            handleCloseModal();
+            setErrorMessage(error.response.data);
         }
     }
 
@@ -110,6 +127,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
 
 
     return (<>
+        {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)} />}
         {isModalOpen && (<div className='flex justify-center items-center min-h-screen'>
 
             <div
