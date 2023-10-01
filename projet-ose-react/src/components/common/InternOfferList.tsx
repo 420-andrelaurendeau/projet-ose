@@ -1,60 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {InterOfferJob} from "../../model/IntershipOffer";
 import useModal from "../../hooks/useModal";
 import InternshipOfferModal from "./InternshipOfferModal";
 import Switcher from "../../utils/switcher";
+import {getAllPendingInterOfferJob} from "../../api/InterOfferJobAPI";
+
 
 function GSInternOfferList() {
 
-
-    const listInternOffer: InterOfferJob[] = [
-        {
-            id: 1,
-            title: "Développeur Frontend",
-            location: "Paris",
-            description: "Concevoir des interfaces utilisateur intuitives et esthétiques. hoijiojvb iusd  i qiuhoiyu y ytf giu h iuh uh iu hiuh iuh ihiuh ihiuhihi hiuhihih iuhih ih hihihih ihihihi hihi hihihiuuig gyuguyguyg ytfyfytf yfytfytfy tfytfyt fyfyfy fytfytfyiuhoij hiuhih hihi hihih ihihi hih",
-            salaryByHour: 25,
-            startDate: new Date('2023-10-01'),
-            endDate: new Date('2024-10-01'),
-            internshipCandidates: [],
-            programmeId: 1,
-            programmeNom: "Génie logiciel",
-            employeurId: 1,
-            employeurNom: "Jean",
-            employeurPrenom: "Dupont",
-            employeurEntreprise: "Google",
-            file: {
-                id: 1,
-                fileName: "offre1.pdf",
-                content: "Contenu du fichier pour l'offre 1",
-                isAccepted: true
-            }
-        },
-        {
-            id: 2,
-            title: "Designer UI/UX",
-            location: "Lyon",
-            description: "Concevoir des interfaces utilisateur intuitives et esthétiques. hoijiojvb iusd  i qiuhoiyu y ytf giu h iuh uh iu hiuh iuh ihiuh ihiuhihi hiuhihih iuhih ih hihihih ihihihi hihi hihihiuuig gyuguyguyg ytfyfytf yfytfytfy tfytfyt fyfyfy fytfytfyiuhoij hiuhih hihi hihih ihihi hih",
-            salaryByHour: 30,
-            startDate: new Date('2023-11-15'),
-            endDate: new Date('2024-11-15'),
-            programmeId: 1,
-            programmeNom: "Génie logiciel",
-            employeurId: 1,
-            employeurNom: "Jean",
-            employeurPrenom: "Dupont",
-            employeurEntreprise: "Google",
-            file: {
-                id: 2,
-                fileName: "offre2.pdf",
-                content: "Contenu du fichier pour l'offre 2",
-                isAccepted: false
-            }
-        },
-    ];
-
+    const [listInternOffer, setListInternOffer] = React.useState<InterOfferJob[]>([]);
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
     const [idInternOffer, setIdInternOffer] = React.useState<Number>(0);
+    const [forceUpdate, setForceUpdate] = React.useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getAllPendingInterOfferJob();
+                console.log(data.map((item: InterOfferJob) => console.log(item.id)));
+                setListInternOffer(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des offres:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     const handleClick = (id: Number) => {
         setIdInternOffer(id);
 
@@ -62,6 +34,15 @@ function GSInternOfferList() {
         handleOpenModal();
 
     }
+
+    const updateInternshipOffer = (updatedOffer: InterOfferJob) => {
+        console.log("dans la fonction update")
+        setListInternOffer(prevList => prevList.map(offer =>
+            offer.id === updatedOffer.id ? updatedOffer : offer
+        ));
+        setForceUpdate(!forceUpdate); // Force un re-rendu
+    };
+
 
     return (
         <div className="items-center">
@@ -81,14 +62,9 @@ function GSInternOfferList() {
                                 <div className="mb-2">
                                     <p className="font-bold dark:text-offwhite"> {item.programmeNom} </p>
                                 </div>
-                                <div className="flex">
-                                    <p className="font-bold dark:text-offwhite"> {item.startDate!.toLocaleDateString()} </p>
-                                    <p className="font-bold dark:text-offwhite mx-2">-</p>
-                                    <p className="font-bold dark:text-offwhite"> {item.endDate!.toLocaleDateString()} </p>
-                                </div>
                             </div>
                             <div className="flex-1 pl-2">
-                                <p className="font-bold dark:text-offwhite"> {item.description} </p>
+                                <p className="font-bold text-black dark:text-offwhite"> {item.state} </p>
                             </div>
                         </div>
                         </>
@@ -99,7 +75,9 @@ function GSInternOfferList() {
                 isModalOpen={isModalOpen}
                 handleCloseModal={handleCloseModal}
                 internshipOffer={listInternOffer.find((item: InterOfferJob) => item.id === idInternOffer)}
+                onUpdateInternshipOffer={updateInternshipOffer} // Passez la fonction ici
             />
+
         </div>
     )
 }
