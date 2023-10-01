@@ -58,7 +58,7 @@ public class OfferReviewRequestControllerTest {
                 .perform(requestBuilder);
 
         resultActions.andExpect(status().isConflict())
-                .andExpect(content().string(containsString("L'offre déjà approuvée.")));
+                .andExpect(content().string(containsString("L'offre a déjà été revue")));
     }
 
     @Test
