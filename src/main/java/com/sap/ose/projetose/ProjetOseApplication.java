@@ -1,10 +1,12 @@
 package com.sap.ose.projetose;
 
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
+import com.sap.ose.projetose.service.InternshipmanagerService;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +29,7 @@ public class ProjetOseApplication implements CommandLineRunner {
     @Autowired
     ProgrammeRepository programmeRepository;
     @Autowired
-    InternOfferRepository internOfferRepository;
+    InternshipmanagerService internshipmanagerService;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
@@ -43,6 +45,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         Etudiant etudiant3 = new Etudiant("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", "Informatique");
         Employeur employeur = new Employeur("Patrique", "Lemieux", "4383006589", "lemieux@gmail.com", "popo", "SAaP");
         Employeur employeur2 = new Employeur("Pierre", "Lacroix", "4387996589", "lacroix@gmail.com", "popo", "SAP");
+        InternshipmanagerDto internshipmanager = new InternshipmanagerDto("Jean", "Dupont", "4387996589", "dadda", 9, 1);
+
+        internshipmanagerService.save(internshipmanager);
         oseService.saveEtudiant(etudiant);
         oseService.saveEtudiant(etudiant2);
         oseService.saveEtudiant(etudiant3);
@@ -51,7 +56,7 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         File file = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",true);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
-        InternOffer internOffer = new InternOffer("ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING);
+        InternOffer internOffer = new InternOffer("ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING, null);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
         System.out.println("Done");

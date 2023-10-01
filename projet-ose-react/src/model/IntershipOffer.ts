@@ -11,6 +11,7 @@ export interface InterOfferJob {
     endDate?: Date;
     internshipCandidates?: any[]; //TODO à remplacer par le bon type
     file?: FileEntity;
+    state: string;
     programmeId: number;
     programmeNom?: String;
     employeurId: number;

@@ -1,9 +1,8 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.dto.ProgrammeDto;
+import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.springframework.stereotype.Service;
@@ -26,10 +25,10 @@ public class InternshipCandidatesService {
         InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
 
         EtudiantDto etudiantDto = oseService.getEtudiantById(internshipCandidatesDto.getEtudiant_id());
-        InternOfferDto internOfferDto = internOfferService.getInterOfferById(internshipCandidatesDto.getInterOfferJob_id());
+        InternOffer internOfferDto = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
 
         internshipCandidates.setEtudiant(etudiantDto.fromDto());
-        internshipCandidates.setInternOffer(internOfferDto.fromDto());
+        internshipCandidates.setInternOffer(internOfferDto);
         return new InternshipCandidatesDto(internshipCandidatesRepository.save(internshipCandidates));
     }
 }

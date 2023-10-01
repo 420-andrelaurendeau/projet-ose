@@ -22,8 +22,9 @@ const initialFormState: InterOfferJob = {
     salaryByHour: 0,
     startDate: undefined,
     endDate: undefined,
+    state: '',
     programmeId: 0,
-    employeurId: 0,
+    employeurId: 5,
     file: undefined,
 };
 
