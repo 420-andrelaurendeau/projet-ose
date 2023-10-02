@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faCircleUser, faXmark} from "@fortawesome/free-solid-svg-icons";
 import Sidebar from "./Sidebar";
 import {useTranslation} from "react-i18next";
+import SidebarEtudiant from "./SidebarEtudiant";
 
 function Header(props: any) {
     const {i18n} = useTranslation();
@@ -65,7 +66,8 @@ function Header(props: any) {
                 >
                     {(ref) => (
                         <div className="md:hidden" id="mobile-menu">
-                            <Sidebar user={props.user}/>
+                            {props.user.matricule && <SidebarEtudiant user={props.user}/>}
+                            {!props.user.matricule && <Sidebar user={props.user}/>}
                         </div>
                     )}
                 </Transition>

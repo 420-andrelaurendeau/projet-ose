@@ -25,8 +25,7 @@ export default function Sidebar(props: any) {
                                 <div className={option === "offer" ? "w-2 bg-blue rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/etudiantStage"
-                                    state={props.user}
+                                    to="/homeEmployeur/offer"
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
                                 >
                                     <FontAwesomeIcon icon={faFileLines} color={option === "offer" ? "black" : "grey"} size="lg"/>
