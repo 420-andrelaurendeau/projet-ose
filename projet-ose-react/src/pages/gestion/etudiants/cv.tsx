@@ -7,25 +7,27 @@ function EvaluerCV() {
     const [displayCV, setDisplayCV] = useState(false);
     const [displayDisplayAssessmentPopup, setDisplayAssessmentPopup] = useState(false);
     return (
-        <div className="md:p-16 md:m-16 p-4 m-4">
-            <h1 className="font-extrabold text-2xl">CVs &aacute; &Eacute;valuer</h1>
-            <div onClick={() => {
-                setDisplayCV(true)
-            }}
-                 className="mx-12 my-16 px-7 py-3 bg-slate-50 rounded-3xl">
-                <div className="w-full relative flex flex-wrap items-center justify-between">
-                    <p className="px-2">Nom, Prenom</p>
-                    <p className="px-2">Formation</p>
+        <>
+            <div className="md:p-16 md:m-16 p-4 m-4">
+                <h1 className="font-extrabold text-2xl">CVs &aacute; &Eacute;valuer</h1>
+                <div onClick={() => {
+                    setDisplayCV(true)
+                }}
+                     className="mx-12 my-16 px-7 py-3 bg-slate-50 rounded-3xl">
+                    <div className="w-full relative flex flex-wrap items-center justify-between">
+                        <p className="px-2">Nom, Prenom</p>
+                        <p className="px-2">Formation</p>
+                    </div>
+                    <p className="px-2">Matricule</p>
+                    <br/>
+                    <div className="w-full relative flex flex-wrap items-center justify-between">
+                        <p className="px-2">Nom du Document</p>
+                        <p className="px-2">Date de Remise</p>
+                    </div>
+                    <br/>
+                    <h1 className="text-lg font-bold">Commentaire:</h1>
+                    <p>Commentaire</p>
                 </div>
-                <p className="px-2">Matricule</p>
-                <br/>
-                <div className="w-full relative flex flex-wrap items-center justify-between">
-                    <p className="px-2">Nom du Document</p>
-                    <p className="px-2">Date de Remise</p>
-                </div>
-                <br/>
-                <h1 className="text-lg font-bold">Commentaire:</h1>
-                <p>Commentaire</p>
             </div>
 
             {
