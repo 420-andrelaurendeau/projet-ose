@@ -2,14 +2,22 @@ import React, {useEffect, useState} from "react";
 import Nav from "../components/common/Nav";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
-import {NavLink, Outlet, Route, useLocation} from "react-router-dom";
-import {getInterOfferJob} from "../api/InterOfferJobAPI";
+import {NavLink, Outlet, Route, useLocation, useOutletContext} from "react-router-dom";
+import {getInterOfferJob, UpdateOffers} from "../api/InterOfferJobAPI";
 
 function EmployeurHomePage() {
     const location = useLocation();
     const user = location.state;
     const [offers, setOffers] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(true)
 
+    const props = {
+        "isModalOpen" : isModalOpen,
+        "setIsModalOpen" : setIsModalOpen,
+        "offers" : offers,
+        "setOffers" : setOffers,
+        "userId" : 4 //todo: change this to user.id
+    }
 
     const user1 = {
         "id": 4,
@@ -22,19 +30,8 @@ function EmployeurHomePage() {
     }
 
     useEffect(() => {
-        const loadOffers = async () => {
-            try {
-                const data = await getInterOfferJob(4);
-                console.log(data);
-                setOffers(data);
-            } catch (error) {
-                console.error('Erreur lors du chargement des programmes:', error);
-            }
-        };
-
-        loadOffers().then(r => console.log(r));
+        UpdateOffers(user1.id,setOffers)
     }, []);
-    const [isModalOpen, setIsModalOpen] = useState(true)
 
     return (
         <div className="min-h-screen h-full bg-darkwhite">
@@ -47,7 +44,7 @@ function EmployeurHomePage() {
                 </div>
             </header>
             <main>
-                <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto py-6 xs:px-6 lg:px-8">
                     <div className="w-full hidden md:block overflow-x-auto">
                             <div className="flex-row flex md:justify-center space-x-4">
                                 <NavLink
@@ -114,7 +111,7 @@ function EmployeurHomePage() {
                     {/* <!-- Replace with your content --> */}
                     <div className="w-full">
                         <Outlet
-                            context={[isModalOpen, setIsModalOpen,offers]}
+                            context={props}
                         />
                     </div>
                     {/* <!-- /End replace --> */}

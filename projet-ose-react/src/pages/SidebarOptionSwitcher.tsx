@@ -12,14 +12,14 @@ function SidebarOptionSwitcher() {
         <div className="bg-darkwhite w-full">
             <div className={option != "offer" ? "max-md:hidden":"hidden"}>
                 <EmployeurOffer
-                    offers={props[2]}
+                    offers={props.offers}
                 />
             </div>
 
             {
                 option === "offer" ?
                     <EmployeurOffer
-                        offers={props[2]}
+                        offers={props.offers}
                     />
                     :
                     option === "candidature" ?
@@ -33,8 +33,10 @@ function SidebarOptionSwitcher() {
                                 :
                                 option === "newOffer" ?
                                     <InternshipOfferForm
-                                        isModalOpen={props[0]}
-                                        setIsModalOpen={props[1]}
+                                        isModalOpen={props.isModalOpen}
+                                        setIsModalOpen={props.setIsModalOpen}
+                                        setOffers={props.setOffers}
+                                        userId={props.userId}
                                     />
                                     :
                                     <p>Home</p>

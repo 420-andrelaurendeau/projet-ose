@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {InterOfferJob} from "../../model/IntershipOffer";
 import {Programme} from "../../model/Programme";
-import {saveInterOfferJob} from "../../api/InterOfferJobAPI";
+import {saveInterOfferJob, UpdateOffers} from "../../api/InterOfferJobAPI";
 import {getProgrammes} from "../../api/ProgrammeAPI";
 import {
     validateDescription,
@@ -14,6 +14,8 @@ import {
     validateTitle
 } from "../../utils/validation/validationInteOfferForm";
 import {NavLink} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUpload} from "@fortawesome/free-solid-svg-icons";
 
 
 const initialFormState: InterOfferJob = {
@@ -28,9 +30,9 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
+const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen, setOffers, userId}) => {
     const {t} = useTranslation();
-
+    const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{
         title?: string,
         location?: string,
@@ -68,6 +70,10 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
 
     };
 
+    const handleClick = () => {
+        ref.current?.click();
+    };
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
@@ -95,6 +101,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
             const savedInterOfferJob = await saveInterOfferJob(formState);
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
             setFormState(initialFormState);
+            UpdateOffers(userId,setOffers)
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);
         }
@@ -154,7 +161,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
 
 
     return (
-        <div className={ isModalOpen ? "flex justify-center items-center min-h-screen " : "md:hidden flex justify-center items-center min-h-screen "}>
+        <div className={"md:hidden flex justify-center items-center min-h-screen max-sm:pt-24"}>
                 <div
                     className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 md:overflow-y-auto max-md:w-5/6">
 
@@ -262,26 +269,33 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen}) => {
                             </div>
 
                             {/* File field */}
+                            <div className="flex flex-col items-center justify-center">
                             <div
-                                className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5">
+                                className="bg-darkwhite h-48 w-4/5 dark:bg-softdark pb-5 cursor-pointer"
+                                onClick={handleClick}>
                                 <input
                                     name='file'
                                     type="file"
-                                    className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
+                                    className="hidden"
+                                    ref={ref}
                                     onChange={(e) => {
                                         handleFileChange(e);
                                     }}
                                     onLoad={() => handleValidation("file")}
-                                />
+                                >
+
+                                </input>
                                 <div className="flex flex-col items-center justify-center py-10 text-center">
+                                    <FontAwesomeIcon icon={faUpload} className="w-14 h-auto text-blue" />
                                     <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
                                     <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
-                                        <span
+                                        {" "} <span
                                             className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
                                     </p>
                                 </div>
 
                                 {renderError(errors.file)}
+                            </div>
                             </div>
                             {formState.file?.fileName && (<div className="mt-4 m-4">
                                 <p className="mb-2 dark:text-gray">{formState.file.fileName}</p>

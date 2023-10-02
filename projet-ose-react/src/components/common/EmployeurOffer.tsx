@@ -1,10 +1,10 @@
 
 export default function EmployeurOffer(props:any) {
     return (
-        <div className="flex flex-col mt-10">
-            <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div className=" overflow-hidden border border-gray sm:rounded-lg">
+        <div className="flex flex-col mt-14">
+            <div className=" xs:-mx-6 lg:-mx-8">
+                <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
+                    <div className=" overflow-auto border border-gray xs:rounded-lg">
                         <table className="w-full divide-y divide-gray">
                             <thead className="bg-blue ">
                             <tr>

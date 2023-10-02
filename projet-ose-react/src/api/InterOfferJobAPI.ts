@@ -47,3 +47,16 @@ export const getInterOfferJob = async (id: number) => {
 
 
 }
+
+export function UpdateOffers(id:number,setOffers:any){
+    const loadOffers = async () => {
+        try {
+            const data = await getInterOfferJob(id);
+            console.log(data);
+            setOffers(data);
+        } catch (error) {
+            console.error('Erreur lors du chargement des programmes:', error);
+        }
+    };
+    loadOffers().then(r => console.log(r))
+}
