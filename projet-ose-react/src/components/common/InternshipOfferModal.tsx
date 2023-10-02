@@ -26,10 +26,13 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
 
     const [theme, setTheme] = useState("light");
     const [errors, setErrors] = useState<{
-        description?: string,
+        comment?: string,
     }>({});
     function handleFormChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+
+
         const {name, value} = e.target;
+
         setFormState(prevState => ({
             ...prevState, [name]: value
         }));
@@ -81,21 +84,27 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
 
         if (!formStateOffer.comment.trim()) {
             setErrors(prevErrors => ({
-                ...prevErrors, description: 'Veuillez fournir un commentaire pour refuser l\'offre.'
+                ...prevErrors, comment:  t("formField.InternshipOfferModal.validation.required")
             }));
             return;
         }
 
-        const descriptionError = validateDescription(formStateOffer.comment, t);
-        if (descriptionError) {
+
+        if (formStateOffer.comment.length < 10) {
             setErrors(prevErrors => ({
-                ...prevErrors, description: descriptionError
+                ...prevErrors, comment: t("formField.InternshipOfferModal.validation.minLenght")
             }));
             return;
-        } else {
+        } else if (formStateOffer.comment.length > 1000) {
             setErrors(prevErrors => ({
-                ...prevErrors, description: undefined
+                ...prevErrors, comment: t("formField.InternshipOfferModal.validation.maxLenght")
             }));
+            return;
+        } else if (/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/.test(formStateOffer.comment.toLowerCase())) {
+            setErrors(prevErrors => ({
+                ...prevErrors, comment: t("formField.InternshipOfferModal.validation.scriptDetected")
+            }));
+            return;
         }
 
         const updatedFormState = {
@@ -212,7 +221,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
                               onChange={(e) => handleFormChange(e)}
                               placeholder={t("formField.InternshipOfferModal.placeholder")}></textarea>
 
-                    {renderError(errors.description)}
+                    {renderError(errors.comment)}
                     {/* Buttons */}
                     <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5 ">
                         <button

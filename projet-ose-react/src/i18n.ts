@@ -30,7 +30,7 @@ i18n
                         validation : {
                             required : 'The title of the job is required',
                             minLenght : 'The title of the job must contain at least 5 characters',
-                            maxLenght : 'The title of the job must contain at most 50 characters',
+                            maxLenght : 'The title of the job must contain at most 20 characters',
                             badCharactere : 'The title of the job contains unauthorized characters'
                         }
                     },
@@ -42,7 +42,8 @@ i18n
                             required : 'The description of the job is required',
                             minLenght : 'The description of the job must contain at least 10 characters',
                             maxLenght : 'The description of the job must contain at most 1000 characters',
-                            badCharactere: "The description of the job contains unauthorized characters"
+                            badCharactere: "The description of the job contains unauthorized characters",
+                            scriptDetected: "The description of the job contains a script."
                         }
                     },
                     location: {
@@ -52,7 +53,7 @@ i18n
                         validation : {
                             required : 'The location is required',
                             minLenght : 'The location must contain at least 5 characters',
-                            maxLenght : 'The location must contain at most 100 characters',
+                            maxLenght : 'The location must contain at most 20 characters',
                             badCharactere: "The location contains unauthorized characters"
                         }
                     },
@@ -107,6 +108,7 @@ i18n
                             required : 'Files are required',
                             toMuchFile: 'You can only upload 5 files maximum',
                             BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB',
+                            BadTypeFile: 'The fichier {{name}} have an extension no authorize.'
                         }
                     },
                     button: {
@@ -209,6 +211,13 @@ i18n
                     button: {
                         approved: "Approved",
                         refused: "Refused",
+                    },
+                    validation: {
+                        minLenght : 'The commentary must contain at least 10 characters',
+                        maxLenght : 'The commentary must contain at most 1000 characters',
+                        badCharactere: "The commentary contains unauthorized characters",
+                        scriptDetected: "The commentary contains a script.",
+                        required: 'The commentary is required',
                     }
                 },
                 InscriptionEmployeur:{
@@ -287,7 +296,7 @@ i18n
                         validation : {
                             required : 'Le titre de l\'offre d\'emploi est requis',
                             minLenght : 'Le titre doit comporter au moins 5 caractères.',
-                            maxLenght : 'Le titre ne doit pas dépasser 50 caractères.',
+                            maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
                             badCharactere : 'Le titre contient des caractères non autorisés.'
                         }
                     },
@@ -299,8 +308,8 @@ i18n
                             required : 'La description de l\'offre d\'emploi est requise',
                             minLenght : 'La description doit comporter au moins 10 caractères.',
                             maxLenght : 'La description ne doit pas dépasser 1000 caractères.',
-                            badCharactere: "La localisation contient des caractères non autorisés."
-
+                            badCharactere: "La description contient des caractères non autorisés.",
+                            scriptDetected: "La description contient un script."
                         }
                     },
                     location: {
@@ -310,7 +319,7 @@ i18n
                         validation : {
                             required : 'Le lieu est requis',
                             minLenght : 'La localisation doit comporter au moins 5 caractères.',
-                            maxLenght : 'La localisation ne doit pas dépasser 100 caractères.',
+                            maxLenght : 'La localisation ne doit pas dépasser 20 caractères.',
                             badCharactere: "La localisation contient des caractères non autorisés."
                         }
                     },
@@ -366,7 +375,6 @@ i18n
                         placeholder : 'Télécharger des fichiers',
                         validation : {
                             required : 'Les fichiers sont requis',
-                            toMuchFile: 'Vous ne pouvez télécharger que 5 fichiers au maximum.',
                             BigSizeFile: 'Le fichier {{name}} dépasse la taille maximale de 5 Mo.',
                             BadTypeFile: 'Le fichier {{name}} a une extension non autorisée.'
                         }
@@ -383,6 +391,17 @@ i18n
                 InternshipOfferModal: {
                     commentary: "Commentaire",
                     placeholder: "Ajouter un commentaire",
+                    button: {
+                        approved: "Approuver",
+                        refused: "Refuser",
+                    },
+                    validation: {
+                        minLenght : 'Le commentaire doit comporter au moins 10 caractères.',
+                        maxLenght : 'Le commentaire ne doit pas dépasser 1000 caractères.',
+                        badCharactere: "Le commentaire contient des caractères non autorisés.",
+                        scriptDetected: "La commentaire contient un script.",
+                        required: "Le commentaire est requis"
+                    }
                 },
                 InscriptionFormEtudiant : {
                     title : {
