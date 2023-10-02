@@ -161,7 +161,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen, setOff
 
 
     return (
-        <div className={"md:hidden flex justify-center items-center min-h-screen max-sm:pt-24"}>
+        <div className="flex justify-center items-center min-h-screen max-md:pt-24">
                 <div
                     className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 md:overflow-y-auto max-md:w-5/6">
 
