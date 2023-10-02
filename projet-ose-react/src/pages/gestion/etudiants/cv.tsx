@@ -8,9 +8,6 @@ function EvaluerCV() {
     const [displayDisplayAssessmentPopup, setDisplayAssessmentPopup] = useState(false);
     return (
         <>
-            <nav className="w-full relative flex flex-wrap items-center justify-center px-2 py-3 bg-gray-500 mb-3">
-                <h1>Header Commun ici</h1>
-            </nav>
             <h1 className="font-extrabold text-2xl">EvaluerCV</h1>
             <div onClick={() => {
                 setDisplayCV(true)
