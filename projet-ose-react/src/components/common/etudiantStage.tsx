@@ -19,7 +19,7 @@ function etudiantStage(props: any) {
     ]);
 
     const fetchOffers = () => {
-        axios.get(`http://localhost:8080/api/interOfferJob/Offers`)
+        axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
             .then(res => {
                 setOffers(res.data);
                 console.log(res.data);
