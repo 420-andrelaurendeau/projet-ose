@@ -20,7 +20,7 @@ function EvaluerCV() {
                     <p className="basis-full md:basis-1/2 flex-grow">Nom du Document</p>
                     <p className="basis-full md:basis-1/2 flex-grow md:text-end">Date de Remise</p>
                     <h1 className="text-lg font-bold basis-full flex-grow mt-4">Commentaire:</h1>
-                    <p className=" basis-full flex-grow">Commentaire</p>
+                    <p className="basis-full flex-grow">Commentaire</p>
                 </div>
             </div>
 
@@ -38,7 +38,7 @@ function EvaluerCV() {
                                 setDisplayCV(false)
                             }}></div>
                             <div
-                                className="absolute bottom-0 bg-white w-[90vw]  sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279] z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                className="absolute bottom-0 bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279] z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                                 Je suis un document.
                             </div>
                         </>
