@@ -13,20 +13,14 @@ function EvaluerCV() {
                 <div onClick={() => {
                     setDisplayCV(true)
                 }}
-                     className="mx-12 my-16 px-7 py-3 bg-slate-50 rounded-3xl">
-                    <div className="w-full relative flex flex-wrap items-center justify-between">
-                        <p className="px-2">Nom, Prenom</p>
-                        <p className="px-2">Formation</p>
-                    </div>
-                    <p className="px-2">Matricule</p>
-                    <br/>
-                    <div className="w-full relative flex flex-wrap items-center justify-between">
-                        <p className="px-2">Nom du Document</p>
-                        <p className="px-2">Date de Remise</p>
-                    </div>
-                    <br/>
-                    <h1 className="text-lg font-bold">Commentaire:</h1>
-                    <p>Commentaire</p>
+                     className="mx-12 my-16 px-7 py-3 bg-slate-50 rounded-3xl flex flex-wrap">
+                    <p className="basis-full flex-grow pb-2 md:pb-0">Nom, Prenom</p>
+                    <p className="basis-full md:basis-1/2">Formation</p>
+                    <p className="basis-full md:basis-1/2 md:text-end pb-2 md:pb-0">Matricule</p>
+                    <p className="basis-full md:basis-1/2 flex-grow">Nom du Document</p>
+                    <p className="basis-full md:basis-1/2 flex-grow md:text-end">Date de Remise</p>
+                    <h1 className="text-lg font-bold basis-full flex-grow mt-4">Commentaire:</h1>
+                    <p className=" basis-full flex-grow">Commentaire</p>
                 </div>
             </div>
 
