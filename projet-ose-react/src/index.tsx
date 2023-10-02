@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import './tailwind.css';
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
@@ -11,6 +10,7 @@ import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import InternOfferPage from "./pages/InternOfferPage";
+import EvaluateStudentCvPage from "./pages/gestion/etudiants/cv";
 
 
 
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
     {
         path: "/InternOffer",
         element: <InternOfferPage/>
+    },
+    {
+        path: "/gestion/etudiants/cv",
+        element: <EvaluateStudentCvPage/>
     },
 
 ])
