@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,9 +86,10 @@ public class InternOfferService {
         return internOfferDtos;
     }
 
-    public List<InternOfferDto> getInternOfferByEmployeurId(Long id){
+    @Transactional
+    public List<InternOfferDto> getInternOfferByEmployeurEmail(String email){
         List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        List<InternOffer> internOffers = employeurRepository.findById(id).get().getInternOffers();
+        List<InternOffer> internOffers = employeurRepository.findByEmail(email).get().getInternOffers();
         for(InternOffer internOffer : internOffers){
                 internOfferDtos.add(new InternOfferDto(internOffer));
         }

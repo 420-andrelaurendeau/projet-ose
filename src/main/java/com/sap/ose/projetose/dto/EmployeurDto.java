@@ -17,6 +17,11 @@ public class EmployeurDto extends UtilisateurDto {
         this.entreprise = entreprise;
     }
 
+    public EmployeurDto(int id, String nom, String prenom, String phone, String email, String entreprise) {
+        super(id,nom, prenom, phone, email);
+        this.entreprise = entreprise;
+    }
+
     public EmployeurDto(Employeur employeur){
         super(employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail());
         this.entreprise = employeur.getEntreprise();

@@ -80,6 +80,7 @@ public class OseService {
 
         employeurs.get().forEach(employeur -> {
             EmployeurDto employeurDto = new EmployeurDto();
+            employeurDto.setId(employeur.getId());
             employeurDto.setNom(employeur.getNom());
             employeurDto.setPrenom(employeur.getPrenom());
             employeurDto.setPhone(employeur.getPhone());

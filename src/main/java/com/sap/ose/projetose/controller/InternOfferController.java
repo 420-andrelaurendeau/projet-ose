@@ -32,9 +32,9 @@ public class InternOfferController {
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/OffersEmp/{id}")
-    public List<InternOfferDto> getInternOfferJob(@PathVariable Long id){
-        return offerJobService.getInternOfferByEmployeurId(id);
+    @GetMapping("/OffersEmp/{email}")
+    public List<InternOfferDto> getInternOfferJob(@PathVariable String email){
+        return offerJobService.getInternOfferByEmployeurEmail(email);
     }
 }
 
