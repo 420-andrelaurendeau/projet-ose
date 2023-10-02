@@ -38,7 +38,7 @@ export const validateDescription = (description: string, t: Function) => {
         errorMsg = t('formField.InternshipOfferForm.description.validation.minLenght');
     } else if (description.length > 500) {
         errorMsg = t('formField.InternshipOfferForm.description.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&]/.test(description)) {
+    } else if (/[^a-zA-Z0-9\s]/.test(description)) {
         errorMsg = t('formField.InternshipOfferForm.description.validation.badCharactere');
     }
 
@@ -100,7 +100,7 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
 
 export const validateFile = (file: FileEntity, t: Function) => {
     const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
-    const allowedExtensions = [".pdf"]; // Vous pouvez ajuster ceci selon vos besoins
+    const allowedExtensions = [".pdf"];
     let errorMsg = "";
 
     if (!file || !file.fileName) {
