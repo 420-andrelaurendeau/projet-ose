@@ -262,7 +262,13 @@ i18n
                         text:'Registration employer'
                     }
 
-                }
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Intership Offer',
+                    }
+                },
             },
         }
       },
@@ -518,6 +524,12 @@ i18n
                         text:'Inscription Employeur'
                     }
 
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Offre stages',
+                    }
                 }
             },
         }

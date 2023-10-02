@@ -13,7 +13,7 @@ import {
     validateStartDate,
     validateTitle
 } from "../../utils/validation/validationInteOfferForm";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen, setOffers, userId}) => {
+const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, userEmail, user}) => {
     const {t} = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{
@@ -98,10 +98,10 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen, setOff
         e.preventDefault();
         try {
             console.log(formState);
-            const savedInterOfferJob = await saveInterOfferJob(formState);
+            const savedInterOfferJob = await saveInterOfferJob(formState, user.id);
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
             setFormState(initialFormState);
-            UpdateOffers(userId,setOffers)
+            setOffers((prevOffers: InterOfferJob[]) => ([...prevOffers, savedInterOfferJob]));
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);
         }
@@ -309,8 +309,9 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, setIsModalOpen, setOff
                                     Submit
 
                                 </button>
-                                <NavLink to="/homeEmployeur/offer"
+                                <NavLink to="/home/offer"
                                          className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
+                                         state={user}
                                     type="button" onClick= {() => setIsModalOpen(false)}>
 
                                         Close

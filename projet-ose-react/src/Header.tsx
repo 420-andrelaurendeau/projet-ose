@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import img from "././assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faCircleUser, faXmark} from "@fortawesome/free-solid-svg-icons";
-import SidebarEmployeurHome from "./SidebarEmployeurHome";
+import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink} from "react-router-dom";
 
-const Nav = (props:any) => {
+const Header = (props:any) => {
     const [isOpen, setIsOpen] = useState(false);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header");
@@ -87,4 +87,4 @@ const Nav = (props:any) => {
     );
 }
 
-export default Nav;
+export default Header;

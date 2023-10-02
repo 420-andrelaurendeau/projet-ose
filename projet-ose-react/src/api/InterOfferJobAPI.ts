@@ -11,7 +11,7 @@ const apiClient = axios.create({
     },
 });
 
-export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
+export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id:number) => {
     const interOfferJobDto = {
         title: interOfferJob.title,
         location: interOfferJob.location,
@@ -21,7 +21,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
         endDate: interOfferJob.endDate,
         programmeId: interOfferJob.programmeId!,
         file: interOfferJob.file,
-        employeurId: 4 //TODO à remplacer par le bon type
+        employeurId: id
     }
 
     try {
@@ -34,9 +34,9 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
     }
 };
 
-export const getInterOfferJob = async (id: number) => {
+export const getInterOfferJob = async (email: string) => {
     try {
-        const response = await apiClient.get('/OffersEmp/' + id);
+        const response = await apiClient.get('/OffersEmp/' + email);
         console.log(response.data);
         return response.data;
 
@@ -48,10 +48,10 @@ export const getInterOfferJob = async (id: number) => {
 
 }
 
-export function UpdateOffers(id:number,setOffers:any){
+export function UpdateOffers(email:string,setOffers:any){
     const loadOffers = async () => {
         try {
-            const data = await getInterOfferJob(id);
+            const data = await getInterOfferJob(email);
             console.log(data);
             setOffers(data);
         } catch (error) {

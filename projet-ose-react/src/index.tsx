@@ -12,6 +12,7 @@ import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
+import HomePage from "./pages/HomePage";
 
 
 if(window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/"){
@@ -32,11 +33,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <Navigate to={"/signIn"}/>,
+        element: <App/>,
     },
     {
-        path: "/home",
-        element: <SidebarOptionSwitcher/>
+        path: "/home/:option",
+        element: <HomePage/>,
     },
     {
         path: "/etudiantInscription",
@@ -45,16 +46,6 @@ const router = createBrowserRouter([
     {
         path: "/employeurInscription",
         element: <PageEmployeurInscription/>
-    },
-    {
-        path: "/homeEmployeur",
-        element: <EmployeurHomePage/>,
-        children: [
-            {
-                path: "/homeEmployeur/:option",
-                element: <SidebarOptionSwitcher/>,
-            },
-        ]
     },
 
 ])

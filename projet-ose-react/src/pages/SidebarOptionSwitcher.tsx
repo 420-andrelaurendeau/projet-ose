@@ -1,12 +1,19 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 
-function SidebarOptionSwitcher() {
-    let { option } = useParams()
-    const props:any = useOutletContext()
+export interface Props{
+    isModalOpen: boolean;
+    setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+    offers: never[];
+    setOffers: Dispatch<SetStateAction<never[]>>;
+    userEmail: any;
+    user: any;
+}
 
+function SidebarOptionSwitcher(props:Props) {
+    let { option } = useParams()
     return (
 
         <div className="bg-darkwhite w-full">
@@ -36,7 +43,8 @@ function SidebarOptionSwitcher() {
                                         isModalOpen={props.isModalOpen}
                                         setIsModalOpen={props.setIsModalOpen}
                                         setOffers={props.setOffers}
-                                        userId={props.userId}
+                                        userId={props.userEmail}
+                                        user={props.user}
                                     />
                                     :
                                     <p>Home</p>
