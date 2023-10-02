@@ -8,7 +8,7 @@ export interface Props{
     setIsModalOpen: Dispatch<SetStateAction<boolean>>;
     offers: never[];
     setOffers: Dispatch<SetStateAction<never[]>>;
-    userEmail: any;
+    userEmail: any; 
     user: any;
 }
 
