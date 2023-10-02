@@ -300,7 +300,17 @@ i18n
                     stage : {
                         name : 'stage',
                         text : 'Intership Offer',
+                    },
+                    sidebar : {
+                        stage : {
+                            name : 'stage',
+                            text : "Offer"
+                        }
                     }
+                },
+                Home : {
+                    name : 'home',
+                    text : 'Welcome to the home page : ',
                 }
             },
         }
@@ -595,7 +605,17 @@ i18n
                     stage : {
                         name : 'stage',
                         text : 'Offre stages',
+                    },
+                    sidebar : {
+                        stage : {
+                            name : 'stage',
+                            text : "Offre"
+                        }
                     }
+                },
+                Home : {
+                    name : 'home',
+                    text : 'Bienvenue sur la page d\'accueil : ',
                 }
             },
         }

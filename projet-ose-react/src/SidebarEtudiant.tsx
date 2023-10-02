@@ -2,9 +2,12 @@ import React, {useState} from "react";
 import {faCircleUser, faFileLines} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {NavLink, useParams} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 export default function SidebarEtudiant(props: any) {
     let { option } = useParams()
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header");
 
     return (
         <div className="fixed shadow">
@@ -30,7 +33,7 @@ export default function SidebarEtudiant(props: any) {
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
                                 >
                                     <FontAwesomeIcon icon={faFileLines} color={option === "offer" ? "black" : "grey"} size="lg"/>
-                                    <p className={option == "offer" ? "text-black" : "text-gray"}>Offer</p>
+                                    <p className={option == "offer" ? "text-black" : "text-gray"}>{fields.sidebar.stage.text}</p>
                                 </NavLink>
                             </li>
                         </ul>
