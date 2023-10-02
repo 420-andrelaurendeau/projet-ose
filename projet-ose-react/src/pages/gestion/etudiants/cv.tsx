@@ -38,7 +38,7 @@ function EvaluerCV() {
                                 setDisplayCV(false)
                             }}></div>
                             <div
-                                className="absolute bottom-0 bg-white h-[90%] aspect-[216/279] z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                                className="absolute bottom-0 bg-white w-[90vw]  sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279] z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                                 Je suis un document.
                             </div>
                         </>
@@ -54,9 +54,13 @@ function EvaluerCV() {
                             className="absolute bottom-0 bg-white h-3/5 w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                             <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV: NOM_DU_CV</h1>
                             <div className="w-full flex-start flex">
-                                <p>Nom, Prenom</p>
-                                <p>Formation</p>
-                                <input type="text" className="flex-1"/>
+                                <div className="w-full relative flex flex-wrap items-center justify-between">
+                                    <p className="px-2 w-full">Nom, Prenom</p>
+                                    <p className="px-2 w-full">Formation</p>
+                                    <p className="px-2 w-full">Matricule</p>
+                                    <input type="text" className="w-full outline-1"/>
+                                </div>
+                                <br/>
                                 <hr/>
                             </div>
                         </div>
