@@ -5,7 +5,7 @@ import {faFileSignature} from '@fortawesome/free-solid-svg-icons'
 
 function EvaluerCV() {
     const [displayCV, setDisplayCV] = useState(false);
-    const [displayDisplayAssessmentPopup, setDisplayAssessmentPopup] = useState(false);
+    const [displayAssessmentPopup, setDisplayAssessmentPopup] = useState(false);
     return (
         <>
             <div className="md:p-16 md:m-16 p-4 m-4">
@@ -51,7 +51,7 @@ function EvaluerCV() {
                     ) : null
             }
             {
-                displayDisplayAssessmentPopup ? (
+                displayAssessmentPopup ? (
                     <>
                         <div className="absolute bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() => {
                             setDisplayAssessmentPopup(false)
