@@ -4,7 +4,7 @@ export default function EmployeurOffer(props:any) {
         <div className="flex flex-col mt-14">
             <div className=" xs:-mx-6 lg:-mx-8">
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
-                    <div className=" overflow-auto border border-gray xs:rounded-lg">
+                    <div className=" overflow-auto border border-gray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray">
                             <thead className="bg-blue ">
                             <tr>

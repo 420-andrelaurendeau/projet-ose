@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
 function Home(props:any) {
     console.log(props.user)
     return (
        <div className="min-h-screen h-full bg-darkwhite">
-           <Header user={props.user}/>
+           <Header
+               user={props.user}
+           />
            {
                 props.user.matricule ?
                     <div className="w-full h-screen flex flex-col items-center justify-center">

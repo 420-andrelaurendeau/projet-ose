@@ -30,7 +30,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, userEmail, user}) => {
+const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) => {
     const {t} = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{
@@ -309,13 +309,15 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, userEmai
                                     Submit
 
                                 </button>
-                                <NavLink to="/home/offer"
-                                         className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
-                                         state={user}
-                                    type="button" onClick= {() => setIsModalOpen(false)}>
-
-                                        Close
-
+                                <NavLink
+                                    to="/home/offer"
+                                    className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
+                                    state={user}
+                                    type="button"
+                                    onClick= {() =>
+                                        setIsModalOpen(false)
+                                    }>
+                                    Close
                                 </NavLink>
 
                             </div>

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "././assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
@@ -7,24 +6,17 @@ import {faBars, faCircleUser, faXmark} from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink} from "react-router-dom";
+import {useState} from "react";
 
 const Header = (props:any) => {
-    const [isOpen, setIsOpen] = useState(false);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header");
-    interface FormData {
-        nom: string;
-        prenom: string;
-        email: string;
-        telephone: string;
-        entreprise: string;
-        programme: string;
-    }
+    const [isOpen, setIsOpen] = useState(false);
     return (
         <div>
             {
                 isOpen ?
-                    <div className="fixed w-screen h-screen backdrop-blur-sm"/>
+                    <div className="fixed w-screen h-screen backdrop-blur-sm md:hidden"/>
                     : null
             }
             <div className="fixed w-full">
