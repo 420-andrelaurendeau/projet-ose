@@ -52,7 +52,7 @@ function EvaluerCV() {
                         }}></div>
                         <div
                             className="absolute bottom-0 bg-white h-3/5 w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                            <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV</h1>
+                            <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV: NOM_DU_CV</h1>
                             <div className="w-full flex-start flex">
                                 <p>Nom, Prenom</p>
                                 <p>Formation</p>
