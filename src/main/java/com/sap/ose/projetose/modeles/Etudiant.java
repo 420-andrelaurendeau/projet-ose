@@ -26,22 +26,22 @@ public class Etudiant extends Utilisateur{
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "etudiant_id")
-    private List<InternshipCandidates> internships;
+    private List<InternshipCandidates> internshipsCandidate;
 
 
-    public Etudiant(String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internships) {
+    public Etudiant(String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internshipsCandidate) {
         super(nom, prenom, telephone, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = "";
-        this.internships = internships;
+        this.internshipsCandidate = internshipsCandidate;
     }
 
-    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internships) {
+    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internshipsCandidate) {
         super(id, nom, prenom, telephone, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = "";
-        this.internships = internships;
+        this.internshipsCandidate = internshipsCandidate;
     }
 }

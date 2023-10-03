@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EtudiantService {
@@ -34,7 +33,7 @@ public class EtudiantService {
     @Transactional
     public Optional<Etudiant> saveEtudiant(Etudiant etudiant) {
         try {
-            System.out.println(etudiant.getInternships());
+            System.out.println(etudiant.getInternshipsCandidate());
             return Optional.of(etudiantRepository.save(etudiant));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
@@ -47,14 +46,14 @@ public class EtudiantService {
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
-            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv(), etudiant.getInternships().stream().map(InternshipCandidates::getId).toList()));
+            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
         }
         return dtos;
     }
 
     public EtudiantDto getEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv(), value.getInternships().stream().map(InternshipCandidates::getId).toList())).orElse(null);
+        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
     public Etudiant findEtudiantById(Long id) {
@@ -70,11 +69,12 @@ public class EtudiantService {
     public List<StudentAppliedOffersDto> getOffersAppliedByEtudiant(long id) {
         try {
             Etudiant etudiant = etudiantRepository.findById(id).orElseThrow(EtudiantNotFoundException::new);
-            List<StudentAppliedOffersDto> offersAppliedDto;
-            List<InternshipCandidates> offersApplied = etudiant.getInternships();
+            List<InternshipCandidates> offersApplied = etudiant.getInternshipsCandidate();
 
+            if (offersApplied == null)
+                return new ArrayList<>();
 
-            offersAppliedDto = offersApplied.stream().map(
+            return offersApplied.stream().map(
                     (offerApplied) -> {
                         StudentAppliedOffersDto dto = new StudentAppliedOffersDto();
 
@@ -87,18 +87,16 @@ public class EtudiantService {
                         dto.setAppliedFiles(fileDtos);
 
                         return dto;
-                    }).collect(Collectors.toList());
-
-            return offersAppliedDto;
+                    }).toList();
 
         } catch (EtudiantNotFoundException e) {
             logger.error("Etudiant non trouvé avec l'id" + id, e);
             throw e;
         } catch (DataAccessException e) {
-            logger.error("Erreur lors de la récupération des offres appliquées par l'étudiant avec l'id" + id, e);
+            logger.error("Erreur lors de la récupération des offres appliquées par l'étudiant avec l'Id :" + id, e);
             throw new DatabaseException("Erreur lors de la récupération des offres appliquées par l'étudiant");
         } catch (Exception e) {
-            logger.error("Erreur inconnue lors de la récupération des offres appliquées par l'étudiant avec l'id" + id, e);
+            logger.error("Erreur inconnue lors de la récupération des offres appliquées par l'étudiant avec l'id :" + id, e);
             throw new ServiceException("Erreur lors de la récupération des offres appliquées par l'étudiant");
         }
     }

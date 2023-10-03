@@ -32,7 +32,7 @@ public class EtudiantDto extends UtilisateurDto {
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
         this.cv = etudiant.getCv();
-        this.internships_id = etudiant.getInternships().stream().map(InternshipCandidates::getId).toList();
+        this.internships_id = etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList();
     }
 
     public Etudiant fromDto() {

@@ -39,7 +39,7 @@ public class InternshipCandidatesService {
 
             Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant_id());
             InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
-            List<File> files = internshipCandidatesDto.getFiles_ids().stream().map(fileService::findById).toList();
+            List<File> files = internshipCandidatesDto.getFiles_id().stream().map(fileService::findById).toList();
 
 
             internshipCandidates.setEtudiant(etudiant);
