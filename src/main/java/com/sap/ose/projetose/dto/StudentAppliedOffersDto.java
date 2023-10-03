@@ -13,5 +13,4 @@ public class StudentAppliedOffersDto {
 
     private InternOfferDto appliedOffer;
     private List<FileDto> appliedFiles;
-
 }

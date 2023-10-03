@@ -2,8 +2,6 @@ package com.sap.ose.projetose.controller;
 
 
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.ProgrammeDto;
-import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.service.InternOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +30,8 @@ public class InternOfferController {
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/Offers")
-    public List<InternOfferDto> getOffers() {
+    @GetMapping("/pendingOffers")
+    public List<InternOfferDto> getPendingOffers() {
         return offerJobService.getInternOfferPending();
     }
 
