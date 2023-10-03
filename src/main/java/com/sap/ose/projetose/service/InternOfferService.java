@@ -67,7 +67,7 @@ public class InternOfferService {
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
-
+    @Transactional
     public List<InternOfferDto> getInternOfferAccepted(){
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
