@@ -19,7 +19,7 @@ const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({ e
 const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, handleCloseModal, onUpdateInternshipOffer}) => {
     const {t} = useTranslation();
     const [formStateOffer, setFormState] = React.useState({
-        comment: "", state: "", internOfferId: 0, internshipmanagerId: 1,
+        comment: "", state: "", internOfferId: 0, internshipmanagerId: 6,
     });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);

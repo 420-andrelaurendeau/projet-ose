@@ -2,6 +2,7 @@ package com.sap.ose.projetose;
 
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
@@ -28,6 +29,9 @@ public class ProjetOseApplication implements CommandLineRunner {
     private EmployeurService employeurService;
     @Autowired
     private InternOfferService internOfferService;
+
+    @Autowired
+    private  InternshipmanagerService internshipmanagerService;
 
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
@@ -70,6 +74,10 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file));
 
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+
+
+        Internshipmanager internshipmanager = new Internshipmanager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
+        internshipmanagerService.save(new InternshipmanagerDto(internshipmanager));
 
     }
 }

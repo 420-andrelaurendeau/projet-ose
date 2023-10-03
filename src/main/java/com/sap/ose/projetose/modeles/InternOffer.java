@@ -26,7 +26,7 @@ public class InternOffer {
     private LocalDate endDate;
     private State state;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "interOfferJob_id")
     private List<InternshipCandidates> internshipCandidates;
 
@@ -42,7 +42,7 @@ public class InternOffer {
     @JoinColumn(name = "employeur_id")
     private Employeur employeur;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "offerReviewRequest_id")
     private OfferReviewRequest offerReviewRequest;
 

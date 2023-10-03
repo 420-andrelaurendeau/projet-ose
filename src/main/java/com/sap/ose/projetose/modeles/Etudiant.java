@@ -24,7 +24,7 @@ public class Etudiant extends Utilisateur{
 
     private String cv;
 
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "etudiant_id")
     private List<InternshipCandidates> internships;
 
