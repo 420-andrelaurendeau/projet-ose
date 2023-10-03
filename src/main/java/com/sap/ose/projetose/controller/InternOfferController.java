@@ -36,5 +36,10 @@ public class InternOfferController {
     public List<InternOfferDto> getOffers() {
         return offerJobService.getInternOfferPending();
     }
+
+    @GetMapping("/allOffers")
+    public List<InternOfferDto> getAllOffers() {
+        return offerJobService.getInternOffers();
+    }
 }
 

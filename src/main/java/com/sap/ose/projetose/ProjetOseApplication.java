@@ -4,8 +4,6 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
-import com.sap.ose.projetose.service.EmployeurService;
-import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;

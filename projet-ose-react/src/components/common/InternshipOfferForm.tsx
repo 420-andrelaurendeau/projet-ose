@@ -22,8 +22,9 @@ const initialFormState: InterOfferJob = {
     salaryByHour: 0,
     startDate: undefined,
     endDate: undefined,
+    state: '',
     programmeId: 0,
-    employeurId: 0,
+    employeurId: 5,
     file: undefined,
 };
 
@@ -61,9 +62,9 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
         const {name, value} = e.target;
 
 
-            setFormState(prevState => ({
-                ...prevState, [name]: value
-            }));
+        setFormState(prevState => ({
+            ...prevState, [name]: value
+        }));
 
     };
 
@@ -154,153 +155,152 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
 
 
     return (<div className='flex justify-center items-center min-h-screen'>
-        {isModalOpen && (
-            <div
-                className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-start p-3 overflow-y-auto">
+        {isModalOpen && (<div
+            className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-start p-3 overflow-y-auto">
 
-                <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark">
+            <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark">
 
-                    <form className="space-y-4 mx-auto w-full max-w-xl" onSubmit={handleSubmit}>
+                <form className="space-y-4 mx-auto w-full max-w-xl" onSubmit={handleSubmit}>
 
-                        <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{t('formField.InternshipOfferForm.titleForm')}</h1>
+                    <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{t('formField.InternshipOfferForm.titleForm')}</h1>
 
-                        <div
-                            className='block sm:flex items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 min-h-50'>
-                            {/* Title field */}
-                            <div className='flex-auto sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="title_placeholder">{t('formField.InternshipOfferForm.title.text')}</label>
-                                <input name='title'
-                                       className={"mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs placeholder:h-10 dark:bg-softdark dark:text-orange dark:border-0"}
-                                       onBlur={() => handleValidation("title")} type="text" id="title_placeholder"
-                                       onChange={handleFormChange} value={formState.title}
-                                       placeholder={t("formField.InternshipOfferForm.title.placeholder")}/>
-                                {renderError(errors.title)}
-                            </div>
-
-                            {/* Location field */}
-                            <div className='flex-auto sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="location_placeholder">{t('formField.InternshipOfferForm.location.text')}</label>
-                                <input name="location"
-                                       className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                       type="text" value={formState.location} id="location_placeholder"
-                                       onChange={handleFormChange} onBlur={() => handleValidation("location")}
-                                       placeholder={t("formField.InternshipOfferForm.location.placeholder")}/>
-                                {renderError(errors.location)}
-                            </div>
-
-                        </div>
-
-                        {/* Description field */}
-                        <div>
+                    <div
+                        className='block sm:flex items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 min-h-50'>
+                        {/* Title field */}
+                        <div className='flex-auto sm:w-1/2'>
                             <label className="block text-xs font-bold dark:text-offwhite"
-                                   htmlFor="description_placeholder">{t('formField.InternshipOfferForm.description.text')}</label>
-                            <textarea name='description'
-                                      className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                      id="description_placeholder" onBlur={() => handleValidation("description")}
-                                      onChange={(e) => handleFormChange(e)} value={formState.description}
-                                      placeholder={t("formField.InternshipOfferForm.description.placeholder")}></textarea>
-                            {renderError(errors.description)}
+                                   htmlFor="title_placeholder">{t('formField.InternshipOfferForm.title.text')}</label>
+                            <input name='title'
+                                   className={"mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs placeholder:h-10 dark:bg-softdark dark:text-orange dark:border-0"}
+                                   onBlur={() => handleValidation("title")} type="text" id="title_placeholder"
+                                   onChange={handleFormChange} value={formState.title}
+                                   placeholder={t("formField.InternshipOfferForm.title.placeholder")}/>
+                            {renderError(errors.title)}
                         </div>
 
-                        <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
-                            {/* Categories field */}
-                            <div className='sm:w-1/2 sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
-                                <select name="programmeId"
-                                        className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
-                                        onChange={(e) => handleFormChange(e)} defaultValue={"default"}
-                                        id="categories_placeholder">
-                                    <option value="default"
-                                            disabled>{t('formField.InternshipOfferForm.program.placeholder')}</option>
-                                    {programmes.map((programme) => (<option key={programme.id} value={programme.id}>
-                                        {programme.nom}
-                                    </option>))}
-                                </select>
-                                {renderError(errors.programme)}
-                            </div>
-
-                            {/* Salary field */}
-                            <div className='sm:w-1/2 sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
-                                <input name='salaryByHour'
-                                       className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                       type="text" id="salary_placeholder"
-                                       onBlur={() => handleValidation("salaryByHour")} onChange={handleFormChange}
-                                       value={formState.salaryByHour}
-                                       placeholder={t("formField.InternshipOfferForm.salary.placeholder") + " $"}/>
-                                {renderError(errors.salaryByHour)}
-                            </div>
-
+                        {/* Location field */}
+                        <div className='flex-auto sm:w-1/2'>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="location_placeholder">{t('formField.InternshipOfferForm.location.text')}</label>
+                            <input name="location"
+                                   className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                   type="text" value={formState.location} id="location_placeholder"
+                                   onChange={handleFormChange} onBlur={() => handleValidation("location")}
+                                   placeholder={t("formField.InternshipOfferForm.location.placeholder")}/>
+                            {renderError(errors.location)}
                         </div>
 
-                        <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
-                            {/* Start date field */}
-                            <div className='flex-auto sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="start_date_placeholder">{t('formField.InternshipOfferForm.startDate.text')}</label>
-                                <input name='startDate'
-                                       className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
-                                       type="date" id="start_date_placeholder"
-                                       onBlur={() => handleValidation("startDate")} onChange={handleFormChange}/>
-                                {renderError(errors.startDate)}
-                            </div>
+                    </div>
 
-                            {/* End date field */}
-                            <div className='flex-auto sm:w-1/2'>
-                                <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="end_date_placeholder">{t('formField.InternshipOfferForm.endDate.text')}</label>
-                                <input name='endDate'
-                                       className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
-                                       type="date" id="end_date_placeholder"
-                                       onBlur={() => handleValidation("endDate")} onChange={handleFormChange}/>
-                                {renderError(errors.endDate)}
-                            </div>
+                    {/* Description field */}
+                    <div>
+                        <label className="block text-xs font-bold dark:text-offwhite"
+                               htmlFor="description_placeholder">{t('formField.InternshipOfferForm.description.text')}</label>
+                        <textarea name='description'
+                                  className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                  id="description_placeholder" onBlur={() => handleValidation("description")}
+                                  onChange={(e) => handleFormChange(e)} value={formState.description}
+                                  placeholder={t("formField.InternshipOfferForm.description.placeholder")}></textarea>
+                        {renderError(errors.description)}
+                    </div>
+
+                    <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
+                        {/* Categories field */}
+                        <div className='sm:w-1/2 sm:w-1/2'>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
+                            <select name="programmeId"
+                                    className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
+                                    onChange={(e) => handleFormChange(e)} defaultValue={"default"}
+                                    id="categories_placeholder">
+                                <option value="default"
+                                        disabled>{t('formField.InternshipOfferForm.program.placeholder')}</option>
+                                {programmes.map((programme) => (<option key={programme.id} value={programme.id}>
+                                    {programme.nom}
+                                </option>))}
+                            </select>
+                            {renderError(errors.programme)}
                         </div>
 
-                        {/* File field */}
-                        <div
-                            className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5">
-                            <input
-                                name='file'
-                                type="file"
-                                className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
-                                onChange={(e) => {
-                                    handleFileChange(e);
-                                }}
-                                onLoad={() => handleValidation("file")}
-                            />
-                            <div className="flex flex-col items-center justify-center py-10 text-center">
-                                <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
-                                <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
-                                    <span
-                                        className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
-                                </p>
-                            </div>
-
-                            {renderError(errors.file)}
+                        {/* Salary field */}
+                        <div className='sm:w-1/2 sm:w-1/2'>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
+                            <input name='salaryByHour'
+                                   className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                   type="text" id="salary_placeholder"
+                                   onBlur={() => handleValidation("salaryByHour")} onChange={handleFormChange}
+                                   value={formState.salaryByHour}
+                                   placeholder={t("formField.InternshipOfferForm.salary.placeholder") + " $"}/>
+                            {renderError(errors.salaryByHour)}
                         </div>
-                        {formState.file?.fileName && (<div className="mt-4 m-4">
-                            <p className="mb-2 dark:text-gray">{formState.file.fileName}</p>
-                        </div>)}
 
-                        {/* Submit button */}
-                        <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5">
-                            <button
-                                className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
-                                type="submit" disabled={!isFormValid()}>Submit
-                            </button>
-                            <button
-                                className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
-                                type="button" onClick={handleCloseModal}>Close
-                            </button>
+                    </div>
+
+                    <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
+                        {/* Start date field */}
+                        <div className='flex-auto sm:w-1/2'>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="start_date_placeholder">{t('formField.InternshipOfferForm.startDate.text')}</label>
+                            <input name='startDate'
+                                   className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
+                                   type="date" id="start_date_placeholder"
+                                   onBlur={() => handleValidation("startDate")} onChange={handleFormChange}/>
+                            {renderError(errors.startDate)}
                         </div>
-                    </form>
-                </div>
-            </div>)}
+
+                        {/* End date field */}
+                        <div className='flex-auto sm:w-1/2'>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="end_date_placeholder">{t('formField.InternshipOfferForm.endDate.text')}</label>
+                            <input name='endDate'
+                                   className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
+                                   type="date" id="end_date_placeholder"
+                                   onBlur={() => handleValidation("endDate")} onChange={handleFormChange}/>
+                            {renderError(errors.endDate)}
+                        </div>
+                    </div>
+
+                    {/* File field */}
+                    <div
+                        className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5">
+                        <input
+                            name='file'
+                            type="file"
+                            className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
+                            onChange={(e) => {
+                                handleFileChange(e);
+                            }}
+                            onLoad={() => handleValidation("file")}
+                        />
+                        <div className="flex flex-col items-center justify-center py-10 text-center">
+                            <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
+                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
+                                <span
+                                    className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
+                            </p>
+                        </div>
+
+                        {renderError(errors.file)}
+                    </div>
+                    {formState.file?.fileName && (<div className="mt-4 m-4">
+                        <p className="mb-2 dark:text-gray">{formState.file.fileName}</p>
+                    </div>)}
+
+                    {/* Submit button */}
+                    <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5">
+                        <button
+                            className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
+                            type="submit" disabled={!isFormValid()}>Submit
+                        </button>
+                        <button
+                            className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
+                            type="button" onClick={handleCloseModal}>Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>)}
     </div>);
 }
 

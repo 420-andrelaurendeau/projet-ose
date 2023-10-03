@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {InterOfferJob} from "../model/IntershipOffer";
+import {OfferReviewRequest} from "../model/OfferReviewRequest";
 
-const API_BASE_URL = 'http://localhost:8080/api/interOfferJob';
+const API_BASE_URL = 'http://localhost:8080/api/';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
@@ -21,15 +22,62 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
         endDate: interOfferJob.endDate,
         programmeId: interOfferJob.programmeId!,
         file: interOfferJob.file,
-        employeurId: 4 //TODO à remplacer par le bon type
+        employeurId: interOfferJob.employeurId //TODO à remplacer par le bon type
     }
 
     try {
 
-        const response = await apiClient.post('/save', interOfferJobDto);
+        const response = await apiClient.post('interOfferJob/save', interOfferJobDto);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la sauvegarde de l\'InterOfferJob:', error);
         throw error;
     }
 };
+
+export const getAllPendingInterOfferJob = async (): Promise<InterOfferJob[]> => {
+    try {
+        const response = await axios.create({
+            baseURL: API_BASE_URL,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        }).get('interOfferJob/allOffers');
+        response.data.map((item: any) => console.log(item));
+        return response.data.map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            location: item.location,
+            description: item.description,
+            salaryByHour: item.salaryByHour,
+            startDate: new Date(item.startDate),
+            endDate: new Date(item.endDate),
+            internshipCandidates: item.internshipCandidates,
+            file: item.file,
+            state: item.state,
+            programmeId: item.programmeId,
+            programmeNom: item.programmeNom,
+            employeurId: item.employeurId,
+            employeurNom: item.employeurNom,
+            employeurPrenom: item.employeurPrenom,
+            employeurEntreprise: item.employeurEntreprise
+        }));
+
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde de la revue de l\'offre:', error);
+        throw error;
+    }
+}
+
+export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequest) => {
+    try {
+        const response = await apiClient.post('offerReviewRequest/save', offerReviewRequest);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
+        throw error;
+    }
+};
+
+
+

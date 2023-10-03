@@ -22,6 +22,31 @@ import java.util.Optional;
 public class EmployeurService {
 
     private final EmployeurRepository employeurRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
+
+    @Autowired
+    public EmployeurService(EmployeurRepository employeurRepository) {
+        this.employeurRepository = employeurRepository;
+    }
+
+    Employeur findById(long id) {
+        try {
+            System.out.println(id);
+            return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
+        } catch (EmployerNotFoundException e) {
+            logger.error("Employeur non trouvé avec l'id" + id);
+            throw e;
+        } catch (DataAccessException e) {
+            logger.info("Erreur d'accès a la base de donné lors de la récupération de l'employeuravec l'Id :" + id, e);
+            throw new DatabaseException("Erreur d'accès a la base de donné lors de la récupération de l'employeur");
+        } catch (Exception e) {
+            logger.info("Erreur inconnue lors de la récupération de l'employé avec l'Id : " + id, e);
+            throw new ServiceException("Erreur inconnue lors de la récupération de l'employeur");
+        }
+    }
+
+
     private final ProgrammeService programmeService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 

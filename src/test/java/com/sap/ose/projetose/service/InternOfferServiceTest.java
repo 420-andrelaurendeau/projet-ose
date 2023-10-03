@@ -1,107 +1,55 @@
 package com.sap.ose.projetose.service;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyDouble;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.controller.InternOfferController;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.exception.GlobalExceptionHandler;
+import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
-
-import java.io.UnsupportedEncodingException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.*;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.exception.GlobalExceptionHandler;
-import com.sap.ose.projetose.service.InternOfferService;
+import com.sap.ose.projetose.repository.ProgrammeRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {InternOfferService.class})
 @ExtendWith(SpringExtension.class)
 class InternOfferServiceTest {
+
+    private final InternOfferDto internOfferDto = new InternOfferDto();
+    @Autowired
+    private InternOfferService internOfferService;
+    @MockBean
+    private ProgrammeService programmeService;
+    @MockBean
+    private ProgrammeRepository programmeRepository;
+    @MockBean
+    private EmployeurService employeurService;
     @MockBean
     private EmployeurRepository employeurRepository;
-
     @MockBean
     private InternOfferRepository internOfferRepository;
 
-    @Autowired
-    private InternOfferService internOfferService;
-
-    @MockBean
-    private ProgrammeService programmeService;
-
-
-    private InternOfferDto internOfferDto = new InternOfferDto();
-
     @BeforeEach
     public void setUp() {
+        this.internOfferDto.setId(1L);
         this.internOfferDto.setDescription("The characteristics of someone or something");
         this.internOfferDto.setEmployeurEntreprise("Employeur Entreprise");
         this.internOfferDto.setEmployeurId(1L);
@@ -109,7 +57,6 @@ class InternOfferServiceTest {
         this.internOfferDto.setEmployeurPrenom("Employeur Prenom");
         this.internOfferDto.setEndDate("2020-03-01");
         this.internOfferDto.setFile(new FileDto());
-        this.internOfferDto.setId(1L);
         this.internOfferDto.setInternshipCandidates(new ArrayList<>());
         this.internOfferDto.setLocation("Location");
         this.internOfferDto.setProgrammeId(1);
@@ -120,50 +67,108 @@ class InternOfferServiceTest {
     }
 
     @Test
-    public void saveInterOfferJob_ProgrammeNotFound() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.empty());
+    public void saveInterOfferJob_Creation() {
+        Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
+        Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", 1);
+        InternOffer mockedInternOffer = internOfferDto.fromDto();
+        mockedInternOffer.setProgramme(mockedProgramme);
+        mockedInternOffer.setEmployeur(mockedEmployeur);
 
-        assertThrows(NullPointerException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        when(programmeService.findById(anyLong())).thenReturn(mockedProgramme);
+        when(employeurService.findById(anyLong())).thenReturn(mockedEmployeur);
+        when(internOfferRepository.save(any(InternOffer.class))).thenReturn(mockedInternOffer);
+
+        ArgumentCaptor<InternOffer> captor = ArgumentCaptor.forClass(InternOffer.class);
+        internOfferService.saveInterOfferJob(internOfferDto);
+
+        verify(internOfferRepository).save(captor.capture());
+        InternOffer savedOffer = captor.getValue();
+
+        assertEquals(internOfferDto.getId(), savedOffer.getId());
+        assertEquals(internOfferDto.getProgrammeId(), savedOffer.getProgramme().getId());
+        assertEquals(internOfferDto.getEmployeurId(), savedOffer.getEmployeur().getId());
+
+    }
+
+
+    @Test
+    public void saveInterOfferJob_OfferAlreadyApprovedException() {
+        InternOffer mockOffer = new InternOffer();
+        mockOffer.setState(State.ACCEPTED);
+        when(internOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockOffer));
+
+        OfferAlreadyReviewException result = assertThrows(OfferAlreadyReviewException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("L'offre a déjà été approuvée et ne peut pas être modifiée.", result.getMessage());
+    }
+
+
+    @Test
+    public void saveInterOfferJob_ProgrammeNotFound() {
+        when(programmeService.findById(anyLong())).thenThrow(ProgramNotFoundException.class);
+
+        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Programme non trouvé", result.getMessage());
     }
 
     @Test
     public void saveInterOfferJob_EmployeurNotFound() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(employeurService.findById(anyLong())).thenThrow(EmployerNotFoundException.class);
 
-        assertThrows(NullPointerException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
-    }
-
-    @Test
-    public void saveInterOfferJob_DataIntegrityError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
-
-        when(internOfferRepository.save(any())).thenThrow(DataIntegrityViolationException.class);
-
-        assertThrows(DataIntegrityViolationException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        EmployerNotFoundException result = assertThrows(EmployerNotFoundException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Employeur non trouvé", result.getMessage());
     }
 
     @Test
     public void saveInterOfferJob_DataAccessError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
+        when(internOfferRepository.save(any())).thenThrow(new DataAccessException("") {
+        });
 
-        when(internOfferRepository.save(any())).thenThrow(EmptyResultDataAccessException.class);
-
-
-        assertThrows(DataAccessException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Erreur lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
     public void saveInterOfferJob_UnknownError() {
-        when(programmeService.getProgrammeById(anyInt())).thenReturn(Optional.of(new Programme()));
-        when(employeurRepository.findById(anyLong())).thenReturn(Optional.of(new Employeur()));
-
         when(internOfferRepository.save(any())).thenThrow(IllegalArgumentException.class);
 
-        // Act & Assert
-        assertThrows(RuntimeException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        ServiceException result = assertThrows(ServiceException.class, () -> internOfferService.saveInterOfferJob(internOfferDto));
+        assertEquals("Erreur lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
+    }
+
+
+    @Test
+    public void findById_Success() {
+        InternOffer mockOffer = internOfferDto.fromDto();
+        when(internOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockOffer));
+
+        InternOffer result = internOfferService.findById(anyLong());
+
+        Assertions.assertEquals(mockOffer, result);
+    }
+
+    @Test
+    public void findById_NotFound() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(OfferNotFoundException.class);
+
+        OfferNotFoundException result = assertThrows(OfferNotFoundException.class, () -> internOfferService.findById(anyLong()));
+        assertEquals("Offre d'emploi non trouvée.", result.getMessage());
+    }
+
+    @Test
+    public void findById_DatabaseException() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
+        });
+
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internOfferService.findById(anyLong()));
+        assertEquals("Erreur lors de la récupération de l'offre d'emploi.", result.getMessage());
+    }
+
+    @Test
+    public void findById_ServiceException() {
+        when(internOfferRepository.findById(anyLong())).thenThrow(RuntimeException.class);
+
+        ServiceException result = assertThrows(ServiceException.class, () -> internOfferService.findById(anyLong()));
+        assertEquals("Erreur lors de la récupération de l'offre d'emploi.", result.getMessage());
     }
 }
 
