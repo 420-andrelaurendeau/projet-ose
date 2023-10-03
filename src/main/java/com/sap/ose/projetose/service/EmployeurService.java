@@ -1,7 +1,9 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.EmployeurDto;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.EmployerNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
@@ -9,8 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,12 +24,14 @@ import java.util.Optional;
 public class EmployeurService {
 
     private final EmployeurRepository employeurRepository;
-
     private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
+    private final ProgrammeService programmeService;
+
 
     @Autowired
-    public EmployeurService(EmployeurRepository employeurRepository) {
+    public EmployeurService(EmployeurRepository employeurRepository, ProgrammeService programmeService) {
         this.employeurRepository = employeurRepository;
+        this.programmeService = programmeService;
     }
 
     Employeur findById(long id) {
@@ -47,18 +51,10 @@ public class EmployeurService {
     }
 
 
-    private final ProgrammeService programmeService;
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
-
-    public EmployeurService(EmployeurRepository employeurRepository, ProgrammeService programmeService) {
-        this.employeurRepository = employeurRepository;
-        this.programmeService = programmeService;
-    }
-
     @Transactional
     public Employeur saveEmployeur(String nom, String prenom, String phone, String email, String password, String nomEntreprise, long programme_id ){
         try {
-            Programme programme = programmeService.getProgrammeById(programme_id).orElseThrow(() -> new EntityNotFoundException("Programme non trouve avec ID: " + programme_id));
+            Programme programme = programmeService.getProgrammeById(programme_id).fromDto();
             return employeurRepository.save(new Employeur(nom,prenom,phone,email,password,nomEntreprise,programme));
 
         }catch (DataAccessException e){

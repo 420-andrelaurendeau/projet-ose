@@ -10,13 +10,8 @@ import com.sap.ose.projetose.repository.ProgrammeRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,8 +21,6 @@ import java.util.Optional;
 @Service
 public class ProgrammeService {
 
-    ProgrammeRepository programmeRepository;
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
     private final ProgrammeRepository programmeRepository;
     private final Logger logger = LoggerFactory.getLogger(ProgrammeService.class);
 

@@ -4,6 +4,8 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.service.EmployeurService;
+import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,8 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         File file = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",true);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
-        InternOffer internOffer = new InternOffer("ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING);
+        OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
+        InternOffer internOffer = new InternOffer("ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
         System.out.println("Done");

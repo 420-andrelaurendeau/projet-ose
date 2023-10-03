@@ -46,9 +46,18 @@ public class InternOffer {
     @JoinColumn(name = "offerReviewRequest_id")
     private OfferReviewRequest offerReviewRequest;
 
-    public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
-                       LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur employeur, State state, OfferReviewRequest offerReviewRequest) {
+    public InternOffer(String title,
+                       String location,
+                       String description,
+                       double salaryByHour,
+                       LocalDate startDate,
+                       LocalDate endDate,
+                       List<InternshipCandidates> internshipCandidates,
+                       Programme programme,
+                       File files,
+                       Employeur employeur,
+                       State state,
+                       OfferReviewRequest offerReviewRequest) {
         this.title = title;
         this.location = location;
         this.description = description;

@@ -1,51 +1,43 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Programme;
-import com.sap.ose.projetose.repository.EmployeurRepository;
+import com.sap.ose.projetose.exception.*;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class InternOfferService {
 
     private final InternOfferRepository offerJobRepository;
-
     private final ProgrammeService programmeService;
-    private final EmployeurRepository employeurRepository;
+    private final EmployeurService employeurService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     @Autowired
-    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService) {
+    public InternOfferService(InternOfferRepository offerJobRepository, ProgrammeService programmeService, EmployeurService employeurService) {
         this.offerJobRepository = offerJobRepository;
-        this.employeurRepository = employeurRepository;
         this.programmeService = programmeService;
+        this.employeurService = employeurService;
     }
+
 
     @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
             System.out.println(internOfferDto.getEmployeurId());
 
-            if (isApprovedOrDeclineById(internOfferDto.getId()))
+            if ( isApprovedOrDeclineById(internOfferDto.getId()))
                 throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
@@ -110,9 +102,11 @@ public class InternOfferService {
     }
 
     InternOfferDto getInterOfferById(Long id) {
-        Optional<InternOffer> internOffer = offerJobRepository.findById(id);
+        InternOffer internOffer = offerJobRepository.findById(id).orElse(null);
+        return new InternOfferDto(internOffer);
+    }
 
-    InternOffer findById(long id) {
+    InternOffer findById( long id){
         try {
             return offerJobRepository.findById(id).orElseThrow(OfferNotFoundException::new);
         } catch (OfferNotFoundException e) {
@@ -127,9 +121,15 @@ public class InternOfferService {
         }
     }
 
+    public List<InternOfferDto> getInternOffers(){
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>() ;
+        for(InternOffer offer : offerJobRepository.findAll()){
+            internOfferDtoList.add(new InternOfferDto(offer));
+        }
+        return internOfferDtoList;
+    }
 
     boolean isApprovedOrDeclineById(long id) {
         return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
-
 }
