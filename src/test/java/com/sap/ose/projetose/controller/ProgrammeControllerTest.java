@@ -36,7 +36,7 @@ class ProgrammeControllerTest {
     @Test
     void testSaveProgramme() throws Exception {
         Optional<ProgrammeDto> ofResult = Optional.of(new ProgrammeDto(1, "Nom", "The characteristics of someone or something"));
-        when(oseService.saveProgramme(Mockito.any())).thenReturn(ofResult);
+        //when(programmeController.saveProgramme(Mockito.any())).thenReturn(ofResult);
 
         ProgrammeDto programmeDTO = new ProgrammeDto();
         programmeDTO.setDescription("The characteristics of someone or something");
@@ -52,7 +52,7 @@ class ProgrammeControllerTest {
      */
     @Test
     void testGetProgrammes() throws Exception {
-        when(oseService.getProgrammes()).thenReturn(new ArrayList<>());
+        when(programmeController.getProgrammes()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/programmes");
         MockMvcBuilders.standaloneSetup(programmeController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
     }
@@ -64,7 +64,7 @@ class ProgrammeControllerTest {
     void testGetProgrammes2() throws Exception {
         ArrayList<ProgrammeDto> programmeDTOList = new ArrayList<>();
         programmeDTOList.add(new ProgrammeDto(1, "Nom", "The characteristics of someone or something"));
-        when(oseService.getProgrammes()).thenReturn(programmeDTOList);
+        when(programmeController.getProgrammes()).thenReturn(programmeDTOList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/programmes");
         MockMvcBuilders.standaloneSetup(programmeController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":1,\"nom\":\"Nom\",\"description\":\"The characteristics of someone or something\"}]"));
     }

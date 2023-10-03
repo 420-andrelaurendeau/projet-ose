@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class InternshipCandidatesDto {
         this.id = internshipCandidates.getId();
         this.etudiant_id = internshipCandidates.getEtudiant().getId();
         this.interOfferJob_id = internshipCandidates.getInternOffer().getId();
-        this.files_ids = internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+        this.files_ids = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {

@@ -3,6 +3,7 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
+import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.service.OseService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,14 +37,14 @@ class UtilisateurControllerTest {
      */
     @Test
     void testGetAllUsers() throws Exception {
-        EtudiantDto etudiant = new EtudiantDto("Jean", "Dupont", "4387996589", "dupont@gmail.com", "2045878", "Informatique", "");
+        EtudiantDto etudiant = new EtudiantDto("Jean", "Dupont", "4387996589", "dupont@gmail.com", "2045878", 1L, "", null);
         EmployeurDto employeur = new EmployeurDto("Patrique", "Lemieux", "4383006589", "lemieux@gmail.com", "SAP");
         List<UtilisateurDto> utilisateurDtoList = new ArrayList<>();
         utilisateurDtoList.add(etudiant);
         utilisateurDtoList.add(employeur);
         when(oseService.getAllUsers()).thenReturn(utilisateurDtoList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/utilisateur/utilisateurs");
-        MockMvcBuilders.standaloneSetup(utilisateurController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"nom\":\"Jean\",\"prenom\":\"Dupont\",\"phone\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programme\":\"Informatique\",\"cv\":\"\"},{\"nom\":\"Patrique\",\"prenom\":\"Lemieux\",\"phone\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"entreprise\":\"SAP\"}]"));
+        MockMvcBuilders.standaloneSetup(utilisateurController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"nom\":\"Jean\",\"prenom\":\"Dupont\",\"phone\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programme_id\":1,\"cv\":\"\",\"internships_id\":null},{\"nom\":\"Patrique\",\"prenom\":\"Lemieux\",\"phone\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"entreprise\":\"SAP\",\"programme_id\":0}]"));
     }
 
     /**

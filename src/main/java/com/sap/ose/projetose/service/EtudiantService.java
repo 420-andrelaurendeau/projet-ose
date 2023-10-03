@@ -2,7 +2,14 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.FileDto;
+import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -13,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EtudiantService {
@@ -26,10 +34,12 @@ public class EtudiantService {
     @Transactional
     public Optional<Etudiant> saveEtudiant(Etudiant etudiant) {
         try {
+            System.out.println(etudiant.getInternships());
             return Optional.of(etudiantRepository.save(etudiant));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
-            throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {};
+            throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
+            };
         }
 
     }
@@ -37,17 +47,61 @@ public class EtudiantService {
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
-            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv()));
+            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv(), etudiant.getInternships().stream().map(InternshipCandidates::getId).toList()));
         }
         return dtos;
     }
+
     public EtudiantDto getEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv())).orElse(null);
+        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv(), value.getInternships().stream().map(InternshipCandidates::getId).toList())).orElse(null);
+    }
+
+    public Etudiant findEtudiantById(Long id) {
+        Optional<Etudiant> etudiant = etudiantRepository.findById(id);
+        return etudiant.orElse(null);
     }
 
     Etudiant getEtudiantByCourriel(String courriel) {
         return etudiantRepository.findByCourriel(courriel).orElse(null);
     }
+
+    @Transactional
+    public List<StudentAppliedOffersDto> getOffersAppliedByEtudiant(long id) {
+        try {
+            Etudiant etudiant = etudiantRepository.findById(id).orElseThrow(EtudiantNotFoundException::new);
+            List<StudentAppliedOffersDto> offersAppliedDto;
+            List<InternshipCandidates> offersApplied = etudiant.getInternships();
+
+
+            offersAppliedDto = offersApplied.stream().map(
+                    (offerApplied) -> {
+                        StudentAppliedOffersDto dto = new StudentAppliedOffersDto();
+
+                        InternOfferDto offerDto = new InternOfferDto(offerApplied.getInternOffer());
+                        offerDto.setInternshipCandidates(null);
+
+                        List<FileDto> fileDtos = offerApplied.getFiles().stream().map(FileDto::new).toList();
+
+                        dto.setAppliedOffer(offerDto);
+                        dto.setAppliedFiles(fileDtos);
+
+                        return dto;
+                    }).collect(Collectors.toList());
+
+            return offersAppliedDto;
+
+        } catch (EtudiantNotFoundException e) {
+            logger.error("Etudiant non trouvé avec l'id" + id, e);
+            throw e;
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des offres appliquées par l'étudiant avec l'id" + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des offres appliquées par l'étudiant");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres appliquées par l'étudiant avec l'id" + id, e);
+            throw new ServiceException("Erreur lors de la récupération des offres appliquées par l'étudiant");
+        }
+    }
+
 
 }

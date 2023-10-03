@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.exception;
 
+import com.sap.ose.projetose.modeles.Etudiant;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmployerNotFoundException.class)
     public ResponseEntity<String> handleEmployerNotFoundException(EmployerNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EtudiantNotFoundException.class)
+    public ResponseEntity<String> handleEtudiantNotFoundException(EtudiantNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 

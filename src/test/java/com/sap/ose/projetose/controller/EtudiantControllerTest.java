@@ -3,6 +3,8 @@ package com.sap.ose.projetose.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.OseService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,16 +32,16 @@ class EtudiantControllerTest {
     @Autowired
     private EtudiantController etudiantController;
     @MockBean
-    private OseService oseService;
+    private EtudiantService oseService;
 
     /**
      * Method under test: {@link EtudiantController#getEtudiant(Long)}
      */
     @Test
     void testGetEtudiant() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", "Programme", "Cv"));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1, "Cv", null));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"nom\":null,\"prenom\":null,\"phone\":null,\"email\":null,\"matricule\":\"Matricule\",\"programme\":\"Programme\"," + "\"cv\":\"Cv\"}"));
+        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"nom\":null,\"prenom\":null,\"phone\":null,\"email\":null,\"matricule\":\"Matricule\",\"programme_id\":1," + "\"cv\":\"Cv\",\"internships_id\":null}"));
     }
 
     /**
@@ -56,7 +58,7 @@ class EtudiantControllerTest {
         etudiant.setPassword("iloveyou");
         etudiant.setPhone("6625550144");
         etudiant.setPrenom("Prenom");
-        etudiant.setProgramme("Programme");
+        etudiant.setProgramme(new Programme());
         Optional<Etudiant> ofResult = Optional.of(etudiant);
         when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
 
@@ -69,10 +71,10 @@ class EtudiantControllerTest {
         etudiant2.setPassword("iloveyou");
         etudiant2.setPhone("6625550144");
         etudiant2.setPrenom("Prenom");
-        etudiant2.setProgramme("Programme");
+        etudiant2.setProgramme(new Programme());
         String content = (new ObjectMapper()).writeValueAsString(etudiant2);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/etudiant/ajouter").contentType(MediaType.APPLICATION_JSON).content(content);
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"programme\":\"Programme\",\"cv\":\"Cv\"}"));
+        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"programme\":{\"id\":0,\"nom\":null,\"description\":null},\"cv\":\"Cv\",\"internships\":null}"));
     }
 
     /**
@@ -80,7 +82,7 @@ class EtudiantControllerTest {
      */
     @Test
     void testGetEtudiant2() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", "Programme", "Cv"));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1L, "Cv", null));
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -91,7 +93,7 @@ class EtudiantControllerTest {
      */
     @Test
     void testGetEtudiants() throws Exception {
-        when(oseService.getAllEtudiants()).thenReturn(new ArrayList<>());
+        when(oseService.getEtudiants()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/etudiants");
         MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
     }

@@ -26,8 +26,8 @@ public class InternOffer {
     private LocalDate endDate;
     private State state;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "internshipCandidates_id")
+    @OneToMany()
+    @JoinColumn(name = "interOfferJob_id")
     private List<InternshipCandidates> internshipCandidates;
 
     @OneToOne()
