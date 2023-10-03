@@ -27,13 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 public class OfferReviewRequestControllerTest {
 
+    private final OfferReviewRequestDto offerReviewRequestDto = new OfferReviewRequestDto();
     @Autowired
     private OfferReviewRequestController offerReviewRequestController;
-
     @MockBean
     private OfferReviewRequestService offerReviewRequestService;
-
-    private final OfferReviewRequestDto offerReviewRequestDto = new OfferReviewRequestDto();
 
     @BeforeEach
     public void setUp() {
@@ -48,11 +46,20 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyReviewException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                                                        .post("/api/offerReviewRequest/save")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .content(content);
 
-        resultActions.andExpect(status().isConflict()).andExpect(content().string(containsString("L'offre a déjà été revue")));
+        ResultActions resultActions = MockMvcBuilders
+                                        .standaloneSetup(offerReviewRequestController)
+                                        .setControllerAdvice(new GlobalExceptionHandler()).build()
+                                        .perform(requestBuilder);
+
+        resultActions
+                .andExpect(status().isConflict())
+                .andExpect(content().string(containsString("L'offre a déjà été revue")));
     }
 
     @Test
@@ -60,11 +67,19 @@ public class OfferReviewRequestControllerTest {
         when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                                                        .post("/api/offerReviewRequest/save")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(offerReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
+        ResultActions resultActions = MockMvcBuilders
+                                        .standaloneSetup(offerReviewRequestController)
+                                        .setControllerAdvice(new GlobalExceptionHandler()).build()
+                                        .perform(requestBuilder);
 
-        resultActions.andExpect(status().isNotFound()).andExpect(content().string(containsString("Offre d'emploi non trouvée.")));
+        resultActions
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Offre d'emploi non trouvée.")));
     }
 
     @Test
