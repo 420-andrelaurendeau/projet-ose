@@ -3,8 +3,10 @@ package com.sap.ose.projetose.dto;
 import com.sap.ose.projetose.modeles.Employeur;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
