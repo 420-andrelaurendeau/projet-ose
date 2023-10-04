@@ -37,7 +37,7 @@ public class InternOfferController {
 
     @GetMapping("/allOffers")
     public List<InternOfferDto> getAllOffers() {
-        return offerJobService.getInternOffers();
+        return offerJobService.getAllInternOffers();
     }
 }
 

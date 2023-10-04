@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternOffer;
@@ -9,6 +10,7 @@ import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +43,6 @@ public class InternshipCandidatesService {
             InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
             List<File> files = internshipCandidatesDto.getFiles_id().stream().map(fileService::findById).toList();
 
-
             internshipCandidates.setEtudiant(etudiant);
             internshipCandidates.setInternOffer(internOffer);
             internshipCandidates.setFiles(files);
@@ -51,6 +52,12 @@ public class InternshipCandidatesService {
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
 }

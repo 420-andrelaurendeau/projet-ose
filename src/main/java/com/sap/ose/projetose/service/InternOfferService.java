@@ -66,6 +66,7 @@ public class InternOfferService {
         }
     }
 
+    @Transactional
     public List<InternOfferDto> getInternOfferAccepted(){
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
@@ -89,6 +90,7 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    @Transactional
     public List<InternOfferDto> getInternOfferDeclined(){
         List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
@@ -120,7 +122,7 @@ public class InternOfferService {
         }
     }
 
-    public List<InternOfferDto> getInternOffers(){
+    public List<InternOfferDto> getAllInternOffers(){
         List<InternOfferDto> internOfferDtoList = new ArrayList<>() ;
         for(InternOffer offer : offerJobRepository.findAll()){
             internOfferDtoList.add(new InternOfferDto(offer));
