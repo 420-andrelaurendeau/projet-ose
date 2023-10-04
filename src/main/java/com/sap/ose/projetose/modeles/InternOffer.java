@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.modeles;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,8 +26,8 @@ public class InternOffer {
     private LocalDate endDate;
     private State state;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "internshipCandidates_id")
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "interOfferJob_id")
     private List<InternshipCandidates> internshipCandidates;
 
     @OneToOne()
@@ -43,10 +42,22 @@ public class InternOffer {
     @JoinColumn(name = "employeur_id")
     private Employeur employeur;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "offerReviewRequest_id")
+    private OfferReviewRequest offerReviewRequest;
 
-    public InternOffer(String title, String location, String description, double salaryByHour, LocalDate startDate,
-                       LocalDate endDate, List<InternshipCandidates> internshipCandidates,
-                       Programme programme, File files, Employeur employeur,State state) {
+    public InternOffer(String title,
+                       String location,
+                       String description,
+                       double salaryByHour,
+                       LocalDate startDate,
+                       LocalDate endDate,
+                       List<InternshipCandidates> internshipCandidates,
+                       Programme programme,
+                       File files,
+                       Employeur employeur,
+                       State state,
+                       OfferReviewRequest offerReviewRequest) {
         this.title = title;
         this.location = location;
         this.description = description;
@@ -57,7 +68,23 @@ public class InternOffer {
         this.programme = programme;
         this.file = files;
         this.employeur = employeur;
-        this.state = state ;
+        this.state = state;
+        this.offerReviewRequest = offerReviewRequest;
+    }
+
+    public InternOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, List<InternshipCandidates> internshipCandidates, Programme programme, File file, Employeur employeur, State state, OfferReviewRequest offerReviewRequest) {
+        this.id = id;
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.salaryByHour = salaryByHour;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.internshipCandidates = internshipCandidates;
+        this.programme = programme;
+        this.file = file;
+        this.employeur = employeur;
+        this.state = state;
+        this.offerReviewRequest = offerReviewRequest;
     }
 }
-

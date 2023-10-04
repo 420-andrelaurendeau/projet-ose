@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class InternOfferDto {
     private double salaryByHour;
     private String startDate;
     private String endDate;
-    private List<InternshipCandidatesDto> internshipCandidates;
+    private List<Long> internshipCandidates;
     private long programmeId;
     private FileDto file;
     private long employeurId;
@@ -31,7 +32,7 @@ public class InternOfferDto {
     private String employeurPrenom;
     private String employeurNom;
     private String employeurEntreprise;
-
+    private long offerReviewRequestId;
     private State state;
 
     public InternOfferDto(InternOffer internOffer) {
@@ -41,7 +42,7 @@ public class InternOfferDto {
         this.description = internOffer.getDescription();
         this.startDate =  internOffer.getStartDate().toString();
         this.endDate = internOffer.getEndDate().toString();
-        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? null : internOffer.getInternshipCandidates().stream().map(InternshipCandidatesDto::new).collect(Collectors.toList());
+        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? null : internOffer.getInternshipCandidates().stream().map(internshipCandidates -> internshipCandidates.getId()).collect(Collectors.toList());
         this.programmeId = internOffer.getProgramme().getId();
         this.file = new FileDto(internOffer.getFile());
         this.employeurId = internOffer.getEmployeur().getId();
@@ -50,25 +51,27 @@ public class InternOfferDto {
         this.employeurNom = internOffer.getEmployeur().getNom();
         this.employeurEntreprise = internOffer.getEmployeur().getEntreprise();
         this.state = internOffer.getState();
+        this.offerReviewRequestId = internOffer.getOfferReviewRequest() == null ? 0 : internOffer.getOfferReviewRequest().getId();
     }
 
-    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file,State state) {
+    public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file,State state, long offerReviewRequestId) {
         this.title = title;
         this.location = location;
         this.description = description;
         this.salaryByHour = salaryByHour;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.internshipCandidates = internshipCandidates;
+        this.internshipCandidates = internshipCandidates == null ? new ArrayList<>() : internshipCandidates.stream().map(internshipCandidate -> internshipCandidate.getId()).collect(Collectors.toList());
         this.programmeId = programmeId;
         this.file = file;
         this.state = state;
+        this.offerReviewRequestId = offerReviewRequestId;
     }
 
     public InternOffer fromDto() {
         if (this.internshipCandidates == null) {
-            return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state);
+            return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
         }
-        return new InternOffer(title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), internshipCandidates.stream().map(InternshipCandidatesDto::fromDto).collect(Collectors.toList()) , null, file.fromDto(), null,state);
+        return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
     }
 }

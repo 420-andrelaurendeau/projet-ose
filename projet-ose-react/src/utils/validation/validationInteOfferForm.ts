@@ -6,9 +6,9 @@ export const validateTitle = (title: string, t: Function) => {
 
     if (title.length < 5) {
         errorMsg = t('formField.InternshipOfferForm.title.validation.minLenght');
-    } else if (title.length > 50) {
+    } else if (title.length > 20) {
         errorMsg = t('formField.InternshipOfferForm.title.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&]/.test(title)) {
+    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüïî]/.test(title)) {
         errorMsg = t('formField.InternshipOfferForm.title.validation.badCharactere');
     }
 
@@ -21,9 +21,9 @@ export const validateLocation = (location: string, t: Function) => {
 
     if (location.length < 5) {
         errorMsg = t('formField.InternshipOfferForm.location.validation.minLenght');
-    } else if (location.length > 50) {
+    } else if (location.length > 20) {
         errorMsg = t('formField.InternshipOfferForm.location.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&]/.test(location)) {
+    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüïî]/.test(location)) {
         errorMsg = t('formField.InternshipOfferForm.location.validation.badCharactere');
     }
 
@@ -36,10 +36,10 @@ export const validateDescription = (description: string, t: Function) => {
 
     if (description.length < 10) {
         errorMsg = t('formField.InternshipOfferForm.description.validation.minLenght');
-    } else if (description.length > 500) {
+    } else if (description.length > 1000) {
         errorMsg = t('formField.InternshipOfferForm.description.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&]/.test(description)) {
-        errorMsg = t('formField.InternshipOfferForm.description.validation.badCharactere');
+    } else if (/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/.test(description.toLowerCase())) {
+        errorMsg = t('formField.InternshipOfferForm.description.validation.scriptDetected');
     }
 
     return errorMsg;
@@ -100,19 +100,16 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
 
 export const validateFile = (file: FileEntity, t: Function) => {
     const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
-    const allowedExtensions = [".pdf"]; // Vous pouvez ajuster ceci selon vos besoins
+    const allowedExtensions = [".pdf"];
     let errorMsg = "";
 
-    if (!file || !file.fileName) {
-        errorMsg = t('formField.InternshipOfferForm.file.validation.noFileSelected');
-        return errorMsg;
-    }
     const ext = "." + file.fileName.split(".").pop();
 
     // TODO Vérifier la taille du fichier
     /*
 
      */
+    console.log(!allowedExtensions.includes(ext.toLowerCase()))
     if (!allowedExtensions.includes(ext.toLowerCase())) {
         errorMsg = t('formField.InternshipOfferForm.file.validation.BadTypeFile', {name: file.fileName});
     }

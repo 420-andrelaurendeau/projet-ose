@@ -18,11 +18,11 @@ public class InternshipCandidates {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
-    @ManyToOne()
+    @OneToOne()
     @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;
 

@@ -32,9 +32,14 @@ public class InternOfferController {
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/Offers")
-    public List<InternOfferDto> getOffers() {
+    @GetMapping("/pendingOffers")
+    public List<InternOfferDto> getPendingOffers() {
         return offerJobService.getInternOfferPending();
+    }
+
+    @GetMapping("/allOffers")
+    public List<InternOfferDto> getAllOffers() {
+        return offerJobService.getAllInternOffers();
     }
 
     @GetMapping("/OffersEtudiant")

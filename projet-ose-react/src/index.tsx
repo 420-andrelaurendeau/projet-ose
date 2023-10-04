@@ -13,6 +13,7 @@ import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
 import HomePage from "./pages/HomePage";
 import InternOfferPage from "./pages/InternOfferPage";
+import GSInternOfferPage from './pages/GSInternOfferPage';
 
 
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         path: "/InternOffer",
         element: <InternOfferPage/>
     },
+    {
+        path: "/GSInternOffer",
+        element: <GSInternOfferPage/>
+    }
 
 ])
 
