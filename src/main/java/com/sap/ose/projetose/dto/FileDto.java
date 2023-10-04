@@ -1,7 +1,8 @@
 package com.sap.ose.projetose.dto;
 
 
-import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.AssessmentState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +15,16 @@ public class FileDto {
     private long id;
     private byte[] content;
     private String fileName;
-    private boolean isAccepted;
+    private AssessmentState isAccepted;
 
     public FileDto(File file) {
         this.id = file.getId();
         this.content = file.getContent();
         this.fileName = file.getFileName();
-        this.isAccepted = file.isAccepted();
+        this.isAccepted = file.getAsssessmentState();
     }
 
     public File fromDto() {
-        File file = new File(content, fileName, isAccepted);
-        return file;
+        return new File(fileName, content);
     }
 }

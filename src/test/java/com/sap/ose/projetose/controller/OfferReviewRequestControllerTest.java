@@ -43,7 +43,7 @@ public class OfferReviewRequestControllerTest {
 
     @Test
     void testSaveOfferReviewRequest_OfferAlreadyApprovedException() throws Exception {
-        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyReviewException());
+        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new OfferAlreadyReviewedException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
 
@@ -84,7 +84,7 @@ public class OfferReviewRequestControllerTest {
 
     @Test
     void testSaveOfferReviewRequest_InternshipmanagerNotFoundException() throws Exception {
-        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new InternshipmanagerNotFoundException());
+        when(offerReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new InternshipManagerNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);

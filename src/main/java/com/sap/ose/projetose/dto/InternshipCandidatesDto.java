@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.InternshipCandidates;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,8 +31,8 @@ public class InternshipCandidatesDto {
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();
         this.etudiant_id = internshipCandidates.getEtudiant().getId();
-        this.interOfferJob_id = internshipCandidates.getInternOffer().getId();
-        this.files_id = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+        this.interOfferJob_id = internshipCandidates.getInternshipOffer().getId();
+        this.files_id = internshipCandidates.getFiles().isEmpty() ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {

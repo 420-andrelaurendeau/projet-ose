@@ -1,11 +1,12 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.InternshipOffer;
+import com.sap.ose.projetose.models.InternshipCandidates;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -15,35 +16,28 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class InternshipCandidatesService {
-
     private final InternshipCandidatesRepository internshipCandidatesRepository;
-    private final InternOfferService internOfferService;
-    private final EtudiantService etudiantService;
+    private final InternshipOfferService internshipOfferService;
+    private final StudentService studentService;
 
     private final FileService fileService;
 
     private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
-
-    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, FileService fileService) {
-        this.internshipCandidatesRepository = internshipCandidatesRepository;
-        this.internOfferService = internOfferService;
-        this.etudiantService = etudiantService;
-        this.fileService = fileService;
-    }
 
     @Transactional
     public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
         try{
             InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
 
-            Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant_id());
-            InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
+            Student etudiant = studentService.findEtudiantById(internshipCandidatesDto.getEtudiant_id());
+            InternshipOffer internshipOffer = internshipOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
             List<File> files = internshipCandidatesDto.getFiles_id().stream().map(fileService::findById).toList();
 
 
             internshipCandidates.setEtudiant(etudiant);
-            internshipCandidates.setInternOffer(internOffer);
+            internshipCandidates.setInternshipOffer(internshipOffer);
             internshipCandidates.setFiles(files);
 
             return new InternshipCandidatesDto(internshipCandidatesRepository.save(internshipCandidates));

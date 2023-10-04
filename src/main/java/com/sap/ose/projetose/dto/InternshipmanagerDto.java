@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Internshipmanager;
+import com.sap.ose.projetose.models.InternshipManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,24 +10,18 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InternshipmanagerDto extends UtilisateurDto {
+public class InternshipmanagerDto extends UserDto {
 
     private long id;
     private long programmeId;
 
-    public InternshipmanagerDto(String nom, String prenom, String phone, String email, long id, int programmeId) {
-        super(nom, prenom, phone, email);
-        this.id = id;
-        this.programmeId = programmeId;
-    }
-
-    public InternshipmanagerDto(Internshipmanager internshipmanager) {
+    public InternshipmanagerDto(InternshipManager internshipmanager) {
         super(internshipmanager.getNom(), internshipmanager.getPrenom(), internshipmanager.getPhone(), internshipmanager.getEmail());
         this.id = internshipmanager.getId();
-        this.programmeId = internshipmanager.getProgramme().getId();
+        this.programmeId = internshipmanager.getFormation().getId();
     }
 
-    public Internshipmanager fromDto() {
-        return new Internshipmanager(getNom(), getPrenom(), getPhone(), getEmail(), null, null);
+    public InternshipManager fromDto() {
+        return new InternshipManager(getNom(), getPrenom(), getPhone(), getEmail(), null, null);
     }
 }
