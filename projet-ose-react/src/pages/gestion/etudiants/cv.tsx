@@ -37,14 +37,14 @@ function EvaluerCV() {
                             <div className="fixed bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() => {
                                 setDisplayCV(false)
                             }}></div>
-                            <div className="absolute bottom-0 overflow-scroll scroll-auto z-10 w-screen h-[calc(100vh-2rem)]">
-                                <div className="flex flex-col justify-end items-center px-3">
+                            <div className="absolute bottom-0 overflow-scroll no-scrollbar z-10 h-[calc(100vh-2rem)] -translate-x-1/2 left-1/2">
+                                <div className="justify-end items-center px-3">
                                     <div
-                                        className="my-3 bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279]">
+                                        className="my-5 bg-white w-[80vw] aspect-[216/279]">
                                         Je suis un document. Page 1
                                     </div>
                                     <div
-                                        className="bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279]">
+                                        className="my-5 bg-white w-[80vw] aspect-[216/279]">
                                         Je suis un document. Page 2
                                     </div>
                                 </div>
