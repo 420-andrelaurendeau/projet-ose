@@ -28,18 +28,26 @@ function EvaluerCV() {
                 displayCV ?
                     (
                         <>
-                            <div className="absolute top-0 bg-dark w-full h-8 z-10 flex justify-end items-center px-3 ">
+                            <div className="absolute top-0 bg-dark w-full h-8 z-20 flex justify-end items-center px-3 ">
                                 <FontAwesomeIcon icon={faFileSignature} className="text-white" onClick={() => {
                                     setDisplayCV(false);
                                     setDisplayAssessmentPopup(true);
                                 }}/>
                             </div>
-                            <div className="absolute bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() => {
+                            <div className="fixed bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() => {
                                 setDisplayCV(false)
                             }}></div>
-                            <div
-                                className="absolute bottom-0 bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279] z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                                Je suis un document.
+                            <div className="absolute bottom-0 overflow-scroll scroll-auto z-10 w-screen h-[calc(100vh-2rem)]">
+                                <div className="flex flex-col justify-end items-center px-3">
+                                    <div
+                                        className="my-3 bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279]">
+                                        Je suis un document. Page 1
+                                    </div>
+                                    <div
+                                        className="bg-white w-[90vw] sm:w-auto sm:h-[80vh] md:h-[90vh] aspect-[216/279]">
+                                        Je suis un document. Page 2
+                                    </div>
+                                </div>
                             </div>
                         </>
                     ) : null
@@ -53,11 +61,12 @@ function EvaluerCV() {
                         <div
                             className="absolute bottom-0 bg-white h-3/5 w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                             <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV: NOM_DU_CV</h1>
-                            <div className="w-full flex-start flex">
-                                <div className="w-full relative flex flex-wrap items-center justify-between">
+                            <div className="w-full h-full flex-start flex px-5 py-3">
+                                <div className="w-full max-h-full relative flex flex-col flex-wrap">
                                     <p className="px-2 w-full">Nom, Prenom</p>
                                     <p className="px-2 w-full">Formation</p>
                                     <p className="px-2 w-full">Matricule</p>
+                                    <div className="flex-grow">a</div>
                                     <input type="text" className="w-full outline-1"/>
                                 </div>
                                 <br/>
