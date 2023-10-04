@@ -32,7 +32,7 @@ public class InternshipCandidatesDto {
         this.id = internshipCandidates.getId();
         this.etudiant_id = internshipCandidates.getEtudiant().getId();
         this.interOfferJob_id = internshipCandidates.getInternOffer().getId();
-        this.files_id = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+        this.files_id = internshipCandidates.getFiles().isEmpty() ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {

@@ -37,6 +37,9 @@ public class ProjetOseApplication implements CommandLineRunner {
     private InternshipCandidatesService internshipCandidatesService;
 
     @Autowired
+    private FileService fileService;
+
+    @Autowired
     ProgrammeRepository programmeRepository;
     @Autowired
     InternOfferRepository internOfferRepository;
@@ -60,10 +63,12 @@ public class ProjetOseApplication implements CommandLineRunner {
         employeurService.saveEmployeur(employeur);
         employeurService.saveEmployeur(employeur2);
 
-        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true);
+        File file = new File(2L,"hello".getBytes(StandardCharsets.UTF_8),"Test.txt",true);
+        File file2 = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test2.txt",true);
+        fileService.saveFile(file2);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
-        InternOffer internOffer = new InternOffer(1L,"ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
+        InternOffer internOffer = new InternOffer(1L,"Stage en informatique","Montréal","Un stage trop trop cool pour un etrudiant comme toi. Prépare toi pour avoir le meilleur stage de ta vie😊👌.",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
@@ -71,7 +76,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         etudiantService.saveEtudiant(etudiant);
 
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file));
+        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file, file2));
 
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 

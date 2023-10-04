@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {InterOfferJob} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
+import {AppliedOffers} from "../model/AppliedOffers";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
 
@@ -78,6 +79,19 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
         throw error;
     }
 };
+
+export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
+    try {
+        const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
+        return response.data.map((item: any) => ({
+            appliedOffer: item.appliedOffer,
+            appliedFiles: item.appliedFiles
+        }));
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
+        throw error;
+    }
+}
 
 
 

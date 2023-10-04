@@ -13,6 +13,7 @@ import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import InternOfferPage from "./pages/InternOfferPage";
 import GSInternOfferPage from './pages/GSInternOfferPage';
+import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 
 
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
     {
         path: "/GSInternOffer",
         element: <GSInternOfferPage/>
+    },
+    {
+        path: "/testStudentAppliedOffers",
+        element: <StudentAppliedOffers/>
     }
 
 ])
