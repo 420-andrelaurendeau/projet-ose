@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,7 +40,7 @@ public class InternshipCandidatesService {
         try{
             InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
 
-            Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant_id());
+            Etudiant etudiant = etudiantService.findByMatricule(internshipCandidatesDto.getEtudiant_matricule());
             InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
             List<File> files = internshipCandidatesDto.getFiles_id().stream().map(fileService::findById).toList();
 
@@ -47,8 +48,25 @@ public class InternshipCandidatesService {
             internshipCandidates.setInternOffer(internOffer);
             internshipCandidates.setFiles(files);
 
-            return new InternshipCandidatesDto(internshipCandidatesRepository.save(internshipCandidates));
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
 
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+    @Transactional
+    public InternshipCandidatesDto saveCandidates(InternshipCandidates internshipCandidates){
+        try{
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};

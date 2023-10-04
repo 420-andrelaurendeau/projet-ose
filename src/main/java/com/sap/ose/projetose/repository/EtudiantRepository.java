@@ -10,4 +10,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
     @Query("SELECT e FROM Etudiant e WHERE e.email = ?1")
     Optional<Etudiant> findByCourriel(String email);
+
+    @Query("SELECT e FROM Etudiant e WHERE e.matricule = ?1")
+    Optional<Etudiant> findByMatricule(String matricule);
 }

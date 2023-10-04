@@ -61,6 +61,11 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
+    public Etudiant findByMatricule(String matricule){
+        Optional<Etudiant> etudiant = etudiantRepository.findByMatricule(matricule);
+        return etudiant.orElse(null);
+    }
+
     Etudiant getEtudiantByCourriel(String courriel) {
         return etudiantRepository.findByCourriel(courriel).orElse(null);
     }
