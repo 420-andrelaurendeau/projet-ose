@@ -21,6 +21,8 @@ public abstract class Utilisateur {
     private String phone;
     @Column(unique = true)
     private String email;
+    @Getter(AccessLevel.NONE)
+    @ToString.Exclude
     private String password;
 
     public Utilisateur(String nom, String prenom, String phone, String email, String password) {
