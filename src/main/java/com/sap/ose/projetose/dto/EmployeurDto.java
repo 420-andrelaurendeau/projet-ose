@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class EmployeurDto extends UtilisateurDto {
 
     private String entreprise;
+    private long programme_id;
 
     public EmployeurDto(String nom, String prenom, String phone, String email, String entreprise) {
         super(nom, prenom, phone, email);
@@ -22,5 +23,6 @@ public class EmployeurDto extends UtilisateurDto {
     public EmployeurDto(Employeur employeur) {
         super(employeur.getNom(), employeur.getPrenom(), employeur.getPhone(), employeur.getEmail());
         this.entreprise = employeur.getEntreprise();
+        this.programme_id = employeur.getProgramme().getId();
     }
 }

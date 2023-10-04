@@ -4,7 +4,10 @@ package com.sap.ose.projetose.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.GlobalExceptionHandler;
+import com.sap.ose.projetose.exception.ProgramNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.service.InternOfferService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,8 +63,8 @@ class InternOfferControllerTest {
     }
 
     @Test
-    void testSaveInterOfferJob_NullPointerException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new NullPointerException("Programme non trouvé"));
+    void testSaveInterOfferJob_ProgramNotFoundException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new ProgramNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
@@ -76,31 +79,9 @@ class InternOfferControllerTest {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Programme non trouvé")));
     }
-
     @Test
-    void testSaveInterOfferJob_DataIntegrityViolationException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi."));
-
-
-        String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
-        ;
-
-        resultActions.andExpect(status().isBadRequest())
-                .andExpect(content().string("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi."));
-    }
-
-    @Test
-    void testSaveInterOfferJob_DataAccessException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DataAccessException("Erreur d'accès aux données") {
-        });
+    void testSaveInterOfferJob_DatabaseException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DatabaseException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
@@ -114,12 +95,12 @@ class InternOfferControllerTest {
                 .perform(requestBuilder);
 
         resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().string("Erreur d'accès aux données"));
+                .andExpect(content().string("Erreur d'accès a la base de données"));
     }
 
     @Test
-    void testSaveInterOfferJob_RuntimeException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new RuntimeException("Erreur inconnue"));
+    void testSaveInterOfferJob_ServiceException() throws Exception {
+        when(internOfferService.saveInterOfferJob(any())).thenThrow(new ServiceException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internOfferDto);
@@ -133,7 +114,7 @@ class InternOfferControllerTest {
                 .perform(requestBuilder);
 
         resultActions.andExpect(status().isInternalServerError())
-                .andExpect(content().string("Erreur inconnue"));
+                .andExpect(content().string("Erreur au niveau du service"));
     }
 
 }

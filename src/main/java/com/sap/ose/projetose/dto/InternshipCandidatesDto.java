@@ -1,34 +1,43 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class InternshipCandidatesDto {
 
-    private final long id;
-    private final EtudiantDto etudiant;
-    private final InternOfferDto interOfferJob;
-    private final List<FileDto> files;
+    private long id;
+    private long etudiant_id;
+    private long interOfferJob_id;
+    private List<Long> files_id;
 
 
-    public InternshipCandidatesDto(long id, EtudiantDto etudiant, InternOfferDto interOfferJob, List<FileDto> files) {
+    public InternshipCandidatesDto(long id, int etudiant_id, int interOfferJob_id, List<Long> files_id) {
         this.id = id;
-        this.etudiant = etudiant;
-        this.interOfferJob = interOfferJob;
-        this.files = files;
+        this.etudiant_id = etudiant_id;
+        this.interOfferJob_id = interOfferJob_id;
+        this.files_id = files_id;
     }
 
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();
-        this.etudiant = new EtudiantDto(internshipCandidates.getEtudiant());
-        this.interOfferJob = new InternOfferDto(internshipCandidates.getInternOffer());
-        this.files = internshipCandidates.getFiles().stream().map(FileDto::new).collect(Collectors.toList());
+        this.etudiant_id = internshipCandidates.getEtudiant().getId();
+        this.interOfferJob_id = internshipCandidates.getInternOffer().getId();
+        this.files_id = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {
-        return new InternshipCandidates(etudiant.fromDto(), interOfferJob.fromDto(), files.stream().map(FileDto::fromDto).collect(Collectors.toList()));
+        return new InternshipCandidates(null,null, null);
     }
+
 
 }
