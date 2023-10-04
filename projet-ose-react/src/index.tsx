@@ -4,14 +4,12 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, Navigate, redirect, RouterProvider, useNavigate} from "react-router-dom";
-import SidebarOptionSwitcher from "./pages/SidebarOptionSwitcher";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
-import EmployeurHomePage from "./pages/EmployeurHomePage";
 import HomePage from "./pages/HomePage";
 
 

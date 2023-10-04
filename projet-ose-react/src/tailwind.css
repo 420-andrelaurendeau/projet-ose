@@ -1037,6 +1037,10 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-logoDark {
+  background-image: ./src/assets/images/Cegep-Andre-Laurendeau.png;
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -1437,6 +1441,10 @@ video {
   background-color: rgb(26 28 35 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:bg-logo) {
+  background-image: ./src/assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png;
+}
+
 :is(.dark .dark\:text-gray) {
   --tw-text-opacity: 1;
   color: rgb(208 204 208 / var(--tw-text-opacity));
@@ -1455,6 +1463,15 @@ video {
 :is(.dark .dark\:text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:hover\:text-amber-500:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(245 158 11 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:focus-visible\:outline-orange:focus-visible) {
+  outline-color: #F57A00;
 }
 
 @media not all and (min-width: 768px) {

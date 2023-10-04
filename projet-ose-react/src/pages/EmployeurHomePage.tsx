@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFileLines, faPencil, faSignature, faSpinner, faUsers} from "@fortawesome/free-solid-svg-icons";
-import {NavLink, Outlet, Route, useLocation, useOutletContext} from "react-router-dom";
-import {getInterOfferJob, UpdateOffers} from "../api/InterOfferJobAPI";
-import Header from "../Header";
+import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {NavLink, useLocation} from "react-router-dom";
+import {UpdateOffers} from "../api/InterOfferJobAPI";
 import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 
 function EmployeurHomePage() {
