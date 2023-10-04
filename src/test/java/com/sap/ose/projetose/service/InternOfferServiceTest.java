@@ -69,7 +69,7 @@ class InternOfferServiceTest {
     @Test
     public void saveInterOfferJob_Creation() {
         Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
-        Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", 1);
+        Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Programme());
         InternOffer mockedInternOffer = internOfferDto.fromDto();
         mockedInternOffer.setProgramme(mockedProgramme);
         mockedInternOffer.setEmployeur(mockedEmployeur);

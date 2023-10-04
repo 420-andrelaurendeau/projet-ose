@@ -17,7 +17,7 @@ public class OfferReviewRequest {
 
     private String comment;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "internOffer_id")
     private InternOffer internOffer;
 

@@ -70,10 +70,27 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
+
         if (files && files[0]) {
             const file = files[0];
-            const reader = new FileReader();
+            const maxSizeInBytes = 2 * 1024 * 1024;
+            const allowedExtensions = [".pdf"];
+            const ext = "." + file.name.split(".").pop();
+            if (file.size > maxSizeInBytes) {
+                setErrors(prevErrors => ({
+                    ...prevErrors, ["file"]: t("formField.InternshipOfferForm.file.validation.BigSizeFile",  {name: file.name})
+                }));
+                return;
+            }
 
+            if (!allowedExtensions.includes(ext.toLowerCase())) {
+                setErrors(prevErrors => ({
+                    ...prevErrors, ["file"]: t('formField.InternshipOfferForm.file.validation.BadTypeFile', {name: file.name})
+                }));
+                return;
+            }
+
+            const reader = new FileReader();
             reader.onloadend = () => {
                 const base64String = reader.result?.toString().split(',')[1];
 
@@ -83,10 +100,18 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                     }
                 }));
             };
-
             reader.readAsDataURL(file);
         }
+
+
     };
+
+    useEffect(() => {
+        if (formState.file!) {
+            handleValidation("file");
+        }
+
+    }, [formState.file]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -144,6 +169,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                 fieldError = validateEndDate(formState.endDate!, formState.startDate!, t);
                 break;
             case "file":
+                console.log(formState.file!)
                 fieldError = validateFile(formState.file!, t);
                 break;
         }
@@ -270,8 +296,8 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                             className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
                             onChange={(e) => {
                                 handleFileChange(e);
+                                //handleValidation("file");
                             }}
-                            onLoad={() => handleValidation("file")}
                         />
                         <div className="flex flex-col items-center justify-center py-10 text-center">
                             <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>

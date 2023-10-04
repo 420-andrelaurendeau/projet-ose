@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/etudiant")
+@CrossOrigin(origins = "http://localhost:3000")
 public class EtudiantController {
 
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
@@ -24,7 +26,6 @@ public class EtudiantController {
     }
 
     @PostMapping("/ajouter")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
         return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
@@ -36,13 +37,14 @@ public class EtudiantController {
     }
 
     @GetMapping("/etudiants")
-    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
+    @GetMapping("{id}/offersApplied")
+    public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
 
-
-
+        return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));
+    }
 }
