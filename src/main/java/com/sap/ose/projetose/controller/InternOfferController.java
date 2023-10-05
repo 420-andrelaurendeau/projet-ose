@@ -27,6 +27,7 @@ public class InternOfferController {
     @PostMapping("/save")
     public ResponseEntity<InternOfferDto> saveInterOfferJob(@RequestBody InternOfferDto internOfferJobdto) {
 
+        System.out.println(internOfferJobdto.toString());
         InternOfferDto savedOfferJobDto = offerJobService.saveInterOfferJob(internOfferJobdto);
 
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
@@ -45,6 +46,11 @@ public class InternOfferController {
     @GetMapping("/OffersEtudiant")
     public List<InternOfferDto> getOffersEtudiant() {
         return offerJobService.getInternOfferAccepted();
+    }
+
+    @GetMapping("/OffersEmp/{email}")
+    public List<InternOfferDto> getInternOfferJob(@PathVariable String email){
+        return offerJobService.getInternOfferByEmployeurEmail(email);
     }
 }
 

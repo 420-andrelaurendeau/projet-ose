@@ -13,3 +13,8 @@ tache
 2. Daily plus recurrent au maximum au 3 jours
 
 
+*Pont negatif*
+
+1. Tout les membres ne sont pas present lors des periodes disponible
+
+

@@ -1,9 +1,11 @@
 package com.sap.ose.projetose.modeles;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +26,7 @@ public class InternOffer {
     private double salaryByHour;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
     private State state;
 
     @OneToMany(cascade = CascadeType.REMOVE)

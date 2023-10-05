@@ -1,7 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import InternshipOfferModal from "./components/common/InternshipOfferModal";
 
 i18n
   // detect user language
@@ -108,7 +107,6 @@ i18n
                             required : 'Files are required',
                             toMuchFile: 'You can only upload 5 files maximum',
                             BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB',
-                            BadTypeFile: 'The fichier {{name}} have an extension no authorize.'
                         }
                     },
                     button: {
@@ -424,6 +422,7 @@ i18n
                         placeholder : 'Télécharger des fichiers',
                         validation : {
                             required : 'Les fichiers sont requis',
+                            toMuchFile: 'Vous ne pouvez télécharger que 5 fichiers au maximum.',
                             BigSizeFile: 'Le fichier {{name}} dépasse la taille maximale de 5 Mo.',
                             BadTypeFile: 'Le fichier {{name}} a une extension non autorisée.'
                         }

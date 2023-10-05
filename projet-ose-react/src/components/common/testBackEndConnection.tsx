@@ -31,7 +31,7 @@ const TestBackEndConnection = (props:any) => {
     }
 
     const handleSubmit = (user:FormData) => {
-        navigate('/home', {
+        navigate('/home/offer', {
             state: user,
 
         });

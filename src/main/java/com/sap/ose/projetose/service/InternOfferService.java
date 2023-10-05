@@ -4,6 +4,11 @@ import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.modeles.Etats;
+import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -11,9 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InternOfferService {
@@ -133,4 +140,23 @@ public class InternOfferService {
     boolean isApprovedOrDeclineById(long id) {
         return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
+
+    public List<InternOfferDto> getInternOffer(){
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer internOffer : offerJobRepository.findAll()){
+            internOfferDtos.add(new InternOfferDto());
+        }
+        return internOfferDtos;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getInternOfferByEmployeurEmail(String email){
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        List<InternOffer> internOffers = employeurRepository.findByEmail(email).get().getInternOffers();
+        for(InternOffer internOffer : internOffers){
+                internOfferDtos.add(new InternOfferDto(internOffer));
+        }
+        return internOfferDtos;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.modeles.Etats;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;

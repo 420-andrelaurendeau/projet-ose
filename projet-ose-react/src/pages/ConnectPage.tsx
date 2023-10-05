@@ -1,21 +1,15 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
-import TestBackEndConnection from "../components/common/testBackEndConnection";
-import ErrorPage from "./ErrorPage";
+import useDarkSide from "../hooks/useDarkSide";
+
 
 function ConnectPage() {
-    const [darkMode, setDarkMode] = React.useState(false)
-    function toggleDarkMode() {
-        setDarkMode(prevDarkMode => !prevDarkMode)
-    }
+
     return (
 
-        <div className={darkMode ? "h-screen w-full bg-dark" : "h-screen w-full bg-white"}>
+        <div className="h-screen w-full bg-white dark:bg-dark">
             <div className="items-center">
-                <ConnectForm
-                    darkMode={darkMode}
-                    toggleDarkMode={toggleDarkMode}
-                />
+                <ConnectForm/>
             </div>
         </div>
     );

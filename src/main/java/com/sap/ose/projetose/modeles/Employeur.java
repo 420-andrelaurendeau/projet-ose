@@ -1,21 +1,16 @@
 package com.sap.ose.projetose.modeles;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@EqualsAndHashCode(callSuper = true)
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@DiscriminatorValue("EMPLOYEUR")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@DiscriminatorValue("EMPLOYEUR")
 public class Employeur extends Utilisateur {
-
     @Column(unique = true)
     private String entreprise;
 
@@ -31,12 +26,15 @@ public class Employeur extends Utilisateur {
         this.programme = programme;
     }
 
-    public Employeur(String nom, String prenom, String email,String phone, String password, String entreprise, Programme programme) {
+    public Employeur(String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
         super(nom, prenom, email, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;
+        this.internOffers = new ArrayList<>();
     }
 
-
-
+    public Employeur(String nom, String prenom, String telephone, String email, String password, String entreprise) {
+        super(nom, prenom, telephone, email, password);
+        this.entreprise = entreprise;
+    }
 }
