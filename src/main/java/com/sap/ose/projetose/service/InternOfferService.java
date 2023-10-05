@@ -45,7 +45,7 @@ public class InternOfferService {
             InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
-            internOffer.setState(State.ACCEPTED);
+            internOffer.setState(State.PENDING);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
