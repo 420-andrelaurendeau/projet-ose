@@ -20,4 +20,8 @@ public class FileService {
         return fileEntityRepository.findById(id).orElse(null);
     }
 
+
+    public void saveFile(File file) {
+        fileEntityRepository.save(file);
+    }
 }
