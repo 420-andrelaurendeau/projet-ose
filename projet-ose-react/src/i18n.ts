@@ -635,7 +635,7 @@ i18n
                             text : 'Date de fin :',
                         },
                         apply: {
-                            name : 'apply',
+                            name : 'Apply',
                             text : 'Postuler',
                         }
                     }

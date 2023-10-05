@@ -55,10 +55,10 @@ export default function EmployeurOffer(props:any) {
                       <span
                           className={
                           offer.state == "PENDING" ?
-                              "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-1/2 bg-orange text-white dark:text-offwhite"
+                              "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                               : offer.state === "DECLINED" ?
-                                  "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-1/2 bg-red text-white dark:text-offwhite"
-                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-1/2 justify-center bg-green text-white dark:text-offwhite"}
+                                  "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                       >
                         {offer.state}
                       </span>
