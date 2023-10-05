@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {faCircleUser, faFileLines} from "@fortawesome/free-solid-svg-icons";
+import {faCircleUser, faFileArrowDown, faFileLines} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {NavLink, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -34,6 +34,18 @@ export default function SidebarEtudiant(props: any) {
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className={option == "offer" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
                                     <p className={option == "offer" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.stage.text}</p>
+                                </NavLink>
+                            </li>
+                            <li className="rounded-sm flex space-x-2">
+                                <div className={option === "appliedOffers" ? "w-2 bg-blue rounded-lg": "hidden"}>
+                                </div>
+                                <NavLink
+                                    to="/home/appliedOffers"
+                                    state={props.user}
+                                    className="flex items-center p-2 space-x-3 rounded-md w-full"
+                                >
+                                    <FontAwesomeIcon icon={faFileArrowDown} className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
+                                    <p className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.offre_applique.text}</p>
                                 </NavLink>
                             </li>
                         </ul>

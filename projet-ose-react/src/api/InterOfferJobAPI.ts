@@ -93,6 +93,8 @@ export const getInterOfferJob = async (email: string) => {
         throw error;
     }
 
+}
+
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
@@ -104,9 +106,6 @@ export const getStudentAppliedOffers = async (studentId: number): Promise<Applie
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;
     }
-}
-
-
 }
 
 export function UpdateOffers(email:string,setOffers:any){

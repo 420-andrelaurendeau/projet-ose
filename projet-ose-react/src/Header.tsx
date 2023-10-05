@@ -39,9 +39,12 @@ const Header = (props:any) => {
                                     />
                                 </div>
                             </div>
-                            {props.user.matricule && <div className="hidden md:block">
+                            {props.user.matricule && <div className="hidden md:flex">
                                 <NavLink to={"/home/offer"} state={props.user} className="ml-10 flex items-baseline space-x-4">
                                     <p className="text-blue dark:text-orange">{fields.stage.text}</p>
+                                </NavLink>
+                                <NavLink to={"/home/appliedOffers"} state={props.user} className="ml-10 flex items-baseline space-x-4">
+                                    <p className="text-blue dark:text-orange">{fields.sidebar.offre_applique.text}</p>
                                 </NavLink>
                             </div>}
                             <Switcher/>

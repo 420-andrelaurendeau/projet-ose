@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
 import EtudiantStage from "./EtudiantStage";
+import EtudiantStagePage from "../../pages/EtudiantStagePage";
 function Home(props:any) {
     console.log(props.user)
     useEffect(() => {
@@ -15,7 +16,9 @@ function Home(props:any) {
            />
            {
                 props.user.matricule ?
-                    <EtudiantStage/>
+                    <EtudiantStagePage
+
+                    />
                     : <EmployeurHomePage/>
            }
        </div>
