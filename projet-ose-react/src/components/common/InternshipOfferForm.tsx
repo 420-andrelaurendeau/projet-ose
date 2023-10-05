@@ -103,6 +103,7 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
             setFormState(initialFormState);
             setOffers((prevOffers: InterOfferJob[]) => ([...prevOffers, savedInterOfferJob]));
+            setIsModalOpen(false);
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);
         }

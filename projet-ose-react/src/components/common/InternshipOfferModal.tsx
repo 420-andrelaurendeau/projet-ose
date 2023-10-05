@@ -60,6 +60,19 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
 
     }, [internshipOffer]);
 
+    useEffect(() => {
+        function handleKeyUp(event: KeyboardEvent) {
+            if (event.key === 'Escape') {
+                handleCloseModal();
+            }
+        }
+
+        window.addEventListener('keyup', handleKeyUp);
+
+        return () => window.removeEventListener('keyup', handleKeyUp);
+    }, [handleCloseModal]);
+
+
     async function handleApprove() {
         const updatedFormState = {
             ...formStateOffer,
@@ -142,102 +155,118 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
             <div
                 className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-start p-3 overflow-y-auto">
                 <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark">
-                    <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{internshipOffer.title}</h1>
-                    <div className="block sm:flex mt-5 sm:justify-between sm:items-start">
-                        <div className='block items-center min-h-50'>
-                            {/* Employeur field */}
-                            <div className={"flex"}>
-                                <p className={"p-1 dark:text-offwhite"}>
-                                    {internshipOffer.employeurNom!}
-                                </p>
-                                <p className={"p-1 dark:text-offwhite"}>
-                                    {internshipOffer.employeurPrenom!}
-                                </p>
-                            </div>
-                            {/* Location field */}
-                            <p className="p-1 dark:text-offwhite">
-                                {internshipOffer.location}
-                            </p>
-
-                            {/* Company field */}
-                            <p className="p-1 dark:text-offwhite">
-                                {internshipOffer.employeurEntreprise}
-                            </p>
-                        </div>
-                        <div className="block sm:flex flex-col sm:justify-end sm:items-end h-full">
-                            <div className="flex">
-                                {/* Start date field */}
-                                <p className="p-1 dark:text-offwhite">
-                                    {new Date(internshipOffer.startDate).toLocaleDateString('fr-FR', {
-                                        day: '2-digit', month: '2-digit', year: 'numeric',
-                                    })}
-                                </p>
-
-                                {/* End date field */}
-                                <p className="p-1 dark:text-offwhite">
-                                    {new Date(internshipOffer.endDate).toLocaleDateString('fr-FR', {
-                                        day: '2-digit', month: '2-digit', year: 'numeric',
-                                    })}
-                                </p>
-                            </div>
-                            {/* Programme field */}
-                            <div className="flex">
-                                <p className="p-1 w-full dark:text-offwhite">
-                                    {internshipOffer.programmeNom}
-                                </p>
-                            </div>
-                            {/* Salary field */}
-                            <div className="flex">
-                                <p className="p-1 w-full dark:text-offwhite">
-                                    {internshipOffer.salaryByHour}&nbsp;$/h
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Description field */}
-                    <div className="mb-5 justify-center items-center h-full">
-                        <p className="mt-1 p-2 w-full dark:text-offwhite ">
-                            {internshipOffer.description}
-                        </p>
-
-                    </div>
-
-                    {/* File field */}
-                    <div className="flex mb-5">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill={theme === `light` ? `#306bac` : `#F57A00`}
-                             height="50" viewBox="0 -960 960 960" width="24">
-                            <path
-                                d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
-                        </svg>
-                        <p className="mt-1 p-2 w-full dark:text-offwhite">{internshipOffer.file.fileName}</p>
-                    </div>
+                    <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark relative">
 
 
-                    {/* Commentaire field */}
-                    <textarea name='comment'
-                              className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
-                              id="commentary_placeholder"
-                              onChange={(e) => handleFormChange(e)}
-                              placeholder={t("formField.InternshipOfferModal.placeholder")}></textarea>
-
-                    {renderError(errors.comment)}
-                    {/* Buttons */}
-                    <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5 ">
                         <button
-                            className="w-full flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange"
-                            type="button"
-                            onClick={handleApprove}>
-                            {t("formField.InternshipOfferModal.button.approved")}
-                        </button>
-                        <button
-                            className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
-                            type="button"
-                            onClick={handleDecline}>
-                            {t("formField.InternshipOfferModal.button.refused")}
+                            onClick={handleCloseModal}
+                            className="absolute top-2 right-2 bg-red-600 dark:text-offwhite p-2 rounded-full focus:outline-none z-10"
+                        >
+                            X
                         </button>
 
+                        <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{internshipOffer.title}</h1>
+
+
+
+
+                        <div className="block sm:flex mt-5 sm:justify-between sm:items-start">
+                            <div className='block items-center min-h-50'>
+                                {/* Employeur field */}
+                                <div className={"flex"}>
+                                    <p className={"p-1 dark:text-offwhite"}>
+                                        {internshipOffer.employeurNom!}
+                                    </p>
+                                    <p className={"p-1 dark:text-offwhite"}>
+                                        {internshipOffer.employeurPrenom!}
+                                    </p>
+                                </div>
+                                {/* Location field */}
+                                <p className="p-1 dark:text-offwhite">
+                                    {internshipOffer.location}
+                                </p>
+
+                                {/* Company field */}
+                                <p className="p-1 dark:text-offwhite">
+                                    {internshipOffer.employeurEntreprise}
+                                </p>
+                            </div>
+                            <div className="block sm:flex flex-col sm:justify-end sm:items-end h-full">
+                                <div className="flex">
+                                    {/* Start date field */}
+                                    <p className="p-1 dark:text-offwhite">
+                                        {new Date(internshipOffer.startDate).toLocaleDateString('fr-FR', {
+                                            day: '2-digit', month: '2-digit', year: 'numeric',
+                                        })}
+                                    </p>
+
+                                    {/* End date field */}
+                                    <p className="p-1 dark:text-offwhite">
+                                        {new Date(internshipOffer.endDate).toLocaleDateString('fr-FR', {
+                                            day: '2-digit', month: '2-digit', year: 'numeric',
+                                        })}
+                                    </p>
+                                </div>
+                                {/* Programme field */}
+                                <div className="flex">
+                                    <p className="p-1 w-full dark:text-offwhite">
+                                        {internshipOffer.programmeNom}
+                                    </p>
+                                </div>
+                                {/* Salary field */}
+                                <div className="flex">
+                                    <p className="p-1 w-full dark:text-offwhite">
+                                        {internshipOffer.salaryByHour}&nbsp;$/h
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Description field */}
+                        <div className="mb-5 justify-center items-center h-full">
+                            <p className="mt-1 p-2 w-full dark:text-offwhite ">
+                                {internshipOffer.description}
+                            </p>
+
+                        </div>
+
+                        {/* File field */}
+                        <div className="flex mb-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill={theme === `light` ? `#306bac` : `#F57A00`}
+                                 height="50" viewBox="0 -960 960 960" width="24">
+                                <path
+                                    d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
+                            </svg>
+                            <p className="mt-1 p-2 w-full dark:text-offwhite">{internshipOffer.file.fileName}</p>
+                        </div>
+
+
+                        {/* Commentaire field */}
+                        <textarea name='comment'
+                                  className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
+                                  id="commentary_placeholder"
+                                  onChange={(e) => handleFormChange(e)}
+                                  placeholder={t("formField.InternshipOfferModal.placeholder")}></textarea>
+
+                        {renderError(errors.comment)}
+                        {/* Buttons */}
+                        <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5 ">
+                            <button
+                                className="w-full flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange"
+                                type="button"
+                                onClick={handleApprove}>
+                                {t("formField.InternshipOfferModal.button.approved")}
+                            </button>
+                            <button
+                                className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
+                                type="button"
+                                onClick={handleDecline}>
+                                {t("formField.InternshipOfferModal.button.refused")}
+                            </button>
+
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>)}
