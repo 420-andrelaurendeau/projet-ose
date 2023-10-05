@@ -1,12 +1,15 @@
-import {ReactElement, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {validateFile} from "../utils/validation/validationInteOfferForm";
 import {FileEntity} from "../model/FileEntity";
+import {setSelectionRange} from "@testing-library/user-event/dist/utils";
 
 
 function TeleversementCV(): ReactElement {
 
     const [files, setFiles] = useState<any[]>([])
+    const [utilisateurs, setUtilisateurs] = useState([])
+    const [selectedUser, setUser] = useState({matricule: ""})
 
     const [errors, setErrors] = useState<{
         file?: string
@@ -14,13 +17,29 @@ function TeleversementCV(): ReactElement {
 
     const {t} = useTranslation();
 
+    const fetchUsers = async () => {
+        const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
+        return await res.json()
+    }
+
+    useEffect(() => {
+        const getUtilisateurs = async () => {
+            const users = await fetchUsers()
+            let etudiants = users.filter((e: any) => {
+                return e.cv || e.cv == "" && !!e.matricule;
+            })
+            setUtilisateurs(etudiants)
+
+        }
+        getUtilisateurs().then(r => console.log(r))
+    }, [])
 
     function handleFileChange(event: any) {
         let currFile: FileEntity = {fileName: event.target.files[0].name, content: "", isAccepted: false}
         const file = event.target.files[0]
-        const reader:FileReader = new FileReader();
-        reader.onloadend = ()=>{
-            const base64string:string|undefined =  reader.result?.toString().split(',')[1]
+        const reader: FileReader = new FileReader();
+        reader.onloadend = () => {
+            const base64string: string | undefined = reader.result?.toString().split(',')[1]
             currFile.content = base64string || ""
 
             let fileError: string = validateFile(currFile, t)
@@ -86,7 +105,7 @@ function TeleversementCV(): ReactElement {
 
                     <br/>
                     <div className={"flex flex-col items-center justify-center w-full"}>
-                        <div className={"flex flex-col items-center justify-around w-full bg-gray"}>
+                        <div className={"flex flex-col items-center justify-around w-full "}>
                             {files.map((file, i) => {
                                 return <div key={i}>
                                     {file["fileName"]}
@@ -95,6 +114,21 @@ function TeleversementCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
+                    <div className={"flex flex-col items-center justify-center w-full"}>
+                        <div className={"flex flex-col items-center justify-around w-full "}>
+                            {utilisateurs.map((user, i) => {
+                                return <div key={i} className={`m-1 w-full text-center cursor-pointer`} onClick={() => {
+                                    setUser({matricule: user["matricule"]})
+                                    console.log(selectedUser)
+                                }}>
+                                    {user["nom"]}
+                                </div>
+                            })}
+                        </div>
+                        <div>
+                            {selectedUser.matricule}
+                        </div>
+                    </div>
                     <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"}>
                         Submit
                     </div>

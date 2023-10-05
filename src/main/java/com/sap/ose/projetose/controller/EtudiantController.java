@@ -42,6 +42,13 @@ public class EtudiantController {
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
+    @PostMapping("/addCv/{matricule}")
+    public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody String cv){
+        logger.info("add cv to " + matricule );
+        Etudiant etudiant = etudiantService.updateCVByMatricule(matricule, cv);
+        return ResponseEntity.ok().body(etudiant);
+    }
+
     @GetMapping("{id}/offersApplied")
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
 

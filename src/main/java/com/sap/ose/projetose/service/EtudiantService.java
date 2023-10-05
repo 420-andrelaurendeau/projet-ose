@@ -66,6 +66,12 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
+    public Etudiant updateCVByMatricule(String matricule, String cv){
+        Etudiant etudiant = findByMatricule(matricule);
+        etudiant.setCv(cv);
+        return etudiant;
+    }
+
     Etudiant getEtudiantByCourriel(String courriel) {
         return etudiantRepository.findByCourriel(courriel).orElse(null);
     }
