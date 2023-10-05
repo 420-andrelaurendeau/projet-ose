@@ -42,10 +42,10 @@ public class InternOfferService {
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
             Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
 
-            InternOffer internOffer = internOfferDto.fromDto();
+            InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
-            internOffer.setState(State.PENDING);
+            internOffer.setState(State.ACCEPTED);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 

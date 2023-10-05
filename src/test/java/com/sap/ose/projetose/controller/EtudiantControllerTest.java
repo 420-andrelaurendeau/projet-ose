@@ -70,7 +70,7 @@ class EtudiantControllerTest {
 
 
         etudiant = new Etudiant();
-        etudiant.setCv("Cv");
+        etudiant.setCv(null);
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1);
         etudiant.setMatricule("Matricule");
@@ -93,7 +93,7 @@ class EtudiantControllerTest {
      */
     @Test
     void testGetEtudiant() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1, "Cv", null));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1, null, null));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
         MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"nom\":null,\"prenom\":null,\"phone\":null,\"email\":null,\"matricule\":\"Matricule\",\"programme_id\":1," + "\"cv\":\"Cv\",\"internships_id\":null}"));
     }
@@ -104,7 +104,7 @@ class EtudiantControllerTest {
     @Test
     void testSaveEtudiant() throws Exception {
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv("Cv");
+        etudiant.setCv(null);
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1);
         etudiant.setMatricule("Matricule");
@@ -117,7 +117,7 @@ class EtudiantControllerTest {
         when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv("Cv");
+        etudiant2.setCv(null);
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1);
         etudiant2.setMatricule("Matricule");
@@ -136,7 +136,7 @@ class EtudiantControllerTest {
      */
     @Test
     void testGetEtudiant2() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1L, "Cv", null));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1L, null, null));
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());

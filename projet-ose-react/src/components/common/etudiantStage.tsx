@@ -28,7 +28,23 @@ function etudiantStage(props: any) {
                 console.log(err);
             });
     }
-
+    const applyOffer = (offer: any, student: any) => {
+        console.log(offer);
+        console.log(student);
+        axios.post(`http://localhost:8080/api/intershipCandidates/saveCandidats`, {
+            etudiant: student,
+            internOfferJob: offer,
+            files: null
+        }).then(
+            res => {
+                console.log(res.data);
+            }
+        ).catch(
+            err => {
+                console.log(err);
+            }
+        )
+    }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         fetchOffers();
@@ -84,6 +100,7 @@ function etudiantStage(props: any) {
                                         <div className="flex justify-between">
                                             <div className="text-sm leading-5 text-gray-500">
                                                 <button
+                                                    onClick={() => applyOffer(offer, user)}
                                                     type="submit"
                                                     className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
                                                 >

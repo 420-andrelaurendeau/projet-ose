@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.modeles.Etudiant;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +40,10 @@ public class InternshipCandidatesService {
     @Transactional
     public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
         try{
-            InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
-
-            Etudiant etudiant = etudiantService.findByMatricule(internshipCandidatesDto.getEtudiant_matricule());
-            InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInterOfferJob_id());
-            List<File> files = internshipCandidatesDto.getFiles_id().stream().map(fileService::findById).toList();
+            InternshipCandidates internshipCandidates = new InternshipCandidates(internshipCandidatesDto.fromDto());
+            Etudiant etudiant = etudiantService.findByMatricule(internshipCandidatesDto.getEtudiant().getMatricule());
+            InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInternOfferJob().getId());
+            List<File> files = internshipCandidatesDto.getFiles() == null ? new ArrayList<>() : internshipCandidatesDto.getFiles().stream().map(FileDto::fromDto).toList();
 
             internshipCandidates.setEtudiant(etudiant);
             internshipCandidates.setInternOffer(internOffer);

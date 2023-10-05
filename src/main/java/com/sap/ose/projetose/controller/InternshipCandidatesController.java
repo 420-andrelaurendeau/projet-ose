@@ -16,10 +16,12 @@ public class InternshipCandidatesController {
 
     InternshipCandidatesService internshipCandidatesService;
 
+    public InternshipCandidatesController(InternshipCandidatesService internshipCandidatesService) {
+        this.internshipCandidatesService = internshipCandidatesService;
+    }
     @PostMapping("/saveCandidats")
     public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
-
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 

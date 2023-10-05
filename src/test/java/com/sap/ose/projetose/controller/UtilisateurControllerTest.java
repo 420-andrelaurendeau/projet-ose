@@ -37,7 +37,7 @@ class UtilisateurControllerTest {
      */
     @Test
     void testGetAllUsers() throws Exception {
-        EtudiantDto etudiant = new EtudiantDto("Jean", "Dupont", "4387996589", "dupont@gmail.com", "2045878", 1L, "", null);
+        EtudiantDto etudiant = new EtudiantDto("Jean", "Dupont", "4387996589", "dupont@gmail.com", "2045878", 1L, null, null);
         EmployeurDto employeur = new EmployeurDto("Patrique", "Lemieux", "4383006589", "lemieux@gmail.com", "SAP");
         List<UtilisateurDto> utilisateurDtoList = new ArrayList<>();
         utilisateurDtoList.add(etudiant);
