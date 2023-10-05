@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.exception;
 
-import com.sap.ose.projetose.modeles.Etudiant;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,8 +26,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(OfferAlreadyReviewException.class)
-    public ResponseEntity<String> handleOfferAlreadyApprovedException(OfferAlreadyReviewException e) {
+    @ExceptionHandler(OfferAlreadyReviewedException.class)
+    public ResponseEntity<String> handleOfferAlreadyApprovedException(OfferAlreadyReviewedException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 
@@ -47,8 +46,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(InternshipmanagerNotFoundException.class)
-    public ResponseEntity<String> handleInternshipCandidateNotFoundException(InternshipmanagerNotFoundException e) {
+    @ExceptionHandler(InternshipManagerNotFoundException.class)
+    public ResponseEntity<String> handleInternshipCandidateNotFoundException(InternshipManagerNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(OfferNotFoundException.class)

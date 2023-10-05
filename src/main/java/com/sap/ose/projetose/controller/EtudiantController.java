@@ -1,8 +1,8 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
-import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.dto.StudentDto;
+import com.sap.ose.projetose.dto.StudentApplicationsDto;
+import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,31 +26,31 @@ public class EtudiantController {
     }
 
     @PostMapping("/ajouter")
-    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-        return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Student> saveEtudiant(@RequestBody Student student) {
+        return etudiantService.saveEtudiant(student).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
-    public EtudiantDto getEtudiant(@PathVariable Long id) {
+    public StudentDto getEtudiant(@PathVariable Long id) {
         return etudiantService.getEtudiantById(id);
     }
 
     @GetMapping("/etudiants")
-    public ResponseEntity<List<EtudiantDto>> getEtudiants() {
+    public ResponseEntity<List<StudentDto>> getEtudiants() {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
     @PostMapping("/addCv/{matricule}")
-    public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody String cv){
+    public ResponseEntity<Student> addCv(@PathVariable String matricule, @RequestBody String cv){
         logger.info("add cv to " + matricule );
-        Etudiant etudiant = etudiantService.updateCVByMatricule(matricule, null);
-        return ResponseEntity.ok().body(etudiant);
+        Student student = etudiantService.updateCVByMatricule(matricule, null);
+        return ResponseEntity.ok().body(student);
     }
 
     @GetMapping("{id}/offersApplied")
-    public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
+    public ResponseEntity<List<StudentApplicationsDto>> getOffersApplied(@PathVariable long id) {
 
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));
     }

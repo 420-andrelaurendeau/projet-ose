@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.UtilisateurDto;
-import com.sap.ose.projetose.service.OseService;
+import com.sap.ose.projetose.dto.UserDto;
+import com.sap.ose.projetose.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +16,17 @@ import java.util.List;
 @RequestMapping("/api/utilisateur")
 public class UtilisateurController {
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
-    private final OseService oseService;
+    private final UserService userService;
 
-    public UtilisateurController( OseService oseService) {
-        this.oseService = oseService;
+    public UtilisateurController( UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/utilisateurs")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<List<UtilisateurDto>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         logger.info("getAllUsers");
-        return ResponseEntity.ok().body(oseService.getAllUsers());
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
 }

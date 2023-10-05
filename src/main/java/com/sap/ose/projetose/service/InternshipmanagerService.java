@@ -1,11 +1,11 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
+import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.models.InternshipManager;
+import com.sap.ose.projetose.models.Program;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +31,11 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public InternshipmanagerDto getById(long id) {
+    public InternshipManagerDto getById(long id) {
         try {
-            Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
-            return new InternshipmanagerDto(internshipmanager);
-        } catch (InternshipmanagerNotFoundException e) {
+            InternshipManager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(InternshipManagerNotFoundException::new);
+            return new InternshipManagerDto(internshipmanager);
+        } catch (InternshipManagerNotFoundException e) {
             logger.error("Gestionnaire de stage non trouvée pour l'Id : " + id);
             throw e;
         } catch (DataAccessException e) {
@@ -48,11 +48,11 @@ public class InternshipmanagerService {
         }
     }
 
-    Internshipmanager findById(long id) {
+    InternshipManager findById(long id) {
 
         try {
-            return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
-        } catch (InternshipmanagerNotFoundException e) {
+            return internshipmanagerRepository.findById(id).orElseThrow(InternshipManagerNotFoundException::new);
+        } catch (InternshipManagerNotFoundException e) {
             logger.error("Gestionnaire de stage non trouvée pour l'Id : " + id);
             throw e;
         } catch (DataAccessException e) {
@@ -66,12 +66,12 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public void save(InternshipmanagerDto internshipmanagerDto) {
+    public void save(InternshipManagerDto internshipmanagerDto) {
         try {
-            Programme program = programmeService.findById(internshipmanagerDto.getProgrammeId());
+            Program program = programmeService.findById(internshipmanagerDto.getProgramId());
 
-            Internshipmanager internshipmanager = internshipmanagerDto.fromDto();
-            internshipmanager.setProgramme(program);
+            InternshipManager internshipmanager = internshipmanagerDto.fromDto();
+            internshipmanager.setProgram(program);
 
             internshipmanagerRepository.save(internshipmanager);
 

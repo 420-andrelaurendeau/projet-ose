@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.models.Employer;
 import com.sap.ose.projetose.service.EmployeurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,8 @@ public class EmployeurController {
 
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<Employeur> saveEmployeur(@RequestBody Employeur employeur){
-        return employeurService.saveEmployeur(employeur).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Employer> saveEmployeur(@RequestBody Employer employer){
+        return employeurService.saveEmployeur(employer).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 

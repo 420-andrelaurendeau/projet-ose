@@ -1,9 +1,9 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
@@ -51,38 +51,38 @@ public class OfferReviewRequestServiceTest {
     public void setUp() {
         this.offerReviewRequestDto.setId(0);
         this.offerReviewRequestDto.setComment("Comment");
-        this.offerReviewRequestDto.setInternOfferId(0L);
-        this.offerReviewRequestDto.setInternshipmanagerId(1L);
+        this.offerReviewRequestDto.setInternshipOfferId(0L);
+        this.offerReviewRequestDto.setInternshipManagerId(1L);
     }
 
     @Test
     public void saveOfferReviewRequest_Test() throws Exception {
 
-        Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
-        Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Programme());
+        Program mockedProgram = new Program(1L, "Programme Nom", "Programme Description");
+        Employer mockedEmployer = new Employer(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Program());
         File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8), "Test", true);
-        InternOffer mockedInternOffer = new InternOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedProgramme, mockedFile, mockedEmployeur, State.PENDING, null);
-        Internshipmanager mockedInternshipmanager = new Internshipmanager(1L, "nom", "name", "lastName", "email", "password", null);
+        InternshipOffer mockedInternshipOffer = new InternshipOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedProgram, mockedFile, mockedEmployer, ApprovalStatus.PENDING, null);
+        InternshipManager mockedInternshipManager = new InternshipManager(1L, "nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
-        mockedOfferReviewRequest.setInternOffer(mockedInternOffer);
-        mockedOfferReviewRequest.setInternshipmanager(mockedInternshipmanager);
+        mockedOfferReviewRequest.setInternshipOffer(mockedInternshipOffer);
+        mockedOfferReviewRequest.setInternshipManager(mockedInternshipManager);
 
         when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(false);
-        when(internOfferService.findById(anyLong())).thenReturn(mockedInternOffer);
-        when(internshipmanagerService.findById(anyLong())).thenReturn(mockedInternshipmanager);
+        when(internOfferService.findById(anyLong())).thenReturn(mockedInternshipOffer);
+        when(internshipmanagerService.findById(anyLong())).thenReturn(mockedInternshipManager);
         when(offerReviewRequestRepository.save(any(OfferReviewRequest.class))).thenReturn(mockedOfferReviewRequest);
 
 
-        InternOfferDto returnedDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        InternshipOfferDto returnedDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
 
 
         verify(offerReviewRequestRepository).save(any(OfferReviewRequest.class));
-        verify(internOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternOfferId());
-        verify(internOfferService).findById(offerReviewRequestDto.getInternOfferId());
-        verify(internshipmanagerService).findById(offerReviewRequestDto.getInternshipmanagerId());
+        verify(internOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternshipOfferId());
+        verify(internOfferService).findById(offerReviewRequestDto.getInternshipOfferId());
+        verify(internshipmanagerService).findById(offerReviewRequestDto.getInternshipManagerId());
 
 
-        assertEquals(offerReviewRequestDto.getInternOfferId(), returnedDto.getId());
+        assertEquals(offerReviewRequestDto.getInternshipOfferId(), returnedDto.getId());
         assertEquals(offerReviewRequestDto.getState(), returnedDto.getState());
 
 
@@ -93,7 +93,7 @@ public class OfferReviewRequestServiceTest {
     public void saveOfferReviewRequest_OfferAlreadyApprovedException() {
         when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(true);
 
-        OfferAlreadyReviewException result = assertThrows(OfferAlreadyReviewException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        OfferAlreadyReviewedException result = assertThrows(OfferAlreadyReviewedException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("L'offre a déjà été revue", result.getMessage());
     }
 
@@ -108,15 +108,15 @@ public class OfferReviewRequestServiceTest {
 
     @Test
     public void saveOfferReviewRequest_InternshipmanagerNotFound() {
-        when(internOfferService.findById(anyLong())).thenThrow(new InternshipmanagerNotFoundException());
+        when(internOfferService.findById(anyLong())).thenThrow(new InternshipManagerNotFoundException());
 
-        InternshipmanagerNotFoundException result = assertThrows(InternshipmanagerNotFoundException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        InternshipManagerNotFoundException result = assertThrows(InternshipManagerNotFoundException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Gestionnaire de stage non trouvé.", result.getMessage());
     }
 
     @Test
     public void saveOfferReviewRequest_DataAccessError() {
-        when(internOfferService.findById(anyLong())).thenReturn(new InternOffer());
+        when(internOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
         when(offerReviewRequestRepository.save(any())).thenThrow(new DataAccessException("") {
         });
 
@@ -126,7 +126,7 @@ public class OfferReviewRequestServiceTest {
 
     @Test
     public void saveOfferReviewRequest_UnknownError() {
-        when(internOfferService.findById(anyLong())).thenReturn(new InternOffer());
+        when(internOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
         when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
 
         ServiceException result = assertThrows(ServiceException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));

@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.dto;
 
 
-import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.models.File;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

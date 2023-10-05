@@ -1,12 +1,12 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.*;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.models.*;
+import com.sap.ose.projetose.models.Employer;
+import com.sap.ose.projetose.models.InternshipOffer;
+import com.sap.ose.projetose.models.Program;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
@@ -37,26 +37,26 @@ public class InternOfferService {
 
 
     @Transactional
-    public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
+    public InternshipOfferDto saveInterOfferJob(InternshipOfferDto internshipOfferDto) {
         try {
-            System.out.println(internOfferDto.getEmployeurId());
+            System.out.println(internshipOfferDto.getEmployerId());
 
-            if ( isApprovedOrDeclineById(internOfferDto.getId()))
-                throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
+            if ( isApprovedOrDeclineById(internshipOfferDto.getId()))
+                throw new OfferAlreadyReviewedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
-            Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
-            Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
+            Program program = programmeService.findById(internshipOfferDto.getProgramId());
+            Employer employer = employeurService.findById(internshipOfferDto.getEmployerId());
 
-            InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
-            internOffer.setProgramme(programme);
-            internOffer.setEmployeur(employeur);
-            internOffer.setState(State.PENDING);
+            InternshipOffer internshipOffer = internshipOfferDto.fromDto();
+            internshipOffer.setProgram(program);
+            internshipOffer.setEmployer(employer);
+            internshipOffer.setState(ApprovalStatus.PENDING);
 
-            InternOffer savedOfferDto = offerJobRepository.save(internOffer);
+            InternshipOffer savedOfferDto = offerJobRepository.save(internshipOffer);
 
-            return new InternOfferDto(savedOfferDto);
-        } catch (OfferAlreadyReviewException e) {
-            logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internOfferDto.getId(), e);
+            return new InternshipOfferDto(savedOfferDto);
+        } catch (OfferAlreadyReviewedException e) {
+            logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internshipOfferDto.getId(), e);
             throw e;
         } catch (ProgramNotFoundException e) {
             throw new ProgramNotFoundException();
@@ -72,47 +72,47 @@ public class InternOfferService {
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferAccepted(){
-        List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+    public List<InternshipOfferDto> getInternOfferAccepted(){
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllApproved();
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
-        for (InternOffer offre : internOfferList){
-            InternOfferDto internOfferDto = new InternOfferDto(offre);
-            internOfferDtoList.add(internOfferDto);
+        for (InternshipOffer offre : internshipOfferList){
+            InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
+            internshipOfferDtoList.add(internshipOfferDto);
         }
-        return internOfferDtoList;
+        return internshipOfferDtoList;
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferPending() {
-        List<InternOffer> internOfferList = offerJobRepository.findAllPending();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+    public List<InternshipOfferDto> getInternOfferPending() {
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllPending();
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
-        for (InternOffer offre : internOfferList){
-            InternOfferDto internOfferDto = new InternOfferDto(offre);
-            internOfferDtoList.add(internOfferDto);
+        for (InternshipOffer offre : internshipOfferList){
+            InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
+            internshipOfferDtoList.add(internshipOfferDto);
         }
-        return internOfferDtoList;
+        return internshipOfferDtoList;
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferDeclined(){
-        List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+    public List<InternshipOfferDto> getInternOfferDeclined(){
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllDeclined();
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
-        for (InternOffer offre : internOfferList){
-            InternOfferDto internOfferDto = new InternOfferDto(offre);
-            internOfferDtoList.add(internOfferDto);
+        for (InternshipOffer offre : internshipOfferList){
+            InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
+            internshipOfferDtoList.add(internshipOfferDto);
         }
-        return internOfferDtoList;
+        return internshipOfferDtoList;
     }
 
-    InternOfferDto getInterOfferById(Long id) {
-        InternOffer internOffer = offerJobRepository.findById(id).orElse(null);
-        return new InternOfferDto(internOffer);
+    InternshipOfferDto getInterOfferById(Long id) {
+        InternshipOffer internshipOffer = offerJobRepository.findById(id).orElse(null);
+        return new InternshipOfferDto(internshipOffer);
     }
 
-    InternOffer findById( long id){
+    InternshipOffer findById(long id){
         try {
             return offerJobRepository.findById(id).orElseThrow(OfferNotFoundException::new);
         } catch (OfferNotFoundException e) {
@@ -127,34 +127,34 @@ public class InternOfferService {
         }
     }
 
-    public List<InternOfferDto> getAllInternOffers(){
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>() ;
-        for(InternOffer offer : offerJobRepository.findAll()){
-            internOfferDtoList.add(new InternOfferDto(offer));
+    public List<InternshipOfferDto> getAllInternOffers(){
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>() ;
+        for(InternshipOffer offer : offerJobRepository.findAll()){
+            internshipOfferDtoList.add(new InternshipOfferDto(offer));
         }
-        return internOfferDtoList;
+        return internshipOfferDtoList;
     }
 
     boolean isApprovedOrDeclineById(long id) {
-        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
+        return offerJobRepository.findById(id).filter(offer -> offer.getState() == ApprovalStatus.APPROVED || offer.getState() == ApprovalStatus.REJECTED).isPresent();
     }
 
-    public List<InternOfferDto> getInternOffer(){
-        List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        for(InternOffer internOffer : offerJobRepository.findAll()){
-            internOfferDtos.add(new InternOfferDto());
+    public List<InternshipOfferDto> getInternOffer(){
+        List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
+        for(InternshipOffer internshipOffer : offerJobRepository.findAll()){
+            internshipOfferDtos.add(new InternshipOfferDto());
         }
-        return internOfferDtos;
+        return internshipOfferDtos;
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferByEmployeurEmail(String email){
-        List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        List<InternOffer> internOffers = employeurRepository.findByEmail(email).get().getInternOffers();
-        for(InternOffer internOffer : internOffers){
-                internOfferDtos.add(new InternOfferDto(internOffer));
+    public List<InternshipOfferDto> getInternOfferByEmployeurEmail(String email){
+        List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
+        List<InternshipOffer> internshipOffers = employeurRepository.findByEmail(email).get().getInternshipOffers();
+        for(InternshipOffer internshipOffer : internshipOffers){
+                internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
         }
-        return internOfferDtos;
+        return internshipOfferDtos;
     }
 
 }

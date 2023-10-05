@@ -1,12 +1,11 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.service.OfferReviewRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,8 +23,8 @@ public class OfferReviewRequestController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<InternOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
-        InternOfferDto internOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
-        return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
+    public ResponseEntity<InternshipOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
+        InternshipOfferDto internshipOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        return new ResponseEntity<>(internshipOfferDto, HttpStatus.CREATED);
     }
 }

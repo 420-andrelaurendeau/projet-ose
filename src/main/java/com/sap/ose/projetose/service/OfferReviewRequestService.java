@@ -1,11 +1,11 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.OfferReviewRequest;
+import com.sap.ose.projetose.models.InternshipOffer;
+import com.sap.ose.projetose.models.InternshipManager;
+import com.sap.ose.projetose.models.OfferReviewRequest;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
@@ -33,32 +33,32 @@ public class OfferReviewRequestService {
 
 
     @Transactional
-    public InternOfferDto saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
+    public InternshipOfferDto saveOfferReviewRequest(OfferReviewRequestDto offerReviewRequestDto) {
         try {
-            if (internOfferService.isApprovedOrDeclineById(offerReviewRequestDto.getInternOfferId()))
-                throw new OfferAlreadyReviewException();
+            if (internOfferService.isApprovedOrDeclineById(offerReviewRequestDto.getInternshipOfferId()))
+                throw new OfferAlreadyReviewedException();
 
-            InternOffer internOffer = internOfferService.findById(offerReviewRequestDto.getInternOfferId());
-            Internshipmanager internshipmanager = internshipmanagerService.findById(offerReviewRequestDto.getInternshipmanagerId());
+            InternshipOffer internshipOffer = internOfferService.findById(offerReviewRequestDto.getInternshipOfferId());
+            InternshipManager internshipmanager = internshipmanagerService.findById(offerReviewRequestDto.getInternshipManagerId());
 
             OfferReviewRequest offerReviewRequest = offerReviewRequestDto.fromDto();
-            offerReviewRequest.setInternOffer(internOffer);
-            offerReviewRequest.setInternshipmanager(internshipmanager);
+            offerReviewRequest.setInternshipOffer(internshipOffer);
+            offerReviewRequest.setInternshipManager(internshipmanager);
 
-            internOffer.setState(offerReviewRequestDto.getState());
-            internOffer.setOfferReviewRequest(offerReviewRequest);
+            internshipOffer.setState(offerReviewRequestDto.getState());
+            internshipOffer.setOfferReviewRequest(offerReviewRequest);
 
             offerReviewRequestRepository.save(offerReviewRequest);
 
-            return new InternOfferDto(internOffer);
-        } catch (OfferAlreadyReviewException e) {
-            logger.error("L'offre a déjà été approuvée pour l'Id" + offerReviewRequestDto.getInternOfferId(), e);
+            return new InternshipOfferDto(internshipOffer);
+        } catch (OfferAlreadyReviewedException e) {
+            logger.error("L'offre a déjà été approuvée pour l'Id" + offerReviewRequestDto.getInternshipOfferId(), e);
             throw e;
         } catch (OfferNotFoundException e) {
-            logger.error("Offre d'emploi non trouvée pour l'Id : " + offerReviewRequestDto.getInternOfferId(), e);
+            logger.error("Offre d'emploi non trouvée pour l'Id : " + offerReviewRequestDto.getInternshipOfferId(), e);
             throw e;
-        } catch (InternshipmanagerNotFoundException e) {
-            logger.error("Gestionnaire de stage non trouvée pour l'Id : " + offerReviewRequestDto.getInternshipmanagerId(), e);
+        } catch (InternshipManagerNotFoundException e) {
+            logger.error("Gestionnaire de stage non trouvée pour l'Id : " + offerReviewRequestDto.getInternshipManagerId(), e);
             throw e;
         } catch (DataAccessException e) {
             logger.error("Erreur d'accès à la base de données lors de la sauvegarde de la revue de l'offre d'emploi", e);

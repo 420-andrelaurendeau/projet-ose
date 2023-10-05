@@ -1,18 +1,15 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.exception.EtudiantNotFoundException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.dto.InternshipApplicationDto;
+import com.sap.ose.projetose.models.InternshipOffer;
+import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,19 +35,19 @@ public class InternshipCandidatesService {
     }
 
     @Transactional
-    public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
+    public InternshipApplicationDto saveCandidates(InternshipApplicationDto internshipApplicationDto){
         try{
-            InternshipCandidates internshipCandidates = new InternshipCandidates(internshipCandidatesDto.fromDto());
-            Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant().getId());
-            InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInternOfferJob().getId());
-            List<File> files = internshipCandidatesDto.getFiles() == null ? new ArrayList<>() : internshipCandidatesDto.getFiles().stream().map(FileDto::fromDto).toList();
+            InternshipApplication internshipApplication = internshipApplicationDto.toInternshipApplication();
+            Student student = etudiantService.findEtudiantById(internshipApplicationDto.getStudentDto().getId());
+            InternshipOffer internshipOffer = internOfferService.findById(internshipApplicationDto.getInternshipOfferDto().getId());
+            List<File> files = internshipApplicationDto.getFileDtos() == null ? new ArrayList<>() : internshipApplicationDto.getFileDtos().stream().map(FileDto::fromDto).toList();
 
-            internshipCandidates.setEtudiant(etudiant);
-            internshipCandidates.setInternOffer(internOffer);
-            internshipCandidates.setFiles(files);
+            internshipApplication.setStudent(student);
+            internshipApplication.setInternshipOffer(internshipOffer);
+            internshipApplication.setFiles(files);
 
-            internshipCandidatesRepository.save(internshipCandidates);
-            return new InternshipCandidatesDto(internshipCandidates);
+            internshipCandidatesRepository.save(internshipApplication);
+            return new InternshipApplicationDto(internshipApplication);
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -65,10 +62,10 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipCandidatesDto saveCandidates(InternshipCandidates internshipCandidates){
+    public InternshipApplicationDto saveCandidates(InternshipApplication internshipApplication){
         try{
-            internshipCandidatesRepository.save(internshipCandidates);
-            return new InternshipCandidatesDto(internshipCandidates);
+            internshipCandidatesRepository.save(internshipApplication);
+            return new InternshipApplicationDto(internshipApplication);
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};

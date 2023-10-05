@@ -1,9 +1,9 @@
 package com.sap.ose.projetose.repository;
 
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.models.Program;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProgrammeRepository extends JpaRepository<Programme, Long> {
+public interface ProgrammeRepository extends JpaRepository<Program, Long> {
 }

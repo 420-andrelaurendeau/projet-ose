@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.dto.InternshipApplicationDto;
 import com.sap.ose.projetose.service.InternshipCandidatesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +17,8 @@ public class InternshipCandidatesController {
         this.internshipCandidatesService = internshipCandidatesService;
     }
     @PostMapping("/saveCandidats")
-    public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
+    public ResponseEntity<InternshipApplicationDto> saveIntershipCandidate(@RequestBody InternshipApplicationDto internshipApplicationDto) {
+        InternshipApplicationDto savedInternship = internshipCandidatesService.saveCandidates(internshipApplicationDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 

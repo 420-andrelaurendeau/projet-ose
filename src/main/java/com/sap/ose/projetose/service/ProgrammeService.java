@@ -3,9 +3,8 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.ProgrammeDto;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.dto.ProgramDto;
+import com.sap.ose.projetose.models.Program;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class ProgrammeService {
         this.programmeRepository = programmeRepository;
     }
 
-    Programme findById(long id) {
+    Program findById(long id) {
         try {
             return programmeRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
 
@@ -47,9 +46,9 @@ public class ProgrammeService {
     }
 
     @Transactional
-    public ProgrammeDto saveProgramme(String nom, String description) {
+    public ProgramDto saveProgramme(String nom, String description) {
         try{
-            return new ProgrammeDto(programmeRepository.save(new Programme(nom, description)));
+            return new ProgramDto(programmeRepository.save(new Program(nom, description)));
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -58,20 +57,20 @@ public class ProgrammeService {
     }
 
     @Transactional
-    public Optional<ProgrammeDto> saveProgramme(ProgrammeDto programmeDTO) {
-        return Optional.of(new ProgrammeDto(programmeRepository.save(programmeDTO.fromDto())));
+    public Optional<ProgramDto> saveProgramme(ProgramDto programDTO) {
+        return Optional.of(new ProgramDto(programmeRepository.save(programDTO.toNewProgram())));
     }
 
-    public List<ProgrammeDto> getProgrammes() {
-        List<ProgrammeDto> dtos = new ArrayList<>();
-        for (Programme programme : programmeRepository.findAll()) {
-            dtos.add(new ProgrammeDto(programme));
+    public List<ProgramDto> getProgrammes() {
+        List<ProgramDto> dtos = new ArrayList<>();
+        for (Program program : programmeRepository.findAll()) {
+            dtos.add(new ProgramDto(program));
         }
         return dtos;
     }
 
-    public ProgrammeDto getProgrammeById(Long id) {
-        Optional<Programme> programme = programmeRepository.findById(id);
-        return programme.map(value -> new ProgrammeDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
+    public ProgramDto getProgrammeById(Long id) {
+        Optional<Program> programme = programmeRepository.findById(id);
+        return programme.map(value -> new ProgramDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
     }
 }
