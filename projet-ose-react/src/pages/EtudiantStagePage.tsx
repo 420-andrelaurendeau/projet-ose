@@ -36,7 +36,7 @@ function EtudiantStagePage() {
 
         fetchData();
         fetchOffers();
-    }, []);
+    }, [listStudentAppliedOffers]);
 
     return (
             <div className="items-center">
