@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -26,8 +29,8 @@ public class Employeur extends Utilisateur {
         this.programme = programme;
     }
 
-    public Employeur(String nom, String prenom, String email,String phone, String password, String entreprise, int programme) {
-        super(nom, prenom, email, phone, password);
+    public Employeur(String nom, String prenom, String email,String phone, String password, String entreprise, Programme programme) {
+        super(nom, prenom, phone, email, password);
         this.entreprise = entreprise;
         this.programme = programme;
         this.internOffers = new ArrayList<>();
@@ -36,5 +39,13 @@ public class Employeur extends Utilisateur {
     public Employeur(String nom, String prenom, String telephone, String email, String password, String entreprise) {
         super(nom, prenom, telephone, email, password);
         this.entreprise = entreprise;
+    }
+
+    @Override
+    public String toString() {
+        return "Employeur{" +
+                "entreprise='" + entreprise + '\'' +
+                ", programme=" + programme +
+                '}';
     }
 }

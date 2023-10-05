@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -59,5 +60,22 @@ public class Etudiant extends Utilisateur{
         this.programme = programme;
         this.cv = null;
         this.internshipsCandidate = internshipsCandidate;
+    }
+
+        public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme) {
+        super(nom, prenom, phone, email, password);
+        this.matricule = matricule;
+        this.programme = programme;
+        this.cv = null;
+        this.internshipsCandidate = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Etudiant{" +
+                "matricule='" + matricule + '\'' +
+                ", programme=" + programme +
+                ", cv=" + cv +
+                '}';
     }
 }

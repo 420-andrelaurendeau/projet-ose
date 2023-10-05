@@ -5,7 +5,6 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etats;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
@@ -16,23 +15,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InternOfferService {
 
     private final InternOfferRepository offerJobRepository;
+    private final EmployeurRepository employeurRepository;
     private final ProgrammeService programmeService;
     private final EmployeurService employeurService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     @Autowired
-    public InternOfferService(InternOfferRepository offerJobRepository, ProgrammeService programmeService, EmployeurService employeurService) {
+    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService, EmployeurService employeurService) {
         this.offerJobRepository = offerJobRepository;
+        this.employeurRepository = employeurRepository;
         this.programmeService = programmeService;
         this.employeurService = employeurService;
     }
