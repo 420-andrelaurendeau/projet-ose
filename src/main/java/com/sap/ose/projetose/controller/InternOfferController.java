@@ -2,6 +2,8 @@ package com.sap.ose.projetose.controller;
 
 
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.ProgrammeDto;
+import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.service.InternOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,11 @@ public class InternOfferController {
     @GetMapping("/allOffers")
     public List<InternOfferDto> getAllOffers() {
         return offerJobService.getAllInternOffers();
+    }
+
+    @GetMapping("/OffersEtudiant")
+    public List<InternOfferDto> getOffersEtudiant() {
+        return offerJobService.getInternOfferAccepted();
     }
 }
 

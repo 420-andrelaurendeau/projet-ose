@@ -4,6 +4,7 @@ import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
@@ -44,7 +45,7 @@ public class OseService {
             etudiantDto.setEmail(etudiant.getEmail());
             etudiantDto.setPhone(etudiant.getPhone());
             etudiantDto.setMatricule(etudiant.getMatricule());
-            etudiantDto.setCv(etudiant.getCv());
+            etudiantDto.setCv(etudiant.getCv().stream().map(File::getId).toList());
             etudiantDto.setProgramme_id(etudiant.getProgramme().getId());
             etudiantDtos.add(etudiantDto);
         });

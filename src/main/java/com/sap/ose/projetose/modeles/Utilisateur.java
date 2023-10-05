@@ -30,4 +30,11 @@ public abstract class Utilisateur {
         this.email = email;
         this.password = password;
     }
+
+    public Utilisateur(String nom, String prenom, String phone, String email) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.phone = phone;
+        this.email = email;
+    }
 }

@@ -25,10 +25,10 @@ function TeleversementCV(): ReactElement {
     useEffect(() => {
         const getUtilisateurs = async () => {
             const users = await fetchUsers()
-            let etudiants = users.filter((e: any) => {
+            let students = users.filter((e: any) => {
                 return e.cv || e.cv == "" && !!e.matricule;
             })
-            setUtilisateurs(etudiants)
+            setUtilisateurs(students)
 
         }
         getUtilisateurs().then(r => console.log(r))

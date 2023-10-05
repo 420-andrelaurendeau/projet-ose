@@ -57,7 +57,7 @@ public class EtudiantServiceTest {
 
 
         etudiant = new Etudiant();
-        etudiant.setCv("Cv");
+        etudiant.setCv(null);
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setMatricule("Matricule");

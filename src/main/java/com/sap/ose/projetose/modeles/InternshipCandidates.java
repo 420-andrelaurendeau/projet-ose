@@ -22,16 +22,22 @@ public class InternshipCandidates {
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.REMOVE)
     private List<File> files;
 
     public InternshipCandidates(Etudiant etudiant, InternOffer internOffer, List<File> files) {
         this.etudiant = etudiant;
         this.internOffer = internOffer;
         this.files = files;
+    }
+
+    public InternshipCandidates(InternshipCandidates internshipCandidates) {
+        this.etudiant = internshipCandidates.getEtudiant();
+        this.internOffer = internshipCandidates.getInternOffer();
+        this.files = internshipCandidates.getFiles();
     }
 }
