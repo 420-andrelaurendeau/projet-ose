@@ -8,7 +8,6 @@ import com.sap.ose.projetose.repository.InternshipOfferRepository;
 import com.sap.ose.projetose.repository.FormationRepository;
 import com.sap.ose.projetose.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,23 +20,15 @@ import java.util.List;
 @SpringBootApplication
 @RequiredArgsConstructor
 public class ProjetOseApplication implements CommandLineRunner {
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private EmployerService employerService;
-    @Autowired
-    private InternshipOfferService internshipOfferService;
+    private final StudentService studentService;
+    private final EmployerService employerService;
+    private final InternOfferService internOfferService;
+    private final InternshipOfferService internshipOfferService;
 
-    @Autowired
-    private InternshipManagerService internshipmanagerService;
-
-    @Autowired
     private InternshipCandidatesService internshipCandidatesService;
 
-    @Autowired
-    FormationRepository formationRepository;
-    @Autowired
-    InternshipOfferRepository internshipOfferRepository;
+    private final FormationRepository formationRepository;
+    private final InternshipOfferRepository internshipOfferRepository;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);

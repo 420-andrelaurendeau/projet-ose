@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InternshipManager extends User {
 
-
     @OneToOne
     @JoinColumn(name = "programme_id")
     private Formation formation;

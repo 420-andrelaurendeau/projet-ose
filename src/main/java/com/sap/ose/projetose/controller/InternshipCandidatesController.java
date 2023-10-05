@@ -15,7 +15,7 @@ public class InternshipCandidatesController {
 
     private final InternshipCandidatesService internshipCandidatesService;
 
-    @PostMapping("/save")
+    @PostMapping("/saveCandidats")
     public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
 

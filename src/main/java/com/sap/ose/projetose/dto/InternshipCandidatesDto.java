@@ -16,23 +16,15 @@ import java.util.stream.Collectors;
 public class InternshipCandidatesDto {
 
     private long id;
-    private long etudiant_id;
-    private long interOfferJob_id;
-    private List<Long> files_id;
-
-
-    public InternshipCandidatesDto(long id, int etudiant_id, int interOfferJob_id, List<Long> files_id) {
-        this.id = id;
-        this.etudiant_id = etudiant_id;
-        this.interOfferJob_id = interOfferJob_id;
-        this.files_id = files_id;
-    }
+    private long studentMatricule;
+    private long internshipOfferId;
+    private List<Long> filesId;
 
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();
-        this.etudiant_id = internshipCandidates.getEtudiant().getId();
-        this.interOfferJob_id = internshipCandidates.getInternshipOffer().getId();
-        this.files_id = internshipCandidates.getFiles().isEmpty() ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+        this.studentMatricule = internshipCandidates.getEtudiant().getId();
+        this.internshipOfferId = internshipCandidates.getInternOffer().getId();
+        this.filesId = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {
