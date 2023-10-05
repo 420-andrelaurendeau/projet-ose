@@ -1,7 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import InternshipOfferModal from "./components/common/InternshipOfferModal";
 
 i18n
   // detect user language
@@ -460,7 +459,7 @@ i18n
                     },
                     programme: {
                         name : 'programme',
-                        text : 'Programme :',
+                        text : 'Formation :',
                         placeholder : 'Choisir un programme',
                         validation : {
                             required : 'Le programme est requis',
@@ -551,7 +550,7 @@ i18n
                     },
                     titre:{
                         name:'titre',
-                        text:'Inscription Employeur'
+                        text:'Inscription Employer'
                     }
 
                 }

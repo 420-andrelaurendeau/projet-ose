@@ -1,8 +1,6 @@
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import {saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
-import {validateDescription} from "../../utils/validation/validationInteOfferForm";
-import {InterOfferJob} from "../../model/IntershipOffer";
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({ errorMessage, onClose }) => {
     return (
@@ -145,7 +143,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
                     <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{internshipOffer.title}</h1>
                     <div className="block sm:flex mt-5 sm:justify-between sm:items-start">
                         <div className='block items-center min-h-50'>
-                            {/* Employeur field */}
+                            {/* Employer field */}
                             <div className={"flex"}>
                                 <p className={"p-1 dark:text-offwhite"}>
                                     {internshipOffer.employeurNom!}
@@ -180,7 +178,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
                                     })}
                                 </p>
                             </div>
-                            {/* Programme field */}
+                            {/* Formation field */}
                             <div className="flex">
                                 <p className="p-1 w-full dark:text-offwhite">
                                     {internshipOffer.programmeNom}

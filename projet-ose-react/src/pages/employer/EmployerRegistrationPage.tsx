@@ -1,5 +1,5 @@
 import React from "react";
-import InscriptionEmployeur from "../components/common/inscriptionEmployeur";
+import InscriptionEmployeur from "../../components/common/inscriptionEmployeur";
 
 function EmployeurInscriptionPage() {
     const [darkMode, setDarkMode] = React.useState(false);

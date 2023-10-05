@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
-import img from "../../assets/icons/user-solid.svg";
 import {useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser} from '@fortawesome/free-solid-svg-icons'
 
 
 const TestBackEndConnection = () => {
@@ -45,7 +46,7 @@ const TestBackEndConnection = () => {
                     {utilisateurs.map((utilisateur: FormData) => (
                         <li key={utilisateur.email} className="flex justify-between gap-x-6 py-5">
                             <div className="flex min-w-0 gap-x-4">
-                                <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={img} alt=""/>
+                                <FontAwesomeIcon className="h-12 w-12 flex-none rounded-full bg-gray-50" icon={faUser}/>
                                 <div className="min-w-0 flex-auto">
                                     <p className="text-sm font-semibold leading-6 text-gray-900">{utilisateur.prenom + ' ' + utilisateur.nom}</p>
                                     <p className="mt-1 truncate text-xs leading-5 text-gray-500">

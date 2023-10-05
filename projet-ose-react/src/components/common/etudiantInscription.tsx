@@ -1,10 +1,8 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
-// @ts-ignore
-import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
-// @ts-ignore
-import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
+import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
@@ -248,7 +246,7 @@ function EtudiantInscription(props: any) {
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                                    <option key={programme["id"]} value={programme["id"]}>{programme["nom"]}</option>
                                 ))}
                             </select>
                         </div>

@@ -70,7 +70,7 @@ function EvaluerCV() {
                         <div className="absolute bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() => {
                             setDisplayAssessmentPopup(false)
                         }}></div>
-                        <div className="absolute bg-white rounded-md w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+                        <div className="absolute bg-white rounded-md w-2/3 md:w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
                             <div className="flex flex-col justify-start h-full">
                                 <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV: NOM_DU_CV</h1>
                                 <div className="flex flex-col justify-between px-5 py-3 grow-1 basis-full">
@@ -78,7 +78,7 @@ function EvaluerCV() {
                                         <label className="font-bold text-lg">Commentaires:</label>
                                         <textarea className="border-2 border-slate-200 rounded-md resize-none h-52"/>
                                     </div>
-                                    <div className="flex flex-row justify-around transition-colors mb-5">
+                                    <div className="flex flex-col md:flex-row justify-around transition-colors mb-5">
                                         <button className="bg-green-600 hover:bg-green-500 text-white rounded-md px-3 py-1 mt-3">Accepter</button>
                                         <button className="bg-red-600 hover:bg-red-500 text-white rounded-md px-3 py-1 mt-3">Refuser</button>
                                     </div>

@@ -16,7 +16,7 @@ function InscriptionEmployeur(props: any) {
     email: string;
     password: string;
     entreprise: string;
-    programme: any;
+    formation: any;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -26,7 +26,7 @@ function InscriptionEmployeur(props: any) {
     email: "",
     password: "",
     entreprise: "",
-    programme: null,
+    formation: null,
   });
   const [showPassword, setShowPasswprd] = useState(false);
   const [programmes, setProgrammes] = useState([]);
@@ -37,7 +37,7 @@ function InscriptionEmployeur(props: any) {
 
   const fetchProgrammes = () => {
     axios
-        .get("http://localhost:8080/api/programme/programmes")
+        .get("http://localhost:8080/api/formation/programmes")
         .then((response) => {
           console.log(response);
           setProgrammes(response.data);
@@ -72,10 +72,10 @@ function InscriptionEmployeur(props: any) {
     const phone = formData.phone;
     const password = formData.password;
     const nomEntreprise = formData.entreprise;
-    const programme = formData.programme;
+    const formation = formData.formation;
 
-    if (programme == null) {
-      alert(fields.programme.validation.required);
+    if (formation == null) {
+      alert(fields.formation.validation.required);
       return;
     }
 
@@ -87,7 +87,7 @@ function InscriptionEmployeur(props: any) {
           email: email,
           password: password,
           entreprise: nomEntreprise,
-          programme: programme,
+          formation: formation,
         })
         .then((response) => {
           console.log(response);
@@ -105,7 +105,7 @@ function InscriptionEmployeur(props: any) {
             email: "",
             password: "",
             entreprise: "",
-            programme: 0,
+            formation: 0,
           });
           event.target.reset();
         });
@@ -304,21 +304,21 @@ function InscriptionEmployeur(props: any) {
 
               <div>
                 <label
-                    htmlFor="programme"
+                    htmlFor="formation"
                     className={
                       props.darkMode ?
                           "block text-sm font-medium leading-6 text-white"
                           : "block text-sm font-medium leading-6 text-black"
                     }
                 >
-                  {fields.programme.text}
+                  {fields.formation.text}
                 </label>
                 <select
-                    value={formData.programme}
+                    value={formData.formation}
                     onChange={handleChange}
-                    name={"programme"}
+                    name={"formation"}
                     defaultValue={"DEFAULT"}
-                    id="programme"
+                    id="formation"
                     required={true}
                     className={
                       props.darkMode ?
@@ -326,9 +326,9 @@ function InscriptionEmployeur(props: any) {
                           : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
                     }
                 >
-                  <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
-                  {programmes.map((programme) => (
-                      <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                  <option value={"DEFAULT"} disabled>{fields.formation.placeholder}</option>
+                  {programmes.map((formation) => (
+                      <option key={formation['id']} value={formation['id']}>{formation['nom']}</option>
                   ))}
                 </select>
               </div>

@@ -1,4 +1,4 @@
-import {FileEntity} from "../../model/FileEntity";
+import {File} from "../../model/File";
 
 export const validateTitle = (title: string, t: Function) => {
     title = title.trim();
@@ -98,7 +98,7 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
     return errorMsg;
 }
 
-export const validateFile = (file: FileEntity, t: Function) => {
+export const validateFile = (file: File, t: Function) => {
     const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
     const allowedExtensions = [".pdf"];
     let errorMsg = "";

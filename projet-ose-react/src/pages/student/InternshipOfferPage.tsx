@@ -1,9 +1,9 @@
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
-import useModal from "../hooks/useModal";
-import Switcher from "../utils/switcher";
+import InternshipOfferForm from "../../components/common/InternshipOfferForm";
+import useModal from "../../hooks/useModal";
+import Switcher from "../../utils/switcher";
 import React from "react";
 
-function InternOfferPage() {
+function InternshipOfferPage() {
 
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
 
@@ -32,4 +32,4 @@ function InternOfferPage() {
     )
 }
 
-export default InternOfferPage;
+export default InternshipOfferPage;

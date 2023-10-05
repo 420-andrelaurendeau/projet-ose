@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import './index.css';
-import './tailwind.css';
-import App from './App';
+
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+
+import './i18n.ts';
+
 import ErrorPage from "./pages/ErrorPage";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
-import ConnectPage from "./pages/ConnectPage";
-import './i18n.ts';
-import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
-import PageEmployeurInscription from "./pages/PageEmployeurInscription";
-import InternOfferPage from "./pages/InternOfferPage";
-import GSInternOfferPage from './pages/GSInternOfferPage';
+
+import LoginPage from "./pages/LoginPage";
+import StudentRegistrationPage from "./pages/student/StudentRegistrationPage";
+import EmployerRegistrationPage from "./pages/employer/EmployerRegistrationPage";
+import StudentInternshipOfferPage from "./pages/student/InternshipOfferPage";
+import ManagementInternshipOfferPage from './pages/management/offers/InternshipOfferPage';
+import AssessCvPage from "./pages/management/students/AssessCv";
 
 
 
@@ -20,36 +24,40 @@ const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
 const router = createBrowserRouter([
     {
+        path: "/",
+        element: <Navigate to={"/signIn"}/>,
+    },
+    {
         path: "/signIn",
-        element: <ConnectPage/>
+        element: <LoginPage/>
     },
     {
         path: "/signInTemp",
         element: <TestBackEndConnection/>
     },
     {
-        path: "/",
-        element: <Navigate to={"/signIn"}/>,
-    },
-    {
         path: "/home",
         element: <ErrorPage/>
     },
     {
-        path: "/etudiantInscription",
-        element: <EtudiantInscriptionPage/>
+        path: "/etudiant/inscription",
+        element: <StudentRegistrationPage/>
     },
     {
-        path: "/employeurInscription",
-        element: <PageEmployeurInscription/>
+        path: "/etudiant/offre",
+        element: <StudentInternshipOfferPage/>
     },
     {
-        path: "/InternOffer",
-        element: <InternOfferPage/>
+        path: "/employeur/inscription",
+        element: <EmployerRegistrationPage/>
     },
     {
-        path: "/GSInternOffer",
-        element: <GSInternOfferPage/>
+        path: "/gestion/offers",
+        element: <ManagementInternshipOfferPage/>
+    },
+    {
+        path: "/gestion/etudiants/cv",
+        element: <AssessCvPage/>
     }
 
 ])

@@ -1,6 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss/plugin");
 module.exports = {
-    purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+    content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
     darkMode: 'media', // Utilise le mode sombre en fonction des préférences du système
     theme: {
         extend: {
@@ -20,5 +20,14 @@ module.exports = {
             opacity: ['disabled'],
         },
     },
-    plugins: [],
+    plugins: [
+        plugin(function({addUtilities}) {
+            addUtilities({
+                '.no-scrollbar': {
+                    '-ms-overflow-style': 'none',
+                    'scrollbar-width': 'none'
+                }
+            })
+        })
+    ],
 }

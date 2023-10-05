@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {InterOfferJob} from "../../model/IntershipOffer";
-import {Programme} from "../../model/Programme";
+import React, {useEffect, useState} from "react";
+import {useTranslation} from "react-i18next";
+import {InternshipOffer} from "../../model/IntershipOffer";
+import {Program} from "../../model/Program";
 import {saveInterOfferJob} from "../../api/InterOfferJobAPI";
 import {getProgrammes} from "../../api/ProgrammeAPI";
 import {
@@ -12,10 +12,10 @@ import {
     validateSalary,
     validateStartDate,
     validateTitle
-} from "../../utils/validation/validationInteOfferForm";
+} from "../../utils/validation/ValidateInternshipOfferForm";
 
 
-const initialFormState: InterOfferJob = {
+const initialFormState: InternshipOffer = {
     title: '',
     location: '',
     description: '',
@@ -41,9 +41,9 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
         endDate?: string,
         file?: string
     }>({});
-    const [formState, setFormState] = useState<InterOfferJob>(initialFormState);
+    const [formState, setFormState] = useState<InternshipOffer>(initialFormState);
 
-    const [programmes, setProgrammes] = useState<Programme[]>([]);
+    const [programmes, setProgrammes] = useState<Program[]>([]);
 
     useEffect(() => {
         const loadProgrammes = async () => {
@@ -232,7 +232,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
 
                     <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
                         {/* Categories field */}
-                        <div className='sm:w-1/2 sm:w-1/2'>
+                        <div className='sm:w-1/2'>
                             <label className="block text-xs font-bold dark:text-offwhite"
                                    htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
                             <select name="programmeId"
@@ -249,7 +249,7 @@ const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, hand
                         </div>
 
                         {/* Salary field */}
-                        <div className='sm:w-1/2 sm:w-1/2'>
+                        <div className='sm:w-1/2'>
                             <label className="block text-xs font-bold dark:text-offwhite"
                                    htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
                             <input name='salaryByHour'

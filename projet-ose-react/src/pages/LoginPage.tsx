@@ -1,7 +1,7 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
 
-function ConnectPage() {
+function LoginPage() {
     const [darkMode, setDarkMode] = React.useState(false)
 
     function toggleDarkMode() {
@@ -21,4 +21,4 @@ function ConnectPage() {
     );
 }
 
-export default ConnectPage;
+export default LoginPage;

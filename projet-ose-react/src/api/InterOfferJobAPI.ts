@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {InterOfferJob} from "../model/IntershipOffer";
+import {InternshipOffer} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
@@ -11,7 +11,7 @@ const apiClient = axios.create({
     },
 });
 
-export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
+export const saveInterOfferJob = async (interOfferJob: InternshipOffer) => {
     const interOfferJobDto = {
         id: interOfferJob.id,
         title: interOfferJob.title,
@@ -35,7 +35,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob) => {
     }
 };
 
-export const getAllPendingInterOfferJob = async (): Promise<InterOfferJob[]> => {
+export const getAllPendingInterOfferJob = async (): Promise<InternshipOffer[]> => {
     try {
         const response = await axios.create({
             baseURL: API_BASE_URL,

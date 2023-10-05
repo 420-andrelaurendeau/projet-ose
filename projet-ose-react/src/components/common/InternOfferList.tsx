@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {InterOfferJob} from "../../model/IntershipOffer";
+import {InternshipOffer} from "../../model/IntershipOffer";
 import useModal from "../../hooks/useModal";
 import InternshipOfferModal from "./InternshipOfferModal";
 import Switcher from "../../utils/switcher";
@@ -8,7 +8,7 @@ import {getAllPendingInterOfferJob} from "../../api/InterOfferJobAPI";
 
 function GSInternOfferList() {
 
-    const [listInternOffer, setListInternOffer] = React.useState<InterOfferJob[]>([]);
+    const [listInternOffer, setListInternOffer] = React.useState<InternshipOffer[]>([]);
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
     const [idInternOffer, setIdInternOffer] = React.useState<Number>(0);
     const [forceUpdate, setForceUpdate] = React.useState(false);
@@ -17,7 +17,7 @@ function GSInternOfferList() {
         const fetchData = async () => {
             try {
                 const data = await getAllPendingInterOfferJob();
-                console.log(data.map((item: InterOfferJob) => console.log(item.id)));
+                console.log(data.map((item: InternshipOffer) => console.log(item.id)));
                 setListInternOffer(data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des offres:", error);
@@ -35,7 +35,7 @@ function GSInternOfferList() {
 
     }
 
-    const updateInternshipOffer = (updatedOffer: InterOfferJob) => {
+    const updateInternshipOffer = (updatedOffer: InternshipOffer) => {
         console.log("dans la fonction update")
         setListInternOffer(prevList => prevList.map(offer =>
             offer.id === updatedOffer.id ? updatedOffer : offer
@@ -47,7 +47,7 @@ function GSInternOfferList() {
     return (
         <div className="items-center">
             {
-                listInternOffer.map((item: InterOfferJob) => {
+                listInternOffer.map((item: InternshipOffer) => {
                     return (
                         <>
                             <Switcher/>
@@ -74,7 +74,7 @@ function GSInternOfferList() {
             <InternshipOfferModal
                 isModalOpen={isModalOpen}
                 handleCloseModal={handleCloseModal}
-                internshipOffer={listInternOffer.find((item: InterOfferJob) => item.id === idInternOffer)}
+                internshipOffer={listInternOffer.find((item: InternshipOffer) => item.id === idInternOffer)}
                 onUpdateInternshipOffer={updateInternshipOffer}
             />
 

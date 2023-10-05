@@ -1,8 +1,8 @@
 import React from "react";
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import toggleOn from "../../assets/images/toggle-on-solid.svg";
-import toggleOff from "../../assets/images/toggle-off-solid.svg";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faToggleOn, faToggleOff} from '@fortawesome/free-solid-svg-icons'
 import {useTranslation} from 'react-i18next';
 
 
@@ -30,10 +30,9 @@ const ConnectForm = (props: any) => {
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className=" justify-center items-center">
-                    <img onClick={props.toggleDarkMode}
+                    <FontAwesomeIcon onClick={props.toggleDarkMode}
                          className="self-left justify-self-end w-8 h-auto"
-                         src={props.darkMode ? toggleOn : toggleOff}
-                         alt="toggle"/>
+                         icon={props.darkMode ? faToggleOn : faToggleOff}/>
                 </div>
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">

@@ -1,7 +1,7 @@
 import {useState} from "react";
-import EtudiantInscription from "../components/common/etudiantInscription";
+import EtudiantInscription from "../../components/common/etudiantInscription";
 
-function EtudiantInscriptionPage() {
+function StudentRegistrationPage() {
     const [darkMode, setDarkMode] = useState(false);
 
     function toggleDarkMode() {
@@ -25,4 +25,4 @@ function EtudiantInscriptionPage() {
     )
 }
 
-export default EtudiantInscriptionPage;
+export default StudentRegistrationPage;

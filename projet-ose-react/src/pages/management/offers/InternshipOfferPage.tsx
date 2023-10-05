@@ -1,8 +1,7 @@
 import React from "react";
-import GSInternOfferList from "../components/common/InternOfferList";
-import {list} from "postcss";
+import GSInternOfferList from "../../../components/common/InternOfferList";
 
-function GSInternOfferPage() {
+function InternshipOfferPage() {
 
 
     return (
@@ -19,4 +18,4 @@ function GSInternOfferPage() {
     )
 }
 
-export default GSInternOfferPage;
+export default InternshipOfferPage;
