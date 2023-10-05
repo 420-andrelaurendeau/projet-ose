@@ -11,6 +11,12 @@ function EtudiantInscription(props: any) {
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
     console.log(fields)
 
+    const [programme, setProgramme] = useState({
+        id: 0,
+        nom: "",
+        description: "",
+    });
+
     const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
@@ -18,20 +24,37 @@ function EtudiantInscription(props: any) {
         password: "",
         phone: "",
         matricule: "",
-        programme: null,
+        programme: programme,
         cv: null,
     });
 
+
     const [programmes, setProgrammes] = useState([]);
     const [reussite, setReussite] = useState(false);
+    const [error, setError] = useState(false);
+
     const handleChange = (event:any) => {
         const { name, value } = event.target;
         console.log(name + " " + value);
+        console.log(event.target.value)
         setFormData({
             ...formData,
             [name]: value,
         });
+        console.log(formData)
     };
+
+    const handleProgramChange = (event:any) => {
+        const { name, value } = event.target;
+        setProgramme(JSON.parse(event.target.value));
+        console.log(programme)
+        setFormData({
+            ...formData,
+            [name]: programme,
+        });
+        console.log(formData)
+    }
+
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
@@ -54,12 +77,13 @@ function EtudiantInscription(props: any) {
             })
             .then((response) => {
                 console.log(response);
+                setReussite(true);
             })
             .catch((error) => {
                 console.log(error);
                 alert("Erreur lors de l'inscription")
+                setError(true);
             }).then(() => {
-                setReussite(true);
                 setFormData({
                     nom: "",
                     prenom: "",
@@ -67,7 +91,11 @@ function EtudiantInscription(props: any) {
                     password: "",
                     phone: "",
                     matricule: "",
-                    programme: null,
+                    programme: {
+                        id: 0,
+                        nom: "",
+                        description: "",
+                    },
                     cv: null,
                 });
                 event.target.reset();
@@ -244,11 +272,11 @@ function EtudiantInscription(props: any) {
                                 }
                                 defaultValue={"DEFAULT"}
                                 name={"programme"}
-                                onChange={handleChange}
+                                onChange={handleProgramChange}
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                                    <option key={programme['id']} value={JSON.stringify(programme)}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>
@@ -264,6 +292,7 @@ function EtudiantInscription(props: any) {
                             {fields.submitButton.text}
                         </button>
                         {reussite && <p className="text-green-500 scale-150 text-center">{fields.reussite.name}</p>}
+                        {error && <p className="text-red-500 scale-150 text-center">{fields.error.name}</p>}
                     </div>
                 </form>
             </div>

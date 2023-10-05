@@ -201,6 +201,9 @@ i18n
                     },
                     reussite: {
                         name : 'Registration successful',
+                    },
+                    error : {
+                        name : 'Registration failed',
                     }
                 },
                 InternshipOfferModal: {
@@ -524,6 +527,9 @@ i18n
                     },
                     reussite: {
                         name : 'Inscription réussie',
+                    },
+                    error : {
+                        name : 'Inscription échouée',
                     }
                 },
                 ConnectForm: {

@@ -34,14 +34,13 @@ public class EtudiantService {
     @Transactional
     public Optional<Etudiant> saveEtudiant(Etudiant etudiant) {
         try {
-            System.out.println(etudiant.getInternshipsCandidate());
+            System.out.println(etudiant.getProgramme());
             return Optional.of(etudiantRepository.save(etudiant));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
             };
         }
-
     }
 
     public List<EtudiantDto> getEtudiants() {
