@@ -11,6 +11,7 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -25,16 +26,20 @@ import java.util.Optional;
 @Service
 public class EtudiantService {
     private final EtudiantRepository etudiantRepository;
+
+    private final ProgrammeService programmeService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService) {
         this.etudiantRepository = etudiantRepository;
+        this.programmeService = programmeService;
     }
 
     @Transactional
     public Optional<Etudiant> saveEtudiant(Etudiant etudiant) {
         try {
-            System.out.println(etudiant.getProgramme());
+            Programme programme = programmeService.findById(etudiant.getProgramme().getId());
+            etudiant.setProgramme(programme);
             return Optional.of(etudiantRepository.save(etudiant));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());

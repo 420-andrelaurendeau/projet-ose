@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 // @ts-ignore
 import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
 import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
+import {Link, useNavigate} from "react-router-dom";
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
-    console.log(fields)
+    const navigate = useNavigate();
 
     const [programme, setProgramme] = useState({
         id: 0,
@@ -47,19 +48,18 @@ function EtudiantInscription(props: any) {
     const handleProgramChange = (event:any) => {
         const { name, value } = event.target;
         setProgramme(JSON.parse(event.target.value));
-        console.log(programme)
+        console.log("setProgramme : "+ JSON.parse(value))
         setFormData({
             ...formData,
             [name]: programme,
         });
-        console.log(formData)
     }
 
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
         const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
-        console.log(password, nom, prenom, email, phone, cv, programme);
+        console.log("Au moment du submit : " + programme);
         if (programme == null) {
             alert(fields.programme.validation.required);
             return;
@@ -76,30 +76,27 @@ function EtudiantInscription(props: any) {
                 cv: cv,
             })
             .then((response) => {
-                console.log(response);
-                setReussite(true);
+                console.log(response)
+                setReussite(true)
+                setError(false)
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error)
                 alert("Erreur lors de l'inscription")
-                setError(true);
-            }).then(() => {
-                setFormData({
-                    nom: "",
-                    prenom: "",
-                    email: "",
-                    password: "",
-                    phone: "",
-                    matricule: "",
-                    programme: {
-                        id: 0,
-                        nom: "",
-                        description: "",
-                    },
-                    cv: null,
-                });
-                event.target.reset();
-             });
+                setReussite(false)
+                setError(true)
+            })
+        event.target.reset();
+        setFormData({
+            nom: "",
+            prenom: "",
+            email: "",
+            password: "",
+            phone: "",
+            matricule: "",
+            programme: programme,
+            cv: null,
+        });
     };
 
     const fetchProgrammes = () => {
@@ -116,8 +113,20 @@ function EtudiantInscription(props: any) {
 
     React.useEffect(() => {
         fetchProgrammes();
-    }
-    , []);
+    }, []);
+
+    useEffect(() => {
+        setFormData(formData);
+    },[formData]);
+
+
+    useEffect(() => {
+        setProgramme(programme);
+        setFormData({
+            ...formData,
+            "programme": programme,
+        })
+    },[programme]);
 
     return (
         <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
@@ -292,6 +301,7 @@ function EtudiantInscription(props: any) {
                             {fields.submitButton.text}
                         </button>
                         {reussite && <p className="text-green-500 scale-150 text-center">{fields.reussite.name}</p>}
+                        {reussite && <Link to={"/signIn"}><p className="text-green-500 scale-100 text-center">{fields.reussite.link}</p></Link>}
                         {error && <p className="text-red-500 scale-150 text-center">{fields.error.name}</p>}
                     </div>
                 </form>

@@ -201,6 +201,7 @@ i18n
                     },
                     reussite: {
                         name : 'Registration successful',
+                        link: 'You can login here',
                     },
                     error : {
                         name : 'Registration failed',
@@ -527,6 +528,7 @@ i18n
                     },
                     reussite: {
                         name : 'Inscription réussie',
+                        link : 'Vous pouvez vous connecter ici',
                     },
                     error : {
                         name : 'Inscription échouée',
