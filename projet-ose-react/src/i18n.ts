@@ -13,7 +13,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     debug: true,
-    fallbackLng: 'en',
+    fallbackLng: 'fr',
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
@@ -280,6 +280,55 @@ i18n
                         text:'Registration employer'
                     }
 
+                },
+                EtudiantStage:{
+                    titre:{
+                        name:'titre',
+                        text:'Internship for students'
+                    },
+                    stage:{
+                        name:'stage',
+                        description: {
+                            name : 'description',
+                            text : 'Description :',
+                        },
+                        location: {
+                            name : 'location',
+                            text : 'Location :',
+                        },
+                        salary: {
+                            name : 'salary',
+                            text : 'Salary per hour :'
+                        },
+                        startDate: {
+                            name : 'startDate',
+                            text : 'Start date :',
+                        },
+                        endDate: {
+                            name : 'endDate',
+                            text : 'End date :',
+                        },
+                        apply: {
+                            name : 'apply',
+                            text : 'Apply',
+                        }
+                    }
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Intership Offer',
+                    },
+                    sidebar : {
+                        stage : {
+                            name : 'stage',
+                            text : "Offer"
+                        }
+                    }
+                },
+                Home : {
+                    name : 'home',
+                    text : 'Welcome to the home page : ',
                 }
             },
         }
@@ -554,6 +603,55 @@ i18n
                         text:'Inscription Employeur'
                     }
 
+                },
+                EtudiantStage:{
+                    titre:{
+                        name:'titre',
+                        text:'Stages pour étudiants'
+                    },
+                    stage:{
+                        name:'stage',
+                        description: {
+                            name : 'description',
+                            text : 'Description de l\'offre d\'emploi :',
+                        },
+                        location: {
+                            name : 'location',
+                            text : 'Lieu :',
+                        },
+                        salary: {
+                            name : 'salary',
+                            text : 'salaire par heure :'
+                        },
+                        startDate: {
+                            name : 'startDate',
+                            text : 'Date de début :',
+                        },
+                        endDate: {
+                            name : 'endDate',
+                            text : 'Date de fin :',
+                        },
+                        apply: {
+                            name : 'apply',
+                            text : 'Postuler',
+                        }
+                    }
+                },
+                Header: {
+                    stage : {
+                        name : 'stage',
+                        text : 'Offre stages',
+                    },
+                    sidebar : {
+                        stage : {
+                            name : 'stage',
+                            text : "Offre"
+                        }
+                    }
+                },
+                Home : {
+                    name : 'home',
+                    text : 'Bienvenue sur la page d\'accueil : ',
                 }
             },
         }

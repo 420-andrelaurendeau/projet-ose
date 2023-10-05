@@ -30,7 +30,7 @@ public class InternOffer {
     @JoinColumn(name = "interOfferJob_id")
     private List<InternshipCandidates> internshipCandidates;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "program_id")
     private Programme programme;
 
@@ -42,7 +42,7 @@ public class InternOffer {
     @JoinColumn(name = "employeur_id")
     private Employeur employeur;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "offerReviewRequest_id")
     private OfferReviewRequest offerReviewRequest;
 
@@ -86,5 +86,21 @@ public class InternOffer {
         this.employeur = employeur;
         this.state = state;
         this.offerReviewRequest = offerReviewRequest;
+    }
+
+    public InternOffer(InternOffer internOffer) {
+        this.id = internOffer.getId();
+        this.title = internOffer.getTitle();
+        this.location = internOffer.getLocation();
+        this.description = internOffer.getDescription();
+        this.salaryByHour = internOffer.getSalaryByHour();
+        this.startDate = internOffer.getStartDate();
+        this.endDate = internOffer.getEndDate();
+        this.internshipCandidates = internOffer.getInternshipCandidates();
+        this.programme = internOffer.getProgramme();
+        this.file = internOffer.getFile();
+        this.employeur = internOffer.getEmployeur();
+        this.state = internOffer.getState();
+        this.offerReviewRequest = internOffer.getOfferReviewRequest();
     }
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @AllArgsConstructor
@@ -16,9 +18,12 @@ public class Employeur extends Utilisateur {
 
     @Column(unique = true)
     private String entreprise;
+
     @ManyToOne
     private Programme programme;
 
+    @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<InternOffer> internOffers;
 
     public Employeur(long id, String nom, String prenom, String email,String phone, String password, String entreprise, Programme programme) {
         super(id, nom, prenom, email, phone, password);

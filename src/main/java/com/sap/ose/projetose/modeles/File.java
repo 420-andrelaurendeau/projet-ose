@@ -22,6 +22,15 @@ public class File {
 
     private boolean isAccepted;
 
+    @ManyToOne
+    @JoinColumn(name = "etudiant_id")
+    private Etudiant etudiant;
+
+    @ManyToOne
+    @JoinColumn(name = "internship_id")
+    private InternshipCandidates internshipCandidates;
+
+
     public File(byte[] content, String fileName, boolean isAccepted) {
         this.content = content;
         this.fileName = fileName;
