@@ -67,9 +67,9 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
-    public Etudiant updateCVByMatricule(String matricule, String cv){
+    public Etudiant updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        etudiant.setCv(cv);
+        etudiant.setCv(List.of(cv));
         return etudiant;
     }
 
