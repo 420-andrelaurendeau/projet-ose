@@ -321,6 +321,10 @@ i18n
                         stage : {
                             name : 'stage',
                             text : "Offer"
+                        },
+                        offre_applique : {
+                            name : 'offre applique',
+                            text : "Applied offer"
                         }
                     }
                 },
@@ -631,7 +635,7 @@ i18n
                             text : 'Date de fin :',
                         },
                         apply: {
-                            name : 'apply',
+                            name : 'Apply',
                             text : 'Postuler',
                         }
                     }
@@ -645,6 +649,10 @@ i18n
                         stage : {
                             name : 'stage',
                             text : "Offre"
+                        },
+                        offre_applique : {
+                            name : 'offre applique',
+                            text : "Offre appliqué"
                         }
                     }
                 },

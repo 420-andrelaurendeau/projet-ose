@@ -17,20 +17,7 @@ function EtudiantStage(props: any) {
     const user = location.state;
     let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [offers, setOffers] = useState([
-    ]);
-    const [appliedOffer, setAppliedOffer] = useState([]);
 
-    const fetchOffers = () => {
-        axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
-            .then(res => {
-                setOffers(res.data);
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
         console.log(student);
@@ -41,6 +28,7 @@ function EtudiantStage(props: any) {
         }).then(
             res => {
                 console.log(res.data);
+                props.setAppliedOffers([...props.appliedOffers, res.data]);
             }
         ).catch(
             err => {
@@ -55,10 +43,6 @@ function EtudiantStage(props: any) {
             alert("Vous avez appliqué à l'offre de stage : " + offer.id + " qui est : " + offer.title);
         }
     }
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        fetchOffers();
-    }, []);
 
     return (
         <div>
@@ -70,7 +54,7 @@ function EtudiantStage(props: any) {
                     <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                         {fields.titre.text}
                     </h1>
-                    {offers.map((offer: any) => (
+                    {props.offers.map((offer: any) => (
                         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}>
                             <div className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">
                                 <div>
@@ -106,7 +90,7 @@ function EtudiantStage(props: any) {
                                                 <button
                                                     onClick={() => applyOffer(offer, user)}
                                                     type="submit"
-                                                    disabled={!!offer.internshipCandidates.map((candidate: number) => candidate).includes(user.id)}
+                                                    disabled={props.appliedOffers.some((appliedOffer: any) => appliedOffer.appliedOffer.id === offer.id)}
                                                     className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white bg-blue dark:bg-orange hover:bg-gray focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                 >
                                                     {fields.stage.apply.text}
