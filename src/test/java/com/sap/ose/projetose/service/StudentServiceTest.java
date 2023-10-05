@@ -66,7 +66,7 @@ public class StudentServiceTest {
         etudiant.setPrenom("Prenom");
         etudiant.setFormation(new Formation());
         etudiant.setInternshipsCandidate(List.of(
-                new InternshipCandidates(
+                new InternshipApplication(
                         etudiant,
                         internshipOffer,
                         List.of(new File())

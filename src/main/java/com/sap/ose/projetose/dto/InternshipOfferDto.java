@@ -68,6 +68,6 @@ public class InternshipOfferDto {
     }
 
     public InternshipOffer fromDto() {
-        return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
+        return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.toFile(), null,state, null);
     }
 }

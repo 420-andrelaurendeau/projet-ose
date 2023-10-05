@@ -54,7 +54,7 @@ public class OfferReviewRequestServiceTest {
         Employer mockedEmployer = new Employer(1, "Employer Nom", "Employer Prenom", "Employer Entreprise", "Employer Email", "dsdsfsf", "fdfdd", new Formation());
         File mockedFile = new File("Test", mockedEmployer, "hello".getBytes(StandardCharsets.UTF_8));
         InternshipOffer mockedInternshipOffer = new InternshipOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedFormation, mockedFile, mockedEmployer, AssessmentState.PENDING, null);
-        InternshipManager mockedInternshipManager = new InternshipManager(1L, "nom", "name", "lastName", "email", "password", null);
+        InternshipManager mockedInternshipManager = new InternshipManager("nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
         mockedOfferReviewRequest.setInternhipOffer(mockedInternshipOffer);
         mockedOfferReviewRequest.setInternshipManager(mockedInternshipManager);

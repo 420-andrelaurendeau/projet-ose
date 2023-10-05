@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternshipCandidates {
+public class InternshipApplication {
 
 
     @Id
@@ -29,9 +29,11 @@ public class InternshipCandidates {
     @OneToMany()
     private List<File> files;
 
-    public InternshipCandidates(Student etudiant, InternshipOffer internshipOffer, List<File> files) {
+    public InternshipApplication(Student etudiant, InternshipOffer internshipOffer, List<File> files) {
         this.etudiant = etudiant;
         this.internshipOffer = internshipOffer;
         this.files = files;
     }
+
+
 }

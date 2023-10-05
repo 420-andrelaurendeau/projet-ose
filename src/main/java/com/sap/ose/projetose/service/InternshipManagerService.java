@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -10,7 +10,6 @@ import com.sap.ose.projetose.repository.InternshipManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -25,10 +24,10 @@ public class InternshipManagerService {
     Logger logger = LoggerFactory.getLogger(InternshipManagerService.class);
 
     @Transactional
-    public InternshipmanagerDto getById(long id) {
+    public InternshipManagerDto getById(long id) {
         try {
             InternshipManager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(InternshipManagerNotFoundException::new);
-            return new InternshipmanagerDto(internshipmanager);
+            return new InternshipManagerDto(internshipmanager);
         } catch (InternshipManagerNotFoundException e) {
             logger.error("Gestionnaire de stage non trouvée pour l'Id : " + id);
             throw e;
@@ -60,7 +59,7 @@ public class InternshipManagerService {
     }
 
     @Transactional
-    public void save(InternshipmanagerDto internshipmanagerDto) {
+    public void save(InternshipManagerDto internshipmanagerDto) {
         try {
             Formation program = formationService.findById(internshipmanagerDto.getProgrammeId());
 

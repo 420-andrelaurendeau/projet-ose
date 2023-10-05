@@ -1,35 +1,30 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.models.File;
-import com.sap.ose.projetose.models.InternshipCandidates;
+import com.sap.ose.projetose.models.InternshipApplication;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class InternshipCandidatesDto {
-
     private long id;
     private long studentMatricule;
     private long internshipOfferId;
-    private List<Long> filesId;
+    private List<FileDto> files;
 
-    public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
-        this.id = internshipCandidates.getId();
-        this.studentMatricule = internshipCandidates.getEtudiant().getId();
-        this.internshipOfferId = internshipCandidates.getInternshipOffer().getId();
-        this.filesId = internshipCandidates.getFiles().isEmpty() ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+    public InternshipCandidatesDto(InternshipApplication internshipApplication) {
+        this.id = internshipApplication.getId();
+        this.studentMatricule = internshipApplication.getEtudiant().getId();
+        this.internshipOfferId = internshipApplication.getInternshipOffer().getId();
+        this.files = internshipApplication.getFiles().isEmpty() ? new ArrayList<>() : internshipApplication.getFiles().stream().map(FileDto::new).toList();
     }
 
-    public InternshipCandidates fromDto() {
-        return new InternshipCandidates(null,null, null);
+    public InternshipApplication fromDto() {
+        return new InternshipApplication(null,null, null);
     }
-
-
 }

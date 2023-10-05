@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.models.Employer;
+import com.sap.ose.projetose.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,5 +25,10 @@ public class EmployerDto extends UserDto {
         super(employer.getNom(), employer.getPrenom(), employer.getPhone(), employer.getEmail());
         this.entreprise = employer.getEntreprise();
         this.programme_id = employer.getFormation().getId();
+    }
+
+    @Override
+    public User toUser() {
+        return null;
     }
 }

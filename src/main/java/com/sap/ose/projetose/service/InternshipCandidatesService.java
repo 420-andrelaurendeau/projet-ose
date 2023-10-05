@@ -2,7 +2,7 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
 import com.sap.ose.projetose.models.File;
-import com.sap.ose.projetose.models.InternshipCandidates;
+import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.models.InternshipOffer;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
@@ -29,18 +29,18 @@ public class InternshipCandidatesService {
     @Transactional
     public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
         try{
-            InternshipCandidates internshipCandidates = internshipCandidatesDto.fromDto();
+            InternshipApplication internshipApplication = internshipCandidatesDto.fromDto();
 
             Student student = studentService.findEtudiantByMatricule(internshipCandidatesDto.getStudentMatricule());
             InternshipOffer internshipOffer = internshipOfferService.findById(internshipCandidatesDto.getInternshipOfferId());
-            List<File> files = internshipCandidatesDto.getFilesId().stream().map(fileService::findById).toList();
+            List<File> files = internshipCandidatesDto.getFiles().stream().map(fileDto -> fileService.findById(fileDto.getId())).toList();
 
-            internshipCandidates.setEtudiant(student);
-            internshipCandidates.setInternshipOffer(internshipOffer);
-            internshipCandidates.setFiles(files);
+            internshipApplication.setEtudiant(student);
+            internshipApplication.setInternshipOffer(internshipOffer);
+            internshipApplication.setFiles(files);
 
-            internshipCandidatesRepository.save(internshipCandidates);
-            return new InternshipCandidatesDto(internshipCandidates);
+            internshipCandidatesRepository.save(internshipApplication);
+            return new InternshipCandidatesDto(internshipApplication);
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -54,10 +54,10 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipCandidatesDto saveCandidates(InternshipCandidates internshipCandidates){
+    public InternshipCandidatesDto saveCandidates(InternshipApplication internshipApplication){
         try{
-            internshipCandidatesRepository.save(internshipCandidates);
-            return new InternshipCandidatesDto(internshipCandidates);
+            internshipCandidatesRepository.save(internshipApplication);
+            return new InternshipCandidatesDto(internshipApplication);
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};

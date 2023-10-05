@@ -28,7 +28,7 @@ public class InternshipOffer {
 
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "interOfferJob_id")
-    private List<InternshipCandidates> internshipCandidates;
+    private List<InternshipApplication> internshipCandidates;
 
     @OneToOne()
     @JoinColumn(name = "program_id")
@@ -52,7 +52,7 @@ public class InternshipOffer {
                            double salaryByHour,
                            LocalDate startDate,
                            LocalDate endDate,
-                           List<InternshipCandidates> internshipCandidates,
+                           List<InternshipApplication> internshipCandidates,
                            Formation formation,
                            File files,
                            Employer employer,
@@ -72,7 +72,7 @@ public class InternshipOffer {
         this.offerReviewRequest = offerReviewRequest;
     }
 
-    public InternshipOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, List<InternshipCandidates> internshipCandidates, Formation formation, File file, Employer employer, AssessmentState state, OfferReviewRequest offerReviewRequest) {
+    public InternshipOffer(long id, String title, String location, String description, double salaryByHour, LocalDate startDate, LocalDate endDate, List<InternshipApplication> internshipCandidates, Formation formation, File file, Employer employer, AssessmentState state, OfferReviewRequest offerReviewRequest) {
         this.id = id;
         this.title = title;
         this.location = location;

@@ -41,7 +41,7 @@ public class OseService {
             studentDto.setPhone(etudiant.getPhone());
             studentDto.setMatricule(etudiant.getMatricule());
             studentDto.setCv(etudiant.getCv());
-            studentDto.setProgramme_id(etudiant.getFormation().getId());
+            studentDto.setProgrammeId(etudiant.getFormation().getId());
             studentDtos.add(studentDto);
         });
 

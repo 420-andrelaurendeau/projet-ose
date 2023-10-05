@@ -31,8 +31,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "npm run build:css && craco start",
-    "build": "npm run build:css && craco build",
+    "start": "npm run build:css && react-scripts start",
+    "build": "npm run build:css && react-scripts build",
     "build:css": "postcss src/index.css -o src/tailwind.css"
   },
   "eslintConfig": {

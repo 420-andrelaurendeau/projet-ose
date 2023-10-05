@@ -1,8 +1,7 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repository.FormationRepository;
 import com.sap.ose.projetose.service.*;
@@ -49,7 +48,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         employerService.saveEmployeur(employer2);
 
         File file = new File("Test.txt", etudiant2, "hello".getBytes(StandardCharsets.UTF_8));
-        List<InternshipCandidates> internshipCandidates = new ArrayList<>();
+        List<InternshipApplication> internshipCandidates = new ArrayList<>();
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
         InternshipOffer internshipOffer = new InternshipOffer(1L,"ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates, formation1,file, employer, AssessmentState.PENDING,offerReviewRequest);
         InternshipOfferDto internshipOfferDto = new InternshipOfferDto(internshipOffer);
@@ -59,13 +58,13 @@ public class ProjetOseApplication implements CommandLineRunner {
         studentService.saveEtudiant(etudiant);
 
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internshipOffer, List.of(file));
+        InternshipApplication internshipApplication1 = new InternshipApplication(etudiant, internshipOffer, List.of(file));
 
-        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+//        FIXME internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipApplication1));
 
 
-        InternshipManager internshipmanager = new InternshipManager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", formation1);
-        internshipManagerService.save(new InternshipmanagerDto(internshipmanager));
+        InternshipManager internshipmanager = new InternshipManager("Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", formation1);
+        internshipManagerService.save(new InternshipManagerDto(internshipmanager));
 
     }
 }

@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 public class InternshipManagerServiceTest {
 
-    private final InternshipmanagerDto internshipmanagerDto = new InternshipmanagerDto();
+    private final InternshipManagerDto internshipmanagerDto = new InternshipManagerDto();
     @Autowired
     private InternshipManagerService internshipmanagerService;
     @MockBean
@@ -93,8 +93,8 @@ public class InternshipManagerServiceTest {
 
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.of(mockIntern));
 
-        InternshipmanagerDto result = internshipmanagerService.getById(anyLong());
-        assertEquals(new InternshipmanagerDto(mockIntern), result);
+        InternshipManagerDto result = internshipmanagerService.getById(anyLong());
+        assertEquals(new InternshipManagerDto(mockIntern), result);
     }
 
     @Test

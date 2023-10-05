@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,12 +23,18 @@ public abstract class User {
     @Getter(AccessLevel.NONE)
     @ToString.Exclude
     private String password;
+    @ManyToOne
+    @JoinColumn(name = "programme_id")
+    private Formation formation;
 
-    public User(String nom, String prenom, String phone, String email, String password) {
+    public User(String nom, String prenom, String email, String password, String phone, Formation formation) {
         this.nom = nom;
         this.prenom = prenom;
         this.phone = phone;
         this.email = email;
         this.password = password;
+        this.formation = formation;
     }
+
+    public abstract UserDto toUserDto();
 }

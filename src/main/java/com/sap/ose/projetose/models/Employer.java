@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,22 +17,21 @@ public class Employer extends User {
 
     @Column(unique = true)
     private String entreprise;
-    @ManyToOne
-    private Formation formation;
 
 
     public Employer(long id, String nom, String prenom, String email, String phone, String password, String entreprise, Formation formation) {
-        super(id, nom, prenom, email, phone, password);
+        super(id, nom, prenom, phone, password, email, formation);
         this.entreprise = entreprise;
-        this.formation = formation;
     }
 
     public Employer(String nom, String prenom, String email, String phone, String password, String entreprise, Formation formation) {
-        super(nom, prenom, email, phone, password);
+        super(nom, prenom, phone, password, email, formation);
         this.entreprise = entreprise;
-        this.formation = formation;
     }
 
 
-
+    @Override
+    public UserDto toUserDto() {
+        return null;
+    }
 }

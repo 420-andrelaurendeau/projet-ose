@@ -8,7 +8,7 @@ import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.exception.StudentNotFoundException;
-import com.sap.ose.projetose.models.InternshipCandidates;
+import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -44,14 +44,14 @@ public class StudentService {
     public List<StudentDto> getEtudiants() {
         List<StudentDto> dtos = new ArrayList<>();
         for (Student etudiant : studentRepository.findAll()) {
-            dtos.add(new StudentDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getFormation().getId(), etudiant.getCv(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
+            dtos.add(new StudentDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getFormation().getId(), etudiant.getCv(), etudiant.getInternshipsCandidate().stream().map(InternshipApplication::getId).toList()));
         }
         return dtos;
     }
 
     public StudentDto getEtudiantById(Long id) {
         Optional<Student> etudiant = studentRepository.findById(id);
-        return etudiant.map(value -> new StudentDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getFormation().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
+        return etudiant.map(value -> new StudentDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getFormation().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipApplication::getId).toList())).orElse(null);
     }
 
     public Student findEtudiantByMatricule(Long id) {
@@ -67,7 +67,7 @@ public class StudentService {
     public List<StudentApplicationDto> getOffersAppliedByEtudiant(long id) {
         try {
             Student etudiant = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
-            List<InternshipCandidates> offersApplied = etudiant.getInternshipsCandidate();
+            List<InternshipApplication> offersApplied = etudiant.getInternshipsCandidate();
 
             if (offersApplied == null)
                 return new ArrayList<>();
