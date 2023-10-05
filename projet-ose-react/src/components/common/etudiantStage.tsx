@@ -13,7 +13,7 @@ function etudiantStage(props: any) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const location = useLocation();
     const user = location.state;
-
+    let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [offers, setOffers] = useState([
     ]);
@@ -42,8 +42,15 @@ function etudiantStage(props: any) {
         ).catch(
             err => {
                 console.log(err);
+                anError = true;
             }
         )
+        if (anError) {
+            alert("Une erreur est survenue lors de l'application à l'offre de stage");
+        }
+        else {
+            alert("Vous avez appliqué à l'offre de stage : " + offer.id + " qui est : " + offer.title);
+        }
     }
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
