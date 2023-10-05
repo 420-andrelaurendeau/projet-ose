@@ -4,9 +4,9 @@ export default function EmployeurOffer(props:any) {
         <div className="flex flex-col mt-14">
             <div className=" xs:-mx-6 lg:-mx-8">
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
-                    <div className=" overflow-auto border border-gray xxxs:rounded-lg">
-                        <table className="w-full divide-y divide-gray">
-                            <thead className="bg-blue ">
+                    <div className=" overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                        <table className="w-full divide-y divide-gray dark:divide-darkgray">
+                            <thead className="bg-blue dark:bg-orange ">
                             <tr>
                                 <th
                                     scope="col"
@@ -37,32 +37,32 @@ export default function EmployeurOffer(props:any) {
                                 </th>
                             </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray">
+                            <tbody className="bg-white dark:bg-dark divide-y divide-gray">
                             {props.offers.map((offer:any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center">
                                             <div className="ml-4">
-                                                <div className="text-sm font-medium text-gray-900">{offer.title}</div>
+                                                <div className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm text-gray-900">{offer.location}</div>
+                                        <div className="text-sm dark:text-offwhite">{offer.location}</div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                           className={
                           offer.status == "Pending" ?
-                              "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange text-white"
+                              "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange text-white dark:text-offwhite"
                               : offer.status === "Rejected" ?
-                                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red text-white"
-                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green text-white"}
+                                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red text-white dark:text-offwhite"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green text-white dark:text-offwhite"}
                       >
                         {offer.status}
                       </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
                                         {offer.startDate}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

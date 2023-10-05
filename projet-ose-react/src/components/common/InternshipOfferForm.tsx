@@ -165,7 +165,7 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
                 <div
                     className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 md:overflow-y-auto max-md:w-5/6">
 
-                    <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark">
+                    <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark border border-gray dark:border-darkgray">
 
                         <form className="space-y-4 mx-auto w-full max-w-xl" onSubmit={handleSubmit}>
 
@@ -286,7 +286,7 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
 
                                 </input>
                                 <div className="flex flex-col items-center justify-center py-10 text-center">
-                                    <FontAwesomeIcon icon={faUpload} className="w-14 h-auto text-blue" />
+                                    <FontAwesomeIcon icon={faUpload} className="w-14 h-auto text-blue dark:text-orange" />
                                     <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
                                     <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
                                         {" "} <span

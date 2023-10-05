@@ -1,10 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
 function Home(props:any) {
     console.log(props.user)
+    useEffect(() => {
+
+        console.log(localStorage.getItem('theme'))
+    }, [localStorage.getItem('theme')]);
     return (
-       <div className="min-h-screen h-full bg-darkwhite">
+       <div>
            <Header
                user={props.user}
            />
@@ -17,7 +21,6 @@ function Home(props:any) {
                     </div>
                     : <EmployeurHomePage/>
            }
-
        </div>
     );
 }

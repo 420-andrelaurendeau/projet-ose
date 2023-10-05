@@ -29,41 +29,41 @@ function EmployeurHomePage() {
                             <div className="flex-row flex md:justify-center space-x-4">
                                 <div
 
-                                    className="border border-gray bg-white basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
                                             <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray truncate ">Total candidature</p>
-                                            <p className="text-xl font-bold">150</p>
+                                            <p className="text-xl dark:text-white font-bold">150</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div
-                                    className="border border-gray bg-white basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
                                             <FontAwesomeIcon icon={faFileLines} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray">Total offer</p>
-                                            <p className="text-xl font-bold">{offers.length}</p>
+                                            <p className="text-xl dark:text-white font-bold">{offers.length}</p>
                                         </div>
                                     </div>
                                 </div>
 
                                 <NavLink
                                     to="/home/newOffer"
-                                    className="border border-gray bg-white basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     onClick={() => setIsModalOpen(true)}
                                     state={user}
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
                                             <FontAwesomeIcon icon={faPencil} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
@@ -73,15 +73,15 @@ function EmployeurHomePage() {
                                     </div>
                                 </NavLink>
                                 <div
-                                    className="border border-gray bg-white basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue rounded-full h-12 w-12 flex items-center justify-center">
+                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
                                             <FontAwesomeIcon icon={faSignature} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray">Total contract</p>
-                                            <p className="text-xl font-bold">150</p>
+                                            <p className="text-xl dark:text-white font-bold">150</p>
                                         </div>
                                     </div>
                                 </div>

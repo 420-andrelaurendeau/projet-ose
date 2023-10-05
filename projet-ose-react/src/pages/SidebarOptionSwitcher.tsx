@@ -16,7 +16,7 @@ function SidebarOptionSwitcher(props:Props) {
     let { option } = useParams()
     return (
 
-        <div className="bg-darkwhite w-full">
+        <div className="bg-darkwhite dark:bg-softdark w-full">
             <div className={option != "offer" ? "max-md:hidden":"hidden"}>
                 <EmployeurOffer
                     offers={props.offers}
