@@ -11,7 +11,6 @@ import {ftruncate} from "fs";
 function EmployeurHomePage() {
     const [offers, setOffers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(true)
-    const [isModalNewOfferOpen, setIsModalNewOfferOpen] = useState(false)
     const location = useLocation();
     const user = location.state;
 
@@ -63,7 +62,6 @@ function EmployeurHomePage() {
                                 <NavLink
                                     to="/home/newOffer"
                                     className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    onClick={() => setIsModalNewOfferOpen(true)}
                                     state={user}
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
@@ -101,16 +99,6 @@ function EmployeurHomePage() {
                             user={user}
                         />
                     </div>
-                    {
-                        isModalNewOfferOpen && (
-                            <InternshipOfferForm
-                                setIsModalOpen={setIsModalNewOfferOpen}
-                                setOffers={setOffers}
-                                user={user}
-                            ></InternshipOfferForm>
-                        )
-                    }
-                    {/* <!-- /End replace --> */}
                 </div>
             </main>
         </div>

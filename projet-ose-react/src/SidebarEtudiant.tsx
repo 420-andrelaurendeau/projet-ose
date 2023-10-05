@@ -25,24 +25,26 @@ export default function SidebarEtudiant(props: any) {
                                 <div className="shadow h-1 flex justify-center"/>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "offer" ? "w-2 bg-blue rounded-lg": "hidden"}>
+                                <div className={option === "offer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
                                     to="/home/offer"
                                     state={props.user}
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className={option == "offer" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
                                     <p className={option == "offer" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.stage.text}</p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "appliedOffers" ? "w-2 bg-blue rounded-lg": "hidden"}>
+                                <div className={option === "appliedOffers" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
                                     to="/home/appliedOffers"
                                     state={props.user}
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileArrowDown} className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
                                     <p className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.offre_applique.text}</p>

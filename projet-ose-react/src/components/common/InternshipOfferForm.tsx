@@ -165,9 +165,13 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
     return (
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
                 <div
-                    className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 md:overflow-y-auto max-md:w-5/6">
-
-                    <div className="bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark border border-gray dark:border-darkgray">
+                    className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 max-md:w-5/6">
+                    <NavLink
+                        to="/home/offer"
+                        className="md:absolute max-md:hidden w-full h-full"
+                        state={user}
+                    />
+                    <div className="md:relative bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark border border-gray dark:border-darkgray">
 
                         <form className="space-y-4 mx-auto w-full max-w-xl" onSubmit={handleSubmit}>
 
