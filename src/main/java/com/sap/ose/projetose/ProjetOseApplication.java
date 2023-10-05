@@ -1,10 +1,9 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.repository.InternshipOfferRepository;
 import com.sap.ose.projetose.repository.FormationRepository;
 import com.sap.ose.projetose.service.*;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +21,12 @@ import java.util.List;
 public class ProjetOseApplication implements CommandLineRunner {
     private final StudentService studentService;
     private final EmployerService employerService;
-    private final InternOfferService internOfferService;
     private final InternshipOfferService internshipOfferService;
 
-    private InternshipCandidatesService internshipCandidatesService;
+    private final InternshipCandidatesService internshipCandidatesService;
 
     private final FormationRepository formationRepository;
-    private final InternshipOfferRepository internshipOfferRepository;
+    private final InternshipManagerService internshipManagerService;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
@@ -38,8 +36,8 @@ public class ProjetOseApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Formation formation1 = formationRepository.save(new Formation("Techniques de l'informatique", "Formation de formation en techniques de l'informatique"));
         Formation formation2 = formationRepository.save(new Formation("Techniques de l'administration", "Formation de formation en techniques de l'administration"));
-        Formation formation3 = formationRepository.save(new Formation("Techniques de la logistique", "Formation de formation en techniques de la logistique"));
-        Formation formation4 = formationRepository.save(new Formation("Techniques de la comptabilité et de la gestion", "Formation de formation en techniques de la comptabilité et de la gestion"));
+        formationRepository.save(new Formation("Techniques de la logistique", "Formation de formation en techniques de la logistique"));
+        formationRepository.save(new Formation("Techniques de la comptabilité et de la gestion", "Formation de formation en techniques de la comptabilité et de la gestion"));
 
         Student etudiant2 = new Student("Marc", "Max", "4387999889", "max@gmail.com", "popo", "2045888", formation1, null);
         Student etudiant3 = new Student("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", formation1, null);
@@ -50,7 +48,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         employerService.saveEmployeur(employer);
         employerService.saveEmployeur(employer2);
 
-        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true);
+        File file = new File("Test.txt", etudiant2, "hello".getBytes(StandardCharsets.UTF_8));
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
         InternshipOffer internshipOffer = new InternshipOffer(1L,"ff","ff","ff",20.50,LocalDate.now(),LocalDate.now(),internshipCandidates, formation1,file, employer, AssessmentState.PENDING,offerReviewRequest);
@@ -67,7 +65,7 @@ public class ProjetOseApplication implements CommandLineRunner {
 
 
         InternshipManager internshipmanager = new InternshipManager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", formation1);
-        internshipmanagerService.save(new InternshipmanagerDto(internshipmanager));
+        internshipManagerService.save(new InternshipmanagerDto(internshipmanager));
 
     }
 }

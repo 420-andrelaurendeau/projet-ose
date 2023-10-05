@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.models.AssessmentState;
 import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +32,7 @@ public class InternshipOfferDto {
     private String employeurNom;
     private String employeurEntreprise;
     private long offerReviewRequestId;
-    private State state;
+    private AssessmentState state;
 
     public InternshipOfferDto(InternshipOffer internshipOffer) {
         this.id = internshipOffer.getId();
@@ -53,14 +53,14 @@ public class InternshipOfferDto {
         this.offerReviewRequestId = internshipOffer.getOfferReviewRequest() == null ? 0 : internshipOffer.getOfferReviewRequest().getId();
     }
 
-    public InternshipOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file, State state, long offerReviewRequestId) {
+    public InternshipOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file, AssessmentState state, long offerReviewRequestId) {
         this.title = title;
         this.location = location;
         this.description = description;
         this.salaryByHour = salaryByHour;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.internshipCandidates = internshipCandidates == null ? new ArrayList<>() : internshipCandidates.stream().map(internshipCandidate -> internshipCandidate.getId()).collect(Collectors.toList());
+        this.internshipCandidates = internshipCandidates == null ? new ArrayList<>() : internshipCandidates.stream().map(InternshipCandidatesDto::getId).collect(Collectors.toList());
         this.programmeId = programmeId;
         this.file = file;
         this.state = state;
@@ -68,9 +68,6 @@ public class InternshipOfferDto {
     }
 
     public InternshipOffer fromDto() {
-        if (this.internshipCandidates == null) {
-            return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
-        }
         return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
     }
 }

@@ -28,7 +28,7 @@ const initialFormState: InternshipOffer = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal, handleOpenModal}) => {
+const InternshipOfferForm: React.FC<any> = ({isModalOpen, handleCloseModal}) => {
     const {t} = useTranslation();
 
     const [errors, setErrors] = useState<{

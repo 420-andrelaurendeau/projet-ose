@@ -1,7 +1,6 @@
 package com.sap.ose.projetose.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,7 @@ public class File {
 
     public File(@NonNull String fileName, User uploader, byte[] content) {
         this.content = content;
+        this.uploader = uploader;
         this.fileName = fileName;
     }
 }

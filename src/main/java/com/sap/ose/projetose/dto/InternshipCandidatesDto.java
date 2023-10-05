@@ -23,8 +23,8 @@ public class InternshipCandidatesDto {
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();
         this.studentMatricule = internshipCandidates.getEtudiant().getId();
-        this.internshipOfferId = internshipCandidates.getInternOffer().getId();
-        this.filesId = internshipCandidates.getFiles().isEmpty() == true ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
+        this.internshipOfferId = internshipCandidates.getInternshipOffer().getId();
+        this.filesId = internshipCandidates.getFiles().isEmpty() ? new ArrayList<>() : internshipCandidates.getFiles().stream().map(File::getId).collect(Collectors.toList());
     }
 
     public InternshipCandidates fromDto() {

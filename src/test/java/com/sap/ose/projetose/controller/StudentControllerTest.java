@@ -1,14 +1,14 @@
 package com.sap.ose.projetose.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationDto;
+import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.exception.GlobalExceptionHandler;
 import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.in;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -58,7 +57,7 @@ class StudentControllerTest {
         internshipOffer.setEmployer(new Employer());
         internshipOffer.setEndDate(LocalDate.now());
         internshipOffer.setFile(new File());
-        internshipOffer.setState(State.ACCEPTED);
+        internshipOffer.setState(AssessmentState.APPROVED);
         internshipOffer.setId(1L);
         internshipOffer.setInternshipCandidates(null);
         internshipOffer.setLocation("Location");
@@ -70,7 +69,7 @@ class StudentControllerTest {
 
 
         etudiant = new Student();
-        etudiant.setCv("Cv");
+        etudiant.setCv(new ArrayList<>());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1);
         etudiant.setMatricule("Matricule");
@@ -93,7 +92,7 @@ class StudentControllerTest {
      */
     @Test
     void testGetEtudiant() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1, "Cv", null));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1, new ArrayList<>(), null));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
         MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"nom\":null,\"prenom\":null,\"phone\":null,\"email\":null,\"matricule\":\"Matricule\",\"programme_id\":1," + "\"cv\":\"Cv\",\"internships_id\":null}"));
     }
@@ -104,7 +103,7 @@ class StudentControllerTest {
     @Test
     void testSaveEtudiant() throws Exception {
         Student etudiant = new Student();
-        etudiant.setCv("Cv");
+        etudiant.setCv(new ArrayList<>());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1);
         etudiant.setMatricule("Matricule");
@@ -117,7 +116,7 @@ class StudentControllerTest {
         when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
 
         Student etudiant2 = new Student();
-        etudiant2.setCv("Cv");
+        etudiant2.setCv(new ArrayList<>());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1);
         etudiant2.setMatricule("Matricule");
@@ -136,7 +135,7 @@ class StudentControllerTest {
      */
     @Test
     void testGetEtudiant2() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1L, "Cv", null));
+        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1L, new ArrayList<>(), null));
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -221,7 +220,7 @@ class StudentControllerTest {
     void getOffersApplied_StudentAppliedOffersArray() throws Exception {
 
 
-        StudentSubmittedApplicationsDto dto = new StudentSubmittedApplicationsDto(new InternshipOfferDto(etudiant.getInternshipsCandidate().get(0).getInternshipOffer()), List.of(new FileDto()));
+        StudentApplicationDto dto = new StudentApplicationDto(new InternshipOfferDto(etudiant.getInternshipsCandidate().get(0).getInternshipOffer()), List.of(new FileDto()));
         when(oseService.getOffersAppliedByEtudiant(anyLong())).thenReturn(List.of(dto));
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")

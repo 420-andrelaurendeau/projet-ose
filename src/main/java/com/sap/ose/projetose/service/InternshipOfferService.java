@@ -39,7 +39,7 @@ public class InternshipOfferService {
             InternshipOffer internshipOffer = internshipOfferDto.fromDto();
             internshipOffer.setFormation(formation);
             internshipOffer.setEmployer(employer);
-            internshipOffer.setState(State.PENDING);
+            internshipOffer.setState(AssessmentState.PENDING);
 
             InternshipOffer savedOfferDto = offerJobRepository.save(internshipOffer);
 
@@ -60,8 +60,8 @@ public class InternshipOfferService {
         }
     }
 
-    public List<InternshipOfferDto> getInternOfferAccepted(){
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIs();
+    public List<InternshipOfferDto> getInternshipOfferApproved(){
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllApproved();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
 
         for (InternshipOffer offre : internshipOfferList){
@@ -72,7 +72,7 @@ public class InternshipOfferService {
     }
 
     @Transactional
-    public List<InternshipOfferDto> getInternOfferPending() {
+    public List<InternshipOfferDto> getInternshipOfferPending() {
         List<InternshipOffer> internshipOfferList = offerJobRepository.findAllPending();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class InternshipOfferService {
         return internshipOfferDtoList;
     }
 
-    public List<InternshipOfferDto> getInternOfferDeclined(){
+    public List<InternshipOfferDto> getInternshipOfferRejected(){
         List<InternshipOffer> internshipOfferList = offerJobRepository.findAllRejected();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
 
@@ -94,9 +94,9 @@ public class InternshipOfferService {
         return internshipOfferDtoList;
     }
 
-    InternshipOfferDto getInterOfferById(Long id) {
+    InternshipOfferDto getInternshipOfferById(Long id) {
         InternshipOffer internshipOffer = offerJobRepository.findById(id).orElse(null);
-        return new InternshipOfferDto(internshipOffer);
+        return internshipOffer == null ? null : new InternshipOfferDto(internshipOffer);
     }
 
     InternshipOffer findById(long id){
@@ -114,7 +114,7 @@ public class InternshipOfferService {
         }
     }
 
-    public List<InternshipOfferDto> getInternOffers(){
+    public List<InternshipOfferDto> getInternshipOffers(){
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>() ;
         for(InternshipOffer offer : offerJobRepository.findAll()){
             internshipOfferDtoList.add(new InternshipOfferDto(offer));
@@ -123,6 +123,6 @@ public class InternshipOfferService {
     }
 
     boolean isApprovedOrDeclineById(long id) {
-        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
+        return offerJobRepository.findById(id).filter(offer -> offer.getState() == AssessmentState.APPROVED || offer.getState() == AssessmentState.REJECTED).isPresent();
     }
 }

@@ -54,7 +54,7 @@ public class StudentService {
         return etudiant.map(value -> new StudentDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getFormation().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
-    public Student findEtudiantById(Long id) {
+    public Student findEtudiantByMatricule(Long id) {
         Optional<Student> etudiant = studentRepository.findById(id);
         return etudiant.orElse(null);
     }

@@ -8,7 +8,7 @@ export const validateTitle = (title: string, t: Function) => {
         errorMsg = t('formField.InternshipOfferForm.title.validation.minLenght');
     } else if (title.length > 20) {
         errorMsg = t('formField.InternshipOfferForm.title.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüïî]/.test(title)) {
+    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüï]/.test(title)) {
         errorMsg = t('formField.InternshipOfferForm.title.validation.badCharactere');
     }
 
@@ -23,7 +23,7 @@ export const validateLocation = (location: string, t: Function) => {
         errorMsg = t('formField.InternshipOfferForm.location.validation.minLenght');
     } else if (location.length > 20) {
         errorMsg = t('formField.InternshipOfferForm.location.validation.maxLenght');
-    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüïî]/.test(location)) {
+    } else if (/[^a-zA-Z0-9\s\-.,'&éêèîâàçûüï]/.test(location)) {
         errorMsg = t('formField.InternshipOfferForm.location.validation.badCharactere');
     }
 
@@ -99,7 +99,6 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
 }
 
 export const validateFile = (file: File, t: Function) => {
-    const maxFileSize = 2 * 1024 * 1024; // 5 Mo en octets
     const allowedExtensions = [".pdf"];
     let errorMsg = "";
 

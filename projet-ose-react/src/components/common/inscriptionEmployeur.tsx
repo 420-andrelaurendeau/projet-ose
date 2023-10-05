@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
 import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"

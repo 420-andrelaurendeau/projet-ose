@@ -16,7 +16,7 @@ import StudentRegistrationPage from "./pages/student/StudentRegistrationPage";
 import EmployerRegistrationPage from "./pages/employer/EmployerRegistrationPage";
 import StudentInternshipOfferPage from "./pages/student/InternshipOfferPage";
 import ManagementInternshipOfferPage from './pages/management/offers/InternshipOfferPage';
-import AssessCvPage from "./pages/management/students/AssessCv";
+import AssessCvPage from "./pages/management/student/AssessCv";
 
 
 

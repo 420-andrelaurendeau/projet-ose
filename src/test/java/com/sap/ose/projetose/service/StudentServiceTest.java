@@ -3,7 +3,6 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationDto;
-import com.sap.ose.projetose.dto.StudentSubmittedApplicationsDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repository.StudentRepository;
@@ -17,11 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -57,7 +56,7 @@ public class StudentServiceTest {
 
         new File();
         etudiant = new Student();
-        etudiant.setCv("Cv");
+        etudiant.setCv(new ArrayList<>());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setMatricule("Matricule");
