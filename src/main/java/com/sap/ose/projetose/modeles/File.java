@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -35,5 +37,16 @@ public class File {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;
+    }
+
+    @Override
+    public String toString() {
+        return "File{" +
+                "id=" + id +
+                ", content=" + Arrays.toString(content) +
+                ", fileName='" + fileName + '\'' +
+                ", isAccepted=" + isAccepted +
+                ", etudiant=" + etudiant +
+                '}';
     }
 }

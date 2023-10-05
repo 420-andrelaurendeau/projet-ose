@@ -29,8 +29,7 @@ public class InternOffer {
     private String status;
     private State state;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "interOfferJob_id")
+    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipCandidates;
 
     @ManyToOne()
@@ -105,5 +104,24 @@ public class InternOffer {
         this.employeur = internOffer.getEmployeur();
         this.state = internOffer.getState();
         this.offerReviewRequest = internOffer.getOfferReviewRequest();
+    }
+
+    @Override
+    public String toString() {
+        return "InternOffer{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", location='" + location + '\'' +
+                ", description='" + description + '\'' +
+                ", salaryByHour=" + salaryByHour +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status='" + status + '\'' +
+                ", state=" + state +
+                ", internshipCandidates=" + internshipCandidates +
+                ", programme=" + programme +
+                ", file=" + file +
+                ", employeur=" + employeur +
+                '}';
     }
 }

@@ -5,8 +5,10 @@ import {useTranslation} from "react-i18next";
 import Header from "../../Header";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
+import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function etudiantStage(props: any) {
+function EtudiantStage(props: any) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.EtudiantStage");
@@ -17,6 +19,7 @@ function etudiantStage(props: any) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [offers, setOffers] = useState([
     ]);
+    const [appliedOffer, setAppliedOffer] = useState([]);
 
     const fetchOffers = () => {
         axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
@@ -59,25 +62,19 @@ function etudiantStage(props: any) {
 
     return (
         <div>
-            <Header user={user}/>
-            <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
-                        className={props.darkMode ? "mx-auto h-16 w-auto" : "mx-auto h-16 w-auto"}
-                        src={props.darkMode ? imgDark : img}
-                        alt="Cegep Andre Laurendeau"
-                    />
-                    <h1 className=
-                            {props.darkMode ?
-                                "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white"
-                                : "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black"}>
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8 ">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-28">
+                    <div className="flex items-center justify-center">
+                        <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
+                    </div>
+                    <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                         {fields.titre.text}
                     </h1>
                     {offers.map((offer: any) => (
-                        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                            <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}>
+                            <div className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">
                                 <div>
-                                    <h2 className="mt-6 text-center text-3xl font-extrabold leading-9 text-gray-900">
+                                    <h2 className="mt-6 text-center text-3xl font-extrabold leading-9 dark:text-white">
                                         {offer.title}
                                     </h2>
                                 </div>
@@ -85,19 +82,19 @@ function etudiantStage(props: any) {
                                 <div className="mt-6">
                                     <div className="w-full">
                                         <div className="flex justify-between">
-                                            <div className="text-sm leading-5 text-gray-500">
-                                                <p className={"text-gray-900"}>{fields.stage.description.text}</p>
-                                                <p className={"text-gray-900"}>{fields.stage.location.text}</p>
-                                                <p className={"text-gray-900"}>{fields.stage.salary.text}</p>
-                                                <p className={"text-gray-900"}>{fields.stage.startDate.text}</p>
-                                                <p className={"text-gray-900"}>{fields.stage.endDate.text}</p>
+                                            <div className="text-sm leading-5 dark:text-white">
+                                                <p>{fields.stage.description.text}</p>
+                                                <p>{fields.stage.location.text}</p>
+                                                <p>{fields.stage.salary.text}</p>
+                                                <p>{fields.stage.startDate.text}</p>
+                                                <p>{fields.stage.endDate.text}</p>
                                             </div>
-                                            <div className="text-sm leading-5 text-gray-500">
-                                                <p className={"text-gray-900"}>{offer.description}</p>
-                                                <p className={"text-gray-900"}>{offer.location}</p>
-                                                <p className={"text-gray-900"}>{offer.salaryByHour}</p>
-                                                <p className={"text-gray-900"}>{offer.startDate}</p>
-                                                <p className={"text-gray-900"}>{offer.endDate}</p>
+                                            <div className="text-sm leading-5 dark:text-white">
+                                                <p>{offer.description}</p>
+                                                <p>{offer.location}</p>
+                                                <p>{offer.salaryByHour}</p>
+                                                <p>{offer.startDate}</p>
+                                                <p>{offer.endDate}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -105,11 +102,12 @@ function etudiantStage(props: any) {
                                 <div className="mt-6">
                                     <div className="w-full">
                                         <div className="flex justify-between">
-                                            <div className="text-sm leading-5 text-gray-500">
+                                            <div className="text-sm leading-5">
                                                 <button
                                                     onClick={() => applyOffer(offer, user)}
                                                     type="submit"
-                                                    className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green active:bg-green-700 transition duration-150 ease-in-out"
+                                                    disabled={!!offer.internshipCandidates.map((candidate: number) => candidate).includes(user.id)}
+                                                    className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white bg-blue dark:bg-orange hover:bg-gray focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                 >
                                                     {fields.stage.apply.text}
                                                 </button>
@@ -127,4 +125,4 @@ function etudiantStage(props: any) {
     )
 }
 
-export default etudiantStage;
+export default EtudiantStage;

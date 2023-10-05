@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 import {NavLink} from "react-router-dom";
 import React, {useState} from "react";
 import Switcher from "./utils/switcher";
+import SidebarEtudiant from "./SidebarEtudiant";
 
 const Header = (props:any) => {
     const {i18n} = useTranslation();
@@ -39,7 +40,7 @@ const Header = (props:any) => {
                                 </div>
                             </div>
                             {props.user.matricule && <div className="hidden md:block">
-                                <NavLink to={"/etudiantStage"} state={props.user} className="ml-10 flex items-baseline space-x-4">
+                                <NavLink to={"/home/offer"} state={props.user} className="ml-10 flex items-baseline space-x-4">
                                     <p className="text-blue dark:text-orange">{fields.stage.text}</p>
                                 </NavLink>
                             </div>}
@@ -74,9 +75,15 @@ const Header = (props:any) => {
                         leaveTo="opacity-0 scale-95"
                     >
                         <div className="md:hidden" >
-                            <SidebarEmployeurHome
-                                user={props.user}
-                            />
+                            {
+                                props.user.matricule ?
+                                 <SidebarEtudiant
+                                        user={props.user}
+                                 />:
+                                    <SidebarEmployeurHome
+                                        user={props.user}
+                                    />
+                            }
                         </div>
                     </Transition>
                 </nav>

@@ -11,7 +11,7 @@ const TestBackEndConnection = (props:any) => {
         nom: string;
         prenom: string;
         email: string;
-        telephone: string;
+        phone: string;
         entreprise: string;
         programme: string;
     }
@@ -19,6 +19,7 @@ const TestBackEndConnection = (props:any) => {
     useEffect(() => {
         const getUtilisateurs = async () => {
             const utilisateursFromServer = await fetchUtilisateurs()
+            console.log(utilisateursFromServer)
             setUtilisateurs(utilisateursFromServer)
 
         }

@@ -26,8 +26,7 @@ public class Etudiant extends Utilisateur{
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.REMOVE)
     private List<File> cv;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "etudiant_id")
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipsCandidate;
 
     public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {

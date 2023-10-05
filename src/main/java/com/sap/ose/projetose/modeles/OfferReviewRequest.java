@@ -21,7 +21,7 @@ public class OfferReviewRequest {
     @JoinColumn(name = "internOffer_id")
     private InternOffer internOffer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "internshipmanager_id")
     public Internshipmanager internshipmanager;
 

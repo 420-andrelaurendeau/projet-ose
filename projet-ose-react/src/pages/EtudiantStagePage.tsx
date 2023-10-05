@@ -1,8 +1,12 @@
-import {useState} from "react";
-import EtudiantStage from "../components/common/etudiantStage";
+import React, {useState} from "react";
+import EtudiantStage from "../components/common/EtudiantStage";
+import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
+import {useLocation} from "react-router-dom";
 
 function EtudiantStagePage() {
     const [darkMode, setDarkMode] = useState(false);
+    const location = useLocation();
+    const user = location.state;
     function toggleDarkMode() {
         setDarkMode(!darkMode)
     }
@@ -14,10 +18,11 @@ function EtudiantStagePage() {
             </head>
             <body className={darkMode ? "h-screen bg-dark" : "h-screen bg-white"}>
             <div className="items-center">
-                <EtudiantStage
-                    darkMode={darkMode}
-                    toggleDarkMode={toggleDarkMode}
-                />
+                <div className="w-full">
+                    <SidebarOptionSwitcher
+                        user={user}
+                    />
+                </div>
             </div>
             </body>
         </html>

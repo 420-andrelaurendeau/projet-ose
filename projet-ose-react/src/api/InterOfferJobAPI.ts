@@ -22,7 +22,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id:number)
         endDate: interOfferJob.endDate,
         programmeId: interOfferJob.programmeId!,
         file: interOfferJob.file,
-        employeurId: interOfferJob.employeurId //TODO à remplacer par le bon type
+        employeurId: id
     }
 
     try {
@@ -84,8 +84,7 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
 
 export const getInterOfferJob = async (email: string) => {
     try {
-        const response = await apiClient.get('/OffersEmp/' + email);
-        console.log(response.data);
+        const response = await apiClient.get('interOfferJob/OffersEmp/' + email);
         return response.data;
 
     } catch (error) {

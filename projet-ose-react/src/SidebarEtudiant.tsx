@@ -11,15 +11,15 @@ export default function SidebarEtudiant(props: any) {
 
     return (
         <div className="fixed shadow">
-            <div className="flex flex-col w-60 h-screen p-3 bg-white ">
+            <div className="flex flex-col w-60 h-screen p-3 bg-white dark:bg-dark ">
                 <div className="space-y-3">
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-3 text-sm">
                             <li className=" space-y-3 ">
                                 <p className="text-xl font-bold flex justify-center">
-                                    <FontAwesomeIcon icon={faCircleUser} className="w-20 h-auto text-blue flex justify-center" />
+                                    <FontAwesomeIcon icon={faCircleUser} className="w-20 h-auto text-blue dark:text-orange flex justify-center" />
                                 </p>
-                                <p className="text-xl font-bold flex justify-center">
+                                <p className="text-xl dark:text-white font-bold flex justify-center">
                                     {props.user.prenom + ' ' + props.user.nom}
                                 </p>
                                 <div className="shadow h-1 flex justify-center"/>
@@ -28,12 +28,12 @@ export default function SidebarEtudiant(props: any) {
                                 <div className={option === "offer" ? "w-2 bg-blue rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/etudiantStage"
+                                    to="/home/offer"
                                     state={props.user}
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
                                 >
-                                    <FontAwesomeIcon icon={faFileLines} color={option === "offer" ? "black" : "grey"} size="lg"/>
-                                    <p className={option == "offer" ? "text-black" : "text-gray"}>{fields.sidebar.stage.text}</p>
+                                    <FontAwesomeIcon icon={faFileLines} className={option == "offer" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
+                                    <p className={option == "offer" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.stage.text}</p>
                                 </NavLink>
                             </li>
                         </ul>

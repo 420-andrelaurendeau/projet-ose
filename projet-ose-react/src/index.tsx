@@ -12,7 +12,6 @@ import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
 import HomePage from "./pages/HomePage";
-import InternOfferPage from "./pages/InternOfferPage";
 import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
 
@@ -52,10 +51,6 @@ const router = createBrowserRouter([
     {
         path: "/etudiantStage",
         element: <EtudiantStagePage/>
-    },
-    {
-        path: "/InternOffer",
-        element: <InternOfferPage/>
     },
     {
         path: "/GSInternOffer",

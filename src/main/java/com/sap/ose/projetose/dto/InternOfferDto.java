@@ -2,6 +2,7 @@ package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.Etats;
 import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,7 +44,7 @@ public class InternOfferDto {
         this.description = internOffer.getDescription();
         this.startDate =  internOffer.getStartDate().toString();
         this.endDate = internOffer.getEndDate().toString();
-        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? null : internOffer.getInternshipCandidates().stream().map(internshipCandidates -> internshipCandidates.getId()).collect(Collectors.toList());
+        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? null : internOffer.getInternshipCandidates().stream().map(InternshipCandidates::getId).collect(Collectors.toList());
         this.programmeId = internOffer.getProgramme().getId();
         this.file = new FileDto(internOffer.getFile());
         this.employeurId = internOffer.getEmployeur().getId();

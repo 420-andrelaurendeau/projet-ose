@@ -40,6 +40,7 @@ public class OseService {
 
         etudiants.get().forEach(etudiant -> {
             EtudiantDto etudiantDto = new EtudiantDto();
+            etudiantDto.setId(etudiant.getId());
             etudiantDto.setNom(etudiant.getNom());
             etudiantDto.setPrenom(etudiant.getPrenom());
             etudiantDto.setEmail(etudiant.getEmail());

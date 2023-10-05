@@ -27,6 +27,7 @@ const initialFormState: InterOfferJob = {
     endDate: undefined,
     programmeId: 0,
     employeurId: 0,
+    state: "PENDING",
     file: undefined,
 };
 

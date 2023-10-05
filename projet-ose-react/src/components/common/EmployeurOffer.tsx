@@ -1,5 +1,6 @@
 
 export default function EmployeurOffer(props:any) {
+    console.log(props.offers);
     return (
         <div className="flex flex-col mt-14">
             <div className=" xs:-mx-6 lg:-mx-8">
@@ -37,7 +38,7 @@ export default function EmployeurOffer(props:any) {
                                 </th>
                             </tr>
                             </thead>
-                            <tbody className="bg-white dark:bg-dark divide-y divide-gray">
+                            <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                             {props.offers.map((offer:any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap">
@@ -53,13 +54,13 @@ export default function EmployeurOffer(props:any) {
                                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                           className={
-                          offer.status == "Pending" ?
-                              "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-orange text-white dark:text-offwhite"
-                              : offer.status === "Rejected" ?
-                                  "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red text-white dark:text-offwhite"
-                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green text-white dark:text-offwhite"}
+                          offer.state == "PENDING" ?
+                              "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-1/2 bg-orange text-white dark:text-offwhite"
+                              : offer.state === "DECLINED" ?
+                                  "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-1/2 bg-red text-white dark:text-offwhite"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-1/2 justify-center bg-green text-white dark:text-offwhite"}
                       >
-                        {offer.status}
+                        {offer.state}
                       </span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">

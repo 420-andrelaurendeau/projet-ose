@@ -41,7 +41,7 @@ public class InternshipCandidatesService {
     public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
         try{
             InternshipCandidates internshipCandidates = new InternshipCandidates(internshipCandidatesDto.fromDto());
-            Etudiant etudiant = etudiantService.findByMatricule(internshipCandidatesDto.getEtudiant().getMatricule());
+            Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant().getId());
             InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInternOfferJob().getId());
             List<File> files = internshipCandidatesDto.getFiles() == null ? new ArrayList<>() : internshipCandidatesDto.getFiles().stream().map(FileDto::fromDto).toList();
 
@@ -60,6 +60,7 @@ public class InternshipCandidatesService {
             throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
+            logger.info(e.getCause().getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
