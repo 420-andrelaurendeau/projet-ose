@@ -6,6 +6,7 @@ import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.ProgrammeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,6 +36,12 @@ public class EtudiantServiceTest {
 
     @MockBean
     EtudiantRepository etudiantRepository;
+
+    @MockBean
+    ProgrammeService programmeService;
+
+    @MockBean
+    ProgrammeRepository programmeRepository;
 
     Etudiant etudiant = new Etudiant();
 
