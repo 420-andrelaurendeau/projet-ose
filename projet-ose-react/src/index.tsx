@@ -14,12 +14,14 @@ import EtudiantStagePage from "./pages/EtudiantStagePage";
 import HomePage from "./pages/HomePage";
 import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
+import {ToastContextProvider} from "./hooks/context/ToastContext";
 
 
-if(window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/"){
+if (window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/") {
     window.location.pathname = "/homeEmployeur/offer"
     console.log(1)
 }
+
 
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
@@ -65,7 +67,9 @@ const router = createBrowserRouter([
 
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <ToastContextProvider>
+            <RouterProvider router={router}/>
+        </ToastContextProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

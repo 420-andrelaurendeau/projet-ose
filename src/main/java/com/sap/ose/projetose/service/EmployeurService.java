@@ -66,6 +66,8 @@ public class EmployeurService {
     @Transactional
     public Optional<Employeur> saveEmployeur(Employeur employeur){
         try {
+            Programme programme = programmeService.findById(employeur.getProgramme().getId());
+            employeur.setProgramme(programme);
             return Optional.of(employeurRepository.save(employeur));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());

@@ -17,7 +17,7 @@ public class Employeur extends Utilisateur {
     @Column(unique = true)
     private String entreprise;
 
-    @ManyToOne
+    @ManyToOne()
     private Programme programme;
 
     @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
