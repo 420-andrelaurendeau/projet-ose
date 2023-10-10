@@ -1,15 +1,22 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 // @ts-ignore
 import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
 import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
+import {Link, useNavigate} from "react-router-dom";
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
-    console.log(fields)
+    const navigate = useNavigate();
+
+    const [programme, setProgramme] = useState({
+        id: 0,
+        nom: "",
+        description: "",
+    });
 
     const [formData, setFormData] = useState({
         nom: "",
@@ -18,25 +25,41 @@ function EtudiantInscription(props: any) {
         password: "",
         phone: "",
         matricule: "",
-        programme: null,
+        programme: programme,
         cv: null,
     });
 
+
     const [programmes, setProgrammes] = useState([]);
     const [reussite, setReussite] = useState(false);
+    const [error, setError] = useState(false);
+
     const handleChange = (event:any) => {
         const { name, value } = event.target;
         console.log(name + " " + value);
+        console.log(event.target.value)
         setFormData({
             ...formData,
             [name]: value,
         });
+        console.log(formData)
     };
+
+    const handleProgramChange = (event:any) => {
+        const { name, value } = event.target;
+        setProgramme(JSON.parse(event.target.value));
+        console.log("setProgramme : "+ JSON.parse(value))
+        setFormData({
+            ...formData,
+            [name]: programme,
+        });
+    }
+
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
         const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
-        console.log(password, nom, prenom, email, phone, cv, programme);
+        console.log("Au moment du submit : " + programme);
         if (programme == null) {
             alert(fields.programme.validation.required);
             return;
@@ -53,25 +76,27 @@ function EtudiantInscription(props: any) {
                 cv: cv,
             })
             .then((response) => {
-                console.log(response);
+                console.log(response)
+                setReussite(true)
+                setError(false)
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error)
                 alert("Erreur lors de l'inscription")
-            }).then(() => {
-                setReussite(true);
-                setFormData({
-                    nom: "",
-                    prenom: "",
-                    email: "",
-                    password: "",
-                    phone: "",
-                    matricule: "",
-                    programme: null,
-                    cv: null,
-                });
-                event.target.reset();
-             });
+                setReussite(false)
+                setError(true)
+            })
+        event.target.reset();
+        setFormData({
+            nom: "",
+            prenom: "",
+            email: "",
+            password: "",
+            phone: "",
+            matricule: "",
+            programme: programme,
+            cv: null,
+        });
     };
 
     const fetchProgrammes = () => {
@@ -88,8 +113,20 @@ function EtudiantInscription(props: any) {
 
     React.useEffect(() => {
         fetchProgrammes();
-    }
-    , []);
+    }, []);
+
+    useEffect(() => {
+        setFormData(formData);
+    },[formData]);
+
+
+    useEffect(() => {
+        setProgramme(programme);
+        setFormData({
+            ...formData,
+            "programme": programme,
+        })
+    },[programme]);
 
     return (
         <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
@@ -244,11 +281,11 @@ function EtudiantInscription(props: any) {
                                 }
                                 defaultValue={"DEFAULT"}
                                 name={"programme"}
-                                onChange={handleChange}
+                                onChange={handleProgramChange}
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                                    <option key={programme['id']} value={JSON.stringify(programme)}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>
@@ -264,6 +301,8 @@ function EtudiantInscription(props: any) {
                             {fields.submitButton.text}
                         </button>
                         {reussite && <p className="text-green-500 scale-150 text-center">{fields.reussite.name}</p>}
+                        {reussite && <Link to={"/signIn"}><p className="text-green-500 scale-100 text-center">{fields.reussite.link}</p></Link>}
+                        {error && <p className="text-red-500 scale-150 text-center">{fields.error.name}</p>}
                     </div>
                 </form>
             </div>

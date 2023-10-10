@@ -82,9 +82,11 @@ const Header = (props:any) => {
                                 props.user.matricule ?
                                  <SidebarEtudiant
                                         user={props.user}
+                                        setIsOpen={setIsOpen}
                                  />:
                                     <SidebarEmployeurHome
                                         user={props.user}
+                                        setIsOpen={setIsOpen}
                                     />
                             }
                         </div>

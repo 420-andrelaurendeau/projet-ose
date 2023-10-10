@@ -28,6 +28,7 @@ export default function SidebarEmployeurHome(props: any) {
                                     to="/home/offer"
                                     className="flex items-center p-2 space-x-3 rounded-md w-full"
                                     state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className={option == "offer" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
                                     <p className={option == "offer" ? "text-black dark:text-white" : "text-gray"}>Offer</p>
@@ -40,6 +41,7 @@ export default function SidebarEmployeurHome(props: any) {
                                     to="/home/candidature"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                     state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faUsers} className={option == "candidature" ? "text-black dark:text-white" : "text-gray"} size="lg" />
                                     <p className={option == "candidature" ? "text-black dark:text-white" : "text-gray"}>Candidature</p>
@@ -52,6 +54,7 @@ export default function SidebarEmployeurHome(props: any) {
                                     to="/home/contract"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                     state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSignature} className={option == "contract" ? "text-black dark:text-white" : "text-gray"} size="lg" />
                                     <p className={option == "contract" ? "text-black dark:text-white" : "text-gray"}>Contract</p>
@@ -64,6 +67,7 @@ export default function SidebarEmployeurHome(props: any) {
                                     to="/home/pendingOffer"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                     state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSpinner} className={option == "pendingOffer" ? "text-black dark:text-white" : "text-gray"} size="lg" />
                                     <p className={option == "pendingOffer" ? "text-black dark:text-white" : "text-gray"}>Pending offer</p>
@@ -76,6 +80,7 @@ export default function SidebarEmployeurHome(props: any) {
                                     to="/home/newOffer"
                                     className="flex items-center p-2 space-x-3 rounded-md"
                                     state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faPencil} className={option == "newOffer" ? "text-black dark:text-white" : "text-gray"} size="lg" />
                                     <p className={option == "newOffer" ? "text-black dark:text-white" : "text-gray"}>New offer</p>
