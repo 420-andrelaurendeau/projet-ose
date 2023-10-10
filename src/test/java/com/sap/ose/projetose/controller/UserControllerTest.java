@@ -43,7 +43,7 @@ class UserControllerTest {
         userDtoList.add(employeur);
         when(userService.getAllUsers()).thenReturn(userDtoList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/utilisateur/utilisateurs");
-        MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":0,\"lastName\":\"Jean\",\"firstName\":\"Dupont\",\"phoneNumber\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programId\":1,\"cvIds\":null,\"internshipIds\":null},{\"id\":0,\"lastName\":\"Patrique\",\"firstName\":\"Lemieux\",\"phoneNumber\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"entreprise\":\"SAP\",\"programId\":0}]"));
+        MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":0,\"lastName\":\"Jean\",\"firstName\":\"Dupont\",\"phoneNumber\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programId\":1,\"cvIds\":null,\"applicationIds\":null},{\"id\":0,\"lastName\":\"Patrique\",\"firstName\":\"Lemieux\",\"phoneNumber\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"enterprise\":\"SAP\",\"studyProgramId\":0}]"));
     }
 
     /**

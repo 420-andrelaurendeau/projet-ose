@@ -94,7 +94,7 @@ class StudentControllerTest {
     void testGetEtudiant() throws Exception {
         when(oseService.getStudentDTOById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1, null, null));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
-        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":0,\"lastName\":null,\"firstName\":null,\"phoneNumber\":null,\"email\":null,\"matricule\":\"Matricule\",\"programId\":1," + "\"cvIds\":null,\"internshipIds\":null}"));
+        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":0,\"lastName\":null,\"firstName\":null,\"phoneNumber\":null,\"email\":null,\"matricule\":\"Matricule\",\"programId\":1," + "\"cvIds\":null,\"applicationIds\":null}"));
     }
 
     /**
