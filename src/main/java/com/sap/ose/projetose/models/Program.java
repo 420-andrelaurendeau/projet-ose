@@ -18,8 +18,8 @@ public class Program {
     private String nom;
     private String description;
 
-    public Program(String nom, String description) {
-        this.nom = nom;
+    public Program(String name, String description) {
+        this.nom = name;
         this.description = description;
     }
 }

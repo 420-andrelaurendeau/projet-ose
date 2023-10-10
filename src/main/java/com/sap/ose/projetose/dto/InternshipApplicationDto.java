@@ -13,22 +13,19 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class InternshipApplicationDto {
-
     private long id;
-    private StudentDto studentDto;
+    private StudentDto candidateDto;
     private InternshipOfferDto internshipOfferDto;
     private List<FileDto> fileDtos;
 
     public InternshipApplicationDto(InternshipApplication internshipApplication) {
         this.id = internshipApplication.getId();
-        this.studentDto = internshipApplication.getStudent() == null ? null : new StudentDto(internshipApplication.getStudent());
+        this.candidateDto = internshipApplication.getStudent() == null ? null : new StudentDto(internshipApplication.getStudent());
         this.internshipOfferDto = internshipApplication.getInternshipOffer() == null ? null : new InternshipOfferDto(internshipApplication.getInternshipOffer());
         this.fileDtos = internshipApplication.getFiles() == null ? null : internshipApplication.getFiles().stream().map(FileDto::new).toList();
     }
 
     public InternshipApplication toInternshipApplication() {
-        return new InternshipApplication((Student) studentDto.toNewUser(), internshipOfferDto.fromDto(), fileDtos == null ? new ArrayList<>() : fileDtos.stream().map(FileDto::fromDto).toList());
+        return new InternshipApplication((Student) candidateDto.toUser(), internshipOfferDto.toInternshipOffer(), fileDtos == null ? new ArrayList<>() : fileDtos.stream().map(FileDto::toFile).toList());
     }
-
-
 }

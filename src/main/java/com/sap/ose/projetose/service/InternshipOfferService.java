@@ -1,53 +1,47 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.models.*;
+import com.sap.ose.projetose.models.ApprovalStatus;
 import com.sap.ose.projetose.models.Employer;
 import com.sap.ose.projetose.models.InternshipOffer;
 import com.sap.ose.projetose.models.Program;
-import com.sap.ose.projetose.repository.EmployeurRepository;
+import com.sap.ose.projetose.repository.EmployerRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class InternOfferService {
+@RequiredArgsConstructor
+public class InternshipOfferService {
 
     private final InternOfferRepository offerJobRepository;
-    private final EmployeurRepository employeurRepository;
-    private final ProgrammeService programmeService;
-    private final EmployeurService employeurService;
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
+    private final EmployerRepository employerRepository;
+    private final StudyProgramService studyProgramService;
+    private final EmployerService employerService;
+    Logger logger = LoggerFactory.getLogger(InternshipOfferService.class);
 
-    @Autowired
-    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService, EmployeurService employeurService) {
-        this.offerJobRepository = offerJobRepository;
-        this.employeurRepository = employeurRepository;
-        this.programmeService = programmeService;
-        this.employeurService = employeurService;
-    }
 
 
     @Transactional
-    public InternshipOfferDto saveInterOfferJob(InternshipOfferDto internshipOfferDto) {
+    public InternshipOfferDto saveInternshipOfferJob(InternshipOfferDto internshipOfferDto) {
         try {
             System.out.println(internshipOfferDto.getEmployerId());
 
             if ( isApprovedOrDeclineById(internshipOfferDto.getId()))
                 throw new OfferAlreadyReviewedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
-            Program program = programmeService.findById(internshipOfferDto.getProgramId());
-            Employer employer = employeurService.findById(internshipOfferDto.getEmployerId());
+            Program program = studyProgramService.findById(internshipOfferDto.getProgramId());
+            Employer employer = employerService.findById(internshipOfferDto.getEmployerId());
 
-            InternshipOffer internshipOffer = internshipOfferDto.fromDto();
+            InternshipOffer internshipOffer = internshipOfferDto.toInternshipOffer();
             internshipOffer.setProgram(program);
             internshipOffer.setEmployer(employer);
             internshipOffer.setState(ApprovalStatus.PENDING);
@@ -72,8 +66,8 @@ public class InternOfferService {
     }
 
     @Transactional
-    public List<InternshipOfferDto> getInternOfferAccepted(){
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllApproved();
+    public List<InternshipOfferDto> getAcceptedInternshipOffer(){
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsApproved();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
         for (InternshipOffer offre : internshipOfferList){
@@ -85,7 +79,7 @@ public class InternOfferService {
 
     @Transactional
     public List<InternshipOfferDto> getInternOfferPending() {
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllPending();
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsPending();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
         for (InternshipOffer offre : internshipOfferList){
@@ -97,7 +91,7 @@ public class InternOfferService {
 
     @Transactional
     public List<InternshipOfferDto> getInternOfferDeclined(){
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllDeclined();
+        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsRejected();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
         for (InternshipOffer offre : internshipOfferList){
@@ -150,7 +144,7 @@ public class InternOfferService {
     @Transactional
     public List<InternshipOfferDto> getInternOfferByEmployeurEmail(String email){
         List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
-        List<InternshipOffer> internshipOffers = employeurRepository.findByEmail(email).get().getInternshipOffers();
+        List<InternshipOffer> internshipOffers = employerRepository.findAllByEmailEqualsIgnoreCase(email).get().getInternshipOffers();
         for(InternshipOffer internshipOffer : internshipOffers){
                 internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
         }

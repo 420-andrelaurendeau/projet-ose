@@ -6,11 +6,11 @@ import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
 import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.exception.GlobalExceptionHandler;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.service.EtudiantService;
+import com.sap.ose.projetose.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,13 +38,13 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {EtudiantController.class})
+@ContextConfiguration(classes = {StudentController.class})
 @ExtendWith(SpringExtension.class)
 class StudentControllerTest {
     @Autowired
-    private EtudiantController etudiantController;
+    private StudentController studentController;
     @MockBean
-    private EtudiantService oseService;
+    private StudentService oseService;
 
 
     private Student student;
@@ -88,17 +88,17 @@ class StudentControllerTest {
     }
 
     /**
-     * Method under test: {@link EtudiantController#getEtudiant(Long)}
+     * Method under test: {@link StudentController#getStudent(Long)}
      */
     @Test
     void testGetEtudiant() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1, null, null));
+        when(oseService.getStudentDTOById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1, null, null));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":0,\"lastName\":null,\"firstName\":null,\"phoneNumber\":null,\"email\":null,\"matricule\":\"Matricule\",\"programId\":1," + "\"cvIds\":null,\"internshipIds\":null}"));
+        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":0,\"lastName\":null,\"firstName\":null,\"phoneNumber\":null,\"email\":null,\"matricule\":\"Matricule\",\"programId\":1," + "\"cvIds\":null,\"internshipIds\":null}"));
     }
 
     /**
-     * Method under test: {@link EtudiantController#saveEtudiant(Student)}
+     * Method under test: {@link StudentController#saveStudent(Student)}
      */
     @Test
     void testSaveEtudiant() throws Exception {
@@ -113,7 +113,7 @@ class StudentControllerTest {
         student.setFirstName("Prenom");
         student.setProgram(new Program());
         Optional<Student> ofResult = Optional.of(student);
-        when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
+        when(oseService.saveStudent(Mockito.any())).thenReturn(ofResult);
 
         Student student2 = new Student();
         student2.setCvList(null);
@@ -127,39 +127,39 @@ class StudentControllerTest {
         student2.setProgram(new Program());
         String content = (new ObjectMapper()).writeValueAsString(student2);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/etudiant/ajouter").contentType(MediaType.APPLICATION_JSON).content(content);
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"lastName\":\"Nom\",\"firstName\":\"Prenom\",\"phoneNumber\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"program\":{\"id\":0,\"nom\":null,\"description\":null},\"cvList\":null,\"internshipApplications\":null}"));
+        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"lastName\":\"Nom\",\"firstName\":\"Prenom\",\"phoneNumber\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"program\":{\"id\":0,\"nom\":null,\"description\":null},\"cvList\":null,\"internshipApplications\":null}"));
     }
 
     /**
-     * Method under test: {@link EtudiantController#getEtudiant(Long)}
+     * Method under test: {@link StudentController#getStudent(Long)}
      */
     @Test
     void testGetEtudiant2() throws Exception {
-        when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1L, null, null));
+        when(oseService.getStudentDTOById(Mockito.<Long>any())).thenReturn(new StudentDto("Matricule", 1L, null, null));
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder);
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     /**
-     * Method under test: {@link EtudiantController#getEtudiants()}
+     * Method under test: {@link StudentController#getStudents()}
      */
     @Test
     void testGetEtudiants() throws Exception {
-        when(oseService.getEtudiants()).thenReturn(new ArrayList<>());
+        when(oseService.getStudents()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/etudiants");
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
+        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
 
     @Test
     void getOffersApplied_EtudiantNotFoundException() throws Exception {
-        when(etudiantController.getOffersApplied(anyLong())).thenThrow(new EtudiantNotFoundException());
+        when(studentController.getApplicationsByStudent(anyLong())).thenThrow(new StudentNotFoundException());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(studentController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
@@ -170,12 +170,12 @@ class StudentControllerTest {
 
     @Test
     void getOffersApplied_DatabaseException() throws Exception {
-        when(etudiantController.getOffersApplied(anyLong())).thenThrow(new DatabaseException());
+        when(studentController.getApplicationsByStudent(anyLong())).thenThrow(new DatabaseException());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(studentController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
@@ -186,12 +186,12 @@ class StudentControllerTest {
 
     @Test
     void getOffersApplied_ServiceException() throws Exception {
-        when(etudiantController.getOffersApplied(anyLong())).thenThrow(new ServiceException());
+        when(studentController.getApplicationsByStudent(anyLong())).thenThrow(new ServiceException());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(studentController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
@@ -203,12 +203,12 @@ class StudentControllerTest {
 
     @Test
     void getOffersApplied_EmptyArray() throws Exception {
-        when(oseService.getOffersAppliedByEtudiant(anyLong())).thenReturn(new ArrayList<>());
+        when(oseService.getApplicationsByStudent(anyLong())).thenReturn(new ArrayList<>());
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
-        MockMvcBuilders.standaloneSetup(etudiantController)
+        MockMvcBuilders.standaloneSetup(studentController)
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -221,14 +221,14 @@ class StudentControllerTest {
 
 
         StudentApplicationsDto dto = new StudentApplicationsDto(new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()), List.of(new FileDto()));
-        when(oseService.getOffersAppliedByEtudiant(anyLong())).thenReturn(List.of(dto));
+        when(oseService.getApplicationsByStudent(anyLong())).thenReturn(List.of(dto));
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         String expectedJson = new ObjectMapper().writeValueAsString(List.of(dto));
 
-        MockMvcBuilders.standaloneSetup(etudiantController)
+        MockMvcBuilders.standaloneSetup(studentController)
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())

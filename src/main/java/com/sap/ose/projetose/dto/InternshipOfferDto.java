@@ -28,10 +28,10 @@ public class InternshipOfferDto {
     private long programId;
     private FileDto file;
     private long employerId;
-    private String programNom;
-    private String employerPrenom;
-    private String employerNom;
-    private String employerEntreprise;
+    private String programName;
+    private String employerFirstName;
+    private String employerLastName;
+    private String employerEnterprise;
     private long offerReviewRequestId;
     private ApprovalStatus state;
 
@@ -46,10 +46,10 @@ public class InternshipOfferDto {
         this.programId = internshipOffer.getProgram().getId();
         this.file = new FileDto(internshipOffer.getFile());
         this.employerId = internshipOffer.getEmployer().getId();
-        this.programNom = internshipOffer.getProgram().getNom();
-        this.employerPrenom = internshipOffer.getEmployer().getFirstName();
-        this.employerNom = internshipOffer.getEmployer().getLastName();
-        this.employerEntreprise = internshipOffer.getEmployer().getEntreprise();
+        this.programName = internshipOffer.getProgram().getNom();
+        this.employerFirstName = internshipOffer.getEmployer().getFirstName();
+        this.employerLastName = internshipOffer.getEmployer().getLastName();
+        this.employerEnterprise = internshipOffer.getEmployer().getEnterprise();
         this.state = internshipOffer.getState();
         this.offerReviewRequestId = internshipOffer.getOfferReviewRequest() == null ? 0 : internshipOffer.getOfferReviewRequest().getId();
     }
@@ -68,7 +68,7 @@ public class InternshipOfferDto {
         this.offerReviewRequestId = offerReviewRequestId;
     }
 
-    public InternshipOffer fromDto() {
-        return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
+    public InternshipOffer toInternshipOffer() {
+        return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.toFile(), null,state, null);
     }
 }

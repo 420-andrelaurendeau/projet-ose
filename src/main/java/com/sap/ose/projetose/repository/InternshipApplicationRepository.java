@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InternshipCandidatesRepository extends JpaRepository<InternshipApplication, Long> {
+public interface InternshipApplicationRepository extends JpaRepository<InternshipApplication, Long> {
 }

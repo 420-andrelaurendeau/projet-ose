@@ -23,8 +23,7 @@ public class FileDto {
         this.isAccepted = file.isAccepted();
     }
 
-    public File fromDto() {
-        File file = new File(content, fileName, isAccepted);
-        return file;
+    public File toFile() {
+        return new File(content, fileName, isAccepted);
     }
 }

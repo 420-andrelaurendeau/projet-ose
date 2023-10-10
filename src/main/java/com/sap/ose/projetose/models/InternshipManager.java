@@ -14,17 +14,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InternshipManager extends User {
-
     @OneToOne
     @JoinColumn(name = "programme_id")
     private Program program;
 
-    public InternshipManager(String nom, String prenom, String phone, String email, String password, Program program) {
-        super(nom, prenom, phone, email, password);
+    public InternshipManager(String lastName, String firstName, String phone, String email, String password, Program program) {
+        super(lastName, firstName, phone, email, password);
         this.program = program;
     }
-    public InternshipManager(long id, String nom, String prenom, String phone, String email, String password, Program program) {
-        super(id, nom, prenom, phone, email, password);
+    public InternshipManager(long id, String lastName, String firstName, String phone, String email, String password, Program program) {
+        super(id, lastName, firstName, phone, email, password);
         this.program = program;
     }
 

@@ -1,18 +1,18 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
 import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.models.File;
-import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -23,19 +23,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EtudiantService {
-    private final EtudiantRepository etudiantRepository;
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
-
-    public EtudiantService(EtudiantRepository etudiantRepository) {
-        this.etudiantRepository = etudiantRepository;
-    }
+@RequiredArgsConstructor
+public class StudentService {
+    private final StudentRepository studentRepository;
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Transactional
-    public Optional<Student> saveEtudiant(Student student) {
+    public Optional<Student> saveStudent(Student student) {
         try {
             System.out.println(student.getInternshipApplications());
-            return Optional.of(etudiantRepository.save(student));
+            return Optional.of(studentRepository.save(student));
         } catch (DataAccessException e) {
             logger.info(e.getMessage(), e);
             throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
@@ -44,43 +41,44 @@ public class EtudiantService {
 
     }
 
-    public List<StudentDto> getEtudiants() {
+    public List<StudentDto> getStudents() {
         List<StudentDto> dtos = new ArrayList<>();
-        for (Student student : etudiantRepository.findAll()) {
+        for (Student student : studentRepository.findAll()) {
             dtos.add(new StudentDto(student.getLastName(), student.getFirstName(), student.getPhoneNumber(), student.getEmail(), student.getMatricule(), student.getProgram().getId(), student.getCvList().stream().map(File::getId).toList(), student.getInternshipApplications().stream().map(InternshipApplication::getId).toList()));
         }
         return dtos;
     }
 
-    public StudentDto getEtudiantById(Long id) {
-        Optional<Student> etudiant = etudiantRepository.findById(id);
+    public StudentDto getStudentDTOById(Long id) {
+        Optional<Student> etudiant = studentRepository.findById(id);
         return etudiant.map(value -> new StudentDto(value.getLastName(), value.getFirstName(), value.getPhoneNumber(), value.getEmail(), value.getMatricule(), value.getProgram().getId(), value.getCvList().stream().map(File::getId).toList(), value.getInternshipApplications().stream().map(InternshipApplication::getId).toList())).orElse(null);
     }
 
-    public Student findEtudiantById(Long id) {
-        Optional<Student> etudiant = etudiantRepository.findById(id);
+    public Student getStudentById(Long id) {
+        Optional<Student> student = studentRepository.findById(id);
+        return student.orElse(null);
+    }
+
+    public Student getStudentByMatricule(String matricule){
+        Optional<Student> etudiant = studentRepository.findByMatriculeEqualsIgnoreCase(matricule);
         return etudiant.orElse(null);
     }
 
-    public Student findByMatricule(String matricule){
-        Optional<Student> etudiant = etudiantRepository.findByMatricule(matricule);
-        return etudiant.orElse(null);
-    }
-
-    public Student updateCVByMatricule(String matricule, File cv){
-        Student student = findByMatricule(matricule);
+    public Student updateCvByMatricule(String matricule, File cv){
+        //FIXME: Possible NullPointerException.
+        Student student = getStudentByMatricule(matricule);
         student.setCvList(List.of(cv));
         return student;
     }
 
-    Student getEtudiantByCourriel(String courriel) {
-        return etudiantRepository.findByCourriel(courriel).orElse(null);
+    Student getStudentByEmail(String email) {
+        return studentRepository.findAllByEmailEqualsIgnoreCase(email).orElse(null);
     }
 
     @Transactional
-    public List<StudentApplicationsDto> getOffersAppliedByEtudiant(long id) {
+    public List<StudentApplicationsDto> getApplicationsByStudent(long id) {
         try {
-            Student student = etudiantRepository.findById(id).orElseThrow(EtudiantNotFoundException::new);
+            Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
             List<InternshipApplication> offersApplied = student.getInternshipApplications();
 
             if (offersApplied == null)
@@ -101,7 +99,7 @@ public class EtudiantService {
                         return dto;
                     }).toList();
 
-        } catch (EtudiantNotFoundException e) {
+        } catch (StudentNotFoundException e) {
             logger.error("Etudiant non trouvé avec l'id" + id, e);
             throw e;
         } catch (DataAccessException e) {

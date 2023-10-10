@@ -6,7 +6,7 @@ import com.sap.ose.projetose.exception.EmployerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.Employer;
 import com.sap.ose.projetose.models.Program;
-import com.sap.ose.projetose.repository.EmployeurRepository;
+import com.sap.ose.projetose.repository.EmployerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,15 +21,15 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeurService {
-    private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
+public class EmployerService {
+    private final Logger logger = LoggerFactory.getLogger(EmployerService.class);
 
-    private final EmployeurRepository employeurRepository;
-    private final ProgrammeService programmeService;
+    private final EmployerRepository employerRepository;
+    private final StudyProgramService studyProgramService;
 
     Employer findById(long id) {
         try {
-            return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
+            return employerRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
             logger.error("Employer non trouvé avec l'id" + id);
             throw e;
@@ -44,10 +44,10 @@ public class EmployeurService {
 
 
     @Transactional
-    public Employer saveEmployeur(String nom, String prenom, String phone, String email, String password, String nomEntreprise, long programme_id ){
+    public Employer saveEmployer(String lastName, String firstName, String phone, String email, String password, String employerName, long programId ){
         try {
-            Program program = programmeService.getProgrammeById(programme_id).toNewProgram();
-            return employeurRepository.save(new Employer(nom,prenom,phone,email,password,nomEntreprise, program));
+            Program program = studyProgramService.getStudyProgramById(programId).toNewProgram();
+            return employerRepository.save(new Employer(lastName,firstName,phone,email,password,employerName, program));
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -56,24 +56,24 @@ public class EmployeurService {
     }
 
     @Transactional
-    public Optional<Employer> saveEmployeur(Employer employer){
+    public Optional<Employer> saveEmployer(Employer employer){
         try {
-            return Optional.of(employeurRepository.save(employer));
+            return Optional.of(employerRepository.save(employer));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
         }
     }
 
-    public List<EmployerDto> getAllEmployeur(){
+    public List<EmployerDto> getAllEmployers(){
         List<EmployerDto> employerDTOS = new ArrayList<>();
-        for(Employer employer : employeurRepository.findAll()){
-            employerDTOS.add(new EmployerDto(employer.getLastName(), employer.getFirstName(), employer.getPhoneNumber(), employer.getEmail(), employer.getEntreprise()));
+        for(Employer employer : employerRepository.findAll()){
+            employerDTOS.add(new EmployerDto(employer.getLastName(), employer.getFirstName(), employer.getPhoneNumber(), employer.getEmail(), employer.getEnterprise()));
         }
         return employerDTOS;
     }
 
-    EmployerDto getEmployeurById(Long id){
-        return new EmployerDto(Objects.requireNonNull(employeurRepository.findById(id).orElse(null))) ;
+    EmployerDto getEmployerById(Long id){
+        return new EmployerDto(Objects.requireNonNull(employerRepository.findById(id).orElse(null))) ;
     }
 }

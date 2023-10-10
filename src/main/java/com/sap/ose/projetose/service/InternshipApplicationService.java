@@ -6,7 +6,8 @@ import com.sap.ose.projetose.models.InternshipOffer;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.models.InternshipApplication;
-import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
+import com.sap.ose.projetose.repository.InternshipApplicationRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -17,36 +18,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class InternshipCandidatesService {
+@RequiredArgsConstructor
+public class InternshipApplicationService {
 
-    private final InternshipCandidatesRepository internshipCandidatesRepository;
-    private final InternOfferService internOfferService;
-    private final EtudiantService etudiantService;
+    private final InternshipApplicationRepository internshipApplicationRepository;
+    private final InternshipOfferService internshipOfferService;
+    private final StudentService studentService;
 
-    private final FileService fileService;
-
-    private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
-
-    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, FileService fileService) {
-        this.internshipCandidatesRepository = internshipCandidatesRepository;
-        this.internOfferService = internOfferService;
-        this.etudiantService = etudiantService;
-        this.fileService = fileService;
-    }
+    private final Logger logger = LoggerFactory.getLogger(InternshipApplicationService.class);
 
     @Transactional
-    public InternshipApplicationDto saveCandidates(InternshipApplicationDto internshipApplicationDto){
+    public InternshipApplicationDto saveApplication(InternshipApplicationDto internshipApplicationDto){
         try{
             InternshipApplication internshipApplication = internshipApplicationDto.toInternshipApplication();
-            Student student = etudiantService.findEtudiantById(internshipApplicationDto.getStudentDto().getId());
-            InternshipOffer internshipOffer = internOfferService.findById(internshipApplicationDto.getInternshipOfferDto().getId());
-            List<File> files = internshipApplicationDto.getFileDtos() == null ? new ArrayList<>() : internshipApplicationDto.getFileDtos().stream().map(FileDto::fromDto).toList();
+            Student student = studentService.getStudentById(internshipApplicationDto.getCandidateDto().getId());
+            InternshipOffer internshipOffer = internshipOfferService.findById(internshipApplicationDto.getInternshipOfferDto().getId());
+            List<File> files = internshipApplicationDto.getFileDtos() == null ? new ArrayList<>() : internshipApplicationDto.getFileDtos().stream().map(FileDto::toFile).toList();
 
             internshipApplication.setStudent(student);
             internshipApplication.setInternshipOffer(internshipOffer);
             internshipApplication.setFiles(files);
 
-            internshipCandidatesRepository.save(internshipApplication);
+            internshipApplicationRepository.save(internshipApplication);
             return new InternshipApplicationDto(internshipApplication);
 
         }catch (DataAccessException e){
@@ -62,9 +55,9 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipApplicationDto saveCandidates(InternshipApplication internshipApplication){
+    public InternshipApplicationDto saveApplication(InternshipApplication internshipApplication){
         try{
-            internshipCandidatesRepository.save(internshipApplication);
+            internshipApplicationRepository.save(internshipApplication);
             return new InternshipApplicationDto(internshipApplication);
         }catch (DataAccessException e){
             logger.info(e.getMessage());

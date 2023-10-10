@@ -2,20 +2,16 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.repository.FileEntityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class FileService {
 
-    private FileEntityRepository fileEntityRepository;
+    private final FileEntityRepository fileEntityRepository;
 
-    @Autowired
-    public FileService(FileEntityRepository fileEntityRepository) {
-        this.fileEntityRepository = fileEntityRepository;
-    }
-
-    File findById(Long id) {
+    File findFileById(Long id) {
         return fileEntityRepository.findById(id).orElse(null);
     }
 

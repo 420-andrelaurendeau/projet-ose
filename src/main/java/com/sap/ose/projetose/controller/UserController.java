@@ -2,6 +2,7 @@ package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.UserDto;
 import com.sap.ose.projetose.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/utilisateur")
-public class UtilisateurController {
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
+@RequiredArgsConstructor
+public class UserController {
+    Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
-
-    public UtilisateurController( UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/utilisateurs")
     @CrossOrigin(origins = "http://localhost:3000")

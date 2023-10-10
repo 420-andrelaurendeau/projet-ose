@@ -7,31 +7,26 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
 import com.sap.ose.projetose.models.Program;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class InternshipmanagerService {
+@RequiredArgsConstructor
+public class InternshipManagerService {
 
     private final InternshipmanagerRepository internshipmanagerRepository;
 
-    private final ProgrammeService programmeService;
+    private final StudyProgramService studyProgramService;
 
-    Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
-
-    @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, ProgrammeService programmeService) {
-        this.internshipmanagerRepository = internshipmanagerRepository;
-        this.programmeService = programmeService;
-    }
+    Logger logger = LoggerFactory.getLogger(InternshipManagerService.class);
 
     @Transactional
-    public InternshipManagerDto getById(long id) {
+    public InternshipManagerDto getInternshipManagerById(long id) {
         try {
             InternshipManager internshipmanager = internshipmanagerRepository.findById(id).orElseThrow(InternshipManagerNotFoundException::new);
             return new InternshipManagerDto(internshipmanager);
@@ -48,7 +43,7 @@ public class InternshipmanagerService {
         }
     }
 
-    InternshipManager findById(long id) {
+    InternshipManager findInternshipManagerById(long id) {
 
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipManagerNotFoundException::new);
@@ -66,11 +61,11 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public void save(InternshipManagerDto internshipmanagerDto) {
+    public void saveManager(InternshipManagerDto internshipmanagerDto) {
         try {
-            Program program = programmeService.findById(internshipmanagerDto.getProgramId());
+            Program program = studyProgramService.findById(internshipmanagerDto.getProgramId());
 
-            InternshipManager internshipmanager = internshipmanagerDto.fromDto();
+            InternshipManager internshipmanager = internshipmanagerDto.toInternshipManager();
             internshipmanager.setProgram(program);
 
             internshipmanagerRepository.save(internshipmanager);

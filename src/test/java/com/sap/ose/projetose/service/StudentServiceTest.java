@@ -5,7 +5,7 @@ import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,15 +25,15 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {EtudiantService.class})
+@ContextConfiguration(classes = {StudentService.class})
 @ExtendWith(SpringExtension.class)
 public class StudentServiceTest {
 
     @Autowired
-    EtudiantService etudiantService;
+    StudentService studentService;
 
     @MockBean
-    EtudiantRepository etudiantRepository;
+    StudentRepository studentRepository;
 
     Student student = new Student();
 
@@ -79,9 +79,9 @@ public class StudentServiceTest {
 
         student.setInternshipApplications(null);
 
-        when(etudiantRepository.findById(anyLong())).thenReturn(Optional.of(student));
+        when(studentRepository.findById(anyLong())).thenReturn(Optional.of(student));
 
-        List<StudentApplicationsDto> result = etudiantService.getOffersAppliedByEtudiant(1);
+        List<StudentApplicationsDto> result = studentService.getApplicationsByStudent(1);
 
         assertEquals(0, result.size());
     }
@@ -96,11 +96,11 @@ public class StudentServiceTest {
                 )
         );
 
-        when(etudiantRepository.findById(anyLong())).thenReturn(Optional.of(student));
+        when(studentRepository.findById(anyLong())).thenReturn(Optional.of(student));
 
-        List<StudentApplicationsDto> result = etudiantService.getOffersAppliedByEtudiant(1L);
+        List<StudentApplicationsDto> result = studentService.getApplicationsByStudent(1L);
 
-        verify(etudiantRepository).findById(1L);
+        verify(studentRepository).findById(1L);
 
         assertEquals(mockedStudentApplied.size(), result.size());
         assertNull(result.get(0).getAppliedOffer().getInternshipApplicationIds());
@@ -111,26 +111,26 @@ public class StudentServiceTest {
     @Test
     public void getOffersAppliedByEtudiant_EtudiantNotFound() {
 
-        when(etudiantRepository.findById(anyLong())).thenThrow(new EtudiantNotFoundException());
+        when(studentRepository.findById(anyLong())).thenThrow(new StudentNotFoundException());
 
-        EtudiantNotFoundException result = assertThrows(EtudiantNotFoundException.class, () -> etudiantService.getOffersAppliedByEtudiant(1));
+        StudentNotFoundException result = assertThrows(StudentNotFoundException.class, () -> studentService.getApplicationsByStudent(1));
         assertEquals("Étudiant non trouvé", result.getMessage());
     }
 
 
     @Test
     public void getOffersAppliedByEtudiant_DataAccessException() {
-        when(etudiantRepository.findById(anyLong())).thenThrow(new DataAccessException("") {});
+        when(studentRepository.findById(anyLong())).thenThrow(new DataAccessException("") {});
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> etudiantService.getOffersAppliedByEtudiant(1));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> studentService.getApplicationsByStudent(1));
         assertEquals("Erreur lors de la récupération des offres appliquées par l'étudiant", result.getMessage());
     }
 
     @Test
     public void getOffersAppliedByEtudiant_ServiceException() {
-        when(etudiantRepository.findById(anyLong())).thenThrow(new RuntimeException());
+        when(studentRepository.findById(anyLong())).thenThrow(new RuntimeException());
 
-        ServiceException result = assertThrows(ServiceException.class, () -> etudiantService.getOffersAppliedByEtudiant(1));
+        ServiceException result = assertThrows(ServiceException.class, () -> studentService.getApplicationsByStudent(1));
         assertEquals("Erreur lors de la récupération des offres appliquées par l'étudiant", result.getMessage());
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 @DiscriminatorValue("EMPLOYEUR")
 public class Employer extends User {
     @Column(unique = true)
-    private String entreprise;
+    private String enterprise;
 
     @ManyToOne
     private Program program;
@@ -25,22 +25,22 @@ public class Employer extends User {
     @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
-    public Employer(long id, String nom, String prenom, String email, String phone, String password, String entreprise, Program program) {
-        super(id, nom, prenom, email, phone, password);
-        this.entreprise = entreprise;
+    public Employer(long id, String lastName, String firstName, String email, String phone, String password, String enterprise, Program program) {
+        super(id, lastName, firstName, email, phone, password);
+        this.enterprise = enterprise;
         this.program = program;
     }
 
-    public Employer(String nom, String prenom, String email, String phone, String password, String entreprise, Program program) {
-        super(nom, prenom, phone, email, password);
-        this.entreprise = entreprise;
+    public Employer(String lastName, String firstName, String email, String phone, String password, String enterprise, Program program) {
+        super(lastName, firstName, phone, email, password);
+        this.enterprise = enterprise;
         this.program = program;
         this.internshipOffers = new ArrayList<>();
     }
 
-    public Employer(String nom, String prenom, String telephone, String email, String password, String entreprise) {
-        super(nom, prenom, telephone, email, password);
-        this.entreprise = entreprise;
+    public Employer(String lastName, String firstName, String telephone, String email, String password, String enterprise) {
+        super(lastName, firstName, telephone, email, password);
+        this.enterprise = enterprise;
     }
 
     @Override

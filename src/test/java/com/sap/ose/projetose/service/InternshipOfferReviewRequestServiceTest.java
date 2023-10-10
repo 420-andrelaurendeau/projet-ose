@@ -27,25 +27,25 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {OfferReviewRequestService.class})
+@ContextConfiguration(classes = {InternshipOfferReviewRequestService.class})
 @ExtendWith(SpringExtension.class)
-public class OfferReviewRequestServiceTest {
+public class InternshipOfferReviewRequestServiceTest {
 
     private final OfferReviewRequestDto offerReviewRequestDto = new OfferReviewRequestDto();
     @Autowired
-    private OfferReviewRequestService offerReviewRequestService;
+    private InternshipOfferReviewRequestService internshipOfferReviewRequestService;
     @MockBean
     private OfferReviewRequestRepository offerReviewRequestRepository;
     @MockBean
-    private InternOfferService internOfferService;
+    private InternshipOfferService internshipOfferService;
     @MockBean
     private InternOfferRepository internOfferRepository;
     @MockBean
-    private InternshipmanagerService internshipmanagerService;
+    private InternshipManagerService internshipmanagerService;
     @MockBean
     private InternshipmanagerRepository internshipmanagerRepository;
     @MockBean
-    private ProgrammeService programmeService;
+    private StudyProgramService studyProgramService;
 
     @BeforeEach
     public void setUp() {
@@ -67,19 +67,19 @@ public class OfferReviewRequestServiceTest {
         mockedOfferReviewRequest.setInternshipOffer(mockedInternshipOffer);
         mockedOfferReviewRequest.setInternshipManager(mockedInternshipManager);
 
-        when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(false);
-        when(internOfferService.findById(anyLong())).thenReturn(mockedInternshipOffer);
-        when(internshipmanagerService.findById(anyLong())).thenReturn(mockedInternshipManager);
+        when(internshipOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(false);
+        when(internshipOfferService.findById(anyLong())).thenReturn(mockedInternshipOffer);
+        when(internshipmanagerService.findInternshipManagerById(anyLong())).thenReturn(mockedInternshipManager);
         when(offerReviewRequestRepository.save(any(OfferReviewRequest.class))).thenReturn(mockedOfferReviewRequest);
 
 
-        InternshipOfferDto returnedDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        InternshipOfferDto returnedDto = internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
 
 
         verify(offerReviewRequestRepository).save(any(OfferReviewRequest.class));
-        verify(internOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternshipOfferId());
-        verify(internOfferService).findById(offerReviewRequestDto.getInternshipOfferId());
-        verify(internshipmanagerService).findById(offerReviewRequestDto.getInternshipManagerId());
+        verify(internshipOfferService).isApprovedOrDeclineById(offerReviewRequestDto.getInternshipOfferId());
+        verify(internshipOfferService).findById(offerReviewRequestDto.getInternshipOfferId());
+        verify(internshipmanagerService).findInternshipManagerById(offerReviewRequestDto.getInternshipManagerId());
 
 
         assertEquals(offerReviewRequestDto.getInternshipOfferId(), returnedDto.getId());
@@ -91,45 +91,45 @@ public class OfferReviewRequestServiceTest {
 
     @Test
     public void saveOfferReviewRequest_OfferAlreadyApprovedException() {
-        when(internOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(true);
+        when(internshipOfferService.isApprovedOrDeclineById(anyLong())).thenReturn(true);
 
-        OfferAlreadyReviewedException result = assertThrows(OfferAlreadyReviewedException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        OfferAlreadyReviewedException result = assertThrows(OfferAlreadyReviewedException.class, () -> internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("L'offre a déjà été revue", result.getMessage());
     }
 
     @Test
     public void saveOfferReviewRequest_InterOfferNotFound() {
-        when(internOfferService.findById(anyLong())).thenThrow(new OfferNotFoundException());
+        when(internshipOfferService.findById(anyLong())).thenThrow(new OfferNotFoundException());
 
-        OfferNotFoundException result = assertThrows(OfferNotFoundException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        OfferNotFoundException result = assertThrows(OfferNotFoundException.class, () -> internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Offre d'emploi non trouvée.", result.getMessage());
     }
 
 
     @Test
     public void saveOfferReviewRequest_InternshipmanagerNotFound() {
-        when(internOfferService.findById(anyLong())).thenThrow(new InternshipManagerNotFoundException());
+        when(internshipOfferService.findById(anyLong())).thenThrow(new InternshipManagerNotFoundException());
 
-        InternshipManagerNotFoundException result = assertThrows(InternshipManagerNotFoundException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        InternshipManagerNotFoundException result = assertThrows(InternshipManagerNotFoundException.class, () -> internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Gestionnaire de stage non trouvé.", result.getMessage());
     }
 
     @Test
     public void saveOfferReviewRequest_DataAccessError() {
-        when(internOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
+        when(internshipOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
         when(offerReviewRequestRepository.save(any())).thenThrow(new DataAccessException("") {
         });
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Erreur d'accès à la base de données lors de la sauvegarde de la revue de l'offre d'emploi.", result.getMessage());
     }
 
     @Test
     public void saveOfferReviewRequest_UnknownError() {
-        when(internOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
+        when(internshipOfferService.findById(anyLong())).thenReturn(new InternshipOffer());
         when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
 
-        ServiceException result = assertThrows(ServiceException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
+        ServiceException result = assertThrows(ServiceException.class, () -> internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Erreur inconnue lors de la sauvegarde de la revue de l'offre d'emploi.", result.getMessage());
     }
 }

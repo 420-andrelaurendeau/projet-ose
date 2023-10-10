@@ -8,7 +8,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.GlobalExceptionHandler;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.service.InternOfferService;
+import com.sap.ose.projetose.service.InternshipOfferService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,31 +30,31 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {InternOfferController.class})
+@ContextConfiguration(classes = {InternshipOfferController.class})
 @ExtendWith(SpringExtension.class)
 class InternshipOfferControllerTest {
     @Autowired
-    private InternOfferController internOfferController;
+    private InternshipOfferController internshipOfferController;
 
     @MockBean
-    private InternOfferService internOfferService;
+    private InternshipOfferService internshipOfferService;
 
     private InternshipOfferDto internshipOfferDto = new InternshipOfferDto();
 
     @BeforeEach
     public void setUp() {
         this.internshipOfferDto.setDescription("The characteristics of someone or something");
-        this.internshipOfferDto.setEmployerEntreprise("Employeur Entreprise");
+        this.internshipOfferDto.setEmployerEnterprise("Employeur Entreprise");
         this.internshipOfferDto.setEmployerId(1L);
-        this.internshipOfferDto.setEmployerNom("Employeur Nom");
-        this.internshipOfferDto.setEmployerPrenom("Employeur Prenom");
+        this.internshipOfferDto.setEmployerLastName("Employeur Nom");
+        this.internshipOfferDto.setEmployerFirstName("Employeur Prenom");
         this.internshipOfferDto.setEndDate("2020-03-01");
         this.internshipOfferDto.setFile(new FileDto());
         this.internshipOfferDto.setId(1L);
         this.internshipOfferDto.setInternshipApplicationIds(new ArrayList<>());
         this.internshipOfferDto.setLocation("Location");
         this.internshipOfferDto.setProgramId(1);
-        this.internshipOfferDto.setProgramNom("Programme Nom");
+        this.internshipOfferDto.setProgramName("Programme Nom");
         this.internshipOfferDto.setSalaryByHour(10.0d);
         this.internshipOfferDto.setStartDate("2020-03-01");
         this.internshipOfferDto.setTitle("Dr");
@@ -62,14 +62,14 @@ class InternshipOfferControllerTest {
 
     @Test
     void testSaveInterOfferJob_ProgramNotFoundException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new ProgramNotFoundException());
+        when(internshipOfferService.saveInternshipOfferJob(any())).thenThrow(new ProgramNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/interOfferJob/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
@@ -79,7 +79,7 @@ class InternshipOfferControllerTest {
     }
     @Test
     void testSaveInterOfferJob_DatabaseException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new DatabaseException());
+        when(internshipOfferService.saveInternshipOfferJob(any())).thenThrow(new DatabaseException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);
@@ -87,7 +87,7 @@ class InternshipOfferControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);
@@ -98,7 +98,7 @@ class InternshipOfferControllerTest {
 
     @Test
     void testSaveInterOfferJob_ServiceException() throws Exception {
-        when(internOfferService.saveInterOfferJob(any())).thenThrow(new ServiceException());
+        when(internshipOfferService.saveInternshipOfferJob(any())).thenThrow(new ServiceException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);
@@ -106,7 +106,7 @@ class InternshipOfferControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
-        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internOfferController)
+        ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferController)
                 .setControllerAdvice(new GlobalExceptionHandler())
                 .build()
                 .perform(requestBuilder);

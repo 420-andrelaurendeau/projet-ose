@@ -12,28 +12,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InternshipManagerDto extends UserDto {
-
-    private long id;
     private long programId;
 
-    public InternshipManagerDto(String nom, String prenom, String phone, String email, long id, int programId) {
-        super(nom, prenom, phone, email);
-        this.id = id;
+    public InternshipManagerDto(long id, String lastName, String firstName, String phone, String email, int programId) {
+        super(id, lastName, firstName, phone, email);
         this.programId = programId;
     }
 
     public InternshipManagerDto(InternshipManager internshipmanager) {
-        super(internshipmanager.getLastName(), internshipmanager.getFirstName(), internshipmanager.getPhoneNumber(), internshipmanager.getEmail());
-        this.id = internshipmanager.getId();
+        super(internshipmanager.getFirstName(), internshipmanager.getLastName(), internshipmanager.getPhoneNumber(), internshipmanager.getEmail());
         this.programId = internshipmanager.getProgram().getId();
     }
 
-    public InternshipManager fromDto() {
+    public InternshipManager toInternshipManager() {
         return new InternshipManager(getLastName(), getFirstName(), getPhoneNumber(), getEmail(), null, null);
     }
 
     @Override
-    public User toNewUser() {
-        return new InternshipManager(id, getLastName(), getFirstName(), getPhoneNumber(), getEmail(), null, null);
+    public User toUser() {
+        return new InternshipManager(getId(), getLastName(), getFirstName(), getPhoneNumber(), getEmail(), null, null);
     }
 }

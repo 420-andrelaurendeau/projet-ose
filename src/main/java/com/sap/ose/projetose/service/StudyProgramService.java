@@ -1,15 +1,15 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.StudyProgramDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.dto.ProgramDto;
 import com.sap.ose.projetose.models.Program;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.repository.StudyProgramRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +18,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProgrammeService {
+@RequiredArgsConstructor
+public class StudyProgramService {
 
-    private final ProgrammeRepository programmeRepository;
-    private final Logger logger = LoggerFactory.getLogger(ProgrammeService.class);
-
-    @Autowired
-    public ProgrammeService(ProgrammeRepository programmeRepository) {
-        this.programmeRepository = programmeRepository;
-    }
+    private final StudyProgramRepository studyProgramRepository;
+    private final Logger logger = LoggerFactory.getLogger(StudyProgramService.class);
 
     Program findById(long id) {
         try {
-            return programmeRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
+            return studyProgramRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
 
         } catch (ProgramNotFoundException e) {
             logger.error("Programme non trouvé avec l'Id" + id);
@@ -46,9 +42,9 @@ public class ProgrammeService {
     }
 
     @Transactional
-    public ProgramDto saveProgramme(String nom, String description) {
+    public StudyProgramDto saveStudyProgram(String nom, String description) {
         try{
-            return new ProgramDto(programmeRepository.save(new Program(nom, description)));
+            return new StudyProgramDto(studyProgramRepository.save(new Program(nom, description)));
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -57,20 +53,20 @@ public class ProgrammeService {
     }
 
     @Transactional
-    public Optional<ProgramDto> saveProgramme(ProgramDto programDTO) {
-        return Optional.of(new ProgramDto(programmeRepository.save(programDTO.toNewProgram())));
+    public Optional<StudyProgramDto> saveStudyProgram(StudyProgramDto studyProgramDTO) {
+        return Optional.of(new StudyProgramDto(studyProgramRepository.save(studyProgramDTO.toNewProgram())));
     }
 
-    public List<ProgramDto> getProgrammes() {
-        List<ProgramDto> dtos = new ArrayList<>();
-        for (Program program : programmeRepository.findAll()) {
-            dtos.add(new ProgramDto(program));
+    public List<StudyProgramDto> getAllStudyPrograms() {
+        List<StudyProgramDto> dtos = new ArrayList<>();
+        for (Program program : studyProgramRepository.findAll()) {
+            dtos.add(new StudyProgramDto(program));
         }
         return dtos;
     }
 
-    public ProgramDto getProgrammeById(Long id) {
-        Optional<Program> programme = programmeRepository.findById(id);
-        return programme.map(value -> new ProgramDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
+    public StudyProgramDto getStudyProgramById(Long id) {
+        Optional<Program> program = studyProgramRepository.findById(id);
+        return program.map(value -> new StudyProgramDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
     }
 }

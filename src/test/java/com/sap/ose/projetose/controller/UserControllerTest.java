@@ -22,17 +22,17 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {UtilisateurController.class})
+@ContextConfiguration(classes = {UserController.class})
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
     @MockBean
     private UserService userService;
 
     @Autowired
-    private UtilisateurController utilisateurController;
+    private UserController userController;
 
     /**
-     * Method under test: {@link UtilisateurController#getAllUsers()}
+     * Method under test: {@link UserController#getAllUsers()}
      */
     @Test
     void testGetAllUsers() throws Exception {
@@ -43,17 +43,17 @@ class UserControllerTest {
         userDtoList.add(employeur);
         when(userService.getAllUsers()).thenReturn(userDtoList);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/utilisateur/utilisateurs");
-        MockMvcBuilders.standaloneSetup(utilisateurController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":0,\"lastName\":\"Jean\",\"firstName\":\"Dupont\",\"phoneNumber\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programId\":1,\"cvIds\":null,\"internshipIds\":null},{\"id\":0,\"lastName\":\"Patrique\",\"firstName\":\"Lemieux\",\"phoneNumber\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"entreprise\":\"SAP\",\"programId\":0}]"));
+        MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":0,\"lastName\":\"Jean\",\"firstName\":\"Dupont\",\"phoneNumber\":\"4387996589\",\"email\":\"dupont@gmail.com\",\"matricule\":\"2045878\",\"programId\":1,\"cvIds\":null,\"internshipIds\":null},{\"id\":0,\"lastName\":\"Patrique\",\"firstName\":\"Lemieux\",\"phoneNumber\":\"4383006589\",\"email\":\"lemieux@gmail.com\",\"entreprise\":\"SAP\",\"programId\":0}]"));
     }
 
     /**
-     * Method under test: {@link UtilisateurController#getAllUsers()}
+     * Method under test: {@link UserController#getAllUsers()}
      */
     @Test
     void testGetAllUsers2() throws Exception {
         when(userService.getAllUsers()).thenReturn(new ArrayList<>());
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(utilisateurController).build().perform(requestBuilder);
+        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }

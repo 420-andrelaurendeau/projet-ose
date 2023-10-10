@@ -7,7 +7,7 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
 import com.sap.ose.projetose.models.Program;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.repository.StudyProgramRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,19 +25,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration(classes = {InternshipmanagerService.class})
+@ContextConfiguration(classes = {InternshipManagerService.class})
 @ExtendWith(SpringExtension.class)
 public class InternshipManagerServiceTest {
 
     private final InternshipManagerDto internshipmanagerDto = new InternshipManagerDto();
     @Autowired
-    private InternshipmanagerService internshipmanagerService;
+    private InternshipManagerService internshipmanagerService;
     @MockBean
     private InternshipmanagerRepository internshipmanagerRepository;
     @MockBean
-    private ProgrammeService programmeService;
+    private StudyProgramService studyProgramService;
     @MockBean
-    private ProgrammeRepository programmeRepository;
+    private StudyProgramRepository studyProgramRepository;
 
     @BeforeEach
     public void setUp() {
@@ -52,10 +52,10 @@ public class InternshipManagerServiceTest {
 
     @Test
     public void findById_Success() {
-        InternshipManager mockIntern = internshipmanagerDto.fromDto();
+        InternshipManager mockIntern = internshipmanagerDto.toInternshipManager();
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.of(mockIntern));
 
-        InternshipManager result = internshipmanagerService.findById(anyLong());
+        InternshipManager result = internshipmanagerService.findInternshipManagerById(anyLong());
 
         Assertions.assertEquals(mockIntern, result);
     }
@@ -64,7 +64,7 @@ public class InternshipManagerServiceTest {
     public void findById_NotFound() {
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        InternshipManagerNotFoundException reslut = assertThrows(InternshipManagerNotFoundException.class, () -> internshipmanagerService.findById(anyLong()));
+        InternshipManagerNotFoundException reslut = assertThrows(InternshipManagerNotFoundException.class, () -> internshipmanagerService.findInternshipManagerById(anyLong()));
         assertEquals("Gestionnaire de stage non trouvé.", reslut.getMessage());
     }
 
@@ -73,7 +73,7 @@ public class InternshipManagerServiceTest {
         when(internshipmanagerRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
         });
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipmanagerService.findById(anyLong()));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipmanagerService.findInternshipManagerById(anyLong()));
         assertEquals("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage", result.getMessage());
     }
 
@@ -81,19 +81,19 @@ public class InternshipManagerServiceTest {
     public void findById_UnknownError() {
         when(internshipmanagerRepository.findById(anyLong())).thenThrow(new NullPointerException(""));
 
-        ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.findById(anyLong()));
+        ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.findInternshipManagerById(anyLong()));
         assertEquals("Erreur inconnue lors de la récupération du gestionnaire de stage", result.getMessage());
     }
 
     @Test
     public void getById_Success() {
         Program mockProgram = new Program(1L, "ds", "description");
-        InternshipManager mockIntern = internshipmanagerDto.fromDto();
+        InternshipManager mockIntern = internshipmanagerDto.toInternshipManager();
         mockIntern.setProgram(mockProgram);
 
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.of(mockIntern));
 
-        InternshipManagerDto result = internshipmanagerService.getById(anyLong());
+        InternshipManagerDto result = internshipmanagerService.getInternshipManagerById(anyLong());
         assertEquals(new InternshipManagerDto(mockIntern), result);
     }
 
@@ -101,7 +101,7 @@ public class InternshipManagerServiceTest {
     public void getById_NotFound() {
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        InternshipManagerNotFoundException reslut = assertThrows(InternshipManagerNotFoundException.class, () -> internshipmanagerService.getById(anyLong()));
+        InternshipManagerNotFoundException reslut = assertThrows(InternshipManagerNotFoundException.class, () -> internshipmanagerService.getInternshipManagerById(anyLong()));
         assertEquals("Gestionnaire de stage non trouvé.", reslut.getMessage());
     }
 
@@ -110,7 +110,7 @@ public class InternshipManagerServiceTest {
         when(internshipmanagerRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
         });
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipmanagerService.getById(anyLong()));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipmanagerService.getInternshipManagerById(anyLong()));
         assertEquals("Erreur d'accès a la base de  données lors de la récupération du gestionnaire de stage", result.getMessage());
     }
 
@@ -118,7 +118,7 @@ public class InternshipManagerServiceTest {
     public void getById_UnknownError() {
         when(internshipmanagerRepository.findById(anyLong())).thenThrow(new NullPointerException(""));
 
-        ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.getById(anyLong()));
+        ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.getInternshipManagerById(anyLong()));
         assertEquals("Erreur inconnue lors de la récupération du gestionnaire de stage", result.getMessage());
     }
 
