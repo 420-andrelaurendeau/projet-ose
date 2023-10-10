@@ -5,7 +5,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EmployerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.Employer;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.EmployerRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -46,8 +46,8 @@ public class EmployerService {
     @Transactional
     public Employer saveEmployer(String lastName, String firstName, String phone, String email, String password, String employerName, long programId ){
         try {
-            Program program = studyProgramService.getStudyProgramById(programId).toNewProgram();
-            return employerRepository.save(new Employer(lastName,firstName,phone,email,password,employerName, program));
+            StudyProgram studyProgram = studyProgramService.getStudyProgramById(programId).toNewProgram();
+            return employerRepository.save(new Employer(lastName,firstName,phone,email,password,employerName, studyProgram));
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -58,6 +58,8 @@ public class EmployerService {
     @Transactional
     public Optional<Employer> saveEmployer(Employer employer){
         try {
+            StudyProgram StudyProgram = studyProgramService.findProgramById(employer.getStudyProgram().getId());
+            employer.setStudyProgram(StudyProgram);
             return Optional.of(employerRepository.save(employer));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());

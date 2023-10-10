@@ -43,10 +43,10 @@ public class InternshipOfferDto {
         this.startDate =  internshipOffer.getStartDate().toString();
         this.endDate = internshipOffer.getEndDate().toString();
         this.internshipApplicationIds = internshipOffer.getInternshipCandidates() == null ? null : internshipOffer.getInternshipCandidates().stream().map(InternshipApplication::getId).collect(Collectors.toList());
-        this.programId = internshipOffer.getProgram().getId();
+        this.programId = internshipOffer.getStudyProgram().getId();
         this.file = new FileDto(internshipOffer.getFile());
         this.employerId = internshipOffer.getEmployer().getId();
-        this.programName = internshipOffer.getProgram().getNom();
+        this.programName = internshipOffer.getStudyProgram().getNom();
         this.employerFirstName = internshipOffer.getEmployer().getFirstName();
         this.employerLastName = internshipOffer.getEmployer().getLastName();
         this.employerEnterprise = internshipOffer.getEmployer().getEnterprise();

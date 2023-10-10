@@ -4,7 +4,7 @@ import com.sap.ose.projetose.dto.StudyProgramDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.StudyProgramRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {StudyProgramService.class})
 @ExtendWith(SpringExtension.class)
-class StudyProgramServiceTest {
+class StudyStudyProgramServiceTest {
 
     private final StudyProgramDto studyProgramDto = new StudyProgramDto();
     @Autowired
@@ -42,10 +42,10 @@ class StudyProgramServiceTest {
 
     @Test
     public void findById_Success() {
-        Program mockprog = studyProgramDto.toNewProgram();
+        StudyProgram mockprog = studyProgramDto.toNewProgram();
         when(studyProgramRepository.findById(anyLong())).thenReturn(Optional.of(mockprog));
 
-        Program result = studyProgramService.findById(anyLong());
+        StudyProgram result = studyProgramService.findProgramById(anyLong());
 
         Assertions.assertEquals(mockprog, result);
     }
@@ -54,7 +54,7 @@ class StudyProgramServiceTest {
     public void findById_NotFound() {
         when(studyProgramRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> studyProgramService.findById(anyLong()));
+        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> studyProgramService.findProgramById(anyLong()));
         assertEquals("Programme non trouvé", result.getMessage());
     }
 
@@ -63,7 +63,7 @@ class StudyProgramServiceTest {
         when(studyProgramRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
         });
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> studyProgramService.findById(anyLong()));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> studyProgramService.findProgramById(anyLong()));
         assertEquals("Erreur lors de la récupération du programme", result.getMessage());
     }
 
@@ -71,7 +71,7 @@ class StudyProgramServiceTest {
     public void findById_UnknownError() {
         when(studyProgramRepository.findById(anyLong())).thenThrow(new RuntimeException("Test exception"));
 
-        ServiceException result = assertThrows(ServiceException.class, () -> studyProgramService.findById(anyLong()));
+        ServiceException result = assertThrows(ServiceException.class, () -> studyProgramService.findProgramById(anyLong()));
         assertEquals("Erreur lors de la récupération du programme", result.getMessage());
     }
 

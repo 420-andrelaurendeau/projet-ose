@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +14,13 @@ public class StudyProgramDto {
     private String description;
 
 
-    public StudyProgramDto(Program program) {
-        this.id = program.getId();
-        this.name = program.getNom();
-        this.description = program.getDescription();
+    public StudyProgramDto(StudyProgram studyProgram) {
+        this.id = studyProgram.getId();
+        this.name = studyProgram.getNom();
+        this.description = studyProgram.getDescription();
     }
 
-    public Program toNewProgram() {
-        return new Program(name, description);
+    public StudyProgram toNewProgram() {
+        return new StudyProgram(name, description);
     }
 }

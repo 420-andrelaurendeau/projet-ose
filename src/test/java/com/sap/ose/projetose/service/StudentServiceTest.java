@@ -3,7 +3,9 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
-import com.sap.ose.projetose.exception.*;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repository.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,6 +35,8 @@ public class StudentServiceTest {
 
     @MockBean
     StudentRepository studentRepository;
+    @MockBean
+    StudyProgramService studyProgramService;
 
     Student student = new Student();
 
@@ -48,9 +51,9 @@ public class StudentServiceTest {
         internshipOffer.setId(1L);
         internshipOffer.setInternshipCandidates(null);
         internshipOffer.setLocation("Location");
-        internshipOffer.setProgram(null);
+        internshipOffer.setStudyProgram(null);
         internshipOffer.setSalaryByHour(10.0d);
-        internshipOffer.setProgram(new Program());
+        internshipOffer.setStudyProgram(new StudyProgram());
         internshipOffer.setStartDate(LocalDate.now());
         internshipOffer.setTitle("Dr");
 
@@ -64,7 +67,7 @@ public class StudentServiceTest {
         student.setPassword("iloveyou");
         student.setPhoneNumber("6625550144");
         student.setFirstName("Prenom");
-        student.setProgram(new Program());
+        student.setStudyProgram(new StudyProgram());
         student.setInternshipApplications(List.of(
                 new InternshipApplication(
                         student,

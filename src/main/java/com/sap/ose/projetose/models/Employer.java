@@ -20,21 +20,21 @@ public class Employer extends User {
     private String enterprise;
 
     @ManyToOne
-    private Program program;
+    private StudyProgram studyProgram;
 
     @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
-    public Employer(long id, String lastName, String firstName, String email, String phone, String password, String enterprise, Program program) {
+    public Employer(long id, String lastName, String firstName, String email, String phone, String password, String enterprise, StudyProgram studyProgram) {
         super(id, lastName, firstName, email, phone, password);
         this.enterprise = enterprise;
-        this.program = program;
+        this.studyProgram = studyProgram;
     }
 
-    public Employer(String lastName, String firstName, String email, String phone, String password, String enterprise, Program program) {
+    public Employer(String lastName, String firstName, String email, String phone, String password, String enterprise, StudyProgram studyProgram) {
         super(lastName, firstName, phone, email, password);
         this.enterprise = enterprise;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.internshipOffers = new ArrayList<>();
     }
 

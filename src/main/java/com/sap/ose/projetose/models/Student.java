@@ -22,7 +22,7 @@ public class Student extends User {
 
     @ManyToOne
     @JoinColumn(name = "programme_id")
-    private Program program;
+    private StudyProgram studyProgram;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.REMOVE)
     private List<File> cvList;
@@ -31,42 +31,42 @@ public class Student extends User {
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
 
-    public Student(long id, String lastName, String firstName, String phoneNumber, String email, String password, String matricule, Program program, List<File> cvList, List<InternshipApplication> internshipApplications) {
+    public Student(long id, String lastName, String firstName, String phoneNumber, String email, String password, String matricule, StudyProgram studyProgram, List<File> cvList, List<InternshipApplication> internshipApplications) {
         super(id, lastName, firstName, phoneNumber, email, password);
         this.matricule = matricule;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.cvList = cvList;
         this.internshipApplications = internshipApplications;
     }
 
-    public Student(String lastName, String firstName, String phoneNumber, String email, String matricule, Program program, List<File> cvList, List<InternshipApplication> internshipApplications) {
+    public Student(String lastName, String firstName, String phoneNumber, String email, String matricule, StudyProgram studyProgram, List<File> cvList, List<InternshipApplication> internshipApplications) {
         super(lastName, firstName, phoneNumber, email);
         this.matricule = matricule;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.cvList = cvList;
         this.internshipApplications = internshipApplications;
     }
 
-    public Student(long id, String lastName, String firstName, String phone, String email, String password, String matricule, Program program, List<InternshipApplication> internshipApplications) {
+    public Student(long id, String lastName, String firstName, String phone, String email, String password, String matricule, StudyProgram studyProgram, List<InternshipApplication> internshipApplications) {
         super(id, lastName, firstName, phone, email, password);
         this.matricule = matricule;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.cvList = null;
         this.internshipApplications = internshipApplications;
     }
 
-    public Student(String lastName, String firstName, String phone, String email, String password, String matricule, Program program, List<InternshipApplication> internshipApplications) {
+    public Student(String lastName, String firstName, String phone, String email, String password, String matricule, StudyProgram studyProgram, List<InternshipApplication> internshipApplications) {
         super(lastName, firstName, phone, email, password);
         this.matricule = matricule;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.cvList = null;
         this.internshipApplications = internshipApplications;
     }
 
-        public Student(String lastName, String firstName, String phone, String email, String password, String matricule, Program program) {
+        public Student(String lastName, String firstName, String phone, String email, String password, String matricule, StudyProgram studyProgram) {
         super(lastName, firstName, phone, email, password);
         this.matricule = matricule;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.cvList = null;
         this.internshipApplications = new ArrayList<>();
     }

@@ -33,7 +33,7 @@ public class InternshipOffer {
 
     @ManyToOne()
     @JoinColumn(name = "program_id")
-    private Program program;
+    private StudyProgram studyProgram;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "file_id")
@@ -55,7 +55,7 @@ public class InternshipOffer {
                            LocalDate startDate,
                            LocalDate endDate,
                            List<InternshipApplication> internshipCandidates,
-                           Program program,
+                           StudyProgram studyProgram,
                            File files,
                            Employer employer,
                            ApprovalStatus state,
@@ -67,7 +67,7 @@ public class InternshipOffer {
         this.startDate = startDate;
         this.endDate = endDate;
         this.internshipCandidates = internshipCandidates;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.file = files;
         this.employer = employer;
         this.state = state;
@@ -82,7 +82,7 @@ public class InternshipOffer {
                            LocalDate startDate,
                            LocalDate endDate,
                            List<InternshipApplication> internshipCandidates,
-                           Program program,
+                           StudyProgram studyProgram,
                            File files,
                            Employer employer,
                            ApprovalStatus state,
@@ -95,7 +95,7 @@ public class InternshipOffer {
         this.startDate = startDate;
         this.endDate = endDate;
         this.internshipCandidates = internshipCandidates;
-        this.program = program;
+        this.studyProgram = studyProgram;
         this.file = files;
         this.employer = employer;
         this.state = state;

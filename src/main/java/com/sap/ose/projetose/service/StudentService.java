@@ -8,6 +8,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.StudentNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipApplication;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.repository.StudentRepository;
@@ -26,12 +27,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
+    private final StudyProgramService studyProgramService;
     Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Transactional
     public Optional<Student> saveStudent(Student student) {
         try {
-            System.out.println(student.getInternshipApplications());
+            StudyProgram studyProgram = studyProgramService.findProgramById(student.getStudyProgram().getId());
+            student.setStudyProgram(studyProgram);
             return Optional.of(studentRepository.save(student));
         } catch (DataAccessException e) {
             logger.info(e.getMessage(), e);
@@ -44,14 +47,14 @@ public class StudentService {
     public List<StudentDto> getStudents() {
         List<StudentDto> dtos = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
-            dtos.add(new StudentDto(student.getLastName(), student.getFirstName(), student.getPhoneNumber(), student.getEmail(), student.getMatricule(), student.getProgram().getId(), student.getCvList().stream().map(File::getId).toList(), student.getInternshipApplications().stream().map(InternshipApplication::getId).toList()));
+            dtos.add(new StudentDto(student.getLastName(), student.getFirstName(), student.getPhoneNumber(), student.getEmail(), student.getMatricule(), student.getStudyProgram().getId(), student.getCvList().stream().map(File::getId).toList(), student.getInternshipApplications().stream().map(InternshipApplication::getId).toList()));
         }
         return dtos;
     }
 
     public StudentDto getStudentDTOById(Long id) {
         Optional<Student> etudiant = studentRepository.findById(id);
-        return etudiant.map(value -> new StudentDto(value.getLastName(), value.getFirstName(), value.getPhoneNumber(), value.getEmail(), value.getMatricule(), value.getProgram().getId(), value.getCvList().stream().map(File::getId).toList(), value.getInternshipApplications().stream().map(InternshipApplication::getId).toList())).orElse(null);
+        return etudiant.map(value -> new StudentDto(value.getLastName(), value.getFirstName(), value.getPhoneNumber(), value.getEmail(), value.getMatricule(), value.getStudyProgram().getId(), value.getCvList().stream().map(File::getId).toList(), value.getInternshipApplications().stream().map(InternshipApplication::getId).toList())).orElse(null);
     }
 
     public Student getStudentById(Long id) {

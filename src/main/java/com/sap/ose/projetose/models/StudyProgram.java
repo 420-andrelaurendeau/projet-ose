@@ -11,14 +11,14 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Program {
+public class StudyProgram {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nom;
     private String description;
 
-    public Program(String name, String description) {
+    public StudyProgram(String name, String description) {
         this.nom = name;
         this.description = description;
     }

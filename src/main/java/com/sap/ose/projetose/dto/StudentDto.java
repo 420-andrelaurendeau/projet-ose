@@ -29,7 +29,7 @@ public class StudentDto extends UserDto {
     public StudentDto(Student student) {
         super(student.getFirstName(), student.getLastName(), student.getPhoneNumber(), student.getEmail());
         this.matricule = student.getMatricule();
-        this.programId = student.getProgram().getId();
+        this.programId = student.getStudyProgram().getId();
         this.cvIds = student.getCvList() == null ? null : student.getCvList().stream().map(File::getId).toList();
         this.applicationIds = student.getInternshipApplications() == null ? null : student.getInternshipApplications().stream().map(InternshipApplication::getId).toList();
     }
@@ -37,7 +37,7 @@ public class StudentDto extends UserDto {
     @Override
     public User toUser() {
         //FIXME: Properly implement this.
-        return new Student(getLastName(), getFirstName(), getPhoneNumber(), getEmail(), getMatricule(), (Program) null,null,null);
+        return new Student(getLastName(), getFirstName(), getPhoneNumber(), getEmail(), getMatricule(), (StudyProgram) null,null,null);
     }
 
 }

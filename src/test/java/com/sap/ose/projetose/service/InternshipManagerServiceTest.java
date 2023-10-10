@@ -5,7 +5,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.StudyProgramRepository;
 import org.junit.jupiter.api.Assertions;
@@ -87,9 +87,9 @@ public class InternshipManagerServiceTest {
 
     @Test
     public void getById_Success() {
-        Program mockProgram = new Program(1L, "ds", "description");
+        StudyProgram mockStudyProgram = new StudyProgram(1L, "ds", "description");
         InternshipManager mockIntern = internshipmanagerDto.toInternshipManager();
-        mockIntern.setProgram(mockProgram);
+        mockIntern.setStudyProgram(mockStudyProgram);
 
         when(internshipmanagerRepository.findById(anyLong())).thenReturn(Optional.of(mockIntern));
 

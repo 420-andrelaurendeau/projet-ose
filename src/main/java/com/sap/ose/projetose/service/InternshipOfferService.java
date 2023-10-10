@@ -5,7 +5,7 @@ import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.models.ApprovalStatus;
 import com.sap.ose.projetose.models.Employer;
 import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.EmployerRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
@@ -38,11 +38,11 @@ public class InternshipOfferService {
             if ( isApprovedOrDeclineById(internshipOfferDto.getId()))
                 throw new OfferAlreadyReviewedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
-            Program program = studyProgramService.findById(internshipOfferDto.getProgramId());
+            StudyProgram studyProgram = studyProgramService.findProgramById(internshipOfferDto.getProgramId());
             Employer employer = employerService.findById(internshipOfferDto.getEmployerId());
 
             InternshipOffer internshipOffer = internshipOfferDto.toInternshipOffer();
-            internshipOffer.setProgram(program);
+            internshipOffer.setStudyProgram(studyProgram);
             internshipOffer.setEmployer(employer);
             internshipOffer.setState(ApprovalStatus.PENDING);
 

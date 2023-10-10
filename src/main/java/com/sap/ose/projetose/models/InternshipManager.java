@@ -16,15 +16,15 @@ import lombok.*;
 public class InternshipManager extends User {
     @OneToOne
     @JoinColumn(name = "programme_id")
-    private Program program;
+    private StudyProgram studyProgram;
 
-    public InternshipManager(String lastName, String firstName, String phone, String email, String password, Program program) {
+    public InternshipManager(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {
         super(lastName, firstName, phone, email, password);
-        this.program = program;
+        this.studyProgram = studyProgram;
     }
-    public InternshipManager(long id, String lastName, String firstName, String phone, String email, String password, Program program) {
+    public InternshipManager(long id, String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {
         super(id, lastName, firstName, phone, email, password);
-        this.program = program;
+        this.studyProgram = studyProgram;
     }
 
     @Override

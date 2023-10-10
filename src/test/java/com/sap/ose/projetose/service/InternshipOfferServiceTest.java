@@ -5,7 +5,7 @@ import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.models.Employer;
 import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.models.ApprovalStatus;
 import com.sap.ose.projetose.repository.EmployerRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
@@ -68,13 +68,13 @@ class InternshipOfferServiceTest {
 
     @Test
     public void saveInterOfferJob_Creation() {
-        Program mockedProgram = new Program(1, "Programme Nom", "Programme Description");
-        Employer mockedEmployer = new Employer(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Program());
+        StudyProgram mockedStudyProgram = new StudyProgram(1, "Programme Nom", "Programme Description");
+        Employer mockedEmployer = new Employer(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new StudyProgram());
         InternshipOffer mockedInternshipOffer = internshipOfferDto.toInternshipOffer();
-        mockedInternshipOffer.setProgram(mockedProgram);
+        mockedInternshipOffer.setStudyProgram(mockedStudyProgram);
         mockedInternshipOffer.setEmployer(mockedEmployer);
 
-        when(studyProgramService.findById(mockedProgram.getId())).thenReturn(mockedProgram);
+        when(studyProgramService.findProgramById(mockedStudyProgram.getId())).thenReturn(mockedStudyProgram);
         when(employerService.findById(mockedEmployer.getId())).thenReturn(mockedEmployer);
         when(internOfferRepository.save(any(InternshipOffer.class))).thenReturn(mockedInternshipOffer);
 
@@ -85,7 +85,7 @@ class InternshipOfferServiceTest {
         InternshipOffer savedOffer = captor.getValue();
 
         assertEquals(internshipOfferDto.getId(), savedOffer.getId());
-        assertEquals(internshipOfferDto.getProgramId(), savedOffer.getProgram().getId());
+        assertEquals(internshipOfferDto.getProgramId(), savedOffer.getStudyProgram().getId());
         assertEquals(internshipOfferDto.getEmployerId(), savedOffer.getEmployer().getId());
 
     }
@@ -104,7 +104,7 @@ class InternshipOfferServiceTest {
 
     @Test
     public void saveInterOfferJob_ProgrammeNotFound() {
-        when(studyProgramService.findById(anyLong())).thenThrow(ProgramNotFoundException.class);
+        when(studyProgramService.findProgramById(anyLong())).thenThrow(ProgramNotFoundException.class);
 
         ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> internshipOfferService.saveInternshipOfferJob(internshipOfferDto));
         assertEquals("Programme non trouvé", result.getMessage());

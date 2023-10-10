@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {StudyProgramController.class})
 @ExtendWith(SpringExtension.class)
-class StudyProgramControllerTest {
+class StudyStudyProgramControllerTest {
     @MockBean
     private UserService userService;
 

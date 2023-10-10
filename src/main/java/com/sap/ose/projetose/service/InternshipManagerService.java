@@ -5,7 +5,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class InternshipManagerService {
 
     private final InternshipmanagerRepository internshipmanagerRepository;
-
     private final StudyProgramService studyProgramService;
 
     Logger logger = LoggerFactory.getLogger(InternshipManagerService.class);
@@ -63,10 +62,10 @@ public class InternshipManagerService {
     @Transactional
     public void saveManager(InternshipManagerDto internshipmanagerDto) {
         try {
-            Program program = studyProgramService.findById(internshipmanagerDto.getProgramId());
+            StudyProgram studyProgram = studyProgramService.findProgramById(internshipmanagerDto.getProgramId());
 
             InternshipManager internshipmanager = internshipmanagerDto.toInternshipManager();
-            internshipmanager.setProgram(program);
+            internshipmanager.setStudyProgram(studyProgram);
 
             internshipmanagerRepository.save(internshipmanager);
 

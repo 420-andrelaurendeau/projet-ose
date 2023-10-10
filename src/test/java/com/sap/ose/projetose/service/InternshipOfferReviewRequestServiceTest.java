@@ -58,10 +58,10 @@ public class InternshipOfferReviewRequestServiceTest {
     @Test
     public void saveOfferReviewRequest_Test() throws Exception {
 
-        Program mockedProgram = new Program(1L, "Programme Nom", "Programme Description");
-        Employer mockedEmployer = new Employer(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Program());
+        StudyProgram mockedStudyProgram = new StudyProgram(1L, "Programme Nom", "Programme Description");
+        Employer mockedEmployer = new Employer(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new StudyProgram());
         File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8), "Test", true);
-        InternshipOffer mockedInternshipOffer = new InternshipOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedProgram, mockedFile, mockedEmployer, ApprovalStatus.PENDING, null);
+        InternshipOffer mockedInternshipOffer = new InternshipOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedStudyProgram, mockedFile, mockedEmployer, ApprovalStatus.PENDING, null);
         InternshipManager mockedInternshipManager = new InternshipManager(1L, "nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
         mockedOfferReviewRequest.setInternshipOffer(mockedInternshipOffer);

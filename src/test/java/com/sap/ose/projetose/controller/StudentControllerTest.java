@@ -61,9 +61,9 @@ class StudentControllerTest {
         internshipOffer.setId(1L);
         internshipOffer.setInternshipCandidates(null);
         internshipOffer.setLocation("Location");
-        internshipOffer.setProgram(null);
+        internshipOffer.setStudyProgram(null);
         internshipOffer.setSalaryByHour(10.0d);
-        internshipOffer.setProgram(new Program());
+        internshipOffer.setStudyProgram(new StudyProgram());
         internshipOffer.setStartDate(LocalDate.now());
         internshipOffer.setTitle("Dr");
 
@@ -77,7 +77,7 @@ class StudentControllerTest {
         student.setPassword("iloveyou");
         student.setPhoneNumber("6625550144");
         student.setFirstName("Prenom");
-        student.setProgram(new Program());
+        student.setStudyProgram(new StudyProgram());
         student.setInternshipApplications(List.of(
                 new InternshipApplication(
                         student,
@@ -111,7 +111,7 @@ class StudentControllerTest {
         student.setPassword("iloveyou");
         student.setPhoneNumber("6625550144");
         student.setFirstName("Prenom");
-        student.setProgram(new Program());
+        student.setStudyProgram(new StudyProgram());
         Optional<Student> ofResult = Optional.of(student);
         when(oseService.saveStudent(Mockito.any())).thenReturn(ofResult);
 
@@ -124,10 +124,10 @@ class StudentControllerTest {
         student2.setPassword("iloveyou");
         student2.setPhoneNumber("6625550144");
         student2.setFirstName("Prenom");
-        student2.setProgram(new Program());
+        student2.setStudyProgram(new StudyProgram());
         String content = (new ObjectMapper()).writeValueAsString(student2);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/etudiant/ajouter").contentType(MediaType.APPLICATION_JSON).content(content);
-        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"lastName\":\"Nom\",\"firstName\":\"Prenom\",\"phoneNumber\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"program\":{\"id\":0,\"nom\":null,\"description\":null},\"cvList\":null,\"internshipApplications\":null}"));
+        MockMvcBuilders.standaloneSetup(studentController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"lastName\":\"Nom\",\"firstName\":\"Prenom\",\"phoneNumber\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"studyProgram\":{\"id\":0,\"nom\":null,\"description\":null},\"cvList\":null,\"internshipApplications\":null}"));
     }
 
     /**

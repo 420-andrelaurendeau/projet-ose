@@ -4,7 +4,7 @@ import com.sap.ose.projetose.dto.StudyProgramDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.models.Program;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.StudyProgramRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class StudyProgramService {
     private final StudyProgramRepository studyProgramRepository;
     private final Logger logger = LoggerFactory.getLogger(StudyProgramService.class);
 
-    Program findById(long id) {
+    StudyProgram findProgramById(long id) {
         try {
             return studyProgramRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
 
@@ -44,7 +44,7 @@ public class StudyProgramService {
     @Transactional
     public StudyProgramDto saveStudyProgram(String nom, String description) {
         try{
-            return new StudyProgramDto(studyProgramRepository.save(new Program(nom, description)));
+            return new StudyProgramDto(studyProgramRepository.save(new StudyProgram(nom, description)));
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -59,14 +59,14 @@ public class StudyProgramService {
 
     public List<StudyProgramDto> getAllStudyPrograms() {
         List<StudyProgramDto> dtos = new ArrayList<>();
-        for (Program program : studyProgramRepository.findAll()) {
-            dtos.add(new StudyProgramDto(program));
+        for (StudyProgram studyProgram : studyProgramRepository.findAll()) {
+            dtos.add(new StudyProgramDto(studyProgram));
         }
         return dtos;
     }
 
     public StudyProgramDto getStudyProgramById(Long id) {
-        Optional<Program> program = studyProgramRepository.findById(id);
+        Optional<StudyProgram> program = studyProgramRepository.findById(id);
         return program.map(value -> new StudyProgramDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
     }
 }
