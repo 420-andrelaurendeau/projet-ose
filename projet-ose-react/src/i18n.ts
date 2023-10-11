@@ -330,11 +330,51 @@ i18n
                             name : 'offre applique',
                             text : "Applied offer"
                         }
+                    },
+                    profilMenu : {
+                        active : {
+                            name : 'active',
+                            text : "Active"
+                        },
+                        inactive : {
+                            name : 'inactive',
+                            text : "Inactive"
+                        },
+                        changeTheme : {
+                            name : 'changeTheme',
+                            text : "Change theme"
+                        },
+                        changeLanguage : {
+                            name : 'changeLanguage',
+                            text : "Change language"
+                        }
                     }
                 },
                 Home : {
                     name : 'home',
                     text : 'Welcome to the home page : ',
+                },
+                programs: {
+                    techniqueInformatique: {
+                        id: 1,
+                        name: 'techniqueInformatique',
+                        text: 'Computer Science Technology',
+                    },
+                    techniqueAdministration: {
+                        id: 2,
+                        name: 'techniqueAdministration',
+                        text: 'Administrative Technology',
+                    },
+                    techniqueLogistique: {
+                        id: 3,
+                        name: 'techniqueLogistique',
+                        text: 'Logistics Technology',
+                    },
+                    techniqueComptabiliteAndGestion: {
+                        id: 4,
+                        name: 'techniqueComptabiliteEtGestion',
+                        text: 'Accounting and Management Technology',
+                    },
                 }
             },
         }
@@ -661,12 +701,53 @@ i18n
                         offre_applique : {
                             name : 'offre applique',
                             text : "Offre appliqué"
+                        },
+
+                    },
+                    profilMenu : {
+                        active : {
+                            name : 'active',
+                            text : "Active"
+                        },
+                        inactive : {
+                            name : 'inactive',
+                            text : "Inactive"
+                        },
+                        changeTheme : {
+                            name : 'changeTheme',
+                            text : "Changer le thème"
+                        },
+                        changeLanguage : {
+                            name : 'changeLanguage',
+                            text : "Changer la langue"
                         }
                     }
                 },
                 Home : {
                     name : 'home',
                     text : 'Bienvenue sur la page d\'accueil : ',
+                },
+                programs: {
+                    techniqueInformatique: {
+                        id: 1,
+                        name: 'techniqueInformatique',
+                        text: 'Technique de l\'informatique',
+                    },
+                    techniqueAdministration: {
+                        id: 2,
+                        name: 'techniqueAdministration',
+                        text: 'Technique de l\'administration',
+                    },
+                    techniqueLogistique: {
+                        id: 3,
+                        name: 'techniqueLogistique',
+                        text: 'Technique de la logistique',
+                    },
+                    techniqueComptabiliteAndGestion: {
+                        id: 4,
+                        name: 'techniqueComptabiliteEtGestion',
+                        text: 'Technique de la comptabilité et de la gestion',
+                    },
                 }
             },
         }
