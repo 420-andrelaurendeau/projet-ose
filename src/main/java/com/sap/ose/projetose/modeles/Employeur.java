@@ -2,7 +2,6 @@ package com.sap.ose.projetose.modeles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class Employeur extends Utilisateur {
     private List<InternOffer> internOffers;
 
     public Employeur(long id, String nom, String prenom, String email,String phone, String password, String entreprise, Programme programme) {
-        super(id, nom, prenom, email, phone, password);
+        super(id, nom, prenom, email, Role.EMPLOYEUR, phone, password);
         this.entreprise = entreprise;
         this.programme = programme;
     }
