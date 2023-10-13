@@ -28,6 +28,7 @@ const TestBackEndConnection = (props:any) => {
 
     const fetchUtilisateurs = async () => {
         const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
+        console.log(res);
         return await res.json()
     }
 

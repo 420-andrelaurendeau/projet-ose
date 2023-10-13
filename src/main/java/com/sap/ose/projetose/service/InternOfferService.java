@@ -135,6 +135,7 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+
     boolean isApprovedOrDeclineById(long id) {
         return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }

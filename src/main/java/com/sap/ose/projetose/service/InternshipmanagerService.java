@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
@@ -15,18 +16,22 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class InternshipmanagerService {
 
     private final InternshipmanagerRepository internshipmanagerRepository;
 
+    private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
 
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
     @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, ProgrammeService programmeService) {
+    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService) {
         this.internshipmanagerRepository = internshipmanagerRepository;
+        this.internOfferService = internOfferService;
         this.programmeService = programmeService;
     }
 
@@ -88,6 +93,20 @@ public class InternshipmanagerService {
         } catch (Exception e) {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    public List<InternOfferDto> getOffers() {
+        try {
+
+            return internOfferService.getAllInternOffers();
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
+            throw new DatabaseException("Erreur d'accès a la base de  données lors de la récupération des offres de stage") {
+            };
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres de stage", e);
+            throw new ServiceException("Erreur inconnue lors de la récupération des offres de stage");
         }
     }
 }

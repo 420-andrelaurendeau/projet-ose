@@ -1,27 +1,26 @@
 import React, {useEffect} from "react";
 import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
-import EtudiantStage from "./EtudiantStage";
 import EtudiantStagePage from "../../pages/EtudiantStagePage";
-function Home(props:any) {
-    console.log(props.user)
+import GSInternOfferPage from "../../pages/GSInternOfferPage";
+import GSOffersPage from "../../pages/GSOffersPage";
+
+function Home(props: any) {
     useEffect(() => {
 
         console.log(localStorage.getItem('theme'))
     }, [localStorage.getItem('theme')]);
     return (
-       <div>
-           <Header
-               user={props.user}
-           />
-           {
-                props.user.matricule ?
-                    <EtudiantStagePage
-
-                    />
+        <div>
+            <Header
+                user={props.user}
+            />
+            {
+                props.user.id == 5 ? <GSOffersPage/> : props.user.matricule
+                    ? <EtudiantStagePage/>
                     : <EmployeurHomePage/>
-           }
-       </div>
+            }
+        </div>
     );
 }
 

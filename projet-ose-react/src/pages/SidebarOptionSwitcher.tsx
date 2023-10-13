@@ -1,22 +1,27 @@
-import React, {Dispatch, SetStateAction} from "react";
-import {useOutletContext, useParams} from "react-router-dom";
+import React from "react";
+import {useParams} from "react-router-dom";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import EtudiantStage from "../components/common/EtudiantStage";
 import StudentAppliedOffers from "../components/common/StudentAppliedOffers";
+import GSOffers from "../components/common/GSOffers";
+import GSOffersPage from "./GSOffersPage";
 
 
-
-function SidebarOptionSwitcher(props:any) {
-    let { option } = useParams()
-    console.log(props.user.matricule? "Etudiant" : "Employeur")
+function SidebarOptionSwitcher(props: any) {
+    let {option} = useParams()
     return (
 
         <div className="bg-darkwhite dark:bg-softdark w-full">
 
             {
-                props.user.matricule ?
-                    <div className={option != "offer" ? "max-md:hidden":"hidden"}>
+                props.user.id == 5 ?
+                    <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
+
+                        <GSOffersPage/>
+                    </div>
+                    : props.user.matricule ?
+                    <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
                         <EtudiantStage
                             appliedOffers={props.appliedOffers}
                             setAppliedOffers={props.setAppliedOffers}
@@ -26,7 +31,7 @@ function SidebarOptionSwitcher(props:any) {
                     :
                     <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
                         <EmployeurOffer
-                        offers={props.offers}
+                            offers={props.offers}
                         />
                     </div>
 
@@ -34,52 +39,65 @@ function SidebarOptionSwitcher(props:any) {
             }
 
             {
-                 props.user.matricule ?
+                props.user.id == 5 ?
                     (
                         option === "offer" ?
-                        <EtudiantStage
-                            appliedOffers={props.appliedOffers}
-                            setAppliedOffers={props.setAppliedOffers}
-                            offers={props.offers}
-                        />
-                        :
-                        option === "appliedOffers" ?
-                            <StudentAppliedOffers
-                                appliedOffers={props.appliedOffers}
-                                user={props.user}
-                            />
+                            <>
+                                {console.log("test")}
+                                <GSOffersPage/>
+                            </>
                             :
-                            <p>Home</p>
+                            <></>
                     )
-                     :
-                     (
-                         option === "offer" ?
-                             <EmployeurOffer
-                                 offers={props.offers}
-                             />
-                             :
-                             option === "candidature" ?
-                                 <p>Candidature</p>
-                                 :
-                                 option === "contract" ?
-                                     <p>Contract</p>
-                                     :
-                                     option === "pendingOffer" ?
-                                         <p>Pending offer</p>
-                                         :
-                                         option === "newOffer" ?
-                                             <InternshipOfferForm
-                                                 isModalOpen={props.isModalOpen}
-                                                 setIsModalOpen={props.setIsModalOpen}
-                                                 setOffers={props.setOffers}
-                                                 userId={props.userEmail}
-                                                 user={props.user}
-                                             />
-                                             :
-                                             <p>Home</p>
-                     )
+                    :
+                    props.user.matricule ?
+                        (
+                            option === "offer" ?
+                                <EtudiantStage
+                                    appliedOffers={props.appliedOffers}
+                                    setAppliedOffers={props.setAppliedOffers}
+                                    offers={props.offers}
+                                />
+                                :
+                                option === "appliedOffers" ?
+                                    <StudentAppliedOffers
+                                        appliedOffers={props.appliedOffers}
+                                        user={props.user}
+                                    />
+                                    :
+                                    <p>Home</p>
+                        )
+                        :
+                        (
+                            option === "offer" ?
+                                <EmployeurOffer
+                                    offers={props.offers}
+                                />
+                                :
+                                option === "candidature" ?
+                                    <p>Candidature</p>
+                                    :
+                                    option === "contract" ?
+                                        <p>Contract</p>
+                                        :
+                                        option === "pendingOffer" ?
+                                            <p>Pending offer</p>
+                                            :
+                                            option === "newOffer" ?
+                                                <InternshipOfferForm
+                                                    isModalOpen={props.isModalOpen}
+                                                    setIsModalOpen={props.setIsModalOpen}
+                                                    setOffers={props.setOffers}
+                                                    userId={props.userEmail}
+                                                    user={props.user}
+                                                />
+                                                :
+                                                <p>Home</p>
+                        )
 
             }
+
+
         </div>
     );
 }
