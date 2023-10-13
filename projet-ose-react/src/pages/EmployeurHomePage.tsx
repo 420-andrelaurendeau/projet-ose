@@ -7,8 +7,11 @@ import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 import InternshipOfferModal from "../components/common/InternshipOfferModal";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import {ftruncate} from "fs";
+import {useTranslation} from "react-i18next";
 
 function EmployeurHomePage() {
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(true)
     const location = useLocation();
@@ -23,7 +26,7 @@ function EmployeurHomePage() {
         <div>
             <header className="max-md:hidden ">
                 <div className="max-w-7xl mx-auto py-6 px-6  lg:px-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+                    <h1 className="text-3xl font-bold text-gray-900"> {fields.titre.text} </h1>
                 </div>
             </header>
             <main>
@@ -39,7 +42,7 @@ function EmployeurHomePage() {
                                             <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
-                                            <p className="text-gray truncate ">Total candidature</p>
+                                            <p className="text-gray truncate "> {fields.totalCondidature.text} </p>
                                             <p className="text-xl dark:text-white font-bold">150</p>
                                         </div>
                                     </div>
@@ -53,7 +56,7 @@ function EmployeurHomePage() {
                                             <FontAwesomeIcon icon={faFileLines} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
-                                            <p className="text-gray">Total offer</p>
+                                            <p className="text-gray">{fields.totalOffre.text}</p>
                                             <p className="text-xl dark:text-white font-bold">{offers.length}</p>
                                         </div>
                                     </div>
@@ -69,7 +72,7 @@ function EmployeurHomePage() {
                                             <FontAwesomeIcon icon={faPencil} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
-                                            <p className="text-gray">New offer</p>
+                                            <p className="text-gray">{fields.newOffre.text}</p>
 
                                         </div>
                                     </div>
@@ -82,7 +85,7 @@ function EmployeurHomePage() {
                                             <FontAwesomeIcon icon={faSignature} color="white" size="lg" />
                                         </div>
                                         <div className="pl-2">
-                                            <p className="text-gray">Total contract</p>
+                                            <p className="text-gray">{fields.totalContract.text}</p>
                                             <p className="text-xl dark:text-white font-bold">150</p>
                                         </div>
                                     </div>

@@ -348,6 +348,28 @@ i18n
                             name : 'changeLanguage',
                             text : "Change language"
                         }
+                    },
+                    sidebarEmployeur : {
+                        offre : {
+                            name : 'offre',
+                            text : "Offer"
+                        },
+                        candidature : {
+                            name : 'candidature',
+                            text : "Application"
+                        },
+                        contract : {
+                            name : 'contract',
+                            text : "Contract"
+                        },
+                        pendingOffer : {
+                            name : 'pendingOffer',
+                            text : "Pending offer"
+                        },
+                        newOffre : {
+                            name : 'newOffre',
+                            text : "New offer"
+                        }
                     }
                 },
                 Home : {
@@ -375,6 +397,62 @@ i18n
                         name: 'techniqueComptabiliteEtGestion',
                         text: 'Accounting and Management Technology',
                     },
+                },
+                homeEmployeur:{
+                    titre:{
+                        name:'titre',
+                        text:'Dashboard'
+                    },
+                    totalCondidature:{
+                        name:'totalCondidature',
+                        text:'Total application'
+                    },
+                    totalOffre:{
+                        name:'totalOffre',
+                        text:'Total offer'
+                    },
+                    newOffre:{
+                        name:'newOffre',
+                        text:'New offer'
+                    },
+                    totalContract:{
+                        name:'totalContract',
+                        text:'Total contract'
+                    },
+                    offerTable:{
+                        titre:{
+                            name:'titre',
+                            text:'Title'
+                        },
+                        location:{
+                            name:'location',
+                            text:'Location'
+                        },
+                        status:{
+                            name:'status',
+                            text:'Status'
+                        },
+                        startDate:{
+                            name:'startDate',
+                            text:'Start date'
+                        },
+                        edit:{
+                            name:'edit',
+                            text:'Edit'
+                        },
+                        PENDING:{
+                            name:'PENDING',
+                            text:'Pending'
+                        },
+                        APPROVED:{
+                            name:'APPROVED',
+                            text:'Approved'
+                        },
+                        DECLINED:{
+                            name:'DECLINED',
+                            text:'Declined'
+                        }
+                    }
                 }
             },
         }
@@ -721,6 +799,28 @@ i18n
                             name : 'changeLanguage',
                             text : "Changer la langue"
                         }
+                    },
+                    sidebarEmployeur : {
+                        offre : {
+                            name : 'offre',
+                            text : "Offre"
+                        },
+                        candidature : {
+                            name : 'candidature',
+                            text : "Candidature"
+                        },
+                        contract : {
+                            name : 'contract',
+                            text : "Contrat"
+                        },
+                        pendingOffer : {
+                            name : 'pendingOffer',
+                            text : "Offre en attente"
+                        },
+                        newOffre : {
+                            name : 'newOffre',
+                            text : "Nouvelle offre"
+                        }
                     }
                 },
                 Home : {
@@ -748,6 +848,62 @@ i18n
                         name: 'techniqueComptabiliteEtGestion',
                         text: 'Technique de la comptabilité et de la gestion',
                     },
+                },
+                homeEmployeur:{
+                    titre:{
+                        name:'titre',
+                        text:'Tableau de bord'
+                    },
+                    totalCondidature:{
+                        name:'totalCondidature',
+                        text:'Candidature total'
+                    },
+                    totalOffre:{
+                        name:'totalOffre',
+                        text:'Offre total'
+                    },
+                    newOffre:{
+                        name:'newOffre',
+                        text:'Nouvelle offre'
+                    },
+                    totalContract:{
+                        name:'totalContract',
+                        text:'Contrat total'
+                    },
+                    offerTable:{
+                        titre:{
+                            name:'titre',
+                            text:'Titre'
+                        },
+                        location:{
+                            name:'location',
+                            text:'Lieu'
+                        },
+                        status:{
+                            name:'status',
+                            text:'Etat'
+                        },
+                        startDate:{
+                            name:'startDate',
+                            text:'Date de début'
+                        },
+                        edit:{
+                            name:'edit',
+                            text:'Modifier'
+                        },
+                        PENDING:{
+                            name:'PENDING',
+                            text:'En attente'
+                        },
+                        APPROVED:{
+                            name:'APPROVED',
+                            text:'Approuvé'
+                        },
+                        DECLINED:{
+                            name:'DECLINED',
+                            text:'Refusé'
+                        }
+                    }
                 }
             },
         }
