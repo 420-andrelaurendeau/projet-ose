@@ -2,6 +2,9 @@ package com.sap.ose.projetose.repository;
 
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.State;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -22,5 +25,6 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1")
     List<InternOffer> findByEmployeurId(int id);
 
+    Page<InternOffer> findAllByState(State state, Pageable pageable);
 }
 

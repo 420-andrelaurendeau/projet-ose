@@ -72,6 +72,7 @@ export const getAllPendingInterOfferJob = async (): Promise<InterOfferJob[]> => 
 
 export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequest) => {
     try {
+        console.log(offerReviewRequest)
         const response = await apiClient.post('offerReviewRequest/save', offerReviewRequest);
         return response.data;
     } catch (error) {

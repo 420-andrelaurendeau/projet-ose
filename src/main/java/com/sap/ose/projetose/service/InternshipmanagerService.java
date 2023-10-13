@@ -7,12 +7,14 @@ import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,10 +98,25 @@ public class InternshipmanagerService {
         }
     }
 
-    public List<InternOfferDto> getOffers() {
+    public Page<InternOfferDto> getOffers(int page, int size) {
         try {
 
-            return internOfferService.getAllInternOffers();
+            Page<InternOfferDto> pageOffersDto = internOfferService.getPagableAllInternOffers(page, size);
+            return pageOffersDto;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
+            throw new DatabaseException("Erreur d'accès a la base de  données lors de la récupération des offres de stage") {
+            };
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres de stage", e);
+            throw new ServiceException("Erreur inconnue lors de la récupération des offres de stage");
+        }
+    }
+    public Page<InternOfferDto> getOffers(int page, int size, String state) {
+        try {
+            State stateEnum = State.valueOf(state);
+            Page<InternOfferDto> pageOffersDto = internOfferService.getPagableInternOffersByState(page, size, stateEnum);
+            return pageOffersDto;
         } catch (DataAccessException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
             throw new DatabaseException("Erreur d'accès a la base de  données lors de la récupération des offres de stage") {

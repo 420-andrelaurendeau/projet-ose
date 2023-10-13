@@ -6,85 +6,50 @@ import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 import {InterOfferJob} from "../model/IntershipOffer";
 import {getIntershipOffers} from "../api/GSManagerAPI";
 import GSOffers from "../components/common/GSOffers";
+import PaginatedList from "../components/common/PaginatedList";
 
 
-function GSOffersPage() {
-    const [isModalOpen, setIsModalOpen] = useState(true)
+const GSOffersPage = () => {
+    const [offers, setOffers] = useState([]);
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [offerState, setOfferState] = useState(undefined);
+    const [isUpdate , setIsUpdate] = useState(false);
+
+    const fetchedOffersRef = useRef(false);
     const location = useLocation();
     const user = location.state;
 
-    const [offers, setOffers] = useState<InterOfferJob[]>([]);
-    const [offersApproved, setOffersApproved] = useState<InterOfferJob[]>([]);
-    const [offersPending, setOffersPending] = useState<InterOfferJob[]>([]);
-    const [offersRejected, setOffersRejected] = useState<InterOfferJob[]>([]);
 
-    const [currentOffers, setCurrentOffers] = useState<InterOfferJob[]>();
-
-    const offersFetchedRef = useRef(false);
-
-    useEffect(() => {
-
-        if (offersFetchedRef.current) return;
-        offersFetchedRef.current = true;
-        const fetchData = async () => {
+    useEffect(() =>  {
+        console.log(isUpdate)
+        const fetchOffers = async () => {
             try {
-                const data = await getIntershipOffers();
-
-                setOffers(data)
-                setCurrentOffers(data)
-                setOffersApproved(data.filter((offer: any) => offer.state == "ACCEPTED"));
-                setOffersPending(data.filter((offer: any) => offer.state == "PENDING"));
-                setOffersRejected(data.filter((offer: any) => offer.state == "DECLINED"));
-
-                offersFetchedRef.current = false;
+                console.log("BONJOUR");
+                fetchedOffersRef.current = true
+                const response = await getIntershipOffers({ page, size: 5, state: offerState });
+                setOffers(response.content);
+                setTotalPages(response.totalPages);
 
             } catch (error) {
-                console.error("Erreur lors de la récupération des offres:", error);
+                console.error('Error fetching offers:', error);
             }
+            setIsUpdate(false);
+            fetchedOffersRef.current = false;
         };
+        if (!fetchedOffersRef.current) fetchOffers();
 
-        fetchData();
+    }, [page, offerState, isUpdate]);
 
-    }, []);
-
-
-    useEffect(() => {
-        if(offersFetchedRef.current) return;
-        offersFetchedRef.current = true;
-
-        console.log("BONJOUR")
-
-        setOffersApproved(offers.filter((offer: any) => offer.state == "ACCEPTED"));
-        setOffersPending(offers.filter((offer: any) => offer.state == "PENDING"));
-        setOffersRejected(offers.filter((offer: any) => offer.state == "DECLINED"));
-        offersFetchedRef.current = false;
-    }, [offers]);
-
-    const updateInternshipOffer = (updatedOffer: InterOfferJob) => {
-        console.log("dans la fonction update")
-        setOffers(prevList => prevList.map(offer =>
-            offer.id === updatedOffer.id ? updatedOffer : offer
-        ));
+    const handlePageChange = (newPage: number) => {
+        setPage(newPage);
     };
 
-    const offersByState = (state: string) => {
-        switch (state) {
-            case "ACCEPTED":
-                setCurrentOffers(offersApproved);
-                return
-            case "PENDING":
-                setCurrentOffers(offersPending);
-                return
-            case "DECLINED":
-                console.log("DECLINED");
-                setCurrentOffers(offersRejected);
-                return
-            default:
-                setCurrentOffers(offers);
-                return
-        }
-    }
+    const offersByState = (state: any) => {
+        setOfferState(state);
+    };
 
+    const renderOffer =  <GSOffers user={user} offers={offers} isUpdate={setIsUpdate}/>;
 
     return (
         <div>
@@ -100,7 +65,7 @@ function GSOffersPage() {
 
                             <div
                                 className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                onClick={() => offersByState("DEFAULT")}
+                                onClick={() => offersByState(undefined)}
                             >
                                 <div className="flex space-x-2 items-center h-16 w-auto">
                                     <div
@@ -125,7 +90,7 @@ function GSOffersPage() {
                                     </div>
                                     <div className="pl-2">
                                         <p className="text-gray">Offers accepted</p>
-                                        <p className="text-xl dark:text-white font-bold">{offersApproved.length}</p>
+                                        <p className="text-xl dark:text-white font-bold">{offers.length}</p>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +106,7 @@ function GSOffersPage() {
                                     </div>
                                     <div className="pl-2">
                                         <p className="text-gray">Offers pending</p>
-                                        <p className="text-xl dark:text-white font-bold">{offersPending.length}</p>
+                                        <p className="text-xl dark:text-white font-bold">{offers.length}</p>
                                     </div>
                                 </div>
                             </div>
@@ -158,22 +123,23 @@ function GSOffersPage() {
                                     </div>
                                     <div className="pl-2">
                                         <p className="text-gray">Offers declined</p>
-                                        <p className="text-xl dark:text-white font-bold">{offersRejected.length}</p>
+                                        <p className="text-xl dark:text-white font-bold">{offers.length}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    {
-                        offers.length > 0 ?
-                            <GSOffers user={user} offers={currentOffers} onUpdateInternshipOffer={updateInternshipOffer}/> : <></>
-                    }
-
+                    <PaginatedList
+                        renderItem={renderOffer}
+                        page={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
                 </div>
             </main>
         </div>
     );
-}
+};
 
 export default GSOffersPage;
+

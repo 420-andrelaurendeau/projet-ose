@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +136,21 @@ public class InternOfferService {
             internOfferDtoList.add(new InternOfferDto(offer));
         }
         return internOfferDtoList;
+    }
+
+    @Transactional
+    public Page<InternOfferDto> getPagableAllInternOffers(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<InternOfferDto> pageOffer = offerJobRepository.findAll(pageable).map(InternOfferDto::new);
+        return pageOffer;
+    }
+
+    @Transactional
+    public Page<InternOfferDto> getPagableInternOffersByState(int page, int size, State state){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<InternOfferDto> pageOffer = offerJobRepository.findAllByState(state, pageable).map(InternOfferDto::new);
+
+        return pageOffer;
     }
 
 

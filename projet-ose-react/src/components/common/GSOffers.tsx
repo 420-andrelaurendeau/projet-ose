@@ -112,7 +112,7 @@ export default function GSOffers(props:any) {
                         isModalOpen={isModalOpen}
                         handleCloseModal={handleCloseModal}
                         internshipOffer={offer}
-                        onUpdateInternshipOffer={props.onUpdateInternshipOffer}
+                        isUpdate={props.isUpdate}
                     />
                 )
             }

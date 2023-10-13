@@ -13,13 +13,42 @@ const apiClient = axios.create({
     },
 });
 
-export const getIntershipOffers = async () => {
+interface GetInternshipOffersParams {
+    page: number;
+    size: number;
+    state?: string;
+}
 
+export const getIntershipOffers = async ({ page, size, state }: GetInternshipOffersParams) => {
     try {
-        const response = await apiClient.get('offers');
+        const params: any = { page, size };
+
+        if (state) {
+            params.state = state;
+        }
+
+        const response = await apiClient.get('/offers', {
+            params: params,
+        });
+        console.log('response', response.data);
         return response.data;
     } catch (error) {
-        console.error('Erreur lors de la récupération des offers de stage:', error);
+        console.error('Erreur lors de la récupération des offres de stage:', error);
         throw error;
     }
 };
+
+/**
+
+ export const getIntershipOffers = async () => {
+
+ try {
+ const response = await apiClient.get('offers');
+ return response.data;
+ } catch (error) {
+ console.error('Erreur lors de la récupération des offers de stage:', error);
+ throw error;
+ }
+ };
+
+ */
