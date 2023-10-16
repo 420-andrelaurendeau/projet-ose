@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.EtudiantInscriptionDto;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.EtudiantService;
@@ -26,9 +27,9 @@ public class EtudiantController {
     }
 
     @PostMapping("/ajouter")
-    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
+    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody EtudiantInscriptionDto etudiant) {
         System.out.println(etudiant);
-        return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return etudiantService.saveEtudiantInscription(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")
