@@ -65,7 +65,7 @@ function EtudiantInscription(props: any) {
             return;
         }
         axios
-            .post("http://localhost:8080/api/etudiant/ajouter", {
+            .post("http://localhost:8080/api/student/register", {
                 nom: nom,
                 prenom: prenom,
                 email: email,
@@ -101,7 +101,7 @@ function EtudiantInscription(props: any) {
 
     const fetchProgrammes = () => {
         axios
-            .get("http://localhost:8080/api/programme/programmes")
+            .get("http://localhost:8080/api/programme/all")
             .then((response) => {
                 console.log(response);
                 setProgrammes(response.data);

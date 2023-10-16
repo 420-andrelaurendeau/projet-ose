@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.FileDto;
+import com.sap.ose.projetose.dto.FileTransferDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
 import com.sap.ose.projetose.exception.DatabaseException;
@@ -49,7 +49,7 @@ public class StudentServiceTest {
         internshipOffer.setFile(new File());
         internshipOffer.setState(ApprovalStatus.APPROVED);
         internshipOffer.setId(1L);
-        internshipOffer.setInternshipCandidates(null);
+        internshipOffer.setInternshipApplications(null);
         internshipOffer.setLocation("Location");
         internshipOffer.setStudyProgram(null);
         internshipOffer.setSalaryByHour(10.0d);
@@ -95,7 +95,7 @@ public class StudentServiceTest {
         List<StudentApplicationsDto> mockedStudentApplied = List.of(
                 new StudentApplicationsDto(
                         new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()),
-                        List.of(new FileDto())
+                        List.of(new FileTransferDto())
                 )
         );
 

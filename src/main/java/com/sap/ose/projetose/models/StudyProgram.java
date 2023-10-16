@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.StudyProgramDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,9 @@ public class StudyProgram {
     public StudyProgram(String name, String description) {
         this.nom = name;
         this.description = description;
+    }
+
+    public StudyProgramDto toDto() {
+        return new StudyProgramDto(this);
     }
 }

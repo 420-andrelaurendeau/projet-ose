@@ -19,8 +19,4 @@ public class StudyProgramDto {
         this.name = studyProgram.getNom();
         this.description = studyProgram.getDescription();
     }
-
-    public StudyProgram toNewProgram() {
-        return new StudyProgram(name, description);
-    }
 }

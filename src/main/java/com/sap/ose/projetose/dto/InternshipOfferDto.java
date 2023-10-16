@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +24,7 @@ public class InternshipOfferDto {
     private String endDate;
     private List<Long> internshipApplicationIds;
     private long programId;
-    private FileDto file;
+    private FileTransferDto file;
     private long employerId;
     private String programName;
     private String employerFirstName;
@@ -42,9 +40,9 @@ public class InternshipOfferDto {
         this.description = internshipOffer.getDescription();
         this.startDate =  internshipOffer.getStartDate().toString();
         this.endDate = internshipOffer.getEndDate().toString();
-        this.internshipApplicationIds = internshipOffer.getInternshipCandidates() == null ? null : internshipOffer.getInternshipCandidates().stream().map(InternshipApplication::getId).collect(Collectors.toList());
+        this.internshipApplicationIds = internshipOffer.getInternshipApplications() == null ? null : internshipOffer.getInternshipApplications().stream().map(InternshipApplication::getId).collect(Collectors.toList());
         this.programId = internshipOffer.getStudyProgram().getId();
-        this.file = new FileDto(internshipOffer.getFile());
+        this.file = new FileTransferDto(internshipOffer.getFile());
         this.employerId = internshipOffer.getEmployer().getId();
         this.programName = internshipOffer.getStudyProgram().getNom();
         this.employerFirstName = internshipOffer.getEmployer().getFirstName();
@@ -52,23 +50,5 @@ public class InternshipOfferDto {
         this.employerEnterprise = internshipOffer.getEmployer().getEnterprise();
         this.state = internshipOffer.getState();
         this.offerReviewRequestId = internshipOffer.getOfferReviewRequest() == null ? 0 : internshipOffer.getOfferReviewRequest().getId();
-    }
-
-    public InternshipOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipApplicationDto> internshipApplicationIds, long programmeId, FileDto file, ApprovalStatus state, long offerReviewRequestId) {
-        this.title = title;
-        this.location = location;
-        this.description = description;
-        this.salaryByHour = salaryByHour;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.internshipApplicationIds = internshipApplicationIds == null ? new ArrayList<>() : internshipApplicationIds.stream().map(internshipCandidate -> internshipCandidate.getId()).collect(Collectors.toList());
-        this.programId = programmeId;
-        this.file = file;
-        this.state = state;
-        this.offerReviewRequestId = offerReviewRequestId;
-    }
-
-    public InternshipOffer toInternshipOffer() {
-        return new InternshipOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.toFile(), null,state, null);
     }
 }

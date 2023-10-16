@@ -1,6 +1,8 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,16 +22,16 @@ public class OfferReviewRequest {
     private String comment;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "internOffer_id")
+    @JoinColumn
     private InternshipOffer internshipOffer;
 
     @ManyToOne
-    @JoinColumn(name = "internshipmanager_id")
+    @JoinColumn
     public InternshipManager internshipManager;
 
-    public OfferReviewRequest(InternshipOffer internshipOffer, String comment, InternshipManager internshipManager) {
-        this.internshipOffer = internshipOffer;
-        this.comment = comment;
-        this.internshipManager = internshipManager;
+    public ApprovalStatus reviewState = ApprovalStatus.PENDING;
+
+    public OfferReviewRequestDto toDto() {
+        return new OfferReviewRequestDto(this);
     }
 }

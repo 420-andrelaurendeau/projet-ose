@@ -6,7 +6,7 @@ import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
 import com.sap.ose.projetose.models.StudyProgram;
-import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import com.sap.ose.projetose.repository.InternshipManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class InternshipManagerService {
 
-    private final InternshipmanagerRepository internshipmanagerRepository;
+    private final InternshipManagerRepository internshipmanagerRepository;
     private final StudyProgramService studyProgramService;
 
     Logger logger = LoggerFactory.getLogger(InternshipManagerService.class);

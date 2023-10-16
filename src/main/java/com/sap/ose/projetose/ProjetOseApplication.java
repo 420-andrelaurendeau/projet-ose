@@ -4,10 +4,11 @@ import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.InternshipApplicationDto;
 import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.repository.StudyProgramRepository;
+import com.sap.ose.projetose.repository.*;
 import com.sap.ose.projetose.service.InternshipOfferService;
 import com.sap.ose.projetose.service.UserService;
 import com.sap.ose.projetose.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,66 +20,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@RequiredArgsConstructor
 public class ProjetOseApplication implements CommandLineRunner {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private StudentService studentService;
-    @Autowired
-    private EmployerService employerService;
-    @Autowired
-    private InternshipOfferService internshipOfferService;
-
-    @Autowired
-    private InternshipManagerService internshipmanagerService;
-
-    @Autowired
-    private InternshipApplicationService internshipApplicationService;
-
-    @Autowired
-    StudyProgramRepository studyProgramRepository;
+    private final StudyProgramRepository studyProgramRepository;
+    private final StudentRepository studentRepository;
+    private final EmployerRepository employerRepository;
+    private final InternshipApplicationRepository internshipApplicationRepository;
+    private final FileRepository fileRepository;
+    private final InternshipManagerRepository internshipManagerRepository;
+    private final InternshipOfferRepository internshipOfferRepository;
+    private final OfferReviewRequestRepository offerReviewRequestRepository;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
 	}
     @Override
     public void run(String... args) throws Exception {
-        StudyProgram studyProgram1 = studyProgramRepository.save(new StudyProgram("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
-        StudyProgram studyProgram2 = studyProgramRepository.save(new StudyProgram("Techniques de l'administration", "Programme de formation en techniques de l'administration"));
-        studyProgramRepository.save(new StudyProgram("Techniques de la logistique", "Programme de formation en techniques de la logistique"));
-        studyProgramRepository.save(new StudyProgram("Techniques de la comptabilité et de la gestion", "Programme de formation en techniques de la comptabilité et de la gestion"));
+        StudyProgram studyProgramInformatique = studyProgramRepository.save(new StudyProgram("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
+        StudyProgram studyProgramAdmnistration = studyProgramRepository.save(new StudyProgram("Techniques de l'administration", "Programme de formation en techniques de l'administration"));
+        StudyProgram studyProgramLogistique = studyProgramRepository.save(new StudyProgram("Techniques de la logistique", "Programme de formation en techniques de la logistique"));
+        StudyProgram studyProgramComtabiliteGestion = studyProgramRepository.save(new StudyProgram("Techniques de la comptabilité et de la gestion", "Programme de formation en techniques de la comptabilité et de la gestion"));
 
-        Student student2 = new Student("Marc", "Max", "4387999889", "max@gmail.com", "popo", "2045888", studyProgram1, null);
-        Student student3 = new Student("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", studyProgram1, null);
-        Employer employer = new Employer("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "popo", studyProgram1);
-        Employer employer2 = new Employer("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "poo", studyProgram2);
-        studentService.saveStudent(student2);
-        studentService.saveStudent(student3);
-        employerService.saveEmployer(employer);
-        employerService.saveEmployer(employer2);
-
-        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);
-        List<InternshipApplication> internshipCandidates = new ArrayList<>();
-        OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
+        Student studentMarcMax = studentRepository.save(new Student("Marc", "Max", "4387999889", "max@gmail.com", "popo", "2045888", studyProgramInformatique, null));
+        Student studentLoicLac = studentRepository.save(new Student("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", studyProgramInformatique, null));
+        Student studentJeanDupont = new Student("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", studyProgramInformatique, new ArrayList<>());
 
 
-        InternshipOffer internshipOffer = new InternshipOffer(1L, "Stage Informatique","Laval","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates, studyProgram1,file, employer, ApprovalStatus.APPROVED,offerReviewRequest);
-        InternshipOfferDto internshipOfferDto = new InternshipOfferDto(internshipOffer);
-        internshipOfferService.saveInternshipOfferJob(internshipOfferDto);
+        Employer employerPatriqueLemieux = employerRepository.save(new Employer("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "popo", studyProgramInformatique));
+        Employer employerPierreLacroix = employerRepository.save(new Employer("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "poo", studyProgramAdmnistration));
 
-        InternshipOffer internshipOffer1 = new InternshipOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates, studyProgram1,file, employer2, ApprovalStatus.APPROVED,offerReviewRequest);
-        InternshipOfferDto internshipOfferDto1 = new InternshipOfferDto(internshipOffer1);
-        internshipOfferService.saveInternshipOfferJob(internshipOfferDto1);
+        InternshipManager internshipmanager = internshipManagerRepository.save(new InternshipManager( "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", studyProgramInformatique));
 
-        Student student = new Student("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", studyProgram1, null);
-        studentService.saveStudent(student);
+        OfferReviewRequest offerReviewRequest = offerReviewRequestRepository.save(new OfferReviewRequest());
 
-        InternshipApplication internshipApplication1 = new InternshipApplication(student, internshipOffer, List.of(file));
+        File fileApplicationMarc = fileRepository.save(new File("Application".getBytes(StandardCharsets.UTF_8),"Application",true, studentMarcMax));
+        File fileOffreInformatique = fileRepository.save(new File("OffreInformatique".getBytes(StandardCharsets.UTF_8),"OffreInformatique",true, employerPatriqueLemieux));
+        File fileOffreAdministration = fileRepository.save(new File("OffreSecurite".getBytes(StandardCharsets.UTF_8),"OffreSecurite",true, studentMarcMax));
 
-        internshipApplicationService.saveApplication(new InternshipApplicationDto(internshipApplication1));
+        InternshipOffer internshipOfferInformatique = internshipOfferRepository.save(new InternshipOffer("Stage Informatique","Laval","ff",20,LocalDate.now(),LocalDate.now(), new ArrayList<>(), studyProgramInformatique,fileOffreInformatique, employerPatriqueLemieux, ApprovalStatus.APPROVED,offerReviewRequest));
+        InternshipOffer internshipOfferSecurite = internshipOfferRepository.save(new InternshipOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(), new ArrayList<>(), studyProgramInformatique,fileOffreAdministration, employerPierreLacroix, ApprovalStatus.APPROVED,offerReviewRequest));
 
-
-        InternshipManager internshipmanager = new InternshipManager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", studyProgram1);
-        internshipmanagerService.saveManager(new InternshipManagerDto(internshipmanager));
+        InternshipApplication internshipApplicationMax = internshipApplicationRepository.save(new InternshipApplication(studentMarcMax, internshipOfferInformatique, List.of(fileApplicationMarc)));
     }
 }

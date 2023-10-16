@@ -70,7 +70,7 @@ class StudyStudyProgramControllerTest {
     @Test
     void testGetProgrammes() throws Exception {
         when(studyProgramController.getStudyPrograms()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/programmes");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/all");
         MockMvcBuilders.standaloneSetup(studyProgramController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
@@ -82,7 +82,7 @@ class StudyStudyProgramControllerTest {
         ArrayList<StudyProgramDto> studyProgramDTOList = new ArrayList<>();
         studyProgramDTOList.add(new StudyProgramDto(1, "Nom", "The characteristics of someone or something"));
         when(studyProgramController.getStudyPrograms()).thenReturn(studyProgramDTOList);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/programmes");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/programme/all");
         MockMvcBuilders.standaloneSetup(studyProgramController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[{\"id\":1,\"name\":\"Nom\",\"description\":\"The characteristics of someone or something\"}]"));
     }
 }

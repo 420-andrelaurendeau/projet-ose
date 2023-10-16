@@ -34,10 +34,4 @@ public class StudentDto extends UserDto {
         this.applicationIds = student.getInternshipApplications() == null ? null : student.getInternshipApplications().stream().map(InternshipApplication::getId).toList();
     }
 
-    @Override
-    public User toUser() {
-        //FIXME: Properly implement this.
-        return new Student(getLastName(), getFirstName(), getPhoneNumber(), getEmail(), getMatricule(), (StudyProgram) null,null,null);
-    }
-
 }

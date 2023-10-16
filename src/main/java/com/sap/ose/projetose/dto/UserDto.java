@@ -15,20 +15,11 @@ public abstract class UserDto {
     private String phoneNumber;
     private String email;
 
-    public UserDto(int id, String lastName, String firstName, String phone, String email) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.phoneNumber = phone;
-        this.email = email;
-        this.id = id;
+    public UserDto(User user) {
+        setId(user.getId());
+        setLastName(user.getLastName());
+        setFirstName(user.getFirstName());
+        setPhoneNumber(user.getPhoneNumber());
+        setEmail(user.getEmail());
     }
-
-    public UserDto(String firstName, String lastName, String phone, String email) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.phoneNumber = phone;
-        this.email = email;
-    }
-
-    public abstract User toUser();
 }

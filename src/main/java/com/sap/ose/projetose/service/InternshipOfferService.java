@@ -2,12 +2,9 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.models.ApprovalStatus;
-import com.sap.ose.projetose.models.Employer;
-import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.StudyProgram;
+import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repository.EmployerRepository;
-import com.sap.ose.projetose.repository.InternOfferRepository;
+import com.sap.ose.projetose.repository.InternshipOfferRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -15,38 +12,36 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class InternshipOfferService {
 
-    private final InternOfferRepository offerJobRepository;
+    private final InternshipOfferRepository internshipOfferRepository;
     private final EmployerRepository employerRepository;
     private final StudyProgramService studyProgramService;
     private final EmployerService employerService;
+    private final InternshipOfferReviewRequestService internshipOfferReviewRequestService;
+    private final FileService fileService;
     Logger logger = LoggerFactory.getLogger(InternshipOfferService.class);
 
 
 
     @Transactional
-    public InternshipOfferDto saveInternshipOfferJob(InternshipOfferDto internshipOfferDto) {
+    public InternshipOfferDto createOrUpdateInternshipOffer(InternshipOfferDto internshipOfferDto) {
         try {
-            System.out.println(internshipOfferDto.getEmployerId());
+            InternshipOffer internshipOffer = internshipOfferRepository.findById(internshipOfferDto.getId()).orElse(null);
 
-            if ( isApprovedOrDeclineById(internshipOfferDto.getId()))
+            if (internshipOffer != null && internshipOffer.getState() != ApprovalStatus.PENDING)
                 throw new OfferAlreadyReviewedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
-            StudyProgram studyProgram = studyProgramService.findProgramById(internshipOfferDto.getProgramId());
-            Employer employer = employerService.findById(internshipOfferDto.getEmployerId());
+            internshipOffer = toInternshipOffer(internshipOfferDto);
 
-            InternshipOffer internshipOffer = internshipOfferDto.toInternshipOffer();
-            internshipOffer.setStudyProgram(studyProgram);
-            internshipOffer.setEmployer(employer);
-            internshipOffer.setState(ApprovalStatus.PENDING);
-
-            InternshipOffer savedOfferDto = offerJobRepository.save(internshipOffer);
+            InternshipOffer savedOfferDto = internshipOfferRepository.save(internshipOffer);
 
             return new InternshipOfferDto(savedOfferDto);
         } catch (OfferAlreadyReviewedException e) {
@@ -67,7 +62,7 @@ public class InternshipOfferService {
 
     @Transactional
     public List<InternshipOfferDto> getAcceptedInternshipOffer(){
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsApproved();
+        List<InternshipOffer> internshipOfferList = internshipOfferRepository.findAllByStateIsApproved();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
         for (InternshipOffer offre : internshipOfferList){
@@ -79,7 +74,7 @@ public class InternshipOfferService {
 
     @Transactional
     public List<InternshipOfferDto> getInternOfferPending() {
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsPending();
+        List<InternshipOffer> internshipOfferList = internshipOfferRepository.findAllByStateIsPending();
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
 
         for (InternshipOffer offre : internshipOfferList){
@@ -87,28 +82,11 @@ public class InternshipOfferService {
             internshipOfferDtoList.add(internshipOfferDto);
         }
         return internshipOfferDtoList;
-    }
-
-    @Transactional
-    public List<InternshipOfferDto> getInternOfferDeclined(){
-        List<InternshipOffer> internshipOfferList = offerJobRepository.findAllByStateIsRejected();
-        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
-
-        for (InternshipOffer offre : internshipOfferList){
-            InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
-            internshipOfferDtoList.add(internshipOfferDto);
-        }
-        return internshipOfferDtoList;
-    }
-
-    InternshipOfferDto getInterOfferById(Long id) {
-        InternshipOffer internshipOffer = offerJobRepository.findById(id).orElse(null);
-        return new InternshipOfferDto(internshipOffer);
     }
 
     InternshipOffer findById(long id){
         try {
-            return offerJobRepository.findById(id).orElseThrow(OfferNotFoundException::new);
+            return internshipOfferRepository.findById(id).orElseThrow(OfferNotFoundException::new);
         } catch (OfferNotFoundException e) {
             logger.error("Offre d'emploi non trouvée pour l'Id : " + id);
             throw new OfferNotFoundException();
@@ -123,32 +101,77 @@ public class InternshipOfferService {
 
     public List<InternshipOfferDto> getAllInternOffers(){
         List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>() ;
-        for(InternshipOffer offer : offerJobRepository.findAll()){
+        for(InternshipOffer offer : internshipOfferRepository.findAll()){
             internshipOfferDtoList.add(new InternshipOfferDto(offer));
         }
         return internshipOfferDtoList;
     }
 
     boolean isApprovedOrDeclineById(long id) {
-        return offerJobRepository.findById(id).filter(offer -> offer.getState() == ApprovalStatus.APPROVED || offer.getState() == ApprovalStatus.REJECTED).isPresent();
+        return internshipOfferRepository.findById(id).filter(offer -> offer.getState() == ApprovalStatus.APPROVED || offer.getState() == ApprovalStatus.REJECTED).isPresent();
     }
 
-    public List<InternshipOfferDto> getInternOffer(){
+    public List<InternshipOfferDto> getInternOffer() {
         List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
-        for(InternshipOffer internshipOffer : offerJobRepository.findAll()){
-            internshipOfferDtos.add(new InternshipOfferDto());
+        for(InternshipOffer internshipOffer : internshipOfferRepository.findAll()){
+            internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
         }
         return internshipOfferDtos;
     }
 
     @Transactional
-    public List<InternshipOfferDto> getInternOfferByEmployeurEmail(String email){
+    public List<InternshipOfferDto> getInternOfferByEmployerEmail(String email){
         List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
-        List<InternshipOffer> internshipOffers = employerRepository.findAllByEmailEqualsIgnoreCase(email).get().getInternshipOffers();
-        for(InternshipOffer internshipOffer : internshipOffers){
-                internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
+        List<InternshipOffer> internshipOffers = employerRepository.findAllByEmailEqualsIgnoreCase(email).map(Employer::getInternshipOffers).orElse(null);
+
+        if (internshipOffers == null) {
+            return internshipOfferDtos;
         }
+
+        for(InternshipOffer internshipOffer : internshipOffers){
+            internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
+        }
+
         return internshipOfferDtos;
     }
 
+    public InternshipOffer toInternshipOffer(InternshipOfferDto internshipOfferDto) {
+        StudyProgram studyProgram = studyProgramService.findProgramById(internshipOfferDto.getProgramId());
+        Employer employer = employerService.findById(internshipOfferDto.getEmployerId());
+        File file = fileService.newFile(internshipOfferDto.getFile());
+        OfferReviewRequest offerReviewRequest = internshipOfferReviewRequestService.createNewRequest();
+
+        InternshipOffer internshipOffer = internshipOfferRepository.findById(internshipOfferDto.getId()).orElse(null);
+
+        internshipOffer = internshipOffer == null
+                ? new InternshipOffer(
+                        internshipOfferDto.getTitle(),
+                        internshipOfferDto.getLocation(),
+                        internshipOfferDto.getDescription(),
+                        internshipOfferDto.getSalaryByHour(),
+                        LocalDate.parse(internshipOfferDto.getStartDate()),
+                        LocalDate.parse(internshipOfferDto.getEndDate()),
+                        new ArrayList<>(),
+                        studyProgram,
+                        file,
+                        employer,
+                        internshipOfferDto.getState(),
+                        offerReviewRequest
+                    )
+                : internshipOffer;
+
+        internshipOffer.setTitle(Objects.requireNonNullElse(internshipOfferDto.getTitle(), internshipOffer.getTitle()));
+        internshipOffer.setLocation(Objects.requireNonNullElse(internshipOfferDto.getLocation(), internshipOffer.getLocation()));
+        internshipOffer.setDescription(Objects.requireNonNullElse(internshipOfferDto.getDescription(), internshipOffer.getDescription()));
+        internshipOffer.setSalaryByHour(internshipOfferDto.getSalaryByHour());
+        internshipOffer.setStartDate(Objects.requireNonNullElse(LocalDate.parse(internshipOfferDto.getStartDate()), internshipOffer.getStartDate()));
+        internshipOffer.setEndDate(Objects.requireNonNullElse(LocalDate.parse(internshipOfferDto.getEndDate()), internshipOffer.getEndDate()));
+        internshipOffer.setStudyProgram(Objects.requireNonNullElse(studyProgram, internshipOffer.getStudyProgram()));
+        internshipOffer.setFile(Objects.requireNonNullElse(file, internshipOffer.getFile()));
+        internshipOffer.setEmployer(Objects.requireNonNullElse(employer, internshipOffer.getEmployer()));
+        internshipOffer.setState(Objects.requireNonNullElse(internshipOfferDto.getState(), internshipOffer.getState()));
+        internshipOffer.setOfferReviewRequest(Objects.requireNonNullElse(offerReviewRequest, internshipOffer.getOfferReviewRequest()));
+
+        return internshipOffer;
+    }
 }

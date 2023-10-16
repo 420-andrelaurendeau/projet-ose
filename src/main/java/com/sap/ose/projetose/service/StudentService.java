@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.StudentDto;
-import com.sap.ose.projetose.dto.FileDto;
+import com.sap.ose.projetose.dto.FileTransferDto;
 import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.StudentApplicationsDto;
 import com.sap.ose.projetose.exception.DatabaseException;
@@ -94,10 +94,10 @@ public class StudentService {
                         InternshipOfferDto offerDto = new InternshipOfferDto(offerApplied.getInternshipOffer());
                         offerDto.setInternshipApplicationIds(null);
 
-                        List<FileDto> fileDtos = offerApplied.getFiles().stream().map(FileDto::new).toList();
+                        List<FileTransferDto> fileTransferDtos = offerApplied.getFiles().stream().map(FileTransferDto::new).toList();
 
                         dto.setAppliedOffer(offerDto);
-                        dto.setAppliedFiles(fileDtos);
+                        dto.setAppliedFiles(fileTransferDtos);
 
                         return dto;
                     }).toList();

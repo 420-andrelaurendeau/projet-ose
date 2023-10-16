@@ -14,7 +14,7 @@ function EtudiantStagePage() {
     const [offers, setOffers] = useState([
     ]);
     const fetchOffers = () => {
-        axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
+        axios.get(`http://localhost:8080/api/internshipOffer/getStudentOffers`)
             .then(res => {
                 setOffers(res.data);
                 console.log(res.data);

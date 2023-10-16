@@ -11,29 +11,12 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 public class EmployerDto extends UserDto {
-
     private String enterprise;
     private long studyProgramId;
 
-    public EmployerDto(String lastName, String firstName, String phone, String email, String enterprise) {
-        super(firstName, lastName, phone, email);
-        this.enterprise = enterprise;
-    }
-
-    public EmployerDto(int id, String lastName, String firstName, String phone, String email, String enterprise) {
-        super(id,lastName, firstName, phone, email);
-        this.enterprise = enterprise;
-    }
-
-    public EmployerDto(Employer employer){
-        super(employer.getFirstName(), employer.getLastName(), employer.getPhoneNumber(), employer.getEmail());
+    public EmployerDto(Employer employer) {
+        super(employer);
         this.enterprise = employer.getEnterprise();
         this.studyProgramId = employer.getStudyProgram().getId();
-    }
-
-    @Override
-    public User toUser() {
-        //FIXME: EmployerDto.toNewUser() should return a valid object.
-        return new Student(getLastName(), getFirstName(), getPhoneNumber(), getEmail(), getEnterprise(), (StudyProgram) null,null,null);
     }
 }

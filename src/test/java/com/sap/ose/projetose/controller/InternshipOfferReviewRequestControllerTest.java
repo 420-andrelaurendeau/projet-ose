@@ -48,7 +48,7 @@ public class InternshipOfferReviewRequestControllerTest {
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                                                        .post("/api/offerReviewRequest/save")
+                                                        .post("/api/offerReview/update")
                                                         .contentType(MediaType.APPLICATION_JSON)
                                                         .content(content);
 
@@ -68,7 +68,7 @@ public class InternshipOfferReviewRequestControllerTest {
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                                                        .post("/api/offerReviewRequest/save")
+                                                        .post("/api/offerReview/update")
                                                         .contentType(MediaType.APPLICATION_JSON)
                                                         .content(content);
 
@@ -87,7 +87,7 @@ public class InternshipOfferReviewRequestControllerTest {
         when(internshipOfferReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new InternshipManagerNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReview/update").contentType(MediaType.APPLICATION_JSON).content(content);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
@@ -99,7 +99,7 @@ public class InternshipOfferReviewRequestControllerTest {
         when(internshipOfferReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new DatabaseException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReview/update").contentType(MediaType.APPLICATION_JSON).content(content);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 
@@ -111,7 +111,7 @@ public class InternshipOfferReviewRequestControllerTest {
         when(internshipOfferReviewRequestService.saveOfferReviewRequest(any())).thenThrow(new ServiceException());
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReviewRequest/save").contentType(MediaType.APPLICATION_JSON).content(content);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/offerReview/update").contentType(MediaType.APPLICATION_JSON).content(content);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(internshipOfferReviewRequestController).setControllerAdvice(new GlobalExceptionHandler()).build().perform(requestBuilder);
 

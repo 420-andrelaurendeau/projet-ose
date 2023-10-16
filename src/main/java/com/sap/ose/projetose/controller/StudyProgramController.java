@@ -14,7 +14,7 @@ import java.util.List;
 public class StudyProgramController {
     public final StudyProgramService studyProgramService;
 
-    @PostMapping("/ajouter")
+    @PostMapping({"/update", "/new"})
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<StudyProgramDto> saveStudyProgram(@RequestBody StudyProgramDto studyProgramDTO) {
         return studyProgramService
@@ -23,7 +23,7 @@ public class StudyProgramController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/programmes")
+    @GetMapping("/all")
     @CrossOrigin(origins = "http://localhost:3000")
     public List<StudyProgramDto> getStudyPrograms() {
         return studyProgramService.getAllStudyPrograms();

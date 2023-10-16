@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.InternshipApplicationDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,21 +19,25 @@ public class InternshipApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne()
-    @JoinColumn(name = "etudiant_id")
+    @ManyToOne
+    @JoinColumn
     @ToString.Exclude
-    private Student student;
+    private Student candidate;
 
-    @ManyToOne()
-    @JoinColumn(name = "interOfferJob_id")
+    @ManyToOne
+    @JoinColumn
     private InternshipOffer internshipOffer;
 
-    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<File> files;
 
-    public InternshipApplication(Student student, InternshipOffer internshipOffer, List<File> files) {
-        this.student = student;
+    public InternshipApplication(Student candidate, InternshipOffer internshipOffer, List<File> files) {
+        this.candidate = candidate;
         this.internshipOffer = internshipOffer;
         this.files = files;
+    }
+
+    public InternshipApplicationDto toDto() {
+        return new InternshipApplicationDto(this);
     }
 }

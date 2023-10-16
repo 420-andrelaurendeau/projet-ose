@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.annotations.UserExists;
 import com.sap.ose.projetose.models.OfferReviewRequest;
 import com.sap.ose.projetose.models.ApprovalStatus;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class OfferReviewRequestDto {
     private String comment;
     private ApprovalStatus state;
     private long internshipOfferId;
+    @UserExists
     private long internshipManagerId;
 
     public OfferReviewRequestDto(OfferReviewRequest offerReviewRequest){
@@ -22,9 +24,5 @@ public class OfferReviewRequestDto {
         this.comment = offerReviewRequest.getComment();
         this.internshipOfferId = offerReviewRequest.getInternshipOffer().getId();
         this.internshipManagerId = offerReviewRequest.getInternshipManager().getId();
-    }
-
-    public OfferReviewRequest fromDto(){
-        return new OfferReviewRequest(null, comment, null);
     }
 }

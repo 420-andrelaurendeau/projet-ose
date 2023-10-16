@@ -48,7 +48,7 @@ function InscriptionEmployeur(props: any) {
 
     const fetchProgrammes = () => {
         axios
-            .get("http://localhost:8080/api/programme/programmes")
+            .get("http://localhost:8080/api/programme/all")
             .then((response) => {
                 console.log(response);
                 setProgrammes(response.data);
@@ -114,7 +114,7 @@ function InscriptionEmployeur(props: any) {
         }
 
         axios
-            .post("http://localhost:8080/api/employeur/ajouter", JSON.stringify(formData), {
+            .post("http://localhost:8080/api/employers/newEmployer", JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }

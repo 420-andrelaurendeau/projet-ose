@@ -11,39 +11,39 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/interOfferJob")
+@RequestMapping("/api/internshipOffer")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class InternshipOfferController {
     private final InternshipOfferService internshipOfferService;
 
-    @PostMapping("/save")
-    public ResponseEntity<InternshipOfferDto> saveInterOffer(@RequestBody InternshipOfferDto internshipOfferDto) {
+    @PostMapping({"/update", "/new"})
+    public ResponseEntity<InternshipOfferDto> createInternshipOffer(@RequestBody InternshipOfferDto internshipOfferDto) {
 
         System.out.println(internshipOfferDto.toString());
-        InternshipOfferDto savedOfferJobDto = internshipOfferService.saveInternshipOfferJob(internshipOfferDto);
+        InternshipOfferDto savedOfferJobDto = internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto);
 
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/pendingOffers")
+    @GetMapping("/getPendingOffers")
     public List<InternshipOfferDto> getPendingOffers() {
         return internshipOfferService.getInternOfferPending();
     }
 
-    @GetMapping("/allOffers")
+    @GetMapping("/getOffers")
     public List<InternshipOfferDto> getAllOffers() {
         return internshipOfferService.getAllInternOffers();
     }
 
-    @GetMapping("/OffersEtudiant")
+    @GetMapping("/getStudentOffers")
     public List<InternshipOfferDto> getStudentOffers() {
         return internshipOfferService.getAcceptedInternshipOffer();
     }
 
     @GetMapping("/OffersEmp/{email}")
     public List<InternshipOfferDto> getInternOfferJob(@PathVariable String email){
-        return internshipOfferService.getInternOfferByEmployeurEmail(email);
+        return internshipOfferService.getInternOfferByEmployerEmail(email);
     }
 }
 

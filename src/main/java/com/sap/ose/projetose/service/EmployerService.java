@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.EmployerDto;
+import com.sap.ose.projetose.dto.newEmployerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EmployerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -14,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.xml.validation.Validator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,40 +43,24 @@ public class EmployerService {
         }
     }
 
-
     @Transactional
-    public Employer saveEmployer(String lastName, String firstName, String phone, String email, String password, String employerName, long programId ){
+    public Optional<EmployerDto> newEmployer(newEmployerDto employerDto){
         try {
-            StudyProgram studyProgram = studyProgramService.getStudyProgramById(programId).toNewProgram();
-            return employerRepository.save(new Employer(lastName,firstName,phone,email,password,employerName, studyProgram));
+            Employer employer = new Employer();
+            StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());
 
-        }catch (DataAccessException e){
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'employeur.") {};
-        }
-    }
-
-    @Transactional
-    public Optional<Employer> saveEmployer(Employer employer){
-        try {
-            StudyProgram StudyProgram = studyProgramService.findProgramById(employer.getStudyProgram().getId());
+            employer.setLastName(employerDto.getLastName());
+            employer.setFirstName(employerDto.getFirstName());
+            employer.setPhoneNumber(employerDto.getPhoneNumber());
+            employer.setEmail(employerDto.getEmail());
+            employer.setPassword(employerDto.getPassword());
             employer.setStudyProgram(StudyProgram);
-            return Optional.of(employerRepository.save(employer));
+            employer.setEnterprise(employerDto.getEnterprise());
+
+            return Optional.of(employerRepository.save(employer)).map(EmployerDto::new);
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
         }
-    }
-
-    public List<EmployerDto> getAllEmployers(){
-        List<EmployerDto> employerDTOS = new ArrayList<>();
-        for(Employer employer : employerRepository.findAll()){
-            employerDTOS.add(new EmployerDto(employer.getLastName(), employer.getFirstName(), employer.getPhoneNumber(), employer.getEmail(), employer.getEnterprise()));
-        }
-        return employerDTOS;
-    }
-
-    EmployerDto getEmployerById(Long id){
-        return new EmployerDto(Objects.requireNonNull(employerRepository.findById(id).orElse(null))) ;
     }
 }

@@ -9,21 +9,20 @@ import lombok.ToString;
 
 @Data
 @Entity
-@DiscriminatorColumn(name = "UTILISATEUR")
+@DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column
     private long id;
     private String lastName;
     private String firstName;
     private String phoneNumber;
     @Column(unique = true)
     private String email;
-    @Transient
     @ToString.Exclude
     private String password;
 

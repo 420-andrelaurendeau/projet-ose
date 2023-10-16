@@ -4,13 +4,13 @@ package com.sap.ose.projetose.models;
 import com.sap.ose.projetose.dto.StudentDto;
 import com.sap.ose.projetose.dto.UserDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@DiscriminatorValue("ETUDIANT")
 @Data
 @ToString
 @NoArgsConstructor
@@ -21,13 +21,13 @@ public class Student extends User {
     private String matricule;
 
     @ManyToOne
-    @JoinColumn(name = "programme_id")
+    @JoinColumn
     private StudyProgram studyProgram;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<File> cvList;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
 

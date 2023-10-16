@@ -6,7 +6,7 @@ import com.sap.ose.projetose.exception.InternshipManagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.InternshipManager;
 import com.sap.ose.projetose.models.StudyProgram;
-import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import com.sap.ose.projetose.repository.InternshipManagerRepository;
 import com.sap.ose.projetose.repository.StudyProgramRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +33,7 @@ public class InternshipManagerServiceTest {
     @Autowired
     private InternshipManagerService internshipmanagerService;
     @MockBean
-    private InternshipmanagerRepository internshipmanagerRepository;
+    private InternshipManagerRepository internshipmanagerRepository;
     @MockBean
     private StudyProgramService studyProgramService;
     @MockBean

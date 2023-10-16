@@ -9,13 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/offerReviewRequest")
+@RequestMapping("/api/offerReview")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class InternshipOfferReviewRequestController {
     private final InternshipOfferReviewRequestService internshipOfferReviewRequestService;
 
-    @PostMapping("/save")
+    @PostMapping("/update")
     public ResponseEntity<InternshipOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
         InternshipOfferDto internshipOfferDto = internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
         return new ResponseEntity<>(internshipOfferDto, HttpStatus.CREATED);

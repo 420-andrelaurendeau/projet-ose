@@ -20,10 +20,9 @@ public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @GetMapping("/utilisateurs")
+    @GetMapping("/all")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        logger.info("getAllUsers");
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 

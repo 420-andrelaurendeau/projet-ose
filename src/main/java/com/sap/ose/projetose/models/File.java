@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.FileTransferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,19 +26,15 @@ public class File {
     private boolean isAccepted;
 
     @ManyToOne
-    @JoinColumn(name = "etudiant_id")
+    @JoinColumn
     @ToString.Exclude
-    private Student student;
-
-    @ManyToOne
-    @JoinColumn(name = "internship_id")
-    @ToString.Exclude
-    private InternshipApplication internshipApplication;
+    private User user;
 
 
-    public File(byte[] content, String fileName, boolean isAccepted) {
+    public File(byte[] content, String fileName, boolean isAccepted, User user) {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;
+        this.user = user;
     }
 }

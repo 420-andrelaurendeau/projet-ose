@@ -8,21 +8,19 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue("EMPLOYEUR")
+@EqualsAndHashCode(callSuper = true)
 public class Employer extends User {
-    @Column(unique = true)
     private String enterprise;
 
     @ManyToOne
     private StudyProgram studyProgram;
 
-    @OneToMany(mappedBy = "employeur", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
     public Employer(long id, String lastName, String firstName, String email, String phone, String password, String enterprise, StudyProgram studyProgram) {

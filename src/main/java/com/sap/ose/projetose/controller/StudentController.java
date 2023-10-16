@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiant")
+@RequestMapping("/api/student")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class StudentController {
@@ -23,7 +23,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @PostMapping("/ajouter")
+    @PostMapping({"/register", "/update"})
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         return studentService.saveStudent(student).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
@@ -34,21 +34,21 @@ public class StudentController {
         return studentService.getStudentDTOById(id);
     }
 
-    @GetMapping("/etudiants")
+    @GetMapping("/all")
     public ResponseEntity<List<StudentDto>> getStudents() {
         logger.info("get students");
         return ResponseEntity.ok().body(studentService.getStudents());
     }
 
-    @PostMapping("/addCv/{matricule}")
-    public ResponseEntity<Student> addCv(@PathVariable String matricule, @RequestBody String cv) {
+    @PostMapping("/{id}/cv")
+    public ResponseEntity<Student> addCv(@PathVariable String id, @RequestBody String cv) {
         // FIXME: Properly implement this method.
         logger.info("add cv to " + matricule );
         Student student = studentService.updateCvByMatricule(matricule, null);
         return ResponseEntity.ok().body(student);
     }
 
-    @GetMapping("{id}/offersApplied")
+    @GetMapping("{id}/applications")
     public ResponseEntity<List<StudentApplicationsDto>> getApplicationsByStudent(@PathVariable long id) {
         return ResponseEntity.ok().body(studentService.getApplicationsByStudent(id));
     }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface InternOfferRepository extends JpaRepository<InternshipOffer, Long> {
+public interface InternshipOfferRepository extends JpaRepository<InternshipOffer, Long> {
     default List<InternshipOffer> findAllByStateIsApproved() {
         return findAllByStateEquals(ApprovalStatus.APPROVED);
     }

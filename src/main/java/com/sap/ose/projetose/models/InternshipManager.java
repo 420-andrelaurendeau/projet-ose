@@ -7,15 +7,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class InternshipManager extends User {
     @OneToOne
-    @JoinColumn(name = "programme_id")
+    @JoinColumn
     private StudyProgram studyProgram;
 
     public InternshipManager(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {

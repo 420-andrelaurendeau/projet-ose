@@ -21,7 +21,7 @@ function EtudiantStage(props: any) {
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
         console.log(student);
-        axios.post(`http://localhost:8080/api/intershipCandidates/saveCandidats`, {
+        axios.post(`http://localhost:8080/api/internshipApplications/newApplication`, {
             etudiant: student,
             internOfferJob: offer,
             files: null

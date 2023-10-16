@@ -42,19 +42,8 @@ public class StudyProgramService {
     }
 
     @Transactional
-    public StudyProgramDto saveStudyProgram(String nom, String description) {
-        try{
-            return new StudyProgramDto(studyProgramRepository.save(new StudyProgram(nom, description)));
-
-        }catch (DataAccessException e){
-            logger.info(e.getMessage());
-            throw new DataAccessException("Error lors de la sauvegarde du programme") {};
-        }
-    }
-
-    @Transactional
     public Optional<StudyProgramDto> saveStudyProgram(StudyProgramDto studyProgramDTO) {
-        return Optional.of(new StudyProgramDto(studyProgramRepository.save(studyProgramDTO.toNewProgram())));
+        return Optional.of(new StudyProgramDto(studyProgramRepository.save(studyProgramDTO)));
     }
 
     public List<StudyProgramDto> getAllStudyPrograms() {
@@ -63,10 +52,5 @@ public class StudyProgramService {
             dtos.add(new StudyProgramDto(studyProgram));
         }
         return dtos;
-    }
-
-    public StudyProgramDto getStudyProgramById(Long id) {
-        Optional<StudyProgram> program = studyProgramRepository.findById(id);
-        return program.map(value -> new StudyProgramDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
     }
 }

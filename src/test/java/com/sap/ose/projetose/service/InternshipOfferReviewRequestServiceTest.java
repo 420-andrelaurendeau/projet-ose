@@ -4,8 +4,8 @@ import com.sap.ose.projetose.dto.InternshipOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.repository.InternOfferRepository;
-import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import com.sap.ose.projetose.repository.InternshipOfferRepository;
+import com.sap.ose.projetose.repository.InternshipManagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,11 +39,11 @@ public class InternshipOfferReviewRequestServiceTest {
     @MockBean
     private InternshipOfferService internshipOfferService;
     @MockBean
-    private InternOfferRepository internOfferRepository;
+    private InternshipOfferRepository internshipOfferRepository;
     @MockBean
     private InternshipManagerService internshipmanagerService;
     @MockBean
-    private InternshipmanagerRepository internshipmanagerRepository;
+    private InternshipManagerRepository internshipmanagerRepository;
     @MockBean
     private StudyProgramService studyProgramService;
 

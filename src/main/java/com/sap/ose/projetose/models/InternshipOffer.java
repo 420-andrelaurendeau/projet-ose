@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dto.InternshipOfferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +13,9 @@ import java.util.List;
 
 @Entity
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class InternshipOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,24 +29,24 @@ public class InternshipOffer {
     private String status;
     private ApprovalStatus state;
 
-    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
-    private List<InternshipApplication> internshipCandidates;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<InternshipApplication> internshipApplications;
 
-    @ManyToOne()
-    @JoinColumn(name = "program_id")
+    @ManyToOne
+    @JoinColumn
     private StudyProgram studyProgram;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "file_id")
+    @JoinColumn
     private File file;
 
-    @ManyToOne()
-    @JoinColumn(name = "employeur_id")
+    @ManyToOne
+    @JoinColumn
     @ToString.Exclude
     private Employer employer;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "offerReviewRequest_id")
+    @JoinColumn
     private OfferReviewRequest offerReviewRequest;
 
     public InternshipOffer(String title,
@@ -54,9 +55,9 @@ public class InternshipOffer {
                            double salaryByHour,
                            LocalDate startDate,
                            LocalDate endDate,
-                           List<InternshipApplication> internshipCandidates,
+                           List<InternshipApplication> internshipApplications,
                            StudyProgram studyProgram,
-                           File files,
+                           File file,
                            Employer employer,
                            ApprovalStatus state,
                            OfferReviewRequest offerReviewRequest) {
@@ -66,9 +67,9 @@ public class InternshipOffer {
         this.salaryByHour = salaryByHour;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.internshipCandidates = internshipCandidates;
+        this.internshipApplications = internshipApplications;
         this.studyProgram = studyProgram;
-        this.file = files;
+        this.file = file;
         this.employer = employer;
         this.state = state;
         this.offerReviewRequest = offerReviewRequest;
@@ -81,9 +82,9 @@ public class InternshipOffer {
                            double salaryByHour,
                            LocalDate startDate,
                            LocalDate endDate,
-                           List<InternshipApplication> internshipCandidates,
+                           List<InternshipApplication> internshipApplications,
                            StudyProgram studyProgram,
-                           File files,
+                           File file,
                            Employer employer,
                            ApprovalStatus state,
                            OfferReviewRequest offerReviewRequest) {
@@ -94,11 +95,15 @@ public class InternshipOffer {
         this.salaryByHour = salaryByHour;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.internshipCandidates = internshipCandidates;
+        this.internshipApplications = internshipApplications;
         this.studyProgram = studyProgram;
-        this.file = files;
+        this.file = file;
         this.employer = employer;
         this.state = state;
         this.offerReviewRequest = offerReviewRequest;
+    }
+
+    public InternshipOfferDto toDto() {
+        return new InternshipOfferDto(this);
     }
 }
