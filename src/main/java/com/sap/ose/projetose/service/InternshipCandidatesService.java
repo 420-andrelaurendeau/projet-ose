@@ -166,4 +166,21 @@ public class InternshipCandidatesService {
             throw new ServiceException("Erreur lors de la récupération des candidats refusés.");
         }
     }
+
+    public List<InternshipCandidatesDto> getCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAll();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats.");
+        }
+    }
 }

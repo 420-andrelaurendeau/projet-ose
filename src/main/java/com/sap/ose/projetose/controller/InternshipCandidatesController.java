@@ -27,6 +27,12 @@ public class InternshipCandidatesController {
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
+    @GetMapping("/getCandidats")
+    public ResponseEntity<List<InternshipCandidatesDto>> getIntershipCandidate() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
     @PostMapping("/acceptCandidats")
     public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesDto);
