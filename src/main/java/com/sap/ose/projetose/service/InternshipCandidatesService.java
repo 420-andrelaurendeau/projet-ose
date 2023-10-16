@@ -3,10 +3,7 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,6 +64,42 @@ public class InternshipCandidatesService {
     @Transactional
     public InternshipCandidatesDto saveCandidates(InternshipCandidates internshipCandidates){
         try{
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+    @Transactional
+    public InternshipCandidatesDto acceptCandidates(InternshipCandidatesDto internshipCandidatesDto) {
+        try{
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesDto.getId()).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            internshipCandidates.setState(State.ACCEPTED);
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+    @Transactional
+    public InternshipCandidatesDto refuseCandidates(InternshipCandidatesDto internshipCandidatesDto) {
+        try{
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesDto.getId()).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            internshipCandidates.setState(State.DECLINED);
             internshipCandidatesRepository.save(internshipCandidates);
             return new InternshipCandidatesDto(internshipCandidates);
         }catch (DataAccessException e){

@@ -25,4 +25,16 @@ public class InternshipCandidatesController {
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
+    @PostMapping("/acceptCandidats")
+    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesDto);
+        return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/refuseCandidats")
+    public ResponseEntity<InternshipCandidatesDto> refuseIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.refuseCandidates(internshipCandidatesDto);
+        return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
 }
