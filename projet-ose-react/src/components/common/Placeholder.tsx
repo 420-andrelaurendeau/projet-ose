@@ -27,7 +27,8 @@ function Placeholder(): ReactElement {
                                  className={"cursor-pointer"}/>
             </div>
             <div>
-                <FontAwesomeIcon icon={faPause} style={{color: "#e1d22d",}} onClick={handlePause} className={"cursor-pointer"} />
+                <FontAwesomeIcon icon={faPause} style={{color: "#e1d22d",}} onClick={handlePause}
+                                 className={"cursor-pointer"}/>
             </div>
         </div>
     )
