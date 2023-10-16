@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/intershipCandidates")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,10 +33,28 @@ public class InternshipCandidatesController {
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
-    @PostMapping("/refuseCandidats")
-    public ResponseEntity<InternshipCandidatesDto> refuseIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.refuseCandidates(internshipCandidatesDto);
+    @PostMapping("/declineCandidats")
+    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(internshipCandidatesDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getPendingCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getPendingCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getPendingCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getAcceptedCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getAcceptedCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getAcceptedCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getDeclinedCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getDeclinedCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getDeclinedCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
     }
 
 }

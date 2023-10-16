@@ -2,7 +2,9 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
@@ -96,7 +98,7 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipCandidatesDto refuseCandidates(InternshipCandidatesDto internshipCandidatesDto) {
+    public InternshipCandidatesDto declineCandidates(InternshipCandidatesDto internshipCandidatesDto) {
         try{
             InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesDto.getId()).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
             internshipCandidates.setState(State.DECLINED);
@@ -111,6 +113,57 @@ public class InternshipCandidatesService {
         } catch (Exception e) {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    public List<InternshipCandidatesDto> getPendingCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllPending();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats en attente", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats en attente.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats en attente", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats en attente.");
+        }
+    }
+
+    public List<InternshipCandidatesDto> getAcceptedCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllAccepted();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats acceptés", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats acceptés.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats acceptés", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats acceptés.");
+        }
+    }
+
+    public List<InternshipCandidatesDto> getDeclinedCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllDeclined();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats refusés", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats refusés.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats refusés", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats refusés.");
         }
     }
 }
