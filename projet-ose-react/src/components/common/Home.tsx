@@ -3,25 +3,24 @@ import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
 import EtudiantStage from "./EtudiantStage";
 import EtudiantStagePage from "../../pages/EtudiantStagePage";
-function Home(props:any) {
+
+function Home(props: any) {
     console.log(props.user)
     useEffect(() => {
 
         console.log(localStorage.getItem('theme'))
     }, [localStorage.getItem('theme')]);
     return (
-       <div>
-           <Header
-               user={props.user}
-           />
-           {
+        <div>
+            <Header
+                user={props.user}
+            />
+            {
                 props.user.matricule ?
-                    <EtudiantStagePage
-
-                    />
+                    <EtudiantStagePage/>
                     : <EmployeurHomePage/>
-           }
-       </div>
+            }
+        </div>
     );
 }
 
