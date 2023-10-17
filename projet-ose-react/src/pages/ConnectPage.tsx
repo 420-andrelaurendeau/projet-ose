@@ -1,6 +1,5 @@
 import React from "react";
 import ConnectForm from "../components/common/ConnectForm";
-import useDarkSide from "../hooks/useDarkSide";
 
 
 function ConnectPage() {
