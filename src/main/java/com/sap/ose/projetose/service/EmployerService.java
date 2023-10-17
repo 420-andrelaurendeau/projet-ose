@@ -1,23 +1,21 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.annotations.UserExists;
 import com.sap.ose.projetose.dto.EmployerDto;
 import com.sap.ose.projetose.dto.newEmployerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EmployerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.models.Employer;
-import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repository.EmployerRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.xml.validation.Validator;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,9 +24,8 @@ public class EmployerService {
     private final Logger logger = LoggerFactory.getLogger(EmployerService.class);
 
     private final EmployerRepository employerRepository;
-    private final StudyProgramService studyProgramService;
 
-    Employer findById(long id) {
+    public Employer findById(long id) {
         try {
             return employerRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
@@ -47,14 +44,11 @@ public class EmployerService {
     public Optional<EmployerDto> newEmployer(newEmployerDto employerDto){
         try {
             Employer employer = new Employer();
-            StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());
-
             employer.setLastName(employerDto.getLastName());
             employer.setFirstName(employerDto.getFirstName());
             employer.setPhoneNumber(employerDto.getPhoneNumber());
             employer.setEmail(employerDto.getEmail());
             employer.setPassword(employerDto.getPassword());
-            employer.setStudyProgram(StudyProgram);
             employer.setEnterprise(employerDto.getEnterprise());
 
             return Optional.of(employerRepository.save(employer)).map(EmployerDto::new);
