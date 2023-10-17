@@ -3,6 +3,9 @@ import {useTranslation} from "react-i18next";
 import {validateFile} from "../utils/validation/validationInteOfferForm";
 import {FileEntity} from "../model/FileEntity";
 import {setSelectionRange} from "@testing-library/user-event/dist/utils";
+import axios from "axios";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 
 
 function TeleversementCV(): ReactElement {
@@ -10,6 +13,7 @@ function TeleversementCV(): ReactElement {
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
     const [selectedUser, setUser] = useState({matricule: ""})
+    const [uploadState, setUploadState] = useState({status: "None"})
 
     const [errors, setErrors] = useState<{
         file?: string
@@ -74,6 +78,31 @@ function TeleversementCV(): ReactElement {
 
     }
 
+    const handleSubmit = async () => {
+        console.log(files)
+        setUploadState({status: "Uploading"})
+        axios.post(`http://localhost:8080/api/etudiant/addCv/${selectedUser.matricule}`, files[0]).then(res => {
+            console.log(res)
+            setUploadState({status: "Done"})
+        }).catch(err => {
+            console.log(err)
+            setUploadState({status: "Error"})
+        })
+    }
+
+    const renderUploadStatus = (): ReactElement | null => {
+        switch (uploadState.status) {
+            case "Uploading":
+                return <FontAwesomeIcon icon={faSpinner} spin/>
+            case "Done":
+                return <FontAwesomeIcon icon={faCheck}/>
+            case "Error":
+                return <FontAwesomeIcon icon={faX}/>
+            default:
+                return null
+        }
+    }
+
     return (
         <div className={"flex flex-col items-center justify-center"}>
             <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
@@ -129,9 +158,11 @@ function TeleversementCV(): ReactElement {
                             {selectedUser.matricule}
                         </div>
                     </div>
-                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"}>
+                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
                         Submit
                     </div>
+                    {renderUploadStatus()}
+
                 </form>
             </div>
         </div>
