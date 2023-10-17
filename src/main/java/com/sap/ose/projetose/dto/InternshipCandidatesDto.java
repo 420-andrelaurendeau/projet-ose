@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 public class InternshipCandidatesDto {
 
     private long id;
-    private EtudiantDto etudiant;
+    private EtudiantDtoWithId etudiant;
     private InternOfferDto internOfferJob;
     private List<FileDto> files;
     private State state;
 
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();
-        this.etudiant = internshipCandidates.getEtudiant() == null ? null : new EtudiantDto(internshipCandidates.getEtudiant());
+        this.etudiant = internshipCandidates.getEtudiant() == null ? null : new EtudiantDtoWithId(internshipCandidates.getEtudiant());
         this.internOfferJob = internshipCandidates.getInternOffer() == null ? null : new InternOfferDto(internshipCandidates.getInternOffer());
         this.files = internshipCandidates.getFiles() == null ? null : internshipCandidates.getFiles().stream().map(FileDto::new).toList();
         this.state = internshipCandidates.getState();

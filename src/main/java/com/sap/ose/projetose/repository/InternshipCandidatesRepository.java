@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 public interface InternshipCandidatesRepository extends JpaRepository<InternshipCandidates, Long> {
 
-    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.PENDING")
+    @Query("select i from InternshipCandidates i where i.state = com.sap.ose.projetose.modeles.State.PENDING")
     List<InternshipCandidates> findAllPending();
 
-    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
+    @Query("select i from InternshipCandidates i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
     List<InternshipCandidates> findAllAccepted();
 
-    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.DECLINED")
+    @Query("select i from InternshipCandidates i where i.state = com.sap.ose.projetose.modeles.State.DECLINED")
     List<InternshipCandidates> findAllDeclined();
 }

@@ -29,6 +29,7 @@ public class EtudiantDto extends UtilisateurDto {
         this.internships_id = internships_id;
     }
 
+
     public EtudiantDto(Etudiant etudiant) {
         super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();

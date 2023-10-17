@@ -13,7 +13,7 @@ private long id;
     private String phone;
     private String email;
 
-    public UtilisateurDto(int id, String nom, String prenom, String phone, String email) {
+    public UtilisateurDto(Long id, String nom, String prenom, String phone, String email) {
         this.nom = nom;
         this.prenom = prenom;
         this.phone = phone;

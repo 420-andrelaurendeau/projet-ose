@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
 import com.sap.ose.projetose.modeles.Etudiant;
@@ -34,14 +35,14 @@ public class InternshipCandidatesController {
     }
 
     @PostMapping("/acceptCandidats")
-    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesDto);
+    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody Long internshipCandidatesId) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesId);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
     @PostMapping("/declineCandidats")
-    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(internshipCandidatesDto);
+    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@RequestBody Long internshipCandidatesId) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(internshipCandidatesId);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 

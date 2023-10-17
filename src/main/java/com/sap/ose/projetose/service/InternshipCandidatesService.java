@@ -41,6 +41,7 @@ public class InternshipCandidatesService {
         try{
             InternshipCandidates internshipCandidates = new InternshipCandidates(internshipCandidatesDto.fromDto());
             Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant().getId());
+            etudiant.getInternshipsCandidate().add(internshipCandidates);
             InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInternOfferJob().getId());
             List<File> files = internshipCandidatesDto.getFiles() == null ? new ArrayList<>() : internshipCandidatesDto.getFiles().stream().map(FileDto::fromDto).toList();
 
@@ -80,9 +81,9 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipCandidatesDto acceptCandidates(InternshipCandidatesDto internshipCandidatesDto) {
+    public InternshipCandidatesDto acceptCandidates(Long internshipCandidatesId) {
         try{
-            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesDto.getId()).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesId).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
             internshipCandidates.setState(State.ACCEPTED);
             internshipCandidatesRepository.save(internshipCandidates);
             return new InternshipCandidatesDto(internshipCandidates);
@@ -98,9 +99,9 @@ public class InternshipCandidatesService {
         }
     }
     @Transactional
-    public InternshipCandidatesDto declineCandidates(InternshipCandidatesDto internshipCandidatesDto) {
+    public InternshipCandidatesDto declineCandidates(Long internshipCandidatesId) {
         try{
-            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesDto.getId()).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesId).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
             internshipCandidates.setState(State.DECLINED);
             internshipCandidatesRepository.save(internshipCandidates);
             return new InternshipCandidatesDto(internshipCandidates);
@@ -115,7 +116,7 @@ public class InternshipCandidatesService {
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
-
+    @Transactional
     public List<InternshipCandidatesDto> getPendingCandidates() {
         try {
             List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllPending();
@@ -132,7 +133,7 @@ public class InternshipCandidatesService {
             throw new ServiceException("Erreur lors de la récupération des candidats en attente.");
         }
     }
-
+    @Transactional
     public List<InternshipCandidatesDto> getAcceptedCandidates() {
         try {
             List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllAccepted();
@@ -149,7 +150,7 @@ public class InternshipCandidatesService {
             throw new ServiceException("Erreur lors de la récupération des candidats acceptés.");
         }
     }
-
+    @Transactional
     public List<InternshipCandidatesDto> getDeclinedCandidates() {
         try {
             List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllDeclined();
@@ -166,7 +167,7 @@ public class InternshipCandidatesService {
             throw new ServiceException("Erreur lors de la récupération des candidats refusés.");
         }
     }
-
+    @Transactional
     public List<InternshipCandidatesDto> getCandidates() {
         try {
             List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAll();
