@@ -31,8 +31,8 @@ public class InternshipCandidatesController {
     @GetMapping("/getInternshipCandidatesByIds/{id}")
     public ResponseEntity<List<InternshipCandidatesDto>> getInternshipCandidatesByOfferId(@PathVariable String id) {
         List<InternshipCandidatesDto> internshipCandidatesDto = internshipCandidatesService.getInternshipCandidatesByIds(id);
-        return new ResponseEntity<>(internshipCandidatesDto,HttpStatus.OK);
-
+        return new ResponseEntity<>(internshipCandidatesDto, HttpStatus.OK);
+    }
     @GetMapping("/getCandidats")
     public ResponseEntity<List<InternshipCandidatesDto>> getIntershipCandidate() {
         List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getCandidates();

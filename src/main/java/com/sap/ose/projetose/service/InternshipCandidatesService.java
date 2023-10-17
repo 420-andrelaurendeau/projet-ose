@@ -86,6 +86,17 @@ public class InternshipCandidatesService {
         try{
             List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllByInternOfferId(id);
             return InternshipCandidatesDto.fromList(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
     @Transactional
     public InternshipCandidatesDto acceptCandidates(Long internshipCandidatesId) {
         try{
@@ -113,6 +124,17 @@ public class InternshipCandidatesService {
             }
             List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllById(idsLong);
             return InternshipCandidatesDto.fromList(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
     @Transactional
     public InternshipCandidatesDto declineCandidates(Long internshipCandidatesId) {
         try{
