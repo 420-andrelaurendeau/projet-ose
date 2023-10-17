@@ -17,6 +17,9 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
         const newState = {
             id: id,
             open: !open.open
+        };
+        if (open.id !== id) {
+            newState.open = true;
         }
         setOpen(newState);
     }
@@ -52,6 +55,7 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
                                 <input
                                     id={offer.id}
                                     checked={open.open && open.id === offer.id}
+                                    onChange={() => console.log("change")}
                                     type="checkbox"
                                     className="peer sr-only"
                                 />
