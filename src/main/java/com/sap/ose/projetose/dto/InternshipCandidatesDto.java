@@ -27,6 +27,10 @@ public class InternshipCandidatesDto {
         this.files = internshipCandidates.getFiles() == null ? null : internshipCandidates.getFiles().stream().map(FileDto::new).toList();
     }
 
+    public static List<InternshipCandidatesDto> fromList(List<InternshipCandidates> internshipCandidates) {
+        return internshipCandidates.stream().map(InternshipCandidatesDto::new).collect(Collectors.toList());
+    }
+
     public InternshipCandidates fromDto() {
         return new InternshipCandidates(etudiant.fromDto(),internOfferJob.fromDto(), files == null ? new ArrayList<>() : files.stream().map(FileDto::fromDto).toList());
     }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/intershipCandidates")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -23,6 +25,12 @@ public class InternshipCandidatesController {
     public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getInternshipCandidatesByIds/{id}")
+    public ResponseEntity<List<InternshipCandidatesDto>> getInternshipCandidatesByOfferId(@PathVariable String id) {
+        List<InternshipCandidatesDto> internshipCandidatesDto = internshipCandidatesService.getInternshipCandidatesByIds(id);
+        return new ResponseEntity<>(internshipCandidatesDto,HttpStatus.OK);
     }
 
 }
