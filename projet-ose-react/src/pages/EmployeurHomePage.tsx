@@ -33,9 +33,10 @@ function EmployeurHomePage() {
                 <div className="max-w-7xl mx-auto py-6 xxxs:px-6 lg:px-8">
                     <div className="w-full hidden md:block overflow-x-auto">
                             <div className="flex-row flex md:justify-center space-x-4">
-                                <div
-
+                                <NavLink
+                                    to="/home/candidature"
                                     className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                                    state={user}
                                 >
                                     <div className="flex space-x-2 items-center h-16 w-auto">
                                         <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
@@ -46,7 +47,7 @@ function EmployeurHomePage() {
                                             <p className="text-xl dark:text-white font-bold">150</p>
                                         </div>
                                     </div>
-                                </div>
+                                </NavLink>
 
                                 <div
                                     className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"

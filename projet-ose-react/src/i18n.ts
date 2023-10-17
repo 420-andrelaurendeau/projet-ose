@@ -444,7 +444,7 @@ i18n
                             name:'PENDING',
                             text:'Pending'
                         },
-                        APPROVED:{
+                        ACCEPTED:{
                             name:'APPROVED',
                             text:'Approved'
                         },
@@ -895,7 +895,7 @@ i18n
                             name:'PENDING',
                             text:'En attente'
                         },
-                        APPROVED:{
+                        ACCEPTED:{
                             name:'APPROVED',
                             text:'Approuvé'
                         },

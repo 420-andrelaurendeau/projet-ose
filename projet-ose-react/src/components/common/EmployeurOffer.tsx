@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 export default function EmployeurOffer(props:any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur.offerTable");
-    console.log(props.offers);
+    console.log(props.offers.state);
     return (
         <div className="flex flex-col mt-14">
             <div className=" xs:-mx-6 lg:-mx-8">
