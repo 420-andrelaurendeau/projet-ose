@@ -1,19 +1,37 @@
-import { Transition } from "@headlessui/react";
+import {Transition} from "@headlessui/react";
 import imgDark from "././assets/images/Cegep-Andre-Laurendeau.png";
 import img from "././assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faCircleUser, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {
+    faBars,
+    faCircleUser,
+    faXmark
+} from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink} from "react-router-dom";
-import React, {useState} from "react";
-import Switcher from "./utils/switcher";
+import React, {useEffect, useState} from "react";
 import SidebarEtudiant from "./SidebarEtudiant";
+import useDarkSide from "./hooks/useDarkSide";
+import ProfilMenu from "./components/common/ProfilMenu";
 
 const Header = (props:any) => {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header");
+    const [language, setLanguage] = useState(i18n.language.slice(0, 2));
+    const fields = i18n.getResource(language,"translation","formField");
     const [isOpen, setIsOpen] = useState(false);
+    let [isOpenProfil, setIsOpenProfil] = useState(false)
+
+    function closeModal() {
+        setIsOpenProfil(false)
+    }
+
+    function openModal() {
+        setIsOpenProfil(true)
+    }
+
+
+
     return (
         <div>
             {
@@ -40,17 +58,21 @@ const Header = (props:any) => {
                                 </div>
                             </div>
                             {props.user.matricule && <div className="hidden md:flex">
-                                <NavLink to={"/home/offer"} state={props.user} className="ml-10 flex items-baseline space-x-4">
-                                    <p className="text-blue dark:text-orange">{fields.stage.text}</p>
+                                <NavLink to={"/home/offer"} state={props.user}
+                                         className="ml-10 flex items-baseline space-x-4">
+                                    <p className="text-blue dark:text-orange">{fields.Header.stage.text}</p>
                                 </NavLink>
-                                <NavLink to={"/home/appliedOffers"} state={props.user} className="ml-10 flex items-baseline space-x-4">
-                                    <p className="text-blue dark:text-orange">{fields.sidebar.offre_applique.text}</p>
+                                <NavLink to={"/home/appliedOffers"} state={props.user}
+                                         className="ml-10 flex items-baseline space-x-4">
+                                    <p className="text-blue dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
                                 </NavLink>
                             </div>}
-                            <Switcher/>
-                            <div className="hidden md:block">
-                                <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl" />
-                            </div>
+                            <button className="hidden md:block" onClick={openModal}>
+                                <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
+                            </button>
+                            <ProfilMenu show={isOpenProfil} onClose={closeModal} user={props.user}
+                                        language={language} sidebarIsOpen={isOpen}
+                            />
                             <div className="-mr-2 flex md:hidden">
                                 <button
                                     onClick={() => setIsOpen(!isOpen)}
@@ -61,8 +83,10 @@ const Header = (props:any) => {
                                 >
                                     <span className="sr-only">Open main menu</span>
                                     {!isOpen ?
-                                        <FontAwesomeIcon icon={faBars} color="black" className="block h-6 w-6 text-blue dark:text-orange" />
-                                        : <FontAwesomeIcon icon={faXmark} color="black" className="block h-6 w-6 text-blue dark:text-orange" />
+                                        <FontAwesomeIcon icon={faBars} color="black"
+                                                         className="block h-6 w-6 text-blue dark:text-orange"/>
+                                        : <FontAwesomeIcon icon={faXmark} color="black"
+                                                           className="block h-6 w-6 text-blue dark:text-orange"/>
                                     }
                                 </button>
                             </div>
@@ -77,20 +101,22 @@ const Header = (props:any) => {
                         leaveFrom="opacity-100 scale-100"
                         leaveTo="opacity-0 scale-95"
                     >
-                        <div className="md:hidden" >
+                        <div className="md:hidden">
                             {
                                 props.user.matricule ?
-                                 <SidebarEtudiant
+                                    <SidebarEtudiant
                                         user={props.user}
                                         setIsOpen={setIsOpen}
-                                 />:
+                                    /> :
                                     <SidebarEmployeurHome
                                         user={props.user}
                                         setIsOpen={setIsOpen}
+                                        onOpenProfil={openModal}
                                     />
                             }
                         </div>
                     </Transition>
+
                 </nav>
             </div>
 

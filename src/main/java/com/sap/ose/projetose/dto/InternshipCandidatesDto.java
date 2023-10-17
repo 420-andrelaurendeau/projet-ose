@@ -30,6 +30,10 @@ public class InternshipCandidatesDto {
         this.state = internshipCandidates.getState();
     }
 
+    public static List<InternshipCandidatesDto> fromList(List<InternshipCandidates> internshipCandidates) {
+        return internshipCandidates.stream().map(InternshipCandidatesDto::new).collect(Collectors.toList());
+    }
+
     public InternshipCandidates fromDto() {
         return new InternshipCandidates(etudiant.fromDto(),internOfferJob.fromDto(), files == null ? new ArrayList<>() : files.stream().map(FileDto::fromDto).toList(), state == null ? State.PENDING : state);
     }

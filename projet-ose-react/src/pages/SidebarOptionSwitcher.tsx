@@ -4,6 +4,7 @@ import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import EtudiantStage from "../components/common/EtudiantStage";
 import StudentAppliedOffers from "../components/common/StudentAppliedOffers";
+import CandidatureOffer from "../components/common/CandidatureOffer";
 
 
 
@@ -59,7 +60,10 @@ function SidebarOptionSwitcher(props:any) {
                              />
                              :
                              option === "candidature" ?
-                                 <p>Candidature</p>
+                                 <CandidatureOffer
+                                    user={props.user}
+                                    offers={props.offers}
+                                 />
                                  :
                                  option === "contract" ?
                                      <p>Contract</p>
