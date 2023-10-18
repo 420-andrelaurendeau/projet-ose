@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class newInternshipApplicationDto {
+public class NewInternshipApplicationDto {
     @UserExists
     private long candidateId;
     @InternshipOfferExists

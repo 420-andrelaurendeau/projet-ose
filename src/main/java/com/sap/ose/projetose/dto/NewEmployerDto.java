@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class newEmployerDto extends newUserDto {
+public class NewEmployerDto extends NewUserDto {
     @NotBlank
     private String enterprise;
     private long studyProgramId;

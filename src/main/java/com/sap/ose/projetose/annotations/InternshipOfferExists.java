@@ -15,4 +15,8 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = {InternshipOfferExistsValidator.class})
-public @interface InternshipOfferExists { }
+public @interface InternshipOfferExists {
+    String message() default "Internship offer does not exist";
+    Class[] groups() default {};
+    Class[] payload() default {};
+}

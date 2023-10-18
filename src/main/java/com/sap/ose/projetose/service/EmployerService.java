@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.EmployerDto;
-import com.sap.ose.projetose.dto.newEmployerDto;
+import com.sap.ose.projetose.dto.NewEmployerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EmployerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -15,9 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.xml.validation.Validator;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -44,7 +41,7 @@ public class EmployerService {
     }
 
     @Transactional
-    public Optional<EmployerDto> newEmployer(newEmployerDto employerDto){
+    public Optional<EmployerDto> newEmployer(NewEmployerDto employerDto){
         try {
             Employer employer = new Employer();
             StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());

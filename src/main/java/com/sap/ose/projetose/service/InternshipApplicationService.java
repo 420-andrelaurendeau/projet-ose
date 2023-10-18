@@ -1,13 +1,12 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipApplicationDto;
-import com.sap.ose.projetose.dto.newInternshipApplicationDto;
+import com.sap.ose.projetose.dto.NewInternshipApplicationDto;
 import com.sap.ose.projetose.models.InternshipOffer;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.repository.InternshipApplicationRepository;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public class InternshipApplicationService {
     private final Logger logger = LoggerFactory.getLogger(InternshipApplicationService.class);
 
     @Transactional
-    public InternshipApplicationDto createApplication(newInternshipApplicationDto internshipApplicationDto){
+    public InternshipApplicationDto createApplication(NewInternshipApplicationDto internshipApplicationDto){
         try{
             Student student = studentService.getStudentById(internshipApplicationDto.getCandidateId());
             InternshipOffer internshipOffer = internshipOfferService.findById(internshipApplicationDto.getInternshipOfferDtoId());

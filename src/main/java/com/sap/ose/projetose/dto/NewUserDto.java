@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public abstract class newUserDto {
+public abstract class NewUserDto {
     @NotBlank
     @Pattern(regexp = "[a-zA-Z]+")
     private String lastName;

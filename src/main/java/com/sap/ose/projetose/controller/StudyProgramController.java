@@ -4,10 +4,12 @@ import com.sap.ose.projetose.dto.StudyProgramDto;
 import com.sap.ose.projetose.service.StudyProgramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/programme")
 @RequiredArgsConstructor

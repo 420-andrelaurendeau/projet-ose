@@ -16,4 +16,8 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = {FileExistsValidator.class, FilesExistValidator.class})
-public @interface UserExists {}
+public @interface UserExists {
+    String message() default "User does not exist";
+    Class[] groups() default {};
+    Class[] payload() default {};
+}
