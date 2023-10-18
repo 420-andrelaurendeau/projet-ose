@@ -3,14 +3,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../api/InterOfferJobAPI";
-import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
-import InternshipOfferModal from "../components/common/InternshipOfferModal";
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
-import {ftruncate} from "fs";
 import {useTranslation} from "react-i18next";
 import Header from "../Header";
-import EmployeurOffer from "../components/common/EmployeurOffer";
-
 
 interface Props {
     isModalOpen: boolean,
@@ -35,9 +29,11 @@ function EmployeurHomePage() {
     }, []);
 
     useEffect(() => {
+        let i = 0;
         offers.map((offer:any) => {
-            setNbCandidature(nbCandidature + offer.internshipCandidates.length)
+            i += offer.internshipCandidates.length;
         })
+        setNbCandidature(i);
     }, [offers]);
 
     const context =  {
