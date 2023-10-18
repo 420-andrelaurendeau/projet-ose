@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.repository;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.State;
 import org.springframework.data.domain.Page;
@@ -26,5 +25,9 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     List<InternOffer> findByEmployeurId(int id);
 
     Page<InternOffer> findAllByState(State state, Pageable pageable);
+
+
+    @Query("SELECT i.state, COUNT(i) FROM InternOffer i GROUP BY i.state")
+    List<Object[]> getCountByState();
 }
 

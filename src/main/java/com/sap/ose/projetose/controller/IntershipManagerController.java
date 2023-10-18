@@ -4,13 +4,12 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.InternshipmanagerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/intershipManager")
@@ -19,26 +18,30 @@ import java.util.List;
 public class IntershipManagerController {
 
     private final InternshipmanagerService internshipmanagerService;
+    private final InternOfferService offerJobService;
 
     @GetMapping("/offers")
     public ResponseEntity<Page<InternOfferDto>> getOffers(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "id") String sortField,
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state) {
 
-        Page<InternOfferDto> internOfferDtos;
 
-        if (state == null){
-            System.out.print("state is null");
-                    internOfferDtos = internshipmanagerService.getOffers(page, size);
+        System.out.println("page : " + page + " size : " + size + " sortField : " + sortField + " sortDirection : " + sortDirection + " state : " + state);
+        Page<InternOfferDto> internOfferDtos = internshipmanagerService.getSortedOffersByPage(page, size, state, sortField, sortDirection);
 
-        }
-        else {
-            System.out.print(state);
-            internOfferDtos = internshipmanagerService.getOffers(page, size, state);
-        }
-
+        System.out.println(internOfferDtos);
 
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Long>> getCountInternOfferByState() {
+
+        Map<String, Long> countInternOfferByState = offerJobService.getCountByState();
+
+        return new ResponseEntity<>(countInternOfferByState, HttpStatus.OK);
     }
 }

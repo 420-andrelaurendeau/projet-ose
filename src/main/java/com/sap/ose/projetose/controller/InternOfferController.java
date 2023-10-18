@@ -4,13 +4,17 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.service.InternOfferService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/interOfferJob")

@@ -17,11 +17,13 @@ interface GetInternshipOffersParams {
     page: number;
     size: number;
     state?: string;
+    sortField: string;
+    sortDirection: string;
 }
 
-export const getIntershipOffers = async ({ page, size, state }: GetInternshipOffersParams) => {
+export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection }: GetInternshipOffersParams) => {
     try {
-        const params: any = { page, size };
+        const params: any = { page, size, sortField, sortDirection };
 
         if (state) {
             params.state = state;
@@ -37,6 +39,20 @@ export const getIntershipOffers = async ({ page, size, state }: GetInternshipOff
         throw error;
     }
 };
+
+export const getTotalOfferByState = async () => {
+    try {
+
+        const response = await apiClient.get('/count');
+        console.log('response', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+
+
+}
 
 /**
 
