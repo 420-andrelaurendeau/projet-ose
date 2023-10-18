@@ -20,7 +20,7 @@ public class Internshipmanager extends Utilisateur{
     private Programme programme;
 
     public Internshipmanager(String nom, String prenom, String phone, String email, String password, Programme programme) {
-        super(nom, prenom, phone, email, password);
+        super(nom, prenom, phone, Role.GS, email, password);
         this.programme = programme;
     }
     public Internshipmanager(long id, String nom, String prenom, String phone,Role role, String email, String password, Programme programme) {

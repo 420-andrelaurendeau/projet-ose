@@ -11,13 +11,13 @@ import useDarkSide from "../../hooks/useDarkSide";
 const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
     const [colorTheme,setColorTheme] = React.useState();
-    console.log(colorTheme);
+
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
     const [connectUser, setConnectUser] = React.useState({
         email: "",
         password: ""
     });
-    console.log(fields);
+
 
     useEffect(() => {
 
@@ -26,7 +26,9 @@ const ConnectForm = (props:any) => {
 
     const connect = async (e:any) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/api/auth/signin", {
+        console.log(connectUser.email)
+        console.log(connectUser.password)
+        const response = await fetch("http://localhost:8080/api/auth/authenticate", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(connectUser)
@@ -59,7 +61,7 @@ const ConnectForm = (props:any) => {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6"  onSubmit={connect}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-black dark:text-white">
                                 {fields["email"].text}

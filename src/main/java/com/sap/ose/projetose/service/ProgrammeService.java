@@ -3,7 +3,6 @@ package com.sap.ose.projetose.service;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ProgramNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
@@ -29,7 +28,7 @@ public class ProgrammeService {
         this.programmeRepository = programmeRepository;
     }
 
-    Programme findById(long id) {
+    Programme findById(Long id) {
         try {
             return programmeRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
 

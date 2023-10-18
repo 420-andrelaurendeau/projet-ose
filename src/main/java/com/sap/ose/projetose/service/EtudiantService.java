@@ -78,7 +78,7 @@ public class EtudiantService {
     }
 
     Etudiant getEtudiantByCourriel(String courriel) {
-        return etudiantRepository.findByCourriel(courriel).orElse(null);
+        return etudiantRepository.findByEmail(courriel).orElse(null);
     }
 
     @Transactional

@@ -38,8 +38,8 @@ public class Etudiant extends Utilisateur{
         this.internshipsCandidate = internshipsCandidate;
     }
 
-    public Etudiant(String nom, String prenom, String telephone, String email, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
-        super(nom, prenom, telephone, email);
+    public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
+        super(nom, prenom, phone,Role.ETUDIANT, email);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = cv;
@@ -55,15 +55,15 @@ public class Etudiant extends Utilisateur{
     }
 
     public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internshipsCandidate) {
-        super(nom, prenom, phone, email, password);
+        super(nom, prenom, phone,Role.ETUDIANT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = null;
         this.internshipsCandidate = internshipsCandidate;
     }
 
-        public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme) {
-        super(nom, prenom, phone, email, password);
+    public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme) {
+        super(nom, prenom, phone,Role.ETUDIANT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = null;

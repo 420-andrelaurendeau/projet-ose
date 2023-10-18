@@ -26,8 +26,6 @@ public class InternOfferController {
 
     @PostMapping("/save")
     public ResponseEntity<InternOfferDto> saveInterOfferJob(@RequestBody InternOfferDto internOfferJobdto) {
-
-        System.out.println(internOfferJobdto.toString());
         InternOfferDto savedOfferJobDto = offerJobService.saveInterOfferJob(internOfferJobdto);
 
         return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);

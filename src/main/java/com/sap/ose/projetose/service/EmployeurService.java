@@ -7,7 +7,6 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ public class EmployeurService {
     private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
     private final ProgrammeService programmeService;
 
-
     @Autowired
     public EmployeurService(EmployeurRepository employeurRepository, ProgrammeService programmeService) {
         this.employeurRepository = employeurRepository;
@@ -36,7 +34,6 @@ public class EmployeurService {
 
     Employeur findById(long id) {
         try {
-            System.out.println(id);
             return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
             logger.error("Employeur non trouvé avec l'id" + id);

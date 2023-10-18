@@ -39,7 +39,6 @@ public class InternOfferService {
     @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
-            System.out.println(internOfferDto.getEmployeurId());
 
             if ( isApprovedOrDeclineById(internOfferDto.getId()))
                 throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");

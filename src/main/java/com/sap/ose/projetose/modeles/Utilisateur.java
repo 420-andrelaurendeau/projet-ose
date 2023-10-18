@@ -33,18 +33,20 @@ public class Utilisateur implements UserDetails {
     private String email;
     private String password;
 
-    public Utilisateur(String nom, String prenom, String phone, String email, String password) {
+    public Utilisateur(String nom, String prenom, String phone,Role role, String email, String password) {
         this.nom = nom;
         this.prenom = prenom;
         this.phone = phone;
+        this.role = role;
         this.email = email;
         this.password = password;
     }
 
-    public Utilisateur(String nom, String prenom, String phone, String email) {
+    public Utilisateur(String nom, String prenom, String phone,Role role, String email) {
         this.nom = nom;
         this.prenom = prenom;
         this.phone = phone;
+        this.role = role;
         this.email = email;
     }
 

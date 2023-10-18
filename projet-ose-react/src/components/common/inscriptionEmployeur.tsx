@@ -21,14 +21,8 @@ function InscriptionEmployeur(props: any) {
         email: string;
         password: string;
         entreprise: string;
-        programme: any;
+        programme_id: any;
     }
-
-    const [programmeData, setProgrammeData] = useState<Programme>({
-        id: 0,
-        nom: "",
-        description: "",
-    });
 
     const [formData, setFormData] = useState<FormData>({
         nom: "",
@@ -37,7 +31,7 @@ function InscriptionEmployeur(props: any) {
         email: "",
         password: "",
         entreprise: "",
-        programme: programmeData,
+        programme_id: null,
     });
     const [showPassword, setShowPasswprd] = useState(false);
     const [programmes, setProgrammes] = useState<Programme[]>([]);
@@ -68,14 +62,6 @@ function InscriptionEmployeur(props: any) {
     }, [formData]);
 
 
-    useEffect(() => {
-        setProgrammeData(programmeData);
-        setFormData({
-            ...formData,
-            "programme": programmeData,
-        })
-    }, [programmeData]);
-
     function handleChange(event: any) {
         const {name, value} = event.target;
 
@@ -86,17 +72,7 @@ function InscriptionEmployeur(props: any) {
         console.log(name + "= " + value);
     }
 
-    function handleChangeProgramme(event: any) {
-        const {name, value} = event.target;
 
-
-        setProgrammeData(JSON.parse(value));
-        setFormData({
-            ...formData,
-            [name]: programmeData,
-        });
-
-    }
 
     const handleRedirect = async () => {
         toast.success("Inscription réussie");
@@ -105,25 +81,22 @@ function InscriptionEmployeur(props: any) {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
+        console.log(formData.programme_id)
 
-        const programme = formData.programme;
-
-        if (programme == null) {
+        if (formData.programme_id == 0) {
             alert(fields.programme.validation.required);
             return;
         }
 
         axios
-            .post("http://localhost:8080/api/employeur/ajouter", JSON.stringify(formData), {
+            .post("http://localhost:8080/api/auth/register", JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
 
             })
             .then((response) => {
-                console.log(JSON.stringify(formData));
-                console.log(formData);
-                console.log(response);
+                console.log(response.data)
                 handleRedirect();
             })
             .catch((error) => {
@@ -139,7 +112,7 @@ function InscriptionEmployeur(props: any) {
                     email: "",
                     password: "",
                     entreprise: "",
-                    programme: programmeData,
+                    programme_id: 0,
                 });
                 event.target.reset();
             });
@@ -348,11 +321,11 @@ function InscriptionEmployeur(props: any) {
                                 {fields.programme.text}
                             </label>
                             <select
-                                value={formData.programme}
-                                onChange={handleChangeProgramme}
-                                name={"programme"}
+                                value={formData.programme_id}
+                                onChange={handleChange}
+                                name={"programme_id"}
                                 defaultValue={"DEFAULT"}
-                                id="programme"
+                                id="programme_id"
                                 required={true}
                                 className={
                                     props.darkMode ?
@@ -362,8 +335,7 @@ function InscriptionEmployeur(props: any) {
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']}
-                                            value={JSON.stringify(programme)}>{programme['nom']}</option>
+                                    <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>
