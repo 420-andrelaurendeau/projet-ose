@@ -5,13 +5,15 @@ import {NavLink} from "react-router-dom";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
 import {Simulate} from "react-dom/test-utils";
 import change = Simulate.change;
-const CandidatureOffer:React.FC<any> = ({user,offers}) => {
+import {useProps} from "../../pages/EmployeurHomePage";
+const CandidatureOffer:React.FC<any> = () => {
     const [open, setOpen] = React.useState({
         id: -1,
         open: false
     });
     const [listOpen, setListOpen] = React.useState<any[]>([]);
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
+    const {offers,user} = useProps();
 
     const toggle = (id:number) => {
         const newState = {
@@ -38,10 +40,10 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
         });
     }, [offers]);
     return (
-        <div className="mt-14 flex justify-center">
+        <div className="flex justify-center">
             <div className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
                 <NavLink
-                    to="/home/offer"
+                    to="/employeur/home/offre"
                     className="md:fixed max-md:hidden h-full w-full"
                     state={user}
                 />

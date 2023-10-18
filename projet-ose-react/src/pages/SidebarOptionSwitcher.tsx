@@ -19,19 +19,13 @@ function SidebarOptionSwitcher(props:any) {
                 props.user.matricule ?
                     <div className={option != "offer" ? "max-md:hidden":"hidden"}>
                         <EtudiantStage
-                            appliedOffers={props.appliedOffers}
-                            setAppliedOffers={props.setAppliedOffers}
-                            offers={props.offers}
                         />
                     </div>
                     :
                     <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
                         <EmployeurOffer
-                        offers={props.offers}
                         />
                     </div>
-
-
             }
 
             {
@@ -39,15 +33,11 @@ function SidebarOptionSwitcher(props:any) {
                     (
                         option === "offer" ?
                         <EtudiantStage
-                            appliedOffers={props.appliedOffers}
-                            setAppliedOffers={props.setAppliedOffers}
-                            offers={props.offers}
                         />
                         :
                         option === "appliedOffers" ?
                             <StudentAppliedOffers
-                                appliedOffers={props.appliedOffers}
-                                user={props.user}
+
                             />
                             :
                             <p>Home</p>
@@ -56,7 +46,6 @@ function SidebarOptionSwitcher(props:any) {
                      (
                          option === "offer" ?
                              <EmployeurOffer
-                                 offers={props.offers}
                              />
                              :
                              option === "candidature" ?
@@ -73,11 +62,6 @@ function SidebarOptionSwitcher(props:any) {
                                          :
                                          option === "newOffer" ?
                                              <InternshipOfferForm
-                                                 isModalOpen={props.isModalOpen}
-                                                 setIsModalOpen={props.setIsModalOpen}
-                                                 setOffers={props.setOffers}
-                                                 userId={props.userEmail}
-                                                 user={props.user}
                                              />
                                              :
                                              <p>Home</p>

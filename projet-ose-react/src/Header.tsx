@@ -9,18 +9,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import SidebarEtudiant from "./SidebarEtudiant";
 import useDarkSide from "./hooks/useDarkSide";
 import ProfilMenu from "./components/common/ProfilMenu";
 
-const Header = (props:any) => {
+const Header = () => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const fields = i18n.getResource(language,"translation","formField");
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
+    const location = useLocation();
+    const user = location.state;
 
     function closeModal() {
         setIsOpenProfil(false)
@@ -57,20 +59,10 @@ const Header = (props:any) => {
                                     />
                                 </div>
                             </div>
-                            {props.user.matricule && <div className="hidden md:flex">
-                                <NavLink to={"/home/offer"} state={props.user}
-                                         className="ml-10 flex items-baseline space-x-4">
-                                    <p className="text-blue dark:text-orange">{fields.Header.stage.text}</p>
-                                </NavLink>
-                                <NavLink to={"/home/appliedOffers"} state={props.user}
-                                         className="ml-10 flex items-baseline space-x-4">
-                                    <p className="text-blue dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
-                                </NavLink>
-                            </div>}
                             <button className="hidden md:block" onClick={openModal}>
                                 <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                             </button>
-                            <ProfilMenu show={isOpenProfil} onClose={closeModal} user={props.user}
+                            <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
                                         language={language} sidebarIsOpen={isOpen}
                             />
                             <div className="-mr-2 flex md:hidden">
@@ -103,13 +95,13 @@ const Header = (props:any) => {
                     >
                         <div className="md:hidden">
                             {
-                                props.user.matricule ?
+                                user.matricule ?
                                     <SidebarEtudiant
-                                        user={props.user}
+                                        user={user}
                                         setIsOpen={setIsOpen}
                                     /> :
                                     <SidebarEmployeurHome
-                                        user={props.user}
+                                        user={user}
                                         setIsOpen={setIsOpen}
                                         onOpenProfil={openModal}
                                     />

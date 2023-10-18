@@ -12,7 +12,6 @@ function Home(props:any) {
     return (
        <div>
            <Header
-               user={props.user}
            />
            {
                 props.user.matricule ?

@@ -16,6 +16,7 @@ import {
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
+import {useProps} from "../../pages/EmployeurHomePage";
 
 
 const initialFormState: InterOfferJob = {
@@ -31,7 +32,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) => {
+const InternshipOfferForm: React.FC<any> = () => {
     const {t} = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{
@@ -45,7 +46,7 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
         file?: string
     }>({});
     const [formState, setFormState] = useState<InterOfferJob>(initialFormState);
-
+    const {setIsModalOpen, setOffers, user} = useProps()
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     useEffect(() => {
@@ -163,11 +164,11 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
 
 
     return (
-        <div className="flex justify-center items-center min-h-screen max-md:pt-24">
+        <div className="flex justify-center items-center min-h-screen max-md:pt-10">
                 <div
                     className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
                     <NavLink
-                        to="/home/offer"
+                        to="/employeur/home/offre"
                         className="md:fixed max-md:hidden h-full w-full"
                         state={user}
                     />

@@ -1,12 +1,16 @@
 import {useTranslation} from "react-i18next";
+import {useProps} from "../../pages/EmployeurHomePage";
+import {Outlet} from "react-router-dom";
 
-export default function EmployeurOffer(props:any) {
+export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur.offerTable");
-    console.log(props.offers.state);
+    const {offers} = useProps();
+    console.log(offers);
+
     return (
         <div className="flex flex-col mt-14">
-            <div className=" xs:-mx-6 lg:-mx-8">
+            <div className={window.location.pathname != "/employeur/home/offre" && window.location.pathname != "/employeur/home/offre/" ? "max-md:hidden xs:-mx-6 lg:-mx-8" : "xs:-mx-6 lg:-mx-8"}>
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
                     <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
@@ -42,7 +46,7 @@ export default function EmployeurOffer(props:any) {
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            {props.offers.map((offer:any) => (
+                            { offers.map((offer:any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center">
@@ -81,6 +85,9 @@ export default function EmployeurOffer(props:any) {
                     </div>
                 </div>
             </div>
+            <Outlet
+                context={useProps()}
+            />
         </div>
     );
 }
