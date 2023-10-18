@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBriefcase, faCircleUser} from "@fortawesome/free-solid-svg-icons";
+import {faBriefcase, faCheck, faCircleUser, faPause, faX} from "@fortawesome/free-solid-svg-icons";
 import {NavLink} from "react-router-dom";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
 import {Simulate} from "react-dom/test-utils";
 import change = Simulate.change;
-const CandidatureOffer:React.FC<any> = ({user,offers}) => {
+import axios from "axios";
+import {log} from "util";
+
+const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     const [open, setOpen] = React.useState({
         id: -1,
         open: false
@@ -13,7 +16,7 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
     const [listOpen, setListOpen] = React.useState<any[]>([]);
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
 
-    const toggle = (id:number) => {
+    const toggle = (id: number) => {
         const newState = {
             id: id,
             open: !open.open
@@ -24,9 +27,9 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
         setOpen(newState);
     }
     useEffect(() => {
-        let listIds:number[] = [];
-        offers.map((offer:any) => {
-            offer.internshipCandidates.map((interOfferCandidate:any) => {
+        let listIds: number[] = [];
+        offers.map((offer: any) => {
+            offer.internshipCandidates.map((interOfferCandidate: any) => {
                 listIds.push(interOfferCandidate);
             })
         })
@@ -37,16 +40,54 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
             setInterOfferCandidates(response);
         });
     }, [offers]);
+
+
+    function handleAccept(id: string) {
+        axios.post(`http://localhost:8080/api/intershipCandidates/acceptCandidats/${id}`).then(
+            (res) => {
+                let newList:any[] = [...interOfferCandidates]
+
+                newList.forEach(candidate => {
+                    if (candidate.id == id){
+                        candidate.state = "ACCEPTED"
+                    }
+                })
+                setInterOfferCandidates(newList)
+            }
+        ).catch(e => {
+            console.log(e)
+        })
+    }
+
+    function handleRefuse(id: string) {
+        console.log(id)
+        axios.post(`http://localhost:8080/api/intershipCandidates/declineCandidats/${id}`).then(
+            (res) => {
+                let newList:any[] = [...interOfferCandidates]
+
+                newList.forEach(candidate => {
+                    if (candidate.id == id){
+                        candidate.state = "DECLINED"
+                    }
+                })
+                setInterOfferCandidates(newList)
+            }
+        ).catch(e => {
+            console.log(e)
+        })
+    }
+
     return (
         <div className="mt-14 flex justify-center">
-            <div className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
+            <div
+                className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
                 <NavLink
                     to="/home/offer"
                     className="md:fixed max-md:hidden h-full w-full"
                     state={user}
                 />
                 {
-                    offers.map((offer:any) => (
+                    offers.map((offer: any) => (
                         <div className="md:flex md:justify-center" key={offer.id}>
                             <div key={offer.id}
                                  className="md:relative md:w-3/4 lg:w-1/2 max-sm:w-full mt-14 items-center rounded-2xl px-6 bg-white dark:bg-dark py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -103,6 +144,7 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
                                     {
                                         interOfferCandidates.map((interOfferCandidate: any) => {
                                             if (interOfferCandidate.internOfferJob.id === offer.id) {
+                                                console.log(interOfferCandidate.state)
                                                 return (
                                                     <div key={interOfferCandidate.id}
                                                          className="flex justify-center pt-2">
@@ -112,7 +154,29 @@ const CandidatureOffer:React.FC<any> = ({user,offers}) => {
                                                                 <FontAwesomeIcon icon={faCircleUser}
                                                                                  className="text-blue dark:text-orange"
                                                                                  size="xl"/>
-                                                                <p className="text-black dark:text-white tracking-wide font-bold text-lg ">{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
+                                                                <p className={`text-black dark:text-white tracking-wide font-bold text-lg ${interOfferCandidate.state == "DECLINED" ? 'text-red' : interOfferCandidate.state == "ACCEPTED" ? 'text-green' : 'text-black'}`}>{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
+                                                            </div>
+                                                            <div
+                                                                className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>
+                                                                <div
+                                                                    className={"container flex flex-row items-center justify-around"}>
+                                                                    <div>
+                                                                        <FontAwesomeIcon icon={faCheck}
+                                                                                         style={{color: "#00ff4c",}}
+                                                                                         onClick={() => {
+                                                                                             handleAccept(interOfferCandidate.id)
+                                                                                         }}
+                                                                                         className={"cursor-pointer"}/>
+                                                                    </div>
+                                                                    <div>
+                                                                        <FontAwesomeIcon icon={faX}
+                                                                                         style={{color: "#cc0000",}}
+                                                                                         onClick={() => {
+                                                                                             handleRefuse(interOfferCandidate.id)
+                                                                                         }}
+                                                                                         className={"cursor-pointer"}/>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div className="flex px-2 py-2">
                                                                 <button

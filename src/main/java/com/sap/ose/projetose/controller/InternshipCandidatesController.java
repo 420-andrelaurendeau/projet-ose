@@ -39,15 +39,15 @@ public class InternshipCandidatesController {
         return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
     }
 
-    @PostMapping("/acceptCandidats")
-    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody Long internshipCandidatesId) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesId);
+    @PostMapping("/acceptCandidats/{id}")
+    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@PathVariable Long id) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(id);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
-    @PostMapping("/declineCandidats")
-    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@RequestBody Long internshipCandidatesId) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(internshipCandidatesId);
+    @PostMapping("/declineCandidats/{id}")
+    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@PathVariable Long id) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(id);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
