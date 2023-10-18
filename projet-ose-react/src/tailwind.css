@@ -617,6 +617,11 @@ video {
   margin-right: auto;
 }
 
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .-mr-2 {
   margin-right: -0.5rem;
 }
@@ -639,6 +644,10 @@ video {
 
 .ml-4 {
   margin-left: 1rem;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
 
 .mr-1 {
@@ -761,6 +770,11 @@ video {
   height: auto;
 }
 
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
 .h-full {
   height: 100%;
 }
@@ -775,6 +789,10 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.w-1\/6 {
+  width: 16.666667%;
 }
 
 .w-10\/12 {

@@ -41,6 +41,8 @@ public class ProjetOseApplication implements CommandLineRunner {
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
 
+    @Autowired InterviewService interviewService;
+
     @Autowired
     ProgrammeRepository programmeRepository;
 

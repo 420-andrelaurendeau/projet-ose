@@ -41,4 +41,6 @@ public class EtudiantDto extends UtilisateurDto {
         return new Etudiant(getNom(), getPrenom(), getPhone(), getEmail(), getMatricule(), (Programme) null,null,null);
     }
 
+    public Etudiant fromDtoWithId(){
+        return new Etudiant(getId(),getNom(), getPrenom(), getPhone(), getEmail(), getMatricule(), getMatricule(),(Programme) null,null);}
 }
