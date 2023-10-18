@@ -50,7 +50,7 @@ public class InternOfferService {
             InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
-            internOffer.setState(State.PENDING);
+            internOffer.setState(State.ACCEPTED);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
@@ -107,6 +107,7 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+
     InternOfferDto getInterOfferById(Long id) {
         InternOffer internOffer = offerJobRepository.findById(id).orElse(null);
         return new InternOfferDto(internOffer);
@@ -139,6 +140,7 @@ public class InternOfferService {
         return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
 
+    @Transactional
     public List<InternOfferDto> getInternOffer(){
         List<InternOfferDto> internOfferDtos = new ArrayList<>();
         for(InternOffer internOffer : offerJobRepository.findAll()){

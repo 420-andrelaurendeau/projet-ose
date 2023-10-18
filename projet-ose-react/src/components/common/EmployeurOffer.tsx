@@ -70,7 +70,7 @@ export default function EmployeurOffer(props:any) {
                                         {offer.startDate}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <a href="#" className="text-red hover:text-indigo">
+                                        <a href="" className="text-red hover:text-indigo">
                                             {fields.edit.text}
                                         </a>
                                     </td>

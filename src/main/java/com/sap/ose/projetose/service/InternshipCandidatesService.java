@@ -115,7 +115,7 @@ public class InternshipCandidatesService {
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
-
+    @Transactional
     public List<InternshipCandidatesDto> getInternshipCandidatesByIds(String ids) {
         try{
             List<Long> idsLong = new ArrayList<>();
@@ -132,7 +132,7 @@ public class InternshipCandidatesService {
             throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+            throw new RuntimeException(e);
         }
     }
     @Transactional
