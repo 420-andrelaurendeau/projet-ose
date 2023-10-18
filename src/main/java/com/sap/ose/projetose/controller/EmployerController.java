@@ -18,11 +18,10 @@ public class EmployerController {
     private final EmployerService employerService;
     @PostMapping("/new")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<EmployerDto> newEmployer(@RequestBody newEmployerDto employer){
+    public ResponseEntity<EmployerDto> newEmployer(@Valid @RequestBody newEmployerDto employer){
         return employerService.newEmployer(employer).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @Valid
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<EmployerDto> getEmployerById(@UserExists @PathVariable Long id){

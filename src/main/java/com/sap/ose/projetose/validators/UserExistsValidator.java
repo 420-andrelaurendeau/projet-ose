@@ -5,12 +5,10 @@ import com.sap.ose.projetose.annotations.UserExists;
 import com.sap.ose.projetose.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserExistsValidator implements ConstraintValidator<UserExists, Long> {
-    @Autowired
     private final UserRepository userRepository;
 
     @Override

@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream().map(User::toUserDto).toList();
     }
