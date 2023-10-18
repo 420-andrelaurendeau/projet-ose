@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
 import com.sap.ose.projetose.modeles.Etudiant;
@@ -31,6 +32,41 @@ public class InternshipCandidatesController {
     public ResponseEntity<List<InternshipCandidatesDto>> getInternshipCandidatesByOfferId(@PathVariable String id) {
         List<InternshipCandidatesDto> internshipCandidatesDto = internshipCandidatesService.getInternshipCandidatesByIds(id);
         return new ResponseEntity<>(internshipCandidatesDto,HttpStatus.OK);
+
+    @GetMapping("/getCandidats")
+    public ResponseEntity<List<InternshipCandidatesDto>> getIntershipCandidate() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
+    @PostMapping("/acceptCandidats")
+    public ResponseEntity<InternshipCandidatesDto> acceptIntershipCandidate(@RequestBody Long internshipCandidatesId) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.acceptCandidates(internshipCandidatesId);
+        return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/declineCandidats")
+    public ResponseEntity<InternshipCandidatesDto> declineIntershipCandidate(@RequestBody Long internshipCandidatesId) {
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.declineCandidates(internshipCandidatesId);
+        return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getPendingCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getPendingCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getPendingCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getAcceptedCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getAcceptedCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getAcceptedCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getDeclinedCandidates")
+    public ResponseEntity<List<InternshipCandidatesDto>> getDeclinedCandidates() {
+        List<InternshipCandidatesDto> savedInternship = internshipCandidatesService.getDeclinedCandidates();
+        return new ResponseEntity<>(savedInternship,HttpStatus.FOUND);
     }
 
 }

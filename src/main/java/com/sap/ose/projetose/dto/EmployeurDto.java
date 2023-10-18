@@ -20,7 +20,7 @@ public class EmployeurDto extends UtilisateurDto {
         this.entreprise = entreprise;
     }
 
-    public EmployeurDto(int id, String nom, String prenom, String phone, String email, String entreprise) {
+    public EmployeurDto(Long id, String nom, String prenom, String phone, String email, String entreprise) {
         super(id,nom, prenom, phone, email);
         this.entreprise = entreprise;
     }

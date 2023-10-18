@@ -12,11 +12,6 @@ function EtudiantInscription(props: any) {
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
     const navigate = useNavigate();
 
-    const [programme, setProgramme] = useState({
-        id: 0,
-        nom: "",
-        description: "",
-    });
 
     const [formData, setFormData] = useState({
         nom: "",
@@ -25,7 +20,7 @@ function EtudiantInscription(props: any) {
         password: "",
         phone: "",
         matricule: "",
-        programme: programme,
+        programme_id: 0,
         cv: null,
     });
 
@@ -45,22 +40,12 @@ function EtudiantInscription(props: any) {
         console.log(formData)
     };
 
-    const handleProgramChange = (event:any) => {
-        const { name, value } = event.target;
-        setProgramme(JSON.parse(event.target.value));
-        console.log("setProgramme : "+ JSON.parse(value))
-        setFormData({
-            ...formData,
-            [name]: programme,
-        });
-    }
 
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
-        console.log("Au moment du submit : " + programme);
-        if (programme == null) {
+        const { password, nom, prenom, email, phone, matricule, cv, programme_id } = formData;
+        if (programme_id == 0) {
             alert(fields.programme.validation.required);
             return;
         }
@@ -72,7 +57,7 @@ function EtudiantInscription(props: any) {
                 password: password,
                 phone: phone,
                 matricule: matricule,
-                programme: programme,
+                programme_id: programme_id,
                 cv: cv,
             })
             .then((response) => {
@@ -94,7 +79,7 @@ function EtudiantInscription(props: any) {
             password: "",
             phone: "",
             matricule: "",
-            programme: programme,
+            programme_id: 0,
             cv: null,
         });
     };
@@ -119,14 +104,6 @@ function EtudiantInscription(props: any) {
         setFormData(formData);
     },[formData]);
 
-
-    useEffect(() => {
-        setProgramme(programme);
-        setFormData({
-            ...formData,
-            "programme": programme,
-        })
-    },[programme]);
 
     return (
         <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
@@ -280,12 +257,12 @@ function EtudiantInscription(props: any) {
                                     : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
                                 }
                                 defaultValue={"DEFAULT"}
-                                name={"programme"}
-                                onChange={handleProgramChange}
+                                name={"programme_id"}
+                                onChange={handleChange}
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']} value={JSON.stringify(programme)}>{programme['nom']}</option>
+                                    <option key={programme['id']} value={Number(programme['id'])}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>
