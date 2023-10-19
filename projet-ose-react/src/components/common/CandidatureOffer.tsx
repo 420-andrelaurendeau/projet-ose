@@ -4,6 +4,9 @@ import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-s
 import {NavLink} from "react-router-dom";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
 import {Simulate} from "react-dom/test-utils";
+import change = Simulate.change;
+import {useProps} from "../../pages/EmployeurHomePage";
+const CandidatureOffer:React.FC<any> = () => {
 import axios from "axios";
 import {resolveObjectURL} from "buffer";
 import {isBooleanObject} from "util/types";
@@ -17,6 +20,7 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     });
     const [listOpen, setListOpen] = React.useState<any[]>([]);
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
+    const {offers,user} = useProps();
 
     const toggle = (id: number) => {
         const newState = {
@@ -35,7 +39,6 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                 listIds.push(interOfferCandidate);
             })
         })
-
 
         if (listIds.length === 0) return;
         getInterOfferCandidates(listIds.join(",")).then((response) => {
@@ -130,11 +133,10 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     }
 
     return (
-        <div className="mt-14 flex justify-center">
-            <div
-                className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
+        <div className="flex justify-center">
+            <div className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
                 <NavLink
-                    to="/home/offer"
+                    to="/employeur/home/offre"
                     className="md:fixed max-md:hidden h-full w-full"
                     state={user}
                 />
@@ -205,46 +207,7 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                                                                 <FontAwesomeIcon icon={faCircleUser}
                                                                                  className="text-blue dark:text-orange"
                                                                                  size="xl"/>
-                                                                <p className={`text-black dark:text-white tracking-wide font-bold text-lg ${interOfferCandidate.state == "DECLINED" ? 'text-red' : interOfferCandidate.state == "ACCEPTED" ? 'text-green' : 'text-black'}`}>{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
-
-                                                                <button
-                                                                    disabled={hasStudentApplied(interOfferCandidate, offer.id)}
-                                                                    className={`px-2 py-2 rounded-lg ${hasStudentApplied(interOfferCandidate, offer.id) ? "bg-gray" : "bg-blue"} dark:bg-orange font-bold text-white cursor-pointer`}
-                                                                    hidden={interOfferCandidate.state != "ACCEPTED"}
-                                                                    onClick={() => {
-                                                                        let studentId: number = interOfferCandidate.etudiant.id
-                                                                        let offerId: number = offer.id
-                                                                        studentHasInterviewWithInternOffer(studentId, offerId)
-                                                                    }}>
-                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ? <p>INTERVIEW</p>:
-                                                                        <NavLink to={"/InterviewForm"} state={{"offerId":offer.id, "studentId":interOfferCandidate.etudiant.id}}>
-                                                                            INTERVIEW
-                                                                        </NavLink>}
-
-                                                                </button>
-
-                                                            </div>
-                                                            <div
-                                                                className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>
-                                                                <div
-                                                                    className={"container flex flex-row items-center justify-around"}>
-                                                                    <div>
-                                                                        <FontAwesomeIcon icon={faCheck}
-                                                                                         style={{color: "#00ff4c",}}
-                                                                                         onClick={() => {
-                                                                                             handleAccept(interOfferCandidate.id)
-                                                                                         }}
-                                                                                         className={"cursor-pointer"}/>
-                                                                    </div>
-                                                                    <div>
-                                                                        <FontAwesomeIcon icon={faX}
-                                                                                         style={{color: "#cc0000",}}
-                                                                                         onClick={() => {
-                                                                                             handleRefuse(interOfferCandidate.id)
-                                                                                         }}
-                                                                                         className={"cursor-pointer"}/>
-                                                                    </div>
-                                                                </div>
+                                                                <p className="text-black dark:text-white tracking-wide font-bold text-lg ">{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
                                                             </div>
                                                             <div className="flex px-2 py-2">
                                                                 <button

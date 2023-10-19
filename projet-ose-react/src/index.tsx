@@ -17,11 +17,16 @@ import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import Placeholder from "./components/common/Placeholder";
 import InterviewForm from "./components/common/InterviewForm";
+import EmployeurHomePage from "./pages/EmployeurHomePage";
+import EmployeurOffer from "./components/common/EmployeurOffer";
+import CandidatureOffer from "./components/common/CandidatureOffer";
+import InternshipOfferForm from "./components/common/InternshipOfferForm";
+import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
+import EtudiantStage from "./components/common/EtudiantStage";
 
 
-if (window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/") {
-    window.location.pathname = "/homeEmployeur/offer"
-    console.log(1)
+if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
+    window.location.pathname = "/employeur/home/offre"
 }
 
 
@@ -43,6 +48,51 @@ const router = createBrowserRouter([
     {
         path: "/home/:option",
         element: <HomePage/>,
+    },
+    {
+        path: "/employeur/home",
+        element: <EmployeurHomePage/>,
+        children: [
+            {
+                path: "offre",
+                element: <EmployeurOffer/>,
+                children: [
+                    {
+                        path: "candidature",
+                        element: <CandidatureOffer/>,
+                    },
+                    {
+                        path: "contrat",
+                        element: <p>Contrat</p>,
+                    },
+                    {
+                        path: "offreAttente",
+                        element: <p>Offre en attente</p>,
+                    },
+                    {
+                        path: "nouvelleOffre",
+                        element: <InternshipOfferForm/>,
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        path: "/etudiant/home",
+        element: <EtudiantStagePage/>,
+        children: [
+            {
+                path: "/etudiant/home/offre",
+                element: <EtudiantStage/>,
+                children: [
+                    {
+                        path: "offreApplique",
+                        element: <StudentAppliedOffers/>,
+                    }
+                ]
+            },
+
+        ]
     },
     {
         path: "/etudiantInscription",

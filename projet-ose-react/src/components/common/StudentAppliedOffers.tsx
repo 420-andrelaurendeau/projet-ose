@@ -6,16 +6,19 @@ import {FileEntity} from "../../model/FileEntity";
 import {NavLink} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {useProps} from "../../pages/EtudiantStagePage";
 
-export default function StudentAppliedOffers(props:any) {
+export default function StudentAppliedOffers() {
+    const {appliedOffers, user} = useProps();
+
     return (
         <div className="flex flex-col">
             <div className=" lg:-mx-8 mt-28">
                 <div className=" md:fixed md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:p-3 max-md:w-full ">
                     <NavLink
-                        to="/home/offer"
+                        to="/etudiant/home/offre"
                         className="md:absolute max-md:hidden w-full h-full"
-                        state={props.user}
+                        state={user}
                     />
                     <div className="md:pt-20 xxxs:px-6 lg:px-8 ">
                         <div className="overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
@@ -56,7 +59,7 @@ export default function StudentAppliedOffers(props:any) {
                                     </tr>
                                     </thead>
                                     <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                                    {props.appliedOffers.map((appliedOffer:AppliedOffers) => (
+                                    {appliedOffers.map((appliedOffer:AppliedOffers) => (
                                         <tr key={appliedOffer.appliedOffer.id}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">

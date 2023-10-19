@@ -5,7 +5,7 @@ import {NavLink, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
 export default function SidebarEtudiant(props: any) {
-    let { option } = useParams()
+    const option = window.location.pathname.split("/").pop();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header");
 
@@ -25,29 +25,29 @@ export default function SidebarEtudiant(props: any) {
                                 <div className="shadow h-1 flex justify-center"/>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "offer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "offre" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/home/offer"
+                                    to="/etudiant/home/offre"
                                     state={props.user}
-                                    className="flex items-center p-2 space-x-3 rounded-md w-full"
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offre" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     onClick={() => props.setIsOpen(false)}
                                 >
-                                    <FontAwesomeIcon icon={faFileLines} className={option == "offer" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
-                                    <p className={option == "offer" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.stage.text}</p>
+                                    <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.sidebar.stage.text}</p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "appliedOffers" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "offreApplique" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/home/appliedOffers"
+                                    to="/etudiant/home/offre/offreApplique"
                                     state={props.user}
-                                    className="flex items-center p-2 space-x-3 rounded-md w-full"
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offreApplique" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     onClick={() => props.setIsOpen(false)}
                                 >
-                                    <FontAwesomeIcon icon={faFileArrowDown} className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"} size="lg"/>
-                                    <p className={option == "appliedOffers" ? "text-black dark:text-white" : "text-gray"}>{fields.sidebar.offre_applique.text}</p>
+                                    <FontAwesomeIcon icon={faFileArrowDown} className="group-hover:text-white dark:text-white" size="lg"/>
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.sidebar.offre_applique.text}</p>
                                 </NavLink>
                             </li>
                         </ul>

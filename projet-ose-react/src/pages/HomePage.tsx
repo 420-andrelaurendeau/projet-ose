@@ -6,7 +6,7 @@ function HomePage() {
     const location = useLocation();
     const user = location.state;
     return (
-        <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
+        <div >
             <Home user={user}/>
         </div>
     );

@@ -1,19 +1,25 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../api/InterOfferJobAPI";
-import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
-import InternshipOfferModal from "../components/common/InternshipOfferModal";
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
-import {ftruncate} from "fs";
 import {useTranslation} from "react-i18next";
+import Header from "../Header";
+
+interface Props {
+    isModalOpen: boolean,
+    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    offers: any[],
+    setOffers: React.Dispatch<React.SetStateAction<any[]>>,
+    user: any
+}
 
 function EmployeurHomePage() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(true)
+    const [nbCandidature, setNbCandidature] = useState(0)
     const location = useLocation();
     const user = location.state;
 
@@ -22,11 +28,30 @@ function EmployeurHomePage() {
         UpdateOffers(user.email,setOffers)
     }, []);
 
+    useEffect(() => {
+        let i = 0;
+        offers.map((offer:any) => {
+            i += offer.internshipCandidates.length;
+        })
+        setNbCandidature(i);
+    }, [offers]);
+
+    const context =  {
+        isModalOpen: isModalOpen,
+        setIsModalOpen: setIsModalOpen,
+        offers: offers,
+        setOffers: setOffers,
+        user: user,
+    }
+
+    console.log(context)
+
     return (
-        <div>
-            <header className="max-md:hidden ">
+        <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
+            <Header/>
+            <header className="max-md:hidden pt-14 ">
                 <div className="max-w-7xl mx-auto py-6 px-6  lg:px-8">
-                    <h1 className="text-3xl font-bold text-gray-900"> {fields.titre.text} </h1>
+                    <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.titre.text} </h1>
                 </div>
             </header>
             <main>
@@ -34,7 +59,7 @@ function EmployeurHomePage() {
                     <div className="w-full hidden md:block overflow-x-auto">
                             <div className="flex-row flex md:justify-center space-x-4">
                                 <NavLink
-                                    to="/home/candidature"
+                                    to="offre/candidature"
                                     className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     state={user}
                                 >
@@ -44,7 +69,7 @@ function EmployeurHomePage() {
                                         </div>
                                         <div className="pl-2">
                                             <p className="text-gray truncate "> {fields.totalCondidature.text} </p>
-                                            <p className="text-xl dark:text-white font-bold">150</p>
+                                            <p className="text-xl dark:text-white font-bold">{nbCandidature}</p>
                                         </div>
                                     </div>
                                 </NavLink>
@@ -64,7 +89,7 @@ function EmployeurHomePage() {
                                 </div>
 
                                 <NavLink
-                                    to="/home/newOffer"
+                                    to="offre/nouvelleOffre"
                                     className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                     state={user}
                                 >
@@ -94,13 +119,8 @@ function EmployeurHomePage() {
                             </div>
                     </div>
                     <div className="w-full">
-                        <SidebarOptionSwitcher
-                            isModalOpen={isModalOpen}
-                            setIsModalOpen={setIsModalOpen}
-                            offers={offers}
-                            setOffers={setOffers}
-                            userEmail={user.email}
-                            user={user}
+                        <Outlet
+                            context={context}
                         />
                     </div>
                 </div>
@@ -109,4 +129,8 @@ function EmployeurHomePage() {
     );
 }
 
+
+export function useProps(){
+    return useOutletContext<Props>();
+}
 export default EmployeurHomePage;
