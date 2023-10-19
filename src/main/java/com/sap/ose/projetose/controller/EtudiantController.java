@@ -1,13 +1,13 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.EtudiantInscriptionDto;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.sap.ose.projetose.service.EtudiantService;
 
-import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +27,8 @@ public class EtudiantController {
     }
 
     @PostMapping("/ajouter")
-    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-        return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody EtudiantInscriptionDto etudiant) {
+        return etudiantService.saveEtudiantInscription(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/{id}")

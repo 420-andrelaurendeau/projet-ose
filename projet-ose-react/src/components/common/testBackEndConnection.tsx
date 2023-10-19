@@ -14,6 +14,7 @@ const TestBackEndConnection = (props:any) => {
         phone: string;
         entreprise: string;
         programme: string;
+        matricule: string;
     }
 
     useEffect(() => {
@@ -33,9 +34,11 @@ const TestBackEndConnection = (props:any) => {
     }
 
     const handleSubmit = (user:FormData) => {
-        navigate('/home/offer', {
+        user.matricule ? navigate('/etudiant/home/offre', {
             state: user,
-
+        }) :
+        navigate('/employeur/home/offre', {
+            state: user,
         });
     }
 

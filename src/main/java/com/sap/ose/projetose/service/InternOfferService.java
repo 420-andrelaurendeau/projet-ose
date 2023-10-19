@@ -81,8 +81,7 @@ public class InternOfferService {
     @Transactional
     public List<InternOfferDto> getInternOfferAccepted() {
         List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        ;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
 
         for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
@@ -94,8 +93,7 @@ public class InternOfferService {
     @Transactional
     public List<InternOfferDto> getInternOfferPending() {
         List<InternOffer> internOfferList = offerJobRepository.findAllPending();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        ;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
 
         for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
@@ -107,8 +105,7 @@ public class InternOfferService {
     @Transactional
     public List<InternOfferDto> getInternOfferDeclined() {
         List<InternOffer> internOfferList = offerJobRepository.findAllDeclined();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        ;
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
 
         for (InternOffer offre : internOfferList) {
             InternOfferDto internOfferDto = new InternOfferDto(offre);
@@ -205,7 +202,8 @@ public class InternOfferService {
         return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
 
-    public List<InternOfferDto> getInternOffer() {
+    @Transactional
+    public List<InternOfferDto> getInternOffer(){
         List<InternOfferDto> internOfferDtos = new ArrayList<>();
         for (InternOffer internOffer : offerJobRepository.findAll()) {
             internOfferDtos.add(new InternOfferDto());

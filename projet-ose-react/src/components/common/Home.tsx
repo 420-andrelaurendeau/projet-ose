@@ -12,9 +12,7 @@ function Home(props: any) {
     }, [localStorage.getItem('theme')]);
     return (
         <div>
-            <Header
-                user={props.user}
-            />
+            <Header/>
             {
                 props.user.id == 5 ? <GSOffersPage/> : props.user.matricule
                     ? <EtudiantStagePage/>

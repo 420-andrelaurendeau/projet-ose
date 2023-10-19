@@ -12,6 +12,7 @@ module.exports = {
         'blue': '#306bac',
         'orange': '#F57A00',
         'gray': '#D0CCD0',
+        'lightgray': '#e7e7e7',
         'offwhite': '#FBFCFF',
         'dark': '#121420',
         'softdark': '#1A1C23',
@@ -19,6 +20,7 @@ module.exports = {
         'darkwhite': '#F0F0F0',
         'darkgray': '#21253a',
         'green': '#22d722',
+        'darkergray': '#1A1C23',
       },
       backgroundColor: {
         'bleu': '#306bac',
