@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileService {
 
-    private FileEntityRepository fileEntityRepository;
+    private final FileEntityRepository fileEntityRepository;
 
     @Autowired
     public FileService(FileEntityRepository fileEntityRepository) {

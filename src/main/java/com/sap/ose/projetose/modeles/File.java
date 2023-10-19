@@ -25,12 +25,8 @@ public class File {
     private boolean isAccepted;
 
     @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private Etudiant etudiant;
-
-    @ManyToOne
-    @JoinColumn(name = "internship_id")
-    private InternshipCandidates internshipCandidates;
+    @JoinColumn
+    private Utilisateur utilisateur;
 
 
     public File(byte[] content, String fileName, boolean isAccepted) {
@@ -46,7 +42,7 @@ public class File {
                 ", content=" + Arrays.toString(content) +
                 ", fileName='" + fileName + '\'' +
                 ", isAccepted=" + isAccepted +
-                ", etudiant=" + etudiant +
+                ", etudiant=" + utilisateur +
                 '}';
     }
 }

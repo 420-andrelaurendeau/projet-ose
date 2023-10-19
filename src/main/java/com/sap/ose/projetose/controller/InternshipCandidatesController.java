@@ -24,5 +24,4 @@ public class InternshipCandidatesController {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
-
 }

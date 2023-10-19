@@ -1,12 +1,17 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.FileEntityRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +20,20 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class InternshipmanagerService {
 
     private final InternshipmanagerRepository internshipmanagerRepository;
 
     private final ProgrammeService programmeService;
 
-    Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
+    private final EtudiantRepository etudiantRepository;
+    private final FileEntityRepository fileEntityRepository;
 
-    @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, ProgrammeService programmeService) {
-        this.internshipmanagerRepository = internshipmanagerRepository;
-        this.programmeService = programmeService;
-    }
+    Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
     @Transactional
     public InternshipmanagerDto getById(long id) {
@@ -89,5 +94,24 @@ public class InternshipmanagerService {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
+    }
+
+    @Transactional
+    public List<FileDto> getPendingCVsByDepartment(long id) {
+        return etudiantRepository
+                .findEtudiantByCvIsAcceptedFalse(id)
+                .stream()
+                .map(Etudiant::getCv)
+                .flatMap(List::stream)
+                .filter(file -> !file.isAccepted())
+                .map(FileDto::new)
+                .toList();
+    }
+
+    public void acceptCV(Long id) {
+        fileEntityRepository.findById(id).ifPresent(file -> {
+            file.setAccepted(true);
+            fileEntityRepository.save(file);
+        });
     }
 }

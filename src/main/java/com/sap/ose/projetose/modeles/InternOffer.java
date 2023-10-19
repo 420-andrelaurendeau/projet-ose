@@ -29,23 +29,23 @@ public class InternOffer {
     private String status;
     private State state;
 
-    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipCandidates;
 
     @ManyToOne()
-    @JoinColumn(name = "program_id")
+    @JoinColumn
     private Programme programme;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "file_id")
+    @JoinColumn
     private File file;
 
     @ManyToOne()
-    @JoinColumn(name = "employeur_id")
+    @JoinColumn
     private Employeur employeur;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "offerReviewRequest_id")
+    @JoinColumn
     private OfferReviewRequest offerReviewRequest;
 
     public InternOffer(String title,

@@ -18,11 +18,11 @@ public class OfferReviewRequest {
     private String comment;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "internOffer_id")
+    @JoinColumn
     private InternOffer internOffer;
 
     @ManyToOne
-    @JoinColumn(name = "internshipmanager_id")
+    @JoinColumn
     public Internshipmanager internshipmanager;
 
     public OfferReviewRequest(InternOffer internOffer, String comment, Internshipmanager internshipmanager) {
