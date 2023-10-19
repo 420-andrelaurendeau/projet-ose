@@ -31,7 +31,7 @@ public class EtudiantAuthDto extends UtilisateurAuthDto {
     }
 
     public EtudiantAuthDto(Etudiant etudiant) {
-        super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getPassword());
+        super(etudiant.getId(),etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getPassword());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
         this.cv_ids = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();

@@ -11,7 +11,6 @@ import useDarkSide from "../../hooks/useDarkSide";
 const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
     const [colorTheme,setColorTheme] = React.useState();
-
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
     const [connectUser, setConnectUser] = React.useState({
         email: "",
@@ -20,7 +19,6 @@ const ConnectForm = (props:any) => {
 
 
     useEffect(() => {
-
         console.log(localStorage.getItem('theme'))
     }, [localStorage.getItem('theme')]);
 
@@ -62,6 +60,7 @@ const ConnectForm = (props:any) => {
             console.log('No token found in the response');
         }
     }
+
 
     return (
            <>
