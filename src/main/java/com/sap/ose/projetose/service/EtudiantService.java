@@ -82,10 +82,16 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
-    public Etudiant updateCVByMatricule(String matricule, File cv){
+    @Transactional
+    public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        etudiant.setCv(List.of(cv));
-        return etudiant;
+        List<File> cvs = new ArrayList<File>();
+        cvs.add(cv);
+        cv.setEtudiant(etudiant);
+        etudiant.setCv(cvs);
+        etudiantRepository.save(etudiant);
+        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
+        return etudiantDto;
     }
 
     Etudiant getEtudiantByCourriel(String courriel) {

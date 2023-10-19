@@ -8,6 +8,7 @@ import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class OseService {
         this.employeurRepository = employeurRepository;
     }
 
-
+    @Transactional
     public List<UtilisateurDto> getAllUsers() {
         Optional<List<Employeur>> employeurs = Optional.of(employeurRepository.findAll());
         Optional<List<Etudiant>> etudiants = Optional.of(etudiantRepository.findAll());

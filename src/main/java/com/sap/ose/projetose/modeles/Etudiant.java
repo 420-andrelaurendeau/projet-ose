@@ -24,7 +24,7 @@ public class Etudiant extends Utilisateur{
     @JoinColumn(name = "programme_id")
     private Programme programme;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<File> cv;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)

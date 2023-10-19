@@ -25,7 +25,7 @@ function InterviewForm ():ReactElement{
         }).catch(e => {
             console.log(e)})
         navigate('/employeur/home/offre/candidature', {
-            state: user,
+            state: {user:user, interviewObj:{studentId:location.state.studentId, internOfferId:location.state.offerId}}
         });
     }
 
