@@ -17,6 +17,6 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
     @Query("SELECT e FROM Etudiant e WHERE e.matricule = ?1")
     Optional<Etudiant> findByMatricule(String matricule);
 
-    @Query("SELECT etudiant FROM Etudiant etudiant WHERE etudiant.programme.id = :id")
-    List<Etudiant> findEtudiantByCvIsAcceptedFalse(Long id);
+    @Query("SELECT etudiant FROM Etudiant etudiant JOIN etudiant.cv cv WHERE cv.isAccepted = false")
+    List<Etudiant> findEtudiantByCvIsAcceptedFalse();
 }

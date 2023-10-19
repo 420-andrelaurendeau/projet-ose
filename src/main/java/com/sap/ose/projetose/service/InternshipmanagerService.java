@@ -97,9 +97,9 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public List<FileDto> getPendingCVsByDepartment(long id) {
+    public List<FileDto> getPendingCVsByDepartment() {
         return etudiantRepository
-                .findEtudiantByCvIsAcceptedFalse(id)
+                .findEtudiantByCvIsAcceptedFalse()
                 .stream()
                 .map(Etudiant::getCv)
                 .flatMap(List::stream)
