@@ -12,13 +12,13 @@ import java.util.Date;
 public class InterviewRequestInDto {
     private long id;
     private long studentId;
-    private long employeurId;
+    private long internOfferId;
     private Date date;
     private String description;
 
-    public InterviewRequestInDto(long studentId, long employeurId, Date date, String description) {
+    public InterviewRequestInDto(long studentId, long internOfferId, Date date, String description) {
         this.studentId = studentId;
-        this.employeurId = employeurId;
+        this.internOfferId = internOfferId;
         this.date = date;
         this.description = description;
     }
@@ -28,7 +28,7 @@ public class InterviewRequestInDto {
         return "InterviewRequestInDto{" +
                 "id=" + id +
                 ", studentId=" + studentId +
-                ", employeurId=" + employeurId +
+                ", employeurId=" + internOfferId +
                 ", date=" + date +
                 ", description='" + description + '\'' +
                 '}';

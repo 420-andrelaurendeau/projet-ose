@@ -6,9 +6,11 @@ import com.sap.ose.projetose.dto.InterviewDTO;
 import com.sap.ose.projetose.dto.InterviewRequestInDto;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Interview;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,11 @@ public class InterviewService {
 
     private final EtudiantRepository etudiantRepository;
 
+    private final InternOfferRepository internOfferRepository;
+
     @Autowired
-    public InterviewService(InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
+    public InterviewService(InternOfferRepository internOfferRepository,InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
+        this.internOfferRepository = internOfferRepository;
         this.etudiantRepository = etudiantRepository;
         this.employeurRepository = employeurRepository;
         this.interviewRepository = interviewRepository;
@@ -60,12 +65,17 @@ public class InterviewService {
 
         //TODO changer employeur DTO et etudiant DTO pour quil retorne l'ID des modeles quil represente si non le programme essaye de les dupliquer
 
-        Employeur employeur = employeurRepository.findById(interviewRequestInDto.getEmployeurId()).orElse(null);
+        InternOffer internOffer = internOfferRepository.findById(interviewRequestInDto.getInternOfferId()).orElse(null);
         Etudiant etudiant = etudiantRepository.findById(interviewRequestInDto.getStudentId()).orElse(null);
 
-        InterviewDTO interviewDTO = new InterviewDTO(etudiant, employeur, interviewRequestInDto.getDate(), interviewRequestInDto.getDescription());
+        if (internOffer == null || etudiant == null) {
+            System.out.println("InternOffer or Etudiant not found");
+            return Optional.empty();
+        } else {
+            System.out.println("InternOffer and Etudiant found");
+        }
 
-        System.out.println(interviewDTO);
+        InterviewDTO interviewDTO = new InterviewDTO(etudiant, internOffer, interviewRequestInDto.getDate(), interviewRequestInDto.getDescription());
 
         Interview interview = interviewRepository.save(interviewDTO.fromDto());
 
@@ -87,6 +97,6 @@ public class InterviewService {
     }
 
     public Boolean studentHasInterviewWithEmployeur(Long studentId, Long employerId) {
-        return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getEmployeur().getId() == employerId).findFirst().orElse(null) != null;
+        return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getInternshipOffer().getId() == employerId).findFirst().orElse(null) != null;
     }
 }

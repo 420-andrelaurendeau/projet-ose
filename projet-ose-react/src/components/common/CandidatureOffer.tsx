@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-svg-icons";
 import {NavLink} from "react-router-dom";
@@ -6,6 +6,9 @@ import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
 import {Simulate} from "react-dom/test-utils";
 import axios from "axios";
 import {resolveObjectURL} from "buffer";
+import {isBooleanObject} from "util/types";
+import {log} from "util";
+import InterviewForm from "./InterviewForm";
 
 const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     const [open, setOpen] = React.useState({
@@ -36,14 +39,23 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
 
         if (listIds.length === 0) return;
         getInterOfferCandidates(listIds.join(",")).then((response) => {
-            console.log(response);
-            setInterOfferCandidates(response);
-        }).finally(() => {
-                interOfferCandidates.forEach((candidate) => {
-                    studentHasInterviewWithEmployer(candidate.id, user.id)
+            response.forEach((student: any) => {
+                let interviewList: any[] = []
+                offers.forEach((offer: any) => {
+
+                    let requestBody = {"studentId": student.etudiant.id, "internOfferId": offer.id}
+                    axios.post("http://localhost:8080/api/interview/studentHasInterviewWithInternOffer", requestBody).then((res) => {
+                        interviewList.push({
+                            "offerId": offer.id,
+                            "candidateId": student.etudiant.id,
+                            "alreadyApplied": res.data
+                        })
+                    })
                 })
-            }
-        );
+                student.interviewList = interviewList
+            })
+            setInterOfferCandidates(response);
+        })
     }, [offers]);
 
 
@@ -81,18 +93,22 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
         })
     }
 
-    function studentHasInterviewWithEmployer(studentId: number, employerId: number) {
-        let requestBody = {"studentId": studentId, "employerId": employerId}
+    function studentHasInterviewWithInternOffer(studentId: number, internOfferId: number) {
+        let requestBody = {"studentId": studentId, "internOfferId": internOfferId}
         let response = false
 
-        axios.post("http://localhost:8080/api/interview/studentHasInterviewWithEmployer", requestBody).then(
+        axios.post("http://localhost:8080/api/interview/studentHasInterviewWithInternOffer", requestBody).then(
             (res) => {
                 response = res.data
                 let newList: any[] = [...interOfferCandidates]
 
                 newList.forEach((candidate) => {
-                    if (candidate.id == studentId) {
-                        candidate.interviewStatus = response
+                    if (candidate.etudiant.id == studentId) {
+                        candidate.interviewList.forEach((interview: any) => {
+                            if (interview["offerId"] == internOfferId) {
+                                interview["alreadyApplied"] = response
+                            }
+                        })
                     }
                 })
                 setInterOfferCandidates(newList)
@@ -100,6 +116,17 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
         ).catch((e) => {
             response = false
         })
+    }
+
+    function hasStudentApplied(internOfferCandidate: any, offerId: number): boolean {
+        let returnBool = false;
+        let interviewList = internOfferCandidate["interviewList"]
+        interviewList.forEach((interview: any) => {
+            if (interview["offerId"] == offerId) {
+                returnBool = interview["alreadyApplied"]
+            }
+        })
+        return returnBool
     }
 
     return (
@@ -180,20 +207,20 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                                                                                  size="xl"/>
                                                                 <p className={`text-black dark:text-white tracking-wide font-bold text-lg ${interOfferCandidate.state == "DECLINED" ? 'text-red' : interOfferCandidate.state == "ACCEPTED" ? 'text-green' : 'text-black'}`}>{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
 
-
-
-
                                                                 <button
-                                                                    disabled={interOfferCandidate.interviewStatus}
-                                                                    className={`px-2 py-2 rounded-lg ${interOfferCandidate.interviewStatus ? "bg-gray" : "bg-blue"} dark:bg-orange font-bold text-white cursor-pointer`}
+                                                                    disabled={hasStudentApplied(interOfferCandidate, offer.id)}
+                                                                    className={`px-2 py-2 rounded-lg ${hasStudentApplied(interOfferCandidate, offer.id) ? "bg-gray" : "bg-blue"} dark:bg-orange font-bold text-white cursor-pointer`}
                                                                     hidden={interOfferCandidate.state != "ACCEPTED"}
                                                                     onClick={() => {
-                                                                        let studentId: number = interOfferCandidate.id
-                                                                        let employerId: number = user.id
-                                                                        studentHasInterviewWithEmployer(interOfferCandidate.id, user.id)
-                                                                        console.log(`${studentId} ${employerId}`)
+                                                                        let studentId: number = interOfferCandidate.etudiant.id
+                                                                        let offerId: number = offer.id
+                                                                        studentHasInterviewWithInternOffer(studentId, offerId)
                                                                     }}>
-                                                                    INTERVIEW
+                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ? <p>INTERVIEW</p>:
+                                                                        <NavLink to={"/InterviewForm"} state={{"offerId":offer.id, "studentId":interOfferCandidate.etudiant.id}}>
+                                                                            INTERVIEW
+                                                                        </NavLink>}
+
                                                                 </button>
 
                                                             </div>

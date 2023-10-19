@@ -21,8 +21,8 @@ public class Interview {
     private Etudiant student;
 
     @ManyToOne()
-    @JoinColumn(name = "employeur_id")
-    private Employeur employeur;
+    @JoinColumn(name = "Internshipoffer_id")
+    private InternOffer internshipOffer;
 
     private Date date;
 
@@ -32,7 +32,7 @@ public class Interview {
         return "Interview{" +
                 "id=" + id +
                 ", etudiant_id=" + student.getId() +
-                ", employeur_id=" + employeur.getId() +
+                ", employeur_id=" + internshipOffer.getId() +
                 ", date=" + date +
                 ", description='" + description + '\'' +
                 '}';

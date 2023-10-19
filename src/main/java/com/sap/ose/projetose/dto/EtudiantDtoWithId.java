@@ -30,6 +30,7 @@ public class EtudiantDtoWithId extends UtilisateurDto {
     }
 
 
+
     public EtudiantDtoWithId(Etudiant etudiant) {
         super(etudiant.getId(),etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();
@@ -39,6 +40,6 @@ public class EtudiantDtoWithId extends UtilisateurDto {
     }
 
     public Etudiant fromDto() {
-        return new Etudiant(getNom(), getPrenom(), getPhone(), getEmail(), getMatricule(), (Programme) null,null,null);
+        return new Etudiant(getId(), getNom(), getPrenom(), getPhone(), getEmail(),null, getMatricule(), (Programme) null,null,null);
     }
 }

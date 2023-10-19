@@ -2,7 +2,6 @@ package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.InterviewDTO;
 import com.sap.ose.projetose.dto.InterviewRequestInDto;
-import com.sap.ose.projetose.modeles.Interview;
 import com.sap.ose.projetose.service.InterviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,22 +27,21 @@ public class InterviewController {
     @PostMapping("/save")
     public ResponseEntity<InterviewDTO> saveInterview(@RequestBody InterviewRequestInDto interviewRequestInDto){
         logger.info("Interview request received");
-        System.out.println(interviewRequestInDto);
         return interviewService.saveInterview(interviewRequestInDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/studentHasInterviewWithEmployer")
-    public ResponseEntity<Boolean> studentHasInterviewWithEmployer(@RequestBody studentHasInterviewWithEmployer studentHasInterviewWithEmployer ){
+    @PostMapping("/studentHasInterviewWithInternOffer")
+    public ResponseEntity<Boolean> studentHasInterviewWithEmployer(@RequestBody studentHasInterviewWithInternOffer studentHasInterviewWithInternOffer ){
         logger.info("Interview studenthasinterviewwithemployer request received");
-        boolean result = interviewService.studentHasInterviewWithEmployeur(studentHasInterviewWithEmployer.studentId,studentHasInterviewWithEmployer.employerId);
+        boolean result = interviewService.studentHasInterviewWithEmployeur(studentHasInterviewWithInternOffer.studentId,studentHasInterviewWithInternOffer.internOfferId);
         return Optional.of(result).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }
 
-class studentHasInterviewWithEmployer {
-    long studentId,employerId;
-    public studentHasInterviewWithEmployer(long studentId, long employerId) {
+class studentHasInterviewWithInternOffer {
+    long studentId,internOfferId;
+    public studentHasInterviewWithInternOffer(long studentId, long internOfferId) {
         this.studentId = studentId;
-        this.employerId = employerId;
+        this.internOfferId = internOfferId;
     }
 }
