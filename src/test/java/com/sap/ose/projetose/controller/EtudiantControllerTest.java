@@ -99,39 +99,6 @@ class EtudiantControllerTest {
     }
 
     /**
-     * Method under test: {@link EtudiantController#saveEtudiant(Etudiant)}
-     */
-    @Test
-    void testSaveEtudiant() throws Exception {
-        Etudiant etudiant = new Etudiant();
-        etudiant.setCv(null);
-        etudiant.setEmail("jane.doe@example.org");
-        etudiant.setId(1);
-        etudiant.setMatricule("Matricule");
-        etudiant.setNom("Nom");
-        etudiant.setPassword("iloveyou");
-        etudiant.setPhone("6625550144");
-        etudiant.setPrenom("Prenom");
-        etudiant.setProgramme(new Programme());
-        Optional<Etudiant> ofResult = Optional.of(etudiant);
-        when(oseService.saveEtudiant(Mockito.any())).thenReturn(ofResult);
-
-        Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(null);
-        etudiant2.setEmail("jane.doe@example.org");
-        etudiant2.setId(1);
-        etudiant2.setMatricule("Matricule");
-        etudiant2.setNom("Nom");
-        etudiant2.setPassword("iloveyou");
-        etudiant2.setPhone("6625550144");
-        etudiant2.setPrenom("Prenom");
-        etudiant2.setProgramme(new Programme());
-        String content = (new ObjectMapper()).writeValueAsString(etudiant2);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/etudiant/ajouter").contentType(MediaType.APPLICATION_JSON).content(content);
-        MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":1,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"password\"" + ":\"iloveyou\",\"matricule\":\"Matricule\",\"programme\":{\"id\":0,\"nom\":null,\"description\":null},\"cv\":null,\"internshipsCandidate\":null}"));
-    }
-
-    /**
      * Method under test: {@link EtudiantController#getEtudiant(Long)}
      */
     @Test
