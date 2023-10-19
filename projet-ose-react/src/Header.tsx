@@ -9,10 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
-import {NavLink, useLocation} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import React, {useState} from "react";
 import SidebarEtudiant from "./SidebarEtudiant";
-import useDarkSide from "./hooks/useDarkSide";
 import ProfilMenu from "./components/common/ProfilMenu";
 
 const Header = () => {

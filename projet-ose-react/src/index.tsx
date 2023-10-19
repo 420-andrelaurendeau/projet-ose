@@ -15,7 +15,6 @@ import HomePage from "./pages/HomePage";
 import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
-import Placeholder from "./components/common/Placeholder";
 import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
@@ -46,10 +45,6 @@ const router = createBrowserRouter([
         element: <App/>,
     },
     {
-        path: "/home/:option",
-        element: <HomePage/>,
-    },
-    {
         path: "/employeur/home",
         element: <EmployeurHomePage/>,
         children: [
@@ -60,6 +55,12 @@ const router = createBrowserRouter([
                     {
                         path: "candidature",
                         element: <CandidatureOffer/>,
+                        children: [
+                            {
+                                path: "InterviewForm",
+                                element: <InterviewForm />
+                            }
+                        ]
                     },
                     {
                         path: "contrat",
@@ -114,10 +115,7 @@ const router = createBrowserRouter([
         path: "/TeleverserCV",
         element: <TeleversementCV/>
     },
-    {
-        path: "/InterviewForm",
-        element: <InterviewForm />
-    }
+
 
 
 ])

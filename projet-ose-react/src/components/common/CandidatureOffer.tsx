@@ -1,27 +1,25 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-svg-icons";
-import {NavLink} from "react-router-dom";
+import {NavLink, Outlet, useOutletContext} from "react-router-dom";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
-import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
-import {useProps} from "../../pages/EmployeurHomePage";
-const CandidatureOffer:React.FC<any> = () => {
 import axios from "axios";
-import {resolveObjectURL} from "buffer";
-import {isBooleanObject} from "util/types";
-import {log} from "util";
-import InterviewForm from "./InterviewForm";
+import {useProps} from "../../pages/EmployeurHomePage";
 
-const CandidatureOffer: React.FC<any> = ({user, offers}) => {
+interface User {
+    user: any
+}
+
+const CandidatureOffer: React.FC<any> = () => {
     const [open, setOpen] = React.useState({
         id: -1,
         open: false
     });
-    const [listOpen, setListOpen] = React.useState<any[]>([]);
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
     const {offers,user} = useProps();
-
+    const props = {
+        user: user
+    }
     const toggle = (id: number) => {
         const newState = {
             id: id,
@@ -208,11 +206,51 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                                                                                  className="text-blue dark:text-orange"
                                                                                  size="xl"/>
                                                                 <p className="text-black dark:text-white tracking-wide font-bold text-lg ">{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
+
+                                                            </div>
+                                                            <div
+                                                                className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>
+                                                                <div
+
+                                                                    className={"container flex flex-row items-center justify-around " + (interOfferCandidate.state == "ACCEPTED" ?  "hidden" : "")}>
+                                                                    <div>
+                                                                        <FontAwesomeIcon icon={faCheck}
+                                                                                         style={{color: "#00ff4c",}}
+                                                                                         onClick={() => {
+                                                                                             handleAccept(interOfferCandidate.id)
+                                                                                         }}
+                                                                                         className={"cursor-pointer"}/>
+                                                                    </div>
+                                                                    <div>
+                                                                        <FontAwesomeIcon icon={faX}
+                                                                                         style={{color: "#cc0000",}}
+                                                                                         onClick={() => {
+                                                                                             handleRefuse(interOfferCandidate.id)
+                                                                                         }}
+                                                                                         className={"cursor-pointer"}/>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div className="flex px-2 py-2">
                                                                 <button
+                                                                    hidden={interOfferCandidate.state == "ACCEPTED"}
                                                                     className="px-2 py-2 rounded-lg bg-blue dark:bg-orange font-bold text-white">
                                                                     Review
+                                                                </button>
+                                                                <button
+                                                                    disabled={hasStudentApplied(interOfferCandidate, offer.id)}
+                                                                    className={`px-2 py-2 rounded-lg bg-blue dark:bg-orange disabled:bg-gray dark:disabled:bg-gray font-bold text-white disabled:cursor-auto cursor-pointer`}
+                                                                    hidden={interOfferCandidate.state != "ACCEPTED"}
+                                                                    onClick={() => {
+                                                                        let studentId: number = interOfferCandidate.etudiant.id
+                                                                        let offerId: number = offer.id
+                                                                        studentHasInterviewWithInternOffer(studentId, offerId)
+                                                                    }}>
+                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ? <p>INTERVIEW</p>:
+                                                                        <NavLink to={"InterviewForm"} state={{"offerId":offer.id, "studentId":interOfferCandidate.etudiant.id}}>
+                                                                            INTERVIEW
+                                                                        </NavLink>}
+
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -229,7 +267,14 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                     ))
                 }
             </div>
+            <Outlet
+                context={props}
+            />
         </div>
     );
+}
+
+export function useUser(){
+    return useOutletContext<User>();
 }
 export default CandidatureOffer;
