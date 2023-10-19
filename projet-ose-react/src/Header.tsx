@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
-import {useLocation} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import React, {useState} from "react";
 import SidebarEtudiant from "./SidebarEtudiant";
 import ProfilMenu from "./components/common/ProfilMenu";
@@ -17,7 +17,7 @@ import ProfilMenu from "./components/common/ProfilMenu";
 const Header = () => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
-    const fields = i18n.getResource(language,"translation","formField");
+    const fields = i18n.getResource(language, "translation", "formField");
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
     const location = useLocation();
@@ -32,7 +32,6 @@ const Header = () => {
     }
 
 
-
     return (
         <div>
             {
@@ -45,18 +44,20 @@ const Header = () => {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <img
-                                        className="mx-auto h-12 w-auto visible dark:hidden"
-                                        src={img}
-                                        alt="Your Company"
-                                    />
-                                    <img
-                                        className="mx-auto h-12 w-auto hidden dark:flex"
-                                        src={imgDark}
-                                        alt="Your Company"
-                                    />
-                                </div>
+                                <NavLink to={"/"}>
+                                    <div className="flex-shrink-0">
+                                        <img
+                                            className="mx-auto h-12 w-auto visible dark:hidden"
+                                            src={img}
+                                            alt="Your Company"
+                                        />
+                                        <img
+                                            className="mx-auto h-12 w-auto hidden dark:flex"
+                                            src={imgDark}
+                                            alt="Your Company"
+                                        />
+                                    </div>
+                                </NavLink>
                             </div>
                             <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
                                 <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>

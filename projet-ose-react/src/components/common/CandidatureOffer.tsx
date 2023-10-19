@@ -16,9 +16,9 @@ const CandidatureOffer: React.FC<any> = () => {
         open: false
     });
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
-    const {offers,user} = useProps();
+    const {offers, user} = useProps();
     const props = {
-        user: user
+        user: user,
     }
     const toggle = (id: number) => {
         const newState = {
@@ -132,7 +132,8 @@ const CandidatureOffer: React.FC<any> = () => {
 
     return (
         <div className="flex justify-center">
-            <div className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
+            <div
+                className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
                 <NavLink
                     to="/employeur/home/offre"
                     className="md:fixed max-md:hidden h-full w-full"
@@ -184,7 +185,9 @@ const CandidatureOffer: React.FC<any> = () => {
                                 >
                                     <button
                                         className="w-4/5 py-4 text-white bg-blue dark:bg-orange font-bold rounded-xl cursor-pointer"
-                                        onClick={() => toggle(offer.id)}>
+                                        onClick={() => {
+                                            toggle(offer.id)
+                                        }}>
                                         {open.open && open.id === offer.id ? "Hide candidature" : "Show candidature"}
                                     </button>
 
@@ -212,7 +215,7 @@ const CandidatureOffer: React.FC<any> = () => {
                                                                 className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>
                                                                 <div
 
-                                                                    className={"container flex flex-row items-center justify-around " + (interOfferCandidate.state == "ACCEPTED" ?  "hidden" : "")}>
+                                                                    className={"container flex flex-row items-center justify-around " + (interOfferCandidate.state == "ACCEPTED" ? "hidden" : "")}>
                                                                     <div>
                                                                         <FontAwesomeIcon icon={faCheck}
                                                                                          style={{color: "#00ff4c",}}
@@ -246,11 +249,14 @@ const CandidatureOffer: React.FC<any> = () => {
                                                                         let offerId: number = offer.id
                                                                         studentHasInterviewWithInternOffer(studentId, offerId)
                                                                     }}>
-                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ? <p>INTERVIEW</p>:
-                                                                        <NavLink to={"InterviewForm"} state={{"offerId":offer.id, "studentId":interOfferCandidate.etudiant.id}}>
-                                                                            INTERVIEW
+                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ?
+                                                                        <p>ENTREVUE</p> :
+                                                                        <NavLink to={"InterviewForm"} state={{
+                                                                            "offerId": offer.id,
+                                                                            "studentId": interOfferCandidate.etudiant.id
+                                                                        }} onClick={() => toggle(offer.id)}>
+                                                                            ENTREVUE
                                                                         </NavLink>}
-
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -274,7 +280,8 @@ const CandidatureOffer: React.FC<any> = () => {
     );
 }
 
-export function useUser(){
+export function useUser() {
     return useOutletContext<User>();
 }
+
 export default CandidatureOffer;

@@ -6,9 +6,12 @@ import {setSelectionRange} from "@testing-library/user-event/dist/utils";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
+import {useLocation} from "react-router-dom";
 
 
 function TeleversementCV(): ReactElement {
+
+    let location = useLocation();
 
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
@@ -21,21 +24,8 @@ function TeleversementCV(): ReactElement {
 
     const {t} = useTranslation();
 
-    const fetchUsers = async () => {
-        const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
-        return await res.json()
-    }
-
     useEffect(() => {
-        const getUtilisateurs = async () => {
-            const users = await fetchUsers()
-            let etudiants = users.filter((e: any) => {
-                return e.cv || e.cv == "" && !!e.matricule;
-            })
-            setUtilisateurs(etudiants)
-
-        }
-        getUtilisateurs().then(r => console.log(r))
+        console.log(location.state)
     }, [])
 
     function handleFileChange(event: any) {
@@ -81,7 +71,7 @@ function TeleversementCV(): ReactElement {
     const handleSubmit = async () => {
         console.log(files)
         setUploadState({status: "Uploading"})
-        axios.post(`http://localhost:8080/api/etudiant/addCv/${selectedUser.matricule}`, files[0]).then(res => {
+        axios.post(`http://localhost:8080/api/etudiant/addCv/${location.state.matricule}`, files[0]).then(res => {
             console.log(res)
             setUploadState({status: "Done"})
         }).catch(err => {
@@ -143,21 +133,6 @@ function TeleversementCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div className={"flex flex-col items-center justify-center w-full"}>
-                        <div className={"flex flex-col items-center justify-around w-full "}>
-                            {utilisateurs.map((user, i) => {
-                                return <div key={i} className={`m-1 w-full text-center cursor-pointer`} onClick={() => {
-                                    setUser({matricule: user["matricule"]})
-                                    console.log(selectedUser)
-                                }}>
-                                    {user["nom"]}
-                                </div>
-                            })}
-                        </div>
-                        <div>
-                            {selectedUser.matricule}
-                        </div>
-                    </div>
                     <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
                         Submit
                     </div>
