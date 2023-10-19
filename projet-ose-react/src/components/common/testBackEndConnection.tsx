@@ -70,7 +70,7 @@ return (
                                 type="button"
                                 onClick={(e) => handleSubmit(utilisateur)}
                                 className="bg-blue hover:bg-cyan-900 text-white font-bold py-2 px-4 border border-blue rounded">
-                                Sign in
+                                Connection
                             </button>
                         </div>
                     </li>
