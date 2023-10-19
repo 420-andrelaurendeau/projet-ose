@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InternshipCandidatesService {
@@ -79,5 +80,11 @@ public class InternshipCandidatesService {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
+    }
+
+    public InternshipCandidatesDto getInternshipCandidateById(long id){
+        Optional<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findById(id);
+        return internshipCandidates.map(value -> new InternshipCandidatesDto()).orElse(null);
+
     }
 }

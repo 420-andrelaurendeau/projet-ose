@@ -33,11 +33,11 @@ function InscriptionEmployeur(props: any) {
         entreprise: "",
         programme_id: null,
     });
-    const [showPassword, setShowPasswprd] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     const tooglePasswordVisibility = () => {
-        setShowPasswprd(!showPassword);
+        setShowPassword(!showPassword);
     };
 
     const fetchProgrammes = () => {
@@ -72,8 +72,6 @@ function InscriptionEmployeur(props: any) {
         console.log(name + "= " + value);
     }
 
-
-
     const handleRedirect = async () => {
         toast.success("Inscription réussie");
         navigate("/signIn");
@@ -81,23 +79,27 @@ function InscriptionEmployeur(props: any) {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(formData.programme_id)
+        console.log(formData)
 
-        if (formData.programme_id == 0) {
+        if (formData.programme_id == null) {
             alert(fields.programme.validation.required);
             return;
         }
 
         axios
-            .post("http://localhost:8080/api/auth/register", JSON.stringify(formData), {
+            .post("http://localhost:8080/api/auth/register/employeur", JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-
             })
             .then((response) => {
                 console.log(response.data)
-                handleRedirect();
+                if (response.data != null){
+                    handleRedirect();
+                }else{
+                    console.log("Donnee erronee")
+                }
+
             })
             .catch((error) => {
                 console.log(error);

@@ -1,84 +1,101 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import jwtDecode from 'jwt-decode';
 // @ts-ignore
 import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
 import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link, useNavigate} from "react-router-dom";
+import {useToast} from "../../hooks/state/useToast";
 
 function EtudiantInscription(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
     const navigate = useNavigate();
+    const toast = useToast();
 
-    const [programme, setProgramme] = useState({
-        id: 0,
-        nom: "",
-        description: "",
-    });
+    interface FormData {
+        nom: string;
+        prenom: string;
+        phone: string;
+        email: string;
+        password: string;
+        matricule: string;
+        programme_id: any;
+    }
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         nom: "",
         prenom: "",
         email: "",
         password: "",
         phone: "",
         matricule: "",
-        programme: programme,
-        cv: null,
+        programme_id: null,
     });
-
 
     const [programmes, setProgrammes] = useState([]);
     const [reussite, setReussite] = useState(false);
     const [error, setError] = useState(false);
 
-    const handleChange = (event:any) => {
-        const { name, value } = event.target;
-        console.log(name + " " + value);
-        console.log(event.target.value)
+    useEffect(() => {
+        fetchProgrammes();
+    }, []);
+
+    useEffect(() => {
+        setFormData(formData);
+    },[formData]);
+
+
+    function handleChange(event: any) {
+        const {name, value} = event.target;
+
         setFormData({
             ...formData,
             [name]: value,
         });
-        console.log(formData)
-    };
-
-    const handleProgramChange = (event:any) => {
-        const { name, value } = event.target;
-        setProgramme(JSON.parse(event.target.value));
-        console.log("setProgramme : "+ JSON.parse(value))
-        setFormData({
-            ...formData,
-            [name]: programme,
-        });
+        console.log(name + "= " + value);
     }
 
+    const fetchProgrammes = () => {
+        axios
+            .get("http://localhost:8080/api/programme/programmes")
+            .then((response) => {
+                console.log(response);
+                setProgrammes(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     const handleSubmit = (event:any) => {
         event.preventDefault();
-        const { password, nom, prenom, email, phone, matricule, cv, programme } = formData;
-        console.log("Au moment du submit : " + programme);
-        if (programme == null) {
+
+        console.log("form: "+ formData)
+
+        if (formData.programme_id == null) {
             alert(fields.programme.validation.required);
             return;
         }
+
         axios
-            .post("http://localhost:8080/api/etudiant/ajouter", {
-                nom: nom,
-                prenom: prenom,
-                email: email,
-                password: password,
-                phone: phone,
-                matricule: matricule,
-                programme: programme,
-                cv: cv,
+            .post("http://localhost:8080/api/auth/register/etudiant", JSON.stringify(formData), {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
             .then((response) => {
                 console.log(response)
                 setReussite(true)
                 setError(false)
+                if (response.data != null){
+                    handleRedirect();
+                }else{
+                    console.log("Donnee erronee")
+                }
+
             })
             .catch((error) => {
                 console.log(error)
@@ -94,39 +111,15 @@ function EtudiantInscription(props: any) {
             password: "",
             phone: "",
             matricule: "",
-            programme: programme,
-            cv: null,
+            programme_id: 0,
         });
     };
 
-    const fetchProgrammes = () => {
-        axios
-            .get("http://localhost:8080/api/programme/programmes")
-            .then((response) => {
-                console.log(response);
-                setProgrammes(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+    const handleRedirect = async () => {
+        toast.success("Inscription réussie");
+        navigate("/signIn");
+    };
 
-    React.useEffect(() => {
-        fetchProgrammes();
-    }, []);
-
-    useEffect(() => {
-        setFormData(formData);
-    },[formData]);
-
-
-    useEffect(() => {
-        setProgramme(programme);
-        setFormData({
-            ...formData,
-            "programme": programme,
-        })
-    },[programme]);
 
     return (
         <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
@@ -269,26 +262,34 @@ function EtudiantInscription(props: any) {
                         </div>
                     </div>
                     <div>
-                        <label className={props.darkMode ?
-                            "block text-sm font-medium leading-6 text-white"
-                            : "block text-sm font-medium leading-6 text-black"}>{fields.programme.text}</label>
-                        <div className="mt-2">
-                            <select
-                                required={true}
-                                className={props.darkMode ?
+                        <label
+                            htmlFor="programme"
+                            className={
+                                props.darkMode ?
+                                    "block text-sm font-medium leading-6 text-white"
+                                    : "block text-sm font-medium leading-6 text-black"
+                            }
+                        >
+                            {fields.programme.text}
+                        </label>
+                        <select
+                            value={formData.programme_id}
+                            onChange={handleChange}
+                            name={"programme_id"}
+                            defaultValue={"DEFAULT"}
+                            id="programme_id"
+                            required={true}
+                            className={
+                                props.darkMode ?
                                     "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                }
-                                defaultValue={"DEFAULT"}
-                                name={"programme"}
-                                onChange={handleProgramChange}
-                            >
-                                <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
-                                {programmes.map((programme) => (
-                                    <option key={programme['id']} value={JSON.stringify(programme)}>{programme['nom']}</option>
-                                ))}
-                            </select>
-                        </div>
+                            }
+                        >
+                            <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
+                            {programmes.map((programme) => (
+                                <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <button

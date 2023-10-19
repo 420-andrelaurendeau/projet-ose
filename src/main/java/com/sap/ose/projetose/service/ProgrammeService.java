@@ -71,6 +71,12 @@ public class ProgrammeService {
 
     public ProgrammeDto getProgrammeById(Long id) {
         Optional<Programme> programme = programmeRepository.findById(id);
-        return programme.map(value -> new ProgrammeDto(value.getId(), value.getNom(), value.getDescription())).orElse(null);
+
+        if (programme.isPresent()) {
+            Programme value = programme.get();
+            return new ProgrammeDto(value.getId(), value.getNom(), value.getDescription());
+        } else {
+            return null;
+        }
     }
 }

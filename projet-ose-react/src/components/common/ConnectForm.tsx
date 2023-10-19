@@ -33,8 +33,34 @@ const ConnectForm = (props:any) => {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(connectUser)
         });
+
         const data = await response.json();
         console.log(data);
+
+        if (data && data.token) {
+            const token = data.token;
+
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const decodedToken = JSON.parse(atob(base64));
+
+            const userRole = decodedToken.role;
+
+            if (userRole && userRole.length > 0) {
+                const firstRole = userRole[0];
+                console.log("First role: ", firstRole);
+
+                if (firstRole && firstRole.authority === "EMPLOYEUR") {
+                    console.log("True employeur");
+                }
+                if (firstRole && firstRole.authority === "ETUDIANT") {
+                    console.log("True etudiant");
+                }
+            }
+
+        } else {
+            console.log('No token found in the response');
+        }
     }
 
     return (

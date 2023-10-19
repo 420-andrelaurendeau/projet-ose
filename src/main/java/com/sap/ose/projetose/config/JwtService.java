@@ -1,16 +1,16 @@
 package com.sap.ose.projetose.config;
 
+import com.sap.ose.projetose.modeles.Role;
+import com.sap.ose.projetose.service.UtilisateurService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +30,7 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails){
+        extractClaims.put("role",userDetails.getAuthorities());
         return Jwts
                 .builder()
                 .setClaims(extractClaims)
