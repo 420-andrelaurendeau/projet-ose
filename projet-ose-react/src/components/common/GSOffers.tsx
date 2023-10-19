@@ -4,11 +4,16 @@ import React, {useState} from "react";
 import {InterOfferJob} from "../../model/IntershipOffer";
 import InternshipOfferModal from "./InternshipOfferModal";
 import useModal from "../../hooks/useModal";
+import {useTranslation} from "react-i18next";
 
 
 export default function GSOffers(props: any) {
     const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
     const [offer, setOffer] = useState<InterOfferJob>();
+
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
+
 
     const handleClick = (id: Number) => {
         setOffer(props.offers.filter((offer: any) => offer.id == id)[0]);
@@ -43,7 +48,7 @@ export default function GSOffers(props: any) {
                                         className=" md:w-1/5 w-2/3  px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                                         onClick={() => handleSortClick("title")}
                                     >
-                                        Title
+                                        {fields.table.title}
                                         <div
                                             className={props.sortField === "title" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -56,7 +61,7 @@ export default function GSOffers(props: any) {
                                         className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                                         onClick={() => handleSortClick("employeurEntreprise")}
                                     >
-                                        Entreprise
+                                        {fields.table.enterprise}
                                         <div
                                             className={props.sortField === "employeurEntreprise" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -69,7 +74,7 @@ export default function GSOffers(props: any) {
                                         className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                                         onClick={() => handleSortClick("location")}
                                     >
-                                        Location
+                                        {fields.table.location}
                                         <div
                                             className={props.sortField === "location" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -82,7 +87,7 @@ export default function GSOffers(props: any) {
                                         className="md:w-1/5 w-1/3 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                                         onClick={() => handleSortClick("state")}
                                     >
-                                        Status
+                                        {fields.table.status}
                                         <div
                                             className={props.sortField === "state" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -95,7 +100,7 @@ export default function GSOffers(props: any) {
                                         className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
                                         onClick={() => handleSortClick("startDate")}
                                     >
-                                        Start date
+                                        {fields.table.startDate}
                                         <div
                                             className={props.sortField === "startDate" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon

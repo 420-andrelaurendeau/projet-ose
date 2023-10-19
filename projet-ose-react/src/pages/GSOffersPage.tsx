@@ -5,6 +5,7 @@ import {faClock, faFileLines, faThumbsUp, faXmark} from "@fortawesome/free-solid
 import {getIntershipOffers, getTotalOfferByState} from "../api/GSManagerAPI";
 import GSOffers from "../components/common/GSOffers";
 import PaginatedList from "../components/common/PaginatedList";
+import {useTranslation} from "react-i18next";
 
 
 const GSOffersPage = () => {
@@ -24,6 +25,9 @@ const GSOffersPage = () => {
 
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("desc");
+
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
 
     const fetchedOffersRef = useRef(false);
     const fetchedOffersCountRef = useRef(false);
@@ -132,7 +136,7 @@ const GSOffersPage = () => {
                                                 <FontAwesomeIcon icon={faFileLines} color="white" size="xl"/>
                                             </div>
                                             <div className="pl-2">
-                                                <p className="dark:text-offwhite">Total offer</p>
+                                                <p className="dark:text-offwhite">{fields.header.total}</p>
                                                 <p className="text-xl dark:text-white font-bold">{totalOffers}</p>
                                             </div>
                                         </div>
@@ -148,7 +152,7 @@ const GSOffersPage = () => {
                                                 <FontAwesomeIcon icon={faThumbsUp} color="white" size="xl"/>
                                             </div>
                                             <div className="pl-2">
-                                                <p className="dark:text-offwhite">Offers accepted</p>
+                                                <p className="dark:text-offwhite">{fields.header.accepted}</p>
                                                 <p className="text-xl dark:text-white font-bold">{totalApprouved}</p>
                                             </div>
                                         </div>
@@ -169,7 +173,7 @@ const GSOffersPage = () => {
                                                 <FontAwesomeIcon icon={faClock} color="white" size="xl"/>
                                             </div>
                                             <div className="pl-2">
-                                                <p className="dark:text-offwhite">Offers pending</p>
+                                                <p className="dark:text-offwhite">{fields.header.pending}</p>
                                                 <p className="text-xl dark:text-white font-bold">{totalPending}</p>
                                             </div>
                                         </div>
@@ -186,7 +190,7 @@ const GSOffersPage = () => {
                                                 <FontAwesomeIcon icon={faXmark} color="white" size="xl"/>
                                             </div>
                                             <div className="pl-2">
-                                                <p className="dark:text-offwhite">Offers declined</p>
+                                                <p className="dark:text-offwhite">{fields.header.declined}</p>
                                                 <p className="text-xl dark:text-white font-bold">{totalDeclined}</p>
                                             </div>
                                         </div>

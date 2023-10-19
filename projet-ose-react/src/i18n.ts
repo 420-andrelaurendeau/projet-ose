@@ -20,6 +20,21 @@ i18n
       en: {
         translation: {
             formField: {
+                InternshipOfferList : {
+                    header: {
+                        total: "Total offers",
+                        accepted: "Offers accepted",
+                        declined: "Offers declined",
+                        pending: "Offers pending",
+                    },
+                    table: {
+                        title: "Title",
+                        enterprise: "Enterprise",
+                        location: "Location",
+                        status: "Status",
+                        startDate: "Start date",
+                    }
+                },
                 InternshipOfferForm : {
                     titleForm: 'Iternship offer form',
                     title: {
@@ -342,6 +357,21 @@ i18n
       fr: {
         translation: {
             formField: {
+                InternshipOfferList : {
+                  header: {
+                      total: "Total des offres",
+                      accepted: "Offres acceptées",
+                      declined: "Offres refusées",
+                      pending: "Offres en attente",
+                  },
+                    table: {
+                        title: "Titre",
+                        enterprise: "Entreprise",
+                        location: "Localisation",
+                        status: "Statut",
+                        startDate: "Date de commencement",
+                    }
+                },
                 InternshipOfferForm : {
                     titleForm: 'Formulaire d\'offre de stage',
                     title: {

@@ -1294,6 +1294,10 @@ video {
   padding-left: 0.5rem;
 }
 
+.pr-4 {
+  padding-right: 1rem;
+}
+
 .pt-2 {
   padding-top: 0.5rem;
 }
@@ -1645,6 +1649,11 @@ video {
 
 :is(.dark .dark\:border-0) {
   border-width: 0px;
+}
+
+:is(.dark .dark\:border-dark) {
+  --tw-border-opacity: 1;
+  border-color: rgb(18 20 32 / var(--tw-border-opacity));
 }
 
 :is(.dark .dark\:border-darkgray) {
