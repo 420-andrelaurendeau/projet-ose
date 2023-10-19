@@ -84,6 +84,11 @@ public class EmployeurService {
     }
 
     EmployeurDto getEmployeurById(Long id){
-        return new EmployeurDto(Objects.requireNonNull(employeurRepository.findById(id).orElse(null))) ;
+        System.out.println(id);
+        Employeur employeur = employeurRepository.findById(id).orElse(null);
+        if (employeur == null){
+            return null;
+        }
+        return new EmployeurDto(employeur) ;
     }
 }

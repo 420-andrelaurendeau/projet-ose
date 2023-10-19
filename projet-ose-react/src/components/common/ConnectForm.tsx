@@ -38,10 +38,6 @@ const ConnectForm = (props:any) => {
     return (
            <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                <div className=" flex space-y-3 justify-center items-center">
-                    <Switcher/>
-                </div>
-
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto h-16 w-auto visible dark:hidden"

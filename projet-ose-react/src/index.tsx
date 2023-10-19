@@ -15,6 +15,8 @@ import HomePage from "./pages/HomePage";
 import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
+import Placeholder from "./components/common/Placeholder";
+import InterviewForm from "./components/common/InterviewForm";
 
 
 if (window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/") {
@@ -61,7 +63,12 @@ const router = createBrowserRouter([
     {
         path: "/TeleverserCV",
         element: <TeleversementCV/>
+    },
+    {
+        path: "/InterviewForm",
+        element: <InterviewForm />
     }
+
 
 ])
 

@@ -41,6 +41,8 @@ public class ProjetOseApplication implements CommandLineRunner {
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
 
+    @Autowired InterviewService interviewService;
+
     @Autowired
     ProgrammeRepository programmeRepository;
 
@@ -78,9 +80,6 @@ public class ProjetOseApplication implements CommandLineRunner {
         Etudiant etudiant = new Etudiant("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", programme1, null);
         etudiantService.saveEtudiant(etudiant);
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file));
-
-        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
 
         Internshipmanager internshipmanager = new Internshipmanager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);

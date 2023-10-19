@@ -1,10 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -41,6 +38,20 @@ public class EtudiantService {
             Programme programme = programmeService.findById(etudiant.getProgramme().getId());
             etudiant.setProgramme(programme);
             return Optional.of(etudiantRepository.save(etudiant));
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
+            };
+        }
+    }
+
+    @Transactional
+    public Optional<Etudiant> saveEtudiantInscription(EtudiantInscriptionDto etudiant) {
+        try {
+            Etudiant savingStudent = etudiant.fromDto();
+            Programme programme = programmeService.findById(etudiant.getProgramme_id());
+            savingStudent.setProgramme(programme);
+            return Optional.of(etudiantRepository.save(savingStudent));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {

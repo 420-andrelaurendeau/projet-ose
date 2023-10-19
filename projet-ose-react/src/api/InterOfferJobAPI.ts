@@ -95,6 +95,8 @@ export const getInterOfferJob = async (email: string) => {
 
 }
 
+
+
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
