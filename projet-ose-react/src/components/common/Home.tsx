@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import Header from "../../Header";
 import EmployeurHomePage from "../../pages/EmployeurHomePage";
 import EtudiantStagePage from "../../pages/EtudiantStagePage";
-import GSInternOfferPage from "../../pages/GSInternOfferPage";
 import GSOffersPage from "../../pages/GSOffersPage";
 
 function Home(props: any) {

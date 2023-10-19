@@ -12,7 +12,6 @@ import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
 import HomePage from "./pages/HomePage";
-import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
@@ -22,6 +21,7 @@ import CandidatureOffer from "./components/common/CandidatureOffer";
 import InternshipOfferForm from "./components/common/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
+import GSOffersPage from "./pages/GSOffersPage";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -96,6 +96,16 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path: "/gs/home",
+        element: <GSOffersPage/>,
+        children: [
+            {
+                path: "/gs/home/offre",
+                element: <GSOffersPage/>,
+            },
+        ]
+    },
+    {
         path: "/etudiantInscription",
         element: <EtudiantInscriptionPage/>
     },
@@ -106,10 +116,6 @@ const router = createBrowserRouter([
     {
         path: "/etudiantStage",
         element: <EtudiantStagePage/>
-    },
-    {
-        path: "/GSInternOffer",
-        element: <GSInternOfferPage/>
     },
     {
         path: "/TeleverserCV",

@@ -8,6 +8,7 @@ const TestBackEndConnection = (props:any) => {
     const [utilisateurs, setUtilisateurs] = React.useState([])
     const navigate = useNavigate()
     interface FormData {
+        id: number;
         nom: string;
         prenom: string;
         email: string;
@@ -34,6 +35,11 @@ const TestBackEndConnection = (props:any) => {
     }
 
     const handleSubmit = (user:FormData) => {
+        console.log(user.nom)
+        console.log(user.prenom)
+        user.id === 5 ? navigate('/gs/home/offre', {
+            state: user,
+        }) :
         user.matricule ? navigate('/etudiant/home/offre', {
             state: user,
         }) :
