@@ -317,7 +317,7 @@ const InternshipOfferForm: React.FC<any> = () => {
 
                                 </button>
                                 <NavLink
-                                    to="/home/offer"
+                                    to="/employeur/home/offre"
                                     className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
                                     state={user}
                                     type="button"
