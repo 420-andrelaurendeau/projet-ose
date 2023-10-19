@@ -1,12 +1,14 @@
 package com.sap.ose.projetose.exception;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GlobalExceptionHandlerTest {
 
@@ -16,7 +18,7 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<String> actualHandleDataIntegrityViolationResult = globalExceptionHandler
                 .handleDataIntegrityViolation(new DataIntegrityViolationException("Msg"));
         assertEquals("Msg", actualHandleDataIntegrityViolationResult.getBody());
-        assertEquals(400, actualHandleDataIntegrityViolationResult.getStatusCode().value());
+        assertEquals(400, actualHandleDataIntegrityViolationResult.getStatusCodeValue());
         assertTrue(actualHandleDataIntegrityViolationResult.getHeaders().isEmpty());
     }
 
@@ -26,7 +28,7 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<String> actualHandleDataAccessExceptionResult = globalExceptionHandler
                 .handleDataAccessException(new EmptyResultDataAccessException(3));
         assertEquals("Incorrect result size: expected 3, actual 0", actualHandleDataAccessExceptionResult.getBody());
-        assertEquals(500, actualHandleDataAccessExceptionResult.getStatusCode().value());
+        assertEquals(500, actualHandleDataAccessExceptionResult.getStatusCodeValue());
         assertTrue(actualHandleDataAccessExceptionResult.getHeaders().isEmpty());
     }
 
@@ -37,7 +39,7 @@ class GlobalExceptionHandlerTest {
         ResponseEntity<String> actualHandleUnknownExceptionResult = globalExceptionHandler
                 .handleUnknownException(new Exception("foo"));
         assertEquals("foo", actualHandleUnknownExceptionResult.getBody());
-        assertEquals(500, actualHandleUnknownExceptionResult.getStatusCode().value());
+        assertEquals(500, actualHandleUnknownExceptionResult.getStatusCodeValue());
         assertTrue(actualHandleUnknownExceptionResult.getHeaders().isEmpty());
     }
 

@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.models.AssessmentState;
-import com.sap.ose.projetose.models.OfferReviewRequest;
+import com.sap.ose.projetose.modeles.OfferReviewRequest;
+import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,15 +13,15 @@ public class OfferReviewRequestDto {
 
     private long id;
     private String comment;
-    private AssessmentState state;
+    private State state;
     private long internOfferId;
     private long internshipmanagerId;
 
     public OfferReviewRequestDto(OfferReviewRequest offerReviewRequest){
         this.id = offerReviewRequest.getId();
         this.comment = offerReviewRequest.getComment();
-        this.internOfferId = offerReviewRequest.getInternhipOffer().getId();
-        this.internshipmanagerId = offerReviewRequest.getInternshipManager().getId();
+        this.internOfferId = offerReviewRequest.getInternOffer().getId();
+        this.internshipmanagerId = offerReviewRequest.getInternshipmanager().getId();
     }
 
     public OfferReviewRequest fromDto(){

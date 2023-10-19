@@ -1,46 +1,56 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.models.File;
-import com.sap.ose.projetose.models.InternshipApplication;
-import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class InternshipCandidatesService {
+
     private final InternshipCandidatesRepository internshipCandidatesRepository;
-    private final InternshipOfferService internshipOfferService;
-    private final StudentService studentService;
+    private final InternOfferService internOfferService;
+    private final EtudiantService etudiantService;
 
     private final FileService fileService;
 
     private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
 
+    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, FileService fileService) {
+        this.internshipCandidatesRepository = internshipCandidatesRepository;
+        this.internOfferService = internOfferService;
+        this.etudiantService = etudiantService;
+        this.fileService = fileService;
+    }
+
     @Transactional
     public InternshipCandidatesDto saveCandidates(InternshipCandidatesDto internshipCandidatesDto){
         try{
-            InternshipApplication internshipApplication = internshipCandidatesDto.fromDto();
+            InternshipCandidates internshipCandidates = new InternshipCandidates(internshipCandidatesDto.fromDto());
+            Etudiant etudiant = etudiantService.findEtudiantById(internshipCandidatesDto.getEtudiant().getId());
+            InternOffer internOffer = internOfferService.findById(internshipCandidatesDto.getInternOfferJob().getId());
+            List<File> files = internshipCandidatesDto.getFiles() == null ? new ArrayList<>() : internshipCandidatesDto.getFiles().stream().map(FileDto::fromDto).toList();
 
-            Student student = studentService.findEtudiantByMatricule(internshipCandidatesDto.getStudentMatricule());
-            InternshipOffer internshipOffer = internshipOfferService.findById(internshipCandidatesDto.getInternshipOfferId());
-            List<File> files = internshipCandidatesDto.getFiles().stream().map(fileDto -> fileService.findById(fileDto.getId())).toList();
+            internshipCandidates.setEtudiant(etudiant);
+            internshipCandidates.setInternOffer(internOffer);
+            internshipCandidates.setFiles(files);
 
-            internshipApplication.setEtudiant(student);
-            internshipApplication.setInternshipOffer(internshipOffer);
-            internshipApplication.setFiles(files);
-
-            internshipCandidatesRepository.save(internshipApplication);
-            return new InternshipCandidatesDto(internshipApplication);
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
 
         }catch (DataAccessException e){
             logger.info(e.getMessage());
@@ -50,14 +60,15 @@ public class InternshipCandidatesService {
             throw new NullPointerException(e.getMessage());
         } catch (Exception e) {
             logger.info(e.getMessage());
+            logger.info(e.getCause().getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
         }
     }
     @Transactional
-    public InternshipCandidatesDto saveCandidates(InternshipApplication internshipApplication){
+    public InternshipCandidatesDto saveCandidates(InternshipCandidates internshipCandidates){
         try{
-            internshipCandidatesRepository.save(internshipApplication);
-            return new InternshipCandidatesDto(internshipApplication);
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};

@@ -1,61 +1,68 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.EmployerDto;
-import com.sap.ose.projetose.dto.StudentDto;
-import com.sap.ose.projetose.models.Employer;
-import com.sap.ose.projetose.models.Student;
-import com.sap.ose.projetose.repository.StudentRepository;
-import com.sap.ose.projetose.dto.UserDto;
-import com.sap.ose.projetose.repository.EmployerRepository;
+import com.sap.ose.projetose.dto.EmployeurDto;
+import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.ProgrammeDto;
+import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.dto.UtilisateurDto;
+import com.sap.ose.projetose.modeles.Employeur;
+import com.sap.ose.projetose.repository.EmployeurRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class OseService {
 
-    private final StudentRepository studentRepository;
+    private final EtudiantRepository etudiantRepository;
 
-    private final EmployerRepository employerRepository;
+    private final EmployeurRepository employeurRepository;
 
-    public OseService(StudentRepository studentRepository, EmployerRepository employerRepository) {
-        this.studentRepository = studentRepository;
+    public OseService(EtudiantRepository etudiantRepository, EmployeurRepository employeurRepository) {
+        this.etudiantRepository = etudiantRepository;
 
-        this.employerRepository = employerRepository;
+        this.employeurRepository = employeurRepository;
     }
 
 
-    public List<UserDto> getAllUsers() {
-        Optional<List<Employer>> employeurs = Optional.of(employerRepository.findAll());
-        Optional<List<Student>> etudiants = Optional.of(studentRepository.findAll());
-        List<StudentDto> studentDtos = new ArrayList<>();
-        List<EmployerDto> employerDtos = new ArrayList<>();
+    public List<UtilisateurDto> getAllUsers() {
+        Optional<List<Employeur>> employeurs = Optional.of(employeurRepository.findAll());
+        Optional<List<Etudiant>> etudiants = Optional.of(etudiantRepository.findAll());
+        List<EtudiantDto> etudiantDtos = new ArrayList<>();
+        List<EmployeurDto> employeurDtos = new ArrayList<>();
 
         etudiants.get().forEach(etudiant -> {
-            StudentDto studentDto = new StudentDto();
-            studentDto.setNom(etudiant.getNom());
-            studentDto.setPrenom(etudiant.getPrenom());
-            studentDto.setEmail(etudiant.getEmail());
-            studentDto.setPhone(etudiant.getPhone());
-            studentDto.setMatricule(etudiant.getMatricule());
-            studentDto.setCv(etudiant.getCv());
-            studentDto.setProgrammeId(etudiant.getFormation().getId());
-            studentDtos.add(studentDto);
+            EtudiantDto etudiantDto = new EtudiantDto();
+            etudiantDto.setId(etudiant.getId());
+            etudiantDto.setNom(etudiant.getNom());
+            etudiantDto.setPrenom(etudiant.getPrenom());
+            etudiantDto.setEmail(etudiant.getEmail());
+            etudiantDto.setPhone(etudiant.getPhone());
+            etudiantDto.setMatricule(etudiant.getMatricule());
+            etudiantDto.setCv(etudiant.getCv().stream().map(File::getId).toList());
+            etudiantDto.setProgramme_id(etudiant.getProgramme().getId());
+            etudiantDtos.add(etudiantDto);
         });
 
         employeurs.get().forEach(employeur -> {
-            EmployerDto employerDto = new EmployerDto();
-            employerDto.setNom(employeur.getNom());
-            employerDto.setPrenom(employeur.getPrenom());
-            employerDto.setPhone(employeur.getPhone());
-            employerDto.setEmail(employeur.getEmail());
-            employerDto.setEntreprise(employeur.getEntreprise());
-            employerDtos.add(employerDto);
+            EmployeurDto employeurDto = new EmployeurDto();
+            employeurDto.setId(employeur.getId());
+            employeurDto.setNom(employeur.getNom());
+            employeurDto.setPrenom(employeur.getPrenom());
+            employeurDto.setPhone(employeur.getPhone());
+            employeurDto.setEmail(employeur.getEmail());
+            employeurDto.setEntreprise(employeur.getEntreprise());
+            employeurDtos.add(employeurDto);
         });
-        List<UserDto> utilisateurs = new ArrayList<>(studentDtos);
-        utilisateurs.addAll(employerDtos);
+        List<UtilisateurDto> utilisateurs = new ArrayList<>(etudiantDtos);
+        utilisateurs.addAll(employeurDtos);
         return utilisateurs;
     }
 
