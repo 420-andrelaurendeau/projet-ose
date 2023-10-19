@@ -151,7 +151,6 @@ const ConnectForm = (props:any) => {
                         </a>
                     </p>
                 </div>
-
             </div>
 
         </>
