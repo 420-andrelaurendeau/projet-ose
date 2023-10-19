@@ -66,6 +66,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
 
     const getProgrammeName = (): string => {
         let prog:string = "";
+        if (!fields.programs) return prog;
         Object.keys(fields.programs).forEach((key) => {
             if (fields.programs[key].id === props.user.programme_id) {
                 prog = fields.programs[key].text;
@@ -100,7 +101,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                         leaveTo="opacity-0 scale-95"
                     >
                         <Dialog.Panel
-                            className=" w-80 mt-14 max-md:ml-52 end-0 items-center rounded-2xl px-6 bg-lightgray dark:bg-darkergray py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            className=" w-80 mt-14 max-md:ml-52 end-0 items-center rounded-2xl px-6 bg-lightgray dark:bg-darkergray py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" data-testid="background">
                             <div className="flex  space-x-2">
                                 <FontAwesomeIcon icon={faCircleUser}
                                                  className="text-blue hidden md:flex dark:text-orange h-12"
@@ -117,7 +118,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                             <p className="">
                                                 {props.user.email}
                                             </p>
-                                            <p className="">
+                                            <p data-testid="programme-text">
                                                 {getProgrammeName()}
                                             </p>
                                         </div>
@@ -134,7 +135,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                             <FontAwesomeIcon icon={faPlug}
                                                              bounce={isSwitchStatus}
                                                              className={isActive ? "text-green mt-1.5" : "text-red mt-1.5"}/>
-                                            <p className="text-black dark:text-gray w-10/12 text-start">
+                                            <p className="text-black dark:text-gray w-10/12 text-start" data-testid="active-text">
                                                 {isActive ? fields.Header.profilMenu.active.text : fields.Header.profilMenu.inactive.text}
                                             </p>
                                         </div>
@@ -144,6 +145,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                     <button
                                         className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
                                         onClick={toggleDarkMode}
+                                        data-testid="change-theme"
                                     >
                                         <div className="flex w-full justify-between ">
                                             <div className="h-2 mt-1">
@@ -161,6 +163,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                     <button
                                         className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
                                         onClick={changeLanguage}
+                                        data-testid="change-language"
                                     >
                                         <div className="flex w-full justify-between ">
                                             {language === "en" ?

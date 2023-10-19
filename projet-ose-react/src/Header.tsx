@@ -59,7 +59,7 @@ const Header = () => {
                                     />
                                 </div>
                             </div>
-                            <button className="hidden md:block" onClick={openModal}>
+                            <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
                                 <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                             </button>
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
