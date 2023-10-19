@@ -15,10 +15,10 @@ import SidebarEtudiant from "./SidebarEtudiant";
 import useDarkSide from "./hooks/useDarkSide";
 import ProfilMenu from "./components/common/ProfilMenu";
 
-const Header = (props:any) => {
+const Header = (props: any) => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
-    const fields = i18n.getResource(language,"translation","formField");
+    const fields = i18n.getResource(language, "translation", "formField");
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
 
@@ -29,7 +29,6 @@ const Header = (props:any) => {
     function openModal() {
         setIsOpenProfil(true)
     }
-
 
 
     return (
@@ -45,16 +44,18 @@ const Header = (props:any) => {
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
-                                    <img
-                                        className="mx-auto h-12 w-auto visible dark:hidden"
-                                        src={img}
-                                        alt="Your Company"
-                                    />
-                                    <img
-                                        className="mx-auto h-12 w-auto hidden dark:flex"
-                                        src={imgDark}
-                                        alt="Your Company"
-                                    />
+                                    <NavLink to={"/"}>
+                                        <img
+                                            className="mx-auto h-12 w-auto visible dark:hidden"
+                                            src={img}
+                                            alt="Your Company"
+                                        />
+                                        <img
+                                            className="mx-auto h-12 w-auto hidden dark:flex"
+                                            src={imgDark}
+                                            alt="Your Company"
+                                        />
+                                    </NavLink>
                                 </div>
                             </div>
                             {props.user.matricule && <div className="hidden md:flex">

@@ -27,7 +27,7 @@ public class InterviewService {
     private final EtudiantRepository etudiantRepository;
 
     @Autowired
-    public InterviewService(InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository){
+    public InterviewService(InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
         this.etudiantRepository = etudiantRepository;
         this.employeurRepository = employeurRepository;
         this.interviewRepository = interviewRepository;
@@ -69,7 +69,7 @@ public class InterviewService {
 
         Interview interview = interviewRepository.save(interviewDTO.fromDto());
 
-        if (interview != null){
+        if (interview != null) {
             InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), null, null, interview.getDate(), interview.getDescription());
             return Optional.of(returnInterviewDto);
         }
@@ -84,5 +84,9 @@ public class InterviewService {
 
     public void deleteInterviewById(Long id) {
         interviewRepository.deleteById(id);
+    }
+
+    public Boolean studentHasInterviewWithEmployeur(Long studentId, Long employerId) {
+        return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getEmployeur().getId() == employerId).findFirst().orElse(null) != null;
     }
 }

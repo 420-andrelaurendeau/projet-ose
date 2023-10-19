@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBriefcase, faCheck, faCircleUser, faPause, faX} from "@fortawesome/free-solid-svg-icons";
+import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-svg-icons";
 import {NavLink} from "react-router-dom";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
 import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
 import axios from "axios";
-import {log} from "util";
+import {resolveObjectURL} from "buffer";
 
 const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     const [open, setOpen] = React.useState({
@@ -34,21 +33,27 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
             })
         })
 
+
         if (listIds.length === 0) return;
         getInterOfferCandidates(listIds.join(",")).then((response) => {
             console.log(response);
             setInterOfferCandidates(response);
-        });
+        }).finally(() => {
+                interOfferCandidates.forEach((candidate) => {
+                    studentHasInterviewWithEmployer(candidate.id, user.id)
+                })
+            }
+        );
     }, [offers]);
 
 
     function handleAccept(id: string) {
         axios.post(`http://localhost:8080/api/intershipCandidates/acceptCandidats/${id}`).then(
             (res) => {
-                let newList:any[] = [...interOfferCandidates]
+                let newList: any[] = [...interOfferCandidates]
 
                 newList.forEach(candidate => {
-                    if (candidate.id == id){
+                    if (candidate.id == id) {
                         candidate.state = "ACCEPTED"
                     }
                 })
@@ -60,13 +65,12 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
     }
 
     function handleRefuse(id: string) {
-        console.log(id)
         axios.post(`http://localhost:8080/api/intershipCandidates/declineCandidats/${id}`).then(
             (res) => {
-                let newList:any[] = [...interOfferCandidates]
+                let newList: any[] = [...interOfferCandidates]
 
                 newList.forEach(candidate => {
-                    if (candidate.id == id){
+                    if (candidate.id == id) {
                         candidate.state = "DECLINED"
                     }
                 })
@@ -74,6 +78,27 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
             }
         ).catch(e => {
             console.log(e)
+        })
+    }
+
+    function studentHasInterviewWithEmployer(studentId: number, employerId: number) {
+        let requestBody = {"studentId": studentId, "employerId": employerId}
+        let response = false
+
+        axios.post("http://localhost:8080/api/interview/studentHasInterviewWithEmployer", requestBody).then(
+            (res) => {
+                response = res.data
+                let newList: any[] = [...interOfferCandidates]
+
+                newList.forEach((candidate) => {
+                    if (candidate.id == studentId) {
+                        candidate.interviewStatus = response
+                    }
+                })
+                setInterOfferCandidates(newList)
+            }
+        ).catch((e) => {
+            response = false
         })
     }
 
@@ -144,7 +169,6 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                                     {
                                         interOfferCandidates.map((interOfferCandidate: any) => {
                                             if (interOfferCandidate.internOfferJob.id === offer.id) {
-                                                console.log(interOfferCandidate.state)
                                                 return (
                                                     <div key={interOfferCandidate.id}
                                                          className="flex justify-center pt-2">
@@ -155,6 +179,23 @@ const CandidatureOffer: React.FC<any> = ({user, offers}) => {
                                                                                  className="text-blue dark:text-orange"
                                                                                  size="xl"/>
                                                                 <p className={`text-black dark:text-white tracking-wide font-bold text-lg ${interOfferCandidate.state == "DECLINED" ? 'text-red' : interOfferCandidate.state == "ACCEPTED" ? 'text-green' : 'text-black'}`}>{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
+
+
+
+
+                                                                <button
+                                                                    disabled={interOfferCandidate.interviewStatus}
+                                                                    className={`px-2 py-2 rounded-lg ${interOfferCandidate.interviewStatus ? "bg-gray" : "bg-blue"} dark:bg-orange font-bold text-white cursor-pointer`}
+                                                                    hidden={interOfferCandidate.state != "ACCEPTED"}
+                                                                    onClick={() => {
+                                                                        let studentId: number = interOfferCandidate.id
+                                                                        let employerId: number = user.id
+                                                                        studentHasInterviewWithEmployer(interOfferCandidate.id, user.id)
+                                                                        console.log(`${studentId} ${employerId}`)
+                                                                    }}>
+                                                                    INTERVIEW
+                                                                </button>
+
                                                             </div>
                                                             <div
                                                                 className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>

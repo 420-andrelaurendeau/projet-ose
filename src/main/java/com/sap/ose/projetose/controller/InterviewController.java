@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+
+
 @RestController
 @RequestMapping("/api/interview")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -28,4 +32,18 @@ public class InterviewController {
         return interviewService.saveInterview(interviewRequestInDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/studentHasInterviewWithEmployer")
+    public ResponseEntity<Boolean> studentHasInterviewWithEmployer(@RequestBody studentHasInterviewWithEmployer studentHasInterviewWithEmployer ){
+        logger.info("Interview studenthasinterviewwithemployer request received");
+        boolean result = interviewService.studentHasInterviewWithEmployeur(studentHasInterviewWithEmployer.studentId,studentHasInterviewWithEmployer.employerId);
+        return Optional.of(result).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+}
+
+class studentHasInterviewWithEmployer {
+    long studentId,employerId;
+    public studentHasInterviewWithEmployer(long studentId, long employerId) {
+        this.studentId = studentId;
+        this.employerId = employerId;
+    }
 }
