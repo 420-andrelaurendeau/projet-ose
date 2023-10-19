@@ -45,13 +45,13 @@ const ConnectForm = (props:any) => {
             const userRole = decodedToken.role;
 
             if (userRole && userRole.length > 0) {
-                const user = userRole[0];
-                console.log("First role: ", user);
+                const firstRole = userRole[0];
+                console.log("First role: ", firstRole);
 
-                if (user && user.authority === "EMPLOYEUR") {
+                if (firstRole && firstRole.authority === "EMPLOYEUR") {
                     console.log("True employeur");
                 }
-                if (user && user.authority === "ETUDIANT") {
+                if (firstRole && firstRole.authority === "ETUDIANT") {
                     console.log("True etudiant");
                 }
             }
