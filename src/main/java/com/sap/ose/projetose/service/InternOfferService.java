@@ -12,10 +12,8 @@ import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.PropertyAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -49,7 +47,6 @@ public class InternOfferService {
     @Transactional
     public InternOfferDto saveInterOfferJob(InternOfferDto internOfferDto) {
         try {
-            System.out.println(internOfferDto.getEmployeurId());
 
             if (isApprovedOrDeclineById(internOfferDto.getId()))
                 throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
@@ -164,7 +161,7 @@ public class InternOfferService {
             return pageOffer;
 
         } catch (PropertyReferenceException e) {
-           logger.error("Le champ de tri n'est pas valide : " + sort);
+            logger.error("Le champ de tri n'est pas valide : " + sort);
             throw new BadSortingFieldException(sort.toString());
         } catch (IllegalArgumentException e) {
             logger.error("L'état de l'offre d'emploi est invalide : " + state, e);
@@ -179,21 +176,21 @@ public class InternOfferService {
     }
 
     public Map<String, Long> getCountByState() {
-
+        HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
         try {
             List<Object[]> counts = offerJobRepository.getCountByState();
-            Map<String, Long> countMap = new HashMap<>();
             long totalOffers = 0;
-
             for (Object[] count : counts) {
-                State state = (State) count[0];
                 Long stateCount = (Long) count[1];
-                totalOffers = +stateCount;
-                countMap.put(state.name(), stateCount);
+                countMap.put(count[0].toString(), stateCount);
+
+                totalOffers += stateCount;
+
             }
 
             countMap.put("TOTAL", totalOffers);
 
+            countMap.forEach((key, value) -> logger.info(key + " : " + value));
             return countMap;
         } catch (DataAccessException e) {
             logger.error("Erreur d'accès à la base de données lors de la récupération des offres d'emploi.", e);

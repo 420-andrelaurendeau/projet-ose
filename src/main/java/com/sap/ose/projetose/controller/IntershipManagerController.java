@@ -29,10 +29,8 @@ public class IntershipManagerController {
             @RequestParam(required = false) String state) {
 
 
-        System.out.println("page : " + page + " size : " + size + " sortField : " + sortField + " sortDirection : " + sortDirection + " state : " + state);
         Page<InternOfferDto> internOfferDtos = internshipmanagerService.getSortedOffersByPage(page, size, state, sortField, sortDirection);
 
-        System.out.println(internOfferDtos);
 
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }

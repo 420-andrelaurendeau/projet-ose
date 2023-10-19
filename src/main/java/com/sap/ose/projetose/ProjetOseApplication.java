@@ -75,6 +75,11 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
 
+        InternOffer internOffer2 = new InternOffer("Stage Réseaux","Quebec","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
+        internOfferService.saveInterOfferJob(internOfferDto2);
+
+
         Etudiant etudiant = new Etudiant("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", programme1, null);
         etudiantService.saveEtudiant(etudiant);
 

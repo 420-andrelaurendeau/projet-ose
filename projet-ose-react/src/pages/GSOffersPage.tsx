@@ -17,6 +17,8 @@ const GSOffersPage = () => {
     const [totalPending, setTotalPending] = useState(0);
     const [totalDeclined, setTotalDeclined] = useState(0);
 
+    const [numberElement, setNumberElement] = useState<number>(5)
+
     const [offerState, setOfferState] = useState(undefined);
     const [isUpdate, setIsUpdate] = useState(false);
 
@@ -24,6 +26,7 @@ const GSOffersPage = () => {
     const [sortDirection, setSortDirection] = useState("desc");
 
     const fetchedOffersRef = useRef(false);
+    const fetchedOffersCountRef = useRef(false);
     const location = useLocation();
     const user = location.state;
 
@@ -33,11 +36,9 @@ const GSOffersPage = () => {
             try {
                 fetchedOffersRef.current = true
 
-                const response = await getIntershipOffers({page, size: 2, state: offerState, sortField, sortDirection});
+                const response = await getIntershipOffers({page, size: numberElement, state: offerState, sortField, sortDirection});
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
-
-                await handleTotalOffersByState();
 
             } catch (error) {
                 console.error('Error fetching offers:', error);
@@ -47,7 +48,28 @@ const GSOffersPage = () => {
         };
         if (!fetchedOffersRef.current) fetchOffers();
 
-    }, [page, offerState, isUpdate, sortField, sortDirection]);
+    }, [page, offerState, numberElement, isUpdate, sortField, sortDirection]);
+
+    useEffect(() => {
+        const fetchOffersCount = async () => {
+            try {
+                fetchedOffersCountRef.current = true
+
+                await handleTotalOffersByState();
+
+            } catch (error) {
+                console.error('Error fetching the numbers of offers:', error);
+            }
+            setIsUpdate(false);
+            fetchedOffersCountRef.current = false;
+        };
+        if (!fetchedOffersCountRef.current) fetchOffersCount();
+        console.log("total Approuve " + totalApprouved.toString())
+        console.log("total Pending " + totalPending.toString())
+        console.log("total declined " + totalDeclined.toString())
+        console.log("total " + totalOffers.toString())
+
+    }, [isUpdate]);
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
@@ -55,6 +77,10 @@ const GSOffersPage = () => {
 
     const handleTotalOffersByState = async () => {
         const responseTotal = await getTotalOfferByState();
+        setTotalOffers(0);
+        setTotalApprouved(0);
+        setTotalPending(0);
+        setTotalDeclined(0);
 
         if (responseTotal["PENDING"])
             setTotalPending(responseTotal["PENDING"]);
@@ -69,8 +95,14 @@ const GSOffersPage = () => {
             setTotalOffers(responseTotal["TOTAL"])
     }
 
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setPage(0);
+        setNumberElement(Number(event.target.value));
+    };
+
     const offersByState = (state: any) => {
         setOfferState(state);
+        setPage(0);
     };
 
     const renderOffer = <GSOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField}
@@ -165,7 +197,20 @@ const GSOffersPage = () => {
                         </div>
                     </div>
 
-                    <div className="px-3 mx-3">
+                    <div className="px-3 mx-3 mt-10">
+                        <div className="flex justify-end pr-4">
+                            <label className="">
+                                <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-dark" value={numberElement} onChange={handleChange}>
+                                    <option value={2}>2</option>
+                                    <option value={5}>5</option>
+                                    <option value={10}>10</option>
+                                    <option value={20}>20</option>
+                                </select>
+                            </label>
+                        </div>
+
+
+
                         <PaginatedList
                             renderItem={renderOffer}
                             page={page}

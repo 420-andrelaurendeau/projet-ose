@@ -36,7 +36,7 @@ public class EmployeurService {
 
     Employeur findById(long id) {
         try {
-            System.out.println(id);
+
             return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
             logger.error("Employeur non trouvé avec l'id" + id);

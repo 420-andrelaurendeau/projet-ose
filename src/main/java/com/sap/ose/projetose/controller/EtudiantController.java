@@ -28,7 +28,6 @@ public class EtudiantController {
 
     @PostMapping("/ajouter")
     public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-        System.out.println(etudiant);
         return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
