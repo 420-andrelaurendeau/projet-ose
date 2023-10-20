@@ -22,6 +22,7 @@ import InternshipOfferForm from "./components/common/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
 import GSOffersPage from "./pages/GSOffersPage";
+import ErrorPage from "./pages/ErrorPage";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -121,6 +122,10 @@ const router = createBrowserRouter([
         path: "/TeleverserCV",
         element: <TeleversementCV/>
     },
+    {
+        path: "/*",
+        element: <ErrorPage/>
+    }
 
 
 
