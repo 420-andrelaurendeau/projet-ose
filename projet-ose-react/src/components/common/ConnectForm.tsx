@@ -12,12 +12,11 @@ const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
     const [colorTheme,setColorTheme] = React.useState();
     console.log(colorTheme);
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ConnectForm");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
     const [connectUser, setConnectUser] = React.useState({
         email: "",
         password: ""
     });
-    console.log(fields);
 
     useEffect(() => {
 
@@ -50,7 +49,7 @@ const ConnectForm = (props:any) => {
                         alt="Your Company"
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                        Sign in to your account
+                        {fields.Title.text}
                     </h2>
                 </div>
 
@@ -58,7 +57,7 @@ const ConnectForm = (props:any) => {
                     <form className="space-y-6" action="#" method="POST">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-black dark:text-white">
-                                {fields["email"].text}
+                                {fields.email.text}
                             </label>
                             <div className="mt-2">
                                 <input
@@ -66,7 +65,7 @@ const ConnectForm = (props:any) => {
                                     name="email"
                                     type="email"
                                     autoComplete="email"
-                                    placeholder={fields["email"].placeholder}
+                                    placeholder={fields.email.placeholder}
                                     required
                                     className="block w-full bg-white dark:bg-softdark rounded-md py-2 text-blue dark:text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     defaultValue={connectUser.email}
@@ -78,11 +77,11 @@ const ConnectForm = (props:any) => {
                         <div>
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-black dark:text-white">
-                                    {fields["password"].text}
+                                    {fields.password.text}
                                 </label>
                                 <div className="text-sm">
                                     <a href="#" className="block text-sm font-medium leading-6 text-blue dark:text-orange">
-                                        Forgot password?
+                                        {fields.ForgotPassword.text}
                                     </a>
                                 </div>
                             </div>
@@ -92,7 +91,7 @@ const ConnectForm = (props:any) => {
                                     name="password"
                                     type="password"
                                     autoComplete="current-password"
-                                    placeholder={fields["password"].placeholder}
+                                    placeholder={fields.password.placeholder}
                                     required
                                     className="block w-full bg-white dark:bg-softdark rounded-md py-2 text-blue dark:text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
                                     defaultValue={connectUser.password}
@@ -105,18 +104,18 @@ const ConnectForm = (props:any) => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-blue dark:bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue dark:focus-visible:outline-orange">
-                                Sign in
+                                {fields.SignInButton.text}
                             </button>
                         </div>
                     </form>
 
                     <p className="mt-10 text-center text-sm text-black dark:text-white">
-                        Not register already ?{' '}
+                        {fields.ContactUs.Question.text}{' '}
                         <a href="#" className=
                             {props.darkMode ?
                                 "font-semibold leading-6 text-orange hover:text-amber-500"
                                 :"font-semibold leading-6 text-blue hover:text-indigo-500 dark:text-orange dark:hover:text-amber-500"}>
-                            Contact us
+                            {fields.ContactUs.text}
                         </a>
                     </p>
                 </div>

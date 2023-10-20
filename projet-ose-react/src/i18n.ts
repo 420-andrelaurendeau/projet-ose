@@ -129,26 +129,6 @@ i18n
                         close : 'Close',
                     },
                 },
-                ConnectForm : {
-                    email: {
-                        name : 'email',
-                        text : 'Email address',
-                        placeholder : 'signIn@123.com',
-                        validation : {
-                            required : 'The email address is required',
-                            emailRequired : 'The email address must be a valid email address',
-                        }
-                    },
-                    password: {
-                        name : 'password',
-                        text : 'Password',
-                        placeholder : '*******',
-                        validation : {
-                            required : 'The password is required',
-                            minLenght : 'The password must contain at least 5 characters',
-                        }
-                    }
-                },
                 InscriptionFormEtudiant : {
                     title : {
                         name : 'title',
@@ -468,6 +448,56 @@ i18n
                             text:'Declined'
                         }
                     }
+                },
+                ErrorPage: {
+                    errorMessage: {
+                        name: 'errorMessage',
+                        text: 'This page does not exist',
+                    },
+                    ReturnButton: {
+                        name: 'ReturnButton',
+                        text: 'Return to the home page',
+                    }
+                },
+                LoginPage: {
+                    SignInButton: {
+                        name: 'SignInButton',
+                        text: 'Sign in',
+                    },
+                    Title: {
+                        name: 'Title',
+                        text: 'Sign in to your account',
+                    },
+                    ContactUs: {
+                        name: 'ContactUs',
+                        text: 'Contact us',
+                        Question : {
+                            name: 'Question',
+                            text: 'Not registered already ?',
+                        }
+                    },
+                    ForgotPassword: {
+                        name: 'ForgotPassword',
+                        text: 'Forgot password ?',
+                    },
+                    email: {
+                        name : 'email',
+                        text : 'Email address',
+                        placeholder : 'signIn@123.com',
+                        validation : {
+                            required : 'The email address is required',
+                            emailRequired : 'The email address must be a valid email address',
+                        }
+                    },
+                    password: {
+                        name : 'password',
+                        text : 'Password',
+                        placeholder : '*******',
+                        validation : {
+                            required : 'The password is required',
+                            minLenght : 'The password must contain at least 5 characters',
+                        }
+                    }
                 }
             },
         }
@@ -680,26 +710,6 @@ i18n
                     },
                     error : {
                         name : 'Inscription échouée',
-                    }
-                },
-                ConnectForm: {
-                    email: {
-                        name: 'email',
-                        text: 'Adresse e-mail',
-                        placeholder: 'saisir@123.com',
-                        validation: {
-                            required: 'L\'adresse e-mail est obligatoire',
-                            emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
-                        }
-                    },
-                    password: {
-                        name: 'password',
-                        text: 'Mot de passe',
-                        placeholder: '*******',
-                        validation: {
-                            required: 'Le mot de passe est requis',
-                            minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
-                        }
                     }
                 },
                 InscriptionEmployeur:{
@@ -932,6 +942,56 @@ i18n
                         DECLINED:{
                             name:'DECLINED',
                             text:'Refusé'
+                        }
+                    }
+                },
+                ErrorPage: {
+                    errorMessage: {
+                        name: 'errorMessage',
+                        text: 'Cette page n\'existe pas',
+                    },
+                    ReturnButton: {
+                        name: 'ReturnButton',
+                        text: 'Retourner à la page d\'accueil',
+                    }
+                },
+                LoginPage: {
+                    SignInButton: {
+                        name: 'SignInButton',
+                        text: 'Se connecter',
+                    },
+                    Title: {
+                        name: 'Title',
+                        text: 'Connexion à votre compte',
+                    },
+                    ContactUs: {
+                        name: 'ContactUs',
+                        text: 'Nous contacter',
+                        Question : {
+                            name: 'Question',
+                            text: 'Pas encore enregistré ?',
+                        }
+                    },
+                    ForgotPassword: {
+                        name: 'ForgotPassword',
+                        text: 'Vous avez oublié votre mot de passe ?',
+                    },
+                    email: {
+                        name: 'email',
+                        text: 'Adresse e-mail',
+                        placeholder: 'saisir@123.com',
+                        validation: {
+                            required: 'L\'adresse e-mail est obligatoire',
+                            emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                        }
+                    },
+                    password: {
+                        name: 'password',
+                        text: 'Mot de passe',
+                        placeholder: '*******',
+                        validation: {
+                            required: 'Le mot de passe est requis',
+                            minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                         }
                     }
                 }

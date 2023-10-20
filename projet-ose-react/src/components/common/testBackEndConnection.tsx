@@ -1,9 +1,12 @@
 import React, {useEffect} from "react";
 import img from "../../assets/icons/user-solid.svg";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const TestBackEndConnection = (props:any) => {
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
 
     const [utilisateurs, setUtilisateurs] = React.useState([])
     const navigate = useNavigate()
@@ -70,7 +73,7 @@ return (
                                 type="button"
                                 onClick={(e) => handleSubmit(utilisateur)}
                                 className="bg-blue hover:bg-cyan-900 text-white font-bold py-2 px-4 border border-blue rounded">
-                                Connection
+                                {fields.SignInButton.text}
                             </button>
                         </div>
                     </li>
