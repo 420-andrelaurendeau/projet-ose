@@ -1,11 +1,15 @@
 *Definition de done*
 
-- C'est un story qui est immuable vu qu'elle est dans le main et a ete valider au prealable
+- Il ne faut pas que le code sois YAGNI (You ain't gonna need it)
+- Il faut que le UX sois simple et intuitif a utilise
+- Il faut que tout le texte soit principalement en francais (i18n doit etre applique)
+- Il faut que les donnees utilise sois realiste
+- Il faut une personne pour le code review et une differente pour le plan demo (ce questionner en WTF == avoir un esprit critique)
 
 *Point d'action*
 
-1. Faire les story/taches en pair tout au long du sprint
-2. Des la premiere semaine de chaque sprint tout le monde doit avoir produit de la valeur avant le premier jeudi
+1. Pour chaque Sprint tout le monde doit avoir entre 12 heures de travail minimum avant la fin de la premiere semaine.
+2. Passer en revue tous les plandemos 3 jours avant la presentation et faire une pratique le jour que suit.
 
 *Pont negatif*
 
@@ -13,10 +17,4 @@
 
 
 
-
-
-*Definition de done Sprint-3*
-- Selon mehdi : Une story que l'on va plus revenir et qui est dans main donc immuable
-- Selon timur : Une story donc la fonctionnaliter principale est fini et a ete valider(pofiner)
-- Selon marco : Un demo qui repond au besoin de la story et qui est representatif de tout la fonctionaliter
 
