@@ -1,12 +1,8 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipCandidatesDto;
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.modeles.*;
-import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
@@ -21,7 +17,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.time.LocalDate;
 
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {

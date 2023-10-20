@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.EmployerDtoInscription;
 import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EmployerNotFoundException;
@@ -7,7 +8,6 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EmployeurRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -64,11 +63,24 @@ public class EmployeurService {
     }
 
     @Transactional
-    public Optional<Employeur> saveEmployeur(Employeur employeur){
+    public Optional<EmployeurDto> saveEmployeur(Employeur employeur){
         try {
             Programme programme = programmeService.findById(employeur.getProgramme().getId());
             employeur.setProgramme(programme);
-            return Optional.of(employeurRepository.save(employeur));
+            return Optional.of(new EmployeurDto(employeurRepository.save(employeur)));
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
+        }
+    }
+
+    @Transactional
+    public Optional<EmployeurDto> saveEmployeur(EmployerDtoInscription employeurDto){
+        try {
+            Employeur employeur = employeurDto.fromDto();
+            Programme programme = programmeService.findById(employeurDto.getProgramme_id());
+            employeur.setProgramme(programme);
+            return Optional.of(new EmployeurDto(employeurRepository.save(employeur)));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};

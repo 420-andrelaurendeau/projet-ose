@@ -46,12 +46,12 @@ public class EtudiantService {
     }
 
     @Transactional
-    public Optional<Etudiant> saveEtudiantInscription(EtudiantInscriptionDto etudiant) {
+    public Optional<EtudiantDto> saveEtudiantInscription(EtudiantInscriptionDto etudiant) {
         try {
             Etudiant savingStudent = etudiant.fromDto();
             Programme programme = programmeService.findById(etudiant.getProgramme_id());
             savingStudent.setProgramme(programme);
-            return Optional.of(etudiantRepository.save(savingStudent));
+            return Optional.of(new EtudiantDto(etudiantRepository.save(savingStudent)));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
