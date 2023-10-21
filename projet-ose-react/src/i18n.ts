@@ -341,6 +341,10 @@ i18n
                                 name: 'stage',
                                 text: 'Intership Offer',
                             },
+                            cv: {
+                                name: 'CV',
+                                text: 'Upload your CV',
+                            },
                             sidebar: {
                                 stage: {
                                     name: 'stage',
@@ -810,6 +814,10 @@ i18n
                             stage: {
                                 name: 'stage',
                                 text: 'Offre stages',
+                            },
+                            cv: {
+                                name: 'CV',
+                                text: 'Televerser votre CV',
                             },
                             sidebar: {
                                 stage: {

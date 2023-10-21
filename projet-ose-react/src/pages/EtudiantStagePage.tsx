@@ -88,7 +88,7 @@ function EtudiantStagePage() {
                                 <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{"Televerser votre CV"}</p>
+                                <p className="text-blue dark:text-orange">{fields.Header.cv.text}</p>
                             </div>
                         </div>
                     </NavLink>
