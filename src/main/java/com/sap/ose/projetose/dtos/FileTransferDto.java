@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 @Valid
 public class FileTransferDto {
     private long id;
-    @NotNull
+    @NotNull(message = "{file.content.notBlank}")
     private byte[] content;
-    @NotBlank
+    @NotBlank(message = "{file.fileName.notBlank}")
     private String fileName;
     private boolean isAccepted;
     @UserExists
