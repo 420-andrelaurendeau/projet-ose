@@ -13,7 +13,6 @@ import java.util.List;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Student extends User {
     @Column(unique = true)
@@ -25,6 +24,13 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
+
+    public Student(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram, String matricule) {
+        super(lastName, firstName, phone, email, password, studyProgram);
+        this.matricule = matricule;
+        this.cvList = new ArrayList<>();
+        this.internshipApplications = new ArrayList<>();
+    }
 
     @Override
     public UserDto toDto() {

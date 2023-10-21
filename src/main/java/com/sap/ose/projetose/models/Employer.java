@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Employer extends User {
     private String enterprise;
@@ -23,10 +22,11 @@ public class Employer extends User {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
-    public Employer(String lastName, String firstName, String email, String phone, String password, String enterprise, StudyProgram studyProgram) {
-        super(lastName, firstName, email, phone, password, studyProgram);
+    public Employer(String lastName, String firstName, String phone, String email, String password, String enterprise, StudyProgram studyProgram) {
+        super(lastName, firstName, phone, email, password, studyProgram);
         this.enterprise = enterprise;
         this.studyProgram = studyProgram;
+        this.internshipOffers = new ArrayList<>();
     }
 
     public EmployerDto toDto() {
