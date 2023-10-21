@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class UserDto {
+    protected long studyProgramId;
     private long id;
     private String lastName;
     private String firstName;
@@ -21,5 +21,6 @@ public abstract class UserDto {
         setFirstName(user.getFirstName());
         setPhoneNumber(user.getPhoneNumber());
         setEmail(user.getEmail());
+        this.studyProgramId = user.getStudyProgram().getId();
     }
 }

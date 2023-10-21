@@ -9,11 +9,9 @@ import lombok.*;
 @Data
 public class EmployerDto extends UserDto {
     private String enterprise;
-    private long studyProgramId;
 
     public EmployerDto(Employer employer) {
         super(employer);
         this.enterprise = employer.getEnterprise();
-        this.studyProgramId = employer.getStudyProgram().getId();
     }
 }
