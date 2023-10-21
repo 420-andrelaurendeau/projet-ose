@@ -1,16 +1,16 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.dtos.FileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
 import com.sap.ose.projetose.dtos.StudentApplicationDto;
+import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
-import com.sap.ose.projetose.exceptions.StudentNotFoundException;
 import com.sap.ose.projetose.exceptions.ServiceException;
-import com.sap.ose.projetose.models.InternshipApplication;
-import com.sap.ose.projetose.models.StudyProgram;
-import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.exceptions.StudentNotFoundException;
 import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.InternshipApplication;
+import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.models.StudyProgram;
 import com.sap.ose.projetose.repositories.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -62,12 +62,12 @@ public class StudentService {
         return student.orElse(null);
     }
 
-    public Student getStudentByMatricule(String matricule){
+    public Student getStudentByMatricule(String matricule) {
         Optional<Student> etudiant = studentRepository.findByMatriculeEqualsIgnoreCase(matricule);
         return etudiant.orElse(null);
     }
 
-    public Student updateCvByMatricule(String matricule, File cv){
+    public Student updateCvByMatricule(String matricule, File cv) {
         //FIXME: Possible NullPointerException.
         Student student = getStudentByMatricule(matricule);
         student.setCvList(List.of(cv));

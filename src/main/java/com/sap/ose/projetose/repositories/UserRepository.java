@@ -1,4 +1,3 @@
-
 package com.sap.ose.projetose.repositories;
 
 import com.sap.ose.projetose.models.User;

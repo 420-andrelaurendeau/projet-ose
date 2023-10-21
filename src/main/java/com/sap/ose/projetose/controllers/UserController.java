@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("/api/utilisateur")
 @RequiredArgsConstructor
 public class UserController {
-    Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/all")
     @CrossOrigin(origins = "http://localhost:3000")

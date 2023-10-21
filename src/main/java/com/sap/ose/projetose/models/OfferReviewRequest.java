@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dtos.OfferReviewRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,12 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class OfferReviewRequest extends BaseModel {
-    private String comment;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn
-    private InternshipOffer internshipOffer;
     @ManyToOne
     @JoinColumn
     public InternshipManager internshipManager;
     public ApprovalStatus reviewState = ApprovalStatus.PENDING;
+    private String comment;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn
+    private InternshipOffer internshipOffer;
 }

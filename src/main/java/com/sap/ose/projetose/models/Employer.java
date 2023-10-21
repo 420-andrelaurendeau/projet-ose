@@ -1,9 +1,11 @@
 package com.sap.ose.projetose.models;
 
 import com.sap.ose.projetose.dtos.EmployerDto;
-import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;

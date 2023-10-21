@@ -5,7 +5,7 @@ public class ServiceException extends RuntimeException {
         super(s);
     }
 
-    public ServiceException(){
+    public ServiceException() {
         super("Erreur au niveau du service");
     }
 }

@@ -48,14 +48,14 @@ public class InternshipOfferReviewRequestControllerTest {
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                                                        .post("/api/offerReview/update")
-                                                        .contentType(MediaType.APPLICATION_JSON)
-                                                        .content(content);
+                .post("/api/offerReview/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
 
         ResultActions resultActions = MockMvcBuilders
-                                        .standaloneSetup(internshipOfferReviewRequestController)
-                                        .setControllerAdvice(new GlobalExceptionHandler()).build()
-                                        .perform(requestBuilder);
+                .standaloneSetup(internshipOfferReviewRequestController)
+                .setControllerAdvice(new GlobalExceptionHandler()).build()
+                .perform(requestBuilder);
 
         resultActions
                 .andExpect(status().isConflict())
@@ -68,14 +68,14 @@ public class InternshipOfferReviewRequestControllerTest {
 
         String content = (new ObjectMapper()).writeValueAsString(offerReviewRequestDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                                                        .post("/api/offerReview/update")
-                                                        .contentType(MediaType.APPLICATION_JSON)
-                                                        .content(content);
+                .post("/api/offerReview/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
 
         ResultActions resultActions = MockMvcBuilders
-                                        .standaloneSetup(internshipOfferReviewRequestController)
-                                        .setControllerAdvice(new GlobalExceptionHandler()).build()
-                                        .perform(requestBuilder);
+                .standaloneSetup(internshipOfferReviewRequestController)
+                .setControllerAdvice(new GlobalExceptionHandler()).build()
+                .perform(requestBuilder);
 
         resultActions
                 .andExpect(status().isNotFound())

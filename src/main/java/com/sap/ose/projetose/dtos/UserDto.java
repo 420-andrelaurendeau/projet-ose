@@ -1,7 +1,6 @@
 package com.sap.ose.projetose.dtos;
 
 import com.sap.ose.projetose.models.User;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

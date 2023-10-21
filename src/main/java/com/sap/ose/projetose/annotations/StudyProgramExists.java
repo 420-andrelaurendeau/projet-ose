@@ -1,7 +1,5 @@
 package com.sap.ose.projetose.annotations;
 
-import com.sap.ose.projetose.validators.FileExistsValidator;
-import com.sap.ose.projetose.validators.FilesExistValidator;
 import com.sap.ose.projetose.validators.StudyProgramExistsValidator;
 import jakarta.validation.Constraint;
 
@@ -13,12 +11,14 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.PARAMETER;
 
-@Target( { FIELD, PARAMETER })
+@Target({FIELD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(validatedBy = {StudyProgramExistsValidator.class})
 public @interface StudyProgramExists {
     String message() default "{studyProgram.nonexistent}";
+
     Class[] groups() default {};
+
     Class[] payload() default {};
 }

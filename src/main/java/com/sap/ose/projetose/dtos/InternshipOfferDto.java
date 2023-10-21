@@ -1,8 +1,8 @@
 package com.sap.ose.projetose.dtos;
 
+import com.sap.ose.projetose.models.ApprovalStatus;
 import com.sap.ose.projetose.models.InternshipApplication;
 import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.ApprovalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +38,7 @@ public class InternshipOfferDto {
         this.title = internshipOffer.getTitle();
         this.location = internshipOffer.getLocation();
         this.description = internshipOffer.getDescription();
-        this.startDate =  internshipOffer.getStartDate().toString();
+        this.startDate = internshipOffer.getStartDate().toString();
         this.endDate = internshipOffer.getEndDate().toString();
         this.internshipApplicationIds = internshipOffer.getInternshipApplications() == null ? null : internshipOffer.getInternshipApplications().stream().map(InternshipApplication::getId).collect(Collectors.toList());
         this.programId = internshipOffer.getStudyProgram().getId();

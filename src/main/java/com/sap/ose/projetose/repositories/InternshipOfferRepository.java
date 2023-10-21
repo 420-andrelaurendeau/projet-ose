@@ -12,6 +12,7 @@ public interface InternshipOfferRepository extends JpaRepository<InternshipOffer
     default List<InternshipOffer> findAllByStateIsApproved() {
         return findAllByStateEquals(ApprovalStatus.APPROVED);
     }
+
     default List<InternshipOffer> findAllByStateIsPending() {
         return findAllByStateEquals(ApprovalStatus.PENDING);
     }

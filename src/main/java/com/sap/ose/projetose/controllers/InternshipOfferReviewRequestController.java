@@ -18,7 +18,7 @@ public class InternshipOfferReviewRequestController {
     private final InternshipOfferReviewRequestService internshipOfferReviewRequestService;
 
     @PostMapping("/update")
-    public ResponseEntity<InternshipOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
+    public ResponseEntity<InternshipOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto) {
         InternshipOfferDto internshipOfferDto = internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
         return new ResponseEntity<>(internshipOfferDto, HttpStatus.CREATED);
     }

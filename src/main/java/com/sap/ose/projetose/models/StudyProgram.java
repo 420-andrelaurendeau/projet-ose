@@ -1,7 +1,6 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dtos.StudyProgramDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.*;
 
 @Entity

@@ -6,7 +6,6 @@ import com.sap.ose.projetose.services.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentController {
 
-    Logger logger = LoggerFactory.getLogger(StudentController.class);
-
     private final StudentService studentService;
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @PostMapping({"/register", "/update"})
     public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
@@ -44,7 +42,7 @@ public class StudentController {
     @PostMapping("/{id}/cv")
     public ResponseEntity<Student> addCv(@PathVariable String id, @RequestBody String cv) {
         // FIXME: Properly implement this method.
-        logger.info("add cv to " + matricule );
+        logger.info("add cv to " + matricule);
         Student student = studentService.updateCvByMatricule(matricule, null);
         return ResponseEntity.ok().body(student);
     }

@@ -50,6 +50,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleInternshipCandidateNotFoundException(InternshipManagerNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(OfferNotFoundException.class)
     public ResponseEntity<String> handleOfferNotFoundException(OfferNotFoundException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

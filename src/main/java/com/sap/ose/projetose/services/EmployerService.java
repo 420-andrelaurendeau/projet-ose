@@ -41,7 +41,7 @@ public class EmployerService {
     }
 
     @Transactional
-    public Optional<EmployerDto> createEmployer(NewEmployerDto employerDto){
+    public Optional<EmployerDto> createEmployer(NewEmployerDto employerDto) {
         try {
             Employer employer = new Employer();
             StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());
@@ -57,7 +57,8 @@ public class EmployerService {
             return Optional.of(employerRepository.save(employer)).map(EmployerDto::new);
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
-            throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
+            throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {
+            };
         }
     }
 }

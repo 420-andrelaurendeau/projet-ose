@@ -30,7 +30,6 @@ public class InternshipOfferService {
     Logger logger = LoggerFactory.getLogger(InternshipOfferService.class);
 
 
-
     @Transactional
     public InternshipOfferDto createOrUpdateInternshipOffer(InternshipOfferDto internshipOfferDto) {
         try {
@@ -61,11 +60,11 @@ public class InternshipOfferService {
     }
 
     @Transactional
-    public List<InternshipOfferDto> getAcceptedInternshipOffer(){
+    public List<InternshipOfferDto> getAcceptedInternshipOffer() {
         List<InternshipOffer> internshipOfferList = internshipOfferRepository.findAllByStateIsApproved();
-        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
 
-        for (InternshipOffer offre : internshipOfferList){
+        for (InternshipOffer offre : internshipOfferList) {
             InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
             internshipOfferDtoList.add(internshipOfferDto);
         }
@@ -75,16 +74,16 @@ public class InternshipOfferService {
     @Transactional
     public List<InternshipOfferDto> getInternOfferPending() {
         List<InternshipOffer> internshipOfferList = internshipOfferRepository.findAllByStateIsPending();
-        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();;
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
 
-        for (InternshipOffer offre : internshipOfferList){
+        for (InternshipOffer offre : internshipOfferList) {
             InternshipOfferDto internshipOfferDto = new InternshipOfferDto(offre);
             internshipOfferDtoList.add(internshipOfferDto);
         }
         return internshipOfferDtoList;
     }
 
-    InternshipOffer findById(long id){
+    InternshipOffer findById(long id) {
         try {
             return internshipOfferRepository.findById(id).orElseThrow(OfferNotFoundException::new);
         } catch (OfferNotFoundException e) {
@@ -99,9 +98,9 @@ public class InternshipOfferService {
         }
     }
 
-    public List<InternshipOfferDto> getAllInternOffers(){
-        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>() ;
-        for(InternshipOffer offer : internshipOfferRepository.findAll()){
+    public List<InternshipOfferDto> getAllInternOffers() {
+        List<InternshipOfferDto> internshipOfferDtoList = new ArrayList<>();
+        for (InternshipOffer offer : internshipOfferRepository.findAll()) {
             internshipOfferDtoList.add(new InternshipOfferDto(offer));
         }
         return internshipOfferDtoList;
@@ -113,14 +112,14 @@ public class InternshipOfferService {
 
     public List<InternshipOfferDto> getInternOffer() {
         List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
-        for(InternshipOffer internshipOffer : internshipOfferRepository.findAll()){
+        for (InternshipOffer internshipOffer : internshipOfferRepository.findAll()) {
             internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
         }
         return internshipOfferDtos;
     }
 
     @Transactional
-    public List<InternshipOfferDto> getInternOfferByEmployerEmail(String email){
+    public List<InternshipOfferDto> getInternOfferByEmployerEmail(String email) {
         List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
         List<InternshipOffer> internshipOffers = employerRepository.findAllByEmailEqualsIgnoreCase(email).map(Employer::getInternshipOffers).orElse(null);
 
@@ -128,7 +127,7 @@ public class InternshipOfferService {
             return internshipOfferDtos;
         }
 
-        for(InternshipOffer internshipOffer : internshipOffers){
+        for (InternshipOffer internshipOffer : internshipOffers) {
             internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
         }
 
@@ -145,19 +144,19 @@ public class InternshipOfferService {
 
         internshipOffer = internshipOffer == null
                 ? new InternshipOffer(
-                        internshipOfferDto.getTitle(),
-                        internshipOfferDto.getLocation(),
-                        internshipOfferDto.getDescription(),
-                        internshipOfferDto.getSalaryByHour(),
-                        LocalDate.parse(internshipOfferDto.getStartDate()),
-                        LocalDate.parse(internshipOfferDto.getEndDate()),
-                        new ArrayList<>(),
-                        studyProgram,
-                        file,
-                        employer,
-                        internshipOfferDto.getState(),
-                        offerReviewRequest
-                    )
+                internshipOfferDto.getTitle(),
+                internshipOfferDto.getLocation(),
+                internshipOfferDto.getDescription(),
+                internshipOfferDto.getSalaryByHour(),
+                LocalDate.parse(internshipOfferDto.getStartDate()),
+                LocalDate.parse(internshipOfferDto.getEndDate()),
+                new ArrayList<>(),
+                studyProgram,
+                file,
+                employer,
+                internshipOfferDto.getState(),
+                offerReviewRequest
+        )
                 : internshipOffer;
 
         internshipOffer.setTitle(Objects.requireNonNullElse(internshipOfferDto.getTitle(), internshipOffer.getTitle()));

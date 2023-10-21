@@ -2,10 +2,10 @@ package com.sap.ose.projetose.services;
 
 import com.sap.ose.projetose.dtos.InternshipApplicationDto;
 import com.sap.ose.projetose.dtos.NewInternshipApplicationDto;
-import com.sap.ose.projetose.models.InternshipOffer;
-import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.models.InternshipApplication;
+import com.sap.ose.projetose.models.InternshipOffer;
+import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.repositories.InternshipApplicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -28,25 +28,26 @@ public class InternshipApplicationService {
     private final Logger logger = LoggerFactory.getLogger(InternshipApplicationService.class);
 
     @Transactional
-    public InternshipApplicationDto createApplication(NewInternshipApplicationDto internshipApplicationDto){
-        try{
+    public InternshipApplicationDto createApplication(NewInternshipApplicationDto internshipApplicationDto) {
+        try {
             Student student = studentService.getStudentById(internshipApplicationDto.getCandidateId());
             InternshipOffer internshipOffer = internshipOfferService.findById(internshipApplicationDto.getInternshipOfferDtoId());
 
             List<File> files = internshipApplicationDto.getFileTransferDtosId() == null
                     ? new ArrayList<>()
                     : internshipApplicationDto.getFileTransferDtosId()
-                        .stream()
-                        .map(fileService::newFile)
-                        .toList();
+                    .stream()
+                    .map(fileService::newFile)
+                    .toList();
 
             InternshipApplication internshipApplication = new InternshipApplication(student, internshipOffer, files);
 
             return new InternshipApplicationDto(internshipApplicationRepository.save(internshipApplication));
 
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             logger.info(e.getMessage());
-            throw new DataAccessException("Error lors de la sauvegarde de candidature") {};
+            throw new DataAccessException("Error lors de la sauvegarde de candidature") {
+            };
         } catch (NullPointerException e) {
             logger.info(e.getMessage());
             throw new NullPointerException(e.getMessage());

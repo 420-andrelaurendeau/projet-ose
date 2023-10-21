@@ -5,7 +5,7 @@ public class DatabaseException extends RuntimeException {
         super(s);
     }
 
-    public DatabaseException(){
+    public DatabaseException() {
         super("Erreur d'accès a la base de données");
     }
 }

@@ -123,7 +123,8 @@ public class StudentServiceTest {
 
     @Test
     public void getOffersAppliedByEtudiant_DataAccessException() {
-        when(studentRepository.findById(anyLong())).thenThrow(new DataAccessException("") {});
+        when(studentRepository.findById(anyLong())).thenThrow(new DataAccessException("") {
+        });
 
         DatabaseException result = assertThrows(DatabaseException.class, () -> studentService.getApplicationsByStudent(1));
         assertEquals("Erreur lors de la récupération des offres appliquées par l'étudiant", result.getMessage());

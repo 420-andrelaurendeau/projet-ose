@@ -25,8 +25,9 @@ public class ProjetOseApplication implements CommandLineRunner {
     private final OfferReviewRequestRepository offerReviewRequestRepository;
 
     public static void main(String[] args) {
-		SpringApplication.run(ProjetOseApplication.class, args);
-	}
+        SpringApplication.run(ProjetOseApplication.class, args);
+    }
+
     @Override
     public void run(String... args) throws Exception {
         StudyProgram studyProgramInformatique = studyProgramRepository.save(new StudyProgram("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
@@ -39,19 +40,19 @@ public class ProjetOseApplication implements CommandLineRunner {
         Student studentJeanDupont = new Student("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", studyProgramInformatique, new ArrayList<>());
 
 
-        Employer employerPatriqueLemieux = employerRepository.save(new Employer("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "popo", studyProgramInformatique));
-        Employer employerPierreLacroix = employerRepository.save(new Employer("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "poo", studyProgramAdmnistration));
+        Employer employerPatriqueLemieux = employerRepository.save(new Employer("Patrique", "Lemieux", "lemieux@gmail.com", "4383006589", "popo123", "popo", studyProgramInformatique));
+        Employer employerPierreLacroix = employerRepository.save(new Employer("Pierre", "Lacroix", "lacroix@gmail.com", "4387996589", "popo123", "poo", studyProgramAdmnistration));
 
-        InternshipManager internshipmanager = internshipManagerRepository.save(new InternshipManager( "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", studyProgramInformatique));
+        InternshipManager internshipmanager = internshipManagerRepository.save(new InternshipManager("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", studyProgramInformatique));
 
         OfferReviewRequest offerReviewRequest = offerReviewRequestRepository.save(new OfferReviewRequest());
 
-        File fileApplicationMarc = fileRepository.save(new File("Application".getBytes(StandardCharsets.UTF_8),"Application",true, studentMarcMax));
-        File fileOffreInformatique = fileRepository.save(new File("OffreInformatique".getBytes(StandardCharsets.UTF_8),"OffreInformatique",true, employerPatriqueLemieux));
-        File fileOffreAdministration = fileRepository.save(new File("OffreSecurite".getBytes(StandardCharsets.UTF_8),"OffreSecurite",true, studentMarcMax));
+        File fileApplicationMarc = fileRepository.save(new File("Application".getBytes(StandardCharsets.UTF_8), "Application", true, studentMarcMax));
+        File fileOffreInformatique = fileRepository.save(new File("OffreInformatique".getBytes(StandardCharsets.UTF_8), "OffreInformatique", true, employerPatriqueLemieux));
+        File fileOffreAdministration = fileRepository.save(new File("OffreSecurite".getBytes(StandardCharsets.UTF_8), "OffreSecurite", true, studentMarcMax));
 
-        InternshipOffer internshipOfferInformatique = internshipOfferRepository.save(new InternshipOffer("Stage Informatique","Laval","ff",20,LocalDate.now(),LocalDate.now(), new ArrayList<>(), studyProgramInformatique,fileOffreInformatique, employerPatriqueLemieux, ApprovalStatus.APPROVED,offerReviewRequest));
-        InternshipOffer internshipOfferSecurite = internshipOfferRepository.save(new InternshipOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(), new ArrayList<>(), studyProgramInformatique,fileOffreAdministration, employerPierreLacroix, ApprovalStatus.APPROVED,offerReviewRequest));
+        InternshipOffer internshipOfferInformatique = internshipOfferRepository.save(new InternshipOffer("Stage Informatique", "Laval", "ff", 20, LocalDate.now(), LocalDate.now(), new ArrayList<>(), studyProgramInformatique, fileOffreInformatique, employerPatriqueLemieux, ApprovalStatus.APPROVED, offerReviewRequest));
+        InternshipOffer internshipOfferSecurite = internshipOfferRepository.save(new InternshipOffer("Stage Securité", "Montreal", "ff", 20, LocalDate.now(), LocalDate.now(), new ArrayList<>(), studyProgramInformatique, fileOffreAdministration, employerPierreLacroix, ApprovalStatus.APPROVED, offerReviewRequest));
 
         InternshipApplication internshipApplicationMax = internshipApplicationRepository.save(new InternshipApplication(studentMarcMax, internshipOfferInformatique, List.of(fileApplicationMarc)));
     }

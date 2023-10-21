@@ -44,7 +44,7 @@ public class InternshipOfferController {
     }
 
     @GetMapping("/OffersEmp/{email}")
-    public List<InternshipOfferDto> getInternOfferJob(@PathVariable String email){
+    public List<InternshipOfferDto> getInternOfferJob(@PathVariable String email) {
         return internshipOfferService.getInternOfferByEmployerEmail(email);
     }
 }

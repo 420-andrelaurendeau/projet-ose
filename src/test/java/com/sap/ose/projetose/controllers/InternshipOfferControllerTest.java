@@ -33,13 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {InternshipOfferController.class})
 @ExtendWith(SpringExtension.class)
 class InternshipOfferControllerTest {
+    private final InternshipOfferDto internshipOfferDto = new InternshipOfferDto();
     @Autowired
     private InternshipOfferController internshipOfferController;
-
     @MockBean
     private InternshipOfferService internshipOfferService;
-
-    private InternshipOfferDto internshipOfferDto = new InternshipOfferDto();
 
     @BeforeEach
     public void setUp() {
@@ -77,6 +75,7 @@ class InternshipOfferControllerTest {
         resultActions.andExpect(status().isNotFound())
                 .andExpect(content().string(containsString("Programme non trouvé")));
     }
+
     @Test
     void testSaveInterOfferJob_DatabaseException() throws Exception {
         when(internshipOfferService.createOrUpdateInternshipOffer(any())).thenThrow(new DatabaseException());

@@ -1,7 +1,8 @@
 package com.sap.ose.projetose.dtos;
 
-import com.sap.ose.projetose.models.*;
-import lombok.AllArgsConstructor;
+import com.sap.ose.projetose.models.File;
+import com.sap.ose.projetose.models.InternshipApplication;
+import com.sap.ose.projetose.models.Student;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,4 @@ public class StudentDto extends UserDto {
         this.cvIds = student.getCvList() == null ? null : student.getCvList().stream().map(File::getId).toList();
         this.applicationIds = student.getInternshipApplications() == null ? null : student.getInternshipApplications().stream().map(InternshipApplication::getId).toList();
     }
-
 }
