@@ -14,14 +14,14 @@ import React, {useState} from "react";
 import SidebarEtudiant from "./SidebarEtudiant";
 import ProfilMenu from "./components/common/ProfilMenu";
 
-const Header = () => {
+const Header = (userd: any) => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const fields = i18n.getResource(language, "translation", "formField");
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
     const location = useLocation();
-    const user = location.state;
+    const user = userd.user;
 
     function closeModal() {
         setIsOpenProfil(false)
@@ -33,7 +33,7 @@ const Header = () => {
 
 
     return (
-        <div>
+        <>
             {
                 isOpen ?
                     <div className="fixed w-screen h-screen backdrop-blur-sm md:hidden"/>
@@ -112,7 +112,7 @@ const Header = () => {
                 </nav>
             </div>
 
-        </div>
+        </>
     );
 }
 

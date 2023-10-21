@@ -1,5 +1,5 @@
 import React from "react";
-import {useLocation} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
 import Home from "../components/common/Home";
 
 function HomePage() {
@@ -7,7 +7,7 @@ function HomePage() {
     const user = location.state;
     return (
         <div >
-            <Home user={user}/>
+            <Outlet/>
         </div>
     );
 }

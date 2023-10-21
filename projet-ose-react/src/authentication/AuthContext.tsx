@@ -1,42 +1,63 @@
-import React, {createContext, ReactNode, useContext, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
 
 interface AuthContextProps {
     isAuthenticated: boolean;
     userRole: string | null;
     userId: Number | null;
-    login: (role: string) => void;
-    logout: () => void;
+    loginUser: (token: string) => void;
+    logoutUser: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
     isAuthenticated: false,
     userRole: null,
     userId: null,
-    login: () => {},
-    logout: () => {},
+    loginUser: () => {
+    },
+    logoutUser: () => {
+    },
 });
 
 export const useAuth = () => {
     return useContext(AuthContext);
 };
 
-export const AuthProvider: React.FC<ReactNode> = (children ) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [userRole, setUserRole] = useState<string | null>(null);
-    const [userId, setUserId] = useState<Number | null>(null);
+interface AuthProviderProps {
+    children: ReactNode;
+}
 
-    const login = (role: string) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+    const [userRole, setUserRole] = useState<string | null>("internshipManager");
+    const [userId, setUserId] = useState<Number | null>(1);
+
+    /**
+
+     useEffect(() => {
+     const token = localStorage.getItem('token');
+     if (token) {
+     const decodedToken = JSON.parse(atob(token.split('.')[1]));
+     setUserRole(decodedToken.role);
+     setIsAuthenticated(true);
+     }
+     }, []);
+
+     */
+    const loginUser = (token: string) => {
+        localStorage.setItem('token', token);
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));
+        setUserRole(decodedToken.role);
         setIsAuthenticated(true);
-        setUserRole(role);
     };
 
-    const logout = () => {
-        setIsAuthenticated(false);
+    const logoutUser = () => {
+        localStorage.removeItem('token');
         setUserRole(null);
+        setIsAuthenticated(false);
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, userRole, userId, login, logout }}>
+        <AuthContext.Provider value={{isAuthenticated, userRole, userId, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );

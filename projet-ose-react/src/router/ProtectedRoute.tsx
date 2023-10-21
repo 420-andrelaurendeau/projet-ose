@@ -1,23 +1,27 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import {Route, Navigate, RouteProps, useNavigate} from 'react-router-dom';
 import {useAuth} from "../authentication/AuthContext";
 
 
 interface ProtectedRouteProps {
-    element: React.ReactElement;
-    path: string;
+    children?: React.ReactNode;
     requiredRoles: string[];
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element, path, requiredRoles }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRoles }) => {
     const { isAuthenticated, userRole } = useAuth();
+    const navigate = useNavigate();
 
-    if (!isAuthenticated || !userRole || !requiredRoles.includes(userRole)) {
-        return <Navigate to="/login" />;
+
+    if (!isAuthenticated || !requiredRoles.includes(userRole!)) {
+        navigate('/login');
+        return null;
     }
 
-    return <Route path={path} element={element} />;
+
+    return <>{children}</>;
 };
 
 export default ProtectedRoute;
+
 

@@ -1,22 +1,34 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Header from "../../Header";
-import EmployeurHomePage from "../../pages/EmployeurHomePage";
-import EtudiantStagePage from "../../pages/EtudiantStagePage";
-import GSOffersPage from "../../pages/GSOffersPage";
+import {Outlet} from "react-router-dom";
 
 function Home(props: any) {
-    useEffect(() => {
 
-        console.log(localStorage.getItem('theme'))
-    }, [localStorage.getItem('theme')]);
+    const userr = {
+        user: {
+            matricule: "123456789",
+        }
+    }
+    /**
+     <div className="border-red border-4 flex h-screen">
+     {/* <Header user={userr}/>}
+
+<div className="border-4 border-black py-6 h-full w-full">
+</div>
+
+</div>
+     */
+
     return (
-        <div>
-            <Header/>
-            {
-                props.user.id == 5 ? <GSOffersPage/> : props.user.matricule
-                    ? <EtudiantStagePage/>
-                    : <EmployeurHomePage/>
-            }
+        <div className="">
+
+            <div className="border-4 border-blue">
+                <Header user={userr}/>
+            </div>
+            <div className="h-20"></div>
+            <div className="border-4 border-red">
+                <Outlet/>
+            </div>
         </div>
     );
 }
