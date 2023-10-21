@@ -1,28 +1,25 @@
 package com.sap.ose.projetose.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 public abstract class NewUserDto {
-    @NotBlank
+    @NotBlank(message = "{user.lastName.notBlank}")
     @Pattern(regexp = "[a-zA-Z]+")
     private String lastName;
-    @NotBlank
+    @NotBlank(message = "{user.firstName.notBlank}")
     @Pattern(regexp = "[a-zA-Z]+")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "{user.phoneNumber.notBlank}")
     @Pattern(regexp = "[0-9]{3}-[0-9]{3}-[0-9]{4}")
     private String phoneNumber;
-    @NotBlank
-    @Email
+    @NotNull(message = "{user.email.notBlank}")
+    @Email(message = "{user.email.malformed}")
     private String email;
-    @NotBlank
+    @NotBlank(message = "{user.password.notBlank}")
     @Min(5)
     private String password;
 }
