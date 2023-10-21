@@ -16,7 +16,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Documented
 @Constraint(validatedBy = {InternshipOfferExistsValidator.class})
 public @interface InternshipOfferExists {
-    String message() default "Internship offer does not exist";
+    String message() default "{internshipOffer.nonexistent}";
     Class[] groups() default {};
     Class[] payload() default {};
 }

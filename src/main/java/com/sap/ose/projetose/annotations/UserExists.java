@@ -17,7 +17,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Documented
 @Constraint(validatedBy = {FileExistsValidator.class, FilesExistValidator.class})
 public @interface UserExists {
-    String message() default "User does not exist";
+    String message() default "{user.nonexistent}";
     Class[] groups() default {};
     Class[] payload() default {};
 }

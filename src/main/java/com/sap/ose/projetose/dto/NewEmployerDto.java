@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NewEmployerDto extends NewUserDto {
-    @NotBlank
+    @NotBlank(message = "{employer.enterprise.notBlank}")
     private String enterprise;
     private long studyProgramId;
 }
