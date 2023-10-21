@@ -3,7 +3,7 @@ package com.sap.ose.projetose.services;
 import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.dtos.FileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationsDto;
+import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.StudentNotFoundException;
 import com.sap.ose.projetose.exceptions.ServiceException;
@@ -79,7 +79,7 @@ public class StudentService {
     }
 
     @Transactional
-    public List<StudentApplicationsDto> getApplicationsByStudent(long id) {
+    public List<StudentApplicationDto> getApplicationsByStudent(long id) {
         try {
             Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
             List<InternshipApplication> offersApplied = student.getInternshipApplications();
@@ -89,7 +89,7 @@ public class StudentService {
 
             return offersApplied.stream().map(
                     (offerApplied) -> {
-                        StudentApplicationsDto dto = new StudentApplicationsDto();
+                        StudentApplicationDto dto = new StudentApplicationDto();
 
                         InternshipOfferDto offerDto = new InternshipOfferDto(offerApplied.getInternshipOffer());
                         offerDto.setInternshipApplicationIds(null);

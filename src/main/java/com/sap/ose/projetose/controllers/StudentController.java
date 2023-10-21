@@ -1,7 +1,6 @@
 package com.sap.ose.projetose.controllers;
 
 import com.sap.ose.projetose.dtos.StudentDto;
-import com.sap.ose.projetose.dtos.StudentApplicationsDto;
 import com.sap.ose.projetose.models.Student;
 import com.sap.ose.projetose.services.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -51,7 +50,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}/applications")
-    public ResponseEntity<List<StudentApplicationsDto>> getApplicationsByStudent(@PathVariable long id) {
+    public ResponseEntity<List<StudentApplicationDto>> getApplicationsByStudent(@PathVariable long id) {
         return ResponseEntity.ok().body(studentService.getApplicationsByStudent(id));
     }
 }

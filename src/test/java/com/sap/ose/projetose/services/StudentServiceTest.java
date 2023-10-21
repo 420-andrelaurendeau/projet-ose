@@ -2,7 +2,7 @@ package com.sap.ose.projetose.services;
 
 import com.sap.ose.projetose.dtos.FileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationsDto;
+import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.ServiceException;
 import com.sap.ose.projetose.exceptions.StudentNotFoundException;
@@ -84,7 +84,7 @@ public class StudentServiceTest {
 
         when(studentRepository.findById(anyLong())).thenReturn(Optional.of(student));
 
-        List<StudentApplicationsDto> result = studentService.getApplicationsByStudent(1);
+        List<StudentApplicationDto> result = studentService.getApplicationsByStudent(1);
 
         assertEquals(0, result.size());
     }
@@ -92,8 +92,8 @@ public class StudentServiceTest {
     @Test
     public void getOffersAppliedByEtudiant_StudentAppliedOffers() {
 
-        List<StudentApplicationsDto> mockedStudentApplied = List.of(
-                new StudentApplicationsDto(
+        List<StudentApplicationDto> mockedStudentApplied = List.of(
+                new StudentApplicationDto(
                         new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()),
                         List.of(new FileTransferDto())
                 )
@@ -101,7 +101,7 @@ public class StudentServiceTest {
 
         when(studentRepository.findById(anyLong())).thenReturn(Optional.of(student));
 
-        List<StudentApplicationsDto> result = studentService.getApplicationsByStudent(1L);
+        List<StudentApplicationDto> result = studentService.getApplicationsByStudent(1L);
 
         verify(studentRepository).findById(1L);
 

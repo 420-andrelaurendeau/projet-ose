@@ -3,7 +3,7 @@ package com.sap.ose.projetose.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sap.ose.projetose.dtos.FileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationsDto;
+import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.StudentNotFoundException;
@@ -220,7 +220,7 @@ class StudentControllerTest {
     void getOffersApplied_StudentAppliedOffersArray() throws Exception {
 
 
-        StudentApplicationsDto dto = new StudentApplicationsDto(new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()), List.of(new FileTransferDto()));
+        StudentApplicationDto dto = new StudentApplicationDto(new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()), List.of(new FileTransferDto()));
         when(oseService.getApplicationsByStudent(anyLong())).thenReturn(List.of(dto));
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
