@@ -13,10 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class InternshipApplication extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
     @ManyToOne
     @JoinColumn
     @ToString.Exclude

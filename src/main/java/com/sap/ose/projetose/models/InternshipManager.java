@@ -17,4 +17,8 @@ public class InternshipManager extends User {
     public InternshipManager(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {
         super(lastName, firstName, phone, email, password, studyProgram);
     }
+
+    public InternshipManagerDto toDto() {
+        return new InternshipManagerDto(this);
+    }
 }

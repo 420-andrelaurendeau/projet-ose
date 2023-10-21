@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.models;
 
+import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,10 +11,6 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User extends BaseModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column
-    private long id;
     private String lastName;
     private String firstName;
     private String phoneNumber;
@@ -24,4 +21,6 @@ public abstract class User extends BaseModel {
     @ManyToOne
     @JoinColumn
     private StudyProgram studyProgram;
+
+    public abstract UserDto toDto();
 }

@@ -25,4 +25,9 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
+
+    @Override
+    public UserDto toDto() {
+        return new StudentDto(this);
+    }
 }
