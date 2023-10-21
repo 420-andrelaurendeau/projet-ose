@@ -1,19 +1,15 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Entity
-@DiscriminatorColumn
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class User {
+@EqualsAndHashCode(callSuper = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class User extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
@@ -25,21 +21,7 @@ public abstract class User {
     private String email;
     @ToString.Exclude
     private String password;
-
-    public User(String lastName, String firstName, String phoneNumber, String email, String password) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String lastName, String firstName, String phoneNumber, String email) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
-
-    public abstract UserDto toUserDto();
+    @ManyToOne
+    @JoinColumn
+    private StudyProgram studyProgram;
 }

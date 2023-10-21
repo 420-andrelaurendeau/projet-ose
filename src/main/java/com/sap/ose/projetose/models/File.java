@@ -1,22 +1,15 @@
 package com.sap.ose.projetose.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class File {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+@EqualsAndHashCode(callSuper = true)
+public class File extends BaseModel {
     @Lob
     private byte[] content;
 
@@ -28,12 +21,4 @@ public class File {
     @JoinColumn
     @ToString.Exclude
     private User user;
-
-
-    public File(byte[] content, String fileName, boolean isAccepted, User user) {
-        this.content = content;
-        this.fileName = fileName;
-        this.isAccepted = isAccepted;
-        this.user = user;
-    }
 }

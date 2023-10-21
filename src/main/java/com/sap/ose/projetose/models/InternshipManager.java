@@ -14,21 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class InternshipManager extends User {
-    @OneToOne
-    @JoinColumn
-    private StudyProgram studyProgram;
-
     public InternshipManager(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {
-        super(lastName, firstName, phone, email, password);
-        this.studyProgram = studyProgram;
-    }
-    public InternshipManager(long id, String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram) {
-        super(id, lastName, firstName, phone, email, password);
-        this.studyProgram = studyProgram;
-    }
-
-    @Override
-    public UserDto toUserDto() {
-        return new InternshipManagerDto(this);
+        super(lastName, firstName, phone, email, password, studyProgram);
     }
 }
