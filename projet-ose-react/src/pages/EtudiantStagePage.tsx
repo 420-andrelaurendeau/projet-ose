@@ -65,7 +65,7 @@ function EtudiantStagePage() {
                 <Header/>
                 <div className="pt-24 flex-row flex md:justify-center space-x-4">
                     <NavLink
-                        to="offre/offreApplique"
+                        to="offreApplique"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
@@ -79,7 +79,7 @@ function EtudiantStagePage() {
                         </div>
                     </NavLink>
                     <NavLink
-                        to="/TeleverserCV"
+                        to="/etudiant/home/TeleverserCV"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >

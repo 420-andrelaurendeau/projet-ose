@@ -86,15 +86,19 @@ const router = createBrowserRouter([
                 path: "/etudiant/home/offre",
                 element: <EtudiantStage/>,
                 children: [
-                    {
-                        path: "offreApplique",
-                        element: <StudentAppliedOffers/>,
-                    }
                 ]
             },
-
+            {
+                path: "/etudiant/home/offreApplique",
+                element: <StudentAppliedOffers/>,
+            },
+            {
+                path: "/etudiant/home/TeleverserCV",
+                element: <TeleversementCV/>
+            },
         ]
     },
+
     {
         path: "/gs/home",
         element: <GSOffersPage/>,
@@ -117,10 +121,7 @@ const router = createBrowserRouter([
         path: "/etudiantStage",
         element: <EtudiantStagePage/>
     },
-    {
-        path: "/TeleverserCV",
-        element: <TeleversementCV/>
-    },
+
 
 
 
