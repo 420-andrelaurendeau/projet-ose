@@ -20,7 +20,7 @@ public class InternshipApplicationController {
 
     @PostMapping("/new")
     public ResponseEntity<InternshipApplicationDto> newInternshipApplication(@Valid @RequestBody NewInternshipApplicationDto internshipApplicationDto) {
-        InternshipApplicationDto savedInternshipApplicationDto = internshipApplicationService.createApplication(internshipApplicationDto);
-        return new ResponseEntity<>(savedInternshipApplicationDto, HttpStatus.CREATED);
+        InternshipApplicationDto newInternshipApplicationDto = internshipApplicationService.createApplication(internshipApplicationDto);
+        return new ResponseEntity<>(newInternshipApplicationDto, HttpStatus.CREATED);
     }
 }
