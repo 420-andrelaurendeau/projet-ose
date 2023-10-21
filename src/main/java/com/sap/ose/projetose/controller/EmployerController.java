@@ -18,6 +18,6 @@ public class EmployerController {
     @PostMapping("/new")
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<EmployerDto> newEmployer(@Valid @RequestBody NewEmployerDto employer){
-        return employerService.newEmployer(employer).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return employerService.createEmployer(employer).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }

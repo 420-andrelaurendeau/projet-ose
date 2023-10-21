@@ -41,7 +41,7 @@ public class EmployerService {
     }
 
     @Transactional
-    public Optional<EmployerDto> newEmployer(NewEmployerDto employerDto){
+    public Optional<EmployerDto> createEmployer(NewEmployerDto employerDto){
         try {
             Employer employer = new Employer();
             StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());
