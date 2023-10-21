@@ -1,32 +1,29 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClock, faFileLines, faThumbsUp, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {getIntershipOffers, getTotalOfferByState} from "../api/GSManagerAPI";
 import GSOffers from "../components/common/GSOffers";
 import PaginatedList from "../components/common/PaginatedList";
 import {useTranslation} from "react-i18next";
-import ListItemCountSelector from "../components/common/ListItemCountSelector";
 import GSOffersDashboardHeader from "../components/common/GSOffersDashboardHeader";
 
 
 const GSOffersPage = () => {
     const [offers, setOffers] = useState([]);
-    const [page, setPage] = useState(0);
+
+    const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
 
     const [totalOffers, setTotalOffers] = useState(0);
     const [totalApprouved, setTotalApprouved] = useState(0);
     const [totalPending, setTotalPending] = useState(0);
     const [totalDeclined, setTotalDeclined] = useState(0);
 
-    const [numberElement, setNumberElement] = useState<number>(5)
-
     const [offerState, setOfferState] = useState(undefined);
-    const [isUpdate, setIsUpdate] = useState(false);
-
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("desc");
+
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
@@ -34,6 +31,8 @@ const GSOffersPage = () => {
     const fetchedOffersRef = useRef(false);
     const fetchedOffersCountRef = useRef(false);
     const location = useLocation();
+
+    //TODO Temporaire
     const user = location.state;
 
 
@@ -43,8 +42,8 @@ const GSOffersPage = () => {
                 fetchedOffersRef.current = true
 
                 const response = await getIntershipOffers({
-                    page,
-                    size: numberElement,
+                    page: currentPage,
+                    size: numberElementByPage,
                     state: offerState,
                     sortField,
                     sortDirection
@@ -60,7 +59,7 @@ const GSOffersPage = () => {
         };
         if (!fetchedOffersRef.current) fetchOffers();
 
-    }, [page, offerState, numberElement, isUpdate, sortField, sortDirection]);
+    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
 
     useEffect(() => {
         const fetchOffersCount = async () => {
@@ -79,8 +78,13 @@ const GSOffersPage = () => {
 
     }, [isUpdate]);
 
+    useEffect(() => {
+        document.title = "Offres de stage";
+
+    }, []);
+
     const handlePageChange = (newPage: number) => {
-        setPage(newPage);
+        setCurrentPage(newPage);
     };
 
     const handleTotalOffersByState = async () => {
@@ -103,14 +107,14 @@ const GSOffersPage = () => {
             setTotalOffers(responseTotal["TOTAL"])
     }
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setPage(0);
-        setNumberElement(Number(event.target.value));
+    const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentPage(0);
+        setNumberElementByPage(Number(event.target.value));
     };
 
-    const offersByState = (state: any) => {
+    const handleChangeStateSort = (state: any) => {
         setOfferState(state);
-        setPage(0);
+        setCurrentPage(0);
     };
 
     const renderOffer = <GSOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField}
@@ -119,22 +123,30 @@ const GSOffersPage = () => {
 
     return (
         <div className="">
-            <header className="">
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+            <title>Offres</title>
+            <header className="pb-4">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">Offres de stage</h1>
             </header>
             <main className="">
                 <div className="p-0">
 
-                    <GSOffersDashboardHeader offersByState={offersByState} fields={fields} totalOffers={totalOffers} totalApprouved={totalApprouved} totalPending={totalPending} totalDeclined={totalDeclined}/>
+                    <GSOffersDashboardHeader
+                        offersByState={handleChangeStateSort}
+                        fields={fields}
+                        totalOffers={totalOffers}
+                        totalApprouved={totalApprouved}
+                        totalPending={totalPending}
+                        totalDeclined={totalDeclined}
+                    />
 
 
                     <PaginatedList
                         renderItem={renderOffer}
-                        page={page}
+                        page={currentPage}
                         totalPages={totalPages}
                         onPageChange={handlePageChange}
-                        numberElement={numberElement}
-                        handleChangeNumberElement={handleChange}
+                        numberElement={numberElementByPage}
+                        handleChangeNumberElement={handleChangePage}
                     />
                 </div>
             </main>

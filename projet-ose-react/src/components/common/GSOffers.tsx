@@ -42,7 +42,7 @@ export default function GSOffers(props: any) {
 
                         <div
                             role="columnheader"
-                            className=" md:w-1/5 w-2/3  px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className=" md:w-1/5 w-2/3  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                             onClick={() => handleSortClick("title")}
                         >
                             {fields.table.title}
@@ -55,7 +55,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                             onClick={() => handleSortClick("employeurEntreprise")}
                         >
                             {fields.table.enterprise}
@@ -68,7 +68,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                             onClick={() => handleSortClick("location")}
                         >
                             {fields.table.location}
@@ -81,7 +81,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="md:w-1/5 w-1/3 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className="md:w-1/5 w-1/3 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                             onClick={() => handleSortClick("state")}
                         >
                             {fields.table.status}
@@ -94,7 +94,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
+                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
                             onClick={() => handleSortClick("startDate")}
                         >
                             {fields.table.startDate}
@@ -110,7 +110,7 @@ export default function GSOffers(props: any) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-dark rounded">
+                <div className="bg-white dark:bg-dark rounded border-b-2 border-x-2 border-gray rounded">
                     {props.offers.map((offer: InterOfferJob) => (
                         <div role="row" className="flex p-3"
                              key={offer.id}>
@@ -118,24 +118,24 @@ export default function GSOffers(props: any) {
                             <div role="cell"
                                  className="md:w-1/5 w-2/3 px-2 py-2 whitespace-nowrap truncate">
                                 <div
-                                    className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.title}</div>
+                                    className="font-medium text-gray-900 dark:text-offwhite">{offer.title}</div>
                             </div>
                             <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
                                 <div
-                                    className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.employeurEntreprise}</div>
+                                    className="font-medium text-gray-900 dark:text-offwhite">{offer.employeurEntreprise}</div>
                             </div>
                             <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
                                 <div
-                                    className="text-sm text-gray-500 dark:text-offwhite">{offer.location}</div>
+                                    className="text-gray-500 dark:text-offwhite">{offer.location}</div>
                             </div>
                             <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
                                             <span
                                                 className={
                                                     offer.state == "PENDING" ?
-                                                        "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                        "px-2 inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                         : offer.state === "DECLINED" ?
-                                                            "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
-                                                            : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
+                                                            "px-2 inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
+                                                            : "px-2 inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
                                             >
                                                 {offer.state}
                                             </span>

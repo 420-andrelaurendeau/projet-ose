@@ -202,6 +202,9 @@ i18n
                         name : 'Registration failed',
                     }
                 },
+                ListItemCounterSelector: {
+                    numberItem: "Number of item :",
+                },
                 InternshipOfferModal: {
                     commentary: "Commentary",
                     placeholder: "Add a comment",
@@ -621,6 +624,9 @@ i18n
                             refused: "Refusé",
                         }
                     },
+                },
+                ListItemCounterSelector: {
+                    numberItem: "Nombre d'item :",
                 },
                 InternshipOfferModal: {
                     commentary: "Commentaire",
