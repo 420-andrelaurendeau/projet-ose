@@ -197,7 +197,7 @@ const GSOffersPage = () => {
                         </div>
                     </div>
 
-                    <div className="px-3 mx-3 mt-10">
+                    <div className="px-3 mt-10">
                         <div className="flex justify-end pr-4">
                             <label className="">
                                 <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-dark" value={numberElement} onChange={handleChange}>

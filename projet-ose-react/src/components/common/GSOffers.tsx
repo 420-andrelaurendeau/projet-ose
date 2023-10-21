@@ -35,103 +35,100 @@ export default function GSOffers(props: any) {
 
 
     return (
-        <div className="px-2 md:px-0 flex flex-col mt-1">
-            <div className="-mx-6 lg:-mx-8">
-                <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                    <div className="shadow overflow-hidden rounded-lg">
-                        <div className="min-w-full divide-y divide-gray-200">
-                            <div className="bg-blue dark:bg-orange">
-                                <div className="flex p-3 items-center">
+        <div className="pt-4 pb-4">
+            <div className="">
+                <div className="bg-blue rounded dark:bg-orange">
+                    <div className="flex p-3 items-center">
 
-                                    <div
-                                        role="columnheader"
-                                        className=" md:w-1/5 w-2/3  px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
-                                        onClick={() => handleSortClick("title")}
-                                    >
-                                        {fields.table.title}
-                                        <div
-                                            className={props.sortField === "title" ? "visible" : "hidden"}>
-                                            <FontAwesomeIcon
-                                                icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
-                                                color={"White"} className={"ml-2"}/>
-                                        </div>
-                                    </div>
-                                    <div
-                                        role="columnheader"
-                                        className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
-                                        onClick={() => handleSortClick("employeurEntreprise")}
-                                    >
-                                        {fields.table.enterprise}
-                                        <div
-                                            className={props.sortField === "employeurEntreprise" ? "visible" : "hidden"}>
-                                            <FontAwesomeIcon
-                                                icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
-                                                color={"White"} className={"ml-2"}/>
-                                        </div>
-                                    </div>
-                                    <div
-                                        role="columnheader"
-                                        className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
-                                        onClick={() => handleSortClick("location")}
-                                    >
-                                        {fields.table.location}
-                                        <div
-                                            className={props.sortField === "location" ? "visible" : "hidden"}>
-                                            <FontAwesomeIcon
-                                                icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
-                                                color={"White"} className={"ml-2"}/>
-                                        </div>
-                                    </div>
-                                    <div
-                                        role="columnheader"
-                                        className="md:w-1/5 w-1/3 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
-                                        onClick={() => handleSortClick("state")}
-                                    >
-                                        {fields.table.status}
-                                        <div
-                                            className={props.sortField === "state" ? "visible" : "hidden"}>
-                                            <FontAwesomeIcon
-                                                icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
-                                                color={"White"} className={"ml-2"}/>
-                                        </div>
-                                    </div>
-                                    <div
-                                        role="columnheader"
-                                        className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
-                                        onClick={() => handleSortClick("startDate")}
-                                    >
-                                        {fields.table.startDate}
-                                        <div
-                                            className={props.sortField === "startDate" ? "visible" : "hidden"}>
-                                            <FontAwesomeIcon
-                                                icon={props.sortDirection === "asc" ? faArrowDown19 : faArrowDown91}
-                                                color={"White"} className={"ml-2"}/>
-                                        </div>
-                                    </div>
-                                    <div role="columnheader" className="md:w-10 w-6  relative ">
-                                        <span className="sr-only">View</span>
-                                    </div>
-                                </div>
+                        <div
+                            role="columnheader"
+                            className=" md:w-1/5 w-2/3  px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            onClick={() => handleSortClick("title")}
+                        >
+                            {fields.table.title}
+                            <div
+                                className={props.sortField === "title" ? "visible" : "hidden"}>
+                                <FontAwesomeIcon
+                                    icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                    color={"White"} className={"ml-2"}/>
                             </div>
-                            <div className="bg-white dark:bg-dark ">
-                                {props.offers.map((offer: InterOfferJob) => (
-                                    <div role="row" className="flex p-3"
-                                         key={offer.id}>
+                        </div>
+                        <div
+                            role="columnheader"
+                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            onClick={() => handleSortClick("employeurEntreprise")}
+                        >
+                            {fields.table.enterprise}
+                            <div
+                                className={props.sortField === "employeurEntreprise" ? "visible" : "hidden"}>
+                                <FontAwesomeIcon
+                                    icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                    color={"White"} className={"ml-2"}/>
+                            </div>
+                        </div>
+                        <div
+                            role="columnheader"
+                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            onClick={() => handleSortClick("location")}
+                        >
+                            {fields.table.location}
+                            <div
+                                className={props.sortField === "location" ? "visible" : "hidden"}>
+                                <FontAwesomeIcon
+                                    icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                    color={"White"} className={"ml-2"}/>
+                            </div>
+                        </div>
+                        <div
+                            role="columnheader"
+                            className="md:w-1/5 w-1/3 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            onClick={() => handleSortClick("state")}
+                        >
+                            {fields.table.status}
+                            <div
+                                className={props.sortField === "state" ? "visible" : "hidden"}>
+                                <FontAwesomeIcon
+                                    icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                    color={"White"} className={"ml-2"}/>
+                            </div>
+                        </div>
+                        <div
+                            role="columnheader"
+                            className="hidden md:visible w-1/5 px-2 text-xs font-medium text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
+                            onClick={() => handleSortClick("startDate")}
+                        >
+                            {fields.table.startDate}
+                            <div
+                                className={props.sortField === "startDate" ? "visible" : "hidden"}>
+                                <FontAwesomeIcon
+                                    icon={props.sortDirection === "asc" ? faArrowDown19 : faArrowDown91}
+                                    color={"White"} className={"ml-2"}/>
+                            </div>
+                        </div>
+                        <div role="columnheader" className="md:w-10 w-6  relative ">
+                            <span className="sr-only">View</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-white dark:bg-dark rounded">
+                    {props.offers.map((offer: InterOfferJob) => (
+                        <div role="row" className="flex p-3"
+                             key={offer.id}>
 
-                                        <div role="cell"
-                                             className="md:w-1/5 w-2/3 px-2 py-2 whitespace-nowrap truncate">
-                                            <div
-                                                className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.title}</div>
-                                        </div>
-                                        <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
-                                            <div
-                                                className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.employeurEntreprise}</div>
-                                        </div>
-                                        <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
-                                            <div
-                                                className="text-sm text-gray-500 dark:text-offwhite">{offer.location}</div>
-                                        </div>
-                                        <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
+                            <div role="cell"
+                                 className="md:w-1/5 w-2/3 px-2 py-2 whitespace-nowrap truncate">
+                                <div
+                                    className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.title}</div>
+                            </div>
+                            <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
+                                <div
+                                    className="text-sm font-medium text-gray-900 dark:text-offwhite">{offer.employeurEntreprise}</div>
+                            </div>
+                            <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
+                                <div
+                                    className="text-sm text-gray-500 dark:text-offwhite">{offer.location}</div>
+                            </div>
+                            <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
                                             <span
                                                 className={
                                                     offer.state == "PENDING" ?
@@ -142,22 +139,19 @@ export default function GSOffers(props: any) {
                                             >
                                                 {offer.state}
                                             </span>
-                                        </div>
-                                        <div role="cell"
-                                             className=" hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate text-sm text-gray-500 dark:text-offwhite ">
-                                            {offer.startDate!.toString()}
-                                        </div>
-                                        <div role="cell"
-                                             className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium">
-                                            <FontAwesomeIcon icon={faEye}
-                                                             className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
-                                                             onClick={() => handleClick(offer.id!)}/>
-                                        </div>
-                                    </div>
-                                ))}
+                            </div>
+                            <div role="cell"
+                                 className=" hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate text-sm text-gray-500 dark:text-offwhite ">
+                                {offer.startDate!.toString()}
+                            </div>
+                            <div role="cell"
+                                 className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium">
+                                <FontAwesomeIcon icon={faEye}
+                                                 className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
+                                                 onClick={() => handleClick(offer.id!)}/>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
             {
