@@ -68,10 +68,6 @@ const GSOffersPage = () => {
             fetchedOffersCountRef.current = false;
         };
         if (!fetchedOffersCountRef.current) fetchOffersCount();
-        console.log("total Approuve " + totalApprouved.toString())
-        console.log("total Pending " + totalPending.toString())
-        console.log("total declined " + totalDeclined.toString())
-        console.log("total " + totalOffers.toString())
 
     }, [isUpdate]);
 
