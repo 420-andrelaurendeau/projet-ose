@@ -26,6 +26,7 @@ import ErrorPage from "./pages/ErrorPage";
 import AppRoutes from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";
 import AppRouter from "./router/appRoutes";
+import Header from "./Header";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -138,7 +139,6 @@ root.render(
     <React.StrictMode>
         <AuthProvider>
             <ToastContextProvider>
-                {/*<RouterProvider router={router}>*/}
                 <AppRouter/>
             </ToastContextProvider>
         </AuthProvider>

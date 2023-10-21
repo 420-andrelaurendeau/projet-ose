@@ -6,6 +6,8 @@ import {getIntershipOffers, getTotalOfferByState} from "../api/GSManagerAPI";
 import GSOffers from "../components/common/GSOffers";
 import PaginatedList from "../components/common/PaginatedList";
 import {useTranslation} from "react-i18next";
+import ListItemCountSelector from "../components/common/ListItemCountSelector";
+import GSOffersDashboardHeader from "../components/common/GSOffersDashboardHeader";
 
 
 const GSOffersPage = () => {
@@ -27,7 +29,7 @@ const GSOffersPage = () => {
     const [sortDirection, setSortDirection] = useState("desc");
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
     const fetchedOffersRef = useRef(false);
     const fetchedOffersCountRef = useRef(false);
@@ -40,7 +42,13 @@ const GSOffersPage = () => {
             try {
                 fetchedOffersRef.current = true
 
-                const response = await getIntershipOffers({page, size: numberElement, state: offerState, sortField, sortDirection});
+                const response = await getIntershipOffers({
+                    page,
+                    size: numberElement,
+                    state: offerState,
+                    sortField,
+                    sortDirection
+                });
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
 
@@ -112,113 +120,22 @@ const GSOffersPage = () => {
     return (
         <div className="">
             <header className="">
-
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-
+                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             </header>
             <main className="">
                 <div className="p-0">
-                    <div className="lg:mx-auto sm:w-3/4 sm:mx-auto px-2 sm:px-9">
-                        <div className="flex w-full justify-center gap-x-4">
-                            <div className="w-full">
-                                <div className="block md:flex justify-between gap-x-4 w-full">
-                                    <div
-                                        className="cursor-pointer flex-1 border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black px-3 py-2 rounded-md text-sm font-medium"
-                                        onClick={() => offersByState(undefined)}
-                                    >
-                                        <div className="flex space-x-2 items-center h-16 w-auto">
-                                            <div
-                                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                                <FontAwesomeIcon icon={faFileLines} color="white" size="xl"/>
-                                            </div>
-                                            <div className="pl-2">
-                                                <p className="dark:text-offwhite">{fields.header.total}</p>
-                                                <p className="text-xl dark:text-white font-bold">{totalOffers}</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div
-                                        className="cursor-pointer flex-1 border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black px-3 py-2 rounded-md text-sm font-medium"
-                                        onClick={() => offersByState("ACCEPTED")}
-                                    >
-                                        <div className="flex space-x-2 items-center h-16 w-auto">
-                                            <div
-                                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                                <FontAwesomeIcon icon={faThumbsUp} color="white" size="xl"/>
-                                            </div>
-                                            <div className="pl-2">
-                                                <p className="dark:text-offwhite">{fields.header.accepted}</p>
-                                                <p className="text-xl dark:text-white font-bold">{totalApprouved}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="w-full">
-
-                                <div className=" block md:flex justify-around gap-x-4 md:w-full">
-                                    <div
-                                        className="cursor-pointer flex-1 border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black px-3 py-2 rounded-md text-sm font-medium "
-                                        onClick={() => offersByState("PENDING")}
-                                    >
-                                        <div className="flex space-x-2 items-center h-16 w-auto">
-                                            <div
-                                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                                <FontAwesomeIcon icon={faClock} color="white" size="xl"/>
-                                            </div>
-                                            <div className="pl-2">
-                                                <p className="dark:text-offwhite">{fields.header.pending}</p>
-                                                <p className="text-xl dark:text-white font-bold">{totalPending}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        className="cursor-pointer flex-1 border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black px-3 py-2 rounded-md text-sm font-medium"
-                                        onClick={() => offersByState("DECLINED")}
-                                    >
-                                        <div className="flex space-x-2 items-center h-16 w-auto">
-                                            <div
-                                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-
-                                                <FontAwesomeIcon icon={faXmark} color="white" size="xl"/>
-                                            </div>
-                                            <div className="pl-2">
-                                                <p className="dark:text-offwhite">{fields.header.declined}</p>
-                                                <p className="text-xl dark:text-white font-bold">{totalDeclined}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="px-3 mt-10">
-                        <div className="flex justify-end pr-4">
-                            <label className="">
-                                <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-dark" value={numberElement} onChange={handleChange}>
-                                    <option value={2}>2</option>
-                                    <option value={5}>5</option>
-                                    <option value={10}>10</option>
-                                    <option value={20}>20</option>
-                                </select>
-                            </label>
-                        </div>
+                    <GSOffersDashboardHeader offersByState={offersByState} fields={fields} totalOffers={totalOffers} totalApprouved={totalApprouved} totalPending={totalPending} totalDeclined={totalDeclined}/>
 
 
-
-                        <PaginatedList
-                            renderItem={renderOffer}
-                            page={page}
-                            totalPages={totalPages}
-                            onPageChange={handlePageChange}
-                        />
-                    </div>
-
+                    <PaginatedList
+                        renderItem={renderOffer}
+                        page={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                        numberElement={numberElement}
+                        handleChangeNumberElement={handleChange}
+                    />
                 </div>
             </main>
         </div>
