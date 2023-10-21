@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.validators;
 
 import com.sap.ose.projetose.annotations.FileExists;
-import com.sap.ose.projetose.repository.FileRepository;
+import com.sap.ose.projetose.repositories.FileRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;

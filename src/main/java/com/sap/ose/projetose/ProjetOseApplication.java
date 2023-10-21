@@ -1,15 +1,8 @@
 package com.sap.ose.projetose;
 
-import com.sap.ose.projetose.dto.InternshipOfferDto;
-import com.sap.ose.projetose.dto.InternshipApplicationDto;
-import com.sap.ose.projetose.dto.InternshipManagerDto;
 import com.sap.ose.projetose.models.*;
-import com.sap.ose.projetose.repository.*;
-import com.sap.ose.projetose.service.InternshipOfferService;
-import com.sap.ose.projetose.service.UserService;
-import com.sap.ose.projetose.service.*;
+import com.sap.ose.projetose.repositories.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

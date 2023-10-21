@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dto.InternshipManagerDto;
-import com.sap.ose.projetose.dto.UserDto;
+import com.sap.ose.projetose.dtos.InternshipManagerDto;
+import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;

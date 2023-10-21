@@ -1,10 +1,9 @@
 package com.sap.ose.projetose.models;
 
 
-import com.sap.ose.projetose.dto.StudentDto;
-import com.sap.ose.projetose.dto.UserDto;
+import com.sap.ose.projetose.dtos.StudentDto;
+import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.ArrayList;

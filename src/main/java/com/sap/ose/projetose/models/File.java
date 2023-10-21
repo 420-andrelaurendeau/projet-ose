@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dto.FileTransferDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

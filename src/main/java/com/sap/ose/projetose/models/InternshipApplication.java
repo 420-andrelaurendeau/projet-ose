@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dto.InternshipApplicationDto;
+import com.sap.ose.projetose.dtos.InternshipApplicationDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

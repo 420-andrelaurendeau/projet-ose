@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.models;
 
-import com.sap.ose.projetose.dto.EmployerDto;
-import com.sap.ose.projetose.dto.UserDto;
+import com.sap.ose.projetose.dtos.EmployerDto;
+import com.sap.ose.projetose.dtos.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 

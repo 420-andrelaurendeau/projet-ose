@@ -2,7 +2,7 @@ package com.sap.ose.projetose.validators;
 
 
 import com.sap.ose.projetose.annotations.InternshipOfferExists;
-import com.sap.ose.projetose.repository.InternshipOfferRepository;
+import com.sap.ose.projetose.repositories.InternshipOfferRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
