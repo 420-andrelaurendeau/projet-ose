@@ -215,7 +215,6 @@ public class InternshipCandidatesService {
         return internshipCandidates.map(value -> new InternshipCandidatesDto()).orElse(null);
 
     }
-}
 
     @Transactional
     public List<InternshipCandidatesDto> getCandidates() {
