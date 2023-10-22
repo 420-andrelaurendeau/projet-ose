@@ -20,6 +20,7 @@ i18n
       en: {
         translation: {
             formField: {
+
                 InternshipOfferList : {
                     header: {
                         total: "Total offers",
@@ -36,7 +37,8 @@ i18n
                         PENDING: "Pending",
                         ACCEPTED: "Accepted",
                         DECLINED: "Declined",
-                    }
+                    },
+
                 },
                 InternshipOfferForm : {
                     titleForm: 'Iternship offer form',
@@ -463,6 +465,17 @@ i18n
                 },
                 GSOfferPage: {
                     placeholder:"Please enter a comment",
+                    title: "Internship offer",
+                    errorFetchOffer: "An error occurred while fetching the offer",
+                    errorSaveOfferReview: "An error occurred while saving the offer review",
+                    succesSaveOfferReview: "The offer review has been saved",
+                    validiation:{
+                        required : 'The comment is required',
+                        minLenght : 'The comment must contain at least 10 characters',
+                        maxLenght : 'The comment must contain at most 1000 characters',
+                        scriptDetected: "The comment contains a script.",
+                    }
+
                 },
                 ErrorPage: {
                     errorMessage: {
@@ -536,6 +549,11 @@ i18n
                         PENDING: "Attente",
                         ACCEPTED: "Accepté",
                         DECLINED: "Refusé",
+                    },
+                    title: "Offres de stage",
+                    toast:{
+                        errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
+                        errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
                     }
                 },
                 InternshipOfferForm : {
@@ -666,6 +684,16 @@ i18n
                 },
                 GSOfferPage: {
                     placeholder:"Veillez entrer un commentaire",
+                    title: "Offre de stage",
+                    errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
+                    errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
+                    succesSaveOfferReview: "L'offre a été sauvegardée",
+                    validiation:{
+                        required : 'Le commentaire est requis',
+                        minLenght : 'Le commentaire doit contenir au moins 10 caractères',
+                        maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
+                        scriptDetected: "Le commentaire contient un script.",
+                    }
                 },
                 InscriptionFormEtudiant : {
                     title : {

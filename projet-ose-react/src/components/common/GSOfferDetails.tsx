@@ -6,6 +6,7 @@ import {InterOfferJob} from "../../model/IntershipOffer";
 import {getOfferReviewById} from "../../api/GSManagerAPI";
 import {getOfferReviewRequestById} from "../../api/InterOfferJobAPI";
 import {comment} from "postcss";
+import {useToast} from "../../hooks/state/useToast";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
@@ -29,6 +30,7 @@ const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const [formStateReview, setFormStateReview] = React.useState({
        comment: "", state: ""
     });
+    const toast = useToast();
 
 
     useEffect(() => {
@@ -42,7 +44,7 @@ const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     }));
                     return
                 } catch (error) {
-                    console.error('Error fetching offers:', error);
+                    toast.error("Une erreur est survenue lors du chargement de l'offre")
                 } finally {
                     loadOfferReviewRef.current = false;
                 }

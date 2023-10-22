@@ -49,9 +49,9 @@ const toastTypes: Record<string, ToastType> = {
     },
     error: {
         icon: <FontAwesomeIcon icon={faExclamation} className="h-5 w-5"/>,
-        backgroundColor: "bg-red-100",
-        borderColor: "border-red-500",
-        textColor: "text-red-800",
+        backgroundColor: "bg-red",
+        borderColor: "border-red",
+        textColor: "text-white",
     },
 };
 
@@ -72,7 +72,7 @@ const Toast: FC<ToastProps> = ({message, type, id}) => {
     useEffect(() => {
         timerID.current = setTimeout(() => {
             handleDismiss();
-        }, 1000);
+        }, 5000);
 
         return () => {
             if (timerID.current) {
@@ -89,7 +89,7 @@ const Toast: FC<ToastProps> = ({message, type, id}) => {
                     {icon}
                 </div>
 
-                <p className="text-lg font-bold">{message}</p>
+                <p className="text-md sm:text-lg  font-bold">{message}</p>
                 <button
                     className={`rounded p-1 ${textColor} hover:bg-opacity-30 hover:${backgroundColor}`}
                     onClick={handleDismiss}

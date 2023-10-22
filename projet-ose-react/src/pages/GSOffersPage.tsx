@@ -5,6 +5,8 @@ import GSOffers from "../components/common/GSOffers";
 import PaginatedList from "../components/common/PaginatedList";
 import {useTranslation} from "react-i18next";
 import GSOffersDashboardHeader from "../components/common/GSOffersDashboardHeader";
+import toast from "../components/common/Toast";
+import {useToast} from "../hooks/state/useToast";
 
 
 const GSOffersPage = () => {
@@ -31,6 +33,7 @@ const GSOffersPage = () => {
     const fetchedOffersRef = useRef(false);
     const fetchedOffersCountRef = useRef(false);
     const location = useLocation();
+    const toast = useToast();
 
     //TODO Temporaire
     const user = location.state;
@@ -50,12 +53,12 @@ const GSOffersPage = () => {
                 });
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
-
             } catch (error) {
-                console.error('Error fetching offers:', error);
+                toast.error(fields.toast.errorFetchOffers)
+            } finally {
+                setIsUpdate(false);
+                fetchedOffersRef.current = false;
             }
-            setIsUpdate(false);
-            fetchedOffersRef.current = false;
         };
         if (!fetchedOffersRef.current) fetchOffers();
 
@@ -69,18 +72,18 @@ const GSOffersPage = () => {
                 await handleTotalOffersByState();
 
             } catch (error) {
-                console.error('Error fetching the numbers of offers:', error);
+                toast.error(fields.toast.errorFetchNumberStateOfOffers)
+            } finally {
+                setIsUpdate(false);
+                fetchedOffersCountRef.current = false;
             }
-            setIsUpdate(false);
-            fetchedOffersCountRef.current = false;
         };
         if (!fetchedOffersCountRef.current) fetchOffersCount();
 
     }, [isUpdate]);
 
     useEffect(() => {
-        document.title = "Offres de stage";
-
+        document.title = fields.title;
     }, []);
 
     const handlePageChange = (newPage: number) => {
@@ -125,7 +128,7 @@ const GSOffersPage = () => {
         <div className="">
             <title>Offres</title>
             <header className="pb-4">
-                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">Offres de stage</h1>
+                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">
                 <div className="p-0">
