@@ -125,9 +125,9 @@ const GSOffersPage = () => {
         <div className="">
             <title>Offres</title>
             <header className="pb-4">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">Offres de stage</h1>
+                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">Offres de stage</h1>
             </header>
-            <main className="">
+            <main className="pb-4">
                 <div className="p-0">
 
                     <GSOffersDashboardHeader

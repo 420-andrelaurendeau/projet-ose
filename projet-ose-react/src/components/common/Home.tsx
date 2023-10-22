@@ -12,7 +12,7 @@ function Home(props: any) {
     }
 
     return (
-        <div className="dark:bg-dark h-screen">
+        <div className="dark:bg-dark min-h-screen">
 
             <div className="pb-4">
                 <Header user={userr}/>

@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {InterOfferJob} from "../../model/IntershipOffer";
+import {getOfferReviewById} from "../../api/GSManagerAPI";
+import {getOfferReviewRequestById} from "../../api/InterOfferJobAPI";
+import {comment} from "postcss";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
@@ -19,12 +22,52 @@ const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const navigate = useNavigate();
     const {t} = useTranslation();
     const [theme, setTheme] = useState("light");
+    const [isAlreadyReviewed, setIsAlreadyReviewed] = useState(false);
+    const loadOfferReviewRef = useRef(false);
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
+    const [formStateReview, setFormStateReview] = React.useState({
+       comment: "", state: ""
+    });
+
+
+    useEffect(() => {
+            const loadOfferReview = async () => {
+                try {
+                    loadOfferReviewRef.current = true;
+
+                    const response = await getOfferReviewRequestById(internshipOffer.offerReviewRequestId!);
+                    setFormStateReview(prevState => ({
+                        ...prevState, comment: response.comment!,
+                    }));
+                    return
+                } catch (error) {
+                    console.error('Error fetching offers:', error);
+                } finally {
+                    loadOfferReviewRef.current = false;
+                }
+            }
+
+            if (internshipOffer.state !== "PENDING" && !loadOfferReviewRef.current) {
+                setIsAlreadyReviewed(true);
+                setFormStateReview(prevState => ({
+                    ...prevState, state: internshipOffer.state!,
+                }));
+                loadOfferReview()
+            }
+        }, []
+    )
+
 
     return (
         <>
-            <button className="dark:text-offwhite hover:font-bold" onClick={() => navigate("/gs/offers")}>
-                <Icon className="w-9 h-9 mr-2 fill-current hover:font-bold"/>
+            <button
+                className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
+                onClick={() => navigate("/gs/offers")}
+            >
+                <Icon className="w-5 h-5 fill-current hover:font-bold"/>
             </button>
+
             <h1 className='font-bold text-center text-dark text-2xl dark:text-offwhite'>{internshipOffer!.title}</h1>
 
 
@@ -102,15 +145,45 @@ const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
                 <p className="mt-1 p-2 w-full dark:text-offwhite">{internshipOffer!.file!.fileName}</p>
             </div>
 
+            {!isAlreadyReviewed && (
+                <>
+                    <textarea
+                        name='comment'
+                        className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
+                        id="commentary_placeholder"
+                        onChange={(e) => handleFormChange(e)}
+                        placeholder={t("formField.GSOfferPage.placeholder")}>
 
-            {/* Commentaire field */}
-            <textarea name='comment'
-                      className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
-                      id="commentary_placeholder"
-                      onChange={(e) => handleFormChange(e)}
-                      placeholder={t("formField.GSOfferPage.placeholder")}></textarea>
+                    </textarea>
+                    {renderError()}
+                </>
+            )}
 
-            {renderError()}
+            {isAlreadyReviewed && (
+                <>
+                    <textarea
+                        name='comment'
+                        className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
+                        id="commentary_placeholder"
+                        placeholder={formStateReview.comment}
+                        disabled={true}
+                        >
+
+                    </textarea>
+                    <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
+                                            <span
+                                                className={
+                                                    formStateReview.state! == "PENDING" ?
+                                                        "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                        : formStateReview.state! === "DECLINED" ?
+                                                            "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
+                                                            : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
+                                            >
+                                                {fields.table[formStateReview.state!]}
+                                            </span>
+                    </div>
+                </>
+            )}
         </>
     )
 

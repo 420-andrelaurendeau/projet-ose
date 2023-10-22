@@ -50,21 +50,15 @@ export const getTotalOfferByState = async () => {
         console.error('Erreur lors de la récupération des offres de stage:', error);
         throw error;
     }
-
-
 }
 
-/**
+export const getOfferReviewById = async (id: number) => {
+    try {
+        const response = await apiClient.get(`/offer/${id}/review`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'avis de l\'offre de stage:', error);
+        throw error;
+    }
+}
 
- export const getIntershipOffers = async () => {
-
- try {
- const response = await apiClient.get('offers');
- return response.data;
- } catch (error) {
- console.error('Erreur lors de la récupération des offers de stage:', error);
- throw error;
- }
- };
-
- */

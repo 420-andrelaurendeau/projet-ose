@@ -1,65 +1,104 @@
-import {useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
+
 import {useToast} from "../../hooks/state/useToast";
+import {faCircleXmark} from "@fortawesome/free-solid-svg-icons/faCircleXmark";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faCircleCheck,
+    faCircleExclamation,
+    faExclamation,
+    faTriangleExclamation
+} from "@fortawesome/free-solid-svg-icons";
 
 
-const toastTypes = {
+interface ToastProps {
+    message: string;
+    type: 'success' | 'warning' | 'info' | 'error';
+    id: number;
+}
+
+interface ToastType {
+    icon: JSX.Element;
+    backgroundColor: string;
+    borderColor: string;
+    textColor: string;
+}
+
+interface ToastHook {
+    remove: (id: number) => void;
+}
+
+const toastTypes: Record<string, ToastType> = {
     success: {
-        icon: <></>,
-        iconClass: "success-icon",
-        progressBarClass: "success",
+        icon: <FontAwesomeIcon icon={faCircleCheck} className="h-5 w-5"/>,
+        backgroundColor: "bg-green",
+        borderColor: "border-green",
+        textColor: "text-white",
     },
     warning: {
-        icon: <></>,
-        iconClass: "warning-icon",
-        progressBarClass: "warning",
+        icon: <FontAwesomeIcon icon={faTriangleExclamation} className="h-5 w-5"/>,
+        backgroundColor: "bg-yellow",
+        borderColor: "border-yellow",
+        textColor: "text-white",
     },
     info: {
-        icon: <></>,
-        iconClass: "info-icon",
-        progressBarClass: "info",
+        icon: <FontAwesomeIcon icon={faCircleExclamation} className="h-5 w-5"/>,
+        backgroundColor: "bg-blue",
+        borderColor: "border-blue",
+        textColor: "text-white",
     },
     error: {
-        icon: <></>,
-        iconClass: "error-icon",
-        progressBarClass: "error",
+        icon: <FontAwesomeIcon icon={faExclamation} className="h-5 w-5"/>,
+        backgroundColor: "bg-red-100",
+        borderColor: "border-red-500",
+        textColor: "text-red-800",
     },
 };
-// @ts-ignore
-const Toast = ({message, type, id}) => {
-    // @ts-ignore
-    const {icon, iconClass, progressBarClass} = toastTypes[type];
-    const toast = useToast()
-    const timerID = useRef(null); // create a Reference
+
+const Toast: FC<ToastProps> = ({message, type, id}) => {
+    const {icon,backgroundColor, borderColor, textColor} = toastTypes[type];
+    const toast = useToast() as ToastHook;
+    const timerID = useRef<NodeJS.Timeout | null>(null);
+    const [isExiting, setIsExiting] = React.useState(false);
 
     const handleDismiss = () => {
-        toast.remove(id);
+        setIsExiting(true);
+        setTimeout(() => {
+            toast.remove(id);
+        }, 500);
     };
 
+
     useEffect(() => {
-        // @ts-ignore
         timerID.current = setTimeout(() => {
             handleDismiss();
-        }, 1000000);
+        }, 1000);
 
         return () => {
-            // @ts-ignore
-            clearTimeout(timerID.current);
+            if (timerID.current) {
+                clearTimeout(timerID.current);
+            }
         };
     }, []);
 
     return (
-        <div className="toast fixed top-4 left-4 z-50 bg-blue">
-            <span className={iconClass}>{icon}</span>
-            <p className="toast-message">{message}</p>
-            <button className="dismiss-btn" onClick={handleDismiss}></button>
+        <div
+            className={`fixed top-10 right-4 z-50 p-4 rounded border-l-4 ${backgroundColor} ${borderColor} ${textColor} shadow-lg w-72 ${isExiting ? 'animate-slideOutRight' : 'animate-slideInDown'}`}>
+            <div className="flex justify-between items-start">
+                <div className={`rounded p-1 ${textColor} hover:bg-opacity-30 hover:${backgroundColor}`}>
+                    {icon}
+                </div>
 
-            {/* Toast Progress Bar */}
-            <div className="toast-progress">
-                <div className={`toast-progress-bar ${progressBarClass}`}></div>
+                <p className="text-lg font-bold">{message}</p>
+                <button
+                    className={`rounded p-1 ${textColor} hover:bg-opacity-30 hover:${backgroundColor}`}
+                    onClick={handleDismiss}
+                >
+                    <FontAwesomeIcon icon={faCircleXmark} className="h-5 w-5"/>
+                </button>
             </div>
         </div>
-
-    )
-}
+    );
+};
 
 export default Toast;

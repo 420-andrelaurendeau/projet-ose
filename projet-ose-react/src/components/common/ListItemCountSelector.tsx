@@ -12,8 +12,8 @@ const ListItemCountSelector: React.FC<ListItemCountSelectorProps> = ({numberElem
 
     return (
             <div className="flex justify-end pr-4">
-                    <p className="">{fields.numberItem}</p>
-                    <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-dark ml-4"
+                    <p className="dark:text-white">{fields.numberItem}</p>
+                    <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-gray ml-4"
                             value={numberElement} onChange={handleChangeNumberElement}>
                         <option value={2}>2</option>
                         <option value={5}>5</option>

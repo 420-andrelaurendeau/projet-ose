@@ -1,13 +1,15 @@
 import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate, useNavigation, useParams} from "react-router-dom";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
 import {InterOfferJob} from "../../model/IntershipOffer";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import GSOfferDetails from "./GSOfferDetails";
 import GSReviewOfferForm from "./GSReviewOfferForm";
 import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error; // Adjust the import path to where your SVG is located
+import error = Simulate.error;
+import Toast from "./Toast";
+import {ToastContext} from "../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
     return (
@@ -26,12 +28,16 @@ const GSOfferPage: React.FC<any> = () => {
     const {t} = useTranslation();
     const {id} = useParams();
     const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const [isUpdate, setIsUpdate] = useState(false);
+
     const [formStateOffer, setFormState] = React.useState({
         comment: "", state: "", internOfferId: 0, internshipmanagerId: 6,
     });
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
+    const toast = useContext(ToastContext);
+
 
     const fetchedOfferRef = useRef(false);
 
@@ -57,28 +63,34 @@ const GSOfferPage: React.FC<any> = () => {
     }, [internshipOffer]);
 
 
+
     useEffect(() => {
         const loadOffer = async () => {
             try {
                 fetchedOfferRef.current = true
 
                 const response = await getOfferById(parseInt(id!));
-                //console.log(response)
+                console.log(response)
                 setinternshipOffer(response);
 
             } catch (error) {
                 console.error('Error fetching offers:', error);
+            } finally {
+                fetchedOfferRef.current = false;
             }
-            fetchedOfferRef.current = false;
+
         };
         if (!fetchedOfferRef.current) loadOffer();
 
-    }, []);
+    }, [isUpdate]);
 
     async function saveOfferReview(updatedFormState: any) {
         try {
             await saveOfferReviewRequest(updatedFormState);
+            setIsUpdate(true);
             setFormState(updatedFormState);
+
+
         } catch (error: any) {
             console.error('Erreur lors de la sauvegarde de la revue de l\'offre:', error);
             setErrorMessage(error.response.data);
@@ -99,6 +111,7 @@ const GSOfferPage: React.FC<any> = () => {
         };
 
         await saveOfferReview(updatedFormState);
+        toast.success("Offre approuvée", 1);
     }
 
     async function handleDecline() {
@@ -133,6 +146,7 @@ const GSOfferPage: React.FC<any> = () => {
         };
 
         await saveOfferReview(updatedFormState);
+        toast.success("Offre refusé", 1);
     }
 
     const renderError = () => (
@@ -147,7 +161,7 @@ const GSOfferPage: React.FC<any> = () => {
     return (<>
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
-            <div className=''>
+            <div className={"dark:bg-dark"}>
                 <GSOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}

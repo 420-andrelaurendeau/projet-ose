@@ -80,6 +80,17 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
     }
 };
 
+export const getOfferReviewRequestById = async (id:number) => {
+    try {
+
+        const response = await apiClient.get(`offerReviewRequest/get/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
+        throw error;
+    }
+};
+
 
 export const getInterOfferJob = async (email: string) => {
     try {

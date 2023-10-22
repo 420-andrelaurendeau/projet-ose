@@ -42,7 +42,7 @@ export default function GSOffers(props: any) {
 
                         <div
                             role="columnheader"
-                            className=" md:w-1/5 w-2/3  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className=" md:w-1/5 w-2/3 xxxs:text-sm sm:text-sm px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                             onClick={() => handleSortClick("title")}
                         >
                             {fields.table.title}
@@ -55,7 +55,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="hidden sm:text-sm md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                             onClick={() => handleSortClick("employeurEntreprise")}
                         >
                             {fields.table.enterprise}
@@ -68,7 +68,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="hidden sm:text-sm md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
                             onClick={() => handleSortClick("location")}
                         >
                             {fields.table.location}
@@ -81,7 +81,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="md:w-1/5 w-1/3 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className="md:w-1/5 xxxs:text-sm sm:text-sm w-1/3 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
                             onClick={() => handleSortClick("state")}
                         >
                             {fields.table.status}
@@ -94,7 +94,7 @@ export default function GSOffers(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
+                            className="hidden  sm:text-sm md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex "
                             onClick={() => handleSortClick("startDate")}
                         >
                             {fields.table.startDate}
@@ -132,12 +132,12 @@ export default function GSOffers(props: any) {
                                             <span
                                                 className={
                                                     offer.state == "PENDING" ?
-                                                        "px-2 inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                        "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                         : offer.state === "DECLINED" ?
-                                                            "px-2 inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
-                                                            : "px-2 inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
+                                                            "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
+                                                            : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
                                             >
-                                                {offer.state}
+                                                {fields.table[offer.state]}
                                             </span>
                             </div>
                             <div role="cell"
@@ -145,7 +145,7 @@ export default function GSOffers(props: any) {
                                 {offer.startDate!.toString()}
                             </div>
                             <div role="cell"
-                                 className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium">
+                                 className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
                                 <FontAwesomeIcon icon={faEye}
                                                  className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
                                                  onClick={() => handleOfferClick(offer.id!)}/>

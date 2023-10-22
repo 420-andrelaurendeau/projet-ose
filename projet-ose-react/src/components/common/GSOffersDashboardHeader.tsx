@@ -31,13 +31,13 @@ const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
                             onClick={() => offersByState(undefined)}
                         >
                             <div className="flex space-x-2 items-center h-16 w-auto">
-                                <div
-                                    className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <div className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
                                     <FontAwesomeIcon icon={faFileLines} color="white" size="xl"/>
                                 </div>
+
                                 <div className="pl-2">
-                                    <p className="dark:text-offwhite">{fields.header.total}</p>
-                                    <p className="text-2xl dark:text-white font-bold">{totalOffers}</p>
+                                    <p className="dark:text-offwhite xxxs:text-xs sm:text-xl">{fields.header.total}</p>
+                                    <p className="sm:text-2xl dark:text-white font-bold">{totalOffers}</p>
                                 </div>
                             </div>
                         </div>
@@ -48,12 +48,12 @@ const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
                         >
                             <div className="flex space-x-2 items-center h-16 w-auto">
                                 <div
-                                    className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                    className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
                                     <FontAwesomeIcon icon={faThumbsUp} color="white" size="xl"/>
                                 </div>
                                 <div className="pl-2">
-                                    <p className="dark:text-offwhite">{fields.header.accepted}</p>
-                                    <p className="text-2xl dark:text-white font-bold">{totalApprouved}</p>
+                                    <p className="dark:text-offwhite xxxs:text-xs sm:text-xl">{fields.header.accepted}</p>
+                                    <p className="sm:text-2xl dark:text-white font-bold">{totalApprouved}</p>
                                 </div>
                             </div>
                         </div>
@@ -69,12 +69,12 @@ const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
                         >
                             <div className="flex space-x-2 items-center h-16 w-auto">
                                 <div
-                                    className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                    <FontAwesomeIcon icon={faClock} color="white" size="xl"/>
+                                    className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                                    <FontAwesomeIcon icon={faClock} color="white" size="lg"/>
                                 </div>
                                 <div className="pl-2">
-                                    <p className="dark:text-offwhite">{fields.header.pending}</p>
-                                    <p className="text-2xl dark:text-white font-bold">{totalPending}</p>
+                                    <p className="dark:text-offwhite xxxs:text-xs sm:text-xl">{fields.header.pending}</p>
+                                    <p className="sm:text-2xl dark:text-white font-bold">{totalPending}</p>
                                 </div>
                             </div>
                         </div>
@@ -85,13 +85,13 @@ const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
                         >
                             <div className="flex space-x-2 items-center h-16 w-auto">
                                 <div
-                                    className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                    className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
 
                                     <FontAwesomeIcon icon={faXmark} color="white" size="xl"/>
                                 </div>
                                 <div className="pl-2">
-                                    <p className="dark:text-offwhite">{fields.header.declined}</p>
-                                    <p className="text-2xl dark:text-white font-bold">{totalDeclined}</p>
+                                    <p className="dark:text-offwhite xxxs:text-xs sm:text-xl">{fields.header.declined}</p>
+                                    <p className="sm:text-2xl dark:text-white font-bold">{totalDeclined}</p>
                                 </div>
                             </div>
                         </div>

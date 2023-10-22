@@ -4,14 +4,13 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, Router, RouterProvider} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
-import HomePage from "./pages/HomePage";
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
@@ -23,10 +22,8 @@ import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
 import GSOffersPage from "./pages/GSOffersPage";
 import ErrorPage from "./pages/ErrorPage";
-import AppRoutes from "./router/appRoutes";
-import {AuthProvider} from "./authentication/AuthContext";
 import AppRouter from "./router/appRoutes";
-import Header from "./Header";
+import {AuthProvider} from "./authentication/AuthContext";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -63,7 +60,7 @@ const router = createBrowserRouter([
                         children: [
                             {
                                 path: "InterviewForm",
-                                element: <InterviewForm />
+                                element: <InterviewForm/>
                             }
                         ]
                     },
@@ -130,7 +127,6 @@ const router = createBrowserRouter([
         path: "/*",
         element: <ErrorPage/>
     }
-
 
 
 ])

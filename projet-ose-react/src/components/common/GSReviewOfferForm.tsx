@@ -12,18 +12,18 @@ const GSReviewOfferForm: React.FC<GSReviewOfferFormProps> = ({handleApprove, han
     return(
         <>
             {internshipOffer!.state === "PENDING" && (
-                <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5 ">
+                <div className="flex space-x-4 pt-2 pb-4 ">
                     <button
-                        className="w-full flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange"
+                        className="w-full flex-1 bg-blue text-white font-bold p-2 rounded-md dark:bg-orange"
                         type="button"
                         onClick={handleApprove}>
-                        {t("formField.GSOfferPage.button.approved")}
+                        {t("formField.GSReviewOfferForm.button.approved")}
                     </button>
                     <button
                         className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
                         type="button"
                         onClick={handleDecline}>
-                        {t("formField.GSOfferPage.button.refused")}
+                        {t("formField.GSReviewOfferForm.button.refused")}
                     </button>
 
                 </div>

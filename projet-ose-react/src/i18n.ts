@@ -33,6 +33,9 @@ i18n
                         location: "Location",
                         status: "Status",
                         startDate: "Start date",
+                        PENDING: "Pending",
+                        ACCEPTED: "Accepted",
+                        DECLINED: "Declined",
                     }
                 },
                 InternshipOfferForm : {
@@ -128,6 +131,12 @@ i18n
                         sumbit : 'Submit',
                         close : 'Close',
                     },
+                },
+                GSReviewOfferForm: {
+                    button:{
+                        refused:"Refused",
+                        approved:"Approved"
+                    }
                 },
                 InscriptionFormEtudiant : {
                     title : {
@@ -452,6 +461,9 @@ i18n
                         }
                     }
                 },
+                GSOfferPage: {
+                    placeholder:"Please enter a comment",
+                },
                 ErrorPage: {
                     errorMessage: {
                         name: 'errorMessage',
@@ -521,6 +533,9 @@ i18n
                         location: "Localisation",
                         status: "Statut",
                         startDate: "Date de commencement",
+                        PENDING: "Attente",
+                        ACCEPTED: "Accepté",
+                        DECLINED: "Refusé",
                     }
                 },
                 InternshipOfferForm : {
@@ -642,6 +657,15 @@ i18n
                         scriptDetected: "La commentaire contient un script.",
                         required: "Le commentaire est requis"
                     }
+                },
+                GSReviewOfferForm: {
+                    button:{
+                        refused:"Refuser",
+                        approved:"Approuver"
+                    }
+                },
+                GSOfferPage: {
+                    placeholder:"Veillez entrer un commentaire",
                 },
                 InscriptionFormEtudiant : {
                     title : {
