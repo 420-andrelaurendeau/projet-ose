@@ -3,6 +3,8 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.EtudiantInscriptionDto;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
+import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sap.ose.projetose.modeles.File;

@@ -26,7 +26,6 @@ public class EmployeurService {
     private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
     private final ProgrammeService programmeService;
 
-
     @Autowired
     public EmployeurService(EmployeurRepository employeurRepository, ProgrammeService programmeService) {
         this.employeurRepository = employeurRepository;
@@ -35,7 +34,6 @@ public class EmployeurService {
 
     Employeur findById(long id) {
         try {
-
             return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
             logger.error("Employeur non trouvé avec l'id" + id);

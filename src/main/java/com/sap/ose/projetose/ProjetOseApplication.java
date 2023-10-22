@@ -96,7 +96,9 @@ public class ProjetOseApplication implements CommandLineRunner {
 
 
 
-        Internshipmanager internshipmanager = new Internshipmanager(1L, "Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
+        Internshipmanager internshipmanager = new Internshipmanager(1L, "Jean", "Dupont", "4387996589",Role.GS,  "dupont@gmail.com", "popo", programme1);
         internshipmanagerService.save(new InternshipmanagerDto(internshipmanager));
+
+        System.out.println("DONE");
     }
 }
