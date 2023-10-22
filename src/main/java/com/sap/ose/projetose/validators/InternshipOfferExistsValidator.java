@@ -6,8 +6,9 @@ import com.sap.ose.projetose.repositories.InternshipOfferRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class InternshipOfferExistsValidator implements ConstraintValidator<InternshipOfferExists, Long> {
     private final InternshipOfferRepository internshipOfferRepository;
 
