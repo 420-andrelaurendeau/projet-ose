@@ -42,4 +42,13 @@ public class IntershipManagerController {
 
         return new ResponseEntity<>(countInternOfferByState, HttpStatus.OK);
     }
+
+
+    @GetMapping("/offer/{id}")
+    public ResponseEntity<InternOfferDto> getOfferById(@PathVariable Long id) {
+
+        InternOfferDto internOfferDto = offerJobService.getById(id);
+
+        return new ResponseEntity<>(internOfferDto, HttpStatus.OK);
+    }
 }

@@ -64,13 +64,27 @@ public class ProjetOseApplication implements CommandLineRunner {
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
 
-        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","Description :\n",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
         InternOffer internOffer1 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
+
+        InternOffer internOffer4 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto4 = new InternOfferDto(internOffer4);
+        internOfferService.saveInterOfferJob(internOfferDto4);
+
+        InternOffer internOffer5 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto5 = new InternOfferDto(internOffer5);
+        internOfferService.saveInterOfferJob(internOfferDto5);
+
+        InternOffer internOffer6 = new InternOffer("Stage Securité","Montreal","fdushfkjdskjfhk dsfkjdskjfds vkj jfkjh fds l fhs ljds f ldsf ljds f dslfdsfldsfdsfljdsfbdskjfhbdsfljds fljds fdslhfsdhfsdlhfuiewhfiuewekwf fhewife f;iuew ufi;e ufi;ew fwe fw; fewuf; ew;i f;wie f;iew fee;wuhfuewhfh;iuehf;nweiuf;iufdskjf sdf;k ds;ifdsuif;dsiu;fkndsu;nfsdkjfdskjf d;sifbewu;ife wuiw;ef;ewuiiuefufewhfui;ewiufuifbbfiwlebflew fweifbewiufbibewfew eiuwfbiewfewfwebfil liewfbilbiuewlbfiuqif;bieq",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto6 = new InternOfferDto(internOffer6);
+        internOfferService.saveInterOfferJob(internOfferDto6);
+
+
 
         InternOffer internOffer2 = new InternOffer("Stage Réseaux","Quebec","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
