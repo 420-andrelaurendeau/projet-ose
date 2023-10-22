@@ -1,7 +1,7 @@
 import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
 import {useTranslation} from "react-i18next";
-import Header from "../../Header";
+import Header from "./shared/header/Header";
 import {Outlet, useLocation} from "react-router-dom";
 import axios from "axios";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";

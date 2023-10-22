@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef} from "react";
 
-import {useToast} from "../../hooks/state/useToast";
+import {useToast} from "../../../../hooks/state/useToast";
 import {faCircleXmark} from "@fortawesome/free-solid-svg-icons/faCircleXmark";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {

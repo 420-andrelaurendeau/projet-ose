@@ -1,16 +1,16 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import GSOffersPage from "../pages/GSOffersPage";
-import Home from "../components/common/Home";
-import GSOfferPage from "../components/common/GSOfferPage";
+import GSOffersPage from "../pages/InternshipManager/Offers/GSOffersPage";
+import Layout from "../components/layout/Layout";
+import GSOfferPage from "../pages/InternshipManager/Offer/GSOfferPage";
 
 const InternshipManager: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['internshipManager']}>
             <Routes>
-                <Route path="/" element={<Home/>}>
-                    <Route index element={<Home/>}/>
+                <Route path="/" element={<Layout/>}>
+                    <Route index element={<Layout/>}/>
                     <Route path="offers" element={<GSOffersPage/>}/>
                     <Route path="/offer/:id" element={<GSOfferPage/>} />
                 </Route>

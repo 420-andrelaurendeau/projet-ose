@@ -4,8 +4,8 @@ import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import EtudiantStage from "../components/common/EtudiantStage";
 import StudentAppliedOffers from "../components/common/StudentAppliedOffers";
-import GSOffers from "../components/common/GSOffers";
-import GSOffersPage from "./GSOffersPage";
+import GSOffers from "../components/common/internshipManager/Offers/GSOffers";
+import GSOffersPage from "./InternshipManager/Offers/GSOffersPage";
 import CandidatureOffer from "../components/common/CandidatureOffer";
 
 

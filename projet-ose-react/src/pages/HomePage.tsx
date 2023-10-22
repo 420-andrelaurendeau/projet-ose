@@ -1,6 +1,6 @@
 import React from "react";
 import {Outlet, useLocation} from "react-router-dom";
-import Home from "../components/common/Home";
+import Layout from "../components/layout/Layout";
 
 function HomePage() {
     const location = useLocation();

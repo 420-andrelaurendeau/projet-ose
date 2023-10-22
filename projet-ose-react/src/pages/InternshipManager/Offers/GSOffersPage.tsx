@@ -1,12 +1,12 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {getIntershipOffers, getTotalOfferByState} from "../api/GSManagerAPI";
-import GSOffers from "../components/common/GSOffers";
-import PaginatedList from "../components/common/PaginatedList";
+import {getIntershipOffers, getTotalOfferByState} from "../../../api/GSManagerAPI";
+import GSOffers from "../../../components/common/internshipManager/Offers/GSOffers";
+import PaginatedList from "../../../components/common/shared/paginationList/PaginatedList";
 import {useTranslation} from "react-i18next";
-import GSOffersDashboardHeader from "../components/common/GSOffersDashboardHeader";
-import toast from "../components/common/Toast";
-import {useToast} from "../hooks/state/useToast";
+import GSOffersDashboardHeader from "../../../components/common/internshipManager/Offers/GSOffersDashboardHeader";
+import toast from "../../../components/common/shared/toast/Toast";
+import {useToast} from "../../../hooks/state/useToast";
 
 
 const GSOffersPage = () => {

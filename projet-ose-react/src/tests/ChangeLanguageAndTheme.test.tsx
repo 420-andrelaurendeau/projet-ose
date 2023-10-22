@@ -1,5 +1,5 @@
 import {fireEvent, render, screen} from '@testing-library/react';
-import Header from "../Header";
+import Header from "../components/common/shared/header/Header";
 import {act} from "react-dom/test-utils";
 import {Callback} from "i18next";
 import { TFunction } from 'i18next';

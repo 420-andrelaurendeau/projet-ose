@@ -20,7 +20,7 @@ import CandidatureOffer from "./components/common/CandidatureOffer";
 import InternshipOfferForm from "./components/common/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
-import GSOffersPage from "./pages/GSOffersPage";
+import GSOffersPage from "./pages/InternshipManager/Offers/GSOffersPage";
 import ErrorPage from "./pages/ErrorPage";
 import AppRouter from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";

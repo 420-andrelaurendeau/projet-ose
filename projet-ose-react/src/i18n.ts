@@ -38,7 +38,11 @@ i18n
                         ACCEPTED: "Accepted",
                         DECLINED: "Declined",
                     },
-
+                    title: "Internship offers",
+                    toast:{
+                        errorFetchOffers:"An error occurred while fetching the offers",
+                        errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                    }
                 },
                 InternshipOfferForm : {
                     titleForm: 'Iternship offer form',

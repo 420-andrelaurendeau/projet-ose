@@ -1,18 +1,18 @@
 import {Transition} from "@headlessui/react";
-import imgDark from "././assets/images/Cegep-Andre-Laurendeau.png";
-import img from "././assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faBars,
     faCircleUser,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
-import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
+import SidebarEmployeurHome from "../../SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink, useLocation} from "react-router-dom";
 import React, {useState} from "react";
-import SidebarEtudiant from "./SidebarEtudiant";
-import ProfilMenu from "./components/common/ProfilMenu";
+import SidebarEtudiant from "../../../../SidebarEtudiant";
+import ProfilMenu from "../../ProfilMenu";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();

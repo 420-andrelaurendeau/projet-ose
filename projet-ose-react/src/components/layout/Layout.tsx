@@ -1,8 +1,9 @@
 import React from "react";
-import Header from "../../Header";
+import Header from "../common/shared/header/Header";
 import {Outlet} from "react-router-dom";
+import { t } from "i18next";
 
-function Home(props: any) {
+function Layout(props: any) {
 
     //TODO Temporaire
     const userr = {
@@ -25,4 +26,4 @@ function Home(props: any) {
     );
 }
 
-export default Home;
+export default Layout;

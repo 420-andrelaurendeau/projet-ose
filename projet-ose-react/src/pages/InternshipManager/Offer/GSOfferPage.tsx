@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
-import {InterOfferJob} from "../../model/IntershipOffer";
-import GSOfferDetails from "./GSOfferDetails";
-import GSReviewOfferForm from "./GSReviewOfferForm";
-import {ToastContext} from "../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
+import {getOfferById, saveOfferReviewRequest} from "../../../api/InterOfferJobAPI";
+import {InterOfferJob} from "../../../model/IntershipOffer";
+import GSOfferDetails from "../../../components/common/internshipManager/Offer/GSOfferDetails";
+import GSReviewOfferForm from "../../../components/common/internshipManager/Offer/GSReviewOfferForm";
+import {ToastContext} from "../../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
     return (

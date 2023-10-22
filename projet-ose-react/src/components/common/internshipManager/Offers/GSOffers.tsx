@@ -1,9 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
-import {InterOfferJob} from "../../model/IntershipOffer";
-import GSOfferPage from "./GSOfferPage";
-import useModal from "../../hooks/useModal";
+import {InterOfferJob} from "../../../../model/IntershipOffer";
+import GSOfferPage from "../../../../pages/InternshipManager/Offer/GSOfferPage";
+import useModal from "../../../../hooks/useModal";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 
