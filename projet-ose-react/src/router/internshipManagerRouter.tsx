@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import GSOffersPage from "../pages/InternshipManager/Offers/GSOffersPage";
+import GSOffersPage from "../pages/internshipManager/Offers/GSOffersPage";
 import Layout from "../components/layout/Layout";
-import GSOfferPage from "../pages/InternshipManager/Offer/GSOfferPage";
+import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 
 const InternshipManager: React.FC = () => {
     return (
