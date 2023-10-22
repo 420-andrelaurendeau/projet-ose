@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import StudentRoutes from "./studentRoutes";
 import InternshipManagerRouter from "./internshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
+import ConnectPage from "../pages/ConnectPage";
 
 const AppRouter: React.FC = () => {
     return (
@@ -14,7 +15,7 @@ const AppRouter: React.FC = () => {
                 <Route path="/gs/*" element={<InternshipManagerRouter/>}/>
 
 
-                <Route path="/login" element={<></>}/>
+                <Route path="/login" element={<ConnectPage></ConnectPage>}/>
                 <Route path="*" element={<></>}/>
             </Routes>
         </Router>

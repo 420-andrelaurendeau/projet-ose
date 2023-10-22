@@ -1,5 +1,5 @@
 import React from "react";
-import ConnectForm from "../components/common/ConnectForm";
+import ConnectForm from "../components/common/shared/authentication/ConnectForm";
 
 
 function ConnectPage() {

@@ -1,4 +1,5 @@
 import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 
 interface AuthContextProps {
     isAuthenticated: boolean;
@@ -26,27 +27,27 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
     const [userRole, setUserRole] = useState<string | null>("internshipManager");
     const [userId, setUserId] = useState<Number | null>(1);
 
-    /**
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            setUserRole(decodedToken.role);
+            setIsAuthenticated(true);
+        }
+    }, []);
 
-     useEffect(() => {
-     const token = localStorage.getItem('token');
-     if (token) {
-     const decodedToken = JSON.parse(atob(token.split('.')[1]));
-     setUserRole(decodedToken.role);
-     setIsAuthenticated(true);
-     }
-     }, []);
 
-     */
     const loginUser = (token: string) => {
         localStorage.setItem('token', token);
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        setUserRole(decodedToken.role);
+        console.log(decodedToken);
+        console.log(decodedToken.role[0].authority)
+        setUserRole(decodedToken.role[0].authority);
         setIsAuthenticated(true);
     };
 

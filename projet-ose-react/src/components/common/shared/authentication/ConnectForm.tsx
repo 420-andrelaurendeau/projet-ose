@@ -1,37 +1,36 @@
 import React, {useEffect} from "react";
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import toggleOn from "../../assets/images/toggle-on-solid.svg";
-import toggleOff from "../../assets/images/toggle-off-solid.svg";
+import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import toggleOn from "../../../../assets/images/toggle-on-solid.svg";
+import toggleOff from "../../../../assets/images/toggle-off-solid.svg";
 import { useTranslation } from 'react-i18next';
-import Switcher from "../../utils/switcher";
-import useDarkSide from "../../hooks/useDarkSide";
+import Switcher from "../../../../utils/switcher";
+import useDarkSide from "../../../../hooks/useDarkSide";
+import {useAuth} from "../../../../authentication/AuthContext";
+import {authenticateUser} from "../../../../api/AuthenticationAPI";
+import {useNavigate} from "react-router-dom";
 
 
 const ConnectForm = (props:any) => {
     const {i18n} = useTranslation();
-    const [colorTheme,setColorTheme] = React.useState();
-    console.log(colorTheme);
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
+    const { loginUser, userRole } = useAuth();
+    const navigate = useNavigate();
     const [connectUser, setConnectUser] = React.useState({
         email: "",
         password: ""
     });
 
-    useEffect(() => {
-
-        console.log(localStorage.getItem('theme'))
-    }, [localStorage.getItem('theme')]);
 
     const connect = async (e:any) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/api/auth/signin", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(connectUser)
-        });
-        const data = await response.json();
-        console.log(data);
+        try {
+            const response = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
+            console.log(userRole)
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -103,7 +102,9 @@ const ConnectForm = (props:any) => {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-blue dark:bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue dark:focus-visible:outline-orange">
+                                className="flex w-full justify-center rounded-md bg-blue dark:bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue dark:focus-visible:outline-orange"
+                                onClick={connect}
+                            >
                                 {fields.SignInButton.text}
                             </button>
                         </div>

@@ -875,10 +875,6 @@ video {
   width: 15rem;
 }
 
-.w-64 {
-  width: 16rem;
-}
-
 .w-7 {
   width: 1.75rem;
 }
@@ -1255,11 +1251,6 @@ video {
 .border-green {
   --tw-border-opacity: 1;
   border-color: rgb(34 215 34 / var(--tw-border-opacity));
-}
-
-.border-orange {
-  --tw-border-opacity: 1;
-  border-color: rgb(245 122 0 / var(--tw-border-opacity));
 }
 
 .border-red {
