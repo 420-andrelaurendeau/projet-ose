@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import {InterOfferJob} from "../../model/IntershipOffer";
 import useModal from "../../hooks/useModal";
-import InternshipOfferModal from "./InternshipOfferModal";
+import GSOfferPage from "./GSOfferPage";
 import Switcher from "../../utils/switcher";
 import {getAllPendingInterOfferJob} from "../../api/InterOfferJobAPI";
 
@@ -70,7 +70,7 @@ function GSInternOfferList() {
                     )
                 })
             }
-            <InternshipOfferModal
+            <GSOfferPage
                 isModalOpen={isModalOpen}
                 handleCloseModal={handleCloseModal}
                 internshipOffer={listInternOffer.find((item: InterOfferJob) => item.id === idInternOffer)}

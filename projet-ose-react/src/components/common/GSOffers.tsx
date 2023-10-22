@@ -2,23 +2,23 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import {InterOfferJob} from "../../model/IntershipOffer";
-import InternshipOfferModal from "./InternshipOfferModal";
+import GSOfferPage from "./GSOfferPage";
 import useModal from "../../hooks/useModal";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 
 export default function GSOffers(props: any) {
-    const {isModalOpen, handleOpenModal, handleCloseModal} = useModal();
     const [offer, setOffer] = useState<InterOfferJob>();
 
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
 
+    const navigate = useNavigate();
 
-    const handleClick = (id: Number) => {
-        setOffer(props.offers.filter((offer: any) => offer.id == id)[0]);
-        handleOpenModal();
-    }
+    const handleOfferClick = (id: number) => {
+        navigate(`/gs/offer/${id}`);
+    };
 
     const handleSortClick = (newSortField: any) => {
         if (newSortField === props.sortField && props.sortDirection === "desc") {
@@ -148,22 +148,12 @@ export default function GSOffers(props: any) {
                                  className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium">
                                 <FontAwesomeIcon icon={faEye}
                                                  className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
-                                                 onClick={() => handleClick(offer.id!)}/>
+                                                 onClick={() => handleOfferClick(offer.id!)}/>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
-            {
-                isModalOpen && (
-                    <InternshipOfferModal
-                        isModalOpen={isModalOpen}
-                        handleCloseModal={handleCloseModal}
-                        internshipOffer={offer}
-                        isUpdate={props.isUpdate}
-                    />
-                )
-            }
         </div>
     );
 }
