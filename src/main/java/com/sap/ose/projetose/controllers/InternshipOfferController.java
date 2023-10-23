@@ -19,13 +19,11 @@ import java.util.List;
 public class InternshipOfferController {
     private final InternshipOfferService internshipOfferService;
 
-    @PostMapping({"/update", "/new"})
-    public ResponseEntity<InternshipOfferDto> createInternshipOffer(@RequestBody InternshipOfferDto internshipOfferDto) {
+    @PostMapping("/new")
+    public ResponseEntity<InternshipOfferDto> createInternshipOffer(@Valid @RequestBody NewInternshipOfferDto internshipOfferDto) {
+        InternshipOfferDto newInternshipOfferDto = internshipOfferService.createInternshipOffer(internshipOfferDto);
 
-        System.out.println(internshipOfferDto.toString());
-        InternshipOfferDto savedOfferJobDto = internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto);
-
-        return new ResponseEntity<>(savedOfferJobDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(newInternshipOfferDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/getPendingOffers")
