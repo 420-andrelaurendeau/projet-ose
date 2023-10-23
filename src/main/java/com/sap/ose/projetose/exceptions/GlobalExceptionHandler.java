@@ -3,11 +3,10 @@ package com.sap.ose.projetose.exceptions;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.NonNull;
+import lombok.extern.java.Log;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 
 
+@Log
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -53,13 +53,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .toList());
     }
 
-    @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<String> handleDataAccessException(DataAccessException ignored) {
-        return ResponseEntity.internalServerError().build();
-    }
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleUnknownException(Exception ignored) {
+    public ResponseEntity<String> handleUnknownException(Exception exception) {
+        logger.error(exception.getClass().getName() + ": " + exception.getMessage());
         return ResponseEntity.internalServerError().build();
     }
 }
