@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
 import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.dtos.StudentDto;
@@ -94,10 +94,10 @@ public class StudentService {
                         InternshipOfferDto offerDto = new InternshipOfferDto(offerApplied.getInternshipOffer());
                         offerDto.setInternshipApplicationIds(null);
 
-                        List<FileTransferDto> fileTransferDtos = offerApplied.getFiles().stream().map(FileTransferDto::new).toList();
+                        List<NewFileTransferDto> newFileTransferDtos = offerApplied.getFiles().stream().map(NewFileTransferDto::new).toList();
 
                         dto.setAppliedOffer(offerDto);
-                        dto.setAppliedFiles(fileTransferDtos);
+                        dto.setAppliedFiles(newFileTransferDtos);
 
                         return dto;
                     }).toList();

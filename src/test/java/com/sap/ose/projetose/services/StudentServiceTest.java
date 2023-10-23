@@ -1,8 +1,7 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.ServiceException;
 import com.sap.ose.projetose.exceptions.StudentNotFoundException;
@@ -95,7 +94,7 @@ public class StudentServiceTest {
         List<StudentApplicationDto> mockedStudentApplied = List.of(
                 new StudentApplicationDto(
                         new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()),
-                        List.of(new FileTransferDto())
+                        List.of(new NewFileTransferDto())
                 )
         );
 

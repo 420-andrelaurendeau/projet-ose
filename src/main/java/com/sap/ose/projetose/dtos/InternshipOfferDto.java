@@ -24,7 +24,7 @@ public class InternshipOfferDto {
     private String endDate;
     private List<Long> internshipApplicationIds;
     private long programId;
-    private FileTransferDto file;
+    private NewFileTransferDto file;
     private long employerId;
     private String programName;
     private String employerFirstName;
@@ -42,7 +42,7 @@ public class InternshipOfferDto {
         this.endDate = internshipOffer.getEndDate().toString();
         this.internshipApplicationIds = internshipOffer.getInternshipApplications() == null ? null : internshipOffer.getInternshipApplications().stream().map(InternshipApplication::getId).collect(Collectors.toList());
         this.programId = internshipOffer.getStudyProgram().getId();
-        this.file = new FileTransferDto(internshipOffer.getFile());
+        this.file = new NewFileTransferDto(internshipOffer.getFile());
         this.employerId = internshipOffer.getEmployer().getId();
         this.programName = internshipOffer.getStudyProgram().getNom();
         this.employerFirstName = internshipOffer.getEmployer().getFirstName();

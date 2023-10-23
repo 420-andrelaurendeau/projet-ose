@@ -1,9 +1,8 @@
 package com.sap.ose.projetose.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationDto;
 import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.GlobalExceptionHandler;
@@ -58,7 +57,6 @@ class StudentControllerTest {
         internshipOffer.setEndDate(LocalDate.now());
         internshipOffer.setFile(new File());
         internshipOffer.setState(ApprovalStatus.APPROVED);
-        internshipOffer.setId(1L);
         internshipOffer.setInternshipApplications(null);
         internshipOffer.setLocation("Location");
         internshipOffer.setStudyProgram(null);
@@ -71,7 +69,6 @@ class StudentControllerTest {
         student = new Student();
         student.setCvList(null);
         student.setEmail("jane.doe@example.org");
-        student.setId(1);
         student.setMatricule("Matricule");
         student.setLastName("Nom");
         student.setPassword("iloveyou");
@@ -220,7 +217,7 @@ class StudentControllerTest {
     void getOffersApplied_StudentAppliedOffersArray() throws Exception {
 
 
-        StudentApplicationDto dto = new StudentApplicationDto(new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()), List.of(new FileTransferDto()));
+        StudentApplicationDto dto = new StudentApplicationDto(new InternshipOfferDto(student.getInternshipApplications().get(0).getInternshipOffer()), List.of(new NewFileTransferDto()));
         when(oseService.getApplicationsByStudent(anyLong())).thenReturn(List.of(dto));
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")

@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.models.User;
 import com.sap.ose.projetose.repositories.FileRepository;
@@ -15,9 +15,14 @@ public class FileService {
     private final FileRepository fileRepository;
 
     @Transactional
-    public FileTransferDto newFile(FileTransferDto fileTransferDto) {
-        User uploader = userService.getUserById(fileTransferDto.getUploaderId());
-        File file = new File(fileTransferDto.getContent(), fileTransferDto.getFileName(), fileTransferDto.isAccepted(), uploader);
-        return fileRepository.save(file);
+    public NewFileTransferDto newFile(NewFileTransferDto newFileTransferDto) {
+        User uploader = userService.getUserById(newFileTransferDto.getUploaderId());
+        File file = new File(newFileTransferDto.getContent(), newFileTransferDto.getFileName(), newFileTransferDto.getIsAccepted(), uploader);
+        return new NewFileTransferDto(fileRepository.save(file));
+    }
+
+    @Transactional
+    public File getFileById(Long id) {
+        return fileRepository.findById(id).orElseThrow();
     }
 }

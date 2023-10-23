@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class OfferReviewRequestDto {
-
     private long id;
     private String comment;
     private ApprovalStatus state;
