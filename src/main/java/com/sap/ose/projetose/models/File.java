@@ -15,10 +15,8 @@ import lombok.*;
 public class File extends BaseModel {
     @Lob
     private byte[] content;
-
     private String fileName;
-
-    private boolean isAccepted;
+    private ApprovalStatus approvalStatus;
 
     @ManyToOne
     @JoinColumn
