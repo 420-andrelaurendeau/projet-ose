@@ -24,12 +24,15 @@ public class InternshipOffer extends BaseModel {
     private ApprovalStatus state;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
     @ManyToOne
     @JoinColumn
+    @ToString.Exclude
     private StudyProgram studyProgram;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn
+    @ToString.Exclude
     private File file;
     @ManyToOne
     @JoinColumn
@@ -37,5 +40,6 @@ public class InternshipOffer extends BaseModel {
     private Employer employer;
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn
+    @ToString.Exclude
     private OfferReviewRequest offerReviewRequest;
 }
