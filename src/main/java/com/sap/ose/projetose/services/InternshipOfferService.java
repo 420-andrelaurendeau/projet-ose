@@ -1,14 +1,15 @@
 package com.sap.ose.projetose.services;
 
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
+import com.sap.ose.projetose.dtos.NewInternshipOfferDto;
 import com.sap.ose.projetose.exceptions.*;
 import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repositories.EmployerRepository;
 import com.sap.ose.projetose.repositories.InternshipOfferRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.java.Log;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Log
 @Service
 @RequiredArgsConstructor
 public class InternshipOfferService {
@@ -27,36 +29,28 @@ public class InternshipOfferService {
     private final EmployerService employerService;
     private final InternshipOfferReviewRequestService internshipOfferReviewRequestService;
     private final FileService fileService;
-    Logger logger = LoggerFactory.getLogger(InternshipOfferService.class);
 
 
     @Transactional
-    public InternshipOfferDto createOrUpdateInternshipOffer(InternshipOfferDto internshipOfferDto) {
-        try {
-            InternshipOffer internshipOffer = internshipOfferRepository.findById(internshipOfferDto.getId()).orElse(null);
+    public InternshipOfferDto createInternshipOffer(@Valid NewInternshipOfferDto internshipOfferDto) {
+        InternshipOffer internshipOffer = new InternshipOffer();
 
-            if (internshipOffer != null && internshipOffer.getState() != ApprovalStatus.PENDING)
-                throw new OfferAlreadyReviewedException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
+        internshipOffer.setTitle(internshipOfferDto.getTitle());
+        internshipOffer.setLocation(internshipOfferDto.getLocation());
+        internshipOffer.setDescription(internshipOfferDto.getDescription());
+        internshipOffer.setSalaryByHour(internshipOfferDto.getSalaryByHour());
+        internshipOffer.setStartDate(internshipOfferDto.getStartDate());
+        internshipOffer.setEndDate(internshipOfferDto.getEndDate());
+        internshipOffer.setStudyProgram(studyProgramService.findProgramById(internshipOfferDto.getProgramId()));
+        internshipOffer.setFile(fileService.getFileById(internshipOfferDto.getOfferFile()));
+        internshipOffer.setEmployer(employerService.findById(internshipOfferDto.getEmployerId()));
+        internshipOffer.setState(ApprovalStatus.PENDING);
+        internshipOffer.setOfferReviewRequest(internshipOfferReviewRequestService.createNewRequest(NewInternshipOfferDto));
 
-            internshipOffer = toInternshipOffer(internshipOfferDto);
 
-            InternshipOffer savedOfferDto = internshipOfferRepository.save(internshipOffer);
+        InternshipOffer savedOfferDto = internshipOfferRepository.save(internshipOffer);
 
-            return new InternshipOfferDto(savedOfferDto);
-        } catch (OfferAlreadyReviewedException e) {
-            logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internshipOfferDto.getId(), e);
-            throw e;
-        } catch (ProgramNotFoundException e) {
-            throw new ProgramNotFoundException();
-        } catch (EmployerNotFoundException e) {
-            throw new EmployerNotFoundException();
-        } catch (DataAccessException e) {
-            logger.error("Erreur d'accès à la base de données lors de la sauvegarde de l'offre d'emploi.", e);
-            throw new DatabaseException("Erreur lors de la sauvegarde de l'offre d'emploi.");
-        } catch (Exception e) {
-            logger.error("Erreur inconnu lors de la sauvegarde de l'offre d'emploi.", e);
-            throw new ServiceException("Erreur lors de la sauvegarde de l'offre d'emploi.");
-        }
+        return new InternshipOfferDto(savedOfferDto);
     }
 
     @Transactional
