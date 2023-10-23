@@ -585,7 +585,7 @@ i18n
                                 }
                             },
                             file: {
-                                name: 'file',
+                                name: 'Fichier',
                                 text: 'Glissez et déposez vos fichiers ici',
                                 smallText: 'ou',
                                 span: 'parcourir',

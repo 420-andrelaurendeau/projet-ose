@@ -6,8 +6,10 @@ import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
 import Header from "../../Header";
+import {useTranslation} from "react-i18next";
 
 export default function StudentAppliedOffers() {
+    const {t} = useTranslation();
     const [appliedOffers, setAppliedOffers] = useState<AppliedOffers[]>([])
     let user = useLocation().state;
 
@@ -42,31 +44,32 @@ export default function StudentAppliedOffers() {
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Title
+                                        {t('formField.homeEmployeur.offerTable.titre.text')}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Location
+                                        {t('formField.homeEmployeur.offerTable.location.text')}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Start date
+                                        {t('formField.homeEmployeur.offerTable.startDate.text')}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Entreprise
+                                        {t('formField.InternshipOfferList.table.enterprise')}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Files
+                                        {t('formField.InternshipOfferForm.file.name')}
+
                                     </th>
                                 </tr>
                                 </thead>
