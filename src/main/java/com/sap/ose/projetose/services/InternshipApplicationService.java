@@ -29,32 +29,18 @@ public class InternshipApplicationService {
 
     @Transactional
     public InternshipApplicationDto createApplication(NewInternshipApplicationDto internshipApplicationDto) {
-        try {
-            Student student = studentService.getStudentById(internshipApplicationDto.getCandidateId());
-            InternshipOffer internshipOffer = internshipOfferService.findById(internshipApplicationDto.getInternshipOfferDtoId());
+        Student student = studentService.getStudentById(internshipApplicationDto.getCandidateId());
+        InternshipOffer internshipOffer = internshipOfferService.findById(internshipApplicationDto.getInternshipOfferDtoId());
 
-            List<File> files = internshipApplicationDto.getFileTransferDtosId() == null
-                    ? new ArrayList<>()
-                    : internshipApplicationDto.getFileTransferDtosId()
-                    .stream()
-                    .map(fileService::newFile)
-                    .toList();
+        List<File> files = internshipApplicationDto.getFileTransferDtosId() == null
+                ? new ArrayList<>()
+                : internshipApplicationDto.getFileTransferDtosId()
+                .stream()
+                .map(fileService::getFileById)
+                .toList();
 
-            InternshipApplication internshipApplication = new InternshipApplication(student, internshipOffer, files);
+        InternshipApplication internshipApplication = new InternshipApplication(student, internshipOffer, files);
 
-            return new InternshipApplicationDto(internshipApplicationRepository.save(internshipApplication));
-
-        } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Error lors de la sauvegarde de candidature") {
-            };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            logger.info(e.getCause().getMessage());
-            throw new RuntimeException("Erreur rencontré lors de la sauvegarde de l'offre d'emploi.");
-        }
+        return new InternshipApplicationDto(internshipApplicationRepository.save(internshipApplication));
     }
 }
