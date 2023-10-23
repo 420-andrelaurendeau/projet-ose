@@ -12,6 +12,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRoles
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(userRole)
+        console.log(isAuthenticated)
         if (!isAuthenticated || !requiredRoles.includes(userRole!)) {
             navigate('/login');
         }

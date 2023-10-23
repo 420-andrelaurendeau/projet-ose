@@ -7,7 +7,7 @@ import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 
 const InternshipManager: React.FC = () => {
     return (
-        <ProtectedRoute requiredRoles={['internshipManager']}>
+        <ProtectedRoute requiredRoles={['ETUDIANT']}>
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Layout/>}/>
