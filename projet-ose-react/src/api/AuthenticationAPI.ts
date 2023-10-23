@@ -8,6 +8,7 @@ export const authenticateUser = async (email: string, password: string, loginUse
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+
             },
             body: JSON.stringify({ email, password }),
         });
@@ -18,7 +19,7 @@ export const authenticateUser = async (email: string, password: string, loginUse
         if (data.token) {
             loginUser(data.token);
             console.log()
-            navigate('/');
+            //navigate('/');
         } else {
             //TODO : handle error
         }

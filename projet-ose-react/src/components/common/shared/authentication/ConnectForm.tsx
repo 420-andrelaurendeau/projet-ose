@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {ReactElement, useEffect} from "react";
 import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import toggleOn from "../../../../assets/images/toggle-on-solid.svg";
@@ -11,7 +11,7 @@ import {authenticateUser} from "../../../../api/AuthenticationAPI";
 import {useNavigate} from "react-router-dom";
 
 
-const ConnectForm = (props:any) => {
+const ConnectForm = (props:any): ReactElement => {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
     const { loginUser, userRole } = useAuth();
@@ -27,7 +27,7 @@ const ConnectForm = (props:any) => {
         try {
             const response = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
             console.log(userRole)
-
+            navigate(`/${userRole}/offers`)
         } catch (error) {
             console.log(error);
         }

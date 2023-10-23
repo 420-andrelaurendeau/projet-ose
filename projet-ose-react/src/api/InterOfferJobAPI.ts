@@ -134,7 +134,7 @@ export function UpdateOffers(email: string, setOffers: any) {
 
 export async function getOfferById(id: number) {
     try {
-        const response = await apiClient.get('intershipManager/offer/' + id);
+        const response = await apiClient.get('intersnhipManager/offer/' + id);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
