@@ -19,12 +19,12 @@ i18n
         resources: {
             en: {
                 translation: {
-                    TeleversementCV:{
-                        buttons : {
-                            submit: "Send CV"
-                        }
-                    },
                     formField: {
+                        TeleversementCV:{
+                            buttons : {
+                                submit: "Send CV"
+                            }
+                        },
                         InternshipOfferList: {
                             header: {
                                 total: "Total offers",
@@ -483,12 +483,12 @@ i18n
             },
             fr: {
                 translation: {
-                    TeleversementCV:{
-                        buttons : {
-                            submit: "Envoyer CV"
-                        }
-                    },
                     formField: {
+                        TeleversementCV:{
+                            buttons : {
+                                submit: "Envoyer CV"
+                            }
+                        },
                         InternshipOfferList: {
                             header: {
                                 total: "Total des offres",

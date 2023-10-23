@@ -817,6 +817,10 @@ video {
   width: 83.333333%;
 }
 
+.w-11\/12 {
+  width: 91.666667%;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -2147,10 +2151,6 @@ video {
     position: fixed;
   }
 
-  .md\:absolute {
-    position: absolute;
-  }
-
   .md\:relative {
     position: relative;
   }
@@ -2235,10 +2235,6 @@ video {
 
   .md\:pl-14 {
     padding-left: 3.5rem;
-  }
-
-  .md\:pt-20 {
-    padding-top: 5rem;
   }
 }
 
