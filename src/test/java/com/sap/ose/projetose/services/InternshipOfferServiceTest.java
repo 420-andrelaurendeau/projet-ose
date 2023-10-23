@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
 import com.sap.ose.projetose.exceptions.*;
 import com.sap.ose.projetose.models.ApprovalStatus;
@@ -56,7 +56,7 @@ class InternshipOfferServiceTest {
         this.internshipOfferDto.setEmployerLastName("Employeur Nom");
         this.internshipOfferDto.setEmployerFirstName("Employeur Prenom");
         this.internshipOfferDto.setEndDate("2020-03-01");
-        this.internshipOfferDto.setFile(new FileTransferDto());
+        this.internshipOfferDto.setFile(new NewFileTransferDto());
         this.internshipOfferDto.setInternshipApplicationIds(new ArrayList<>());
         this.internshipOfferDto.setLocation("Location");
         this.internshipOfferDto.setProgramId(1);
@@ -79,7 +79,7 @@ class InternshipOfferServiceTest {
         when(internshipOfferRepository.save(any(InternshipOffer.class))).thenReturn(mockedInternshipOffer);
 
         ArgumentCaptor<InternshipOffer> captor = ArgumentCaptor.forClass(InternshipOffer.class);
-        internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto);
+        internshipOfferService.createInternshipOffer(internshipOfferDto);
 
         verify(internshipOfferRepository).save(captor.capture());
         InternshipOffer savedOffer = captor.getValue();
@@ -97,7 +97,7 @@ class InternshipOfferServiceTest {
         mockOffer.setState(ApprovalStatus.APPROVED);
         when(internshipOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockOffer));
 
-        OfferAlreadyReviewedException result = assertThrows(OfferAlreadyReviewedException.class, () -> internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto));
+        OfferAlreadyReviewedException result = assertThrows(OfferAlreadyReviewedException.class, () -> internshipOfferService.createInternshipOffer(internshipOfferDto));
         assertEquals("L'offre a déjà été approuvée et ne peut pas être modifiée.", result.getMessage());
     }
 
@@ -106,7 +106,7 @@ class InternshipOfferServiceTest {
     public void saveInterOfferJob_ProgrammeNotFound() {
         when(studyProgramService.findProgramById(anyLong())).thenThrow(ProgramNotFoundException.class);
 
-        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto));
+        ProgramNotFoundException result = assertThrows(ProgramNotFoundException.class, () -> internshipOfferService.createInternshipOffer(internshipOfferDto));
         assertEquals("Programme non trouvé", result.getMessage());
     }
 
@@ -114,7 +114,7 @@ class InternshipOfferServiceTest {
     public void saveInterOfferJob_EmployeurNotFound() {
         when(employerService.findById(anyLong())).thenThrow(EmployerNotFoundException.class);
 
-        EmployerNotFoundException result = assertThrows(EmployerNotFoundException.class, () -> internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto));
+        EmployerNotFoundException result = assertThrows(EmployerNotFoundException.class, () -> internshipOfferService.createInternshipOffer(internshipOfferDto));
         assertEquals("Employeur non trouvé", result.getMessage());
     }
 
@@ -123,7 +123,7 @@ class InternshipOfferServiceTest {
         when(internshipOfferRepository.save(any())).thenThrow(new DataAccessException("") {
         });
 
-        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto));
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipOfferService.createInternshipOffer(internshipOfferDto));
         assertEquals("Erreur lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 
@@ -131,7 +131,7 @@ class InternshipOfferServiceTest {
     public void saveInterOfferJob_UnknownError() {
         when(internshipOfferRepository.save(any())).thenThrow(IllegalArgumentException.class);
 
-        ServiceException result = assertThrows(ServiceException.class, () -> internshipOfferService.createOrUpdateInternshipOffer(internshipOfferDto));
+        ServiceException result = assertThrows(ServiceException.class, () -> internshipOfferService.createInternshipOffer(internshipOfferDto));
         assertEquals("Erreur lors de la sauvegarde de l'offre d'emploi.", result.getMessage());
     }
 

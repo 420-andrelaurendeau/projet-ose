@@ -2,7 +2,7 @@ package com.sap.ose.projetose.controllers;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sap.ose.projetose.dtos.FileTransferDto;
+import com.sap.ose.projetose.dtos.NewFileTransferDto;
 import com.sap.ose.projetose.dtos.InternshipOfferDto;
 import com.sap.ose.projetose.exceptions.DatabaseException;
 import com.sap.ose.projetose.exceptions.GlobalExceptionHandler;
@@ -47,7 +47,7 @@ class InternshipOfferControllerTest {
         this.internshipOfferDto.setEmployerLastName("Employeur Nom");
         this.internshipOfferDto.setEmployerFirstName("Employeur Prenom");
         this.internshipOfferDto.setEndDate("2020-03-01");
-        this.internshipOfferDto.setFile(new FileTransferDto());
+        this.internshipOfferDto.setFile(new NewFileTransferDto());
         this.internshipOfferDto.setId(1L);
         this.internshipOfferDto.setInternshipApplicationIds(new ArrayList<>());
         this.internshipOfferDto.setLocation("Location");
@@ -60,7 +60,7 @@ class InternshipOfferControllerTest {
 
     @Test
     void testSaveInterOfferJob_ProgramNotFoundException() throws Exception {
-        when(internshipOfferService.createOrUpdateInternshipOffer(any())).thenThrow(new ProgramNotFoundException());
+        when(internshipOfferService.createInternshipOffer(any())).thenThrow(new ProgramNotFoundException());
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/internshipOffer/newOffer")
@@ -78,7 +78,7 @@ class InternshipOfferControllerTest {
 
     @Test
     void testSaveInterOfferJob_DatabaseException() throws Exception {
-        when(internshipOfferService.createOrUpdateInternshipOffer(any())).thenThrow(new DatabaseException());
+        when(internshipOfferService.createInternshipOffer(any())).thenThrow(new DatabaseException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);
@@ -97,7 +97,7 @@ class InternshipOfferControllerTest {
 
     @Test
     void testSaveInterOfferJob_ServiceException() throws Exception {
-        when(internshipOfferService.createOrUpdateInternshipOffer(any())).thenThrow(new ServiceException());
+        when(internshipOfferService.createInternshipOffer(any())).thenThrow(new ServiceException());
 
 
         String content = (new ObjectMapper()).writeValueAsString(internshipOfferDto);

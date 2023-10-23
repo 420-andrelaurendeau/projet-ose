@@ -102,7 +102,6 @@ class StudentControllerTest {
         Student student = new Student();
         student.setCvList(null);
         student.setEmail("jane.doe@example.org");
-        student.setId(1);
         student.setMatricule("Matricule");
         student.setLastName("Nom");
         student.setPassword("iloveyou");
@@ -115,7 +114,6 @@ class StudentControllerTest {
         Student student2 = new Student();
         student2.setCvList(null);
         student2.setEmail("jane.doe@example.org");
-        student2.setId(1);
         student2.setMatricule("Matricule");
         student2.setLastName("Nom");
         student2.setPassword("iloveyou");
