@@ -3,15 +3,20 @@ import {InterOfferJob} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {webcrypto} from "crypto";
 import {AppliedOffers} from "../model/AppliedOffers";
+import api from "./ConfigAPI";
 
-const API_BASE_URL = 'http://localhost:8080/api/intershipManager/';
+const API_BASE_URL = 'http://localhost:8080/api/internshipManager/';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
     },
 });
+
 
 interface GetInternshipOffersParams {
     page: number;
@@ -29,8 +34,11 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
             params.state = state;
         }
 
-        const response = await apiClient.get('/offers', {
+        const response = await api.get('internshipManager/offers', {
             params: params,
+            headers: {
+             //'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
         });
         console.log('response', response.data);
         return response.data;
@@ -42,8 +50,11 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
 
 export const getTotalOfferByState = async () => {
     try {
-
-        const response = await apiClient.get('/count');
+        const response = await apiClient.get('/count', {
+            headers: {
+              //  'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        });
         console.log('response', response.data);
         return response.data;
     } catch (error) {

@@ -54,6 +54,7 @@ const GSOffersPage = () => {
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
             } catch (error) {
+                console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             } finally {
                 setIsUpdate(false);

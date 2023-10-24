@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/intershipManager")
+@RequestMapping("/api/internshipManager")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class IntershipManagerController {
@@ -27,6 +27,7 @@ public class IntershipManagerController {
             @RequestParam(required = false, defaultValue = "id") String sortField,
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state) {
+
 
 
         Page<InternOfferDto> internOfferDtos = internshipmanagerService.getSortedOffersByPage(page, size, state, sortField, sortDirection);
