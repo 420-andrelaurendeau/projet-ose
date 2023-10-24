@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <></>;
     }
 
     return (

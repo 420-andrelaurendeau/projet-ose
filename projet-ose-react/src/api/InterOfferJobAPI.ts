@@ -9,6 +9,9 @@ const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
     },
 });
 
@@ -134,7 +137,7 @@ export function UpdateOffers(email: string, setOffers: any) {
 
 export async function getOfferById(id: number) {
     try {
-        const response = await apiClient.get('intersnhipManager/offer/' + id);
+        const response = await apiClient.get('internshipManager/offer/' + id);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
