@@ -2,6 +2,7 @@ package com.sap.ose.projetose.annotations;
 
 import com.sap.ose.projetose.validators.FileExistsValidator;
 import com.sap.ose.projetose.validators.FilesExistValidator;
+import com.sap.ose.projetose.validators.UserExistsValidator;
 import jakarta.validation.Constraint;
 
 import java.lang.annotation.Documented;
@@ -15,7 +16,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Target({FIELD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {FileExistsValidator.class, FilesExistValidator.class})
+@Constraint(validatedBy = UserExistsValidator.class)
 public @interface UserExists {
     String message() default "{user.nonexistent}";
 
