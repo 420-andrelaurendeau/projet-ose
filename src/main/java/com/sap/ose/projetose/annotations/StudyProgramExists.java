@@ -14,7 +14,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Target({FIELD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = {StudyProgramExistsValidator.class})
+@Constraint(validatedBy = StudyProgramExistsValidator.class)
 public @interface StudyProgramExists {
     String message() default "{studyProgram.nonexistent}";
 

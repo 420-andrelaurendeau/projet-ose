@@ -31,7 +31,7 @@ public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Transactional
-    public Optional<Student> saveStudent(Student student) {
+    public Optional<Student> createStudent(Student student) {
         try {
             StudyProgram studyProgram = studyProgramService.findProgramById(student.getStudyProgram().getId());
             student.setStudyProgram(studyProgram);

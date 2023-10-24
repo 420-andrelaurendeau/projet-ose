@@ -95,7 +95,7 @@ class StudentControllerTest {
     }
 
     /**
-     * Method under test: {@link StudentController#saveStudent(Student)}
+     * Method under test: {@link StudentController#createStudent(Student)}
      */
     @Test
     void testSaveEtudiant() throws Exception {
@@ -109,7 +109,7 @@ class StudentControllerTest {
         student.setFirstName("Prenom");
         student.setStudyProgram(new StudyProgram());
         Optional<Student> ofResult = Optional.of(student);
-        when(oseService.saveStudent(Mockito.any())).thenReturn(ofResult);
+        when(oseService.createStudent(Mockito.any())).thenReturn(ofResult);
 
         Student student2 = new Student();
         student2.setCvList(null);

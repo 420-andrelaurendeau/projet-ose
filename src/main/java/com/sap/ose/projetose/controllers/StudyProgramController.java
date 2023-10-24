@@ -16,9 +16,12 @@ import java.util.List;
 public class StudyProgramController {
     public final StudyProgramService studyProgramService;
 
-    @PostMapping({"/update", "/new"})
+    @PostMapping( "/new")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<StudyProgramDto> saveStudyProgram(@RequestBody StudyProgramDto studyProgramDTO) {
+    public ResponseEntity<StudyProgramDto> createStudyProgram(@RequestBody StudyProgramDto studyProgramDTO) {
+        //FIXME: make sure this only returns a valid response, Global Exception Handler will handle the rest.
+        // make a new NewStudyProgramDto without ID and with validation for this one.
+        // Checkout <see EmployerController.java> for an example.
         return studyProgramService
                 .saveStudyProgram(studyProgramDTO)
                 .map(ResponseEntity::ok)
@@ -30,6 +33,4 @@ public class StudyProgramController {
     public List<StudyProgramDto> getStudyPrograms() {
         return studyProgramService.getAllStudyPrograms();
     }
-
-
 }

@@ -16,10 +16,5 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class InternshipOfferReviewRequestController {
     private final InternshipOfferReviewRequestService internshipOfferReviewRequestService;
-
-    @PostMapping("/update")
-    public ResponseEntity<InternshipOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto) {
-        InternshipOfferDto internshipOfferDto = internshipOfferReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
-        return new ResponseEntity<>(internshipOfferDto, HttpStatus.CREATED);
-    }
+    //FIXME: Add a specific method to update state. Review Requests are created by the InternshipOffer Controller on creation of an offer.
 }

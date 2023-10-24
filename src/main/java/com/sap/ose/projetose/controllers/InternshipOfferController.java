@@ -40,6 +40,7 @@ public class InternshipOfferController {
         return internshipOfferService.getAllInternOffers();
     }
 
+    //FIXME: use a better address for this one, it isn't clear enough. Perhaps /getAcceptedOffers
     @GetMapping("/getStudentOffers")
     public List<InternshipOfferDto> getStudentOffers() {
         return internshipOfferService.getAcceptedInternshipOffer();

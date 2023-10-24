@@ -40,7 +40,7 @@ class StudyStudyProgramControllerTest {
     private StudyProgramRepository studyProgramRepository;
 
     /**
-     * Method under test: {@link StudyProgramController#saveStudyProgram(StudyProgramDto)}
+     * Method under test: {@link StudyProgramController#createStudyProgram(StudyProgramDto)}
      */
     @Test
     void testSaveProgramme() throws Exception {
