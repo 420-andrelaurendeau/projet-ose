@@ -3,13 +3,20 @@ import {useTranslation} from "react-i18next";
 import {validateFile} from "../utils/validation/validationInteOfferForm";
 import {FileEntity} from "../model/FileEntity";
 import {setSelectionRange} from "@testing-library/user-event/dist/utils";
+import axios from "axios";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
+import {useLocation} from "react-router-dom";
 
 
 function TeleversementCV(): ReactElement {
 
+    let location = useLocation();
+
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
     const [selectedUser, setUser] = useState({matricule: ""})
+    const [uploadState, setUploadState] = useState({status: "None"})
 
     const [errors, setErrors] = useState<{
         file?: string
@@ -17,21 +24,8 @@ function TeleversementCV(): ReactElement {
 
     const {t} = useTranslation();
 
-    const fetchUsers = async () => {
-        const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
-        return await res.json()
-    }
-
     useEffect(() => {
-        const getUtilisateurs = async () => {
-            const users = await fetchUsers()
-            let etudiants = users.filter((e: any) => {
-                return e.cv || e.cv == "" && !!e.matricule;
-            })
-            setUtilisateurs(etudiants)
-
-        }
-        getUtilisateurs().then(r => console.log(r))
+        console.log(location.state)
     }, [])
 
     function handleFileChange(event: any) {
@@ -74,10 +68,35 @@ function TeleversementCV(): ReactElement {
 
     }
 
+    const handleSubmit = async () => {
+        console.log(files)
+        setUploadState({status: "Uploading"})
+        axios.post(`http://localhost:8080/api/etudiant/addCv/${location.state.matricule}`, files[0]).then(res => {
+            console.log(res)
+            setUploadState({status: "Done"})
+        }).catch(err => {
+            console.log(err)
+            setUploadState({status: "Error"})
+        })
+    }
+
+    const renderUploadStatus = (): ReactElement | null => {
+        switch (uploadState.status) {
+            case "Uploading":
+                return <FontAwesomeIcon icon={faSpinner} spin/>
+            case "Done":
+                return <FontAwesomeIcon icon={faCheck}/>
+            case "Error":
+                return <FontAwesomeIcon icon={faX}/>
+            default:
+                return null
+        }
+    }
+
     return (
         <div className={"flex flex-col items-center justify-center"}>
             <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
-                <h1 className={"text-4xl"}>Televerser votre CV</h1>
+                <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
                 <h2></h2>
                 <br/>
                 <form className={"flex flex-col items-center justify-center"}>
@@ -94,7 +113,7 @@ function TeleversementCV(): ReactElement {
                         />
                         <div className="flex flex-col items-center justify-center py-10 text-center">
                             <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
-                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
+                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText') + " "}
                                 <span
                                     className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
                             </p>
@@ -114,24 +133,11 @@ function TeleversementCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div className={"flex flex-col items-center justify-center w-full"}>
-                        <div className={"flex flex-col items-center justify-around w-full "}>
-                            {utilisateurs.map((user, i) => {
-                                return <div key={i} className={`m-1 w-full text-center cursor-pointer`} onClick={() => {
-                                    setUser({matricule: user["matricule"]})
-                                    console.log(selectedUser)
-                                }}>
-                                    {user["nom"]}
-                                </div>
-                            })}
-                        </div>
-                        <div>
-                            {selectedUser.matricule}
-                        </div>
+                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
+                        {t('formField.TeleversementCV.buttons.submit')}
                     </div>
-                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"}>
-                        Submit
-                    </div>
+                    {renderUploadStatus()}
+
                 </form>
             </div>
         </div>

@@ -1,13 +1,13 @@
 import React from "react";
-import {useLocation} from "react-router-dom";
-import Home from "../components/common/Home";
+import {Outlet, useLocation} from "react-router-dom";
+import Layout from "../components/layout/Layout";
 
 function HomePage() {
     const location = useLocation();
     const user = location.state;
     return (
-        <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
-            <Home user={user}/>
+        <div >
+            <Outlet/>
         </div>
     );
 }

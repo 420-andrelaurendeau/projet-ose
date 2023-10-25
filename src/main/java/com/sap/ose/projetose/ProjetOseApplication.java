@@ -3,7 +3,9 @@ package com.sap.ose.projetose;
 import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.dto.auth.InternshipmanagerAuthDto;
 import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
@@ -18,6 +20,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.time.LocalDate;
 
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
@@ -78,9 +82,25 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant1, internOffer, List.of(file));
+        Etudiant etudiant = new Etudiant("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", programme1, null);
+        etudiantService.saveEtudiant(etudiant);
+
+        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file));
 
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+
+
+        InternOffer internOffer4 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto4 = new InternOfferDto(internOffer4);
+        internOfferService.saveInterOfferJob(internOfferDto4);
+
+        InternOffer internOffer5 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto5 = new InternOfferDto(internOffer5);
+        internOfferService.saveInterOfferJob(internOfferDto5);
+
+        InternOffer internOffer6 = new InternOffer("Stage Securité","Montreal","fdushfkjdskjfhk dsfkjdskjfds vkj jfkjh fds l fhs ljds f ldsf ljds f dslfdsfldsfdsfljdsfbdskjfhbdsfljds fljds fdslhfsdhfsdlhfuiewhfiuewekwf fhewife f;iuew ufi;e ufi;ew fwe fw; fewuf; ew;i f;wie f;iew fee;wuhfuewhfh;iuehf;nweiuf;iufdskjf sdf;k ds;ifdsuif;dsiu;fkndsu;nfsdkjfdskjf d;sifbewu;ife wuiw;ef;ewuiiuefufewhfui;ewiufuifbbfiwlebflew fweifbewiufbibewfew eiuwfbiewfewfwebfil liewfbilbiuewlbfiuqif;bieq",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOfferDto internOfferDto6 = new InternOfferDto(internOffer6);
+        internOfferService.saveInterOfferJob(internOfferDto6);
 
         System.out.println("DONE");
     }

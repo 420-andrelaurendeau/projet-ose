@@ -1,19 +1,24 @@
 import React, {useEffect} from "react";
 import img from "../../assets/icons/user-solid.svg";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const TestBackEndConnection = (props:any) => {
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
 
     const [utilisateurs, setUtilisateurs] = React.useState([])
     const navigate = useNavigate()
     interface FormData {
+        id: number;
         nom: string;
         prenom: string;
         email: string;
         phone: string;
         entreprise: string;
         programme: string;
+        matricule: string;
     }
 
     useEffect(() => {
@@ -28,13 +33,21 @@ const TestBackEndConnection = (props:any) => {
 
     const fetchUtilisateurs = async () => {
         const res = await fetch('http://localhost:8080/api/utilisateur/utilisateurs')
+        console.log(res);
         return await res.json()
     }
 
     const handleSubmit = (user:FormData) => {
-        navigate('/home/offer', {
+        console.log(user.nom)
+        console.log(user.prenom)
+        user.id === 5 ? navigate('/gs/home/offre', {
             state: user,
-
+        }) :
+        user.matricule ? navigate('/etudiant/home/offre', {
+            state: user,
+        }) :
+        navigate('/employeur/home/offre', {
+            state: user,
         });
     }
 
@@ -60,7 +73,7 @@ return (
                                 type="button"
                                 onClick={(e) => handleSubmit(utilisateur)}
                                 className="bg-blue hover:bg-cyan-900 text-white font-bold py-2 px-4 border border-blue rounded">
-                                Sign in
+                                {fields.SignInButton.text}
                             </button>
                         </div>
                     </li>

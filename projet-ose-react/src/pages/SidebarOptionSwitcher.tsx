@@ -4,49 +4,56 @@ import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import EtudiantStage from "../components/common/EtudiantStage";
 import StudentAppliedOffers from "../components/common/StudentAppliedOffers";
+import GSOffers from "../components/common/internshipManager/Offers/GSOffers";
+import GSOffersPage from "./internshipManager/Offers/GSOffersPage";
+import CandidatureOffer from "../components/common/CandidatureOffer";
 
 
 
 function SidebarOptionSwitcher(props:any) {
     let { option } = useParams()
-    console.log(props.user.matricule? "Etudiant" : "Employeur")
     return (
 
         <div className="bg-darkwhite dark:bg-softdark w-full">
 
             {
-                props.user.matricule ?
-                    <div className={option != "offer" ? "max-md:hidden":"hidden"}>
+                props.user.id == 5 ?
+                    <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
+
+                        <GSOffersPage/>
+                    </div>
+                    : props.user.matricule ?
+                    <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
                         <EtudiantStage
-                            appliedOffers={props.appliedOffers}
-                            setAppliedOffers={props.setAppliedOffers}
-                            offers={props.offers}
                         />
                     </div>
                     :
                     <div className={option != "offer" ? "max-md:hidden" : "hidden"}>
                         <EmployeurOffer
-                        offers={props.offers}
                         />
                     </div>
-
-
             }
 
             {
-                 props.user.matricule ?
+                props.user.id == 5 ?
+                    (
+                        option === "offer" ?
+                            <>
+                                {console.log("test")}
+                                <GSOffersPage/>
+                            </>
+                            :
+                            <></>
+                    )
+                    : props.user.matricule ?
                     (
                         option === "offer" ?
                         <EtudiantStage
-                            appliedOffers={props.appliedOffers}
-                            setAppliedOffers={props.setAppliedOffers}
-                            offers={props.offers}
                         />
                         :
                         option === "appliedOffers" ?
                             <StudentAppliedOffers
-                                appliedOffers={props.appliedOffers}
-                                user={props.user}
+
                             />
                             :
                             <p>Home</p>
@@ -55,11 +62,13 @@ function SidebarOptionSwitcher(props:any) {
                      (
                          option === "offer" ?
                              <EmployeurOffer
-                                 offers={props.offers}
                              />
                              :
                              option === "candidature" ?
-                                 <p>Candidature</p>
+                                 <CandidatureOffer
+                                    user={props.user}
+                                    offers={props.offers}
+                                 />
                                  :
                                  option === "contract" ?
                                      <p>Contract</p>
@@ -69,11 +78,6 @@ function SidebarOptionSwitcher(props:any) {
                                          :
                                          option === "newOffer" ?
                                              <InternshipOfferForm
-                                                 isModalOpen={props.isModalOpen}
-                                                 setIsModalOpen={props.setIsModalOpen}
-                                                 setOffers={props.setOffers}
-                                                 userId={props.userEmail}
-                                                 user={props.user}
                                              />
                                              :
                                              <p>Home</p>

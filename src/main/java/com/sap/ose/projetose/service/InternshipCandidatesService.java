@@ -2,11 +2,10 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternshipCandidatesDto;
+import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
+import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,9 +81,156 @@ public class InternshipCandidatesService {
         }
     }
 
+    @Transactional
+    public List<InternshipCandidatesDto> getInternshipCandidatesByOfferId(Long id){
+        try{
+            List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllByInternOfferId(id);
+            return InternshipCandidatesDto.fromList(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+@Transactional
+    public List<InternshipCandidatesDto> getInternshipCandidatesByIds(String ids) {
+        try{
+            List<Long> idsLong = new ArrayList<>();
+            for (String id : ids.split(",")) {
+                idsLong.add(Long.parseLong(id));
+            }
+            List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllById(idsLong);
+            return InternshipCandidatesDto.fromList(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    @Transactional
+    public InternshipCandidatesDto acceptCandidates(Long internshipCandidatesId) {
+        try{
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesId).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            internshipCandidates.setState(State.ACCEPTED);
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    @Transactional
+    public InternshipCandidatesDto declineCandidates(Long internshipCandidatesId) {
+        try{
+            InternshipCandidates internshipCandidates = internshipCandidatesRepository.findById(internshipCandidatesId).orElseThrow(() -> new EtudiantNotFoundException("Candidat non trouvé"));
+            internshipCandidates.setState(State.DECLINED);
+            internshipCandidatesRepository.save(internshipCandidates);
+            return new InternshipCandidatesDto(internshipCandidates);
+        }catch (DataAccessException e){
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde du candidats") {};
+        }catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    @Transactional
+    public List<InternshipCandidatesDto> getDeclinedCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllDeclined();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats refusés", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats refusés.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats refusés", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats refusés.");
+        }
+    }
+
+    @Transactional
+    public List<InternshipCandidatesDto> getPendingCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllPending();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats en attente", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats en attente.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats en attente", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats en attente.");
+        }
+    }
+    @Transactional
+    public List<InternshipCandidatesDto> getAcceptedCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAllAccepted();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats acceptés", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats acceptés.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats acceptés", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats acceptés.");
+        }
+    }
+
     public InternshipCandidatesDto getInternshipCandidateById(long id){
         Optional<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findById(id);
         return internshipCandidates.map(value -> new InternshipCandidatesDto()).orElse(null);
 
+    }
+
+    @Transactional
+    public List<InternshipCandidatesDto> getCandidates() {
+        try {
+            List<InternshipCandidates> internshipCandidatesList = internshipCandidatesRepository.findAll();
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = new ArrayList<>();
+            for (InternshipCandidates internshipCandidates : internshipCandidatesList) {
+                internshipCandidatesDtoList.add(new InternshipCandidatesDto(internshipCandidates));
+            }
+            return internshipCandidatesDtoList;
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des candidats", e);
+            throw new DatabaseException("Erreur lors de la récupération des candidats.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des candidats", e);
+            throw new ServiceException("Erreur lors de la récupération des candidats.");
+        }
     }
 }

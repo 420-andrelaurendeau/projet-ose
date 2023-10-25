@@ -1,9 +1,8 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
-import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
-import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
@@ -12,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +21,15 @@ public class InternshipmanagerService {
 
     private final InternshipmanagerRepository internshipmanagerRepository;
 
+    private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
 
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
     @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, ProgrammeService programmeService) {
+    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService) {
         this.internshipmanagerRepository = internshipmanagerRepository;
+        this.internOfferService = internOfferService;
         this.programmeService = programmeService;
     }
 
@@ -49,7 +52,6 @@ public class InternshipmanagerService {
     }
 
     Internshipmanager findById(long id) {
-
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
         } catch (InternshipmanagerNotFoundException e) {
@@ -88,6 +90,26 @@ public class InternshipmanagerService {
         } catch (Exception e) {
             logger.info(e.getMessage());
             throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+    }
+
+    public Page<InternOfferDto> getSortedOffersByPage(int page, int size, String state, String sortField, String sortDirection) {
+        try {
+
+            Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                    Sort.by(sortField).descending();
+            Page<InternOfferDto> pageOffersDto = internOfferService.getSortedByPage(page, size, sort, state);
+            return pageOffersDto;
+        } catch (BadSortingFieldException e) {
+            throw e;
+        } catch (InvalidStateException e) {
+            throw e;
+        } catch (DatabaseException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
+            throw e;
+        } catch (ServiceException e) {
+            logger.error("Erreur inconnue lors de la récupération des offres de stage", e);
+            throw e;
         }
     }
 }

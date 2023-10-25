@@ -44,7 +44,7 @@ public class InternOfferDto {
         this.description = internOffer.getDescription();
         this.startDate =  internOffer.getStartDate().toString();
         this.endDate = internOffer.getEndDate().toString();
-        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? null : internOffer.getInternshipCandidates().stream().map(InternshipCandidates::getId).collect(Collectors.toList());
+        this.internshipCandidates = internOffer.getInternshipCandidates() == null ? new ArrayList<>() : internOffer.getInternshipCandidates().stream().map(InternshipCandidates::getId).collect(Collectors.toList());
         this.programmeId = internOffer.getProgramme().getId();
         this.file = new FileDto(internOffer.getFile());
         this.employeurId = internOffer.getEmployeur().getId();

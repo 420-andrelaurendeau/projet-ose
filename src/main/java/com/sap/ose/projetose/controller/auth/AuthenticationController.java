@@ -17,7 +17,7 @@ public class AuthenticationController {
 
     @PostMapping("/register/employeur")
     public ResponseEntity<AuthenticationResponse> registerEmployeur(@RequestBody EmployeurAuthDto employeurAuthDto){
-        return ResponseEntity.ok(authenticationService.registerEmployeur(employeurAuthDto));
+        return ResponseEntity.ok(authenticationService.registerEmployeur(null,employeurAuthDto));
     }
 
     @PostMapping("/authenticate")

@@ -19,6 +19,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -63,7 +66,6 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse registerEtudiant(EtudiantAuthDto etudiantAuthDto) {
-
         Programme programme = programmeService.getProgrammeById(etudiantAuthDto.getProgramme_id()).fromDto();
 
         Etudiant etudiant = new Etudiant();
@@ -118,7 +120,6 @@ public class AuthenticationService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-            System.out.println(request.getEmail());
             Utilisateur utilisateur = utilisateurService.getUserByEmail(request.getEmail());
 
             var jwtToken = jwtService.generateToken(utilisateur);
@@ -129,5 +130,7 @@ public class AuthenticationService {
                     .build();
         }
     }
+
+
 
 }

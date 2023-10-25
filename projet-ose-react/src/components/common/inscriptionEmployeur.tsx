@@ -14,30 +14,23 @@ function InscriptionEmployeur(props: any) {
     const toast = useToast();
     const navigate = useNavigate();
 
-    interface FormData {
-        nom: string;
-        prenom: string;
-        phone: string;
-        email: string;
-        password: string;
-        entreprise: string;
-        programme_id: any;
-    }
 
-    const [formData, setFormData] = useState<FormData>({
+
+    const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
         phone: "",
         email: "",
         password: "",
         entreprise: "",
-        programme_id: null,
+        programme_id: 0,
     });
-    const [showPassword, setShowPassword] = useState(false);
+
+    const [showPassword, setShowPasswprd] = useState(false);
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     const tooglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+        setShowPasswprd(!showPassword);
     };
 
     const fetchProgrammes = () => {
@@ -62,6 +55,7 @@ function InscriptionEmployeur(props: any) {
     }, [formData]);
 
 
+
     function handleChange(event: any) {
         const {name, value} = event.target;
 
@@ -72,6 +66,7 @@ function InscriptionEmployeur(props: any) {
         console.log(name + "= " + value);
     }
 
+
     const handleRedirect = async () => {
         toast.success("Inscription réussie");
         navigate("/signIn");
@@ -79,27 +74,26 @@ function InscriptionEmployeur(props: any) {
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(formData)
 
-        if (formData.programme_id == null) {
+        const programme = formData.programme_id;
+
+        if (programme == null) {
             alert(fields.programme.validation.required);
             return;
         }
 
         axios
-            .post("http://localhost:8080/api/auth/register/employeur", JSON.stringify(formData), {
+            .post("http://localhost:8080/api/employeur/ajouter", JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
+
             })
             .then((response) => {
-                console.log(response.data)
-                if (response.data != null){
-                    handleRedirect();
-                }else{
-                    console.log("Donnee erronee")
-                }
-
+                console.log(JSON.stringify(formData));
+                console.log(formData);
+                console.log(response);
+                handleRedirect();
             })
             .catch((error) => {
                 console.log(error);
@@ -327,7 +321,7 @@ function InscriptionEmployeur(props: any) {
                                 onChange={handleChange}
                                 name={"programme_id"}
                                 defaultValue={"DEFAULT"}
-                                id="programme_id"
+                                id="programme"
                                 required={true}
                                 className={
                                     props.darkMode ?
@@ -337,7 +331,8 @@ function InscriptionEmployeur(props: any) {
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
-                                    <option key={programme['id']} value={programme['id']}>{programme['nom']}</option>
+                                    <option key={programme['id']}
+                                            value={Number(programme['id'])}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>

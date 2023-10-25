@@ -16,6 +16,7 @@ import {
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
+import {useProps} from "../../pages/EmployeurHomePage";
 
 
 const initialFormState: InterOfferJob = {
@@ -31,7 +32,7 @@ const initialFormState: InterOfferJob = {
     file: undefined,
 };
 
-const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) => {
+const InternshipOfferForm: React.FC<any> = () => {
     const {t} = useTranslation();
     const ref = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{
@@ -45,7 +46,7 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
         file?: string
     }>({});
     const [formState, setFormState] = useState<InterOfferJob>(initialFormState);
-
+    const {setIsModalOpen, setOffers, user} = useProps()
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     useEffect(() => {
@@ -164,118 +165,112 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
 
     return (
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-                <div
-                    className="md:fixed md:z-50 md:top-0 md:left-0 md:w-full md:h-full md:bg-black md:bg-opacity-50 md:flex md:justify-center md:items-start md:p-3 max-md:w-5/6">
-                    <NavLink
-                        to="/home/offer"
-                        className="md:absolute max-md:hidden w-full h-full"
-                        state={user}
-                    />
-                    <div className="md:relative bg-white rounded-lg p-6 w-full max-w-xl dark:bg-dark border border-gray dark:border-darkgray">
+            <div className="w-5/6">
+                <div className="bg-white rounded-lg p-6 w-full  dark:bg-dark border border-gray dark:border-darkgray">
 
-                        <form className="space-y-4 mx-auto w-full max-w-xl" onSubmit={handleSubmit}>
+                    <form className="space-y-4 mx-auto w-full " onSubmit={handleSubmit}>
 
-                            <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite'>{t('formField.InternshipOfferForm.titleForm')}</h1>
+                        <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite pb-6'>{t('formField.InternshipOfferForm.titleForm')}</h1>
 
-                            <div
-                                className='block sm:flex items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 min-h-50'>
-                                {/* Title field */}
-                                <div className='flex-auto sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="title_placeholder">{t('formField.InternshipOfferForm.title.text')}</label>
-                                    <input name='title'
-                                           className={"mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs placeholder:h-10 dark:bg-softdark dark:text-orange dark:border-0"}
-                                           onBlur={() => handleValidation("title")} type="text" id="title_placeholder"
-                                           onChange={handleFormChange} value={formState.title}
-                                           placeholder={t("formField.InternshipOfferForm.title.placeholder")}/>
-                                    {renderError(errors.title)}
-                                </div>
-
-                                {/* Location field */}
-                                <div className='flex-auto sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="location_placeholder">{t('formField.InternshipOfferForm.location.text')}</label>
-                                    <input name="location"
-                                           className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                           type="text" value={formState.location} id="location_placeholder"
-                                           onChange={handleFormChange} onBlur={() => handleValidation("location")}
-                                           placeholder={t("formField.InternshipOfferForm.location.placeholder")}/>
-                                    {renderError(errors.location)}
-                                </div>
-
-                            </div>
-
-                            {/* Description field */}
-                            <div>
+                        <div
+                            className='block sm:flex items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 min-h-50'>
+                            {/* Title field */}
+                            <div className='flex-auto sm:w-1/2 '>
                                 <label className="block text-xs font-bold dark:text-offwhite"
-                                       htmlFor="description_placeholder">{t('formField.InternshipOfferForm.description.text')}</label>
-                                <textarea name='description'
-                                          className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                          id="description_placeholder" onBlur={() => handleValidation("description")}
-                                          onChange={(e) => handleFormChange(e)} value={formState.description}
-                                          placeholder={t("formField.InternshipOfferForm.description.placeholder")}></textarea>
-                                {renderError(errors.description)}
+                                       htmlFor="title_placeholder">{t('formField.InternshipOfferForm.title.text')}</label>
+                                <input name='title'
+                                       className={"mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs placeholder:h-10 dark:bg-softdark dark:text-orange dark:border-0"}
+                                       onBlur={() => handleValidation("title")} type="text" id="title_placeholder"
+                                       onChange={handleFormChange} value={formState.title}
+                                       placeholder={t("formField.InternshipOfferForm.title.placeholder")}/>
+                                {renderError(errors.title)}
                             </div>
 
-                            <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
-                                {/* Categories field */}
-                                <div className='sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
-                                    <select name="programmeId"
-                                            className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
-                                            onChange={(e) => handleFormChange(e)} defaultValue={"default"}
-                                            id="categories_placeholder">
-                                        <option value="default"
-                                                disabled>{t('formField.InternshipOfferForm.program.placeholder')}</option>
-                                        {programmes.map((programme) => (<option key={programme.id} value={programme.id}>
-                                            {programme.nom}
-                                        </option>))}
-                                    </select>
-                                    {renderError(errors.programme)}
-                                </div>
-
-                                {/* Salary field */}
-                                <div className='sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
-                                    <input name='salaryByHour'
-                                           className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
-                                           type="text" id="salary_placeholder"
-                                           onBlur={() => handleValidation("salaryByHour")} onChange={handleFormChange}
-                                           value={formState.salaryByHour}
-                                           placeholder={t("formField.InternshipOfferForm.salary.placeholder") + " $"}/>
-                                    {renderError(errors.salaryByHour)}
-                                </div>
-
+                            {/* Location field */}
+                            <div className='flex-auto sm:w-1/2'>
+                                <label className="block text-xs font-bold dark:text-offwhite"
+                                       htmlFor="location_placeholder">{t('formField.InternshipOfferForm.location.text')}</label>
+                                <input name="location"
+                                       className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                       type="text" value={formState.location} id="location_placeholder"
+                                       onChange={handleFormChange} onBlur={() => handleValidation("location")}
+                                       placeholder={t("formField.InternshipOfferForm.location.placeholder")}/>
+                                {renderError(errors.location)}
                             </div>
 
-                            <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
-                                {/* Start date field */}
-                                <div className='flex-auto sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="start_date_placeholder">{t('formField.InternshipOfferForm.startDate.text')}</label>
-                                    <input name='startDate'
-                                           className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
-                                           type="date" id="start_date_placeholder"
-                                           onBlur={() => handleValidation("startDate")} onChange={handleFormChange}/>
-                                    {renderError(errors.startDate)}
-                                </div>
+                        </div>
 
-                                {/* End date field */}
-                                <div className='flex-auto sm:w-1/2'>
-                                    <label className="block text-xs font-bold dark:text-offwhite"
-                                           htmlFor="end_date_placeholder">{t('formField.InternshipOfferForm.endDate.text')}</label>
-                                    <input name='endDate'
-                                           className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
-                                           type="date" id="end_date_placeholder"
-                                           onBlur={() => handleValidation("endDate")} onChange={handleFormChange}/>
-                                    {renderError(errors.endDate)}
-                                </div>
+                        {/* Description field */}
+                        <div>
+                            <label className="block text-xs font-bold dark:text-offwhite"
+                                   htmlFor="description_placeholder">{t('formField.InternshipOfferForm.description.text')}</label>
+                            <textarea name='description'
+                                      className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                      id="description_placeholder" onBlur={() => handleValidation("description")}
+                                      onChange={(e) => handleFormChange(e)} value={formState.description}
+                                      placeholder={t("formField.InternshipOfferForm.description.placeholder")}></textarea>
+                            {renderError(errors.description)}
+                        </div>
+
+                        <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
+                            {/* Categories field */}
+                            <div className='sm:w-1/2'>
+                                <label className="block text-xs font-bold dark:text-offwhite"
+                                       htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
+                                <select name="programmeId"
+                                        className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
+                                        onChange={(e) => handleFormChange(e)} defaultValue={"default"}
+                                        id="categories_placeholder">
+                                    <option value="default"
+                                            disabled>{t('formField.InternshipOfferForm.program.placeholder')}</option>
+                                    {programmes.map((programme) => (<option key={programme.id} value={programme.id}>
+                                        {programme.nom}
+                                    </option>))}
+                                </select>
+                                {renderError(errors.programme)}
                             </div>
 
-                            {/* File field */}
-                            <div className="flex flex-col items-center justify-center">
+                            {/* Salary field */}
+                            <div className='sm:w-1/2'>
+                                <label className="block text-xs font-bold dark:text-offwhite"
+                                       htmlFor="salary_placeholder">{t('formField.InternshipOfferForm.salary.text')}</label>
+                                <input name='salaryByHour'
+                                       className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-orange dark:border-0"
+                                       type="text" id="salary_placeholder"
+                                       onBlur={() => handleValidation("salaryByHour")} onChange={handleFormChange}
+                                       value={formState.salaryByHour}
+                                       placeholder={t("formField.InternshipOfferForm.salary.placeholder") + " $"}/>
+                                {renderError(errors.salaryByHour)}
+                            </div>
+
+                        </div>
+
+                        <div className='block sm:flex space-x-0 sm:space-x-4 space-y-4 sm:space-y-0'>
+                            {/* Start date field */}
+                            <div className='flex-auto sm:w-1/2'>
+                                <label className="block text-xs font-bold dark:text-offwhite"
+                                       htmlFor="start_date_placeholder">{t('formField.InternshipOfferForm.startDate.text')}</label>
+                                <input name='startDate'
+                                       className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
+                                       type="date" id="start_date_placeholder"
+                                       onBlur={() => handleValidation("startDate")} onChange={handleFormChange}/>
+                                {renderError(errors.startDate)}
+                            </div>
+
+                            {/* End date field */}
+                            <div className='flex-auto sm:w-1/2'>
+                                <label className="block text-xs font-bold dark:text-offwhite"
+                                       htmlFor="end_date_placeholder">{t('formField.InternshipOfferForm.endDate.text')}</label>
+                                <input name='endDate'
+                                       className="mt-1 p-2 w-full border border-gray text-gray rounded-md dark:bg-softdark dark:border-0"
+                                       type="date" id="end_date_placeholder"
+                                       onBlur={() => handleValidation("endDate")} onChange={handleFormChange}/>
+                                {renderError(errors.endDate)}
+                            </div>
+                        </div>
+
+                        {/* File field */}
+                        <div className="flex flex-col items-center justify-center">
                             <div
                                 className="bg-darkwhite h-48 w-4/5 dark:bg-softdark pb-5 cursor-pointer"
                                 onClick={handleClick}>
@@ -302,34 +297,34 @@ const InternshipOfferForm: React.FC<any> = ({setIsModalOpen, setOffers, user}) =
 
                                 {renderError(errors.file)}
                             </div>
-                            </div>
-                            {formState.file?.fileName && (<div className="mt-4 m-4">
-                                <p className="mb-2 dark:text-gray">{formState.file.fileName}</p>
-                            </div>)}
+                        </div>
+                        {formState.file?.fileName && (<div className="mt-4 m-4">
+                            <p className="mb-2 dark:text-gray">{formState.file.fileName}</p>
+                        </div>)}
 
-                            {/* Submit button */}
-                            <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5">
-                                <button
-                                    className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
-                                    type="submit" disabled={!isFormValid()}>
-                                    Submit
+                        {/* Submit button */}
+                        <div className="block space-y-4 sm:space-y-0 sm:flex sm:space-x-4 pt-5">
+                            <button
+                                className={`w-full flex-1 text-white font-bold p-2 rounded-md ${isFormValid() ? 'bg-blue dark:bg-orange' : 'bg-gray cursor-not-allowed'}`}
+                                type="submit" disabled={!isFormValid()}>
+                                Submit
 
-                                </button>
-                                <NavLink
-                                    to="/home/offer"
-                                    className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
-                                    state={user}
-                                    type="button"
-                                    onClick= {() =>
-                                        setIsModalOpen(false)
-                                    }>
-                                    Close
-                                </NavLink>
+                            </button>
+                            <NavLink
+                                to="/employeur/home/offre"
+                                className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
+                                state={user}
+                                type="button"
+                                onClick= {() =>
+                                    setIsModalOpen(false)
+                                }>
+                                Close
+                            </NavLink>
 
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
         </div>
     );
 }

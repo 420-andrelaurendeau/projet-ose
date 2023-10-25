@@ -4,22 +4,30 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
-import HomePage from "./pages/HomePage";
-import GSInternOfferPage from './pages/GSInternOfferPage';
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
+import InterviewForm from "./components/common/InterviewForm";
+import EmployeurHomePage from "./pages/EmployeurHomePage";
+import EmployeurOffer from "./components/common/EmployeurOffer";
+import CandidatureOffer from "./components/common/CandidatureOffer";
+import InternshipOfferForm from "./components/common/InternshipOfferForm";
+import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
+import EtudiantStage from "./components/common/EtudiantStage";
+import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
+import ErrorPage from "./pages/ErrorPage";
+import AppRouter from "./router/appRoutes";
+import {AuthProvider} from "./authentication/AuthContext";
 
 
-if (window.location.pathname == "/homeEmployeur" || window.location.pathname == "/homeEmployeur/") {
-    window.location.pathname = "/homeEmployeur/offer"
-    console.log(1)
+if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
+    window.location.pathname = "/employeur/home/offre"
 }
 
 
@@ -39,8 +47,69 @@ const router = createBrowserRouter([
         element: <App/>,
     },
     {
-        path: "/home/:option",
-        element: <HomePage/>,
+        path: "/employeur/home",
+        element: <EmployeurHomePage/>,
+        children: [
+            {
+                path: "offre",
+                element: <EmployeurOffer/>,
+                children: [
+                    {
+                        path: "candidature",
+                        element: <CandidatureOffer/>,
+                        children: [
+                            {
+                                path: "InterviewForm",
+                                element: <InterviewForm/>
+                            }
+                        ]
+                    },
+                    {
+                        path: "contrat",
+                        element: <p>Contrat</p>,
+                    },
+                    {
+                        path: "offreAttente",
+                        element: <p>Offre en attente</p>,
+                    },
+                    {
+                        path: "nouvelleOffre",
+                        element: <InternshipOfferForm/>,
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        path: "/etudiant/home",
+        element: <EtudiantStagePage/>,
+        children: [
+            {
+                path: "/etudiant/home/offre",
+                element: <EtudiantStage/>,
+                children: [
+                ]
+            },
+            {
+                path: "/etudiant/home/offreApplique",
+                element: <StudentAppliedOffers/>,
+            },
+            {
+                path: "/etudiant/home/TeleverserCV",
+                element: <TeleversementCV/>
+            },
+        ]
+    },
+
+    {
+        path: "/gs/home",
+        element: <GSOffersPage/>,
+        children: [
+            {
+                path: "/gs/home/offre",
+                element: <GSOffersPage/>,
+            },
+        ]
     },
     {
         path: "/etudiantInscription",
@@ -55,21 +124,20 @@ const router = createBrowserRouter([
         element: <EtudiantStagePage/>
     },
     {
-        path: "/GSInternOffer",
-        element: <GSInternOfferPage/>
-    },
-    {
-        path: "/TeleverserCV",
-        element: <TeleversementCV/>
+        path: "/*",
+        element: <ErrorPage/>
     }
+
 
 ])
 
 root.render(
     <React.StrictMode>
-        <ToastContextProvider>
-            <RouterProvider router={router}/>
-        </ToastContextProvider>
+        <AuthProvider>
+            <ToastContextProvider>
+                <AppRouter/>
+            </ToastContextProvider>
+        </AuthProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function
