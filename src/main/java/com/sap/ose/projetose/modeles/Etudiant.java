@@ -31,7 +31,7 @@ public class Etudiant extends Utilisateur{
     private List<InternshipCandidates> internshipsCandidate;
 
     public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
-        super(id, nom, prenom, telephone, Role.ETUDIANT, email, password);
+        super(id, nom, prenom, telephone, Role.STUDENT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = cv;
@@ -39,7 +39,7 @@ public class Etudiant extends Utilisateur{
     }
 
     public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
-        super(nom, prenom, phone,Role.ETUDIANT, email);
+        super(nom, prenom, phone,Role.STUDENT, email);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = cv;
@@ -47,7 +47,7 @@ public class Etudiant extends Utilisateur{
     }
 
     public Etudiant(long id, String nom, String prenom, String phone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internshipsCandidate) {
-        super(id, nom, prenom, phone,Role.ETUDIANT, email, password);
+        super(id, nom, prenom, phone,Role.STUDENT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = null;
@@ -55,7 +55,7 @@ public class Etudiant extends Utilisateur{
     }
 
     public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme, List<InternshipCandidates> internshipsCandidate) {
-        super(nom, prenom, phone,Role.ETUDIANT, email, password);
+        super(nom, prenom, phone,Role.STUDENT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = null;
@@ -63,7 +63,7 @@ public class Etudiant extends Utilisateur{
     }
 
     public Etudiant(String nom, String prenom, String phone, String email, String password, String matricule, Programme programme) {
-        super(nom, prenom, phone,Role.ETUDIANT, email, password);
+        super(nom, prenom, phone,Role.STUDENT, email, password);
         this.matricule = matricule;
         this.programme = programme;
         this.cv = null;

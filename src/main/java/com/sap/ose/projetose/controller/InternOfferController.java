@@ -8,6 +8,7 @@ import com.sap.ose.projetose.service.InternOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class InternOfferController {
     }
 
     @PostMapping("/save")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR')")
     public ResponseEntity<InternOfferDto> saveInterOfferJob(@RequestBody InternOfferDto internOfferJobdto) {
         InternOfferDto savedOfferJobDto = offerJobService.saveInterOfferJob(internOfferJobdto);
 
@@ -32,21 +34,25 @@ public class InternOfferController {
     }
 
     @GetMapping("/pendingOffers")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<InternOfferDto> getPendingOffers() {
         return offerJobService.getInternOfferPending();
     }
 
     @GetMapping("/allOffers")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<InternOfferDto> getAllOffers() {
         return offerJobService.getAllInternOffers();
     }
 
     @GetMapping("/OffersEtudiant")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR') OR hasAuthority('STUDENT')")
     public List<InternOfferDto> getOffersEtudiant() {
         return offerJobService.getInternOfferAccepted();
     }
 
     @GetMapping("/OffersEmp/{email}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR')")
     public List<InternOfferDto> getInternOfferJob(@PathVariable String email){
         return offerJobService.getInternOfferByEmployeurEmail(email);
     }

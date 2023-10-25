@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.UtilisateurAuthDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.dto.UtilisateurSignInDto;
 import com.sap.ose.projetose.service.OseService;

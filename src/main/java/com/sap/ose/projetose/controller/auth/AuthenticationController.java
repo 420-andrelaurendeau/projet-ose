@@ -1,10 +1,9 @@
 package com.sap.ose.projetose.controller.auth;
 
-import com.sap.ose.projetose.dto.EmployeurAuthDto;
-import com.sap.ose.projetose.dto.EtudiantAuthDto;
+import com.sap.ose.projetose.dto.auth.EmployeurAuthDto;
+import com.sap.ose.projetose.dto.auth.EtudiantAuthDto;
 import com.sap.ose.projetose.service.auth.AuthenticationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class AuthenticationController {
 
     @PostMapping("/register/employeur")
     public ResponseEntity<AuthenticationResponse> registerEmployeur(@RequestBody EmployeurAuthDto employeurAuthDto){
-        return ResponseEntity.ok(authenticationService.registerEmployeur(null,employeurAuthDto));
+        return ResponseEntity.ok(authenticationService.registerEmployeur(employeurAuthDto));
     }
 
     @PostMapping("/authenticate")
@@ -28,6 +27,7 @@ public class AuthenticationController {
 
     @PostMapping("/register/etudiant")
     public ResponseEntity<AuthenticationResponse> registerEtudiant(@RequestBody EtudiantAuthDto etudiantAuthDto){
+
         return ResponseEntity.ok(authenticationService.registerEtudiant(etudiantAuthDto));
     }
 }
