@@ -5,6 +5,7 @@ import {FileEntity} from "../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import Header from "../common/shared/header/Header";
 import {useTranslation} from "react-i18next";
 
 export default function StudentAppliedOffers() {

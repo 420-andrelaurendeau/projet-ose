@@ -14,8 +14,6 @@ const AppRouter: React.FC = () => {
                 <Route path="/student/*" element={<StudentRoutes />} />
                 <Route path="/EMPLOYEUR/*" element={<EmployerRouter/>}/>
                 <Route path="/ETUDIANT/*" element={<InternshipManagerRouter/>}/>
-
-
                 <Route path="/login" element={<ConnectPage/>}/>
                 <Route path="*" element={<ErrorPage/>}/>
             </Routes>

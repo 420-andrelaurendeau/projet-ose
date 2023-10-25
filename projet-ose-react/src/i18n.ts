@@ -20,8 +20,7 @@ i18n
                 en: {
                     translation: {
                         formField: {
-
-                            InternshipOfferList : {
+                            InternshipOfferList: {
                                 header: {
                                     total: "Total offers",
                                     accepted: "Offers accepted",
@@ -70,22 +69,22 @@ i18n
                                     }
                                 },
                                 location: {
-                                    name : 'location',
-                                    text : 'Location',
-                                    placeholder : 'Montréal',
-                                    validation : {
-                                        required : 'The location is required',
-                                        minLenght : 'The location must contain at least 5 characters',
-                                        maxLenght : 'The location must contain at most 20 characters',
+                                    name: 'location',
+                                    text: 'Location',
+                                    placeholder: 'Montréal',
+                                    validation: {
+                                        required: 'The location is required',
+                                        minLenght: 'The location must contain at least 5 characters',
+                                        maxLenght: 'The location must contain at most 20 characters',
                                         badCharactere: "The location contains unauthorized characters"
                                     }
                                 },
                                 program: {
-                                    name : 'Program',
-                                    text : 'Program',
-                                    placeholder : 'Choose a program',
-                                    validation : {
-                                        required : 'Please select a valid category',
+                                    name: 'Program',
+                                    text: 'Program',
+                                    placeholder: 'Choose a program',
+                                    validation: {
+                                        required: 'Please select a valid category',
                                         badSelect: "The selected category is not valid"
                                     }
                                 },
@@ -101,121 +100,431 @@ i18n
                                     }
                                 },
                                 startDate: {
-                                    name : 'startDate',
-                                    text : 'Start date',
-                                    placeholder : 'Start date',
-                                    validation : {
-                                        required : 'The start date is required',
-                                        dateNotValid : 'Please enter a valid date',
-                                        dateToLow : "The start date must be today or a future date"
+                                    name: 'startDate',
+                                    text: 'Start date',
+                                    placeholder: 'Start date',
+                                    validation: {
+                                        required: 'The start date is required',
+                                        dateNotValid: 'Please enter a valid date',
+                                        dateToLow: "The start date must be today or a future date"
                                     }
                                 },
                                 endDate: {
-                                    name : 'endDate',
-                                    text : 'End date',
-                                    placeholder : 'End date',
-                                    validation : {
-                                        required : 'The end date is required',
+                                    name: 'endDate',
+                                    text: 'End date',
+                                    placeholder: 'End date',
+                                    validation: {
+                                        required: 'The end date is required',
                                         dateNotValid: 'Please enter a valid date',
-                                        dateToHigh: 'The end date must be today or a future date' ,
+                                        dateToHigh: 'The end date must be today or a future date',
                                         dateToLow: 'The end date must be after the start date'
                                     }
                                 },
                                 file: {
-                                    name : 'file',
-                                    text : 'Drag & drop your files here',
+                                    name: 'file',
+                                    text: 'Drag & drop your files here',
                                     smallText: 'or',
-                                    span : 'browse',
-                                    placeholder : 'Upload files',
-                                    validation : {
-                                        required : 'Files are required',
+                                    span: 'browse',
+                                    placeholder: 'Upload files',
+                                    validation: {
+                                        required: 'Files are required',
                                         toMuchFile: 'You can only upload 5 files maximum',
                                         BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB',
                                     }
                                 },
                                 button: {
-                                    sumbit : 'Submit',
-                                    close : 'Close',
+                                    sumbit: 'Submit',
+                                    close: 'Close',
                                 },
                             },
                             GSReviewOfferForm: {
-                                button:{
-                                    refused:"Refused",
-                                    approved:"Approved"
+                                button: {
+                                    refused: "Refused",
+                                    approved: "Approved"
                                 }
                             },
-                            InscriptionFormEtudiant : {
-                                title : {
-                                    name : 'title',
-                                    text : 'Registration for students',
+                            InscriptionFormEtudiant: {
+                                title: {
+                                    name: 'title',
+                                    text: 'Registration for students',
                                 },
                                 firstName: {
-                                    name : 'firstName',
-                                    text : 'First name :',
-                                    placeholder : 'Jack',
-                                    validation : {
-                                        required : 'The first name is required',
+                                    name: 'firstName',
+                                    text: 'First name :',
+                                    placeholder: 'Jack',
+                                    validation: {
+                                        required: 'The first name is required',
                                     }
                                 },
-                                lastName : {
-                                    name : 'lastName',
-                                    text : 'Last name :',
-                                    placeholder : 'Sparrow',
-                                    validation : {
-                                        required : 'The last name is required',
+                                lastName: {
+                                    name: 'lastName',
+                                    text: 'Last name :',
+                                    placeholder: 'Sparrow',
+                                    validation: {
+                                        required: 'The last name is required',
                                     }
                                 },
-                                email : {
-                                    name : 'email',
-                                    text : 'Email :',
-                                    placeholder : 'email@email.com',
-                                    validation : {
-                                        required : 'The email is required',
+                                email: {
+                                    name: 'email',
+                                    text: 'Email :',
+                                    placeholder: 'email@email.com',
+                                    validation: {
+                                        required: 'The email is required',
                                     }
                                 },
-                                password : {
-                                    name : 'password',
-                                    text : 'Password :',
-                                    placeholder : 'abcas123',
-                                    validation : {
-                                        required : 'The password is required',
+                                password: {
+                                    name: 'password',
+                                    text: 'Password :',
+                                    placeholder: 'abcas123',
+                                    validation: {
+                                        required: 'The password is required',
                                     }
                                 },
                                 phone: {
-                                    name : 'phone',
-                                    text : 'Phone :',
-                                    placeholder : '123-456-7890',
-                                    validation : {
-                                        required : 'The phone is required',
+                                    name: 'phone',
+                                    text: 'Phone :',
+                                    placeholder: '123-456-7890',
+                                    validation: {
+                                        required: 'The phone is required',
                                         pattern: 'Example: 514-123-4567',
                                     }
                                 },
                                 matricule: {
-                                    name : 'matricule',
-                                    text : 'Matricule :',
-                                    placeholder : '1236789',
-                                    validation : {
-                                        required : 'The matricule is required',
+                                    name: 'matricule',
+                                    text: 'Matricule :',
+                                    placeholder: '1236789',
+                                    validation: {
+                                        required: 'The matricule is required',
                                     }
                                 },
                                 programme: {
-                                    name : 'programme',
-                                    text : 'Program :',
-                                    placeholder : 'Choose a program',
-                                    validation : {
-                                        required : 'The program is required',
+                                    name: 'programme',
+                                    text: 'Program :',
+                                    placeholder: 'Choose a program',
+                                    validation: {
+                                        required: 'The program is required',
                                     }
                                 },
                                 submitButton: {
-                                    text : 'Create account',
+                                    text: 'Create account',
                                 },
                                 reussite: {
-                                    name : 'Registration successful',
+                                    name: 'Registration successful',
                                     link: 'You can login here',
                                 },
-                                error : {
-                                    name : 'Registration failed',
+                                error: {
+                                    name: 'Registration failed',
                                 }
+                            },
+                            ListItemCounterSelector: {
+                                numberItem: "Number of item :",
+                            },
+                            InternshipOfferModal: {
+                                commentary: "Commentary",
+                                placeholder: "Add a comment",
+                                button: {
+                                    approved: "Approved",
+                                    refused: "Refused",
+                                },
+                                validation: {
+                                    minLenght: 'The commentary must contain at least 10 characters',
+                                    maxLenght: 'The commentary must contain at most 1000 characters',
+                                    badCharactere: "The commentary contains unauthorized characters",
+                                    scriptDetected: "The commentary contains a script.",
+                                    required: 'The commentary is required',
+                                }
+                            },
+                            InscriptionEmployeur: {
+                                nom: {
+                                    name: 'nom',
+                                    text: 'Last Name :',
+                                    placeholder: 'Your last name ..'
+                                },
+                                prenom: {
+                                    name: 'prenom',
+                                    text: 'First Name :',
+                                    placeholder: 'Your first name ..'
+                                },
+                                entreprise: {
+                                    name: 'nomEntreprise',
+                                    text: 'Entreprise Name :',
+                                    placeholder: 'Your entreprise name ..'
+                                },
+                                email: {
+                                    name: 'email',
+                                    text: 'Email :',
+                                    placeholder: 'Your email ..'
+                                },
+                                telephone: {
+                                    name: 'telephone',
+                                    text: 'Phone Number :',
+                                    placeholder: 'ex : 450-450-4500'
+                                },
+                                password: {
+                                    name: 'password',
+                                    text: 'Password : ',
+                                    placeholder: 'Password ...'
+
+                                },
+                                programme: {
+                                    name: 'programme',
+                                    text: 'Select one programme :',
+                                    validation: {
+                                        required: 'An error occured, please try again'
+                                    }
+                                },
+                                passWordShown: {
+                                    name: 'passWordShown',
+                                    text: 'Show'
+                                },
+                                passWordNotShown: {
+                                    name: 'passWordNotShown',
+                                    text: 'Hide'
+                                },
+                                soumettre: {
+                                    name: 'soumettre',
+                                    text: 'Submit'
+                                },
+                                erreur: {
+                                    name: 'erreur',
+                                    text: "An error occured, while registering try again"
+                                },
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Registration employer'
+                                }
+
+                            },
+                            EtudiantStage: {
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Internship for students'
+                                },
+                                stage: {
+                                    name: 'stage',
+                                    description: {
+                                        name: 'description',
+                                        text: 'Description :',
+                                    },
+                                    location: {
+                                        name: 'location',
+                                        text: 'Location :',
+                                    },
+                                    salary: {
+                                        name: 'salary',
+                                        text: 'Salary per hour :'
+                                    },
+                                    startDate: {
+                                        name: 'startDate',
+                                        text: 'Start date :',
+                                    },
+                                    endDate: {
+                                        name: 'endDate',
+                                        text: 'End date :',
+                                    },
+                                    apply: {
+                                        name: 'apply',
+                                        text: 'Apply',
+                                    }
+                                }
+                            },
+                            Header: {
+                                stage: {
+                                    name: 'stage',
+                                    text: 'Intership Offer',
+                                },
+                                cv: {
+                                    name: 'CV',
+                                    text: 'Upload your CV',
+                                },
+                                sidebar: {
+                                    stage: {
+                                        name: 'stage',
+                                        text: "Offer"
+                                    },
+                                    offre_applique: {
+                                        name: 'offre applique',
+                                        text: "Applied offer"
+                                    }
+                                },
+                                profilMenu: {
+                                    active: {
+                                        name: 'active',
+                                        text: "Active"
+                                    },
+                                    inactive: {
+                                        name: 'inactive',
+                                        text: "Inactive"
+                                    },
+                                    changeTheme: {
+                                        name: 'changeTheme',
+                                        text: "Change theme"
+                                    },
+                                    changeLanguage: {
+                                        name: 'changeLanguage',
+                                        text: "Change language"
+                                    }
+                                },
+                                sidebarEmployeur: {
+                                    offre: {
+                                        name: 'offre',
+                                        text: "Offer"
+                                    },
+                                    candidature: {
+                                        name: 'candidature',
+                                        text: "Application"
+                                    },
+                                    contract: {
+                                        name: 'contract',
+                                        text: "Contract"
+                                    },
+                                    pendingOffer: {
+                                        name: 'pendingOffer',
+                                        text: "Pending offer"
+                                    },
+                                    newOffre: {
+                                        name: 'newOffre',
+                                        text: "New offer"
+                                    }
+                                }
+                            },
+                            Home: {
+                                name: 'home',
+                                text: 'Welcome to the home page : ',
+                            },
+                            programs: {
+                                techniqueInformatique: {
+                                    id: 1,
+                                    name: 'techniqueInformatique',
+                                    text: 'Computer Science Technology',
+                                },
+                                techniqueAdministration: {
+                                    id: 2,
+                                    name: 'techniqueAdministration',
+                                    text: 'Administrative Technology',
+                                },
+                                techniqueLogistique: {
+                                    id: 3,
+                                    name: 'techniqueLogistique',
+                                    text: 'Logistics Technology',
+                                },
+                                techniqueComptabiliteAndGestion: {
+                                    id: 4,
+                                    name: 'techniqueComptabiliteEtGestion',
+                                    text: 'Accounting and Management Technology',
+                                },
+                            },
+                            homeEmployeur: {
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Dashboard'
+                                },
+                                totalCondidature: {
+                                    name: 'totalCondidature',
+                                    text: 'Total application'
+                                },
+                                totalOffre: {
+                                    name: 'totalOffre',
+                                    text: 'Total offer'
+                                },
+                                newOffre: {
+                                    name: 'newOffre',
+                                    text: 'New offer'
+                                },
+                                totalContract: {
+                                    name: 'totalContract',
+                                    text: 'Total contract'
+                                },
+                                offerTable: {
+                                    titre: {
+                                        name: 'titre',
+                                        text: 'Title'
+                                    },
+                                    location: {
+                                        name: 'location',
+                                        text: 'Location'
+                                    },
+                                    status: {
+                                        name: 'status',
+                                        text: 'Status'
+                                    },
+                                    startDate: {
+                                        name: 'startDate',
+                                        text: 'Start date'
+                                    },
+                                    edit: {
+                                        name: 'edit',
+                                        text: 'Edit'
+                                    },
+                                    PENDING: {
+                                        name: 'PENDING',
+                                        text: 'Pending'
+                                    },
+                                    ACCEPTED: {
+                                        name: 'APPROVED',
+                                        text: 'Approved'
+                                    },
+                                    DECLINED: {
+                                        name: 'DECLINED',
+                                        text: 'Declined'
+                                    }
+                                }
+                            }
+                        },
+                        profilMenu: {
+                            active: {
+                                name: 'active',
+                                text: "Active"
+                            },
+                            inactive: {
+                                name: 'inactive',
+                                text: "Inactive"
+                            },
+                            changeTheme: {
+                                name: 'changeTheme',
+                                text: "Change theme"
+                            },
+                            changeLanguage: {
+                                name: 'changeLanguage',
+                                text: "Change language"
+                            }
+                        },
+                        sidebarEmployeur: {
+                            offre: {
+                                name: 'offre',
+                                text: "Offer"
+                            },
+                            candidature: {
+                                name: 'candidature',
+                                text: "Application"
+                            },
+                            contract: {
+                                name: 'contract',
+                                text: "Contract"
+                            },
+                            pendingOffer: {
+                                name: 'pendingOffer',
+                                text: "Pending offer"
+                            },
+                            newOffre: {
+                                name: 'newOffre',
+                                text: "New offer"
+                            }
+                        },
+                        Home: {
+                            name: 'home',
+                            text: 'Welcome to the home page : ',
+                        },
+                        programs: {
+                            techniqueInformatique: {
+                                id: 1,
+                                name: 'techniqueInformatique',
+                                text: 'Computer Science Technology',
+                            },
+                            techniqueAdministration: {
+                                id: 2,
+                                name: 'techniqueAdministration',
+                                text: 'Administrative Technology',
                             },
                             ListItemCounterSelector: {
                                 numberItem: "Number of item :",
@@ -517,7 +826,7 @@ i18n
                             }
                         },
                         GSOfferPage: {
-                            placeholder:"Please enter a comment",
+                            placeholder: "Please enter a comment",
                             title: "Internship offer",
                             errorFetchOffer: "An error occurred while fetching the offer",
                             errorSaveOfferReview: "An error occurred while saving the offer review",
@@ -1061,77 +1370,158 @@ i18n
                             }
                         }
                     },
-                    sidebarEmployeur : {
-                        offre : {
-                            name : 'offre',
-                            text : "Offre"
+                    sidebarEmployeur: {
+                        offre: {
+                            name: 'offre',
+                            text: "Offre"
                         },
-                        candidature : {
-                            name : 'candidature',
-                            text : "Candidature"
+                        candidature: {
+                            name: 'candidature',
+                            text: "Candidature"
                         },
-                        contract : {
-                            name : 'contract',
-                            text : "Contrat"
+                        contract: {
+                            name: 'contract',
+                            text: "Contrat"
                         },
-                        pendingOffer : {
-                            name : 'pendingOffer',
-                            text : "Offre en attente"
+                        pendingOffer: {
+                            name: 'pendingOffer',
+                            text: "Offre en attente"
                         },
-                        newOffre : {
-                            name : 'newOffre',
-                            text : "Nouvelle offre"
-                        }
-                    }
-                },
-
-                ErrorPage: {
-                    errorMessage: {
-                        name: 'errorMessage',
-                        text: 'Cette page n\'existe pas',
-                    },
-                    ReturnButton: {
-                        name: 'ReturnButton',
-                        text: 'Retourner à la page d\'accueil',
-                    }
-                },
-                LoginPage: {
-                    SignInButton: {
-                        name: 'SignInButton',
-                        text: 'Se connecter',
-                    },
-                    Title: {
-                        name: 'Title',
-                        text: 'Connexion à votre compte',
-                    },
-                    ContactUs: {
-                        name: 'ContactUs',
-                        text: 'Nous contacter',
-                        Question : {
-                            name: 'Question',
-                            text: 'Pas encore enregistré ?',
+                        newOffre: {
+                            name: 'newOffre',
+                            text: "Nouvelle offre"
                         }
                     },
-                    ForgotPassword: {
-                        name: 'ForgotPassword',
-                        text: 'Vous avez oublié votre mot de passe ?',
+                    Home: {
+                        name: 'home',
+                        text: 'Bienvenue sur la page d\'accueil : ',
                     },
-                    email: {
-                        name: 'email',
-                        text: 'Adresse e-mail',
-                        placeholder: 'saisir@123.com',
-                        validation: {
-                            required: 'L\'adresse e-mail est obligatoire',
-                            emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                    programs: {
+                        techniqueInformatique: {
+                            id: 1,
+                            name: 'techniqueInformatique',
+                            text: 'Technique de l\'informatique',
+                        },
+                        techniqueAdministration: {
+                            id: 2,
+                            name: 'techniqueAdministration',
+                            text: 'Technique de l\'administration',
+                        },
+                        techniqueLogistique: {
+                            id: 3,
+                            name: 'techniqueLogistique',
+                            text: 'Technique de la logistique',
+                        },
+                        techniqueComptabiliteAndGestion: {
+                            id: 4,
+                            name: 'techniqueComptabiliteEtGestion',
+                            text: 'Technique de la comptabilité et de la gestion',
+                        },
+                    },
+                    homeEmployeur: {
+                        titre: {
+                            name: 'titre',
+                            text: 'Tableau de bord'
+                        },
+                        totalCondidature: {
+                            name: 'totalCondidature',
+                            text: 'Candidature total'
+                        },
+                        totalOffre: {
+                            name: 'totalOffre',
+                            text: 'Offre total'
+                        },
+                        newOffre: {
+                            name: 'newOffre',
+                            text: 'Nouvelle offre'
+                        },
+                        totalContract: {
+                            name: 'totalContract',
+                            text: 'Contrat total'
+                        },
+                        offerTable: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Titre'
+                            },
+                            location: {
+                                name: 'location',
+                                text: 'Lieu'
+                            },
+                            status: {
+                                name: 'status',
+                                text: 'Etat'
+                            },
+                            startDate: {
+                                name: 'startDate',
+                                text: 'Date de début'
+                            },
+                            edit: {
+                                name: 'edit',
+                                text: 'Modifier'
+                            },
+                            PENDING: {
+                                name: 'PENDING',
+                                text: 'En attente'
+                            },
+                            ACCEPTED: {
+                                name: 'APPROVED',
+                                text: 'Approuvé'
+                            },
+                            DECLINED: {
+                                name: 'DECLINED',
+                                text: 'Refusé'
+                            }
                         }
                     },
-                    password: {
-                        name: 'password',
-                        text: 'Mot de passe',
-                        placeholder: '*******',
-                        validation: {
-                            required: 'Le mot de passe est requis',
-                            minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
+                    ErrorPage: {
+                        errorMessage: {
+                            name: 'errorMessage',
+                            text: 'Cette page n\'existe pas',
+                        },
+                        ReturnButton: {
+                            name: 'ReturnButton',
+                            text: 'Retourner à la page d\'accueil',
+                        }
+                    },
+                    LoginPage: {
+                        SignInButton: {
+                            name: 'SignInButton',
+                            text: 'Se connecter',
+                        },
+                        Title: {
+                            name: 'Title',
+                            text: 'Connexion à votre compte',
+                        },
+                        ContactUs: {
+                            name: 'ContactUs',
+                            text: 'Nous contacter',
+                            Question: {
+                                name: 'Question',
+                                text: 'Pas encore enregistré ?',
+                            }
+                        },
+                        ForgotPassword: {
+                            name: 'ForgotPassword',
+                            text: 'Vous avez oublié votre mot de passe ?',
+                        },
+                        email: {
+                            name: 'email',
+                            text: 'Adresse e-mail',
+                            placeholder: 'saisir@123.com',
+                            validation: {
+                                required: 'L\'adresse e-mail est obligatoire',
+                                emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                            }
+                        },
+                        password: {
+                            name: 'password',
+                            text: 'Mot de passe',
+                            placeholder: '*******',
+                            validation: {
+                                required: 'Le mot de passe est requis',
+                                minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
+                            }
                         }
                     }
                 }

@@ -87,8 +87,7 @@ const router = createBrowserRouter([
             {
                 path: "/etudiant/home/offre",
                 element: <EtudiantStage/>,
-                children: [
-                ]
+                children: []
             },
             {
                 path: "/etudiant/home/offreApplique",
@@ -127,7 +126,6 @@ const router = createBrowserRouter([
         path: "/*",
         element: <ErrorPage/>
     }
-
 
 ])
 
