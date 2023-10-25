@@ -13,8 +13,8 @@ import {useNavigate} from "react-router-dom";
 
 const ConnectForm = (props: any): ReactElement => {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "LoginPage");
-    const {loginUser, userRole} = useAuth();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","LoginPage");
+    const { loginUser, userRole } = useAuth();
     const navigate = useNavigate();
     const [connectUser, setConnectUser] = React.useState({
         email: "",
@@ -25,9 +25,12 @@ const ConnectForm = (props: any): ReactElement => {
     const connect = async (e: any) => {
         e.preventDefault();
         try {
-            const response = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
+            const role = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
             console.log(userRole)
-            navigate(`/${userRole}/offers`)
+            if (role === "EMPLOYEUR"){
+                navigate(`/${role}/home/offers`)
+            }else
+                navigate(`/${role}/offers`)
         } catch (error) {
             console.log(error);
         }
@@ -53,7 +56,7 @@ const ConnectForm = (props: any): ReactElement => {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" action="#" method="POST" onSubmit={connect}>
                         <div>
                             <label htmlFor="email"
                                    className="block text-sm font-medium leading-6 text-black dark:text-white">
@@ -106,7 +109,6 @@ const ConnectForm = (props: any): ReactElement => {
                             <button
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-blue dark:bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 dark:hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue dark:focus-visible:outline-orange"
-                                onClick={connect}
                             >
                                 {fields.SignInButton.text}
                             </button>

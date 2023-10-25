@@ -63,9 +63,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         Employeur employeur = new Employeur("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "popo", programme1);
         Employeur employeur2 = new Employeur("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "poo", programme2);
         etudiantService.saveEtudiant(etudiant3);
-        employeurService.saveEmployeur(employeur);
-        employeurService.saveEmployeur(employeur2);
 
+        authenticationService.registerEmployeur(employeur,null);
+        authenticationService.registerEmployeur(employeur2,null);
         authenticationService.registerEtudiant(new EtudiantAuthDto(etudiant2));
 
         File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);

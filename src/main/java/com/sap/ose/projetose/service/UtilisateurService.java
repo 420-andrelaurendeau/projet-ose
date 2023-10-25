@@ -7,6 +7,7 @@ import com.sap.ose.projetose.modeles.Utilisateur;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UtilisateurService {
@@ -18,19 +19,13 @@ public class UtilisateurService {
         this.employeurRepository = employeurRepository;
         this.etudiantRepository = etudiantRepository;
     }
-
+    @Transactional
     public Utilisateur getUserByEmail(String email) {
         Employeur employeur = employeurRepository.findByEmail(email).orElse(null);
         if (employeur != null) {
             return employeur;
         }
-
-        Etudiant etudiant = etudiantRepository.findByEmail(email).orElse(null);
-        if (etudiant != null) {
-            return etudiant;
-        }
-
-        return null;
+        return etudiantRepository.findByEmail(email).orElse(null);
     }
 
     public Role getUserByEmailRole(String email){

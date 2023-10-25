@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/api/';
+const API_BASE_URL = 'http://localhost:8080/api/utilisateur';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
@@ -12,17 +12,12 @@ const apiClient = axios.create({
     },
 });
 
-
-export const getInterOfferCandidates = async (id:any) => {
+export const getUser = async (email: string) => {
     try {
-        console.log(id);
-        const response = await apiClient.get('intershipCandidates/getInternshipCandidatesByIds/' + id);
+        const response = await apiClient.get(`/utilisateur/${email}`);
         return response.data;
-
-
     } catch (error) {
-        console.error('Erreur lors de la récupération des candidats', error);
+        console.error('Erreur lors de la récupération des progrommes:', error);
         throw error;
     }
-
-}
+};

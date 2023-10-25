@@ -3,11 +3,14 @@ import {faCircleUser, faFileLines, faPencil, faSignature, faSpinner, faUsers} fr
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {NavLink, useLocation, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../authentication/AuthContext";
 
 export default function SidebarEmployeurHome(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEmployeur");
     const option = window.location.pathname.split("/").pop();
+    const { userRole, logoutUser } = useAuth();
+
     console.log(option);
     return (
         <div className="fixed shadow h-full min-h-screen overflow-y-hidden hover:overflow-auto ">
@@ -27,11 +30,11 @@ export default function SidebarEmployeurHome(props: any) {
                                 <div className="shadow h-1 flex justify-center"/>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "offre" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "offers" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/employeur/home/offre"
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offre" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    to={"/" + userRole +"/home/offers"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offers" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
@@ -40,11 +43,11 @@ export default function SidebarEmployeurHome(props: any) {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "candidature" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "application" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/employeur/home/offre/candidature"
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "candidature" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    to={"/" + userRole +"/home/application"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "application" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
@@ -56,7 +59,7 @@ export default function SidebarEmployeurHome(props: any) {
                                 <div className={option === "contract" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/employeur/home/offre/contract"
+                                    to={"/" + userRole +"/home/contract"}
                                     className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "contract" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
@@ -66,11 +69,11 @@ export default function SidebarEmployeurHome(props: any) {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "offreAttente" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "pendingOffer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/employeur/home/offre/offreAttente"
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offreAttente" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    to={"/" + userRole +"/home/pendingOffer"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "pendingOffer" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
@@ -79,11 +82,11 @@ export default function SidebarEmployeurHome(props: any) {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "nouvelleOffre" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "newOffer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to="/employeur/home/offre/nouvelleOffre"
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "nouvelleOffre" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    to={"/" + userRole +"/home/newOffer"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "newOffer" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >

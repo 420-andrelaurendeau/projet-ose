@@ -9,7 +9,7 @@ import React from "react";
 
 export default function ErrorComponent(props:any) {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ErrorPage");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","ErrorPage");
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="flex items-center justify-center">
