@@ -15,11 +15,10 @@ function Layout(props: any) {
     return (
         <div className="bg-darkwhite dark:bg-softdark min-h-screen">
 
-            <div className="pb-4">
+            <div>
                 <Header/>
             </div>
-            <div className="h-20"></div>
-            <div className="">
+            <div>
                 <Outlet/>
             </div>
         </div>

@@ -5,6 +5,7 @@ import StudentRoutes from "./studentRoutes";
 import InternshipManagerRouter from "./internshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
 import ConnectPage from "../pages/ConnectPage";
+import ErrorPage from "../pages/ErrorPage";
 
 const AppRouter: React.FC = () => {
     return (
@@ -15,8 +16,8 @@ const AppRouter: React.FC = () => {
                 <Route path="/ETUDIANT/*" element={<InternshipManagerRouter/>}/>
 
 
-                <Route path="/login" element={<ConnectPage></ConnectPage>}/>
-                <Route path="«" element={<></>}/>
+                <Route path="/login" element={<ConnectPage/>}/>
+                <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </Router>
     );

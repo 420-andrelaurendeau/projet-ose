@@ -25,6 +25,7 @@ function EmployeurHomePage() {
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
     const { userEmail, userRole, logoutUser } = useAuth();
+    const location = useLocation();
     const [user, setUser] = useState<User>({
         id: 0,
         nom: "",
@@ -85,9 +86,9 @@ function EmployeurHomePage() {
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
                     <div className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
-                            <NavLink to="offre"
+                            <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
-                                         (location.pathname === "/employeur/home/offre" || location.pathname === "/employeur/home/offre/" ? " border-b-2" : "")
+                                         (location.pathname ===  `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
                                      }
                                      state={user}
                             >
@@ -98,9 +99,9 @@ function EmployeurHomePage() {
                             </NavLink>
 
                             <NavLink
-                                to="nouvelleOffre"
+                                to="newOffer"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === "/employeur/home/nouvelleOffre" || location.pathname === "/employeur/home/nouvelleOffre/" ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/newOffer` || location.pathname === `/${userRole}/home/newOffer/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >

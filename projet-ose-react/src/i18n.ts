@@ -349,6 +349,10 @@ i18n
                                     }
                                 },
                                 profilMenu: {
+                                    signOut: {
+                                        name: 'signOut',
+                                        text: "Sign out"
+                                    },
                                     active: {
                                         name: 'active',
                                         text: "Active"
@@ -420,21 +424,21 @@ i18n
                                     name: 'titre',
                                     text: 'Dashboard'
                                 },
-                                totalCondidature: {
+                                condidature: {
                                     name: 'totalCondidature',
-                                    text: 'Total application'
+                                    text: 'Application'
                                 },
-                                totalOffre: {
+                                offre: {
                                     name: 'totalOffre',
-                                    text: 'Total offer'
+                                    text: 'Offer'
                                 },
                                 newOffre: {
                                     name: 'newOffre',
                                     text: 'New offer'
                                 },
-                                totalContract: {
+                                contract: {
                                     name: 'totalContract',
-                                    text: 'Total contract'
+                                    text: 'Contract'
                                 },
                                 offerTable: {
                                     titre: {
@@ -931,6 +935,10 @@ i18n
 
                         },
                         profilMenu: {
+                            signOut: {
+                                name: 'signOut',
+                                text: "Déconnexion"
+                            },
                             active: {
                                 name: 'active',
                                     text: "Active"
@@ -1002,21 +1010,21 @@ i18n
                             name: 'titre',
                                 text: 'Tableau de bord'
                         },
-                        totalCondidature: {
+                        condidature: {
                             name: 'totalCondidature',
-                                text: 'Candidature total'
+                                text: 'Candidature'
                         },
-                        totalOffre: {
+                        offre: {
                             name: 'totalOffre',
-                                text: 'Offre total'
+                                text: 'Offre'
                         },
                         newOffre: {
                             name: 'newOffre',
                                 text: 'Nouvelle offre'
                         },
-                        totalContract: {
+                        contract: {
                             name: 'totalContract',
-                                text: 'Contrat total'
+                                text: 'Contrat'
                         },
                         offerTable: {
                             titre: {

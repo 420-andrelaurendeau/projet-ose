@@ -8,6 +8,7 @@ import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 import EmployeurHomePage from "../pages/EmployeurHomePage";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import InternshipOfferForm from "../components/common/InternshipOfferForm";
+import ErrorPage from "../pages/ErrorPage";
 
 const EmployerRouter: React.FC = () => {
     return (
@@ -18,7 +19,9 @@ const EmployerRouter: React.FC = () => {
                         <Route path="offers" element={<EmployeurOffer/>}/>
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
                         <Route path="contract" element={<div>Contract</div>}/>
+                        <Route path="*" element={<ErrorPage/>}/>
                     </Route>
+                    <Route path="*" element={<ErrorPage/>}/>
                 </Route>
             </Routes>
         </ProtectedRoute>
