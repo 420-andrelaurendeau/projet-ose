@@ -11,7 +11,7 @@ const AppRouter: React.FC = () => {
         <Router>
             <Routes>
                 <Route path="/student/*" element={<StudentRoutes />} />
-                <Route path="/employer/*" element={<EmployerRouter/>}/>
+                <Route path="/EMPLOYEUR/*" element={<EmployerRouter/>}/>
                 <Route path="/ETUDIANT/*" element={<InternshipManagerRouter/>}/>
 
 

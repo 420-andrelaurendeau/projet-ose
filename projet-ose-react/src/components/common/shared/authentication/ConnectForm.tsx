@@ -13,7 +13,7 @@ import {useNavigate} from "react-router-dom";
 
 const ConnectForm = (props:any): ReactElement => {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","LoginPage");
     const { loginUser, userRole } = useAuth();
     const navigate = useNavigate();
     const [connectUser, setConnectUser] = React.useState({
@@ -27,7 +27,10 @@ const ConnectForm = (props:any): ReactElement => {
         try {
             const response = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
             console.log(userRole)
-            navigate(`/${userRole}/offers`)
+            if (userRole === "EMPLOYEUR"){
+                navigate(`/${userRole}/home/offers`)
+            }else
+                navigate(`/${userRole}/offers`)
         } catch (error) {
             console.log(error);
         }

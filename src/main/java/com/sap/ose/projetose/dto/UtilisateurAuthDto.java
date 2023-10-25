@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.Role;
+import com.sap.ose.projetose.modeles.Utilisateur;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,5 +30,13 @@ public class UtilisateurAuthDto {
         this.phone = phone;
         this.email = email;
         this.password = password;
+    }
+
+    public UtilisateurAuthDto(Utilisateur utilisateur) {
+        this.id = utilisateur.getId();
+        this.nom = utilisateur.getNom();
+        this.prenom = utilisateur.getPrenom();
+        this.phone = utilisateur.getPhone();
+        this.email = utilisateur.getEmail();
     }
 }

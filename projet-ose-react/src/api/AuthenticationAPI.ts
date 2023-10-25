@@ -18,6 +18,7 @@ export const authenticateUser = async (email: string, password: string, loginUse
 
         if (data.token) {
             loginUser(data.token);
+
         } else {
             //TODO : handle error
         }

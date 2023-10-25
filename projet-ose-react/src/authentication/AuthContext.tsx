@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 interface AuthContextProps {
     isAuthenticated: boolean;
     userRole: string | null;
-    userId: Number | null;
+    userEmail: string | null;
     loginUser: (token: string) => void;
     logoutUser: () => void;
 }
@@ -12,8 +12,9 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({
     isAuthenticated: false,
     userRole: null,
-    userId: null,
+    userEmail: "",
     loginUser: () => {
+        console.log('no auth context provider');
     },
     logoutUser: () => {
     },
@@ -30,7 +31,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userRole, setUserRole] = useState<string | null>("");
-    const [userId, setUserId] = useState<Number | null>(1);
+    const [userEmail, setUserEmail] = useState<string | null>("");
 
     const [loading, setLoading] = useState(true);
 
@@ -39,7 +40,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         const token = localStorage.getItem('token');
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
-
             setUserRole(decodedToken.role[0].authority);
             setIsAuthenticated(true);
         }else {
@@ -47,7 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             setUserRole(null);
         }
         setLoading(false);
-    }, []);
+    }, [localStorage.getItem('token')]);
 
 
 
@@ -55,6 +55,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         localStorage.setItem('token', token);
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
         console.log(decodedToken);
+        console.log(decodedToken.sub);
+        setUserEmail(decodedToken.sub);
         console.log(decodedToken.role[0].authority)
         setUserRole(decodedToken.role[0].authority);
         setIsAuthenticated(true);
@@ -72,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, userRole, userId, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{isAuthenticated, userRole, userEmail, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );

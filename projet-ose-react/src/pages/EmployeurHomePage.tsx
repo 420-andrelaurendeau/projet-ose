@@ -5,6 +5,10 @@ import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
 import Header from "../components/common/shared/header/Header";
+import {getUser} from "../api/UtilisateurAPI";
+import {useAuth} from "../authentication/AuthContext";
+import {User} from "../model/User";
+import {data} from "autoprefixer";
 
 interface Props {
     isModalOpen: boolean,
@@ -20,12 +24,36 @@ function EmployeurHomePage() {
     const [offers, setOffers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
-    const location = useLocation();
-    const user = location.state;
+    const { userEmail, userRole, logoutUser } = useAuth();
+    const [user, setUser] = useState<User>({
+        id: 0,
+        nom: "",
+        prenom: "",
+        email: "",
+        phone: "",
+        entreprise: "",
+        programme: "",
+        matricule: "",
+
+    });
+
+    useEffect(() => {
+        const getUtilisateur = async () => {
+            let  data = null;
+            if (userEmail != null){
+                console.log(userEmail)
+                data = await getUser(userEmail)
+                console.log(data)
+                setUser(data)
+            }
+        }
+        getUtilisateur().then(r => console.log(r))
+    }, [localStorage.getItem('token')])
 
     useEffect(() => {
         console.log(user)
-        UpdateOffers(user.email,setOffers)
+        if (userEmail)
+            UpdateOffers(userEmail,setOffers)
     }, []);
 
     useEffect(() => {
@@ -47,9 +75,8 @@ function EmployeurHomePage() {
     console.log(context)
 
     return (
-        <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
-            <Header/>
-            <header className="max-md:hidden pt-14 ">
+        <div className="min-h-screen h-full">
+            <header className="max-md:hidden pt-14">
                 <div className="max-w-7xl mx-auto py-6 px-6  lg:px-8">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.titre.text} </h1>
                 </div>

@@ -7,18 +7,18 @@ import GSOffersPage from "../pages/internshipManager/Offers/GSOffersPage";
 import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 import EmployeurHomePage from "../pages/EmployeurHomePage";
 import EmployeurOffer from "../components/common/EmployeurOffer";
+import InternshipOfferForm from "../components/common/InternshipOfferForm";
 
 const EmployerRouter: React.FC = () => {
     return (
-        <ProtectedRoute requiredRoles={['employer']}>
+        <ProtectedRoute requiredRoles={['EMPLOYEUR']}>
             <Routes>
                 <Route path="/" element={<Layout/>}>
-                    <Route index element={<Layout/>}/>
                     <Route path="home" element={<EmployeurHomePage/>}>
-                        <Route path="offre" element={<EmployeurOffer/>}/>
-                        <Route path="" element={<GSOfferPage/>}/>
+                        <Route path="offers" element={<EmployeurOffer/>}/>
+                        <Route path="newOffer" element={<InternshipOfferForm/>}/>
+                        <Route path="contract" element={<div>Contract</div>}/>
                     </Route>
-                    <Route path="/offer/:id" element={<GSOfferPage/>} />
                 </Route>
             </Routes>
         </ProtectedRoute>

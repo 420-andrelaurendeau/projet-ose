@@ -8,19 +8,21 @@ import com.sap.ose.projetose.exception.ErrorResponse;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
-import com.sap.ose.projetose.service.FileService;
-import com.sap.ose.projetose.service.InternshipCandidatesService;
-import com.sap.ose.projetose.service.ProgrammeService;
-import com.sap.ose.projetose.service.UtilisateurService;
+import com.sap.ose.projetose.service.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,26 +35,48 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UtilisateurService utilisateurService;
+    private final EtudiantService etudiantService;
+    private final EmployeurService employeurService;
+    private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
 
-    public AuthenticationResponse registerEmployeur(EmployeurAuthDto employeurAuthDto) {
 
-        Programme programme = programmeService.getProgrammeById(employeurAuthDto.getProgramme_id()).fromDto();
+    public AuthenticationResponse registerEmployeur(Employeur employeurAuth, EmployeurAuthDto employeurAuthDto) {
 
-        Employeur employeur = new Employeur();
-
-        employeur.setNom(employeurAuthDto.getNom());
-        employeur.setPrenom(employeurAuthDto.getPrenom());
-        employeur.setEmail(employeurAuthDto.getEmail());
-        employeur.setPhone(employeurAuthDto.getPhone());
-        employeur.setRole(Role.EMPLOYEUR);
-        employeur.setPassword(passwordEncoder.encode(employeurAuthDto.getPassword()));
-        employeur.setEntreprise(employeurAuthDto.getEntreprise());
-        employeur.setProgramme(programme);
-
-        employeurRepository.save(employeur);
-
-        var jwtToken = jwtService.generateToken(employeur);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        if (employeurAuthDto == null && employeurAuth != null) {
+            try {
+                Programme programme = programmeService.findById(employeurAuth.getProgramme().getId());
+                employeurAuth.setProgramme(programme);
+                employeurAuth.setRole(Role.EMPLOYEUR);
+                employeurAuth.setPassword(passwordEncoder.encode(employeurAuth.getPassword()));
+                employeurRepository.save(employeurAuth);
+                var jwtToken = jwtService.generateToken(employeurAuth);
+                return AuthenticationResponse.builder().token(jwtToken).build();
+            } catch (DataAccessException e) {
+                logger.info(e.getMessage());
+                throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
+            }
+        } else if (employeurAuthDto != null && employeurAuth == null) {
+            try {
+                Programme programme = programmeService.findById(employeurAuthDto.getProgramme_id());
+                Employeur employeur = new Employeur();
+                employeur.setNom(employeurAuthDto.getNom());
+                employeur.setPrenom(employeurAuthDto.getPrenom());
+                employeur.setPhone(employeurAuthDto.getPhone());
+                employeur.setEmail(employeurAuthDto.getEmail());
+                employeur.setPassword(passwordEncoder.encode(employeurAuthDto.getPassword()));
+                employeur.setEntreprise(employeurAuthDto.getEntreprise());
+                employeur.setProgramme(programme);
+                employeur.setRole(Role.EMPLOYEUR);
+                employeurRepository.save(employeur);
+                var jwtToken = jwtService.generateToken(employeur);
+                return AuthenticationResponse.builder().token(jwtToken).build();
+            } catch (DataAccessException e) {
+                logger.info(e.getMessage());
+                throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
+            }
+        } else {
+            throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};
+        }
     }
 
     public AuthenticationResponse registerEtudiant(EtudiantAuthDto etudiantAuthDto) {
@@ -74,12 +98,13 @@ public class AuthenticationService {
         etudiant.setInternshipsCandidate(null);
         etudiant.setRole(Role.ETUDIANT);
 
-        etudiantRepository.save(etudiant);
+        etudiantService.saveEtudiant(etudiant);
 
         var jwtToken = jwtService.generateToken(etudiant);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    @Transactional
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
@@ -89,6 +114,7 @@ public class AuthenticationService {
             var jwtToken = jwtService.generateToken(utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
+            logger.info(e.getMessage());
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();
