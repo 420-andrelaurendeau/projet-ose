@@ -3,7 +3,7 @@ import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import toggleOn from "../../../../assets/images/toggle-on-solid.svg";
 import toggleOff from "../../../../assets/images/toggle-off-solid.svg";
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import Switcher from "../../../../utils/switcher";
 import useDarkSide from "../../../../hooks/useDarkSide";
 import {useAuth} from "../../../../authentication/AuthContext";
@@ -11,10 +11,10 @@ import {authenticateUser} from "../../../../api/AuthenticationAPI";
 import {useNavigate} from "react-router-dom";
 
 
-const ConnectForm = (props:any): ReactElement => {
+const ConnectForm = (props: any): ReactElement => {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.LoginPage");
-    const { loginUser, userRole } = useAuth();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "LoginPage");
+    const {loginUser, userRole} = useAuth();
     const navigate = useNavigate();
     const [connectUser, setConnectUser] = React.useState({
         email: "",
@@ -22,7 +22,7 @@ const ConnectForm = (props:any): ReactElement => {
     });
 
 
-    const connect = async (e:any) => {
+    const connect = async (e: any) => {
         e.preventDefault();
         try {
             const response = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
@@ -34,7 +34,7 @@ const ConnectForm = (props:any): ReactElement => {
     }
 
     return (
-           <>
+        <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
@@ -55,7 +55,8 @@ const ConnectForm = (props:any): ReactElement => {
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" action="#" method="POST">
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-black dark:text-white">
+                            <label htmlFor="email"
+                                   className="block text-sm font-medium leading-6 text-black dark:text-white">
                                 {fields.email.text}
                             </label>
                             <div className="mt-2">
@@ -75,11 +76,13 @@ const ConnectForm = (props:any): ReactElement => {
 
                         <div>
                             <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-black dark:text-white">
+                                <label htmlFor="password"
+                                       className="block text-sm font-medium leading-6 text-black dark:text-white">
                                     {fields.password.text}
                                 </label>
                                 <div className="text-sm">
-                                    <a href="#" className="block text-sm font-medium leading-6 text-blue dark:text-orange">
+                                    <a href="#"
+                                       className="block text-sm font-medium leading-6 text-blue dark:text-orange">
                                         {fields.ForgotPassword.text}
                                     </a>
                                 </div>
@@ -115,7 +118,7 @@ const ConnectForm = (props:any): ReactElement => {
                         <a href="#" className=
                             {props.darkMode ?
                                 "font-semibold leading-6 text-orange hover:text-amber-500"
-                                :"font-semibold leading-6 text-blue hover:text-indigo-500 dark:text-orange dark:hover:text-amber-500"}>
+                                : "font-semibold leading-6 text-blue hover:text-indigo-500 dark:text-orange dark:hover:text-amber-500"}>
                             {fields.ContactUs.text}
                         </a>
                     </p>

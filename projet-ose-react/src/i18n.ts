@@ -20,7 +20,6 @@ i18n
                 en: {
                     translation: {
                         formField: {
-
                             InternshipOfferList: {
                                 header: {
                                     total: "Total offers",
@@ -511,155 +510,155 @@ i18n
                                 name: 'newOffre',
                                 text: "New offer"
                             }
-                        }
-                    },
-                    Home: {
-                        name: 'home',
-                        text: 'Welcome to the home page : ',
-                    },
-                    programs: {
-                        techniqueInformatique: {
-                            id: 1,
-                            name: 'techniqueInformatique',
-                            text: 'Computer Science Technology',
                         },
-                        techniqueAdministration: {
-                            id: 2,
-                            name: 'techniqueAdministration',
-                            text: 'Administrative Technology',
+                        Home: {
+                            name: 'home',
+                            text: 'Welcome to the home page : ',
                         },
-                        techniqueLogistique: {
-                            id: 3,
-                            name: 'techniqueLogistique',
-                            text: 'Logistics Technology',
+                        programs: {
+                            techniqueInformatique: {
+                                id: 1,
+                                name: 'techniqueInformatique',
+                                text: 'Computer Science Technology',
+                            },
+                            techniqueAdministration: {
+                                id: 2,
+                                name: 'techniqueAdministration',
+                                text: 'Administrative Technology',
+                            },
+                            techniqueLogistique: {
+                                id: 3,
+                                name: 'techniqueLogistique',
+                                text: 'Logistics Technology',
+                            },
+                            techniqueComptabiliteAndGestion: {
+                                id: 4,
+                                name: 'techniqueComptabiliteEtGestion',
+                                text: 'Accounting and Management Technology',
+                            },
                         },
-                        techniqueComptabiliteAndGestion: {
-                            id: 4,
-                            name: 'techniqueComptabiliteEtGestion',
-                            text: 'Accounting and Management Technology',
-                        },
-                    },
-                    homeEmployeur: {
-                        titre: {
-                            name: 'titre',
-                            text: 'Dashboard'
-                        },
-                        totalCondidature: {
-                            name: 'totalCondidature',
-                            text: 'Total application'
-                        },
-                        totalOffre: {
-                            name: 'totalOffre',
-                            text: 'Total offer'
-                        },
-                        newOffre: {
-                            name: 'newOffre',
-                            text: 'New offer'
-                        },
-                        totalContract: {
-                            name: 'totalContract',
-                            text: 'Total contract'
-                        },
-                        offerTable: {
+                        homeEmployeur: {
                             titre: {
                                 name: 'titre',
-                                text: 'Title'
+                                text: 'Dashboard'
                             },
-                            location: {
-                                name: 'location',
-                                text: 'Location'
+                            totalCondidature: {
+                                name: 'totalCondidature',
+                                text: 'Total application'
                             },
-                            status: {
-                                name: 'status',
-                                text: 'Status'
+                            totalOffre: {
+                                name: 'totalOffre',
+                                text: 'Total offer'
                             },
-                            startDate: {
-                                name: 'startDate',
-                                text: 'Start date'
+                            newOffre: {
+                                name: 'newOffre',
+                                text: 'New offer'
                             },
-                            edit: {
-                                name: 'edit',
-                                text: 'Edit'
+                            totalContract: {
+                                name: 'totalContract',
+                                text: 'Total contract'
                             },
-                            PENDING: {
-                                name: 'PENDING',
-                                text: 'Pending'
-                            },
-                            ACCEPTED: {
-                                name: 'APPROVED',
-                                text: 'Approved'
-                            },
-                            DECLINED: {
-                                name: 'DECLINED',
-                                text: 'Declined'
+                            offerTable: {
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Title'
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Location'
+                                },
+                                status: {
+                                    name: 'status',
+                                    text: 'Status'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Start date'
+                                },
+                                edit: {
+                                    name: 'edit',
+                                    text: 'Edit'
+                                },
+                                PENDING: {
+                                    name: 'PENDING',
+                                    text: 'Pending'
+                                },
+                                ACCEPTED: {
+                                    name: 'APPROVED',
+                                    text: 'Approved'
+                                },
+                                DECLINED: {
+                                    name: 'DECLINED',
+                                    text: 'Declined'
+                                }
                             }
-                        }
-                    },
-                    GSOfferPage: {
-                        placeholder: "Please enter a comment",
-                        title: "Internship offer",
-                        errorFetchOffer: "An error occurred while fetching the offer",
-                        errorSaveOfferReview: "An error occurred while saving the offer review",
-                        succesSaveOfferReview: "The offer review has been saved",
-                        validiation: {
-                            required: 'The comment is required',
-                            minLenght: 'The comment must contain at least 10 characters',
-                            maxLenght: 'The comment must contain at most 1000 characters',
-                            scriptDetected: "The comment contains a script.",
-                        }
+                        },
+                        GSOfferPage: {
+                            placeholder: "Please enter a comment",
+                            title: "Internship offer",
+                            errorFetchOffer: "An error occurred while fetching the offer",
+                            errorSaveOfferReview: "An error occurred while saving the offer review",
+                            succesSaveOfferReview: "The offer review has been saved",
+                            validiation: {
+                                required: 'The comment is required',
+                                minLenght: 'The comment must contain at least 10 characters',
+                                maxLenght: 'The comment must contain at most 1000 characters',
+                                scriptDetected: "The comment contains a script.",
+                            }
 
-                    },
-                    ErrorPage: {
-                        errorMessage: {
-                            name: 'errorMessage',
-                            text: 'This page does not exist',
                         },
-                        ReturnButton: {
-                            name: 'ReturnButton',
-                            text: 'Return to the home page',
+                        ErrorPage: {
+                            errorMessage: {
+                                name: 'errorMessage',
+                                text: 'This page does not exist',
+                            },
+                            ReturnButton: {
+                                name: 'ReturnButton',
+                                text: 'Return to the home page',
+                            }
+                        },
+                        LoginPage: {
+                            SignInButton: {
+                                name: 'SignInButton',
+                                text: 'Sign in',
+                            },
+                            Title: {
+                                name: 'Title',
+                                text: 'Sign in to your account',
+                            },
+                            ContactUs: {
+                                name: 'ContactUs',
+                                text: 'Contact us',
+                                Question: {
+                                    name: 'Question',
+                                    text: 'Not registered already ?',
+                                }
+                            },
+                            ForgotPassword: {
+                                name: 'ForgotPassword',
+                                text: 'Forgot password ?',
+                            },
+                            email: {
+                                name: 'email',
+                                text: 'Email address',
+                                placeholder: 'signIn@123.com',
+                                validation: {
+                                    required: 'The email address is required',
+                                    emailRequired: 'The email address must be a valid email address',
+                                }
+                            },
+                            password: {
+                                name: 'password',
+                                text: 'Password',
+                                placeholder: '*******',
+                                validation: {
+                                    required: 'The password is required',
+                                    minLenght: 'The password must contain at least 5 characters',
+                                }
+                            }
                         }
                     },
-                    LoginPage: {
-                        SignInButton: {
-                            name: 'SignInButton',
-                            text: 'Sign in',
-                        },
-                        Title: {
-                            name: 'Title',
-                            text: 'Sign in to your account',
-                        },
-                        ContactUs: {
-                            name: 'ContactUs',
-                            text: 'Contact us',
-                            Question: {
-                                name: 'Question',
-                                text: 'Not registered already ?',
-                            }
-                        },
-                        ForgotPassword: {
-                            name: 'ForgotPassword',
-                            text: 'Forgot password ?',
-                        },
-                        email: {
-                            name: 'email',
-                            text: 'Email address',
-                            placeholder: 'signIn@123.com',
-                            validation: {
-                                required: 'The email address is required',
-                                emailRequired: 'The email address must be a valid email address',
-                            }
-                        },
-                        password: {
-                            name: 'password',
-                            text: 'Password',
-                            placeholder: '*******',
-                            validation: {
-                                required: 'The password is required',
-                                minLenght: 'The password must contain at least 5 characters',
-                            }
-                        }
-                    }
-                },
+                }
             },
             fr: {
                 translation: {
@@ -1158,137 +1157,137 @@ i18n
                             name: 'newOffre',
                             text: "Nouvelle offre"
                         }
-                    }
-                },
-                Home: {
-                    name: 'home',
-                    text: 'Bienvenue sur la page d\'accueil : ',
-                },
-                programs: {
-                    techniqueInformatique: {
-                        id: 1,
-                        name: 'techniqueInformatique',
-                        text: 'Technique de l\'informatique',
                     },
-                    techniqueAdministration: {
-                        id: 2,
-                        name: 'techniqueAdministration',
-                        text: 'Technique de l\'administration',
+                    Home: {
+                        name: 'home',
+                        text: 'Bienvenue sur la page d\'accueil : ',
                     },
-                    techniqueLogistique: {
-                        id: 3,
-                        name: 'techniqueLogistique',
-                        text: 'Technique de la logistique',
+                    programs: {
+                        techniqueInformatique: {
+                            id: 1,
+                            name: 'techniqueInformatique',
+                            text: 'Technique de l\'informatique',
+                        },
+                        techniqueAdministration: {
+                            id: 2,
+                            name: 'techniqueAdministration',
+                            text: 'Technique de l\'administration',
+                        },
+                        techniqueLogistique: {
+                            id: 3,
+                            name: 'techniqueLogistique',
+                            text: 'Technique de la logistique',
+                        },
+                        techniqueComptabiliteAndGestion: {
+                            id: 4,
+                            name: 'techniqueComptabiliteEtGestion',
+                            text: 'Technique de la comptabilité et de la gestion',
+                        },
                     },
-                    techniqueComptabiliteAndGestion: {
-                        id: 4,
-                        name: 'techniqueComptabiliteEtGestion',
-                        text: 'Technique de la comptabilité et de la gestion',
-                    },
-                },
-                homeEmployeur: {
-                    titre: {
-                        name: 'titre',
-                        text: 'Tableau de bord'
-                    },
-                    totalCondidature: {
-                        name: 'totalCondidature',
-                        text: 'Candidature total'
-                    },
-                    totalOffre: {
-                        name: 'totalOffre',
-                        text: 'Offre total'
-                    },
-                    newOffre: {
-                        name: 'newOffre',
-                        text: 'Nouvelle offre'
-                    },
-                    totalContract: {
-                        name: 'totalContract',
-                        text: 'Contrat total'
-                    },
-                    offerTable: {
+                    homeEmployeur: {
                         titre: {
                             name: 'titre',
-                            text: 'Titre'
+                            text: 'Tableau de bord'
                         },
-                        location: {
-                            name: 'location',
-                            text: 'Lieu'
+                        totalCondidature: {
+                            name: 'totalCondidature',
+                            text: 'Candidature total'
                         },
-                        status: {
-                            name: 'status',
-                            text: 'Etat'
+                        totalOffre: {
+                            name: 'totalOffre',
+                            text: 'Offre total'
                         },
-                        startDate: {
-                            name: 'startDate',
-                            text: 'Date de début'
+                        newOffre: {
+                            name: 'newOffre',
+                            text: 'Nouvelle offre'
                         },
-                        edit: {
-                            name: 'edit',
-                            text: 'Modifier'
+                        totalContract: {
+                            name: 'totalContract',
+                            text: 'Contrat total'
                         },
-                        PENDING: {
-                            name: 'PENDING',
-                            text: 'En attente'
-                        },
-                        ACCEPTED: {
-                            name: 'APPROVED',
-                            text: 'Approuvé'
-                        },
-                        DECLINED: {
-                            name: 'DECLINED',
-                            text: 'Refusé'
-                        }
-                    }
-                },
-                ErrorPage: {
-                    errorMessage: {
-                        name: 'errorMessage',
-                        text: 'Cette page n\'existe pas',
-                    },
-                    ReturnButton: {
-                        name: 'ReturnButton',
-                        text: 'Retourner à la page d\'accueil',
-                    }
-                },
-                LoginPage: {
-                    SignInButton: {
-                        name: 'SignInButton',
-                        text: 'Se connecter',
-                    },
-                    Title: {
-                        name: 'Title',
-                        text: 'Connexion à votre compte',
-                    },
-                    ContactUs: {
-                        name: 'ContactUs',
-                        text: 'Nous contacter',
-                        Question: {
-                            name: 'Question',
-                            text: 'Pas encore enregistré ?',
+                        offerTable: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Titre'
+                            },
+                            location: {
+                                name: 'location',
+                                text: 'Lieu'
+                            },
+                            status: {
+                                name: 'status',
+                                text: 'Etat'
+                            },
+                            startDate: {
+                                name: 'startDate',
+                                text: 'Date de début'
+                            },
+                            edit: {
+                                name: 'edit',
+                                text: 'Modifier'
+                            },
+                            PENDING: {
+                                name: 'PENDING',
+                                text: 'En attente'
+                            },
+                            ACCEPTED: {
+                                name: 'APPROVED',
+                                text: 'Approuvé'
+                            },
+                            DECLINED: {
+                                name: 'DECLINED',
+                                text: 'Refusé'
+                            }
                         }
                     },
-                    ForgotPassword: {
-                        name: 'ForgotPassword',
-                        text: 'Vous avez oublié votre mot de passe ?',
-                    },
-                    email: {
-                        name: 'email',
-                        text: 'Adresse e-mail',
-                        placeholder: 'saisir@123.com',
-                        validation: {
-                            required: 'L\'adresse e-mail est obligatoire',
-                            emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                    ErrorPage: {
+                        errorMessage: {
+                            name: 'errorMessage',
+                            text: 'Cette page n\'existe pas',
+                        },
+                        ReturnButton: {
+                            name: 'ReturnButton',
+                            text: 'Retourner à la page d\'accueil',
                         }
                     },
-                    password: {
-                        name: 'password',
-                        text: 'Mot de passe',
-                        placeholder: '*******',
-                        validation: {
-                            required: 'Le mot de passe est requis',
-                            minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
+                    LoginPage: {
+                        SignInButton: {
+                            name: 'SignInButton',
+                            text: 'Se connecter',
+                        },
+                        Title: {
+                            name: 'Title',
+                            text: 'Connexion à votre compte',
+                        },
+                        ContactUs: {
+                            name: 'ContactUs',
+                            text: 'Nous contacter',
+                            Question: {
+                                name: 'Question',
+                                text: 'Pas encore enregistré ?',
+                            }
+                        },
+                        ForgotPassword: {
+                            name: 'ForgotPassword',
+                            text: 'Vous avez oublié votre mot de passe ?',
+                        },
+                        email: {
+                            name: 'email',
+                            text: 'Adresse e-mail',
+                            placeholder: 'saisir@123.com',
+                            validation: {
+                                required: 'L\'adresse e-mail est obligatoire',
+                                emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                            }
+                        },
+                        password: {
+                            name: 'password',
+                            text: 'Mot de passe',
+                            placeholder: '*******',
+                            validation: {
+                                required: 'Le mot de passe est requis',
+                                minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
+                            }
                         }
                     }
                 }
