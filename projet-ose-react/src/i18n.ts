@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
@@ -266,82 +266,210 @@ i18n
                         text:'Password : ',
                         placeholder:'Password ...'
 
-                    },
-                    programme:{
-                        name:'programme',
-                        text:'Select one programme :',
-                        validation:{
-                            required:'An error occured, please try again'
-                        }
-                    },
-                    passWordShown:{
-                        name:'passWordShown',
-                        text:'Show'
-                    },
-                    passWordNotShown:{
-                        name:'passWordNotShown',
-                        text:'Hide'
-                    },
-                    soumettre:{
-                        name:'soumettre',
-                        text:'Submit'
-                    },
-                    erreur:{
-                        name:'erreur',
-                        text:"An error occured, while registering try again"
-                    },
-                    titre:{
-                        name:'titre',
-                        text:'Registration employer'
-                    }
+                            },
+                            programme: {
+                                name: 'programme',
+                                text: 'Select one programme :',
+                                validation: {
+                                    required: 'An error occured, please try again'
+                                }
+                            },
+                            passWordShown: {
+                                name: 'passWordShown',
+                                text: 'Show'
+                            },
+                            passWordNotShown: {
+                                name: 'passWordNotShown',
+                                text: 'Hide'
+                            },
+                            soumettre: {
+                                name: 'soumettre',
+                                text: 'Submit'
+                            },
+                            erreur: {
+                                name: 'erreur',
+                                text: "An error occured, while registering try again"
+                            },
+                            titre: {
+                                name: 'titre',
+                                text: 'Registration employer'
+                            }
 
-                },
-                EtudiantStage:{
-                    titre:{
-                        name:'titre',
-                        text:'Internship for students'
-                    },
-                    stage:{
-                        name:'stage',
-                        description: {
-                            name : 'description',
-                            text : 'Description :',
                         },
-                        location: {
-                            name : 'location',
-                            text : 'Location :',
+                        EtudiantStage: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Internship for students'
+                            },
+                            stage: {
+                                name: 'stage',
+                                description: {
+                                    name: 'description',
+                                    text: 'Description :',
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Location :',
+                                },
+                                salary: {
+                                    name: 'salary',
+                                    text: 'Salary per hour :'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Start date :',
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    text: 'End date :',
+                                },
+                                apply: {
+                                    name: 'apply',
+                                    text: 'Apply',
+                                }
+                            }
                         },
-                        salary: {
-                            name : 'salary',
-                            text : 'Salary per hour :'
+                        Header: {
+                            stage: {
+                                name: 'stage',
+                                text: 'Intership Offer',
+                            },
+                            cv: {
+                                name: 'CV',
+                                text: 'Upload your CV',
+                            },
+                            sidebar: {
+                                stage: {
+                                    name: 'stage',
+                                    text: "Offer"
+                                },
+                                offre_applique: {
+                                    name: 'offre applique',
+                                    text: "Applied offer"
+                                }
+                            },
+                            profilMenu: {
+                                active: {
+                                    name: 'active',
+                                    text: "Active"
+                                },
+                                inactive: {
+                                    name: 'inactive',
+                                    text: "Inactive"
+                                },
+                                changeTheme: {
+                                    name: 'changeTheme',
+                                    text: "Change theme"
+                                },
+                                changeLanguage: {
+                                    name: 'changeLanguage',
+                                    text: "Change language"
+                                }
+                            },
+                            sidebarEmployeur: {
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offer"
+                                },
+                                candidature: {
+                                    name: 'candidature',
+                                    text: "Application"
+                                },
+                                contract: {
+                                    name: 'contract',
+                                    text: "Contract"
+                                },
+                                pendingOffer: {
+                                    name: 'pendingOffer',
+                                    text: "Pending offer"
+                                },
+                                newOffre: {
+                                    name: 'newOffre',
+                                    text: "New offer"
+                                }
+                            }
                         },
-                        startDate: {
-                            name : 'startDate',
-                            text : 'Start date :',
+                        Home: {
+                            name: 'home',
+                            text: 'Welcome to the home page : ',
                         },
-                        endDate: {
-                            name : 'endDate',
-                            text : 'End date :',
+                        programs: {
+                            techniqueInformatique: {
+                                id: 1,
+                                name: 'techniqueInformatique',
+                                text: 'Computer Science Technology',
+                            },
+                            techniqueAdministration: {
+                                id: 2,
+                                name: 'techniqueAdministration',
+                                text: 'Administrative Technology',
+                            },
+                            techniqueLogistique: {
+                                id: 3,
+                                name: 'techniqueLogistique',
+                                text: 'Logistics Technology',
+                            },
+                            techniqueComptabiliteAndGestion: {
+                                id: 4,
+                                name: 'techniqueComptabiliteEtGestion',
+                                text: 'Accounting and Management Technology',
+                            },
                         },
-                        apply: {
-                            name : 'apply',
-                            text : 'Apply',
-                        }
-                    }
-                },
-                Header: {
-                    stage : {
-                        name : 'stage',
-                        text : 'Intership Offer',
-                    },
-                    sidebar : {
-                        stage : {
-                            name : 'stage',
-                            text : "Offer"
-                        },
-                        offre_applique : {
-                            name : 'offre applique',
-                            text : "Applied offer"
+                        homeEmployeur: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Dashboard'
+                            },
+                            totalCondidature: {
+                                name: 'totalCondidature',
+                                text: 'Total application'
+                            },
+                            totalOffre: {
+                                name: 'totalOffre',
+                                text: 'Total offer'
+                            },
+                            newOffre: {
+                                name: 'newOffre',
+                                text: 'New offer'
+                            },
+                            totalContract: {
+                                name: 'totalContract',
+                                text: 'Total contract'
+                            },
+                            offerTable: {
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Title'
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Location'
+                                },
+                                status: {
+                                    name: 'status',
+                                    text: 'Status'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Start date'
+                                },
+                                edit: {
+                                    name: 'edit',
+                                    text: 'Edit'
+                                },
+                                PENDING: {
+                                    name: 'PENDING',
+                                    text: 'Pending'
+                                },
+                                ACCEPTED: {
+                                    name: 'APPROVED',
+                                    text: 'Approved'
+                                },
+                                DECLINED: {
+                                    name: 'DECLINED',
+                                    text: 'Declined'
+                                }
+                            }
                         }
                     },
                     profilMenu : {
@@ -603,40 +731,38 @@ i18n
                         validation : {
                             required : 'Veuillez sélectionner une catégorie valide.',
                             badSelect: "La catégorie sélectionnée n'est pas valide."
-
-
-                        }
-                    },
-                    salary: {
-                        name : 'salary',
-                        text : 'Salaire ($/h):',
-                        placeholder : '18',
-                        validation : {
-                            required : 'Le salaire est requis',
-                            numberRequired : 'Veuillez entrer un nombre valide.',
-                            minLenght: 'Le salaire doit être supérieur à 0.',
-                            maxLenght: "Le salaire doit être inférieur ou égal à 100$ par heure."
-                        }
-                    },
-                    startDate: {
-                        name : 'startDate',
-                        text : 'Date de début :',
-                        placeholder : 'Date de début',
-                        validation : {
-                            required : 'La date de début est requise',
-                            dateNotValid : 'Veuillez entrer une date valide.',
-                            dateToLow : "La date de début doit être aujourd'hui ou une date future."
-                        }
-                    },
-                    endDate: {
-                        name : 'endDate',
-                        text : 'Date de fin :',
-                        placeholder : 'Date de fin',
-                        validation : {
-                            required : 'La date de fin est requise',
-                            dateNotValid: 'Veuillez entrer une date valide.',
-                            dateToHigh: 'La date de fin doit être aujourd\'hui ou une date future.' ,
-                            dateToLow: 'La date de fin doit être postérieure à la date de début.'
+                                }
+                            },
+                            salary: {
+                                name: 'salary',
+                                text: 'Salaire ($/h):',
+                                placeholder: '18',
+                                validation: {
+                                    required: 'Le salaire est requis',
+                                    numberRequired: 'Veuillez entrer un nombre valide.',
+                                    minLenght: 'Le salaire doit être supérieur à 0.',
+                                    maxLenght: "Le salaire doit être inférieur ou égal à 100$ par heure."
+                                }
+                            },
+                            startDate: {
+                                name: 'startDate',
+                                text: 'Date de début :',
+                                placeholder: 'Date de début',
+                                validation: {
+                                    required: 'La date de début est requise',
+                                    dateNotValid: 'Veuillez entrer une date valide.',
+                                    dateToLow: "La date de début doit être aujourd'hui ou une date future."
+                                }
+                            },
+                            endDate: {
+                                name: 'endDate',
+                                text: 'Date de fin :',
+                                placeholder: 'Date de fin',
+                                validation: {
+                                    required: 'La date de fin est requise',
+                                    dateNotValid: 'Veuillez entrer une date valide.',
+                                    dateToHigh: 'La date de fin doit être aujourd\'hui ou une date future.',
+                                    dateToLow: 'La date de fin doit être postérieure à la date de début.'
 
                         }
                     },
@@ -805,101 +931,211 @@ i18n
                         text:'Mot de passe :',
                         placeholder:'Mot de passe ...'
 
-                    },
-                    programme:{
-                        name:'programme',
-                        text:'Selectionner un programme',
-                        validation:{
-                                required:'Une erreur est survenu'
-                        }
-                    },
-                    passWordShown:{
-                        name:'passWordShown',
-                        text:'Voir'
-                    },
-                    passWordNotShown:{
-                        name:'passWordNotShown',
-                        text:'Cachée'
-                    },
-                    soumettre:{
-                        name:'soumettre',
-                        text:'Soumettre'
-                    },
-                    erreur:{
-                        name:'erreur',
-                        text:"Une erreur c'est produite lors de l'inscription veuillez réessayer"
-                    },
-                    titre:{
-                        name:'titre',
-                        text:'Inscription Employeur'
-                    }
+                            },
+                            programme: {
+                                name: 'programme',
+                                text: 'Selectionner un programme',
+                                validation: {
+                                    required: 'Une erreur est survenu'
+                                }
+                            },
+                            passWordShown: {
+                                name: 'passWordShown',
+                                text: 'Voir'
+                            },
+                            passWordNotShown: {
+                                name: 'passWordNotShown',
+                                text: 'Cachée'
+                            },
+                            soumettre: {
+                                name: 'soumettre',
+                                text: 'Soumettre'
+                            },
+                            erreur: {
+                                name: 'erreur',
+                                text: "Une erreur c'est produite lors de l'inscription veuillez réessayer"
+                            },
+                            titre: {
+                                name: 'titre',
+                                text: 'Inscription Employeur'
+                            }
 
-                },
-                EtudiantStage:{
-                    titre:{
-                        name:'titre',
-                        text:'Stages pour étudiants'
-                    },
-                    stage:{
-                        name:'stage',
-                        description: {
-                            name : 'description',
-                            text : 'Description de l\'offre d\'emploi :',
                         },
-                        location: {
-                            name : 'location',
-                            text : 'Lieu :',
+                        EtudiantStage: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Stages pour étudiants'
+                            },
+                            stage: {
+                                name: 'stage',
+                                description: {
+                                    name: 'description',
+                                    text: 'Description de l\'offre d\'emploi :',
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Lieu :',
+                                },
+                                salary: {
+                                    name: 'salary',
+                                    text: 'salaire par heure :'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Date de début :',
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    text: 'Date de fin :',
+                                },
+                                apply: {
+                                    name: 'Apply',
+                                    text: 'Postuler',
+                                }
+                            }
                         },
-                        salary: {
-                            name : 'salary',
-                            text : 'salaire par heure :'
-                        },
-                        startDate: {
-                            name : 'startDate',
-                            text : 'Date de début :',
-                        },
-                        endDate: {
-                            name : 'endDate',
-                            text : 'Date de fin :',
-                        },
-                        apply: {
-                            name : 'Apply',
-                            text : 'Postuler',
-                        }
-                    }
-                },
-                Header: {
-                    stage : {
-                        name : 'stage',
-                        text : 'Offre stages',
-                    },
-                    sidebar : {
-                        stage : {
-                            name : 'stage',
-                            text : "Offre"
-                        },
-                        offre_applique : {
-                            name : 'offre applique',
-                            text : "Offre appliqué"
-                        },
+                        Header: {
+                            stage: {
+                                name: 'stage',
+                                text: 'Offre stages',
+                            },
+                            cv: {
+                                name: 'CV',
+                                text: 'Televerser votre CV',
+                            },
+                            sidebar: {
+                                stage: {
+                                    name: 'stage',
+                                    text: "Offre"
+                                },
+                                offre_applique: {
+                                    name: 'offre applique',
+                                    text: "Offre appliqué"
+                                },
 
-                    },
-                    profilMenu : {
-                        active : {
-                            name : 'active',
-                            text : "Active"
+                            },
+                            profilMenu: {
+                                active: {
+                                    name: 'active',
+                                    text: "Active"
+                                },
+                                inactive: {
+                                    name: 'inactive',
+                                    text: "Inactive"
+                                },
+                                changeTheme: {
+                                    name: 'changeTheme',
+                                    text: "Changer le thème"
+                                },
+                                changeLanguage: {
+                                    name: 'changeLanguage',
+                                    text: "Changer la langue"
+                                }
+                            },
+                            sidebarEmployeur: {
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offre"
+                                },
+                                candidature: {
+                                    name: 'candidature',
+                                    text: "Candidature"
+                                },
+                                contract: {
+                                    name: 'contract',
+                                    text: "Contrat"
+                                },
+                                pendingOffer: {
+                                    name: 'pendingOffer',
+                                    text: "Offre en attente"
+                                },
+                                newOffre: {
+                                    name: 'newOffre',
+                                    text: "Nouvelle offre"
+                                }
+                            }
                         },
-                        inactive : {
-                            name : 'inactive',
-                            text : "Inactive"
+                        Home: {
+                            name: 'home',
+                            text: 'Bienvenue sur la page d\'accueil : ',
                         },
-                        changeTheme : {
-                            name : 'changeTheme',
-                            text : "Changer le thème"
+                        programs: {
+                            techniqueInformatique: {
+                                id: 1,
+                                name: 'techniqueInformatique',
+                                text: 'Technique de l\'informatique',
+                            },
+                            techniqueAdministration: {
+                                id: 2,
+                                name: 'techniqueAdministration',
+                                text: 'Technique de l\'administration',
+                            },
+                            techniqueLogistique: {
+                                id: 3,
+                                name: 'techniqueLogistique',
+                                text: 'Technique de la logistique',
+                            },
+                            techniqueComptabiliteAndGestion: {
+                                id: 4,
+                                name: 'techniqueComptabiliteEtGestion',
+                                text: 'Technique de la comptabilité et de la gestion',
+                            },
                         },
-                        changeLanguage : {
-                            name : 'changeLanguage',
-                            text : "Changer la langue"
+                        homeEmployeur: {
+                            titre: {
+                                name: 'titre',
+                                text: 'Tableau de bord'
+                            },
+                            totalCondidature: {
+                                name: 'totalCondidature',
+                                text: 'Candidature total'
+                            },
+                            totalOffre: {
+                                name: 'totalOffre',
+                                text: 'Offre total'
+                            },
+                            newOffre: {
+                                name: 'newOffre',
+                                text: 'Nouvelle offre'
+                            },
+                            totalContract: {
+                                name: 'totalContract',
+                                text: 'Contrat total'
+                            },
+                            offerTable: {
+                                titre: {
+                                    name: 'titre',
+                                    text: 'Titre'
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Lieu'
+                                },
+                                status: {
+                                    name: 'status',
+                                    text: 'Etat'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Date de début'
+                                },
+                                edit: {
+                                    name: 'edit',
+                                    text: 'Modifier'
+                                },
+                                PENDING: {
+                                    name: 'PENDING',
+                                    text: 'En attente'
+                                },
+                                ACCEPTED: {
+                                    name: 'APPROVED',
+                                    text: 'Approuvé'
+                                },
+                                DECLINED: {
+                                    name: 'DECLINED',
+                                    text: 'Refusé'
+                                }
+                            }
                         }
                     },
                     sidebarEmployeur : {
@@ -1057,10 +1293,8 @@ i18n
                         }
                     }
                 }
-            },
+            }
         }
-      }
-    }
-  });
+    });
 
 export default i18n;
