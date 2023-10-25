@@ -14,7 +14,7 @@ public class OfferReviewRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(length = 1000000000)
     private String comment;
 
     @OneToOne(cascade = CascadeType.PERSIST)

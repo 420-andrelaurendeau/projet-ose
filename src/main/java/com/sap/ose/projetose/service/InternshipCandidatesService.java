@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InternshipCandidatesService {
@@ -207,6 +208,12 @@ public class InternshipCandidatesService {
             logger.error("Erreur inconnue lors de la récupération des candidats acceptés", e);
             throw new ServiceException("Erreur lors de la récupération des candidats acceptés.");
         }
+    }
+
+    public InternshipCandidatesDto getInternshipCandidateById(long id){
+        Optional<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findById(id);
+        return internshipCandidates.map(value -> new InternshipCandidatesDto()).orElse(null);
+
     }
 
     @Transactional

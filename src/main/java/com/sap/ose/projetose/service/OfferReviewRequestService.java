@@ -68,4 +68,17 @@ public class OfferReviewRequestService {
             throw new ServiceException("Erreur inconnue lors de la sauvegarde de la revue de l'offre d'emploi.");
         }
     }
+
+    public OfferReviewRequestDto getOfferReviewRequest(Long id) {
+        try {
+            OfferReviewRequest offerReviewRequest = offerReviewRequestRepository.findById(id).orElseThrow(null);
+            return new OfferReviewRequestDto(offerReviewRequest);
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération de la revue de l'offre d'emploi", e);
+            throw new DatabaseException("Erreur d'accès à la base de données lors de la récupération de la revue de l'offre d'emploi.");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération de la revue de l'offre d'emploi.", e);
+            throw new ServiceException("Erreur inconnue lors de la récupération de la revue de l'offre d'emploi.");
+        }
+    }
 }

@@ -4,7 +4,7 @@ import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-sol
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
-import Header from "../Header";
+import Header from "../components/common/shared/header/Header";
 
 interface Props {
     isModalOpen: boolean,

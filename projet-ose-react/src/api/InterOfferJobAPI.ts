@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {InterOfferJob} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
-import {webcrypto} from "crypto";
 import {AppliedOffers} from "../model/AppliedOffers";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
@@ -10,10 +9,13 @@ const apiClient = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
     },
 });
 
-export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id:number) => {
+export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number) => {
     const interOfferJobDto = {
         title: interOfferJob.title,
         location: interOfferJob.location,
@@ -81,7 +83,16 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
     }
 };
 
+export const getOfferReviewRequestById = async (id:number) => {
+    try {
 
+        const response = await apiClient.get(`offerReviewRequest/get/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
+        throw error;
+    }
+};
 
 
 export const getInterOfferJob = async (email: string) => {
@@ -97,7 +108,6 @@ export const getInterOfferJob = async (email: string) => {
 }
 
 
-
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
@@ -111,7 +121,7 @@ export const getStudentAppliedOffers = async (studentId: number): Promise<Applie
     }
 }
 
-export function UpdateOffers(email:string,setOffers:any){
+export function UpdateOffers(email: string, setOffers: any) {
     const loadOffers = async () => {
         try {
             const data = await getInterOfferJob(email);
@@ -122,4 +132,15 @@ export function UpdateOffers(email:string,setOffers:any){
         }
     };
     loadOffers().then(r => console.log(r))
+}
+
+
+export async function getOfferById(id: number) {
+    try {
+        const response = await apiClient.get('internshipManager/offer/' + id);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
+        throw error;
+    }
 }
