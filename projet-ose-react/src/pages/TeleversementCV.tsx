@@ -96,7 +96,7 @@ function TeleversementCV(): ReactElement {
     return (
         <div className={"flex flex-col items-center justify-center"}>
             <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
-                <h1 className={"text-4xl"}>Televerser votre CV</h1>
+                <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
                 <h2></h2>
                 <br/>
                 <form className={"flex flex-col items-center justify-center"}>
@@ -113,7 +113,7 @@ function TeleversementCV(): ReactElement {
                         />
                         <div className="flex flex-col items-center justify-center py-10 text-center">
                             <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
-                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText')}
+                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText') + " "}
                                 <span
                                     className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
                             </p>
@@ -134,7 +134,7 @@ function TeleversementCV(): ReactElement {
                     </div>
                     <br/>
                     <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
-                        Submit
+                        {t('formField.TeleversementCV.buttons.submit')}
                     </div>
                     {renderUploadStatus()}
 
