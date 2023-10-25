@@ -43,6 +43,8 @@ public class InternOfferService {
             if ( isApprovedOrDeclineById(internOfferDto.getId()))
                 throw new OfferAlreadyReviewException("L'offre a déjà été approuvée et ne peut pas être modifiée.");
 
+            System.out.println(internOfferDto.getProgrammeId());
+
             Programme programme = programmeService.findById(internOfferDto.getProgrammeId());
             Employeur employeur = employeurService.findById(internOfferDto.getEmployeurId());
 

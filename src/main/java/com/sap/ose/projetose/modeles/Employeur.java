@@ -37,12 +37,4 @@ public class Employeur extends Utilisateur {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "Employeur{" +
-                "entreprise='" + entreprise + '\'' +
-                ", programme=" + programme +
-                '}';
-    }
 }

@@ -8,6 +8,7 @@ import com.sap.ose.projetose.exception.ErrorResponse;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.service.FileService;
 import com.sap.ose.projetose.service.InternshipCandidatesService;
 import com.sap.ose.projetose.service.ProgrammeService;
@@ -30,6 +31,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final EmployeurRepository employeurRepository;
     private final EtudiantRepository etudiantRepository;
+    private final InternshipmanagerRepository internshipmanagerRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UtilisateurService utilisateurService;
@@ -57,10 +59,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse registerEtudiant(EtudiantAuthDto etudiantAuthDto) {
 
-        System.out.println(etudiantAuthDto.getProgramme_id());
         Programme programme = programmeService.getProgrammeById(etudiantAuthDto.getProgramme_id()).fromDto();
 
-        System.out.println(programme.getId());
         Etudiant etudiant = new Etudiant();
 
         etudiant.setNom(etudiantAuthDto.getNom());
@@ -80,8 +80,23 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    public AuthenticationResponse registerInternshipManager(InternshipmanagerDto internshipmanagerDto){
+    public AuthenticationResponse registerInternshipManager(InternshipmanagerAuthDto internshipmanagerAuthDto){
+        Programme programme = programmeService.getProgrammeById(internshipmanagerAuthDto.getProgramme_id()).fromDto();
 
+        Internshipmanager internshipmanager = new Internshipmanager();
+
+        internshipmanager.setNom(internshipmanagerAuthDto.getNom());
+        internshipmanager.setPrenom(internshipmanagerAuthDto.getPrenom());
+        internshipmanager.setPhone(internshipmanagerAuthDto.getPhone());
+        internshipmanager.setEmail(internshipmanagerAuthDto.getEmail());
+        internshipmanager.setPassword(passwordEncoder.encode(internshipmanagerAuthDto.getPassword()));
+        internshipmanager.setProgramme(programme);
+        internshipmanager.setRole(Role.GS);
+
+        internshipmanagerRepository.save(internshipmanager);
+
+        var jwtToken = jwtService.generateToken(internshipmanager);
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -98,7 +113,5 @@ public class AuthenticationService {
                     .build();
         }
     }
-
-
 
 }

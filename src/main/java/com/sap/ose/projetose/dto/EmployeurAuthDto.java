@@ -1,6 +1,6 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Role;
+import com.sap.ose.projetose.modeles.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +26,10 @@ public class EmployeurAuthDto extends UtilisateurAuthDto {
         this.programme_id = programme_id;
     }
 
-
+    public EmployeurAuthDto(Employeur employeur) {
+        super(employeur.getId(),employeur.getNom(), employeur.getPrenom(), employeur.getPhone(), employeur.getEmail(), employeur.getPassword());
+        this.entreprise = employeur.getEntreprise();
+        this.programme_id = employeur.getProgramme().getId();
+    }
 
 }

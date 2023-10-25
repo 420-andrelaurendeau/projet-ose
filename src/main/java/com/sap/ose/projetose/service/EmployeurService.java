@@ -75,7 +75,8 @@ public class EmployeurService {
     public List<EmployeurDto> getAllEmployeur(){
         List<EmployeurDto> employeurDTOS = new ArrayList<>();
         for(Employeur employeur : employeurRepository.findAll()){
-            employeurDTOS.add(new EmployeurDto(employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail(),employeur.getEntreprise()));
+            System.out.println(employeur.getId());
+            employeurDTOS.add(new EmployeurDto(employeur.getId(), employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail(),employeur.getEntreprise()));
         }
         return employeurDTOS;
     }
