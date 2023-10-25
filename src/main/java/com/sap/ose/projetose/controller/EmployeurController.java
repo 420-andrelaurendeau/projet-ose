@@ -20,6 +20,4 @@ public class EmployeurController {
     public ResponseEntity<Employeur> saveEmployeur(@RequestBody Employeur employeur){
         return employeurService.saveEmployeur(employeur).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-
-
 }

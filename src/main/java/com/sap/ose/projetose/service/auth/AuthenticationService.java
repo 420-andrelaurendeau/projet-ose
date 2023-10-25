@@ -80,6 +80,10 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    public AuthenticationResponse registerInternshipManager(InternshipmanagerDto internshipmanagerDto){
+
+    }
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));

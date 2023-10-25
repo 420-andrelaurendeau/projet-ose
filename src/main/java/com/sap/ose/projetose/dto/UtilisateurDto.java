@@ -13,7 +13,7 @@ public abstract class UtilisateurDto {
     private String phone;
     private String email;
 
-    public UtilisateurDto(int id, String nom, String prenom, String phone, String email) {
+    public UtilisateurDto(long id, String nom, String prenom, String phone, String email) {
         this.nom = nom;
         this.prenom = prenom;
         this.phone = phone;

@@ -1,22 +1,24 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.Role;
-import com.sap.ose.projetose.modeles.Utilisateur;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UtilisateurService {
 
     private final EmployeurRepository employeurRepository;
     private final EtudiantRepository etudiantRepository;
+    private final InternshipmanagerRepository internshipmanagerRepository;
 
-    public UtilisateurService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
+    public UtilisateurService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository, InternshipmanagerRepository internshipmanagerRepository) {
         this.employeurRepository = employeurRepository;
         this.etudiantRepository = etudiantRepository;
+        this.internshipmanagerRepository = internshipmanagerRepository;
     }
 
     public Utilisateur getUserByEmail(String email) {
@@ -29,6 +31,8 @@ public class UtilisateurService {
         if (etudiant != null) {
             return etudiant;
         }
+
+        Optional<Internshipmanager> internshipmanager = internshipmanagerRepository.findByEmail(email);
 
         return null;
     }
