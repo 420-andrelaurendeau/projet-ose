@@ -1,10 +1,9 @@
 package com.sap.ose.projetose;
 
 import com.sap.ose.projetose.dto.*;
+import com.sap.ose.projetose.dto.auth.InternshipmanagerAuthDto;
 import com.sap.ose.projetose.modeles.*;
-import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
@@ -19,8 +18,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.time.LocalDate;
 
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
@@ -59,10 +56,15 @@ public class ProjetOseApplication implements CommandLineRunner {
         Etudiant etudiant2 = new Etudiant("Loic", "Lac", "4352996589", "Lac@gmail.com", "popo", "2045898", programme1, null);
         Employeur employeur1 = new Employeur("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "popo", programme1);
         Employeur employeur2 = new Employeur("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "poo", programme2);
-        authenticationService.registerEtudiant(new EtudiantAuthDto(etudiant1));
-        authenticationService.registerEtudiant(new EtudiantAuthDto(etudiant2));
-        authenticationService.registerEmployeur(new EmployeurAuthDto(employeur1));
-        authenticationService.registerEmployeur(new EmployeurAuthDto(employeur2));
+
+        System.out.println(etudiant1.getId());
+        authenticationService.registerEtudiant(etudiant1);
+        authenticationService.registerEtudiant(etudiant2);
+        authenticationService.registerEmployeur(employeur1);
+        authenticationService.registerEmployeur(employeur2);
+
+        Internshipmanager internshipmanager = new Internshipmanager("Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
+        authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
         File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
@@ -76,15 +78,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        Etudiant etudiant = new Etudiant("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", "2045878", programme1, null);
-        etudiantService.saveEtudiant(etudiant);
-
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant, internOffer, List.of(file));
+        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant1, internOffer, List.of(file));
 
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
-
-        Internshipmanager internshipmanager = new Internshipmanager("Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
-        authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
         System.out.println("DONE");
     }

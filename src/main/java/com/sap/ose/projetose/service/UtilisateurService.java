@@ -32,7 +32,10 @@ public class UtilisateurService {
             return etudiant;
         }
 
-        Optional<Internshipmanager> internshipmanager = internshipmanagerRepository.findByEmail(email);
+        Internshipmanager internshipmanager = internshipmanagerRepository.findByEmail(email).orElse(null);
+        if (internshipmanager != null){
+            return internshipmanager;
+        }
 
         return null;
     }

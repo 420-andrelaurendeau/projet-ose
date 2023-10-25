@@ -1,9 +1,8 @@
-package com.sap.ose.projetose.dto;
+package com.sap.ose.projetose.dto.auth;
 
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
-import com.sap.ose.projetose.modeles.Programme;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

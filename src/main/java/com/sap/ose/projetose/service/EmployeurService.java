@@ -32,6 +32,10 @@ public class EmployeurService {
         this.programmeService = programmeService;
     }
 
+    Employeur findByEmail(String email){
+        return employeurRepository.findByEmail(email).orElse(null);
+    }
+
     Employeur findById(long id) {
         try {
             return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);

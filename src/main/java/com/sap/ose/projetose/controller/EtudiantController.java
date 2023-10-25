@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,6 @@ public class EtudiantController {
         this.etudiantService = etudiantService;
     }
 
-    @PostMapping("/ajouter")
-    public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-
-        return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     public EtudiantDto getEtudiant(@PathVariable Long id) {
@@ -38,12 +33,14 @@ public class EtudiantController {
     }
 
     @GetMapping("/etudiants")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
     @PostMapping("/addCv/{matricule}")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
     public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody String cv){
         logger.info("add cv to " + matricule );
         Etudiant etudiant = etudiantService.updateCVByMatricule(matricule, null);
@@ -51,8 +48,8 @@ public class EtudiantController {
     }
 
     @GetMapping("{id}/offersApplied")
+    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
-
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));
     }
 }

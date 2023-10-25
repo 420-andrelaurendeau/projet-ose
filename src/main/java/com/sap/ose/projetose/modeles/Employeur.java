@@ -36,5 +36,4 @@ public class Employeur extends Utilisateur {
         this.internOffers = new ArrayList<>();
     }
 
-
 }

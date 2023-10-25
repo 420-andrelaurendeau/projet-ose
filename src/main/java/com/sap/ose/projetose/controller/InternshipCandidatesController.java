@@ -7,6 +7,7 @@ import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.service.InternshipCandidatesService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +21,7 @@ public class InternshipCandidatesController {
         this.internshipCandidatesService = internshipCandidatesService;
     }
     @PostMapping("/saveCandidats")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
         InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
