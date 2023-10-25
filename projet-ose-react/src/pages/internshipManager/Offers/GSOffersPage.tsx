@@ -1,10 +1,10 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {getIntershipOffers, getTotalOfferByState} from "../../../api/GSManagerAPI";
-import GSOffers from "../../../components/common/internshipManager/Offers/GSOffers";
+import {getIntershipOffers, getTotalOfferByState} from "../../../api/internshipManager/InternshipManagerAPI";
+import InternshipManagerOffers from "../../../components/common/internshipManager/Offers/InternshipManagerOffers";
 import PaginatedList from "../../../components/common/shared/paginationList/PaginatedList";
 import {useTranslation} from "react-i18next";
-import GSOffersDashboardHeader from "../../../components/common/internshipManager/Offers/GSOffersDashboardHeader";
+import InternshipManagerOffersDashboardHeader from "../../../components/common/internshipManager/Offers/InternshipManagerOffersDashboardHeader";
 import toast from "../../../components/common/shared/toast/Toast";
 import {useToast} from "../../../hooks/state/useToast";
 
@@ -121,9 +121,9 @@ const GSOffersPage = () => {
         setCurrentPage(0);
     };
 
-    const renderOffer = <GSOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField}
-                                  setsortField={setSortField} setSortDirection={setSortDirection}
-                                  sortDirection={sortDirection}/>;
+    const renderOffer = <InternshipManagerOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField}
+                                                 setsortField={setSortField} setSortDirection={setSortDirection}
+                                                 sortDirection={sortDirection}/>;
 
     return (
         <div className="">
@@ -134,7 +134,7 @@ const GSOffersPage = () => {
             <main className="pb-4">
                 <div className="p-0">
 
-                    <GSOffersDashboardHeader
+                    <InternshipManagerOffersDashboardHeader
                         offersByState={handleChangeStateSort}
                         fields={fields}
                         totalOffers={totalOffers}

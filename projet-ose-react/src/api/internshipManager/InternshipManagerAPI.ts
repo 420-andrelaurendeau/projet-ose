@@ -1,22 +1,9 @@
 import axios from 'axios';
-import {InterOfferJob} from "../model/IntershipOffer";
-import {OfferReviewRequest} from "../model/OfferReviewRequest";
+import {InterOfferJob} from "../../model/IntershipOffer";
+import {OfferReviewRequest} from "../../model/OfferReviewRequest";
 import {webcrypto} from "crypto";
-import {AppliedOffers} from "../model/AppliedOffers";
-import api from "./ConfigAPI";
-
-const API_BASE_URL = 'http://localhost:8080/api/internshipManager/';
-
-const apiClient = axios.create({
-    baseURL: API_BASE_URL,
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-    },
-});
-
+import {AppliedOffers} from "../../model/AppliedOffers";
+import api from "../ConfigAPI";
 
 interface GetInternshipOffersParams {
     page: number;
@@ -50,7 +37,7 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
 
 export const getTotalOfferByState = async () => {
     try {
-        const response = await apiClient.get('/count', {
+        const response = await api.get('internshipManager/count', {
             headers: {
               //  'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
@@ -65,7 +52,7 @@ export const getTotalOfferByState = async () => {
 
 export const getOfferReviewById = async (id: number) => {
     try {
-        const response = await apiClient.get(`/offer/${id}/review`);
+        const response = await api.get(`internshipManager/offer/${id}/review`);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération de l\'avis de l\'offre de stage:', error);

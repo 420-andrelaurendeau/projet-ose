@@ -34,7 +34,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {

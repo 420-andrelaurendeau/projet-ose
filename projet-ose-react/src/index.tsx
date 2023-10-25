@@ -17,7 +17,7 @@ import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
-import InternshipOfferForm from "./components/common/InternshipOfferForm";
+import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
 import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";

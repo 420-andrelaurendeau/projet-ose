@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 
 
-export default function GSOffers(props: any) {
+export default function InternshipManagerOffers(props: any) {
     const [offer, setOffer] = useState<InterOfferJob>();
 
     const {i18n} = useTranslation();

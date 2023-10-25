@@ -6,7 +6,7 @@ interface GSReviewOfferFormProps {
     handleDecline: any;
     internshipOffer: any;
 }
-const GSReviewOfferForm: React.FC<GSReviewOfferFormProps> = ({handleApprove, handleDecline, internshipOffer}) => {
+const InternshipManagerOfferReviewForm: React.FC<GSReviewOfferFormProps> = ({handleApprove, handleDecline, internshipOffer}) => {
     const {t} = useTranslation();
 
     return(
@@ -17,13 +17,13 @@ const GSReviewOfferForm: React.FC<GSReviewOfferFormProps> = ({handleApprove, han
                         className="w-full flex-1 bg-blue text-white font-bold p-2 rounded-md dark:bg-orange"
                         type="button"
                         onClick={handleApprove}>
-                        {t("formField.GSReviewOfferForm.button.approved")}
+                        {t("formField.InternshipManagerOfferReviewForm.button.approved")}
                     </button>
                     <button
                         className="w-full flex-1 bg-red  text-white font-bold p-2 rounded-md dark:bg-red"
                         type="button"
                         onClick={handleDecline}>
-                        {t("formField.GSReviewOfferForm.button.refused")}
+                        {t("formField.InternshipManagerOfferReviewForm.button.refused")}
                     </button>
 
                 </div>
@@ -32,4 +32,4 @@ const GSReviewOfferForm: React.FC<GSReviewOfferFormProps> = ({handleApprove, han
     )
 }
 
-export default GSReviewOfferForm;
+export default InternshipManagerOfferReviewForm;
