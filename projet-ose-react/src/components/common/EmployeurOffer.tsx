@@ -4,7 +4,7 @@ import {Outlet} from "react-router-dom";
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.homeEmployeur.offerTable");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur.offerTable");
     const {offers} = useProps();
     console.log(offers);
 
@@ -12,8 +12,7 @@ export default function EmployeurOffer() {
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
-                    <div
-                        className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
                             <thead className="bg-blue dark:bg-orange ">
                             <tr>
@@ -21,64 +20,62 @@ export default function EmployeurOffer() {
                                     scope="col"
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                 >
-                                    {/*{fields.titre.text}*/}
+                                    {fields.titre.text}
                                 </th>
                                 <th
                                     scope="col"
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                 >
-                                    {/*{fields.location.text}*/}
+                                    {fields.location.text}
                                 </th>
                                 <th
                                     scope="col"
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                 >
-                                    {/*{fields.status.text}*/}
+                                    {fields.status.text}
                                 </th>
                                 <th
                                     scope="col"
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                 >
-                                    {/*{fields.startDate.text}*/}
+                                    {fields.startDate.text}
                                 </th>
                                 <th scope="col" className="relative px-6 py-3">
-                                    <span className="sr-only">{/*fields.edit.text*/}</span>
+                                    <span className="sr-only">{fields.edit.text}</span>
                                 </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            {offers.map((offer: any) => (
+                            { offers.map((offer:any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center">
                                             <div className="ml-4">
-                                                <div
-                                                    className="text-sm font-medium dark:text-offwhite">{/*offer.title*/}
-                                                </div>
+                                                <div className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm dark:text-offwhite">{/*offer.location*/}</div>
+                                        <div className="text-sm dark:text-offwhite">{offer.location}</div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                           className={
-                              offer.state == "PENDING" ?
-                                  "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                  : offer.state === "DECLINED" ?
-                                      "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
-                                      : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
+                          offer.state == "PENDING" ?
+                              "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                              : offer.state === "DECLINED" ?
+                                  "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                  : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                       >
-                        {/*{fields[offer.state].text}*/}
+                        {fields[offer.state].text}
                       </span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
-                                        {/*offer.startDate*/}
+                                        {offer.startDate}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <a href="" className="text-red hover:text-indigo">
-                                            {/*fields.edit.text*/}
+                                            {fields.edit.text}
                                         </a>
                                     </td>
                                 </tr>
