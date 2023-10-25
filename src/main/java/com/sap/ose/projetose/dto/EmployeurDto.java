@@ -29,6 +29,6 @@ public class EmployeurDto extends UtilisateurDto {
     }
 
     public Employeur fromDto(){
-        return new Employeur(this.getNom(), this.getPrenom(),this.getPhone(),  this.getEmail(), " ",this.getEntreprise());
+        return new Employeur(this.getNom(), this.getPrenom(),this.getPhone(),  this.getEmail(), " ",this.getEntreprise(), null);
     }
 }

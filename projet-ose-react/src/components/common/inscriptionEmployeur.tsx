@@ -14,31 +14,18 @@ function InscriptionEmployeur(props: any) {
     const toast = useToast();
     const navigate = useNavigate();
 
-    interface FormData {
-        nom: string;
-        prenom: string;
-        phone: string;
-        email: string;
-        password: string;
-        entreprise: string;
-        programme: any;
-    }
 
-    const [programmeData, setProgrammeData] = useState<Programme>({
-        id: 0,
-        nom: "",
-        description: "",
-    });
 
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
         phone: "",
         email: "",
         password: "",
         entreprise: "",
-        programme: programmeData,
+        programme_id: 0,
     });
+
     const [showPassword, setShowPasswprd] = useState(false);
     const [programmes, setProgrammes] = useState<Programme[]>([]);
 
@@ -68,13 +55,6 @@ function InscriptionEmployeur(props: any) {
     }, [formData]);
 
 
-    useEffect(() => {
-        setProgrammeData(programmeData);
-        setFormData({
-            ...formData,
-            "programme": programmeData,
-        })
-    }, [programmeData]);
 
     function handleChange(event: any) {
         const {name, value} = event.target;
@@ -86,17 +66,6 @@ function InscriptionEmployeur(props: any) {
         console.log(name + "= " + value);
     }
 
-    function handleChangeProgramme(event: any) {
-        const {name, value} = event.target;
-
-
-        setProgrammeData(JSON.parse(value));
-        setFormData({
-            ...formData,
-            [name]: programmeData,
-        });
-
-    }
 
     const handleRedirect = async () => {
         toast.success("Inscription réussie");
@@ -106,7 +75,7 @@ function InscriptionEmployeur(props: any) {
     const handleSubmit = (event: any) => {
         event.preventDefault();
 
-        const programme = formData.programme;
+        const programme = formData.programme_id;
 
         if (programme == null) {
             alert(fields.programme.validation.required);
@@ -139,7 +108,7 @@ function InscriptionEmployeur(props: any) {
                     email: "",
                     password: "",
                     entreprise: "",
-                    programme: programmeData,
+                    programme_id: 0,
                 });
                 event.target.reset();
             });
@@ -348,9 +317,9 @@ function InscriptionEmployeur(props: any) {
                                 {fields.programme.text}
                             </label>
                             <select
-                                value={formData.programme}
-                                onChange={handleChangeProgramme}
-                                name={"programme"}
+                                value={formData.programme_id}
+                                onChange={handleChange}
+                                name={"programme_id"}
                                 defaultValue={"DEFAULT"}
                                 id="programme"
                                 required={true}
@@ -363,7 +332,7 @@ function InscriptionEmployeur(props: any) {
                                 <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
                                 {programmes.map((programme) => (
                                     <option key={programme['id']}
-                                            value={JSON.stringify(programme)}>{programme['nom']}</option>
+                                            value={Number(programme['id'])}>{programme['nom']}</option>
                                 ))}
                             </select>
                         </div>

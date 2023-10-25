@@ -28,4 +28,10 @@ public class OfferReviewRequestController {
         InternOfferDto internOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
         return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<OfferReviewRequestDto> getOfferReviewRequest(@PathVariable("id") Long id){
+        OfferReviewRequestDto offerReviewRequestDto = offerReviewRequestService.getOfferReviewRequest(id);
+        return new ResponseEntity<>(offerReviewRequestDto, HttpStatus.OK);
+    }
 }

@@ -238,7 +238,7 @@ const CandidatureOffer: React.FC<any> = () => {
                                                                 <button
                                                                     hidden={interOfferCandidate.state == "ACCEPTED"}
                                                                     className="px-2 py-2 rounded-lg bg-blue dark:bg-orange font-bold text-white">
-                                                                    Review
+                                                                    Inspection
                                                                 </button>
                                                                 <button
                                                                     disabled={hasStudentApplied(interOfferCandidate, offer.id)}
