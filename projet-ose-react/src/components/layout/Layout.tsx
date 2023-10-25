@@ -13,13 +13,12 @@ function Layout(props: any) {
     }
 
     return (
-        <div className="dark:bg-dark min-h-screen">
+        <div className="bg-darkwhite dark:bg-softdark min-h-screen">
 
-            <div className="pb-4">
-                <Header user={userr}/>
+            <div>
+                <Header/>
             </div>
-            <div className="h-20"></div>
-            <div className="px-4">
+            <div>
                 <Outlet/>
             </div>
         </div>

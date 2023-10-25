@@ -1,6 +1,5 @@
-package com.sap.ose.projetose.dto;
+package com.sap.ose.projetose.dto.auth;
 
-import com.sap.ose.projetose.modeles.Role;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

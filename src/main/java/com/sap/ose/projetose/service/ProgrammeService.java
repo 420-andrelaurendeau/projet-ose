@@ -28,7 +28,7 @@ public class ProgrammeService {
         this.programmeRepository = programmeRepository;
     }
 
-    Programme findById(Long id) {
+    public Programme findById(Long id) {
         try {
             return programmeRepository.findById(id).orElseThrow(ProgramNotFoundException::new);
 

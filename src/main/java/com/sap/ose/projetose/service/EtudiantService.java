@@ -72,7 +72,7 @@ public class EtudiantService {
         return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv().stream().map(File::getId).toList(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
-    public Etudiant findEtudiantById(Long id) {
+    Etudiant findEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         return etudiant.orElse(null);
     }
@@ -94,7 +94,7 @@ public class EtudiantService {
         return etudiantDto;
     }
 
-    Etudiant getEtudiantByCourriel(String courriel) {
+    Etudiant findByEmail(String courriel) {
         return etudiantRepository.findByEmail(courriel).orElse(null);
     }
 

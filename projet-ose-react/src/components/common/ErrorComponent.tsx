@@ -1,15 +1,14 @@
-import i18n from "i18next";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
 import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
-// @ts-ignore
 import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link} from "react-router-dom";
 import React from "react";
 
 export default function ErrorComponent(props:any) {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.ErrorPage");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","ErrorPage");
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="flex items-center justify-center">
@@ -28,7 +27,7 @@ export default function ErrorComponent(props:any) {
                 <ul role="list" className="divide-y divide-gray-100">
                     <li className="flex justify-between gap-x-6 py-5">
                         <div className="flex min-w-0 gap-x-4">
-                            <FontAwesomeIcon icon={["fas", "exclamation-triangle"]} className="h-12 w-12 flex-none rounded-full bg-gray-50 text-red-500" />
+                            <FontAwesomeIcon icon={faTriangleExclamation} className="h-12 w-12 flex-none rounded-full bg-gray-50 text-red-500" />
                             <div className="min-w-0 flex-auto">
                                 <p className= {props.darkMode ?
                                     "mt-1 truncate text-xs leading-5 text-gray-500 text-white"
