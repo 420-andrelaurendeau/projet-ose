@@ -7,7 +7,7 @@ import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link} from "react-router-dom";
 import React from "react";
 
-export default function ErrorComponent(props:any) {
+export default function     ErrorComponent(props:any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","ErrorPage");
     return (

@@ -70,6 +70,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         setIsAuthenticated(false);
     };
 
+    const inscriptionLogIn = (token: string) =>{
+
+    }
+
     if (loading) {
         return <></>;
     }

@@ -8,7 +8,6 @@ export const authenticateUser = async (email: string, password: string, loginUse
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-
             },
             body: JSON.stringify({ email, password }),
         });

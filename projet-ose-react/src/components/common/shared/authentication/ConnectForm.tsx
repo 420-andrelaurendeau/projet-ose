@@ -1,11 +1,7 @@
 import React, {ReactElement, useEffect} from "react";
 import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
 import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import toggleOn from "../../../../assets/images/toggle-on-solid.svg";
-import toggleOff from "../../../../assets/images/toggle-off-solid.svg";
 import { useTranslation } from 'react-i18next';
-import Switcher from "../../../../utils/switcher";
-import useDarkSide from "../../../../hooks/useDarkSide";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {authenticateUser} from "../../../../api/AuthenticationAPI";
 import {useNavigate} from "react-router-dom";

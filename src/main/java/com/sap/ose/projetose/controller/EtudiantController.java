@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.EtudiantService;
@@ -28,6 +29,7 @@ public class EtudiantController {
 
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public EtudiantDto getEtudiant(@PathVariable Long id) {
         return etudiantService.getEtudiantById(id);
     }
@@ -39,17 +41,19 @@ public class EtudiantController {
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
-    @PostMapping("/addCv/{matricule}")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
-    public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody String cv){
-        logger.info("add cv to " + matricule );
-        Etudiant etudiant = etudiantService.updateCVByMatricule(matricule, null);
-        return ResponseEntity.ok().body(etudiant);
-    }
+//    @PostMapping("/addCv/{matricule}")
+//    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
+//    public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody FileDto cv){
+//        logger.info("add cv to " + matricule );
+//        Etudiant etudiant = etudiantService.updateCVByMatricule(matricule,cv);
+//        return ResponseEntity.ok().body(etudiant);
+//    }
 
     @GetMapping("{id}/offersApplied")
     @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));
     }
+
+
 }
