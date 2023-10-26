@@ -56,7 +56,7 @@ const InternshipOfferModal: React.FC<any> = ({internshipOffer, isModalOpen, hand
         if (internshipOffer && internshipOffer.employeurId) {
             console.log(user.id)
             setFormState(prevState => ({
-                ...prevState, internshipmanagerId: 6
+                ...prevState, internshipmanagerId: user.id
             }));
         }
 

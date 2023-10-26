@@ -51,7 +51,7 @@ public class InternshipmanagerService {
         }
     }
 
-    Internshipmanager findById(long id) {
+    public Internshipmanager findById(long id) {
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
         } catch (InternshipmanagerNotFoundException e) {
@@ -68,11 +68,38 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public void save(InternshipmanagerDto internshipmanagerDto) {
+    public Internshipmanager save(InternshipmanagerDto internshipmanagerDto) {
+        Internshipmanager internshipmanager = null;
         try {
             Programme program = programmeService.findById(internshipmanagerDto.getProgrammeId());
 
-            Internshipmanager internshipmanager = internshipmanagerDto.fromDto();
+            internshipmanager = internshipmanagerDto.fromDto();
+            internshipmanager.setProgramme(program);
+
+            internshipmanagerRepository.save(internshipmanager);
+
+        } catch (DataIntegrityViolationException e) {
+            logger.info(e.getMessage());
+            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            };
+        } catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+        return internshipmanager;
+    }
+
+    @Transactional
+    public void save(Internshipmanager internshipmanager) {
+        try {
+            Programme program = programmeService.findById(internshipmanager.getId());
+
             internshipmanager.setProgramme(program);
 
             internshipmanagerRepository.save(internshipmanager);

@@ -20,6 +20,10 @@ public class ProgrammeDto {
         this.description = programme.getDescription();
     }
 
+    public ProgrammeDto(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
 
     public Programme fromDto() {
         return new Programme(nom, description);
