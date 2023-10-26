@@ -23,6 +23,7 @@ import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
 import GSOffersPage from "./pages/GSOffersPage";
 import ErrorPage from "./pages/ErrorPage";
+import StudentInterviewPage from "./pages/StudentInterviewPage";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -93,6 +94,14 @@ const router = createBrowserRouter([
                     }
                 ]
             },
+            {
+                path: "/etudiant/home/TeleverserCV",
+                element: <TeleversementCV/>,
+            },
+            {
+                path: "/etudiant/home/interview",
+                element: <StudentInterviewPage/>,
+            }
 
         ]
     },

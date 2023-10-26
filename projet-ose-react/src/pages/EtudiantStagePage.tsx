@@ -7,7 +7,7 @@ import {getStudentAppliedOffers} from "../api/InterOfferJobAPI";
 import axios from "axios";
 import Header from "../Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faFileLines, faPencil, faSignature, faUsers, faMicrophone} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 
 
@@ -20,7 +20,7 @@ interface Props {
 
 function EtudiantStagePage() {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebar");
     const location = useLocation();
     const user = location.state;
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
@@ -74,12 +74,12 @@ function EtudiantStagePage() {
                                 <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
+                                <p className="text-blue dark:text-orange">{fields.offre_applique.text}</p>
                             </div>
                         </div>
                     </NavLink>
                     <NavLink
-                        to="/TeleverserCV"
+                        to="/etudiant/home/TeleverserCV"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
@@ -88,7 +88,21 @@ function EtudiantStagePage() {
                                 <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{"Televerser votre CV"}</p>
+                                <p className="text-blue dark:text-orange">{fields.uploadCV.text}</p>
+                            </div>
+                        </div>
+                    </NavLink>
+                    <NavLink
+                        to="/etudiant/home/interview"
+                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        state={user}
+                    >
+                        <div className="flex space-x-2 items-center h-16 w-auto">
+                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faMicrophone} className="group-hover:text-white dark:text-white" size="lg"/>
+                            </div>
+                            <div className="pl-2">
+                                <p className="text-blue dark:text-orange">{fields.interview.text}</p>
                             </div>
                         </div>
                     </NavLink>

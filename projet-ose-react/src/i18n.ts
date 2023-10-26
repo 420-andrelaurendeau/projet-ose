@@ -324,6 +324,14 @@ i18n
                         offre_applique : {
                             name : 'offre applique',
                             text : "Applied offer"
+                        },
+                        uploadCV : {
+                            name : 'uploadCV',
+                            text : "Upload CV"
+                        },
+                        interview : {
+                            name : 'interview',
+                            text : "Interview"
                         }
                     },
                     profilMenu : {
@@ -820,6 +828,14 @@ i18n
                             name : 'offre applique',
                             text : "Offre appliqué"
                         },
+                        uploadCV : {
+                            name : 'uploadCV',
+                            text : "Televerser votre CV"
+                        },
+                        interview : {
+                            name : 'interview',
+                            text : "Entrevue"
+                        }
 
                     },
                     profilMenu : {
