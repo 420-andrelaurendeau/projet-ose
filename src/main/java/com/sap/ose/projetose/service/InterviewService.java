@@ -80,4 +80,8 @@ public class InterviewService {
     public List<InterviewDTO> getAllInterviews() {
         return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription())).toList();
     }
+
+    public List<InterviewDTO> getInterviewsByStudentId(long studentId) {
+        return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId).map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription())).toList();
+    }
 }

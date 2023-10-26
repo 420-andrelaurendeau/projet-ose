@@ -1,8 +1,11 @@
 package com.sap.ose.projetose.controller;
 
+import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.EtudiantDtoWithId;
 import com.sap.ose.projetose.dto.InterviewDTO;
 import com.sap.ose.projetose.dto.InterviewRequestInDto;
 import com.sap.ose.projetose.service.InterviewService;
+import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +45,12 @@ public class InterviewController {
     public ResponseEntity<List<InterviewDTO>> getAllInterviews(){
         logger.info("Interview get request received");
         return Optional.of(interviewService.getAllInterviews()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/getByStudentId/{studentId}")
+    public ResponseEntity<List<InterviewDTO>> getInterviewsByStudentId(@PathVariable long studentId){
+        logger.info("Interview get request received");
+        return Optional.of(interviewService.getInterviewsByStudentId(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }
 

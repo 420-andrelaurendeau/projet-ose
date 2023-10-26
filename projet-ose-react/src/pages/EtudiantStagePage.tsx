@@ -26,6 +26,7 @@ function EtudiantStagePage() {
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([
     ]);
+    const [interviews, setInterviews] = useState([]);
     const fetchOffers = () => {
         axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
             .then(res => {
@@ -36,6 +37,18 @@ function EtudiantStagePage() {
                 console.log(err);
             });
     }
+
+    const fetchInterviews = () => {
+        axios.get(`http://localhost:8080/api/interview/getByStudentId/`+user.id)
+            .then(res => {
+                setInterviews(res.data);
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -49,6 +62,8 @@ function EtudiantStagePage() {
 
         fetchData().then(r => console.log("ok"));
         fetchOffers();
+        fetchInterviews()
+        console.log("Etudiant : " + JSON.stringify(user))
     }, []);
 
 
@@ -104,6 +119,9 @@ function EtudiantStagePage() {
                             <div className="pl-2">
                                 <p className="text-blue dark:text-orange">{fields.interview.text}</p>
                             </div>
+                            {interviews.length > 0 ?
+                                <p className="text-dark dark:text-white">{interviews.length}</p>
+                                : <p className="text-dark dark:text-white">0</p>}
                         </div>
                     </NavLink>
 
