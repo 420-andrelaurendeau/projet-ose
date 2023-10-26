@@ -10,14 +10,13 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class InternshipApplication {
-    @Id
+@EqualsAndHashCode(callSuper = true)
+public class InternshipApplication extends BaseModel {
     @ManyToOne
     @JoinColumn
     @ToString.Exclude
     private Student candidate;
 
-    @Id
     @ManyToOne
     @JoinColumn
     private InternshipOffer internshipOffer;
