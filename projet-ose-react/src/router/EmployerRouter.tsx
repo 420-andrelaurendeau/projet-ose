@@ -12,7 +12,7 @@ import InternshipOfferForm from "../components/common/internshipManager/Internsh
 
 const EmployerRouter: React.FC = () => {
     return (
-        <ProtectedRoute requiredRoles={['EMPLOYEUR']}>
+        <ProtectedRoute requiredRoles={['employer']}>
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route path="home" element={<EmployeurHomePage/>}>

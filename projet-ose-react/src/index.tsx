@@ -131,11 +131,9 @@ const router = createBrowserRouter([
 
 root.render(
     <React.StrictMode>
-        <AuthProvider>
-            <ToastContextProvider>
-                <AppRouter/>
-            </ToastContextProvider>
-        </AuthProvider>
+        <ToastContextProvider>
+            <AppRouter/>
+        </ToastContextProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function
