@@ -15,11 +15,13 @@ public class InternshipApplication {
     @ManyToOne
     @JoinColumn
     @ToString.Exclude
+    @Setter(AccessLevel.NONE)
     private Student candidate;
 
     @Id
     @ManyToOne
     @JoinColumn
+    @Setter(AccessLevel.NONE)
     private InternshipOffer internshipOffer;
 
     @OneToMany(cascade = CascadeType.REMOVE)
