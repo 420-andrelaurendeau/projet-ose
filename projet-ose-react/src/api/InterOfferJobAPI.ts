@@ -16,11 +16,22 @@ const apiClient = axios.create({
     },
 });
 
-export const allStudentInternshipOffers = async (): Promise<any[]> => {
-    const response = await apiClient.get('interOfferJob/allOffers');
-    try{
+export const offresEtudiant = async () => {
+    try {
+        const response = await apiClient.get('interOfferJob/OffersEtudiant')
         return response.data
-    }catch (err){
+    } catch (err) {
+        console.log('Error while getting interOfferJob/OffersEtudiant' + err)
+        throw err
+    }
+
+}
+
+export const allStudentInternshipOffers = async (): Promise<any[]> => {
+    try {
+        const response = await apiClient.get('interOfferJob/allOffers');
+        return response.data
+    } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)
         throw err
     }
@@ -94,7 +105,7 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
     }
 };
 
-export const getOfferReviewRequestById = async (id:number) => {
+export const getOfferReviewRequestById = async (id: number) => {
     try {
 
         const response = await apiClient.get(`offerReviewRequest/get/${id}`);

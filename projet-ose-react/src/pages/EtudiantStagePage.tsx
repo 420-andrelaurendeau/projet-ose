@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
-import EtudiantStage from "../components/common/student/StudentStage";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {AppliedOffers} from "../model/AppliedOffers";
-import {getStudentAppliedOffers} from "../api/InterOfferJobAPI";
+import {getStudentAppliedOffers, offresEtudiant} from "../api/InterOfferJobAPI";
 import axios from "axios";
 import Header from "../components/common/shared/header/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -10,7 +9,6 @@ import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-sol
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../authentication/AuthContext";
 import {getUser} from "../api/UtilisateurAPI";
-import {log} from "util";
 
 
 interface Props {
@@ -27,42 +25,19 @@ function EtudiantStagePage() {
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
     const auth = useAuth();
-    const token = localStorage.getItem('token');
-    const fetchOffers = () => {
-        axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
-            .then(res => {
-                setOffers(res.data);
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }
-
-    const fetchData = async (user:any) => {
-        try {
-            console.log(user)
-            const data: AppliedOffers[] = await getStudentAppliedOffers(user.id);
-            console.log(data);
-            setListStudentAppliedOffers(data);
-        } catch (error) {
-            console.error("Erreur lors de la récupération des offres:", error);
-        }
-    };
-
     useEffect(() => {
-        getUser(auth.userEmail!).then((res) => {
-            console.log("SETTING USER")
-            console.log(res)
-            setUser(res);
+        getUser(auth.userEmail!).then((resUser) => {
+                setUser(resUser);
+                getStudentAppliedOffers(resUser.id).then((res) => {
+                    setListStudentAppliedOffers(res);
+                })
+                offresEtudiant().then((res) => {
+                    setOffers(res);
+                })
             }
         ).catch(err => {
             console.log(err)
-        }).finally(() => {
-            fetchData(user).then(r => console.log(r));
-            fetchOffers();
         })
-
 
     }, []);
 
