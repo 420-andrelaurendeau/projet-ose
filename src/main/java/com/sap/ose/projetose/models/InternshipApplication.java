@@ -15,7 +15,7 @@ import static org.hibernate.annotations.GenerationTime.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"candidate", "internshipOffer"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"candidate_id", "internship_offer_id"}))
 public class InternshipApplication extends BaseModel {
     @ManyToOne
     @JoinColumn
@@ -27,5 +27,6 @@ public class InternshipApplication extends BaseModel {
     private InternshipOffer internshipOffer;
 
     @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn
     private List<File> files;
 }

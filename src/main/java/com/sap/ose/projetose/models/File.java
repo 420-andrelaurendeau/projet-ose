@@ -15,7 +15,7 @@ public class File extends BaseModel {
     private String fileName;
     private ApprovalStatus approvalStatus;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     @ToString.Exclude
     private User user;

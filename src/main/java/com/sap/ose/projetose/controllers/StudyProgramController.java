@@ -12,7 +12,7 @@ import java.util.List;
 
 @Validated
 @RestController
-@RequestMapping("/api/programme")
+@RequestMapping("/api/studyProgram")
 @RequiredArgsConstructor
 public class StudyProgramController {
     public final StudyProgramService studyProgramService;

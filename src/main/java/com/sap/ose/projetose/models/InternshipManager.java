@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class InternshipManager extends User {
-    @ManyToMany(mappedBy = "id")
+    @ManyToMany
     private Set<StudyProgram> studyPrograms;
 
     public InternshipManager(String lastName, String firstName, String phone, String email, String password, Set<StudyProgram> studyPrograms) {

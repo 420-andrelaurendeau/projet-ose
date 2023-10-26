@@ -27,7 +27,7 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
-    @OneToOne
+    @ManyToOne
     private StudyProgram studyProgram;
 
     public Student(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram, String matricule) {

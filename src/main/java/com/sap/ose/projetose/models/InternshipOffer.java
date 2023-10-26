@@ -16,6 +16,7 @@ import java.util.List;
 public class InternshipOffer extends BaseModel {
     private String title;
     private String location;
+    @Column(columnDefinition="TEXT")
     private String description;
     private double salaryByHour;
     private LocalDate startDate;
@@ -25,17 +26,20 @@ public class InternshipOffer extends BaseModel {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn
     @ToString.Exclude
     private StudyProgram studyProgram;
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = true)
     @JoinColumn
     @ToString.Exclude
     private File file;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn
     @ToString.Exclude
     private Employer employer;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn
     @ToString.Exclude
     private OfferReviewRequest offerReviewRequest;
 }

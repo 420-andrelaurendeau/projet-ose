@@ -13,6 +13,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class OfferReviewRequest extends BaseModel {
     @ManyToOne
+    @JoinColumn
     public InternshipManager reviewer;
     public ApprovalStatus reviewState = ApprovalStatus.PENDING;
     private String comment;
