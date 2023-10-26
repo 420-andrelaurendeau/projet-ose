@@ -62,7 +62,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 
 
     return (
-        <>
+        <div className="">
             <button
                 className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
                 onClick={() => navigate("/internshipmanager/home/offers")}
@@ -154,7 +154,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
                         id="commentary_placeholder"
                         onChange={(e) => handleFormChange(e)}
-                        placeholder={t("formField.InternshipManagerOfferPage.placeholder")}>
+                        placeholder={t("formField.InternshipOfferModal.placeholder")}>
 
                     </textarea>
                     {renderError()}
@@ -186,7 +186,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     </div>
                 </>
             )}
-        </>
+        </div>
     )
 
 }
