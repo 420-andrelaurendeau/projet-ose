@@ -8,7 +8,7 @@ import Switcher from "../../../../utils/switcher";
 import useDarkSide from "../../../../hooks/useDarkSide";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {authenticateUser} from "../../../../api/AuthenticationAPI";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 const ConnectForm = (props: any): ReactElement => {
@@ -117,12 +117,12 @@ const ConnectForm = (props: any): ReactElement => {
 
                     <p className="mt-10 text-center text-sm text-black dark:text-white">
                         {fields.ContactUs.Question.text}{' '}
-                        <a href="#" className=
+                        <Link to={"/inscription"} className=
                             {props.darkMode ?
                                 "font-semibold leading-6 text-orange hover:text-amber-500"
                                 : "font-semibold leading-6 text-blue hover:text-indigo-500 dark:text-orange dark:hover:text-amber-500"}>
                             {fields.ContactUs.text}
-                        </a>
+                        </Link>
                     </p>
                 </div>
 

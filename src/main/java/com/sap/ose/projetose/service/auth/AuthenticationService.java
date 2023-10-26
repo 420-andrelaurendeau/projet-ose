@@ -12,6 +12,7 @@ import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.service.ProgrammeService;
 import com.sap.ose.projetose.service.UtilisateurService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -114,16 +115,17 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
+    @Transactional
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-            System.out.println(request.getEmail());
             Utilisateur utilisateur = utilisateurService.getUserByEmail(request.getEmail());
 
             var jwtToken = jwtService.generateToken(utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
+            System.out.println("erreur dans authentication service avec l'authenticationManager ");
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();

@@ -51,6 +51,11 @@ public class UtilisateurService {
             return etudiant.getRole();
         }
 
+        Internshipmanager internshipmanager = internshipmanagerRepository.findByEmail(email).orElse(null);
+        if (internshipmanager != null){
+            return internshipmanager.getRole();
+        }
+
         return null;
     }
 }
