@@ -15,14 +15,14 @@ import java.util.Date;
 @Data
 public class InterviewDTO {
     private long id;
-    private Etudiant  student;
-    private InternOffer internOffer;
+    private EtudiantDto student;
+    private InternOfferDto internOffer;
     private Date date;
     private String description;
 
     //TODO changer le code pour qu'on ne use pas des Modeles dans les DTOs
 
-    public InterviewDTO(Etudiant student, InternOffer internOffer, Date date, String description) {
+    public InterviewDTO(EtudiantDto student, InternOfferDto internOffer, Date date, String description) {
         this.student = student;
         this.internOffer = internOffer;
         this.date = date;
@@ -30,7 +30,7 @@ public class InterviewDTO {
     }
 
     public Interview fromDto(){
-        return new Interview(id, student, internOffer, date, description);
+        return new Interview(id, student.fromDto(), internOffer.fromDto(), date, description);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.EmployeurDto;
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.InterviewDTO;
-import com.sap.ose.projetose.dto.InterviewRequestInDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.InternOffer;
@@ -43,28 +40,6 @@ public class InterviewService {
     }
 
     public Optional<InterviewDTO> saveInterview(InterviewRequestInDto interviewRequestInDto) {
-
-//        EtudiantDto studentDto = etudiantService.getEtudiantById(interviewRequestInDto.getStudentId());
-//
-//        if (studentDto == null){
-//            System.out.println("Student not found" + "id : " + interviewRequestInDto.getStudentId());
-//            return Optional.empty();
-//        } else{
-//            System.out.println("Student found" + " id : " + studentDto.getMatricule());
-//        }
-//
-//        EmployeurDto employeurDto = employeurService.getEmployeurById(interviewRequestInDto.getEmployeurId());
-//
-//        if (employeurDto == null){
-//            System.out.println("Employeur not found");
-//            return Optional.empty();
-//        } else{
-//            System.out.println("Employeur found" + "id : " + employeurDto.getId());
-//        }
-//        studentDto.setId(interviewRequestInDto.getStudentId());
-//        employeurDto.setId(interviewRequestInDto.getEmployeurId());
-
-
         //TODO changer employeur DTO et etudiant DTO pour quil retorne l'ID des modeles quil represente si non le programme essaye de les dupliquer
 
         InternOffer internOffer = internOfferRepository.findById(interviewRequestInDto.getInternOfferId()).orElse(null);
@@ -77,9 +52,9 @@ public class InterviewService {
             System.out.println("InternOffer and Etudiant found");
         }
 
-        InterviewDTO interviewDTO = new InterviewDTO(etudiant, internOffer, interviewRequestInDto.getDate(), interviewRequestInDto.getDescription());
+        Interview interview = new Interview(etudiant, internOffer, interviewRequestInDto.getDate(), interviewRequestInDto.getDescription());
 
-        Interview interview = interviewRepository.save(interviewDTO.fromDto());
+       interview = interviewRepository.save(interview);
 
         if (interview != null) {
             InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), null, null, interview.getDate(), interview.getDescription());
@@ -103,6 +78,6 @@ public class InterviewService {
     }
 
     public List<InterviewDTO> getAllInterviews() {
-        return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), interview.getStudent(), interview.getInternshipOffer(), interview.getDate(), interview.getDescription())).toList();
+        return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription())).toList();
     }
 }

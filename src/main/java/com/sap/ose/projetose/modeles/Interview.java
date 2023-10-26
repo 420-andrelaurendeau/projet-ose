@@ -27,6 +27,14 @@ public class Interview {
     private Date date;
 
     private String description;
+
+    public Interview(Etudiant student, InternOffer internshipOffer, Date date, String description) {
+        this.student = student;
+        this.internshipOffer = internshipOffer;
+        this.date = date;
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Interview{" +
