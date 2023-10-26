@@ -26,7 +26,7 @@ public class InternOfferController {
     }
 
     @PostMapping("/save")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
     public ResponseEntity<InternOfferDto> saveInterOfferJob(@RequestBody InternOfferDto internOfferJobdto) {
         InternOfferDto savedOfferJobDto = offerJobService.saveInterOfferJob(internOfferJobdto);
 
@@ -34,25 +34,25 @@ public class InternOfferController {
     }
 
     @GetMapping("/pendingOffers")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public List<InternOfferDto> getPendingOffers() {
         return offerJobService.getInternOfferPending();
     }
 
     @GetMapping("/allOffers")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public List<InternOfferDto> getAllOffers() {
         return offerJobService.getAllInternOffers();
     }
 
     @GetMapping("/OffersEtudiant")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR') OR hasAuthority('STUDENT')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public List<InternOfferDto> getOffersEtudiant() {
         return offerJobService.getInternOfferAccepted();
     }
 
     @GetMapping("/OffersEmp/{email}")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('EMPLOYEUR')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
     public List<InternOfferDto> getInternOfferJob(@PathVariable String email){
         return offerJobService.getInternOfferByEmployeurEmail(email);
     }
