@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import EtudiantStage from "../components/common/student/StudentStage";
-import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {AppliedOffers} from "../model/AppliedOffers";
 import {getStudentAppliedOffers} from "../api/InterOfferJobAPI";

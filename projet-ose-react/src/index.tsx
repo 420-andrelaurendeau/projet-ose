@@ -17,13 +17,13 @@ import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
-import InternshipOfferForm from "./components/common/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/student/StudentAppliedOffers";
 import EtudiantStage from "./components/common/student/StudentStage";
 import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
 import ErrorPage from "./pages/ErrorPage";
 import AppRouter from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";
+import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
