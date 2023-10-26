@@ -11,7 +11,7 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers} from "../../../api/InterOfferJobAPI";
+import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentStage() {
@@ -37,6 +37,9 @@ function StudentStage() {
             allStudentInternshipOffers().then((res) => {
                 setOffers(res);
             })
+            getStudentAppliedOffers(user.id).then((res) => {
+                setAppliedOffers(res);
+            })
         })
 
 
@@ -47,7 +50,7 @@ function StudentStage() {
         console.log(offer);
         console.log(student);
 
-        saveStudentInternshipOffer(offer,student).then(
+        saveStudentInternshipOffer(offer, student).then(
             res => {
                 let appliedOffer: AppliedOffers = {
                     appliedOffer: res.internOfferJob,
@@ -56,6 +59,8 @@ function StudentStage() {
                 console.log(appliedOffer);
 
                 setAppliedOffers([...appliedOffers, appliedOffer]);
+
+                console.log(appliedOffers)
             }
         ).catch(
             err => {

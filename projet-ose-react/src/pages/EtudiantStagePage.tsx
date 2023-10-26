@@ -71,7 +71,7 @@ function EtudiantStagePage() {
                         </div>
                     </NavLink>
                     <NavLink
-                        to="offreApplique"
+                        to="appliedOffers"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
