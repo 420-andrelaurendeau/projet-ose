@@ -12,9 +12,11 @@ import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InterviewRepository;
+import io.micrometer.observation.ObservationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -98,5 +100,9 @@ public class InterviewService {
 
     public Boolean studentHasInterviewWithEmployeur(Long studentId, Long employerId) {
         return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getInternshipOffer().getId() == employerId).findFirst().orElse(null) != null;
+    }
+
+    public List<InterviewDTO> getAllInterviews() {
+        return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), interview.getStudent(), interview.getInternshipOffer(), interview.getDate(), interview.getDescription())).toList();
     }
 }

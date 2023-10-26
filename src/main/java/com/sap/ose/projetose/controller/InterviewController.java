@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -35,6 +36,12 @@ public class InterviewController {
         logger.info("Interview studenthasinterviewwithemployer request received");
         boolean result = interviewService.studentHasInterviewWithEmployeur(studentHasInterviewWithInternOffer.studentId,studentHasInterviewWithInternOffer.internOfferId);
         return Optional.of(result).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<InterviewDTO>> getAllInterviews(){
+        logger.info("Interview get request received");
+        return Optional.of(interviewService.getAllInterviews()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }
 
