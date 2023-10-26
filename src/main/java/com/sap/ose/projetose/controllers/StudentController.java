@@ -4,7 +4,9 @@ import com.sap.ose.projetose.annotations.FileExists;
 import com.sap.ose.projetose.annotations.UserExists;
 import com.sap.ose.projetose.dtos.InternshipApplicationDto;
 import com.sap.ose.projetose.dtos.StudentDto;
+import com.sap.ose.projetose.models.File;
 import com.sap.ose.projetose.models.Student;
+import com.sap.ose.projetose.services.FileService;
 import com.sap.ose.projetose.services.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,6 +25,7 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final FileService fileService;
     Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @PostMapping("/register")
@@ -46,9 +49,8 @@ public class StudentController {
 
     @PostMapping("/{id}/cv")
     public ResponseEntity<Student> addCv(@PathVariable @UserExists Long id, @RequestBody @FileExists Long cv) {
-        // FIXME: Properly implement this method to use StudentId instead of matricule. It should return a StudentDto.
-        logger.info("add cv to " + matricule);
-        Student student = studentService.updateCvByMatricule(matricule, null);
+        File cvFile = fileService.getFileById(cv);
+        Student student = studentService.updateCvById(id, cvFile);
         return ResponseEntity.ok().body(student);
     }
 

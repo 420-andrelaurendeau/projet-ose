@@ -20,6 +20,6 @@ public class OfferReviewRequestDto {
         this.id = offerReviewRequest.getId();
         this.comment = offerReviewRequest.getComment();
         this.internshipOfferId = offerReviewRequest.getInternshipOffer().getId();
-        this.internshipManagerId = offerReviewRequest.getInternshipManager().getId();
+        this.internshipManagerId = offerReviewRequest.getReviewer().getId();
     }
 }

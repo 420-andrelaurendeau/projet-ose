@@ -20,26 +20,22 @@ public class InternshipOffer extends BaseModel {
     private double salaryByHour;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String status;
     private ApprovalStatus state;
 
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
-    @ManyToOne
-    @JoinColumn
+    @OneToOne
     @ToString.Exclude
     private StudyProgram studyProgram;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn
     @ToString.Exclude
     private File file;
-    @ManyToOne
-    @JoinColumn
+    @OneToOne
     @ToString.Exclude
     private Employer employer;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private OfferReviewRequest offerReviewRequest;
 }

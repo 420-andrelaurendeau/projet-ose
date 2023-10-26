@@ -14,7 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream().map(User::toUserDto).toList();
+        return userRepository.findAll().stream().map(User::toDto).toList();
     }
 
     public User getUserById(long uploaderId) {

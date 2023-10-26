@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class EmployerService {
@@ -23,7 +25,7 @@ public class EmployerService {
     @Transactional
     public EmployerDto createEmployer(NewEmployerDto employerDto) {
         Employer employer = new Employer();
-        StudyProgram StudyProgram = studyProgramService.findProgramById(employerDto.getStudyProgramId());
+        Set<StudyProgram> StudyProgram = studyProgramService.findProgramsById(employerDto.getStudyProgramId());
 
         employer.setLastName(employerDto.getLastName());
         employer.setFirstName(employerDto.getFirstName());

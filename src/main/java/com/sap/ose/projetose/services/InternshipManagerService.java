@@ -15,6 +15,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class InternshipManagerService {
@@ -59,29 +61,4 @@ public class InternshipManagerService {
         }
     }
 
-    @Transactional
-    public void saveManager(InternshipManagerDto internshipmanagerDto) {
-        try {
-            StudyProgram studyProgram = studyProgramService.findProgramById(internshipmanagerDto.getProgramId());
-
-            InternshipManager internshipmanager = internshipmanagerDto.toInternshipManager();
-            internshipmanager.setStudyProgram(studyProgram);
-
-            internshipmanagerRepository.save(internshipmanager);
-
-        } catch (DataIntegrityViolationException e) {
-            logger.info(e.getMessage());
-            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
-        } catch (DataAccessException e) {
-            logger.info(e.getMessage());
-            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
-            };
-        } catch (NullPointerException e) {
-            logger.info(e.getMessage());
-            throw new NullPointerException(e.getMessage());
-        } catch (Exception e) {
-            logger.info(e.getMessage());
-            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
-        }
-    }
 }

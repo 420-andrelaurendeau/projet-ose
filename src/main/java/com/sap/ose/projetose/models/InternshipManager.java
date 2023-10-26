@@ -15,13 +15,12 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class InternshipManager extends User {
-    @ManyToMany
-    @JoinTable
-    private Set<StudyProgram> studyProgram;
+    @ManyToMany(mappedBy = "id")
+    private Set<StudyProgram> studyPrograms;
 
-    public InternshipManager(String lastName, String firstName, String phone, String email, String password, Set<StudyProgram> studyProgram) {
+    public InternshipManager(String lastName, String firstName, String phone, String email, String password, Set<StudyProgram> studyPrograms) {
         super(lastName, firstName, phone, email, password);
-        this.studyProgram = studyProgram;
+        this.studyPrograms = studyPrograms;
     }
 
     public InternshipManagerDto toDto() {

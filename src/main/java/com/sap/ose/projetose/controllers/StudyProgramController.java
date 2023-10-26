@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.controllers;
 
+import com.sap.ose.projetose.dtos.NewStudyProgramDto;
 import com.sap.ose.projetose.dtos.StudyProgramDto;
 import com.sap.ose.projetose.services.StudyProgramService;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +19,8 @@ public class StudyProgramController {
 
     @PostMapping( "/new")
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<StudyProgramDto> createStudyProgram(@RequestBody StudyProgramDto studyProgramDTO) {
-        //FIXME: make sure this only returns a valid response, Global Exception Handler will handle the rest.
-        // make a new NewStudyProgramDto without ID and with validation for this one.
-        // Checkout <see EmployerController.java> for an example.
-        return studyProgramService
-                .saveStudyProgram(studyProgramDTO)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<StudyProgramDto> createStudyProgram(@RequestBody NewStudyProgramDto studyProgramDTO) {
+        return ResponseEntity.ok(studyProgramService.createStudyProgram(studyProgramDTO));
     }
 
     @GetMapping("/all")

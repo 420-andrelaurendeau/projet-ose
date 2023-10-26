@@ -2,8 +2,12 @@ package com.sap.ose.projetose.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GeneratedColumn;
 
 import java.util.List;
+
+import static org.hibernate.annotations.GenerationTime.*;
 
 @Entity
 @Data
@@ -11,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"candidate", "internshipOffer"}))
 public class InternshipApplication extends BaseModel {
     @ManyToOne
     @JoinColumn

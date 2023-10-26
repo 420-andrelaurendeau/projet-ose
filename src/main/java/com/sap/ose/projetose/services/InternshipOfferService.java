@@ -45,7 +45,10 @@ public class InternshipOfferService {
         internshipOffer.setFile(fileService.getFileById(internshipOfferDto.getOfferFile()));
         internshipOffer.setEmployer(employerService.findById(internshipOfferDto.getEmployerId()));
         internshipOffer.setState(ApprovalStatus.PENDING);
-        internshipOffer.setOfferReviewRequest(internshipOfferReviewRequestService.createNewRequest(NewInternshipOfferDto));
+
+        internshipOfferRepository.save(internshipOffer);
+
+        internshipOffer.setOfferReviewRequest(internshipOfferReviewRequestService.createRequest(internshipOffer));
 
 
         InternshipOffer savedOfferDto = internshipOfferRepository.save(internshipOffer);
@@ -78,18 +81,7 @@ public class InternshipOfferService {
     }
 
     InternshipOffer findById(long id) {
-        try {
-            return internshipOfferRepository.findById(id).orElseThrow(OfferNotFoundException::new);
-        } catch (OfferNotFoundException e) {
-            logger.error("Offre d'emploi non trouvée pour l'Id : " + id);
-            throw new OfferNotFoundException();
-        } catch (DataAccessException e) {
-            logger.error("Erreur d'accès à la base de données lors de la récupération de l'offre d'emploi avec l'ID : " + id, e);
-            throw new DatabaseException("Erreur lors de la récupération de l'offre d'emploi.");
-        } catch (Exception e) {
-            logger.error("Erreur inconnue lors de la récupération de l'offre d'emploi avec l'ID : " + id, e);
-            throw new ServiceException("Erreur lors de la récupération de l'offre d'emploi.");
-        }
+        return internshipOfferRepository.findById(id).orElseThrow(OfferNotFoundException::new);
     }
 
     public List<InternshipOfferDto> getAllInternOffers() {
@@ -102,14 +94,6 @@ public class InternshipOfferService {
 
     boolean isApprovedOrDeclineById(long id) {
         return internshipOfferRepository.findById(id).filter(offer -> offer.getState() == ApprovalStatus.APPROVED || offer.getState() == ApprovalStatus.REJECTED).isPresent();
-    }
-
-    public List<InternshipOfferDto> getInternOffer() {
-        List<InternshipOfferDto> internshipOfferDtos = new ArrayList<>();
-        for (InternshipOffer internshipOffer : internshipOfferRepository.findAll()) {
-            internshipOfferDtos.add(new InternshipOfferDto(internshipOffer));
-        }
-        return internshipOfferDtos;
     }
 
     @Transactional
@@ -128,43 +112,4 @@ public class InternshipOfferService {
         return internshipOfferDtos;
     }
 
-    public InternshipOffer toInternshipOffer(InternshipOfferDto internshipOfferDto) {
-        StudyProgram studyProgram = studyProgramService.findProgramById(internshipOfferDto.getProgramId());
-        Employer employer = employerService.findById(internshipOfferDto.getEmployerId());
-        File file = fileService.newFile(internshipOfferDto.getFile());
-        OfferReviewRequest offerReviewRequest = internshipOfferReviewRequestService.createNewRequest();
-
-        InternshipOffer internshipOffer = internshipOfferRepository.findById(internshipOfferDto.getId()).orElse(null);
-
-        internshipOffer = internshipOffer == null
-                ? new InternshipOffer(
-                internshipOfferDto.getTitle(),
-                internshipOfferDto.getLocation(),
-                internshipOfferDto.getDescription(),
-                internshipOfferDto.getSalaryByHour(),
-                LocalDate.parse(internshipOfferDto.getStartDate()),
-                LocalDate.parse(internshipOfferDto.getEndDate()),
-                new ArrayList<>(),
-                studyProgram,
-                file,
-                employer,
-                internshipOfferDto.getState(),
-                offerReviewRequest
-        )
-                : internshipOffer;
-
-        internshipOffer.setTitle(Objects.requireNonNullElse(internshipOfferDto.getTitle(), internshipOffer.getTitle()));
-        internshipOffer.setLocation(Objects.requireNonNullElse(internshipOfferDto.getLocation(), internshipOffer.getLocation()));
-        internshipOffer.setDescription(Objects.requireNonNullElse(internshipOfferDto.getDescription(), internshipOffer.getDescription()));
-        internshipOffer.setSalaryByHour(internshipOfferDto.getSalaryByHour());
-        internshipOffer.setStartDate(Objects.requireNonNullElse(LocalDate.parse(internshipOfferDto.getStartDate()), internshipOffer.getStartDate()));
-        internshipOffer.setEndDate(Objects.requireNonNullElse(LocalDate.parse(internshipOfferDto.getEndDate()), internshipOffer.getEndDate()));
-        internshipOffer.setStudyProgram(Objects.requireNonNullElse(studyProgram, internshipOffer.getStudyProgram()));
-        internshipOffer.setFile(Objects.requireNonNullElse(file, internshipOffer.getFile()));
-        internshipOffer.setEmployer(Objects.requireNonNullElse(employer, internshipOffer.getEmployer()));
-        internshipOffer.setState(Objects.requireNonNullElse(internshipOfferDto.getState(), internshipOffer.getState()));
-        internshipOffer.setOfferReviewRequest(Objects.requireNonNullElse(offerReviewRequest, internshipOffer.getOfferReviewRequest()));
-
-        return internshipOffer;
-    }
 }

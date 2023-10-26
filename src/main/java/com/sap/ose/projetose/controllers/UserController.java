@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/all")
     @CrossOrigin(origins = "http://localhost:3000")

@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,7 +15,7 @@ public class File extends BaseModel {
     private String fileName;
     private ApprovalStatus approvalStatus;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn
     @ToString.Exclude
     private User user;

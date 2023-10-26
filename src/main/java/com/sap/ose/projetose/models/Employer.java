@@ -22,8 +22,7 @@ public class Employer extends User {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
-    @ManyToMany(mappedBy = "employers")
-    @JoinTable
+    @ManyToMany(mappedBy = "id")
     private Set<StudyProgram> studyProgram;
 
     public Employer(String lastName, String firstName, String phone, String email, String password, String enterprise, Set<StudyProgram> studyProgram) {

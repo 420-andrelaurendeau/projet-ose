@@ -1,16 +1,10 @@
 package com.sap.ose.projetose.services;
 
-import com.sap.ose.projetose.dtos.NewFileTransferDto;
-import com.sap.ose.projetose.dtos.InternshipOfferDto;
-import com.sap.ose.projetose.dtos.StudentApplicationDto;
+import com.sap.ose.projetose.annotations.UserExists;
+import com.sap.ose.projetose.dtos.InternshipApplicationDto;
 import com.sap.ose.projetose.dtos.StudentDto;
-import com.sap.ose.projetose.exceptions.DatabaseException;
-import com.sap.ose.projetose.exceptions.ServiceException;
 import com.sap.ose.projetose.exceptions.StudentNotFoundException;
-import com.sap.ose.projetose.models.File;
-import com.sap.ose.projetose.models.InternshipApplication;
-import com.sap.ose.projetose.models.Student;
-import com.sap.ose.projetose.models.StudyProgram;
+import com.sap.ose.projetose.models.*;
 import com.sap.ose.projetose.repositories.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -46,15 +40,17 @@ public class StudentService {
 
     public List<StudentDto> getStudents() {
         List<StudentDto> dtos = new ArrayList<>();
+
         for (Student student : studentRepository.findAll()) {
-            dtos.add(new StudentDto(student.getLastName(), student.getFirstName(), student.getPhoneNumber(), student.getEmail(), student.getMatricule(), student.getStudyProgram().getId(), student.getCvList().stream().map(File::getId).toList(), student.getInternshipApplications().stream().map(InternshipApplication::getId).toList()));
+            dtos.add(new StudentDto(student));
         }
+
         return dtos;
     }
 
     public StudentDto getStudentDTOById(Long id) {
-        Optional<Student> etudiant = studentRepository.findById(id);
-        return etudiant.map(value -> new StudentDto(value.getLastName(), value.getFirstName(), value.getPhoneNumber(), value.getEmail(), value.getMatricule(), value.getStudyProgram().getId(), value.getCvList().stream().map(File::getId).toList(), value.getInternshipApplications().stream().map(InternshipApplication::getId).toList())).orElse(null);
+        Optional<Student> student = studentRepository.findById(id);
+        return student.map(StudentDto::new).orElse(null);
     }
 
     public Student getStudentById(Long id) {
@@ -62,14 +58,8 @@ public class StudentService {
         return student.orElse(null);
     }
 
-    public Student getStudentByMatricule(String matricule) {
-        Optional<Student> etudiant = studentRepository.findByMatriculeEqualsIgnoreCase(matricule);
-        return etudiant.orElse(null);
-    }
-
-    public Student updateCvByMatricule(String matricule, File cv) {
-        //FIXME: Possible NullPointerException.
-        Student student = getStudentByMatricule(matricule);
+    public Student updateCvById(Long id, File cv) {
+        Student student = studentRepository.getReferenceById(id);
         student.setCvList(List.of(cv));
         return student;
     }
@@ -79,39 +69,26 @@ public class StudentService {
     }
 
     @Transactional
-    public List<StudentApplicationDto> getApplicationsByStudent(long id) {
-        try {
-            Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
-            List<InternshipApplication> offersApplied = student.getInternshipApplications();
+    public List<InternshipApplicationDto> getApplicationsByStudent(long id) {
+        Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+        List<InternshipApplication> offersApplied = student.getInternshipApplications();
 
-            if (offersApplied == null)
-                return new ArrayList<>();
+        if (offersApplied == null)
+            return new ArrayList<>();
 
-            return offersApplied.stream().map(
-                    (offerApplied) -> {
-                        StudentApplicationDto dto = new StudentApplicationDto();
+        return offersApplied.stream().map(
+                (offerApplied) -> {
+                    InternshipApplicationDto dto = new InternshipApplicationDto();
 
-                        InternshipOfferDto offerDto = new InternshipOfferDto(offerApplied.getInternshipOffer());
-                        offerDto.setInternshipApplicationIds(null);
+                    long offerDtoId = offerApplied.getInternshipOffer().getId();
 
-                        List<NewFileTransferDto> newFileTransferDtos = offerApplied.getFiles().stream().map(NewFileTransferDto::new).toList();
+                    List<Long> newFileTransferDtos = offerApplied.getFiles().stream().map(BaseModel::getId).toList();
 
-                        dto.setAppliedOffer(offerDto);
-                        dto.setAppliedFiles(newFileTransferDtos);
+                    dto.setInternshipOfferDtoId(offerDtoId);
+                    dto.setFileTransferDtosId(newFileTransferDtos);
 
-                        return dto;
-                    }).toList();
-
-        } catch (StudentNotFoundException e) {
-            logger.error("Etudiant non trouvé avec l'id" + id, e);
-            throw e;
-        } catch (DataAccessException e) {
-            logger.error("Erreur lors de la récupération des offres appliquées par l'étudiant avec l'Id :" + id, e);
-            throw new DatabaseException("Erreur lors de la récupération des offres appliquées par l'étudiant");
-        } catch (Exception e) {
-            logger.error("Erreur inconnue lors de la récupération des offres appliquées par l'étudiant avec l'id :" + id, e);
-            throw new ServiceException("Erreur lors de la récupération des offres appliquées par l'étudiant");
-        }
+                    return dto;
+                }).toList();
     }
 
 
