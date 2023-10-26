@@ -871,62 +871,6 @@ i18n
                                 text: 'Inscription Employeur'
                             }
 
-                },
-                EtudiantStage:{
-                    titre:{
-                        name:'titre',
-                        text:'Stages pour étudiants'
-                    },
-                    stage:{
-                        name:'stage',
-                        description: {
-                            name : 'description',
-                            text : 'Description de l\'offre d\'emploi :',
-                        },
-                        location: {
-                            name : 'location',
-                            text : 'Lieu :',
-                        },
-                        salary: {
-                            name : 'salary',
-                            text : 'salaire par heure :'
-                        },
-                        startDate: {
-                            name : 'startDate',
-                            text : 'Date de début :',
-                        },
-                        endDate: {
-                            name : 'endDate',
-                            text : 'Date de fin :',
-                        },
-                        apply: {
-                            name : 'Apply',
-                            text : 'Postuler',
-                        }
-                    }
-                },
-                Header: {
-                    stage : {
-                        name : 'stage',
-                        text : 'Offre stages',
-                    },
-                    sidebar : {
-                        stage : {
-                            name : 'stage',
-                            text : "Offre"
-                        },
-                        offre_applique : {
-                            name : 'offre applique',
-                            text : "Offre appliqué"
-                        },
-                        uploadCV : {
-                            name : 'uploadCV',
-                            text : "Televerser votre CV"
-                        },
-                        interview : {
-                            name : 'interview',
-                            text : "Entrevue"
-                        }
                         },
                         EtudiantStage: {
                             titre: {
@@ -979,7 +923,6 @@ i18n
                                     name: 'offre applique',
                                     text: "Offre appliqué"
                                 },
-
                             },
                             profilMenu: {
                                 signOut: {

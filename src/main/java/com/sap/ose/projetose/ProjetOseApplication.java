@@ -1,12 +1,14 @@
 package com.sap.ose.projetose;
 
 import com.sap.ose.projetose.dto.*;
+import com.sap.ose.projetose.dto.auth.InternshipmanagerAuthDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
 import com.sap.ose.projetose.service.*;
+import com.sap.ose.projetose.service.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -42,6 +44,9 @@ public class ProjetOseApplication implements CommandLineRunner {
     @Autowired
     ProgrammeRepository programmeRepository;
 
+    @Autowired
+    AuthenticationService authenticationService;
+
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
 	}
@@ -57,10 +62,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         Employeur employeur = new Employeur("Patrique", "Lemieux", "lemieux@gmail.com","4383006589" ,"popo123", "Cisco", programme1);
         Employeur employeur2 = new Employeur("Pierre", "Lacroix", "lacroix@gmail.com","4387996589","popo123", "Norton", programme2);
 
-        System.out.println(etudiant1.getId());
-        authenticationService.registerEtudiant(etudiant1);
         authenticationService.registerEtudiant(etudiant2);
-        authenticationService.registerEmployeur(employeur1);
+        authenticationService.registerEtudiant(etudiant3);
+        authenticationService.registerEmployeur(employeur);
         authenticationService.registerEmployeur(employeur2);
 
         Internshipmanager internshipmanager = new Internshipmanager("Jean", "Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
@@ -84,11 +88,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 
-
-        Internshipmanager mangager = new Internshipmanager("Dupont", "Jean","4387996589", "dupont@gmail.com", "popo", programme1);
-        mangager = internshipmanagerService.save(new InternshipmanagerDto(mangager));
-
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant1, internOffer, List.of(file));
+        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
     }
