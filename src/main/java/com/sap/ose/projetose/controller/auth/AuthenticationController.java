@@ -21,6 +21,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
+    //todo add error handling
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }

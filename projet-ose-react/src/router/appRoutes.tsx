@@ -11,9 +11,9 @@ const AppRouter: React.FC = () => {
     return (
         <Router>
             <Routes>
-                <Route path="/student/*" element={<StudentRoutes />} />
+                <Route path="/STUDENT/*" element={<StudentRoutes />} />
                 <Route path="/EMPLOYEUR/*" element={<EmployerRouter/>}/>
-                <Route path="/ETUDIANT/*" element={<InternshipManagerRouter/>}/>
+                <Route path="/ADMIN/*" element={<InternshipManagerRouter/>}/>
                 <Route path="/login" element={<ConnectPage/>}/>
                 <Route path="*" element={<ErrorPage/>}/>
             </Routes>
