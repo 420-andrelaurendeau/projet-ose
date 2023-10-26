@@ -1,15 +1,15 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {validateFile} from "../utils/validation/validationInteOfferForm";
-import {FileEntity} from "../model/FileEntity";
-import {setSelectionRange} from "@testing-library/user-event/dist/utils";
+import {validateFile} from "../../../utils/validation/validationInteOfferForm";
+import {FileEntity} from "../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router-dom";
 
 
-function TeleversementCV(): ReactElement {
+
+function UploadCV(): ReactElement {
 
     let location = useLocation();
 
@@ -134,7 +134,7 @@ function TeleversementCV(): ReactElement {
                     </div>
                     <br/>
                     <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
-                        {t('formField.TeleversementCV.buttons.submit')}
+                        {t('cv.upload_button')}
                     </div>
                     {renderUploadStatus()}
 
@@ -144,4 +144,4 @@ function TeleversementCV(): ReactElement {
     )
 }
 
-export default TeleversementCV
+export default UploadCV

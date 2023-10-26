@@ -4,7 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 import EtudiantStagePage from "../pages/EtudiantStagePage";
 import ErrorPage from "../pages/ErrorPage";
 import EtudiantStage from "../components/common/student/StudentStage";
-import TeleversementCV from "../pages/TeleversementCV";
+import UploadCV from "../components/common/student/UploadCV";
 
 const StudentRoutes: React.FC = () => {
     return (
@@ -12,7 +12,7 @@ const StudentRoutes: React.FC = () => {
             <Routes>
                 <Route path="/" element={<EtudiantStagePage/>}>
                         <Route path="offers" element={<EtudiantStage/>}/>
-                        <Route path="cv" element={<TeleversementCV/>}/>
+                        <Route path="cv" element={<UploadCV/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>

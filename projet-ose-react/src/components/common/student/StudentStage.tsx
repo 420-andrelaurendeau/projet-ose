@@ -10,6 +10,8 @@ import {useProps} from "../../../pages/EtudiantStagePage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
+import {getUser} from "../../../api/UtilisateurAPI";
+import {allStudentInternshipOffers} from "../../../api/InterOfferJobAPI";
 
 function StudentStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -19,7 +21,6 @@ function StudentStage() {
     let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // const {appliedOffers, setAppliedOffers, offers, user} = useProps();
-
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [user, setUser] = useState<any>(null)
@@ -27,32 +28,17 @@ function StudentStage() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        console.log(auth);
-        console.log(token);
+        getUser(auth.userEmail!).then((res) => {
+                setUser(res);
+                console.log(res);
+            }
+        ).finally(() => {
+            allStudentInternshipOffers().then((res) => {
+                setOffers(res);
+            })
+        })
 
-        axios.get(`http://localhost:8080/api/utilisateur/utilisateur/${auth.userEmail}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
-            res => {
-                console.log(res.data);
-                setUser(res.data);
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                anError = true;
-            }
-        )
 
-        axios.get('http://localhost:8080/api/interOfferJob/OffersEtudiant', {headers: {"Authorization": `Bearer ${token}`}}).then(
-            res => {
-                console.log(res.data);
-                setOffers(res.data);
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                anError = true;
-            }
-        )
     }, []);
 
 
@@ -63,7 +49,7 @@ function StudentStage() {
             etudiant: student,
             internOfferJob: offer,
             files: null
-        },{headers: {"Authorization": `Bearer ${token}`}}).then(
+        }, {headers: {"Authorization": `Bearer ${token}`}}).then(
             res => {
                 let appliedOffer: AppliedOffers = {
                     appliedOffer: res.data.internOfferJob,

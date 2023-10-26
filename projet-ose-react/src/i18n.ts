@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import CV from './components/common/student/i18n/CV';
+
 
 i18n
     // detect user language
@@ -579,8 +581,10 @@ i18n
                                 minLenght : 'The password must contain at least 5 characters',
                             }
                         }
-                    }
+                    },
+                    cv: CV.en,
                 }
+
             },
             fr: {
                 translation: {
@@ -1133,7 +1137,8 @@ i18n
                                 minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                             }
                         }
-                    }
+                    },
+                    cv: CV.fr,
                 }
             }
         }

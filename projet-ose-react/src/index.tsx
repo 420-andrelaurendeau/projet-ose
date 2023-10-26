@@ -11,7 +11,7 @@ import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
-import TeleversementCV from "./pages/TeleversementCV";
+import UploadCV from "./components/common/student/UploadCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
@@ -95,7 +95,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/etudiant/home/TeleverserCV",
-                element: <TeleversementCV/>
+                element: <UploadCV/>
             },
         ]
     },
