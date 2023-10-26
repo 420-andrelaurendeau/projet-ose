@@ -24,7 +24,6 @@ public class FileDto {
     }
 
     public File fromDto() {
-        File file = new File(content, fileName, isAccepted);
-        return file;
+        return new File(content, fileName, isAccepted);
     }
 }

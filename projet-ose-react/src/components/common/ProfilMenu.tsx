@@ -7,7 +7,7 @@ import {LanguageIconEn, LanguageIconFr} from "./LanguageIcons";
 import useDarkSide from "../../hooks/useDarkSide";
 import {useTranslation} from "react-i18next";
 
-function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,language: string, sidebarIsOpen: boolean }) {
+function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,language: string, sidebarIsOpen: boolean, onLogout: () => void }) {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const fields = i18n.getResource(language,"translation","formField");
@@ -129,21 +129,6 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                 <div className="block justify-between">
                                     <button
                                         className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
-                                        onClick={switchStatus}
-                                    >
-                                        <div className="flex w-full justify-between ">
-                                            <FontAwesomeIcon icon={faPlug}
-                                                             bounce={isSwitchStatus}
-                                                             className={isActive ? "text-green mt-1.5" : "text-red mt-1.5"}/>
-                                            <p className="text-black dark:text-gray w-10/12 text-start" data-testid="active-text">
-                                                {isActive ? fields.Header.profilMenu.active.text : fields.Header.profilMenu.inactive.text}
-                                            </p>
-                                        </div>
-                                        <FontAwesomeIcon icon={faGreaterThan}
-                                                         className="mt-1.5 mr-1 text-black dark:text-gray"/>
-                                    </button>
-                                    <button
-                                        className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
                                         onClick={toggleDarkMode}
                                         data-testid="change-theme"
                                     >
@@ -177,6 +162,17 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                         </div>
                                         <FontAwesomeIcon icon={faGreaterThan}
                                                          className="mt-1.5 mr-1 text-black dark:text-gray"/>
+                                    </button>
+                                    <button
+                                        className="md:pl-14 flex justify-center mt-2.5 w-full bg-red hover:bg-rose-800"
+                                        onClick={props.onLogout}
+                                    >
+                                        <div className="flex w-full ">
+                                            <FontAwesomeIcon icon={faPlug}/>
+                                            <p className="text-black dark:text-gray w-10/12 text-start" data-testid="active-text">
+                                                {fields.Header.profilMenu.signOut.text}
+                                            </p>
+                                        </div>
                                     </button>
                                 </div>
                             </div>

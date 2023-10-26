@@ -3,6 +3,7 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.service.ProgrammeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class ProgrammeController {
 
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProgrammeDto> saveProgramme(@RequestBody ProgrammeDto programmeDTO) {
         return programmeService.saveProgramme(programmeDTO).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }

@@ -4,14 +4,13 @@ import './index.css';
 import './tailwind.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
-import HomePage from "./pages/HomePage";
 import TeleversementCV from "./pages/TeleversementCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
@@ -21,7 +20,10 @@ import CandidatureOffer from "./components/common/CandidatureOffer";
 import InternshipOfferForm from "./components/common/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
-import GSOffersPage from "./pages/GSOffersPage";
+import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
+import ErrorPage from "./pages/ErrorPage";
+import AppRouter from "./router/appRoutes";
+import {AuthProvider} from "./authentication/AuthContext";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -58,7 +60,7 @@ const router = createBrowserRouter([
                         children: [
                             {
                                 path: "InterviewForm",
-                                element: <InterviewForm />
+                                element: <InterviewForm/>
                             }
                         ]
                     },
@@ -85,8 +87,7 @@ const router = createBrowserRouter([
             {
                 path: "/etudiant/home/offre",
                 element: <EtudiantStage/>,
-                children: [
-                ]
+                children: []
             },
             {
                 path: "/etudiant/home/offreApplique",
@@ -121,17 +122,20 @@ const router = createBrowserRouter([
         path: "/etudiantStage",
         element: <EtudiantStagePage/>
     },
-
-
-
+    {
+        path: "/*",
+        element: <ErrorPage/>
+    }
 
 ])
 
 root.render(
     <React.StrictMode>
-        <ToastContextProvider>
-            <RouterProvider router={router}/>
-        </ToastContextProvider>
+        <AuthProvider>
+            <ToastContextProvider>
+                <AppRouter/>
+            </ToastContextProvider>
+        </AuthProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

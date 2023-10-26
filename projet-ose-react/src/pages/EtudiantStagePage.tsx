@@ -5,7 +5,7 @@ import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {AppliedOffers} from "../model/AppliedOffers";
 import {getStudentAppliedOffers} from "../api/InterOfferJobAPI";
 import axios from "axios";
-import Header from "../Header";
+import Header from "../components/common/shared/header/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";

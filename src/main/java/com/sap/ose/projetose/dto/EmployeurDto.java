@@ -1,7 +1,10 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.Employeur;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -17,7 +20,7 @@ public class EmployeurDto extends UtilisateurDto {
         this.entreprise = entreprise;
     }
 
-    public EmployeurDto(Long id, String nom, String prenom, String phone, String email, String entreprise) {
+    public EmployeurDto(long id, String nom, String prenom, String phone, String email, String entreprise) {
         super(id,nom, prenom, phone, email);
         this.entreprise = entreprise;
     }
@@ -28,7 +31,5 @@ public class EmployeurDto extends UtilisateurDto {
         this.programme_id = employeur.getProgramme().getId();
     }
 
-    public Employeur fromDto(){
-        return new Employeur(this.getNom(), this.getPrenom(),this.getPhone(),  this.getEmail(), " ",this.getEntreprise());
-    }
+
 }

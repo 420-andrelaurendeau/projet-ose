@@ -1,27 +1,38 @@
 import {Transition} from "@headlessui/react";
-import imgDark from "././assets/images/Cegep-Andre-Laurendeau.png";
-import img from "././assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import imgDark from "../../../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faBars,
     faCircleUser,
     faXmark
 } from "@fortawesome/free-solid-svg-icons";
-import SidebarEmployeurHome from "./components/common/SidebarEmployeurHome";
+import SidebarEmployeurHome from "../../SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink, useLocation} from "react-router-dom";
-import React, {useState} from "react";
-import SidebarEtudiant from "./SidebarEtudiant";
-import ProfilMenu from "./components/common/ProfilMenu";
+import React, {useEffect, useState} from "react";
+import SidebarEtudiant from "../../../../SidebarEtudiant";
+import ProfilMenu from "../../ProfilMenu";
+import {useAuth} from "../../../../authentication/AuthContext";
+import {User} from "../../../../model/User";
+import {getUser} from "../../../../api/UtilisateurAPI";
 
-const Header = () => {
+const Header = (userd: any) => {
     const {i18n} = useTranslation();
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
-    const fields = i18n.getResource(language, "translation", "formField");
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
-    const location = useLocation();
-    const user = location.state;
+    const { userEmail, userRole, logoutUser } = useAuth();
+    const [user, setUser] = useState<User>({
+        id: 0,
+        nom: "",
+        prenom: "",
+        email: "",
+        phone: "",
+        entreprise: "",
+        programme: "",
+        matricule: "",
+    });
 
     function closeModal() {
         setIsOpenProfil(false)
@@ -32,14 +43,24 @@ const Header = () => {
     }
 
 
+
+    useEffect(() => {
+        const getUtilisateur = async () => {
+            if (userEmail)
+                setUser(await getUser(userEmail))
+        }
+        getUtilisateur().then(r => console.log(r))
+    }, [])
+
+
     return (
-        <div>
+        <>
             {
                 isOpen ?
                     <div className="fixed w-screen h-screen backdrop-blur-sm md:hidden"/>
                     : null
             }
-            <div className="fixed w-full">
+            <div className="fixed z-40 w-full">
                 <nav className="bg-white dark:bg-dark shadow ">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-16">
@@ -64,6 +85,7 @@ const Header = () => {
                             </button>
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
                                         language={language} sidebarIsOpen={isOpen}
+                                        onLogout={logoutUser}
                             />
                             <div className="-mr-2 flex md:hidden">
                                 <button
@@ -112,7 +134,7 @@ const Header = () => {
                 </nav>
             </div>
 
-        </div>
+        </>
     );
 }
 
