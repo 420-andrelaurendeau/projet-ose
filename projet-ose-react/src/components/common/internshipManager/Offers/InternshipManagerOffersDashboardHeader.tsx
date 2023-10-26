@@ -11,7 +11,7 @@ interface GSOffersDashboardHeaderProps {
     totalDeclined: number;
 }
 
-const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
+const InternshipManagerOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
                                                                              offersByState,
                                                                              fields,
                                                                              totalOffers,
@@ -102,4 +102,4 @@ const GSOffersDashboardHeader: React.FC<GSOffersDashboardHeaderProps> = ({
         </div>
     );
 }
-export default GSOffersDashboardHeader;
+export default InternshipManagerOffersDashboardHeader;
