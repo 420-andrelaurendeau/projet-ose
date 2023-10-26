@@ -3,10 +3,7 @@ package com.sap.ose.projetose.models;
 
 import com.sap.ose.projetose.dtos.StudentDto;
 import com.sap.ose.projetose.dtos.UserDto;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -30,10 +27,13 @@ public class Student extends User {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipApplication> internshipApplications;
+    @ManyToOne
+    private StudyProgram studyProgram;
 
     public Student(String lastName, String firstName, String phone, String email, String password, StudyProgram studyProgram, String matricule) {
-        super(lastName, firstName, phone, email, password, studyProgram);
+        super(lastName, firstName, phone, email, password);
         this.matricule = matricule;
+        this.studyProgram = studyProgram;
         this.cvList = new ArrayList<>();
         this.internshipApplications = new ArrayList<>();
     }

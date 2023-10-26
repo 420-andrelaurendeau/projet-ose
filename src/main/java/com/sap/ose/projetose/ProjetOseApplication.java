@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -30,8 +31,8 @@ public class ProjetOseApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        StudyProgram studyProgramInformatique = studyProgramRepository.save(new StudyProgram("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
-        StudyProgram studyProgramAdmnistration = studyProgramRepository.save(new StudyProgram("Techniques de l'administration", "Programme de formation en techniques de l'administration"));
+        Set<StudyProgram> studyProgramInformatique = studyProgramRepository.save(new StudyProgram("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
+        Set<StudyProgram> studyProgramAdmnistration = studyProgramRepository.save(new StudyProgram("Techniques de l'administration", "Programme de formation en techniques de l'administration"));
         StudyProgram studyProgramLogistique = studyProgramRepository.save(new StudyProgram("Techniques de la logistique", "Programme de formation en techniques de la logistique"));
         StudyProgram studyProgramComtabiliteGestion = studyProgramRepository.save(new StudyProgram("Techniques de la comptabilité et de la gestion", "Programme de formation en techniques de la comptabilité et de la gestion"));
 

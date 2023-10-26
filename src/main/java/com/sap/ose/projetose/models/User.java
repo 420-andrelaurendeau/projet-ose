@@ -18,9 +18,6 @@ public abstract class User extends BaseModel {
     private String email;
     @ToString.Exclude
     private String password;
-    @ManyToOne
-    @JoinColumn
-    private StudyProgram studyProgram;
 
     public abstract UserDto toDto();
 }

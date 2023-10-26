@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,14 +19,15 @@ import java.util.List;
 public class Employer extends User {
     private String enterprise;
 
-    @ManyToOne
-    private StudyProgram studyProgram;
-
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<InternshipOffer> internshipOffers;
 
-    public Employer(String lastName, String firstName, String phone, String email, String password, String enterprise, StudyProgram studyProgram) {
-        super(lastName, firstName, phone, email, password, studyProgram);
+    @ManyToMany(mappedBy = "employers")
+    @JoinTable
+    private Set<StudyProgram> studyProgram;
+
+    public Employer(String lastName, String firstName, String phone, String email, String password, String enterprise, Set<StudyProgram> studyProgram) {
+        super(lastName, firstName, phone, email, password);
         this.enterprise = enterprise;
         this.studyProgram = studyProgram;
         this.internshipOffers = new ArrayList<>();
