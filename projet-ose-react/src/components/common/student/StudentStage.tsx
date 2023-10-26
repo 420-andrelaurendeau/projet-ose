@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers} from "../../../api/InterOfferJobAPI";
+import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -45,15 +46,12 @@ function StudentStage() {
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
         console.log(student);
-        axios.post(`http://localhost:8080/api/intershipCandidates/saveCandidats`, {
-            etudiant: student,
-            internOfferJob: offer,
-            files: null
-        }, {headers: {"Authorization": `Bearer ${token}`}}).then(
+
+        saveStudentInternshipOffer(offer,student).then(
             res => {
                 let appliedOffer: AppliedOffers = {
-                    appliedOffer: res.data.internOfferJob,
-                    appliedFiles: res.data.files
+                    appliedOffer: res.internOfferJob,
+                    appliedFiles: res.files
                 };
                 console.log(appliedOffer);
 

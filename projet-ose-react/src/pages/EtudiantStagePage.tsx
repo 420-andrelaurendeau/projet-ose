@@ -8,6 +8,9 @@ import Header from "../components/common/shared/header/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../authentication/AuthContext";
+import {getUser} from "../api/UtilisateurAPI";
+import {log} from "util";
 
 
 interface Props {
@@ -19,12 +22,12 @@ interface Props {
 
 function EtudiantStagePage() {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField");
-    const location = useLocation();
-    const user = location.state;
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField");
+    const [user, setUser] = useState<any>(null);
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
-    const [offers, setOffers] = useState([
-    ]);
+    const [offers, setOffers] = useState([]);
+    const auth = useAuth();
+    const token = localStorage.getItem('token');
     const fetchOffers = () => {
         axios.get(`http://localhost:8080/api/interOfferJob/OffersEtudiant`)
             .then(res => {
@@ -35,27 +38,40 @@ function EtudiantStagePage() {
                 console.log(err);
             });
     }
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data:AppliedOffers[] = await getStudentAppliedOffers(user.id);
-                console.log(data);
-                setListStudentAppliedOffers(data);
-            } catch (error) {
-                console.error("Erreur lors de la récupération des offres:", error);
-            }
-        };
 
-        fetchData().then(r => console.log("ok"));
-        fetchOffers();
+    const fetchData = async (user:any) => {
+        try {
+            console.log(user)
+            const data: AppliedOffers[] = await getStudentAppliedOffers(user.id);
+            console.log(data);
+            setListStudentAppliedOffers(data);
+        } catch (error) {
+            console.error("Erreur lors de la récupération des offres:", error);
+        }
+    };
+
+    useEffect(() => {
+        getUser(auth.userEmail!).then((res) => {
+            console.log("SETTING USER")
+            console.log(res)
+            setUser(res);
+            }
+        ).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            fetchData(user).then(r => console.log(r));
+            fetchOffers();
+        })
+
+
     }, []);
 
 
-    const context =  {
-        user:user,
-        appliedOffers:listStudentAppliedOffers,
-        setAppliedOffers:setListStudentAppliedOffers,
-        offers:offers
+    const context = {
+        user: user,
+        appliedOffers: listStudentAppliedOffers,
+        setAppliedOffers: setListStudentAppliedOffers,
+        offers: offers
     }
 
     return (
@@ -69,8 +85,10 @@ function EtudiantStagePage() {
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
+                            <div
+                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white"
+                                                 size="lg"/>
                             </div>
                             <div className="pl-2">
                                 <p className="text-blue dark:text-orange">{fields.Header.sidebar.stage.text}</p>
@@ -83,8 +101,10 @@ function EtudiantStagePage() {
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
+                            <div
+                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white"
+                                                 size="lg"/>
                             </div>
                             <div className="pl-2">
                                 <p className="text-blue dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
@@ -97,8 +117,10 @@ function EtudiantStagePage() {
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
+                            <div
+                                className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white"
+                                                 size="lg"/>
                             </div>
                             <div className="pl-2">
                                 <p className="text-blue dark:text-orange">{fields.Header.cv.text}</p>
@@ -115,7 +137,8 @@ function EtudiantStagePage() {
     );
 }
 
-export function useProps(){
+export function useProps() {
     return useOutletContext<Props>();
 }
+
 export default EtudiantStagePage;
