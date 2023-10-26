@@ -65,7 +65,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
         <>
             <button
                 className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
-                onClick={() => navigate("/gs/offers")}
+                onClick={() => navigate("/internshipmanager/home/offers")}
             >
                 <Icon className="w-5 h-5 fill-current hover:font-bold"/>
             </button>

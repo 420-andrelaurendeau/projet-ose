@@ -33,7 +33,7 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
     const toast = useContext(ToastContext);
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "InternshipManagerOfferPage");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
 
     const fetchedOfferRef = useRef(false);
