@@ -3,7 +3,7 @@ import {Route, Routes} from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import EtudiantStagePage from "../pages/EtudiantStagePage";
 import ErrorPage from "../pages/ErrorPage";
-import EtudiantStage from "../components/common/EtudiantStage";
+import EtudiantStage from "../components/common/student/StudentStage";
 import TeleversementCV from "../pages/TeleversementCV";
 
 const StudentRoutes: React.FC = () => {

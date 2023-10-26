@@ -1,17 +1,17 @@
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
 import {useTranslation} from "react-i18next";
-import Header from "./shared/header/Header";
+import Header from "../shared/header/Header";
 import {Outlet, useLocation} from "react-router-dom";
 import axios from "axios";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../pages/EtudiantStagePage";
-import {AppliedOffers} from "../../model/AppliedOffers";
+import {useProps} from "../../../pages/EtudiantStagePage";
+import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
-import {useAuth} from "../../authentication/AuthContext";
+import {useAuth} from "../../../authentication/AuthContext";
 
-function EtudiantStage() {
+function StudentStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
@@ -156,4 +156,4 @@ function EtudiantStage() {
     )
 }
 
-export default EtudiantStage;
+export default StudentStage;

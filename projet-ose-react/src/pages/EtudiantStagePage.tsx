@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import EtudiantStage from "../components/common/EtudiantStage";
+import EtudiantStage from "../components/common/student/StudentStage";
 import SidebarOptionSwitcher from "./SidebarOptionSwitcher";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {AppliedOffers} from "../model/AppliedOffers";
@@ -93,7 +93,7 @@ function EtudiantStagePage() {
                         </div>
                     </NavLink>
                     <NavLink
-                        to="TeleverserCV"
+                        to="cv"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
