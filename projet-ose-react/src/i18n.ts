@@ -732,19 +732,6 @@ i18n
                                 approved:"Approuver"
                             }
                         },
-                        GSOfferPage: {
-                            placeholder:"Veillez entrer un commentaire",
-                            title: "Offre de stage",
-                            errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
-                            errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
-                            succesSaveOfferReview: "L'offre a été sauvegardée",
-                            validiation:{
-                                required : 'Le commentaire est requis',
-                                minLenght : 'Le commentaire doit contenir au moins 10 caractères',
-                                maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
-                                scriptDetected: "Le commentaire contient un script.",
-                            }
-                        },
                         InscriptionFormEtudiant : {
                             title : {
                                 name : 'title',
@@ -1084,7 +1071,19 @@ i18n
                             }
                         }
                     },
-
+                    GSOfferPage: {
+                        placeholder:"Veillez entrer un commentaire",
+                        title: "Offre de stage",
+                        errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
+                        errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
+                        succesSaveOfferReview: "L'offre a été sauvegardée",
+                        validiation:{
+                            required : 'Le commentaire est requis',
+                            minLenght : 'Le commentaire doit contenir au moins 10 caractères',
+                            maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
+                            scriptDetected: "Le commentaire contient un script.",
+                        }
+                    },
                     ErrorPage: {
                         errorMessage: {
                             name: 'errorMessage',
