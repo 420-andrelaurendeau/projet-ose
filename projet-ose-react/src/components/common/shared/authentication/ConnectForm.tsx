@@ -27,10 +27,7 @@ const ConnectForm = (props: any): ReactElement => {
         try {
             const role = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
             console.log(userRole)
-            if (role === "EMPLOYEUR"){
                 navigate(`/${role}/home/offers`)
-            }else
-                navigate(`/${role}/offers`)
         } catch (error) {
             console.log(error);
         }

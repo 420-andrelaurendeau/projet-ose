@@ -10,7 +10,7 @@ const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
             <Routes>
-                <Route path="/" element={<Layout/>}>
+                <Route path="/home/" element={<Layout/>}>
                         <Route path="offers" element={<EtudiantStage/>}/>
                         <Route path="cv" element={<TeleversementCV/>}/>
                         <Route path="*" element={<ErrorPage/>}/>

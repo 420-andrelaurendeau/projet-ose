@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             setUserRole(decodedToken.role[0].authority);
             setIsAuthenticated(true);
             setUserEmail(decodedToken.sub);
-            navigate(`/${decodedToken.role[0].authority}/`);
+            navigate(window.location.pathname);
 
         }else {
             setIsAuthenticated(false);

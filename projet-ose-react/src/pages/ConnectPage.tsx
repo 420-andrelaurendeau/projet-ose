@@ -6,7 +6,7 @@ function ConnectPage() {
 
     return (
 
-        <div className="h-screen w-full bg-white dark:bg-dark">
+        <div className="min-h-screen h-full w-full bg-white dark:bg-dark">
             <div className="items-center">
                 <ConnectForm/>
             </div>

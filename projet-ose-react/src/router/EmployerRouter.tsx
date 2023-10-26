@@ -15,7 +15,9 @@ const EmployerRouter: React.FC = () => {
         <ProtectedRoute requiredRoles={['employer']}>
             <Routes>
                 <Route path="/" element={<Layout/>}>
+                    <Route index path="home" element={<EmployeurHomePage/>}/>
                     <Route path="home" element={<EmployeurHomePage/>}>
+                        <Route index path="offers" element={<EmployeurOffer/>}/>
                         <Route path="offers" element={<EmployeurOffer/>}/>
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
                         <Route path="contract" element={<div>Contract</div>}/>

@@ -5,6 +5,7 @@ import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class UtilisateurService {
         this.internshipmanagerRepository = internshipmanagerRepository;
     }
 
+    @Transactional
     public Utilisateur getUserByEmail(String email) {
         Employeur employeur = employeurRepository.findByEmail(email).orElse(null);
         if (employeur != null) {
