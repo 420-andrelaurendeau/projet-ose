@@ -2,6 +2,7 @@ import axios from 'axios';
 import {InterOfferJob} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {AppliedOffers} from "../model/AppliedOffers";
+import api from "./ConfigAPI";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
 
@@ -137,7 +138,7 @@ export function UpdateOffers(email: string, setOffers: any) {
 
 export async function getOfferById(id: number) {
     try {
-        const response = await apiClient.get('internshipManager/offer/' + id);
+        const response = await api.get('internshipManager/offer/' + id);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);

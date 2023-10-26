@@ -3,7 +3,7 @@ import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {InterOfferJob} from "../../../../model/IntershipOffer";
-import {getOfferReviewById} from "../../../../api/GSManagerAPI";
+import {getOfferReviewById} from "../../../../api/internshipManager/InternshipManagerAPI";
 import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
 import {useToast} from "../../../../hooks/state/useToast";
@@ -14,7 +14,7 @@ interface GSOfferDetailsProps {
     renderError: any;
 }
 
-const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
+const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                                                            handleFormChange,
                                                            internshipOffer,
                                                            renderError
@@ -191,4 +191,4 @@ const GSOfferDetails: React.FC<GSOfferDetailsProps> = ({
 
 }
 
-export default GSOfferDetails;
+export default InternshipManagerOfferDetails;

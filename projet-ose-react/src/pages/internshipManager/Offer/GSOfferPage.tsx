@@ -3,8 +3,8 @@ import {useParams} from "react-router-dom";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {getOfferById, saveOfferReviewRequest} from "../../../api/InterOfferJobAPI";
 import {InterOfferJob} from "../../../model/IntershipOffer";
-import GSOfferDetails from "../../../components/common/internshipManager/Offer/GSOfferDetails";
-import GSReviewOfferForm from "../../../components/common/internshipManager/Offer/GSReviewOfferForm";
+import InternshipManagerOfferDetails from "../../../components/common/internshipManager/Offer/InternshipManagerOfferDetails";
+import InternshipManagerOfferReviewForm from "../../../components/common/internshipManager/Offer/InternshipManagerOfferReviewForm";
 import {ToastContext} from "../../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
@@ -157,14 +157,14 @@ const GSOfferPage: React.FC<any> = () => {
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
             <div className={"dark:bg-dark"}>
-                <GSOfferDetails
+                <InternshipManagerOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}
                     renderError={renderError}
                 />
-                <GSReviewOfferForm handleApprove={handleApprove}
-                                   handleDecline={handleDecline}
-                                   internshipOffer={internshipOffer}
+                <InternshipManagerOfferReviewForm handleApprove={handleApprove}
+                                                  handleDecline={handleDecline}
+                                                  internshipOffer={internshipOffer}
                 />
             </div>
         )}

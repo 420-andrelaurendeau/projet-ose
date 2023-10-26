@@ -7,12 +7,12 @@ import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 
 const InternshipManager: React.FC = () => {
     return (
-        <ProtectedRoute requiredRoles={['ADMIN']}>
+        <ProtectedRoute requiredRoles={['internshipmanager']}>
             <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route index element={<Layout/>}/>
-                    <Route path="offers" element={<GSOffersPage/>}/>
-                    <Route path="/offer/:id" element={<GSOfferPage/>} />
+                <Route path="/home/" element={<Layout/>}>
+                    <Route element={<Layout/>}/>
+                    <Route index path="offers" element={<GSOffersPage/>}/>
+                    <Route path="offer/:id" element={<GSOfferPage/>} />
                 </Route>
             </Routes>
         </ProtectedRoute>

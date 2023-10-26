@@ -21,7 +21,7 @@ public class ProgrammeController {
 
     @PostMapping("/ajouter")
     @CrossOrigin(origins = "http://localhost:3000")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<ProgrammeDto> saveProgramme(@RequestBody ProgrammeDto programmeDTO) {
         return programmeService.saveProgramme(programmeDTO).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }

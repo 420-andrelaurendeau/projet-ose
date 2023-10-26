@@ -17,7 +17,7 @@ import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
-import InternshipOfferForm from "./components/common/InternshipOfferForm";
+import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
 import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
 import EtudiantStage from "./components/common/EtudiantStage";
 import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
@@ -131,11 +131,9 @@ const router = createBrowserRouter([
 
 root.render(
     <React.StrictMode>
-        <AuthProvider>
-            <ToastContextProvider>
-                <AppRouter/>
-            </ToastContextProvider>
-        </AuthProvider>
+        <ToastContextProvider>
+            <AppRouter/>
+        </ToastContextProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

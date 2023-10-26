@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction} from "react";
 import {useOutletContext, useParams} from "react-router-dom";
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
+import InternshipOfferForm from "../components/common/internshipManager/InternshipOfferForm";
 import EmployeurOffer from "../components/common/EmployeurOffer";
 import EtudiantStage from "../components/common/EtudiantStage";
 import StudentAppliedOffers from "../components/common/StudentAppliedOffers";
-import GSOffers from "../components/common/internshipManager/Offers/GSOffers";
+import InternshipManagerOffers from "../components/common/internshipManager/Offers/InternshipManagerOffers";
 import GSOffersPage from "./internshipManager/Offers/GSOffersPage";
 import CandidatureOffer from "../components/common/CandidatureOffer";
 

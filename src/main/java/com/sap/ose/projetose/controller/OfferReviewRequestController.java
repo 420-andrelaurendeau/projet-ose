@@ -25,7 +25,7 @@ public class OfferReviewRequestController {
 
 
     @PostMapping("/save")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<InternOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
         InternOfferDto internOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
         return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
