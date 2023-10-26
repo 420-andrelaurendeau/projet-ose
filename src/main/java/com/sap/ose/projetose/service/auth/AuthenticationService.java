@@ -42,7 +42,7 @@ public class AuthenticationService {
         employeur.setPrenom(employeurAuthDto.getPrenom());
         employeur.setEmail(employeurAuthDto.getEmail());
         employeur.setPhone(employeurAuthDto.getPhone());
-        employeur.setRole(Role.EMPLOYEUR);
+        employeur.setRole(Role.employer);
         employeur.setPassword(passwordEncoder.encode(employeurAuthDto.getPassword()));
         employeur.setEntreprise(employeurAuthDto.getEntreprise());
         employeur.setProgramme(programme);
@@ -55,7 +55,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse registerEmployeur(Employeur employeur) {
         employeur.setPassword(passwordEncoder.encode(employeur.getPassword()));
-        employeur.setRole(Role.EMPLOYEUR);
+        employeur.setRole(Role.employer);
         employeurRepository.save(employeur);
 
         var jwtToken = jwtService.generateToken(employeur);
@@ -77,7 +77,7 @@ public class AuthenticationService {
         etudiant.setProgramme(programme);
         etudiant.setCv(null);
         etudiant.setInternshipsCandidate(null);
-        etudiant.setRole(Role.STUDENT);
+        etudiant.setRole(Role.student);
 
         etudiantRepository.save(etudiant);
 
@@ -88,7 +88,7 @@ public class AuthenticationService {
     public AuthenticationResponse registerEtudiant(Etudiant etudiant) {
 
         etudiant.setPassword(passwordEncoder.encode(etudiant.getPassword()));
-        etudiant.setRole(Role.STUDENT);
+        etudiant.setRole(Role.student);
         etudiantRepository.save(etudiant);
 
         var jwtToken = jwtService.generateToken(etudiant);
@@ -106,7 +106,7 @@ public class AuthenticationService {
         internshipmanager.setEmail(internshipmanagerAuthDto.getEmail());
         internshipmanager.setPassword(passwordEncoder.encode(internshipmanagerAuthDto.getPassword()));
         internshipmanager.setProgramme(programme);
-        internshipmanager.setRole(Role.ADMIN);
+        internshipmanager.setRole(Role.internshipmanager);
 
         internshipmanagerRepository.save(internshipmanager);
 
