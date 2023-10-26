@@ -22,6 +22,7 @@ public class InternOffer {
     private long id;
     private String title;
     private String location;
+    @Column(length = 1000000000)
     private String description;
     private double salaryByHour;
     private LocalDate startDate;

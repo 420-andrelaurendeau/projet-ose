@@ -221,4 +221,9 @@ public class InternOfferService {
         return internOfferDtos;
     }
 
+    public InternOfferDto getById(Long id) {
+        InternOffer internOffer = offerJobRepository.findById(id).orElse(null);
+        return new InternOfferDto(internOffer);
+    }
+
 }

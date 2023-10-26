@@ -4,7 +4,11 @@ import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-sol
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
-import Header from "../Header";
+import Header from "../components/common/shared/header/Header";
+import {getUser} from "../api/UtilisateurAPI";
+import {useAuth} from "../authentication/AuthContext";
+import {User} from "../model/User";
+import {data} from "autoprefixer";
 
 interface Props {
     isModalOpen: boolean,
@@ -20,12 +24,37 @@ function EmployeurHomePage() {
     const [offers, setOffers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
+    const { userEmail, userRole, logoutUser } = useAuth();
     const location = useLocation();
-    const user = location.state;
+    const [user, setUser] = useState<User>({
+        id: 0,
+        nom: "",
+        prenom: "",
+        email: "",
+        phone: "",
+        entreprise: "",
+        programme: "",
+        matricule: "",
+
+    });
+
+    useEffect(() => {
+        const getUtilisateur = async () => {
+            let  data = null;
+            if (userEmail != null){
+                console.log(userEmail)
+                data = await getUser(userEmail)
+                console.log(data)
+                setUser(data)
+            }
+        }
+        getUtilisateur().then(r => console.log(r))
+    }, [localStorage.getItem('token')])
 
     useEffect(() => {
         console.log(user)
-        UpdateOffers(user.email,setOffers)
+        if (userEmail)
+            UpdateOffers(userEmail,setOffers)
     }, []);
 
     useEffect(() => {
@@ -47,76 +76,48 @@ function EmployeurHomePage() {
     console.log(context)
 
     return (
-        <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
-            <Header/>
-            <header className="max-md:hidden pt-14 ">
-                <div className="max-w-7xl mx-auto py-6 px-6  lg:px-8">
+        <div className="min-h-screen h-full">
+            <header className="max-md:hidden pt-24 ">
+                <div className="max-w-7xl mx-auto  px-6  lg:px-8">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.titre.text} </h1>
                 </div>
             </header>
             <main>
-                <div className="max-w-7xl mx-auto py-6 xxxs:px-6 lg:px-8">
-                    <div className="w-full hidden md:block overflow-x-auto">
-                            <div className="flex-row flex md:justify-center space-x-4">
-                                <NavLink
-                                    to="offre/candidature"
-                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    state={user}
-                                >
-                                    <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                            <FontAwesomeIcon icon={faUsers} color="white" size="lg" />
-                                        </div>
-                                        <div className="pl-2">
-                                            <p className="text-gray truncate "> {fields.totalCondidature.text} </p>
-                                            <p className="text-xl dark:text-white font-bold">{nbCandidature}</p>
-                                        </div>
-                                    </div>
-                                </NavLink>
-
-                                <div
-                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                            <FontAwesomeIcon icon={faFileLines} color="white" size="lg" />
-                                        </div>
-                                        <div className="pl-2">
-                                            <p className="text-gray">{fields.totalOffre.text}</p>
-                                            <p className="text-xl dark:text-white font-bold">{offers.length}</p>
-                                        </div>
-                                    </div>
+                <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
+                        <div className="flex-row flex md:justify-start">
+                            <NavLink to="offers"
+                                     className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
+                                         (location.pathname ===  `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
+                                     }
+                                     state={user}
+                            >
+                                <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm" />
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">{fields.offre.text}</p>
                                 </div>
+                            </NavLink>
 
-                                <NavLink
-                                    to="offre/nouvelleOffre"
-                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                    state={user}
-                                >
-                                    <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                            <FontAwesomeIcon icon={faPencil} color="white" size="lg" />
-                                        </div>
-                                        <div className="pl-2">
-                                            <p className="text-gray">{fields.newOffre.text}</p>
+                            <NavLink
+                                to="newOffer"
+                                className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
+                                    + (location.pathname === `/${userRole}/home/newOffer` || location.pathname === `/${userRole}/home/newOffer/` ? " border-b-2" : "")
+                                }
+                                state={user}
+                            >
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm" />
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">{fields.newOffre.text}</p>
+                                </div>
+                            </NavLink>
 
-                                        </div>
-                                    </div>
-                                </NavLink>
-                                <div
-                                    className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-black hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    <div className="flex space-x-2 items-center h-16 w-auto">
-                                        <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                            <FontAwesomeIcon icon={faSignature} color="white" size="lg" />
-                                        </div>
-                                        <div className="pl-2">
-                                            <p className="text-gray">{fields.totalContract.text}</p>
-                                            <p className="text-xl dark:text-white font-bold">150</p>
-                                        </div>
-                                    </div>
+                            <div className="flex space-x-2 items-center h-14 px-5 justify-center">
+                                <FontAwesomeIcon icon={faSignature} className="dark:text-white" size="sm" />
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">{fields.contract.text}</p>
                                 </div>
                             </div>
+                        </div>
                     </div>
                     <div className="w-full">
                         <Outlet

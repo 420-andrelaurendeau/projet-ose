@@ -1,6 +1,6 @@
 import {createContext, useReducer} from "react";
 import {toastReducer} from "../reducer/ToastReducer";
-import ToastsContainer from "../../components/common/ToastContainer";
+import ToastsContainer from "../../components/common/shared/toast/ToastContainer";
 
 
 export const ToastContext = createContext();

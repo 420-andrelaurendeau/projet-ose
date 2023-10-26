@@ -22,6 +22,6 @@ public class EmployerDtoInscription extends UtilisateurInscriptionDto {
         }
 
         public Employeur fromDto(){
-            return new Employeur(this.getNom(), this.getPrenom(),this.getPhone(),  this.getEmail(), this.getPassword(),this.getEntreprise());
+            return new Employeur(this.getNom(), this.getPrenom(),  this.getEmail(), this.getPhone(), this.getPassword(),this.getEntreprise(), null);
         }
 }

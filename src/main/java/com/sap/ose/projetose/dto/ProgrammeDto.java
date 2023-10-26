@@ -26,6 +26,6 @@ public class ProgrammeDto {
     }
 
     public Programme fromDto() {
-        return new Programme(nom, description);
+        return new Programme(this.id, this.nom, this.description);
     }
 }

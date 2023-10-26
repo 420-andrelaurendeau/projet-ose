@@ -26,16 +26,18 @@ public class EmployeurService {
     private final Logger logger = LoggerFactory.getLogger(EmployeurService.class);
     private final ProgrammeService programmeService;
 
-
     @Autowired
     public EmployeurService(EmployeurRepository employeurRepository, ProgrammeService programmeService) {
         this.employeurRepository = employeurRepository;
         this.programmeService = programmeService;
     }
 
+    Employeur findByEmail(String email){
+        return employeurRepository.findByEmail(email).orElse(null);
+    }
+
     Employeur findById(long id) {
         try {
-
             return employeurRepository.findById(id).orElseThrow(EmployerNotFoundException::new);
         } catch (EmployerNotFoundException e) {
             logger.error("Employeur non trouvé avec l'id" + id);
@@ -90,7 +92,8 @@ public class EmployeurService {
     public List<EmployeurDto> getAllEmployeur(){
         List<EmployeurDto> employeurDTOS = new ArrayList<>();
         for(Employeur employeur : employeurRepository.findAll()){
-            employeurDTOS.add(new EmployeurDto(employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail(),employeur.getEntreprise()));
+            System.out.println(employeur.getId());
+            employeurDTOS.add(new EmployeurDto(employeur.getId(), employeur.getNom(),employeur.getPrenom(),employeur.getPhone(),employeur.getEmail(),employeur.getEntreprise()));
         }
         return employeurDTOS;
     }
