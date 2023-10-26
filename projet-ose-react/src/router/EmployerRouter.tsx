@@ -7,8 +7,8 @@ import GSOffersPage from "../pages/internshipManager/Offers/GSOffersPage";
 import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
 import EmployeurHomePage from "../pages/EmployeurHomePage";
 import EmployeurOffer from "../components/common/EmployeurOffer";
-import InternshipOfferForm from "../components/common/InternshipOfferForm";
 import ErrorPage from "../pages/ErrorPage";
+import InternshipOfferForm from "../components/common/internshipManager/InternshipOfferForm";
 
 const EmployerRouter: React.FC = () => {
     return (
