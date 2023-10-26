@@ -28,5 +28,4 @@ public class UtilisateurController {
         logger.info("getAllUsers");
         return ResponseEntity.ok().body(oseService.getAllUsers());
     }
-
 }
