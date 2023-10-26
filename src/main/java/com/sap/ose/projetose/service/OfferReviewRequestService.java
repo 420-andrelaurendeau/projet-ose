@@ -9,6 +9,7 @@ import com.sap.ose.projetose.modeles.OfferReviewRequest;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@AllArgsConstructor
 public class OfferReviewRequestService {
 
     private final OfferReviewRequestRepository offerReviewRequestRepository;
@@ -24,12 +26,7 @@ public class OfferReviewRequestService {
     private final InternshipmanagerService internshipmanagerService;
     private final Logger logger = LoggerFactory.getLogger(OfferReviewRequestService.class);
 
-    @Autowired
-    public OfferReviewRequestService(OfferReviewRequestRepository offerReviewRequestRepository, InternOfferRepository internOfferRepository, InternOfferService internOfferService, ProgrammeService programmeService, InternshipmanagerService internshipmanagerService, InternshipmanagerRepository internshipmanagerRepository, InternshipmanagerService internshipmanagerService1) {
-        this.offerReviewRequestRepository = offerReviewRequestRepository;
-        this.internOfferService = internOfferService;
-        this.internshipmanagerService = internshipmanagerService1;
-    }
+
 
 
     @Transactional
