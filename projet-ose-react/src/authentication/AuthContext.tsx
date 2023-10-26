@@ -32,7 +32,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userRole, setUserRole] = useState<string | null>("");
     const [userEmail, setUserEmail] = useState<string | null>("");
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -42,9 +42,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             setUserRole(decodedToken.role[0].authority);
             setIsAuthenticated(true);
             setUserEmail(decodedToken.sub);
+            navigate(`/${decodedToken.role[0].authority}/`);
+
         }else {
             setIsAuthenticated(false);
             setUserRole(null);
+            navigate(`/login`);
         }
         setLoading(false);
     }, [localStorage.getItem('token')]);

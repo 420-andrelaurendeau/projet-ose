@@ -8,7 +8,7 @@ import TeleversementCV from "../pages/TeleversementCV";
 
 const StudentRoutes: React.FC = () => {
     return (
-        <ProtectedRoute requiredRoles={['STUDENT']}>
+        <ProtectedRoute requiredRoles={['student']}>
             <Routes>
                 <Route path="/" element={<Layout/>}>
                         <Route path="offers" element={<EtudiantStage/>}/>

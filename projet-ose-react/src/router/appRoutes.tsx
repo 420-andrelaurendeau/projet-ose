@@ -6,17 +6,21 @@ import InternshipManagerRouter from "./internshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
 import ConnectPage from "../pages/ConnectPage";
 import ErrorPage from "../pages/ErrorPage";
+import {AuthProvider} from "../authentication/AuthContext";
 
 const AppRouter: React.FC = () => {
     return (
         <Router>
-            <Routes>
-                <Route path="/STUDENT/*" element={<StudentRoutes />} />
-                <Route path="/EMPLOYEUR/*" element={<EmployerRouter/>}/>
-                <Route path="/ADMIN/*" element={<InternshipManagerRouter/>}/>
-                <Route path="/login" element={<ConnectPage/>}/>
-                <Route path="*" element={<ErrorPage/>}/>
-            </Routes>
+            <AuthProvider>
+                <Routes>
+                    <Route path="/"  element={<ConnectPage/>}></Route>
+                    <Route path="*" element={<ErrorPage/>}/>
+                    <Route path="/login" index element={<ConnectPage/>}/>
+                    <Route path="/student/*" element={<StudentRoutes />} />
+                    <Route path="/employer/*" element={<EmployerRouter/>}/>
+                    <Route path="/internshipmanager/*" element={<InternshipManagerRouter/>}/>
+                </Routes>
+            </AuthProvider>
         </Router>
     );
 };
