@@ -33,7 +33,7 @@ const GSOfferPage: React.FC<any> = () => {
     const toast = useContext(ToastContext);
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.GSOfferPage");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "GSOfferPage");
 
 
     const fetchedOfferRef = useRef(false);
@@ -53,7 +53,7 @@ const GSOfferPage: React.FC<any> = () => {
         //TODO remplacer par id
         if (internshipOffer && internshipOffer.employeurId) {
             setFormState(prevState => ({
-                ...prevState, internshipmanagerId: 6
+                ...prevState, internshipmanagerId: 5
             }));
         }
 

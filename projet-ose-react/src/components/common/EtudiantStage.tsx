@@ -8,15 +8,53 @@ import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useProps} from "../../pages/EtudiantStagePage";
 import {AppliedOffers} from "../../model/AppliedOffers";
+import {useEffect, useState} from "react";
+import {useAuth} from "../../authentication/AuthContext";
 
 function EtudiantStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.EtudiantStage");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
     // eslint-disable-next-line react-hooks/rules-of-hooks
     let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const {appliedOffers, setAppliedOffers, offers, user} = useProps();
+    // const {appliedOffers, setAppliedOffers, offers, user} = useProps();
+
+    const [appliedOffers, setAppliedOffers] = useState<any[]>([])
+    const [offers, setOffers] = useState<any[]>([])
+    const [user, setUser] = useState<any>(null)
+    const auth = useAuth();
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        console.log(auth);
+        console.log(token);
+
+        axios.get(`http://localhost:8080/api/utilisateur/utilisateur/${auth.userEmail}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
+            res => {
+                console.log(res.data);
+                setUser(res.data);
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                anError = true;
+            }
+        )
+
+        axios.get('http://localhost:8080/api/interOfferJob/OffersEtudiant', {headers: {"Authorization": `Bearer ${token}`}}).then(
+            res => {
+                console.log(res.data);
+                setOffers(res.data);
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                anError = true;
+            }
+        )
+    }, []);
+
 
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
@@ -25,7 +63,7 @@ function EtudiantStage() {
             etudiant: student,
             internOfferJob: offer,
             files: null
-        }).then(
+        },{headers: {"Authorization": `Bearer ${token}`}}).then(
             res => {
                 let appliedOffer: AppliedOffers = {
                     appliedOffer: res.data.internOfferJob,
@@ -45,18 +83,19 @@ function EtudiantStage() {
 
     return (
         <div>
-            <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
-                <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8 ">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14">
-                        <div className="flex items-center justify-center">
-                            <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
-                        </div>
-                        <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                            {fields.titre.text}
-                        </h1>
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-20">
+                    <div className="flex items-center justify-center">
+                        <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16"/>
+                    </div>
+                    <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                        {fields.titre.text}
+                    </h1>
+                    <div className={"flex flex-col"}>
                         {offers.map((offer: any) => (
                             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}>
-                                <div className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">
+                                <div
+                                    className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">
                                     <div>
                                         <h2 className="mt-6 text-center text-3xl font-extrabold leading-9 dark:text-white">
                                             {offer.title}
@@ -103,6 +142,8 @@ function EtudiantStage() {
                                     </div>
                                 </div>
                             </div>
+
+
                         ))}
                     </div>
                 </div>
