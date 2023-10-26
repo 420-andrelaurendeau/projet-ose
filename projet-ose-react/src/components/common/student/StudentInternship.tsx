@@ -1,20 +1,16 @@
-import img from "../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
 import {useTranslation} from "react-i18next";
-import Header from "../shared/header/Header";
-import {Outlet, useLocation} from "react-router-dom";
-import axios from "axios";
+import {Outlet} from "react-router-dom";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../../pages/EtudiantStagePage";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
-function StudentStage() {
+function StudentInternship() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
@@ -27,21 +23,29 @@ function StudentStage() {
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     const token = localStorage.getItem('token');
+    const isloading = useRef(false);
 
     useEffect(() => {
-        getUser(auth.userEmail!).then((res) => {
-                setUser(res);
-                console.log(res);
-            }
-        ).finally(() => {
-            allStudentInternshipOffers().then((res) => {
-                setOffers(res);
-            })
-            getStudentAppliedOffers(user.id).then((res) => {
-                setAppliedOffers(res);
-            })
-        })
 
+        const fetchUser = async () => {
+            isloading.current = true;
+
+            getUser(auth.userEmail!).then((res) => {
+                    setUser(res);
+                    getStudentAppliedOffers(res.id).then((res) => {
+                        setAppliedOffers(res);
+                    })
+                    allStudentInternshipOffers().then((res) => {
+                        setOffers(res);
+                    })
+                }
+            ).finally(() => {
+                isloading.current = false;
+            })
+        }
+
+        if (!isloading.current)
+            fetchUser();
 
     }, []);
 
@@ -145,4 +149,4 @@ function StudentStage() {
     )
 }
 
-export default StudentStage;
+export default StudentInternship;

@@ -31,6 +31,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userRole, setUserRole] = useState<string | null>("");
+    const [userID, setUserID] = useState<number | null>(0);
     const [userEmail, setUserEmail] = useState<string | null>("");
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);

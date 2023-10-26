@@ -3,7 +3,7 @@ import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {InterOfferJob} from "../../../../model/IntershipOffer";
-import {getOfferReviewById} from "../../../../api/internshipManager/InternshipManagerAPI";
+import {getOfferReviewById} from "../../../../api/InternshipManagerAPI";
 import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
 import {useToast} from "../../../../hooks/state/useToast";
@@ -154,7 +154,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
                         id="commentary_placeholder"
                         onChange={(e) => handleFormChange(e)}
-                        placeholder={t("formField.GSOfferPage.placeholder")}>
+                        placeholder={t("formField.InternshipManagerOfferPage.placeholder")}>
 
                     </textarea>
                     {renderError()}

@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {InterOfferJob} from "../../../model/IntershipOffer";
-import {Programme} from "../../../model/Programme";
-import {saveInterOfferJob, UpdateOffers} from "../../../api/InterOfferJobAPI";
-import {getProgrammes} from "../../../api/ProgrammeAPI";
+import {InterOfferJob} from "../../../../model/IntershipOffer";
+import {Programme} from "../../../../model/Programme";
+import {saveInterOfferJob, UpdateOffers} from "../../../../api/InterOfferJobAPI";
+import {getProgrammes} from "../../../../api/ProgrammeAPI";
 import {
     validateDescription,
     validateEndDate,
@@ -12,11 +12,11 @@ import {
     validateSalary,
     validateStartDate,
     validateTitle
-} from "../../../utils/validation/validationInteOfferForm";
+} from "../../../../utils/validation/validationInteOfferForm";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
-import {useProps} from "../../../pages/EmployeurHomePage";
+import {useProps} from "../../../../pages/EmployeurHomePage";
 
 
 const initialFormState: InterOfferJob = {

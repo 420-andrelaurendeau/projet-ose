@@ -2,12 +2,12 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 // @ts-ignore
-import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
+import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
-import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
+import imgDark from '../../../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link, useNavigate} from "react-router-dom";
 
-function EtudiantInscription(props: any) {
+function StudentInscriptionForm(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
     const navigate = useNavigate();
@@ -287,4 +287,4 @@ function EtudiantInscription(props: any) {
     );
 }
 
-export default EtudiantInscription;
+export default StudentInscriptionForm;

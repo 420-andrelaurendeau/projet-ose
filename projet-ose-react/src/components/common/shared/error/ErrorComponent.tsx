@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTriangleExclamation} from "@fortawesome/free-solid-svg-icons";
-import img from '../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
-import imgDark from '../../assets/images/Cegep-Andre-Laurendeau.png';
+import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
+import imgDark from '../../../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link} from "react-router-dom";
 import React from "react";
 

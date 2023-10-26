@@ -1,4 +1,4 @@
-import ErrorComponent from "../components/common/ErrorComponent";
+import ErrorComponent from "../components/common/shared/error/ErrorComponent";
 import {useState} from "react";
 
 export default function ErrorPage() {

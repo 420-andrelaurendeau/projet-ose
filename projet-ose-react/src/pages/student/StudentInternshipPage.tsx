@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
-import {AppliedOffers} from "../model/AppliedOffers";
-import {getStudentAppliedOffers, offresEtudiant} from "../api/InterOfferJobAPI";
+import {AppliedOffers} from "../../model/AppliedOffers";
+import {getStudentAppliedOffers, offresEtudiant} from "../../api/InterOfferJobAPI";
 import axios from "axios";
-import Header from "../components/common/shared/header/Header";
+import Header from "../../components/common/shared/header/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../authentication/AuthContext";
-import {getUser} from "../api/UtilisateurAPI";
+import {useAuth} from "../../authentication/AuthContext";
+import {getUser} from "../../api/UtilisateurAPI";
 
 
 interface Props {
@@ -18,26 +18,39 @@ interface Props {
     offers: never[]
 }
 
-function EtudiantStagePage() {
+function StudentInternshipPage() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField");
     const [user, setUser] = useState<any>(null);
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
     const auth = useAuth();
+
+    const isLoading = useRef(false);
+
     useEffect(() => {
-        getUser(auth.userEmail!).then((resUser) => {
-                setUser(resUser);
-                getStudentAppliedOffers(resUser.id).then((res) => {
-                    setListStudentAppliedOffers(res);
-                })
-                offresEtudiant().then((res) => {
-                    setOffers(res);
-                })
-            }
-        ).catch(err => {
-            console.log(err)
-        })
+
+        const fetchUser = async () => {
+            isLoading.current = true;
+
+            getUser(auth.userEmail!).then((resUser) => {
+
+                    setUser(resUser);
+                    console.log(resUser)
+                    getStudentAppliedOffers(resUser.id).then((res) => {
+                        setListStudentAppliedOffers(res);
+                    })
+                    offresEtudiant().then((res) => {
+                        setOffers(res);
+                    })
+
+                }
+            ).catch(err => {
+                console.log(err)
+            }).finally(() => isLoading.current = false);
+        }
+        if (!isLoading.current)
+            fetchUser();
 
     }, []);
 
@@ -116,4 +129,4 @@ export function useProps() {
     return useOutletContext<Props>();
 }
 
-export default EtudiantStagePage;
+export default StudentInternshipPage;
