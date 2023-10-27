@@ -16,7 +16,7 @@ export const fetchInterviews = async (userId: number): Promise<Interview[]> => {
         return res.data.map((item: any) => ({
             id: item.id,
             student: item.student,
-            internshipOffer: item.internshipOffer,
+            internOffer: item.internOffer,
             date: item.date,
             description: item.description,
             state: item.state,

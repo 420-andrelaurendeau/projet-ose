@@ -71,8 +71,8 @@ function StudentInternshipPage() {
     };
 
     return (
-        <div className="items-center">
-            <div className="min-h-screen h-full bg-darkwhite dark:bg-softdark">
+        <div className="z-40 w-full items-center">
+            <div className="fbg-white dark:bg-softdark">
                 <Header />
                 <div className="pt-24 flex-row flex md:justify-center w-full">
                     <NavLink

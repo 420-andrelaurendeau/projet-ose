@@ -5,11 +5,14 @@ import com.sap.ose.projetose.dto.EtudiantDtoWithId;
 import com.sap.ose.projetose.dto.InterviewDTO;
 import com.sap.ose.projetose.dto.InterviewRequestInDto;
 import com.sap.ose.projetose.service.InterviewService;
+import jakarta.annotation.security.DenyAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
