@@ -39,3 +39,24 @@ export const fetchInterviewsCountForStudent = async (userId: number): Promise<nu
     }
 }
 
+export const acceptInterview = async (interviewId: number, studentId: number) => {
+    try {
+        const res = await api.post(`interview/studentAcceptsInterviewByStudentId/${interviewId}/${studentId}`)
+        return res.data
+    }
+    catch (err) {
+        console.log('Error while accepting interview' + err)
+        throw err
+    }
+}
+
+export const declineInterview = async (interviewId: number, studentId: number) => {
+    try {
+        const res = await api.post(`interview/studentDeclineInterviewByStudentId/${interviewId}/${studentId}`)
+        return res.data
+    }
+    catch (err) {
+        console.log('Error while declining interview' + err)
+        throw err
+    }
+}

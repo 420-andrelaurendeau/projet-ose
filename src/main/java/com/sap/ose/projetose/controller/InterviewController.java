@@ -62,6 +62,18 @@ public class InterviewController {
         logger.info("Interview get request received");
         return interviewService.getInterviewsCountByStudentId(studentId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/studentAcceptsInterviewByStudentId/{studentId}/{InterviewId}")
+    public ResponseEntity<Boolean> studentAcceptsInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
+        logger.info("Interview accept request received");
+        return interviewService.studentAcceptsInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/studentDeclineInterviewByStudentId/{studentId}/{InterviewId}")
+    public ResponseEntity<Boolean> studentRefuseInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
+        logger.info("Interview decline request received");
+        return interviewService.studentDeclineInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }
 
 class studentHasInterviewWithInternOffer {

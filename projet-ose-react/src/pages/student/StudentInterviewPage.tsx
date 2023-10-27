@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {fetchInterviews, fetchInterviewsCountForStudent} from "../../api/StudentApi";
+import {fetchInterviews, fetchInterviewsCountForStudent, acceptInterview, declineInterview} from "../../api/StudentApi";
 import {getUser} from "../../api/UtilisateurAPI";
 import {getStudentAppliedOffers, offresEtudiant} from "../../api/InterOfferJobAPI";
 import {useAuth} from "../../authentication/AuthContext";
@@ -13,6 +13,38 @@ export default function StudentInterviewPage() {
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
     const isLoading = useRef(false);
     const auth = useAuth();
+
+    const handleOnAccept = (interviewId: number) => {
+        acceptInterview(interviewId, user.id).then((res) => {
+            console.log(res);
+            if (res === true) {
+                {/*Change the interview status to accepted*/}
+                setInterviews(interviews.map((interview) => {
+                    if (interview.id === interviewId) {
+                        interview.state = 0;
+                    }
+                    return interview;
+                }));
+                window.location.reload();
+            }
+        });
+    }
+
+    const handleOnDecline = (interviewId: number) => {
+        declineInterview(interviewId, user.id).then((res) => {
+            console.log(res);
+            if (res === true) {
+                {/*Change the interview status to accepted*/}
+                setInterviews(interviews.map((interview) => {
+                    if (interview.id === interviewId) {
+                        interview.state = 2;
+                    }
+                    return interview;
+                }));
+                window.location.reload();
+            }
+        });
+    }
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -101,7 +133,22 @@ export default function StudentInterviewPage() {
                                         text-center text-sm font-medium">
                                             {interview.internOffer.employeurEntreprise}
                                         </td>
-                                        {/*TODO: Add actions buttons to accept or refuse the interview*/}
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="flex justify-center space-x-2">
+                                                <button
+                                                    onClick={() => handleOnAccept(interview.id)}
+                                                    className="text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
+                                                >
+                                                    Accepter
+                                                </button>
+                                                <button
+                                                    onClick={() => handleOnDecline(interview.id)}
+                                                    className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
+                                                >
+                                                    Refuser
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>

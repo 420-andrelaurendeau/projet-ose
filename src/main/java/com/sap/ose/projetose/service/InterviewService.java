@@ -86,4 +86,24 @@ public class InterviewService {
     public Optional<Long> getInterviewsCountByStudentId(long studentId) {
         return interviewRepository.findAllPending(studentId).isPresent() ? Optional.of((long) interviewRepository.findAllPending(studentId).get().size()) : Optional.empty();
     }
+
+    public Optional<Boolean> studentAcceptsInterviewByStudentId(long studentId, long interviewId) {
+        Interview interview = interviewRepository.findById(interviewId).orElse(null);
+        if (interview != null && interview.getStudent().getId() == studentId) {
+            interview.setState(State.ACCEPTED);
+            interviewRepository.save(interview);
+            return Optional.of(true);
+        }
+        return Optional.of(false);
+    }
+
+    public Optional<Boolean> studentDeclineInterviewByStudentId(long studentId, long interviewId) {
+        Interview interview = interviewRepository.findById(interviewId).orElse(null);
+        if (interview != null && interview.getStudent().getId() == studentId) {
+            interview.setState(State.DECLINED);
+            interviewRepository.save(interview);
+            return Optional.of(true);
+        }
+        return Optional.of(false);
+    }
 }
