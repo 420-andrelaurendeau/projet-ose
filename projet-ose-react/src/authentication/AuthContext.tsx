@@ -41,6 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             setUserRole(decodedToken.role[0].authority);
+            setUserID(decodedToken.id);
             setIsAuthenticated(true);
             setUserEmail(decodedToken.sub);
 
