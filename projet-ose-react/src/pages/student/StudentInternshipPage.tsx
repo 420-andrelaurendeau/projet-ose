@@ -15,7 +15,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../authentication/AuthContext";
 import { getUser } from "../../api/UtilisateurAPI";
-import { fetchInterviews } from "../../api/StudentApi";
+import {fetchInterviews, fetchInterviewsCountForStudent} from "../../api/StudentApi";
 import { Interview } from "../../model/Interview";
 
 interface Props {
@@ -31,7 +31,7 @@ function StudentInternshipPage() {
     const [user, setUser] = useState<any>(null);
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
-    const [interviews, setInterviews] = React.useState<Interview[]>([]);
+    const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
     const auth = useAuth();
 
     const isLoading = useRef(false);
@@ -50,9 +50,9 @@ function StudentInternshipPage() {
                     offresEtudiant().then((res) => {
                         setOffers(res);
                     });
-                    fetchInterviews(resUser.id).then((res) => {
-                        setInterviews(res);
-                        console.log(interviews);
+                    fetchInterviewsCountForStudent(resUser.id).then((res) => {
+                        setInterviewsNb(res);
+                        console.log(interviewsNb);
                     });
                 })
                 .catch((err) => {
@@ -120,7 +120,6 @@ function StudentInternshipPage() {
                     <NavLink
                         to="interview"
                         className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
                             <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
@@ -129,8 +128,8 @@ function StudentInternshipPage() {
                             <div className="pl-2">
                                 <p className="text-blue dark:text-orange">{fields.Header.interview.text}</p>
                             </div>
-                            {interviews.length > 0 ? (
-                                <p className="text-black dark:text-white">{interviews.length}</p>
+                            {interviewsNb > 0 ? (
+                                <p className="text-black dark:text-white">{interviewsNb}</p>
                             ) : (
                                 <p className="text-black dark:text-white">0</p>
                             )}

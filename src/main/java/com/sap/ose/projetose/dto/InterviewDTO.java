@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Interview;
+import com.sap.ose.projetose.modeles.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ public class InterviewDTO {
     private InternOfferDto internOffer;
     private Date date;
     private String description;
+    private State state;
 
     //TODO changer le code pour qu'on ne use pas des Modeles dans les DTOs
 
@@ -29,8 +27,16 @@ public class InterviewDTO {
         this.description = description;
     }
 
+    public InterviewDTO(EtudiantDto student, InternOfferDto internOffer, Date date, String description, State state) {
+        this.student = student;
+        this.internOffer = internOffer;
+        this.date = date;
+        this.description = description;
+        this.state = state;
+    }
+
     public Interview fromDto(){
-        return new Interview(id, student.fromDto(), internOffer.fromDto(), date, description);
+        return new Interview(student.fromDto(), internOffer.fromDto(), date, description, state);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.*;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Interview;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
@@ -44,6 +41,7 @@ public class InterviewService {
 
         InternOffer internOffer = internOfferRepository.findById(interviewRequestInDto.getInternOfferId()).orElse(null);
         Etudiant etudiant = etudiantRepository.findById(interviewRequestInDto.getStudentId()).orElse(null);
+        interviewRequestInDto.setState(State.PENDING);
 
         if (internOffer == null || etudiant == null) {
             System.out.println("InternOffer or Etudiant not found");
@@ -57,7 +55,7 @@ public class InterviewService {
        interview = interviewRepository.save(interview);
 
         if (interview != null) {
-            InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), null, null, interview.getDate(), interview.getDescription());
+            InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), null, null, interview.getDate(), interview.getDescription(), interview.getState());
             return Optional.of(returnInterviewDto);
         }
 
@@ -78,10 +76,14 @@ public class InterviewService {
     }
 
     public List<InterviewDTO> getAllInterviews() {
-        return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription())).toList();
+        return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList();
     }
 
     public List<InterviewDTO> getInterviewsByStudentId(long studentId) {
-        return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId).map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription())).toList();
+        return interviewRepository.findAllPending(studentId).isPresent() ? interviewRepository.findAllPending(studentId).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
+    }
+
+    public Optional<Long> getInterviewsCountByStudentId(long studentId) {
+        return interviewRepository.findAllPending(studentId).isPresent() ? Optional.of((long) interviewRepository.findAllPending(studentId).get().size()) : Optional.empty();
     }
 }

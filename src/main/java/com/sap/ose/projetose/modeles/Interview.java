@@ -28,11 +28,22 @@ public class Interview {
 
     private String description;
 
+    private State state;
+
     public Interview(Etudiant student, InternOffer internshipOffer, Date date, String description) {
         this.student = student;
         this.internshipOffer = internshipOffer;
         this.date = date;
         this.description = description;
+        state = State.PENDING;
+    }
+
+    public Interview(Etudiant student, InternOffer internshipOffer, Date date, String description, State state) {
+        this.student = student;
+        this.internshipOffer = internshipOffer;
+        this.date = date;
+        this.description = description;
+        this.state = state;
     }
 
     @Override

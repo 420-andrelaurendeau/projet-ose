@@ -4,4 +4,5 @@ export interface Interview {
     internshipOffer: number;
     date: string;
     description: string;
+    state: number;
 }
