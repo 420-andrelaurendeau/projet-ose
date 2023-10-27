@@ -20,6 +20,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -124,10 +126,12 @@ public class AuthenticationService {
 
             System.out.println(request.getEmail());
             Utilisateur utilisateur = utilisateurService.getUserByEmail(request.getEmail());
-            Map<String, Object> extractClaims = Map.of("id", utilisateur.getId());
+            Map<String, Object> extractClaims = new HashMap<>();
+            extractClaims.put("id", utilisateur.getId());
             var jwtToken = jwtService.generateToken(extractClaims,utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
+
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();
