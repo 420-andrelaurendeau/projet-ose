@@ -2188,6 +2188,10 @@ video {
     width: 3rem;
   }
 
+  .sm\:w-3\/4 {
+    width: 75%;
+  }
+
   .sm\:w-full {
     width: 100%;
   }
