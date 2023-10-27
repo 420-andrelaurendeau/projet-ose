@@ -124,14 +124,12 @@ public class AuthenticationService {
 
             System.out.println(request.getEmail());
             Utilisateur utilisateur = utilisateurService.getUserByEmail(request.getEmail());
-            Map<String, Object> extractClaims = Map.of("id", utilisateur.getId());
-            var jwtToken = jwtService.generateToken(extractClaims,utilisateur);
+            var jwtToken = jwtService.generateToken(utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();
-
         }
     }
 
