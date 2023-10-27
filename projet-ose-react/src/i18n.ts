@@ -340,6 +340,10 @@ i18n
                                 name: 'CV',
                                 text: 'Upload your CV',
                             },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Interview',
+                            },
                             sidebar: {
                                 stage: {
                                     name: 'stage',
@@ -913,6 +917,10 @@ i18n
                             cv: {
                                 name: 'CV',
                                 text: 'Televerser votre CV',
+                            },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Entrevue',
                             },
                             sidebar: {
                                 stage: {
