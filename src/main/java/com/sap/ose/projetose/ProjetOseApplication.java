@@ -24,11 +24,11 @@ import java.util.List;
 public class ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
-    private OseService oseService;
-    @Autowired
     private EtudiantService etudiantService;
     @Autowired
     private EmployeurService employeurService;
+    @Autowired
+    private AuthenticationService authenticationService;
     @Autowired
     private InternOfferService internOfferService;
 
@@ -43,9 +43,6 @@ public class ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
     ProgrammeRepository programmeRepository;
-
-    @Autowired
-    AuthenticationService authenticationService;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
@@ -91,5 +88,6 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
+        System.out.println("DONE");
     }
 }

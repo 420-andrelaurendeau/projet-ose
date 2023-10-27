@@ -41,6 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             setUserRole(decodedToken.role[0].authority);
+            setUserID(decodedToken.id);
             setIsAuthenticated(true);
             setUserEmail(decodedToken.sub);
 
@@ -59,10 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const loginUser = (token: string) => {
         localStorage.setItem('token', token);
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        console.log(decodedToken);
-        console.log(decodedToken.sub);
         setUserEmail(decodedToken.sub);
-        console.log(decodedToken.role[0].authority)
         setUserRole(decodedToken.role[0].authority);
         setIsAuthenticated(true);
         console.log(userRole);
