@@ -36,6 +36,7 @@ i18n
                                 location: "Location",
                                 status: "Status",
                                 startDate: "Start date",
+                                salary: "Salary",
                                 PENDING: "Pending",
                                 ACCEPTED: "Accepted",
                                 DECLINED: "Declined",
@@ -426,7 +427,7 @@ i18n
                                 name: 'titre',
                                 text: 'Dashboard'
                             },
-                            condidature: {
+                            candidature: {
                                 name: 'totalCondidature',
                                 text: 'Application'
                             },
@@ -474,7 +475,15 @@ i18n
                                 DECLINED: {
                                     name: 'DECLINED',
                                     text: 'Declined'
+                                },
+                                salary: {
+                                    name: "salary",
+                                    text: "Salary"
                                 }
+                            },
+                            toast:{
+                                errorFetchOffers:"An error occurred while fetching the offers",
+                                errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
                             }
                         },
                         profilMenu : {
@@ -602,6 +611,7 @@ i18n
                                 location: "Localisation",
                                 status: "Statut",
                                 startDate: "Date de commencement",
+                                salary: "Salaire",
                                 PENDING: "Attente",
                                 ACCEPTED: "Accepté",
                                 DECLINED: "Refusé",
@@ -1001,7 +1011,7 @@ i18n
                                 name: 'titre',
                                 text: 'Tableau de bord'
                             },
-                            condidature: {
+                            candidature: {
                                 name: 'totalCondidature',
                                 text: 'Candidature'
                             },
@@ -1049,7 +1059,15 @@ i18n
                                 DECLINED: {
                                     name: 'DECLINED',
                                     text: 'Refusé'
+                                },
+                                salary: {
+                                    name: "salary",
+                                    text: "Salaire"
                                 }
+                            },
+                            toast:{
+                                errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
+                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
                             }
                         },
                         sidebarEmployeur : {
