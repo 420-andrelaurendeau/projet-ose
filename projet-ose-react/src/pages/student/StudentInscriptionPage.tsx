@@ -1,7 +1,7 @@
 import {useState} from "react";
-import EtudiantInscription from "../components/common/etudiantInscription";
+import StudentInscriptionForm from "../../components/common/student/form/StudentInscriptionForm";
 
-function EtudiantInscriptionPage() {
+function StudentInscriptionPage() {
     const [darkMode, setDarkMode] = useState(false);
     function toggleDarkMode() {
         setDarkMode(!darkMode)
@@ -14,7 +14,7 @@ function EtudiantInscriptionPage() {
             </head>
             <body className={darkMode ? "h-screen bg-dark" : "h-screen bg-white"}>
                 <div className="items-center">
-                    <EtudiantInscription
+                    <StudentInscriptionForm
                         darkMode={darkMode}
                         toggleDarkMode={toggleDarkMode}
                     />
@@ -24,4 +24,4 @@ function EtudiantInscriptionPage() {
     )
 }
 
-export default EtudiantInscriptionPage;
+export default StudentInscriptionPage;

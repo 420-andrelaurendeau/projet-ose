@@ -12,15 +12,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRoles
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(userRole)
-        console.log(isAuthenticated)
         if (!isAuthenticated || !requiredRoles.includes(userRole!)) {
             navigate('/login');
         }
-    }, [isAuthenticated, userRole, requiredRoles, navigate]); // Dépendances de l'effet
+    }, [isAuthenticated, userRole, requiredRoles, navigate]);
 
     if (!isAuthenticated || !requiredRoles.includes(userRole!)) {
-        return null; // Vous pouvez retourner un composant de chargement ou null ici
+        return null;
     }
 
     return <>{children}</>;

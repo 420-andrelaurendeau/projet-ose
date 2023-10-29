@@ -16,6 +16,27 @@ const apiClient = axios.create({
     },
 });
 
+export const offresEtudiant = async () => {
+    try {
+        const response = await apiClient.get('interOfferJob/OffersEtudiant')
+        return response.data
+    } catch (err) {
+        console.log('Error while getting interOfferJob/OffersEtudiant' + err)
+        throw err
+    }
+
+}
+
+export const allStudentInternshipOffers = async (): Promise<any[]> => {
+    try {
+        const response = await apiClient.get('interOfferJob/allOffers');
+        return response.data
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers' + err)
+        throw err
+    }
+}
+
 export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number) => {
     const interOfferJobDto = {
         title: interOfferJob.title,
@@ -84,7 +105,7 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
     }
 };
 
-export const getOfferReviewRequestById = async (id:number) => {
+export const getOfferReviewRequestById = async (id: number) => {
     try {
 
         const response = await apiClient.get(`offerReviewRequest/get/${id}`);
@@ -111,7 +132,7 @@ export const getInterOfferJob = async (email: string) => {
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
+        const response = await apiClient.get('/student/' + studentId + '/offersApplied');
         return response.data.map((item: any) => ({
             appliedOffer: item.appliedOffer,
             appliedFiles: item.appliedFiles

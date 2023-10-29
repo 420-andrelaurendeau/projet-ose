@@ -31,6 +31,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userRole, setUserRole] = useState<string | null>("");
+    const [userID, setUserID] = useState<number | null>(0);
     const [userEmail, setUserEmail] = useState<string | null>("");
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -40,8 +41,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             setUserRole(decodedToken.role[0].authority);
+            setUserID(decodedToken.id);
             setIsAuthenticated(true);
             setUserEmail(decodedToken.sub);
+
             navigate(window.location.pathname);
 
         }else {
@@ -57,10 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const loginUser = (token: string) => {
         localStorage.setItem('token', token);
         const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        console.log(decodedToken);
-        console.log(decodedToken.sub);
         setUserEmail(decodedToken.sub);
-        console.log(decodedToken.role[0].authority)
         setUserRole(decodedToken.role[0].authority);
         setIsAuthenticated(true);
         console.log(userRole);
@@ -73,7 +73,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     };
 
     if (loading) {
-        return <></>;
+        return <p>FONCTIONNEMENT </p>;
     }
 
     return (

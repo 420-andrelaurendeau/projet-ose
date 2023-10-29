@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiant")
+@RequestMapping("/api/student")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EtudiantController {
 
@@ -43,14 +43,14 @@ public class EtudiantController {
     }
 
     @GetMapping("/etudiants")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
     @PostMapping("/addCv/{matricule}")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public ResponseEntity<EtudiantDto> addCv(@PathVariable String matricule, @RequestBody File cv){
         logger.info("add cv to " + matricule );
         EtudiantDto etudiantDto = etudiantService.updateCVByMatricule(matricule, cv);
@@ -58,7 +58,7 @@ public class EtudiantController {
     }
 
     @GetMapping("{id}/offersApplied")
-    @PreAuthorize("hasAuthority('ADMIN') OR hasAuthority('STUDENT')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
 
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));

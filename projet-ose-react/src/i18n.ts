@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import CV from './components/common/student/i18n/CV';
+
 
 i18n
     // detect user language
@@ -579,8 +581,10 @@ i18n
                                 minLenght : 'The password must contain at least 5 characters',
                             }
                         }
-                    }
+                    },
+                    cv: CV.en,
                 }
+
             },
             fr: {
                 translation: {
@@ -730,19 +734,6 @@ i18n
                             button:{
                                 refused:"Refuser",
                                 approved:"Approuver"
-                            }
-                        },
-                        GSOfferPage: {
-                            placeholder:"Veillez entrer un commentaire",
-                            title: "Offre de stage",
-                            errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
-                            errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
-                            succesSaveOfferReview: "L'offre a été sauvegardée",
-                            validiation:{
-                                required : 'Le commentaire est requis',
-                                minLenght : 'Le commentaire doit contenir au moins 10 caractères',
-                                maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
-                                scriptDetected: "Le commentaire contient un script.",
                             }
                         },
                         InscriptionFormEtudiant : {
@@ -1084,7 +1075,19 @@ i18n
                             }
                         }
                     },
-
+                    GSOfferPage: {
+                        placeholder:"Veillez entrer un commentaire",
+                        title: "Offre de stage",
+                        errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
+                        errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
+                        succesSaveOfferReview: "L'offre a été sauvegardée",
+                        validiation:{
+                            required : 'Le commentaire est requis',
+                            minLenght : 'Le commentaire doit contenir au moins 10 caractères',
+                            maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
+                            scriptDetected: "Le commentaire contient un script.",
+                        }
+                    },
                     ErrorPage: {
                         errorMessage: {
                             name: 'errorMessage',
@@ -1134,7 +1137,8 @@ i18n
                                 minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                             }
                         }
-                    }
+                    },
+                    cv: CV.fr,
                 }
             }
         }

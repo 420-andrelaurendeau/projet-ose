@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {getOfferById, saveOfferReviewRequest} from "../../../api/InterOfferJobAPI";
-import {InterOfferJob} from "../../../model/IntershipOffer";
-import InternshipManagerOfferDetails from "../../../components/common/internshipManager/Offer/InternshipManagerOfferDetails";
-import InternshipManagerOfferReviewForm from "../../../components/common/internshipManager/Offer/InternshipManagerOfferReviewForm";
-import {ToastContext} from "../../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
+import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
+import {InterOfferJob} from "../../model/IntershipOffer";
+import InternshipManagerOfferDetails from "../../components/common/internshipManager/offer/InternshipManagerOfferDetails";
+import InternshipManagerOfferReviewForm from "../../components/common/internshipManager/offer/InternshipManagerOfferReviewForm";
+import {ToastContext} from "../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
     return (
@@ -20,7 +20,7 @@ const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({er
 }
 
 
-const GSOfferPage: React.FC<any> = () => {
+const InternshipManagerOfferPage: React.FC<any> = () => {
     const {id} = useParams();
     const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
     const [isUpdate, setIsUpdate] = useState(false);
@@ -33,7 +33,7 @@ const GSOfferPage: React.FC<any> = () => {
     const toast = useContext(ToastContext);
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "GSOfferPage");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
 
     const fetchedOfferRef = useRef(false);
@@ -156,7 +156,7 @@ const GSOfferPage: React.FC<any> = () => {
     return (<>
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
-            <div className={"dark:bg-dark"}>
+            <div className={"dark:bg-dark pt-24 px-4 h-screen"}>
                 <InternshipManagerOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}
@@ -171,4 +171,4 @@ const GSOfferPage: React.FC<any> = () => {
     </>);
 }
 
-export default GSOfferPage;
+export default InternshipManagerOfferPage;

@@ -23,8 +23,6 @@ import java.util.List;
 public class ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
-    private OseService oseService;
-    @Autowired
     private EtudiantService etudiantService;
     @Autowired
     private EmployeurService employeurService;
@@ -68,6 +66,8 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
+
+
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
 
         InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur1, State.ACCEPTED,offerReviewRequest);
@@ -77,7 +77,6 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOffer internOffer1 = new InternOffer("Stage Securité","Montreal","ff",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
-
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant1, internOffer, List.of(file));
 
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));

@@ -10,8 +10,8 @@ import {
 import SidebarEmployeurHome from "../../SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink, useLocation} from "react-router-dom";
-import React, {useEffect, useState} from "react";
-import SidebarEtudiant from "../../../../SidebarEtudiant";
+import React, {useEffect, useRef, useState} from "react";
+import SidebarEtudiant from "../../student/SidebarEtudiant";
 import ProfilMenu from "./ProfilMenu";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
@@ -42,14 +42,18 @@ const Header = (userd: any) => {
         setIsOpenProfil(true)
     }
 
-
+    const isloading = useRef(false);
 
     useEffect(() => {
         const getUtilisateur = async () => {
+            isloading.current = true;
             if (userEmail)
                 setUser(await getUser(userEmail))
+            isloading.current = false;
         }
-        getUtilisateur().then(r => console.log(r))
+
+        if (!isloading.current)
+            getUtilisateur().then(r => console.log(r))
     }, [])
 
 

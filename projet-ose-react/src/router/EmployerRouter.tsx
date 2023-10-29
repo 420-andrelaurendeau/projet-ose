@@ -2,13 +2,13 @@ import React from "react";
 import {Route, Routes} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/layout/Layout";
-import EtudiantStagePage from "../pages/EtudiantStagePage";
-import GSOffersPage from "../pages/internshipManager/Offers/GSOffersPage";
-import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
+import StudentInternshipPage from "../pages/student/StudentInternshipPage";
+import InternshipManagerOffersPage from "../pages/internshipManager/InternshipManagerOffersPage";
+import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
 import EmployeurHomePage from "../pages/EmployeurHomePage";
 import EmployeurOffer from "../components/common/Employer/EmployeurOffer";
 import ErrorPage from "../pages/ErrorPage";
-import InternshipOfferForm from "../components/common/internshipManager/InternshipOfferForm";
+import InternshipOfferForm from "../components/common/internshipManager/form/InternshipOfferForm";
 
 const EmployerRouter: React.FC = () => {
     return (

@@ -1,15 +1,15 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {getIntershipOffers, getTotalOfferByState} from "../../../api/internshipManager/InternshipManagerAPI";
-import InternshipManagerOffers from "../../../components/common/internshipManager/Offers/InternshipManagerOffers";
-import PaginatedList from "../../../components/common/shared/paginationList/PaginatedList";
+import {getIntershipOffers, getTotalOfferByState} from "../../api/InternshipManagerAPI";
+import InternshipManagerOffers from "../../components/common/internshipManager/offers/InternshipManagerOffers";
+import PaginatedList from "../../components/common/shared/paginationList/PaginatedList";
 import {useTranslation} from "react-i18next";
-import InternshipManagerOffersDashboardHeader from "../../../components/common/internshipManager/Offers/InternshipManagerOffersDashboardHeader";
-import toast from "../../../components/common/shared/toast/Toast";
-import {useToast} from "../../../hooks/state/useToast";
+import InternshipManagerOffersDashboardHeader from "../../components/common/internshipManager/offers/InternshipManagerOffersDashboardHeader";
+import toast from "../../components/common/shared/toast/Toast";
+import {useToast} from "../../hooks/state/useToast";
 
 
-const GSOffersPage = () => {
+const InternshipManagerOffersPage = () => {
     const [offers, setOffers] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(0);
@@ -126,7 +126,7 @@ const GSOffersPage = () => {
                                                  sortDirection={sortDirection}/>;
 
     return (
-        <div className="">
+        <div className="px-4">
             <title>Offres</title>
             <header className="pt-24 pb-4">
                 <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
@@ -158,5 +158,5 @@ const GSOffersPage = () => {
     );
 };
 
-export default GSOffersPage;
+export default InternshipManagerOffersPage;
 
