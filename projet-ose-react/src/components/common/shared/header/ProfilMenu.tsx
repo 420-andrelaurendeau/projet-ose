@@ -2,9 +2,9 @@ import {Dialog, Transition} from "@headlessui/react";
 import React, {Fragment, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleUser, faEnvelope, faGraduationCap, faGreaterThan, faPlug} from "@fortawesome/free-solid-svg-icons";
-import Switcher from "../../utils/switcher";
-import {LanguageIconEn, LanguageIconFr} from "./LanguageIcons";
-import useDarkSide from "../../hooks/useDarkSide";
+import Switcher from "../../../../utils/switcher";
+import {LanguageIconEn, LanguageIconFr} from "../../LanguageIcons";
+import useDarkSide from "../../../../hooks/useDarkSide";
 import {useTranslation} from "react-i18next";
 
 function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,language: string, sidebarIsOpen: boolean, onLogout: () => void }) {

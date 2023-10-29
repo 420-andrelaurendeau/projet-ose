@@ -12,7 +12,7 @@ import {useTranslation} from "react-i18next";
 import {NavLink, useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import SidebarEtudiant from "../../../../SidebarEtudiant";
-import ProfilMenu from "../../ProfilMenu";
+import ProfilMenu from "./ProfilMenu";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";

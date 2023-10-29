@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {useProps} from "../../pages/EmployeurHomePage";
+import {useProps} from "../../../pages/EmployeurHomePage";
 import {Outlet} from "react-router-dom";
 
 export default function EmployeurOffer() {
