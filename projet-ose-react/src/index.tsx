@@ -16,7 +16,7 @@ import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/Employer/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/Employer/EmployeurOffer";
-import CandidatureOffer from "./components/common/CandidatureOffer";
+import CandidatureOffer from "./components/common/Employer/CandidatureOffer";
 import StudentAppliedOffers from "./components/common/student/offers/StudentAppliedOffers";
 import EtudiantStage from "./components/common/student/StudentInternship";
 import InternshipManagerOffersPage from "./pages/internshipManager/InternshipManagerOffersPage";

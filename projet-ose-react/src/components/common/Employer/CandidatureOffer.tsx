@@ -2,9 +2,9 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useOutletContext} from "react-router-dom";
-import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
+import {getInterOfferCandidates} from "../../../api/intershipCandidatesAPI";
 import axios from "axios";
-import {useProps} from "../../pages/EmployeurHomePage";
+import {useProps} from "../../../pages/EmployeurHomePage";
 
 interface User {
     user: any

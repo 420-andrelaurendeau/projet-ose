@@ -1,7 +1,7 @@
 import React, {ReactElement, useContext, useEffect, useState} from "react";
 import {NavLink, useLocation, useNavigate, useOutletContext} from "react-router-dom"
 import axios from "axios";
-import {useUser} from "../CandidatureOffer";
+import {useUser} from "./CandidatureOffer";
 
 function InterviewForm ():ReactElement{
 
