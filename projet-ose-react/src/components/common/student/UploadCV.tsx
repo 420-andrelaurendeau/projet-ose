@@ -1,22 +1,28 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {validateFile} from "../utils/validation/validationInteOfferForm";
-import {FileEntity} from "../model/FileEntity";
-import {setSelectionRange} from "@testing-library/user-event/dist/utils";
+import {validateFile} from "../../../utils/validation/validationInteOfferForm";
+import {FileEntity} from "../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router-dom";
+import {useAuth} from "../../../authentication/AuthContext";
+import {getUser} from "../../../api/UtilisateurAPI";
+import {saveCvStudent} from "../../../api/StudentApi";
+import {useToast} from "../../../hooks/state/useToast";
 
 
-function TeleversementCV(): ReactElement {
+function UploadCV(): ReactElement {
+
+    let toast = useToast();
 
     let location = useLocation();
 
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
-    const [selectedUser, setUser] = useState({matricule: ""})
+    const [user, setUser] = useState<any>(null)
     const [uploadState, setUploadState] = useState({status: "None"})
+    const auth = useAuth();
 
     const [errors, setErrors] = useState<{
         file?: string
@@ -25,7 +31,9 @@ function TeleversementCV(): ReactElement {
     const {t} = useTranslation();
 
     useEffect(() => {
-        console.log(location.state)
+        getUser(auth.userEmail!).then((res) => {
+            setUser(res);
+        })
     }, [])
 
     function handleFileChange(event: any) {
@@ -71,11 +79,14 @@ function TeleversementCV(): ReactElement {
     const handleSubmit = async () => {
         console.log(files)
         setUploadState({status: "Uploading"})
-        axios.post(`http://localhost:8080/api/etudiant/addCv/${location.state.matricule}`, files[0]).then(res => {
+        saveCvStudent(user!.matricule, files[0]).then(res => {
             console.log(res)
             setUploadState({status: "Done"})
+            toast.success(t('cv.success'))
+            setFiles([])
         }).catch(err => {
             console.log(err)
+            toast.error(t('cv.error'))
             setUploadState({status: "Error"})
         })
     }
@@ -134,9 +145,9 @@ function TeleversementCV(): ReactElement {
                     </div>
                     <br/>
                     <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
-                        {t('formField.TeleversementCV.buttons.submit')}
+                        {t('cv.upload_button')} {renderUploadStatus()}
                     </div>
-                    {renderUploadStatus()}
+
 
                 </form>
             </div>
@@ -144,4 +155,4 @@ function TeleversementCV(): ReactElement {
     )
 }
 
-export default TeleversementCV
+export default UploadCV

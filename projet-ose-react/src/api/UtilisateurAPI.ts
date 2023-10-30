@@ -1,7 +1,6 @@
 import axios from 'axios';
 import api from "./ConfigAPI";
 
-
 export const getUser = async (email: string) => {
     try {
         console.log(localStorage.getItem('token'))

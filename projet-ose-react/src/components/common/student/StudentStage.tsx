@@ -1,17 +1,20 @@
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
+import img from "../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png";
+import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
 import {useTranslation} from "react-i18next";
-import Header from "./shared/header/Header";
+import Header from "../shared/header/Header";
 import {Outlet, useLocation} from "react-router-dom";
 import axios from "axios";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../pages/EtudiantStagePage";
-import {AppliedOffers} from "../../model/AppliedOffers";
+import {useProps} from "../../../pages/EtudiantStagePage";
+import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
-import {useAuth} from "../../authentication/AuthContext";
+import {useAuth} from "../../../authentication/AuthContext";
+import {getUser} from "../../../api/UtilisateurAPI";
+import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
-function EtudiantStage() {
+function StudentStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
@@ -19,7 +22,6 @@ function EtudiantStage() {
     let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     // const {appliedOffers, setAppliedOffers, offers, user} = useProps();
-
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [user, setUser] = useState<any>(null)
@@ -27,51 +29,38 @@ function EtudiantStage() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        console.log(auth);
-        console.log(token);
+        getUser(auth.userEmail!).then((res) => {
+                setUser(res);
+                console.log(res);
+            }
+        ).finally(() => {
+            allStudentInternshipOffers().then((res) => {
+                setOffers(res);
+            })
+            getStudentAppliedOffers(user.id).then((res) => {
+                setAppliedOffers(res);
+            })
+        })
 
-        axios.get(`http://localhost:8080/api/utilisateur/utilisateur/${auth.userEmail}`, {headers: {"Authorization": `Bearer ${token}`}}).then(
-            res => {
-                console.log(res.data);
-                setUser(res.data);
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                anError = true;
-            }
-        )
 
-        axios.get('http://localhost:8080/api/interOfferJob/OffersEtudiant', {headers: {"Authorization": `Bearer ${token}`}}).then(
-            res => {
-                console.log(res.data);
-                setOffers(res.data);
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                anError = true;
-            }
-        )
     }, []);
 
 
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
         console.log(student);
-        axios.post(`http://localhost:8080/api/intershipCandidates/saveCandidats`, {
-            etudiant: student,
-            internOfferJob: offer,
-            files: null
-        },{headers: {"Authorization": `Bearer ${token}`}}).then(
+
+        saveStudentInternshipOffer(offer, student).then(
             res => {
                 let appliedOffer: AppliedOffers = {
-                    appliedOffer: res.data.internOfferJob,
-                    appliedFiles: res.data.files
+                    appliedOffer: res.internOfferJob,
+                    appliedFiles: res.files
                 };
                 console.log(appliedOffer);
 
                 setAppliedOffers([...appliedOffers, appliedOffer]);
+
+                console.log(appliedOffers)
             }
         ).catch(
             err => {
@@ -156,4 +145,4 @@ function EtudiantStage() {
     )
 }
 
-export default EtudiantStage;
+export default StudentStage;

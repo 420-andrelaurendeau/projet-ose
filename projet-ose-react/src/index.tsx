@@ -11,19 +11,19 @@ import './i18n.ts';
 import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
 import EtudiantStagePage from "./pages/EtudiantStagePage";
-import TeleversementCV from "./pages/TeleversementCV";
+import UploadCV from "./components/common/student/UploadCV";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
-import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
-import StudentAppliedOffers from "./components/common/StudentAppliedOffers";
-import EtudiantStage from "./components/common/EtudiantStage";
+import StudentAppliedOffers from "./components/common/student/StudentAppliedOffers";
+import EtudiantStage from "./components/common/student/StudentStage";
 import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
 import ErrorPage from "./pages/ErrorPage";
 import AppRouter from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";
+import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -95,7 +95,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/etudiant/home/TeleverserCV",
-                element: <TeleversementCV/>
+                element: <UploadCV/>
             },
         ]
     },
