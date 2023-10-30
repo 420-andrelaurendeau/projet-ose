@@ -49,7 +49,8 @@ public class InternOfferController {
     @GetMapping("/OffersEtudiant")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public List<InternOfferDto> getOffersEtudiant() {
-        return offerJobService.getInternOfferAccepted();
+        List<InternOfferDto> offers = offerJobService.getInternOfferAccepted();
+        return offers;
     }
 
     @GetMapping("/OffersEmp/{email}")

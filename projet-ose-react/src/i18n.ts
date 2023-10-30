@@ -330,6 +330,10 @@ i18n
                                     name: 'apply',
                                     text: 'Apply',
                                 }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'No internship available'
                             }
                         },
                         Header: {
@@ -913,6 +917,10 @@ i18n
                                     name: 'Apply',
                                     text: 'Postuler',
                                 }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'Aucun stage disponible'
                             }
                         },
                         Header: {

@@ -19,6 +19,7 @@ const apiClient = axios.create({
 export const offresEtudiant = async () => {
     try {
         const response = await apiClient.get('interOfferJob/OffersEtudiant')
+        console.log(response.data)
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/OffersEtudiant' + err)

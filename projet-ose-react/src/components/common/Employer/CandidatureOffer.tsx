@@ -1,67 +1,105 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import React, {ReactElement, useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBriefcase, faCheck, faCircleUser, faX} from "@fortawesome/free-solid-svg-icons";
-import {NavLink, Outlet, useOutletContext} from "react-router-dom";
+import {NavLink, Outlet, useOutletContext, useParams} from "react-router-dom";
 import {getInterOfferCandidates} from "../../../api/intershipCandidatesAPI";
 import axios from "axios";
-import {useProps} from "../../../pages/EmployeurHomePage";
+import {useProps} from "../../../pages/employer/EmployeurHomePage";
+import {InterOfferJob} from "../../../model/IntershipOffer";
+import {useTranslation} from "react-i18next";
+import {getOfferById} from "../../../api/InterOfferJobAPI";
+import {ToastContext} from "../../../hooks/context/ToastContext";
 
 interface User {
     user: any
 }
 
+const apiClient = axios.create({
+    baseURL: 'http://localhost:8080/api',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': 'http://localhost:3000',
+    },
+});
+
 const CandidatureOffer: React.FC<any> = () => {
-    const [open, setOpen] = React.useState({
-        id: -1,
-        open: false
-    });
+    const {id} = useParams();
     const [interOfferCandidates, setInterOfferCandidates] = useState<any[]>([]);
     const {offers, user} = useProps();
     const props = {
         user: user,
     }
-    const toggle = (id: number) => {
-        const newState = {
-            id: id,
-            open: !open.open
-        };
-        if (open.id !== id) {
-            newState.open = true;
+    const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField");
+    const fetchedOfferRef = useRef(false);
+    const fetchedCandidateRef = useRef(false);
+
+    const toast = useContext(ToastContext);
+
+    const loadOffer = async () => {
+        try {
+
+            fetchedOfferRef.current = true
+            const response = await getOfferById(parseInt(id!));
+            setinternshipOffer(response);
+            console.log(response);
+            return response;
+
+        } catch (error) {
+            toast.error(fields.InternshipOfferList.errorFetchOffer);
+        } finally {
+            fetchedOfferRef.current = false;
         }
-        setOpen(newState);
-    }
-    useEffect(() => {
-        let listIds: number[] = [];
-        offers.map((offer: any) => {
-            offer.internshipCandidates.map((interOfferCandidate: any) => {
-                listIds.push(interOfferCandidate);
-            })
-        })
+    };
 
-        if (listIds.length === 0) return;
-        getInterOfferCandidates(listIds.join(",")).then((response) => {
-            response.forEach((student: any) => {
-                let interviewList: any[] = []
-                offers.forEach((offer: any) => {
-
-                    let requestBody = {"studentId": student.etudiant.id, "internOfferId": offer.id}
-                    axios.post("http://localhost:8080/api/interview/studentHasInterviewWithInternOffer", requestBody).then((res) => {
-                        interviewList.push({
-                            "offerId": offer.id,
-                            "candidateId": student.etudiant.id,
-                            "alreadyApplied": res.data
-                        })
-                    })
-                })
-                student.interviewList = interviewList
-            })
+    const loadCandidates = async (ids:number[]) => {
+        try {
+            fetchedCandidateRef.current = true
+            const response = await getInterOfferCandidates(ids.join(","));
             setInterOfferCandidates(response);
-        })
-    }, [offers]);
+            console.log(response);
+            return response;
+        }catch (error){
+            toast.error(fields.InternshipOfferList.errorFetchOffer);
+        } finally {
+            fetchedCandidateRef.current = false;
+        }
+    }
+
+    useEffect(() => {
+        if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
+            console.log("Offer loaded")
+            if (!fetchedCandidateRef.current){
+                loadCandidates(offer.internshipCandidates).then(
+                    (candidatures) => {
+                        console.log("Candidates loaded")
+                        candidatures.forEach((candidature: any) => {
+                            let interviewList: any[] = []
+                            offers.forEach((offer: any) => {
+                                let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
+                                apiClient.post("interview/studentHasInterviewWithInternOffer", requestBody,
+                                ).then((res) => {
+                                    interviewList.push({
+                                        "offerId": offer.id,
+                                        "candidateId": candidature.etudiant.id,
+                                        "alreadyApplied": res.data
+                                    })
+                                })
+                            })
+                            candidature.interviewList = interviewList
+                        })
+                    }
+                )
+            }
+        });
+    }, []);
 
 
     function handleAccept(id: string) {
-        axios.post(`http://localhost:8080/api/intershipCandidates/acceptCandidats/${id}`).then(
+        apiClient.post(`intershipCandidates/acceptCandidats/${id}`).then(
             (res) => {
                 let newList: any[] = [...interOfferCandidates]
 
@@ -78,7 +116,7 @@ const CandidatureOffer: React.FC<any> = () => {
     }
 
     function handleRefuse(id: string) {
-        axios.post(`http://localhost:8080/api/intershipCandidates/declineCandidats/${id}`).then(
+        apiClient.post(`intershipCandidates/declineCandidats/${id}`).then(
             (res) => {
                 let newList: any[] = [...interOfferCandidates]
 
@@ -98,7 +136,7 @@ const CandidatureOffer: React.FC<any> = () => {
         let requestBody = {"studentId": studentId, "internOfferId": internOfferId}
         let response = false
 
-        axios.post("http://localhost:8080/api/interview/studentHasInterviewWithInternOffer", requestBody).then(
+        apiClient.post("interview/studentHasInterviewWithInternOffer", requestBody).then(
             (res) => {
                 response = res.data
                 let newList: any[] = [...interOfferCandidates]
@@ -132,146 +170,68 @@ const CandidatureOffer: React.FC<any> = () => {
 
     return (
         <div className="flex justify-center">
-            <div
-                className="md:fixed md:z-50 md:top-0 md:left-0 w-full md:h-full md:bg-black md:bg-opacity-50 md:items-start md:p-3 max-md:w-5/6 md:overflow-auto">
-                <NavLink
-                    to="/employeur/home/offre"
-                    className="md:fixed max-md:hidden h-full w-full"
-                    state={user}
-                />
-                {
-                    offers.map((offer: any) => (
-                        <div className="md:flex md:justify-center" key={offer.id}>
-                            <div key={offer.id}
-                                 className="md:relative md:w-3/4 lg:w-1/2 max-sm:w-full mt-14 items-center rounded-2xl px-6 bg-white dark:bg-dark py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <FontAwesomeIcon icon={faBriefcase} className="h-12 dark:text-white "/>
-                                <br/>
-                                <input
-                                    id={offer.id}
-                                    checked={open.open && open.id === offer.id}
-                                    onChange={() => console.log("change")}
-                                    type="checkbox"
-                                    className="peer sr-only"
-                                />
-                                <br/>
-                                <p className="text-black dark:text-white tracking-wide font-bold text-lg ">{offer.title}</p>
-                                <br/>
-                                <p className="text-darkgray dark:text-gray tracking-wide text-sm">{offer.description}</p>
-                                <br/>
-                                <div className="flex -space-x-1 overflow-hidden ">
-                                    {
-                                        Array.from(Array(offer.internshipCandidates.length), (e, i) => {
-                                            if (i <= 5) {
-                                                return (
-                                                    <FontAwesomeIcon key={i} icon={faCircleUser}
-                                                                     className="text-blue dark:text-orange inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark"
-                                                                     size="xl"/>
-                                                )
-                                            } else if (5 > 1 && i <= 6) {
-                                                return (
-                                                    <div key={i}
-                                                         className="flex items-center bg-blue dark:bg-orange justify-center text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark text-xs">
-                                                        +{offer.internshipCandidates.length - 1}
+            <div className="w-full md:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+                <div className=" py-8 flex justify-between">
+                    <h1 className="text-3xl font-bold text-black dark:text-white">Candidatures</h1>
+                </div>
+                <div className=" border-t border-neutral-200 dark:border-darkergray">
+                    <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
+                        {interOfferCandidates.map((candidate) => {
+                            return (
+                                <div key={candidate.id} className="px-4 py-6 xs:grid xs:grid-cols-3 xs:gap-4 xs:px-0">
+                                    <dt className=" font-medium space-y-8 leading-6 dark:text-white">
+                                        <div className="space-y-3">
+                                            <div>
+                                                <p className="font-medium text-neutral-500 dark:text-neutral-300">
+                                                    Name
+                                                </p>
+                                            </div>
+                                            <div className="flex space-x-4 h-10 items-center">
+                                                <FontAwesomeIcon icon={faCircleUser} size="xl" className="text-blue dark:text-orange h-full"/>
+                                                <div>
+                                                    <div className="text-sm font-medium text-black dark:text-white">
+                                                        {candidate.etudiant.prenom + " " + candidate.etudiant.nom}
                                                     </div>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </div>
-                                <br/>
-                                <label
-                                    htmlFor={offer.id}
-                                    className="w-full flex justify-center items-center bg-blue-100 hover:bg-blue-500 transition-colors duration-1000 ease-in-out"
-                                >
-                                    <button
-                                        className="w-4/5 py-4 text-white bg-blue dark:bg-orange font-bold rounded-xl cursor-pointer"
-                                        onClick={() => {
-                                            toggle(offer.id)
-                                        }}>
-                                        {open.open && open.id === offer.id ? "Hide candidature" : "Show candidature"}
-                                    </button>
-
-                                </label>
-                                <br/>
-                                <div
-                                    className=" h-0 rounded-lg overflow-hidden bg-slate-300 dark:bg-amber-400 peer-checked:h-52  peer-checked:overflow-scroll transition-[height] duration-1000 ease-in-out "
-                                >
-                                    {
-                                        interOfferCandidates.map((interOfferCandidate: any) => {
-                                            if (interOfferCandidate.internOfferJob.id === offer.id) {
-                                                return (
-                                                    <div key={interOfferCandidate.id}
-                                                         className="flex justify-center pt-2">
-                                                        <div
-                                                            className="md:w-3/4 w-5/6 flex justify-between border-b border-blue ">
-                                                            <div className="flex px-2 items-center space-x-2">
-                                                                <FontAwesomeIcon icon={faCircleUser}
-                                                                                 className="text-blue dark:text-orange"
-                                                                                 size="xl"/>
-                                                                <p className="text-black dark:text-white tracking-wide font-bold text-lg ">{interOfferCandidate.etudiant.prenom} {" "} {interOfferCandidate.etudiant.nom}</p>
-
-                                                            </div>
-                                                            <div
-                                                                className={"ml-auto my-auto h-fit w-1/6 flex flex-row items-center "}>
-                                                                <div
-
-                                                                    className={"container flex flex-row items-center justify-around " + (interOfferCandidate.state == "ACCEPTED" ? "hidden" : "")}>
-                                                                    <div>
-                                                                        <FontAwesomeIcon icon={faCheck}
-                                                                                         style={{color: "#00ff4c",}}
-                                                                                         onClick={() => {
-                                                                                             handleAccept(interOfferCandidate.id)
-                                                                                         }}
-                                                                                         className={"cursor-pointer"}/>
-                                                                    </div>
-                                                                    <div>
-                                                                        <FontAwesomeIcon icon={faX}
-                                                                                         style={{color: "#cc0000",}}
-                                                                                         onClick={() => {
-                                                                                             handleRefuse(interOfferCandidate.id)
-                                                                                         }}
-                                                                                         className={"cursor-pointer"}/>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex px-2 py-2">
-                                                                <button
-                                                                    hidden={interOfferCandidate.state == "ACCEPTED"}
-                                                                    className="px-2 py-2 rounded-lg bg-blue dark:bg-orange font-bold text-white">
-                                                                    Inspection
-                                                                </button>
-                                                                <button
-                                                                    disabled={hasStudentApplied(interOfferCandidate, offer.id)}
-                                                                    className={`px-2 py-2 rounded-lg bg-blue dark:bg-orange disabled:bg-gray dark:disabled:bg-gray font-bold text-white disabled:cursor-auto cursor-pointer`}
-                                                                    hidden={interOfferCandidate.state != "ACCEPTED"}
-                                                                    onClick={() => {
-                                                                        let studentId: number = interOfferCandidate.etudiant.id
-                                                                        let offerId: number = offer.id
-                                                                        studentHasInterviewWithInternOffer(studentId, offerId)
-                                                                    }}>
-                                                                    {hasStudentApplied(interOfferCandidate, offer.id) ?
-                                                                        <p>ENTREVUE</p> :
-                                                                        <NavLink to={"InterviewForm"} state={{
-                                                                            "offerId": offer.id,
-                                                                            "studentId": interOfferCandidate.etudiant.id
-                                                                        }} onClick={() => toggle(offer.id)}>
-                                                                            ENTREVUE
-                                                                        </NavLink>}
-                                                                </button>
-                                                            </div>
-                                                        </div>
+                                                    <div className="text-sm text-neutral-500 dark:text-neutral-300">
+                                                        {candidate.etudiant.programme_id}
                                                     </div>
-                                                )
-                                            }
-                                        })
-                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                Contact Information
+                                            </p>
+                                            <div className=" font-medium text-black dark:text-white">
+                                                <p>{candidate.etudiant.phone}</p>
+                                                <p>{candidate.etudiant.email}</p>
+                                            </div>
+                                        </div>
+
+                                    </dt>
+                                    <dd className=" font-medium space-y-8 leading-6 dark:text-white">
+                                        <div className="space-y-3">
+                                            <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                Interview
+                                            </p>
+                                            <div className="flex font-medium h-10 items-center text-black dark:text-white">
+                                                No interview
+                                            </div>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                Status
+                                            </p>
+                                            <div className=" font-medium text-black dark:text-white">
+                                                {candidate.state}
+                                            </div>
+                                        </div>
+                                    </dd>
                                 </div>
-
-                            </div>
-                        </div>
-
-                    ))
-                }
+                            )
+                        })}
+                    </dl>
+                </div>
             </div>
             <Outlet
                 context={props}

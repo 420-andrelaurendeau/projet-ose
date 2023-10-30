@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
-import {UpdateOffers} from "../api/InterOfferJobAPI";
+import {UpdateOffers} from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
-import Header from "../components/common/shared/header/Header";
-import {getUser} from "../api/UtilisateurAPI";
-import {useAuth} from "../authentication/AuthContext";
-import {User} from "../model/User";
+import Header from "../../components/common/shared/header/Header";
+import {getUser} from "../../api/UtilisateurAPI";
+import {useAuth} from "../../authentication/AuthContext";
+import {User} from "../../model/User";
 import {data} from "autoprefixer";
-import {useToast} from "../hooks/state/useToast";
+import {useToast} from "../../hooks/state/useToast";
 
 interface Props {
     isModalOpen: boolean,

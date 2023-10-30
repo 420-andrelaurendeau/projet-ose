@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {useProps} from "../../../pages/EmployeurHomePage";
+import {useProps} from "../../../pages/employer/EmployeurHomePage";
 import {Outlet, useNavigate} from "react-router-dom";
 import {InterOfferJob} from "../../../model/IntershipOffer";
 import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
@@ -38,6 +38,9 @@ export default function EmployeurOffer() {
     const handleOfferClick = (id: number) => {
         navigate(`/employer/home/offers/${id}`);
     };
+    const handleApplicationClick = (id: number) => {
+        navigate(`/employer/home/offers/${id}/application`);
+    }
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
@@ -157,12 +160,15 @@ export default function EmployeurOffer() {
                                                             return (
                                                                 <FontAwesomeIcon key={i} icon={faCircleUser}
                                                                                  className="text-blue dark:text-orange inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark cursor-pointer"
+                                                                                 onClick={() => handleApplicationClick(offer.id!)}
                                                                                  size="xl"/>
                                                             )
                                                         } else if (i > 2) {
                                                             return (
                                                                 <div key={i}
-                                                                     className="flex items-center bg-blue dark:bg-orange justify-center  text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark  cursor-pointer">
+                                                                     className="flex items-center bg-blue dark:bg-orange justify-center  text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark  cursor-pointer"
+                                                                     onClick={() => handleApplicationClick(offer.id!)}
+                                                                >
                                                                     +{offer.internshipCandidates!.length - 1}
                                                                 </div>
                                                             )
