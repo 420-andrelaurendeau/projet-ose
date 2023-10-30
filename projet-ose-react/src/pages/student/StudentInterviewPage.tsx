@@ -25,7 +25,6 @@ export default function StudentInterviewPage() {
                     }
                     return interview;
                 }));
-                window.location.reload();
             }
         });
     }
@@ -41,7 +40,6 @@ export default function StudentInterviewPage() {
                     }
                     return interview;
                 }));
-                window.location.reload();
             }
         });
     }
@@ -114,7 +112,7 @@ export default function StudentInterviewPage() {
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                                <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
                                 {interviews.map((interview) => (
                                     <tr key={interview.id}>
                                         <td className="px-6 py-4 whitespace-nowrap
@@ -136,17 +134,21 @@ export default function StudentInterviewPage() {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex justify-center space-x-2">
                                                 <button
+                                                    disabled={interview.state != 1}
                                                     onClick={() => handleOnAccept(interview.id)}
                                                     className="text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
                                                     Accepter
                                                 </button>
                                                 <button
+                                                    disabled={interview.state != 1}
                                                     onClick={() => handleOnDecline(interview.id)}
                                                     className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
                                                     Refuser
                                                 </button>
+                                                {interview.state == 0 && <p>Accepted</p>}
+                                                {interview.state == 2 && <p>Declined</p>}
                                             </div>
                                         </td>
                                     </tr>

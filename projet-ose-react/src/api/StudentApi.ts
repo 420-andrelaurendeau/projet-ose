@@ -41,7 +41,7 @@ export const fetchInterviewsCountForStudent = async (userId: number): Promise<nu
 
 export const acceptInterview = async (interviewId: number, studentId: number) => {
     try {
-        const res = await api.post(`interview/studentAcceptsInterviewByStudentId/${interviewId}/${studentId}`)
+        const res = await api.post(`interview/studentAcceptsInterviewByStudentId/${studentId}/${interviewId}`)
         return res.data
     }
     catch (err) {
@@ -52,7 +52,7 @@ export const acceptInterview = async (interviewId: number, studentId: number) =>
 
 export const declineInterview = async (interviewId: number, studentId: number) => {
     try {
-        const res = await api.post(`interview/studentDeclineInterviewByStudentId/${interviewId}/${studentId}`)
+        const res = await api.post(`interview/studentDeclineInterviewByStudentId/${studentId}/${interviewId}`)
         return res.data
     }
     catch (err) {

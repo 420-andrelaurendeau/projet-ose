@@ -54,8 +54,12 @@ public class InterviewService {
 
        interview = interviewRepository.save(interview);
 
+       EtudiantDto etudiantDto = new EtudiantDto(etudiant);
+
+       InternOfferDto internOfferDto = new InternOfferDto(internOffer);
+
         if (interview != null) {
-            InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), null, null, interview.getDate(), interview.getDescription(), interview.getState());
+            InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), etudiantDto, internOfferDto, interview.getDate(), interview.getDescription(), interview.getState());
             return Optional.of(returnInterviewDto);
         }
 
@@ -80,17 +84,19 @@ public class InterviewService {
     }
 
     public List<InterviewDTO> getInterviewsByStudentId(long studentId) {
-        return interviewRepository.findAllPending(studentId).isPresent() ? interviewRepository.findAllPending(studentId).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
+        return interviewRepository.findAllByStudentId(studentId).isPresent() ? interviewRepository.findAllByStudentId(studentId).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
     }
 
     public Optional<Long> getInterviewsCountByStudentId(long studentId) {
-        return interviewRepository.findAllPending(studentId).isPresent() ? Optional.of((long) interviewRepository.findAllPending(studentId).get().size()) : Optional.empty();
+        return interviewRepository.findAllByStudentId(studentId).isPresent() ? Optional.of((long) interviewRepository.findAllByStudentId(studentId).get().size()) : Optional.empty();
     }
 
     public Optional<Boolean> studentAcceptsInterviewByStudentId(long studentId, long interviewId) {
         Interview interview = interviewRepository.findById(interviewId).orElse(null);
+        Etudiant etudiant = etudiantRepository.findById(studentId).orElse(null);
         if (interview != null && interview.getStudent().getId() == studentId) {
             interview.setState(State.ACCEPTED);
+            interview.setStudent(etudiant);
             interviewRepository.save(interview);
             return Optional.of(true);
         }

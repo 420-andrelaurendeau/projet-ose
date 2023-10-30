@@ -13,5 +13,6 @@ public interface InterviewRepository extends JpaRepository<Interview, Long> {
 
     @Query("SELECT i FROM Interview i WHERE i.state = 1 AND i.student.id = ?1")
     Optional<List<Interview>> findAllPending(long studentId);
-
+    @Query("SELECT i FROM Interview i WHERE i.student.id = ?1")
+    Optional<List<Interview>> findAllByStudentId(long studentId);
 }
