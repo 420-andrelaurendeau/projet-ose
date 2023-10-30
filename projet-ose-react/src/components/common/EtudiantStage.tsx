@@ -92,7 +92,7 @@ function EtudiantStage() {
                         {fields.titre.text}
                     </h1>
                     <div className={"flex flex-col"}>
-                        {offers.map((offer: any) => (
+                        {offers.length == 0? <p className="bg-red text-center text-white p-2 m-2">Il n'y a aucun stage disponible</p> :offers.map((offer: any) => (
                             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}>
                                 <div
                                     className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">
