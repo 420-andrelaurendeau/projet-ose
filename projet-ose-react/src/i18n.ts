@@ -22,7 +22,19 @@ i18n
             en: {
                 translation: {
                     formField: {
-
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Accepted",
+                                declinedInternshipsAgreement: "Declined",
+                                pendingInternshipsAgreement: "Pending",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
+                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
+                            },
+                            title: "Internships agreement",
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -589,6 +601,19 @@ i18n
             fr: {
                 translation: {
                     formField: {
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Acceptées",
+                                declinedInternshipsAgreement: "Refusées",
+                                pendingInternshipsAgreement: "Attente",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
+                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
+                            },
+                            title: "Ententes de stage",
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total des offres",
