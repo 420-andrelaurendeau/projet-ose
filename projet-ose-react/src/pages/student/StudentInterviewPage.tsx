@@ -21,10 +21,11 @@ export default function StudentInterviewPage() {
                 {/*Change the interview status to accepted*/}
                 setInterviews(interviews.map((interview) => {
                     if (interview.id === interviewId) {
-                        interview.state = 0;
+                        interview.state = "ACCEPTED";
                     }
                     return interview;
                 }));
+                console.log(interviews);
             }
         });
     }
@@ -36,7 +37,7 @@ export default function StudentInterviewPage() {
                 {/*Change the interview status to accepted*/}
                 setInterviews(interviews.map((interview) => {
                     if (interview.id === interviewId) {
-                        interview.state = 2;
+                        interview.state = "DECLINED";
                     }
                     return interview;
                 }));
@@ -134,21 +135,21 @@ export default function StudentInterviewPage() {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex justify-center space-x-2">
                                                 <button
-                                                    disabled={interview.state != 1}
+                                                    disabled={interview.state != "PENDING"}
                                                     onClick={() => handleOnAccept(interview.id)}
-                                                    className="text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
+                                                    className="disabled:bg-gray text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
                                                     Accepter
                                                 </button>
                                                 <button
-                                                    disabled={interview.state != 1}
+                                                    disabled={interview.state != "PENDING"}
                                                     onClick={() => handleOnDecline(interview.id)}
-                                                    className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
+                                                    className="disabled:bg-gray text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
                                                     Refuser
                                                 </button>
-                                                {interview.state == 0 && <p>Accepted</p>}
-                                                {interview.state == 2 && <p>Declined</p>}
+                                                {interview.state == "ACCEPTED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">ACCEPTED</p>}
+                                                {interview.state == "DECLINED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">DECLINED</p>}
                                             </div>
                                         </td>
                                     </tr>
