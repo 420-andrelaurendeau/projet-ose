@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.EtudiantDtoWithId;
-import com.sap.ose.projetose.dto.InterviewDTO;
-import com.sap.ose.projetose.dto.InterviewRequestInDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.service.InterviewService;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -73,13 +70,5 @@ public class InterviewController {
     public ResponseEntity<Boolean> studentRefuseInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
         logger.info("Interview decline request received");
         return interviewService.studentDeclineInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
-}
-
-class studentHasInterviewWithInternOffer {
-    long studentId,internOfferId;
-    public studentHasInterviewWithInternOffer(long studentId, long internOfferId) {
-        this.studentId = studentId;
-        this.internOfferId = internOfferId;
     }
 }

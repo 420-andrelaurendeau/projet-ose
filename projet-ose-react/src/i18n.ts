@@ -22,7 +22,6 @@ i18n
             en: {
                 translation: {
                     formField: {
-
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -587,8 +586,29 @@ i18n
                         }
                     },
                     cv: CV.en,
-                }
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Title',
+                            location: 'Location',
+                            date: 'Date of the interview',
+                            company: 'Company',
+                            action: {
+                                name: 'action',
+                                text: 'Action',
+                                button : {
+                                    accept: 'Accept',
+                                    decline: 'Decline',
+                                },
+                                status:{
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                }
+                            },
+                        }
+                    }
 
+                },
             },
             fr: {
                 translation: {
@@ -1146,6 +1166,27 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Titre',
+                            location: 'Lieu de travail',
+                            date: 'Date de l\'entrevue',
+                            company: 'Compagnie',
+                            action: {
+                                name: 'action',
+                                text: 'Actions',
+                                button : {
+                                    accept: 'Accepter',
+                                    decline: 'Decliner',
+                                },
+                                status:{
+                                    accepted: "Accepter",
+                                    declined: "Decliner",
+                                }
+                            },
+                        }
+                    }
                 }
             }
         }

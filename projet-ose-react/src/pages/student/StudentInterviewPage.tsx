@@ -3,9 +3,11 @@ import {fetchInterviews, acceptInterview, declineInterview} from "../../api/Stud
 import {getUser} from "../../api/UtilisateurAPI";
 import {useAuth} from "../../authentication/AuthContext";
 import {Interview} from "../../model/Interview";
+import i18n from "i18next";
 
 
 export default function StudentInterviewPage() {
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
     const isLoading = useRef(false);
@@ -82,31 +84,34 @@ export default function StudentInterviewPage() {
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Titre
+                                        {fields.table.title}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Lieu de l'entretien
+                                        {fields.table.location}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Date de l'entretien
+
+                                        {fields.table.date}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Compagnie
+
+                                        {fields.table.company}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        Actions
+
+                                        {fields.table.action.text}
                                     </th>
                                 </tr>
                                 </thead>
@@ -136,17 +141,17 @@ export default function StudentInterviewPage() {
                                                     onClick={() => handleOnAccept(interview.id)}
                                                     className="disabled:bg-gray text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
-                                                    Accepter
+                                                    {fields.table.action.button.accept}
                                                 </button>
                                                 <button
                                                     disabled={interview.state != "PENDING"}
                                                     onClick={() => handleOnDecline(interview.id)}
                                                     className="disabled:bg-gray text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
                                                 >
-                                                    Refuser
+                                                    {fields.table.action.button.decline}
                                                 </button>
-                                                {interview.state == "ACCEPTED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">ACCEPTED</p>}
-                                                {interview.state == "DECLINED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">DECLINED</p>}
+                                                {interview.state === "ACCEPTED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.accepted}</p>}
+                                                {interview.state === "DECLINED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
                                             </div>
                                         </td>
                                     </tr>

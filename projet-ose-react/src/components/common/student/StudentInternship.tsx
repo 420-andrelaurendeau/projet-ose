@@ -11,18 +11,14 @@ import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentInternship() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     let anError = false;
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    // const {appliedOffers, setAppliedOffers, offers, user} = useProps();
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
-    const token = localStorage.getItem('token');
+    //const token = localStorage.getItem('token');
     const isloading = useRef(false);
 
     useEffect(() => {
