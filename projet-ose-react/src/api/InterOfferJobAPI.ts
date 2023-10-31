@@ -119,6 +119,7 @@ export const getOfferReviewRequestById = async (id: number) => {
 
 export const getInterOfferJob = async (email: string) => {
     try {
+        console.log(email)
         const response = await apiClient.get('interOfferJob/OffersEmp/' + email);
         return response.data;
 
@@ -133,10 +134,11 @@ export const getInterOfferJob = async (email: string) => {
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
+
         return response.data.map((item: any) => ({
-            appliedOffer: item.appliedOffer,
-            appliedFiles: item.appliedFiles
-        }));
+                appliedOffer: item.appliedOffer,
+                appliedFiles: item.appliedFiles
+            }));
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;
