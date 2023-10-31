@@ -32,14 +32,15 @@ function StudentStage() {
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
                 console.log(res);
+            getStudentAppliedOffers(res.id).then((res) => {
+                setAppliedOffers(res);
+            })
             }
         ).finally(() => {
             allStudentInternshipOffers().then((res) => {
                 setOffers(res);
             })
-            getStudentAppliedOffers(user.id).then((res) => {
-                setAppliedOffers(res);
-            })
+
         })
 
 

@@ -16,8 +16,6 @@ function UploadCV(): ReactElement {
 
     let toast = useToast();
 
-    let location = useLocation();
-
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
     const [user, setUser] = useState<any>(null)
@@ -33,6 +31,8 @@ function UploadCV(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
+        }).catch((error)=>{
+            console.log("Error fetching user data:", error)
         })
     }, [])
 
