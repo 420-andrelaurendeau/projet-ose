@@ -130,8 +130,8 @@ function StudentInternship() {
                                     </th>
                                 </tr>
                                 </thead>
+                                <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                 {offers.map((offer: any) => (
-                                    <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                     <tr key={offer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
@@ -168,8 +168,8 @@ function StudentInternship() {
                                             </button>
                                         </td>
                                     </tr>
-                                    </tbody>
-                                ))}
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                     </div>
