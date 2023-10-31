@@ -8,6 +8,7 @@ import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InterviewRepository;
 import io.micrometer.observation.ObservationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -111,5 +112,10 @@ public class InterviewService {
             return Optional.of(true);
         }
         return Optional.of(false);
+    }
+
+    public List<InterviewDTO> getStudentInterviewsStagePendingByStudentId(long studentId) {
+//        return interviewRepository.findInterviewsStagePendingByStudentId(studentId);
+        return null;
     }
 }

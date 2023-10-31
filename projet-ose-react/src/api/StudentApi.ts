@@ -20,11 +20,28 @@ export const fetchInterviews = async (userId: number): Promise<Interview[]> => {
             date: item.date,
             description: item.description,
             state: item.state,
+            stage: 0
         }))
     }
     catch (err) {
         console.log('Error while fetching interviews' + err)
         throw err
+    }
+}
+
+export const fetchInterviewsStagePending = async (userId: number): Promise<Interview[]> => {
+    try{
+        const res = await api.get(`interview/getByStudentId/`+ userId)
+        return res.data.map((item: any) => ({
+            id: item.id,
+            student: item.student,
+            internOffer: item.internOffer,
+            date: item.date,
+            description: item.description,
+            state: item.state,
+        }))
+    }catch (error){
+        throw error
     }
 }
 
