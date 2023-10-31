@@ -34,6 +34,12 @@ i18n
                                 errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
                             },
                             title: "Internships agreement",
+                            internshipsAgreement: {
+                                title: "Title",
+                                enterprise: "Enterprise",
+                                student: "Student",
+                                status: "Status",
+                            }
                         },
                         InternshipOfferList : {
                             header: {
@@ -613,6 +619,12 @@ i18n
                                 errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
                             },
                             title: "Ententes de stage",
+                            internshipsAgreement: {
+                                title: "Titre",
+                                enterprise: "Entreprise",
+                                student: "Étudiant",
+                                status: "Statut",
+                            }
                         },
                         InternshipOfferList : {
                             header: {

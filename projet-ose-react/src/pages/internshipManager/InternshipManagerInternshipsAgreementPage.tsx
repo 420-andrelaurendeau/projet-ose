@@ -9,6 +9,8 @@ import toast from "../../components/common/shared/toast/Toast";
 import {useToast} from "../../hooks/state/useToast";
 import InternshipManagerInternshipsAgreementDashoardHeader
     from "../../components/common/internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
+import InternshipManagerInternshipsAgreement
+    from "../../components/common/internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreement";
 
 
 const InternshipManagerInternshipsAgreementPage = () => {
@@ -123,7 +125,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
         setCurrentPage(0);
     };
 
-    const renderOffer = <InternshipManagerOffers user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
+    const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
                                                  sortDirection={sortDirection}/>;
 
