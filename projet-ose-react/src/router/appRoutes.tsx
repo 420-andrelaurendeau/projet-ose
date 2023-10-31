@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import StudentRoutes from "./studentRoutes";
-import InternshipManagerRouter from "./internshipManagerRouter";
+import InternshipManagerRouter from "./InternshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
 import ConnectPage from "../pages/ConnectPage";
 import ErrorPage from "../pages/ErrorPage";
