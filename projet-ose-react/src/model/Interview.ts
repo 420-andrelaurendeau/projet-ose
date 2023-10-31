@@ -7,5 +7,5 @@ export interface Interview {
     internOffer: InternshipOfferJob;
     date: string;
     description: string;
-    state: number;
+    state: string;
 }

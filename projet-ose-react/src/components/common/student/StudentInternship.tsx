@@ -11,18 +11,14 @@ import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentInternship() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     let anError = false;
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    // const {appliedOffers, setAppliedOffers, offers, user} = useProps();
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
-    const token = localStorage.getItem('token');
+    //const token = localStorage.getItem('token');
     const isloading = useRef(false);
 
     useEffect(() => {
@@ -130,8 +126,8 @@ function StudentInternship() {
                                     </th>
                                 </tr>
                                 </thead>
+                                <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                 {offers.map((offer: any) => (
-                                    <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                     <tr key={offer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
@@ -168,8 +164,8 @@ function StudentInternship() {
                                             </button>
                                         </td>
                                     </tr>
-                                    </tbody>
-                                ))}
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                     </div>
