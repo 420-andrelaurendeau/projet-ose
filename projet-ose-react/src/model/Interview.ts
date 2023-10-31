@@ -8,5 +8,4 @@ export interface Interview {
     date: string;
     description: string;
     state: string;
-    stage: string;
 }

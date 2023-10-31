@@ -72,10 +72,4 @@ public class InterviewController {
         return interviewService.studentDeclineInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @Transactional
-    @GetMapping
-    public ResponseEntity<List<InterviewDTO>> getInterviewsStagePendindByStudentId(@PathVariable long studentId){
-        logger.info("Interview Stage Pending");
-        return Optional.of(interviewService.getStudentInterviewsStagePendingByStudentId(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
-    }
 }

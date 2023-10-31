@@ -30,8 +30,6 @@ public class Interview {
 
     private State state;
 
-    private State stage;
-
     public Interview(Etudiant student, InternOffer internshipOffer, Date date, String description) {
         this.student = student;
         this.internshipOffer = internshipOffer;

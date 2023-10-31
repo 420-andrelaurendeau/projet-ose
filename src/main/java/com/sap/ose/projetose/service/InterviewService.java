@@ -114,8 +114,4 @@ public class InterviewService {
         return Optional.of(false);
     }
 
-    public List<InterviewDTO> getStudentInterviewsStagePendingByStudentId(long studentId) {
-//        return interviewRepository.findInterviewsStagePendingByStudentId(studentId);
-        return null;
-    }
 }
