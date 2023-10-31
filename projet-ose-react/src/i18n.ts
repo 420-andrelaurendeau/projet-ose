@@ -1181,8 +1181,8 @@ i18n
                                     decline: 'Decliner',
                                 },
                                 status:{
-                                    accepted: "Accepter",
-                                    declined: "Decliner",
+                                    accepted: "Accepté",
+                                    declined: "Decliné",
                                 }
                             },
                         }

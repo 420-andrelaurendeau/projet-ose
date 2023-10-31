@@ -151,7 +151,7 @@ export default function StudentInterviewPage() {
                                                     {fields.table.action.button.decline}
                                                 </button>
                                                 {interview.state === "ACCEPTED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.accepted}</p>}
-                                                {interview.state === "DECLINED" && <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
+                                                {interview.state === "DECLINED" && <p className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
                                             </div>
                                         </td>
                                     </tr>
