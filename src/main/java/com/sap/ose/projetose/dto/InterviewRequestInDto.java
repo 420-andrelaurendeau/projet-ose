@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,14 @@ public class InterviewRequestInDto {
     private long internOfferId;
     private Date date;
     private String description;
+    private State state;
 
-    public InterviewRequestInDto(long studentId, long internOfferId, Date date, String description) {
+    public InterviewRequestInDto(long studentId, long internOfferId, Date date, String description, State state) {
         this.studentId = studentId;
         this.internOfferId = internOfferId;
         this.date = date;
         this.description = description;
+        this.state = state;
     }
 
     @Override

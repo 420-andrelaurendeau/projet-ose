@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {InterOfferJob} from "../../model/IntershipOffer";
-import {OfferReviewRequest} from "../../model/OfferReviewRequest";
+import {InterOfferJob} from "../model/IntershipOffer";
+import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {webcrypto} from "crypto";
-import {AppliedOffers} from "../../model/AppliedOffers";
-import api from "../ConfigAPI";
+import {AppliedOffers} from "../model/AppliedOffers";
+import api from "./ConfigAPI";
 
 interface GetInternshipOffersParams {
     page: number;

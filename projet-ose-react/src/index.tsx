@@ -8,22 +8,22 @@ import {createBrowserRouter} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
 import ConnectPage from "./pages/ConnectPage";
 import './i18n.ts';
-import EtudiantInscriptionPage from "./pages/EtudiantInscriptionPage";
+import StudentInscriptionPage from "./pages/student/StudentInscriptionPage";
 import PageEmployeurInscription from "./pages/PageEmployeurInscription";
-import EtudiantStagePage from "./pages/EtudiantStagePage";
-import UploadCV from "./components/common/student/UploadCV";
+import StudentInternshipPage from "./pages/student/StudentInternshipPage";
+import UploadCVForm from "./components/common/student/form/UploadCVForm";
 import {ToastContextProvider} from "./hooks/context/ToastContext";
 import InterviewForm from "./components/common/InterviewForm";
 import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
-import StudentAppliedOffers from "./components/common/student/StudentAppliedOffers";
-import EtudiantStage from "./components/common/student/StudentStage";
-import GSOffersPage from "./pages/internshipManager/Offers/GSOffersPage";
+import StudentAppliedOffers from "./components/common/student/offers/StudentAppliedOffers";
+import InternshipManagerOffersPage from "./pages/internshipManager/InternshipManagerOffersPage";
 import ErrorPage from "./pages/ErrorPage";
+import StudentInterviewPage from "./pages/student/StudentInterviewPage";
 import AppRouter from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";
-import InternshipOfferForm from "./components/common/internshipManager/InternshipOfferForm";
+import InternshipOfferForm from "./components/common/internshipManager/form/InternshipOfferForm";
 
 
 if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
@@ -82,37 +82,40 @@ const router = createBrowserRouter([
     },
     {
         path: "/etudiant/home",
-        element: <EtudiantStagePage/>,
+        element: <StudentInternshipPage/>,
         children: [
             {
-                path: "/etudiant/home/offre",
-                element: <EtudiantStage/>,
-                children: []
+                path: "/etudiant/home/offers",
+                element: <StudentInternshipPage/>,
             },
             {
                 path: "/etudiant/home/offreApplique",
                 element: <StudentAppliedOffers/>,
             },
             {
+                path: "/etudiant/home/interview",
+                element: <StudentInterviewPage/>,
+            },
+            {
                 path: "/etudiant/home/TeleverserCV",
-                element: <UploadCV/>
+                element: <UploadCVForm/>
             },
         ]
     },
 
     {
         path: "/gs/home",
-        element: <GSOffersPage/>,
+        element: <InternshipManagerOffersPage/>,
         children: [
             {
                 path: "/gs/home/offre",
-                element: <GSOffersPage/>,
+                element: <InternshipManagerOffersPage/>,
             },
         ]
     },
     {
         path: "/etudiantInscription",
-        element: <EtudiantInscriptionPage/>
+        element: <StudentInscriptionPage/>
     },
     {
         path: "/employeurInscription",
@@ -120,7 +123,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/etudiantStage",
-        element: <EtudiantStagePage/>
+        element: <StudentInternshipPage/>
     },
     {
         path: "/*",

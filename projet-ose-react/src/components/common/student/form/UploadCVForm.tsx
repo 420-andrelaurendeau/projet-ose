@@ -1,18 +1,18 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {validateFile} from "../../../utils/validation/validationInteOfferForm";
-import {FileEntity} from "../../../model/FileEntity";
+import {validateFile} from "../../../../utils/validation/validationInteOfferForm";
+import {FileEntity} from "../../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router-dom";
-import {useAuth} from "../../../authentication/AuthContext";
-import {getUser} from "../../../api/UtilisateurAPI";
-import {saveCvStudent} from "../../../api/StudentApi";
-import {useToast} from "../../../hooks/state/useToast";
+import {useAuth} from "../../../../authentication/AuthContext";
+import {getUser} from "../../../../api/UtilisateurAPI";
+import {saveCvStudent} from "../../../../api/StudentApi";
+import {useToast} from "../../../../hooks/state/useToast";
 
 
-function UploadCV(): ReactElement {
+function UploadCVForm(): ReactElement {
 
     let toast = useToast();
 
@@ -155,4 +155,4 @@ function UploadCV(): ReactElement {
     )
 }
 
-export default UploadCV
+export default UploadCVForm

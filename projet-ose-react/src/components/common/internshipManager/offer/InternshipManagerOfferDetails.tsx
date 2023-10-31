@@ -3,7 +3,7 @@ import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {InterOfferJob} from "../../../../model/IntershipOffer";
-import {getOfferReviewById} from "../../../../api/internshipManager/InternshipManagerAPI";
+import {getOfferReviewById} from "../../../../api/InternshipManagerAPI";
 import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
 import {useToast} from "../../../../hooks/state/useToast";
@@ -62,10 +62,10 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 
 
     return (
-        <>
+        <div className="">
             <button
                 className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
-                onClick={() => navigate("/gs/offers")}
+                onClick={() => navigate("/internshipmanager/home/offers")}
             >
                 <Icon className="w-5 h-5 fill-current hover:font-bold"/>
             </button>
@@ -73,7 +73,8 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             <h1 className='font-bold text-center text-dark text-2xl dark:text-offwhite'>{internshipOffer!.title}</h1>
 
 
-            <div className="block sm:flex mt-5 sm:justify-between sm:items-start">
+
+            <div className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto">
                 <div className='block items-center min-h-50'>
 
                     {/* Employeur field */}
@@ -130,7 +131,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             </div>
 
             {/* Description field */}
-            <div className="mb-5 justify-center items-center h-full">
+            <div className="mb-5 justify-center items-center h-full sm:mx-auto sm:w-3/4">
                 <p className="mt-1 p-2 w-full dark:text-offwhite ">
                     {internshipOffer!.description}
                 </p>
@@ -138,7 +139,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             </div>
 
             {/* File field */}
-            <div className="flex mb-5">
+            <div className="flex mb-5 sm:mx-auto sm:w-3/4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill={theme === `light` ? `#306bac` : `#F57A00`}
                      height="50" viewBox="0 -960 960 960" width="24">
                     <path
@@ -148,21 +149,21 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             </div>
 
             {!isAlreadyReviewed && (
-                <>
+                <div className="sm:w-3/4 mx-auto">
                     <textarea
                         name='comment'
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
                         id="commentary_placeholder"
                         onChange={(e) => handleFormChange(e)}
-                        placeholder={t("formField.GSOfferPage.placeholder")}>
+                        placeholder={t("formField.InternshipOfferModal.placeholder")}>
 
                     </textarea>
                     {renderError()}
-                </>
+                </div>
             )}
 
             {isAlreadyReviewed && (
-                <>
+                <div  className="sm:w-3/4 sm:mx-auto">
                     <textarea
                         name='comment'
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
@@ -184,9 +185,9 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                                                 {fields.table[formStateReview.state!]}
                                             </span>
                     </div>
-                </>
+                </div>
             )}
-        </>
+        </div>
     )
 
 }

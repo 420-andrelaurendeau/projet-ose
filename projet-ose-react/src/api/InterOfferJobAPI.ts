@@ -119,7 +119,6 @@ export const getOfferReviewRequestById = async (id: number) => {
 
 export const getInterOfferJob = async (email: string) => {
     try {
-        console.log(email)
         const response = await apiClient.get('interOfferJob/OffersEmp/' + email);
         return response.data;
 
@@ -133,8 +132,7 @@ export const getInterOfferJob = async (email: string) => {
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/etudiant/' + studentId + '/offersApplied');
-
+        const response = await apiClient.get('/student/' + studentId + '/offersApplied');
         return response.data.map((item: any) => ({
                 appliedOffer: item.appliedOffer,
                 appliedFiles: item.appliedFiles
