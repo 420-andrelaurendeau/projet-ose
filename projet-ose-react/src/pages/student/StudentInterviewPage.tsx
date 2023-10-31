@@ -1,11 +1,8 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {fetchInterviews, fetchInterviewsCountForStudent, acceptInterview, declineInterview} from "../../api/StudentApi";
+import {fetchInterviews, acceptInterview, declineInterview} from "../../api/StudentApi";
 import {getUser} from "../../api/UtilisateurAPI";
-import {getStudentAppliedOffers, offresEtudiant} from "../../api/InterOfferJobAPI";
 import {useAuth} from "../../authentication/AuthContext";
 import {Interview} from "../../model/Interview";
-import {AppliedOffers} from "../../model/AppliedOffers";
-import {useProps} from "./StudentInternshipPage";
 
 
 export default function StudentInterviewPage() {
