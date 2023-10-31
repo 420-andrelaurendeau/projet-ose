@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.InterviewDTO;
@@ -12,6 +13,10 @@ import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InterviewRepository;
+import io.micrometer.observation.ObservationFilter;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +34,7 @@ public class InterviewService {
     private final EtudiantRepository etudiantRepository;
 
     private final InternOfferRepository internOfferRepository;
+    Logger logger = LoggerFactory.getLogger(InterviewService.class);
 
     @Autowired
     public InterviewService(InternOfferRepository internOfferRepository,InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
@@ -98,5 +104,21 @@ public class InterviewService {
 
     public Boolean studentHasInterviewWithEmployeur(Long studentId, Long employerId) {
         return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getInternshipOffer().getId() == employerId).findFirst().orElse(null) != null;
+    }
+
+    @Transactional
+    public Optional<InterviewDTO> getInterview(long studentId, long internOfferId) {
+        try {
+            InterviewDTO interviewDTO = new InterviewDTO();
+            Interview inte = interviewRepository.findByStudentIdAndInternOfferId(studentId, internOfferId);
+            if (inte != null) {
+                interviewDTO = new InterviewDTO(inte.getId(), null, null, inte.getDate(), inte.getDescription());
+            }
+            return Optional.of(interviewDTO);
+        }catch (Exception e){
+            logger.error("Error while getting interview",e);
+            return Optional.empty();
+        }
+
     }
 }

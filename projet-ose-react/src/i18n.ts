@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import CV from './components/common/student/i18n/CV';
+import application from "./components/common/Employer/application/i18n/application";
+import employerOffer from "./components/common/Employer/offer/i18n/offer";
 
 
 i18n
@@ -22,7 +24,8 @@ i18n
             en: {
                 translation: {
                     formField: {
-
+                        application,
+                        employerOffer,
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -602,6 +605,8 @@ i18n
             fr: {
                 translation: {
                     formField: {
+                        application,
+                        employerOffer,
                         InternshipOfferList : {
                             header: {
                                 total: "Total des offres",

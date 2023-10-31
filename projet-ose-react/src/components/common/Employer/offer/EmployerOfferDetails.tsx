@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {getOfferById} from "../../../api/InterOfferJobAPI";
-import {ToastContext} from "../../../hooks/context/ToastContext";
+import {getOfferById} from "../../../../api/InterOfferJobAPI";
+import {ToastContext} from "../../../../hooks/context/ToastContext";
 import {useTranslation} from "react-i18next";
-import {InterOfferJob} from "../../../model/IntershipOffer";
+import {InterOfferJob} from "../../../../model/IntershipOffer";
 import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
 
@@ -11,18 +11,12 @@ import {Buffer} from "buffer";
 const EmployerOfferDetails: React.FC<any> = () => {
     const navigate = useNavigate();
     const {id} = useParams();
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const toast = useContext(ToastContext);
     const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField");
-
-
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
 
-    const [errors, setErrors] = useState<{
-        comment?: string,
-    }>({});
 
     const getProgrammeName = (): string => {
         let prog:string = "";
@@ -60,7 +54,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                 console.log(response);
 
             } catch (error) {
-                toast.error(fields.InternshipOfferList.errorFetchOffer);
+                toast.error(fields.errorFetchOffer);
             } finally {
                 fetchedOfferRef.current = false;
             }
@@ -83,7 +77,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                             "px-6 py-2 inline-flex text-lg leading-5  justify-center rounded-full bg-red text-white dark:text-offwhite"
                                             : "px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-green text-white dark:text-offwhite"}
                             >
-                                            {internshipOffer ? fields.homeEmployeur.offerTable[internshipOffer.state].text : ""}
+                                            {internshipOffer ? fields[internshipOffer.state].text : ""}
                                         </span>
                         </h2>
                         <div className="flex gap-2">
@@ -92,13 +86,13 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/employer/home/offers")}
                             >
-                                Back
+                                {fields.back.text}
                             </button>
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-red dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             >
-                                Edit
+                                {fields.edit.text}
                             </button>
                         </div>
                     </div>
@@ -106,33 +100,39 @@ const EmployerOfferDetails: React.FC<any> = () => {
             </div>
         <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
             <div className="px-4 sm:px-0">
-                <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">Offer Information</h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">Offer details and applications.</p>
+                <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
+                    {fields.title.text}
+                </h3>
+                <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
+                    {fields.subtitle.text}
+                </p>
             </div>
             <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
                 <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.InternshipOfferForm.title.text}</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.jobTitle.text}</dt>
                         <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.title}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.InternshipOfferForm.location.text}</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.location.text}</dt>
                         <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.location}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.InternshipOfferForm.program.text}</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.program.text}</dt>
                         <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{getProgrammeName()}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.InternshipOfferForm.salary.text}</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.salary.text}</dt>
                         <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">${internshipOffer?.salaryByHour}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.InternshipOfferForm.description.text}</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.description.text}</dt>
                         <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.description}</dd>
                     </div>
                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">Attachments</dt>
+                        <dt className="text-sm font-medium leading-6 dark:text-white">
+                            {fields.attachments.text}
+                        </dt>
                         <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
                                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
@@ -147,7 +147,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                     </div>
                                     <div className="ml-4 flex-shrink-0">
                                         <a href="#" className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
-                                            Download
+                                            {fields.download.text}
                                         </a>
                                     </div>
                                 </li>

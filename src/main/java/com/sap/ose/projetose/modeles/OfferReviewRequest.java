@@ -30,4 +30,13 @@ public class OfferReviewRequest {
         this.comment = comment;
         this.internshipmanager = internshipmanager;
     }
+
+    @Override
+    public String toString() {
+        return "OfferReviewRequest{" +
+                "id=" + id +
+                ", comment='" + comment + '\'' +
+                ", internshipmanager=" + internshipmanager +
+                '}';
+    }
 }

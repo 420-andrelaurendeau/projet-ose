@@ -61,7 +61,6 @@ function EmployeurHomePage() {
             if (userEmail != null){
                 console.log(userEmail)
                 data = await getUser(userEmail)
-                console.log(data)
                 setUser(data)
             }
         }
@@ -119,10 +118,6 @@ function EmployeurHomePage() {
         numberElementByPage: numberElementByPage,
         page: currentPage,
     }
-
-
-
-    console.log(context)
 
     return (
         <div className="min-h-screen h-full">

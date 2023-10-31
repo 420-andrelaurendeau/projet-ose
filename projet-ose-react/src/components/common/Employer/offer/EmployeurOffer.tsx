@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import {useProps} from "../../../pages/employer/EmployeurHomePage";
+import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 import {Outlet, useNavigate} from "react-router-dom";
-import {InterOfferJob} from "../../../model/IntershipOffer";
-import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
+import {InterOfferJob} from "../../../../model/IntershipOffer";
+import ListItemPageSelector from "../../shared/paginationList/ListItemPageSelector";
 import React from "react";
-import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
+import ListItemCountSelector from "../../shared/paginationList/ListItemCountSelector";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowDown19,
@@ -135,7 +135,7 @@ export default function EmployeurOffer() {
                                     <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
                                         <div className="text-sm dark:text-offwhite">{offer.startDate!.toString()}</div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
+                                    <td className="px-6 py-4 whitespace-nowrap dark:text-white max-md:hidden">
                                         {offer.salaryByHour} $
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">

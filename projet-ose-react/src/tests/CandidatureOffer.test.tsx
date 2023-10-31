@@ -1,6 +1,6 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import {Callback, TFunction} from "i18next";
-import CandidatureOffer from "../components/common/Employer/CandidatureOffer";
+import ApplicationOffer from "../components/common/Employer/application/ApplicationOffer";
 
 
 const Offres = [{
