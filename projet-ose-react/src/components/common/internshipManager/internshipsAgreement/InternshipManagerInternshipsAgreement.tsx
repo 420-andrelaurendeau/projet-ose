@@ -83,7 +83,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             className="xxxs:text-xs sm:text-sm w-1/4 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
                             onClick={() => handleSortClick("state")}
                         >
-                            <p className="text-xs">{fields.status}</p>
+                            {fields.status}
                             <div
                                 className={props.sortField === "state" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -91,8 +91,8 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     color={"White"} className={"ml-2"}/>
                             </div>
                         </div>
-                        <div role="columnheader" className="md:w-2 w-1/12  relative ">
-                            <span className="sr-only">View</span>
+                        <div role="columnheader" className=" w-1/12">
+
                         </div>
                     </div>
                 </div>
