@@ -6,7 +6,7 @@ import {Outlet, useLocation} from "react-router-dom";
 import axios from "axios";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../../pages/EtudiantStagePage";
+import {useProps} from "../../../pages/student/StudentInternshipPage"
 import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
@@ -32,15 +32,14 @@ function StudentStage() {
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
                 console.log(res);
-                getStudentAppliedOffers(res.id).then((res) => {
-                    setAppliedOffers(res);
-                })
             }
         ).finally(() => {
             allStudentInternshipOffers().then((res) => {
                 setOffers(res);
             })
-
+            getStudentAppliedOffers(user.id).then((res) => {
+                setAppliedOffers(res);
+            })
         })
     }, []);
 
@@ -80,7 +79,7 @@ function StudentStage() {
                         {fields.titre.text}
                     </h1>
                     <div className={"flex flex-col"}>
-                        {offers.length == 0? <p className="bg-red text-center text-white p-2 m-2">Il n'y a aucun stage disponible</p> :offers.map((offer: any) => (
+                        {offers.map((offer: any) => (
                             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}>
                                 <div
                                     className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10">

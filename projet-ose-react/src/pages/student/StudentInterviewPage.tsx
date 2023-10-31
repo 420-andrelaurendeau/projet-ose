@@ -71,7 +71,7 @@ export default function StudentInterviewPage() {
     }, [interviews]);
 
     return (
-        <div className="text-white  dark:bg-black">
+        <div className="text-white dark:bg-black">
             <div className="flex flex-col items-center">
                 <div className=" lg:-mx-8 mt-28 w-11/12 ">
                     <div
