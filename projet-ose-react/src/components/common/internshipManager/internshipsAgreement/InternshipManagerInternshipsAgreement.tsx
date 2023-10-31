@@ -37,11 +37,11 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
         <div className="pt-4 pb-4">
             <div className="">
                 <div className="bg-blue rounded dark:bg-orange">
-                    <div className="flex p-3 items-center">
+                    <div className="flex p-2 items-center">
 
                         <div
                             role="columnheader"
-                            className=" md:w-1/5 w-2/3 xxxs:text-sm sm:text-sm px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
                             onClick={() => handleSortClick("title")}
                         >
                             {fields.title}
@@ -54,7 +54,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="hidden sm:text-sm md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="xxxs:text-xs sm:text-sm w-1/3 md:w-1/5  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
                             onClick={() => handleSortClick("employeurEntreprise")}
                         >
                             {fields.enterprise}
@@ -67,7 +67,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="sm:text-sm md:visible w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate md:flex"
+                            className="xxxs:text-xs sm:text-sm w-1/3 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
                             onClick={() => handleSortClick("location")}
                         >
                             {fields.student}
@@ -80,10 +80,10 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="md:w-1/5 xxxs:text-sm sm:text-sm w-1/3 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex "
+                            className="xxxs:text-xs sm:text-sm w-1/4 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
                             onClick={() => handleSortClick("state")}
                         >
-                            {fields.status}
+                            <p className="text-xs">{fields.status}</p>
                             <div
                                 className={props.sortField === "state" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -91,7 +91,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     color={"White"} className={"ml-2"}/>
                             </div>
                         </div>
-                        <div role="columnheader" className="md:w-10 w-6  relative ">
+                        <div role="columnheader" className="md:w-2 w-1/12  relative ">
                             <span className="sr-only">View</span>
                         </div>
                     </div>
