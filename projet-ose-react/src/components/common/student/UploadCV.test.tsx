@@ -2,45 +2,26 @@ import {fireEvent, render, screen} from "@testing-library/react";
 import UploadCV from "./UploadCV";
 import React from "react";
 import {ToastContextProvider} from "../../../hooks/context/ToastContext";
+import {getUser} from "../../../api/UtilisateurAPI";
 import {saveCvStudent} from "../../../api/StudentApi";
-import axios from "axios";
-import api from "../../../api/ConfigAPI"
-import mocked = jest.mocked;
+import {act} from "react-dom/test-utils";
+
 
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-jest.mock("../../../api/ConfigAPI", () => {
-    return {
-        get: jest.fn(() => {
-        }),
-        post: jest.fn(),
-    }
-})
-
 jest.mock("../../../api/UtilisateurAPI", () => {
     return {
-        getUser: jest.fn(()=>{return Promise.resolve({
-            matricule: "123456",
-        })})
-    }
-})
-jest.mock('axios', () => {
-    return {
-        create: jest.fn(() => ({
-                interceptors: {
-                    request: {use: jest.fn(), eject: jest.fn()},
-                    response: {use: jest.fn(), eject: jest.fn()}
-                },
-            }
-        )),
-        get: jest.fn(),
-        post: jest.fn(),
-    }
-})
+        getUser: jest.fn(),
+    };
+});
 
-const mockedAxios: jest.Mocked<typeof axios> = axios as jest.Mocked<typeof axios>;
-const mockedUser: any = jest.genMockFromModule('../../../api/UtilisateurAPI');
+jest.mock("../../../api/StudentApi", () => {
+    return {
+        saveCvStudent: jest.fn(),
+    };
+});
+
 
 jest.mock('react-i18next', () => ({
     useTranslation: () => {
@@ -60,8 +41,9 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe("UploadCV Component", () => {
-    beforeEach(()=>{
-
+    beforeEach(() => {
+        const mockResponse = {data: "mocked data"};
+        (getUser as jest.Mock).mockResolvedValue(mockResponse);
     })
 
     it("renders the component upload button to be greyed out and cursor default", () => {
@@ -115,9 +97,8 @@ describe("UploadCV Component", () => {
 
     it("handles file submission and shows a success message", async () => {
         //TODO test with backend calls need to be figured out
-        let responsePost: any = {data: "Success"}
-        mockedAxios.post.mockResolvedValue(responsePost);
-
+        let response = Promise.resolve({data: "success"});
+        (saveCvStudent as jest.Mock).mockResolvedValue(response);
         render(
             <ToastContextProvider>
                 <UploadCV/>
@@ -125,14 +106,30 @@ describe("UploadCV Component", () => {
 
         const sampleFile = new File(["Sample file content"], "test.pdf");
         const fileInput = screen.getByLabelText("file");
+        act(() => {
+            fireEvent.change(fileInput, {
+                target: {files: [sampleFile]},
+            });
+        })
 
-        fireEvent.change(fileInput, {
-            target: {files: [sampleFile]},
-        });
+        //VERY IMPORTANT THAT YOU AWAIT SOMETHING THAT CHANGES AFTER A STATE CHANGE LIKE HERE
+        const selectedFile = await screen.findByText("test.pdf");
+        expect(selectedFile).toBeInTheDocument();
 
-        const submitButton = screen.getByLabelText("upload_button");
-        fireEvent.click(submitButton);
-        const successMessage = await screen.findByText("cv.upload_success");
+
+        const submitButton = await screen.findByLabelText("upload_button");
+        act(() => {
+            fireEvent.click(submitButton);
+        })
+
+        const successMessage = await screen.findByText("cv.success");
+        try{
+            const selectedFileGone = screen.getByText("test.pdf");
+            fail("selected file should be gone")
+        }catch (e){
+
+        }
+
         expect(successMessage).toBeInTheDocument();
     });
 });

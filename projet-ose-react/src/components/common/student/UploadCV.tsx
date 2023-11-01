@@ -31,7 +31,7 @@ function UploadCV(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
-        }).catch((error)=>{
+        }).catch((error) => {
             console.log("Error fetching user data:", error)
         })
     }, [])
@@ -50,8 +50,9 @@ function UploadCV(): ReactElement {
             }));
             if (fileError === "") {
                 let newFile = [currFile]
-                setFiles(files => [...newFile])
+                setFiles([...newFile])
             }
+            console.log(fileError)
         }
         reader.readAsDataURL(file)
     }
@@ -78,17 +79,19 @@ function UploadCV(): ReactElement {
 
     const handleSubmit = async () => {
         console.log(files)
-        setUploadState({status: "Uploading"})
-        saveCvStudent(user!.matricule, files[0]).then(res => {
-            console.log(res)
-            setUploadState({status: "Done"})
-            toast.success(t('cv.success'))
-            setFiles([])
-        }).catch(err => {
-            console.log(err)
-            toast.error(t('cv.error'))
-            setUploadState({status: "Error"})
-        })
+        if (files.length !== 0) {
+            setUploadState({status: "Uploading"})
+            saveCvStudent(user!.matricule, files[0]).then(res => {
+                console.log(res)
+                setUploadState({status: "Done"})
+                toast.success(t('cv.success'))
+                setFiles([])
+            }).catch(err => {
+                console.log(err)
+                toast.error(t('cv.error'))
+                setUploadState({status: "Error"})
+            })
+        }
     }
 
     const renderUploadStatus = (): ReactElement | null => {
@@ -145,12 +148,9 @@ function UploadCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div aria-label="upload_button" className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`} onClick={()=>{
-                        if(files.length > 0){
-                            handleSubmit()
-                        }
-
-                    }}>
+                    <div aria-label="upload_button"
+                         className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`}
+                         onClick={handleSubmit}>
                         {t('cv.upload_button')} {renderUploadStatus()}
                     </div>
 
