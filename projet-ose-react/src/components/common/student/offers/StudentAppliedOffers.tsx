@@ -13,12 +13,12 @@ export default function StudentAppliedOffers() {
     const [appliedOffers, setAppliedOffers] = useState<AppliedOffers[]>([])
     let user = useLocation().state;
 
+
     const fetchData = async () => {
         try {
             return await getStudentAppliedOffers(user.id)
-
         } catch (error) {
-            console.error("Erreur lors de la récupération des offres:", error);
+            console.log("Erreur lors de la récupération des offres:", error);
             return []
         }
     };
@@ -26,7 +26,7 @@ export default function StudentAppliedOffers() {
     useEffect(() => {
         fetchData().then((data) => {
             setAppliedOffers(data!);
-        });
+        })
     }, [])
 
 
