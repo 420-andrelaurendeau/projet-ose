@@ -2,6 +2,7 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {validateFile} from "../../../../utils/validation/ValidateInternshipOfferForm";
 // @ts-ignore
+//TODO: Fix le file pour quil soit bien envoyer
 import {FileEntity} from "../../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
