@@ -71,7 +71,7 @@ function StudentStage() {
                         <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
                     </div>
                     <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                        {t("formField.EtudiantStage.titre.text")} {/* Use t() function */}
+                        {t("formField.EtudiantStage.titre.text")}
                     </h1>
                     <div className={"flex flex-col"}>
                         {offers.map((offer: any) => {
