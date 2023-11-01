@@ -145,7 +145,7 @@ function UploadCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`} onClick={()=>{
+                    <div aria-label="upload_button" className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`} onClick={()=>{
                         if(files.length > 0){
                             handleSubmit()
                         }

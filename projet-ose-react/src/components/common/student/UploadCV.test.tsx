@@ -1,41 +1,49 @@
-import axios from "axios";
-import {getUser} from "../../../api/UtilisateurAPI";
-import {fireEvent,screen, render, renderHook} from "@testing-library/react";
+import {fireEvent, render, screen} from "@testing-library/react";
 import UploadCV from "./UploadCV";
-import {FileEntity} from "../../../model/FileEntity";
+import React from "react";
+import {ToastContextProvider} from "../../../hooks/context/ToastContext";
+import {saveCvStudent} from "../../../api/StudentApi";
+import axios from "axios";
 
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-jest.mock("axios", () => ({
-    ...jest.requireActual("axios"),
-    post: jest.fn(),
-    get: jest.fn(),
-}))
-
+// jest.mock('axios', () => {
+//     return {
+//         create: jest.fn(() => ({
+//             get: jest.fn(),
+//             post:jest.fn(),
+//             interceptors: {
+//                 request: { use: jest.fn(), eject: jest.fn() },
+//                 response: { use: jest.fn(), eject: jest.fn() }
+//             },
+//         }))
+//     }
+// })
 jest.mock('react-i18next', () => ({
-    // this mock makes sure any components using the translate hook can use it without a warning being shown
     useTranslation: () => {
         return {
-            t: (str:any) => str,
+            t: (str: any) => str,
             i18n: {
-                changeLanguage: () => new Promise(() => {}),
+                changeLanguage: () => new Promise(() => {
+                }),
             },
         };
     },
     initReactI18next: {
         type: '3rdParty',
-        init: () => {},
+        init: () => {
+        },
     }
 }));
 
 describe("UploadCV Component", () => {
     it("renders the component upload button to be greyed out and cursor default", () => {
-        render(<UploadCV />);
-        const fileInput = screen.getByText("cv.upload_button");
-        expect(fileInput).toBeInTheDocument();
-        expect(fileInput.classList.contains("bg-gray")).toBe(true)
-        expect(fileInput.classList.contains("cursor-default")).toBe(true)
+        render(<UploadCV/>);
+        const button = screen.getByLabelText("upload_button");
+        expect(button).toBeInTheDocument();
+        expect(button.classList.contains("bg-gray")).toBe(true)
+        expect(button.classList.contains("cursor-default")).toBe(true)
     });
 
     it("handles file selection and displays the selected file", async () => {
@@ -50,6 +58,12 @@ describe("UploadCV Component", () => {
 
         const selectedFile = await screen.findByText("test.pdf");
         expect(selectedFile).toBeInTheDocument();
+
+        const button = screen.getByLabelText("upload_button");
+        expect(button).toBeInTheDocument();
+        expect(button.classList.contains("bg-blue")).toBe(true)
+        expect(button.classList.contains("cursor-pointer")).toBe(true)
+
     });
 
     it("validates the selected file", async () => {
@@ -65,7 +79,31 @@ describe("UploadCV Component", () => {
 
         const errorMessage = await screen.findByText("formField.InternshipOfferForm.file.validation.BadTypeFile");
         expect(errorMessage).toBeInTheDocument();
+
+        const button = screen.getByLabelText("upload_button");
+        expect(button).toBeInTheDocument();
+        expect(button.classList.contains("bg-gray")).toBe(true)
+        expect(button.classList.contains("cursor-default")).toBe(true)
     });
 
-    // You can write more test cases for other functionalities like handling form submission, etc.
+
+    it("handles file submission and shows a success message", async () => {
+        //TODO test with backend calls need to be figured out
+        render(
+            <ToastContextProvider>
+                <UploadCV/>
+            </ToastContextProvider>);
+
+        const sampleFile = new File(["Sample file content"], "test.pdf");
+        const fileInput = screen.getByLabelText("file");
+
+        fireEvent.change(fileInput, {
+            target: {files: [sampleFile]},
+        });
+
+        const submitButton = screen.getByLabelText("upload_button");
+        fireEvent.click(submitButton);
+        const successMessage = await screen.findByText("cv.upload_success");
+        expect(successMessage).toBeInTheDocument();
+    });
 });
