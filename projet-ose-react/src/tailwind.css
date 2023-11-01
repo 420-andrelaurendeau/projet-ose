@@ -1031,6 +1031,10 @@ video {
   animation: slideOutRight 0.5s ease-out;
 }
 
+.cursor-default {
+  cursor: default;
+}
+
 .cursor-not-allowed {
   cursor: not-allowed;
 }
