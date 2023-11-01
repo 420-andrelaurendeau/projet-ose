@@ -43,7 +43,7 @@
   "scripts": {
     "start": "npm run build:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "build:css": "postcss src/index.css -o src/tailwind.css"
   },
   "eslintConfig": {
@@ -65,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.2",
     "@types/jsonwebtoken": "^9.0.4"
   }
 }
