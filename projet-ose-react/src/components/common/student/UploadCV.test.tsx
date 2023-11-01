@@ -4,22 +4,44 @@ import React from "react";
 import {ToastContextProvider} from "../../../hooks/context/ToastContext";
 import {saveCvStudent} from "../../../api/StudentApi";
 import axios from "axios";
+import api from "../../../api/ConfigAPI"
+import mocked = jest.mocked;
 
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-// jest.mock('axios', () => {
-//     return {
-//         create: jest.fn(() => ({
-//             get: jest.fn(),
-//             post:jest.fn(),
-//             interceptors: {
-//                 request: { use: jest.fn(), eject: jest.fn() },
-//                 response: { use: jest.fn(), eject: jest.fn() }
-//             },
-//         }))
-//     }
-// })
+jest.mock("../../../api/ConfigAPI", () => {
+    return {
+        get: jest.fn(() => {
+        }),
+        post: jest.fn(),
+    }
+})
+
+jest.mock("../../../api/UtilisateurAPI", () => {
+    return {
+        getUser: jest.fn(()=>{return Promise.resolve({
+            matricule: "123456",
+        })})
+    }
+})
+jest.mock('axios', () => {
+    return {
+        create: jest.fn(() => ({
+                interceptors: {
+                    request: {use: jest.fn(), eject: jest.fn()},
+                    response: {use: jest.fn(), eject: jest.fn()}
+                },
+            }
+        )),
+        get: jest.fn(),
+        post: jest.fn(),
+    }
+})
+
+const mockedAxios: jest.Mocked<typeof axios> = axios as jest.Mocked<typeof axios>;
+const mockedUser: any = jest.genMockFromModule('../../../api/UtilisateurAPI');
+
 jest.mock('react-i18next', () => ({
     useTranslation: () => {
         return {
@@ -38,6 +60,10 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe("UploadCV Component", () => {
+    beforeEach(()=>{
+
+    })
+
     it("renders the component upload button to be greyed out and cursor default", () => {
         render(<UploadCV/>);
         const button = screen.getByLabelText("upload_button");
@@ -89,6 +115,9 @@ describe("UploadCV Component", () => {
 
     it("handles file submission and shows a success message", async () => {
         //TODO test with backend calls need to be figured out
+        let responsePost: any = {data: "Success"}
+        mockedAxios.post.mockResolvedValue(responsePost);
+
         render(
             <ToastContextProvider>
                 <UploadCV/>
