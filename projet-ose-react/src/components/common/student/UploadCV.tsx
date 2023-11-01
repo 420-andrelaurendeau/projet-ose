@@ -114,6 +114,7 @@ function UploadCV(): ReactElement {
                     <div
                         className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5 px-9">
                         <input
+                            aria-label="file"
                             name='file'
                             type="file"
                             className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
@@ -144,7 +145,12 @@ function UploadCV(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
+                    <div className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`} onClick={()=>{
+                        if(files.length > 0){
+                            handleSubmit()
+                        }
+
+                    }}>
                         {t('cv.upload_button')} {renderUploadStatus()}
                     </div>
 

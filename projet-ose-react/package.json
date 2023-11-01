@@ -67,5 +67,10 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.2",
     "@types/jsonwebtoken": "^9.0.4"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }
