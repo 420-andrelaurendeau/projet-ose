@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
-import GSOffersPage from "../pages/internshipManager/Offers/GSOffersPage";
+import InternshipManagerOffersPage from "../pages/internshipManager/InternshipManagerOffersPage";
 import Layout from "../components/layout/Layout";
-import GSOfferPage from "../pages/internshipManager/Offer/GSOfferPage";
+import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
 
 const InternshipManager: React.FC = () => {
     return (
@@ -11,8 +11,8 @@ const InternshipManager: React.FC = () => {
             <Routes>
                 <Route path="/home/" element={<Layout/>}>
                     <Route element={<Layout/>}/>
-                    <Route index path="offers" element={<GSOffersPage/>}/>
-                    <Route path="offer/:id" element={<GSOfferPage/>} />
+                    <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
+                    <Route path="offer/:id" element={<InternshipManagerOfferPage/>} />
                 </Route>
             </Routes>
         </ProtectedRoute>

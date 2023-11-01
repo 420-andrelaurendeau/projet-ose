@@ -6,6 +6,7 @@ import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.service.InternOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,13 +49,20 @@ public class InternOfferController {
     @GetMapping("/OffersEtudiant")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public List<InternOfferDto> getOffersEtudiant() {
-        return offerJobService.getInternOfferAccepted();
+        List<InternOfferDto> offers = offerJobService.getInternOfferAccepted();
+        return offers;
     }
 
     @GetMapping("/OffersEmp/{email}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
-    public List<InternOfferDto> getInternOfferJob(@PathVariable String email){
-        return offerJobService.getInternOfferByEmployeurEmail(email);
+    public Page<InternOfferDto> getInternOfferJob(
+            @PathVariable String email,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "id") String sortField,
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
+
+        return offerJobService.getInternOfferByEmployeurEmail(email, page, size, sortField, sortDirection);
     }
 }
 

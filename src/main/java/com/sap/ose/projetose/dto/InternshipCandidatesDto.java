@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ public class InternshipCandidatesDto {
     private InternOfferDto internOfferJob;
     private List<FileDto> files;
     private State state;
+    private Date date;
 
     public InternshipCandidatesDto(InternshipCandidates internshipCandidates) {
         this.id = internshipCandidates.getId();

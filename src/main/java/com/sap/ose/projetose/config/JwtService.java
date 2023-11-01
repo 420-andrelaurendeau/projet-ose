@@ -25,12 +25,13 @@ public class JwtService {
         return extractClaim(token,Claims::getSubject);
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails ){
         return generateToken(new HashMap<>(),userDetails);
     }
 
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails){
         extractClaims.put("role",userDetails.getAuthorities());
+        System.out.println(extractClaims);
         return Jwts
                 .builder()
                 .setClaims(extractClaims)

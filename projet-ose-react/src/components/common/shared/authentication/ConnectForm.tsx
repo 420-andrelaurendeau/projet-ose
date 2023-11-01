@@ -27,8 +27,7 @@ const ConnectForm = (props: any): ReactElement => {
         try {
             const role = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
             console.log(userRole)
-            navigate(`/${role}/home/offers`)
-
+                navigate(`/${role}/home/offers`)
         } catch (error) {
             console.log(error);
         }
