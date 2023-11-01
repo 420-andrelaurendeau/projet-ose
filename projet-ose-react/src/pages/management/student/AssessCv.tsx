@@ -2,21 +2,19 @@ import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFileSignature} from '@fortawesome/free-solid-svg-icons'
 import axios from "axios";
-import {File} from "../../../model/File";
-import config from "tailwindcss/defaultConfig";
-
+import {FileEntity} from "../../../model/FileEntity";
 function EvaluerCV() {
-    const [CvInView, setCvInView] = useState(null as File | null);
-    const [displayAssessmentPopup, setDisplayAssessmentPopup] = useState(null as File | null);
-    const [files, setFiles] = useState([] as Array<File>);
+    const [CvInView, setCvInView] = useState(null as FileEntity | null);
+    const [displayAssessmentPopup, setDisplayAssessmentPopup] = useState(null as FileEntity | null);
+    const [files, setFiles] = useState([] as Array<FileEntity>);
 
     async function getPendingFiles() {
         const response = await axios.get('/api/management/pending_cvs');
         console.log(response.data);
-        setFiles(response.data as Array<File>);
+        setFiles(response.data as Array<FileEntity>);
     }
 
-    async function ApproveFile(file: File) {
+    async function ApproveFile(file: FileEntity) {
         return axios.post('/api/management/approve_cv?id=' + file.id).then((_) => getPendingFiles());
     }
 

@@ -1,4 +1,4 @@
-import {File} from "../../model/File";
+import {FileEntity} from "../../model/FileEntity";
 
 export const validateTitle = (title: string, t: Function) => {
     title = title.trim();
@@ -98,7 +98,7 @@ export const validateEndDate = (endDate: Date, startDate: Date, t: Function) => 
     return errorMsg;
 }
 
-export const validateFile = (file: File, t: Function) => {
+export const validateFile = (file: FileEntity, t: Function) => {
     const allowedExtensions = [".pdf"];
     let errorMsg = "";
 

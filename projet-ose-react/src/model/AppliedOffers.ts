@@ -1,7 +1,7 @@
 import {InternshipOffer} from "./IntershipOffer";
-import {File} from "./File";
+import {FileEntity} from "./FileEntity";
 
 export interface AppliedOffers {
     appliedOffer: InternshipOffer;
-    appliedFiles: File[];
+    appliedFiles: FileEntity[];
 }

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getStudentAppliedOffers} from "../../../../api/InterOfferJobAPI";
 import {AppliedOffers} from "../../../../model/AppliedOffers";
-import {File} from "../../../../model/File";
+import {FileEntity} from "../../../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
@@ -98,7 +98,7 @@ export default function StudentAppliedOffers() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm dark:text-offwhite">
-                                                {appliedOffer.appliedFiles.map((file: File) => (
+                                                {appliedOffer.appliedFiles.map((file: FileEntity) => (
                                                     <div key={file.id} className="flex space-y-2">
                                                         <FontAwesomeIcon icon={faFilePdf}/>
                                                         <a href="src/components/common" download={file.fileName}>{file.fileName}</a>

@@ -1,4 +1,4 @@
-import {File} from "./File";
+import {FileEntity} from "./FileEntity";
 
 export interface InternshipOffer {
     id?: number;
@@ -9,7 +9,7 @@ export interface InternshipOffer {
     startDate?: Date;
     endDate?: Date;
     internshipCandidates?: any[]; //TODO à remplacer par le bon type
-    file?: File;
+    file?: FileEntity;
     state: string;
     offerReviewRequestId?: number;
     programmeId: number;
