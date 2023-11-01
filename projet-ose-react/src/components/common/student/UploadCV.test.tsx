@@ -1,10 +1,10 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import UploadCV from "./UploadCV";
 import React from "react";
 import {ToastContextProvider} from "../../../hooks/context/ToastContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {saveCvStudent} from "../../../api/StudentApi";
 import {act} from "react-dom/test-utils";
+import UploadCV from "./UploadCV";
 
 
 jest.spyOn(console, "error").mockImplementation(() => {

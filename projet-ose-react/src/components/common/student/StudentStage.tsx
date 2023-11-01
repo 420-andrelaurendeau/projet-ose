@@ -6,7 +6,7 @@ import {Outlet, useLocation} from "react-router-dom";
 import axios from "axios";
 import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../../pages/EtudiantStagePage";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
