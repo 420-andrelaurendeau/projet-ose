@@ -39,6 +39,8 @@ public class ProjetOseApplication implements CommandLineRunner {
     private InternshipCandidatesService internshipCandidatesService;
 
     @Autowired
+    private StageService stageService;
+    @Autowired
     private InterviewService interviewService;
 
     @Autowired
@@ -87,6 +89,17 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+
+        StageDto stage = new StageDto(0L,1L, 1L,null, State.ACCEPTED);
+        StageDto stage2 = new StageDto(0L,2L, 2L, State.ACCEPTED, State.ACCEPTED);
+        StageDto stage3 = new StageDto(0L,2L, 2L,State.DECLINED, State.ACCEPTED);
+        StageDto stage4 = new StageDto(0L,2L, 2L,null, State.DECLINED);
+
+        stageService.save(stage);
+        stageService.save(stage2);
+        stageService.save(stage3);
+        stageService.save(stage4);
+
 
         System.out.println("DONE");
     }

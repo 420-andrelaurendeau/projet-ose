@@ -1,6 +1,11 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation} from "react-router-dom";
-import {getIntershipOffers, getTotalOfferByState} from "../../api/InternshipManagerAPI";
+import {
+    getIntershipOffers,
+    getStageCountByState,
+    getStages,
+    getTotalOfferByState
+} from "../../api/InternshipManagerAPI";
 import InternshipManagerOffers from "../../components/common/internshipManager/offers/InternshipManagerOffers";
 import PaginatedList from "../../components/common/shared/paginationList/PaginatedList";
 import {useTranslation} from "react-i18next";
@@ -48,15 +53,15 @@ const InternshipManagerInternshipsAgreementPage = () => {
             try {
                 fetchedInternshipsAgreementRef.current = true
 
-                const response = await getIntershipOffers({
+                const response = await getStages({
                     page: currentPage,
                     size: numberElementByPage,
                     state: offerState,
                     sortField,
                     sortDirection
                 });
-                setInternshipsAgreement(response.content);
-                setTotalPages(response.totalPages);
+                //setInternshipsAgreement(response.content);
+                //setTotalPages(response.totalPages);
             } catch (error) {
                 console.log(error);
                 toast.error(fields.toast.errorFetchInternshipsAgreement)
@@ -96,7 +101,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     };
 
     const handleTotalOffersByState = async () => {
-        const responseTotal = await getTotalOfferByState();
+        const responseTotal = await getStageCountByState();
         setTotalInternshipsAgreement(0);
         setTotalApprouved(0);
         setTotalPending(0);
