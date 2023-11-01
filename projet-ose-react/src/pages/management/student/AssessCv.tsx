@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFileSignature} from '@fortawesome/free-solid-svg-icons'
+import {getStudentPendingCv} from "../../../api/InternshipManagerAPI";
 import axios from "axios";
 import {FileEntity} from "../../../model/FileEntity";
 function EvaluerCV() {
@@ -8,23 +9,18 @@ function EvaluerCV() {
     const [displayAssessmentPopup, setDisplayAssessmentPopup] = useState(null as FileEntity | null);
     const [files, setFiles] = useState([] as Array<FileEntity>);
 
-    async function getPendingFiles() {
-        const response = await axios.get('/api/management/pending_cvs');
-        console.log(response.data);
-        setFiles(response.data as Array<FileEntity>);
-    }
 
     async function ApproveFile(file: FileEntity) {
-        return axios.post('/api/management/approve_cv?id=' + file.id).then((_) => getPendingFiles());
+        return axios.post('/api/management/approve_cv?id=' + file.id).then((_) => getStudentPendingCv());
     }
 
     useEffect(() => {
-        getPendingFiles();
+        getStudentPendingCv().then(r => setFiles(r));
     }, []);
 
     return (
         <>
-            <div className="md:p-16 md:m-16 p-4 m-4">
+            <div className="md:p-16 p-4">
                 <h1 className="font-extrabold text-2xl">CVs &aacute; &Eacute;valuer</h1>
                 {files.map((file) =>
                     <>

@@ -4,6 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 import InternshipManagerOffersPage from "../pages/internshipManager/InternshipManagerOffersPage";
 import Layout from "../components/layout/Layout";
 import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
+import EvaluerCV from "../pages/management/student/AssessCv";
 
 const InternshipManager: React.FC = () => {
     return (
@@ -11,6 +12,7 @@ const InternshipManager: React.FC = () => {
             <Routes>
                 <Route path="/home/" element={<Layout/>}>
                     <Route element={<Layout/>}/>
+                    <Route index path="studentCvReview" element={<EvaluerCV/>}/>
                     <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
                     <Route path="offer/:id" element={<InternshipManagerOfferPage/>} />
                 </Route>

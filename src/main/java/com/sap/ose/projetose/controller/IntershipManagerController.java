@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.controller;
 
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.InternshipmanagerService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,5 +53,13 @@ public class IntershipManagerController {
         InternOfferDto internOfferDto = offerJobService.getById(id);
 
         return new ResponseEntity<>(internOfferDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/studentCv/pending")
+    public ResponseEntity<List<FileDto>> getPendingCv() {
+
+        List<FileDto> pendingCv = internshipmanagerService.getPendingCv();
+
+        return new ResponseEntity<>(pendingCv, HttpStatus.OK);
     }
 }

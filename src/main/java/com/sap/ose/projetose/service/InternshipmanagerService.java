@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.exception.*;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class InternshipmanagerService {
 
@@ -24,13 +27,16 @@ public class InternshipmanagerService {
     private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
 
+    private final FileService fileService;
+
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
     @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService) {
+    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService, FileService fileService) {
         this.internshipmanagerRepository = internshipmanagerRepository;
         this.internOfferService = internOfferService;
         this.programmeService = programmeService;
+        this.fileService = fileService;
     }
 
     @Transactional
@@ -136,6 +142,19 @@ public class InternshipmanagerService {
             throw e;
         } catch (ServiceException e) {
             logger.error("Erreur inconnue lors de la récupération des offres de stage", e);
+            throw e;
+        }
+    }
+    @Transactional
+    public List<FileDto> getPendingCv() {
+        try {
+            List<FileDto> pendingCv = fileService.getAllStudentPendingCv();
+            return pendingCv;
+        } catch (DatabaseException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
+            throw e;
+        } catch (ServiceException e) {
+            logger.error("Erreur inconnue lors de la récupération des CV", e);
             throw e;
         }
     }

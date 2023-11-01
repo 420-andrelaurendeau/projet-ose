@@ -55,3 +55,13 @@ export const getOfferReviewById = async (id: number) => {
     }
 }
 
+export const getStudentPendingCv = async () => {
+    try {
+        const response = await api.get(`internshipManager/studentCv/pending`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des CV en attente:', error);
+        throw error;
+    }
+}
+

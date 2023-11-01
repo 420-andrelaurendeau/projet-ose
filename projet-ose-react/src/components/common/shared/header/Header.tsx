@@ -5,7 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faBars,
     faCircleUser,
-    faXmark
+    faXmark,
+    faFileLines, faFile
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "../../SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
@@ -84,6 +85,22 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             </div>
+                            {userRole === "internshipmanager" &&
+                                <NavLink to={"offers"}>
+                                    <div className="flex-shrink-0 hidden md:block text-center">
+                                        <FontAwesomeIcon icon={faFileLines} className="text-blue dark:text-orange" size="xl"/>
+                                        <p>Offre de stage</p>
+                                    </div>
+                                </NavLink>
+                            }
+                            {userRole === "internshipmanager" &&
+                                <NavLink to={"studentCvReview"}>
+                                    <div className="flex-shrink-0 hidden md:block text-center">
+                                        <FontAwesomeIcon icon={faFile} className="text-blue dark:text-orange" size="xl"/>
+                                        <p>Student CV review</p>
+                                    </div>
+                                </NavLink>
+                            }
                             <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
                                 <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                             </button>
