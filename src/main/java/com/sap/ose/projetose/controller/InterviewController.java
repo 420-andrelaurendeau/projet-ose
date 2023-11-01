@@ -1,13 +1,18 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.InterviewDTO;
-import com.sap.ose.projetose.dto.InterviewRequestInDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.service.InterviewService;
+import jakarta.annotation.security.DenyAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.transaction.Transactional;
+import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -36,12 +41,35 @@ public class InterviewController {
         boolean result = interviewService.studentHasInterviewWithEmployeur(studentHasInterviewWithInternOffer.studentId,studentHasInterviewWithInternOffer.internOfferId);
         return Optional.of(result).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-}
 
-class studentHasInterviewWithInternOffer {
-    long studentId,internOfferId;
-    public studentHasInterviewWithInternOffer(long studentId, long internOfferId) {
-        this.studentId = studentId;
-        this.internOfferId = internOfferId;
+    @GetMapping("/getAll")
+    public ResponseEntity<List<InterviewDTO>> getAllInterviews(){
+        logger.info("Interview get request received");
+        return Optional.of(interviewService.getAllInterviews()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+    @Transactional
+    @GetMapping("/getByStudentId/{studentId}")
+    public ResponseEntity<List<InterviewDTO>> getInterviewsByStudentId(@PathVariable long studentId){
+        logger.info("Interview get request received");
+        return Optional.of(interviewService.getInterviewsByStudentId(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+    @Transactional
+    @GetMapping("/getCountByStudentId/{studentId}")
+    public ResponseEntity<Long> getInterviewsCountByStudentId(@PathVariable long studentId){
+        logger.info("Interview get request received");
+        return interviewService.getInterviewsCountByStudentId(studentId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/studentAcceptsInterviewByStudentId/{studentId}/{InterviewId}")
+    public ResponseEntity<Boolean> studentAcceptsInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
+        logger.info("Interview accept request received");
+        return interviewService.studentAcceptsInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/studentDeclineInterviewByStudentId/{studentId}/{InterviewId}")
+    public ResponseEntity<Boolean> studentRefuseInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
+        logger.info("Interview decline request received");
+        return interviewService.studentDeclineInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
 }

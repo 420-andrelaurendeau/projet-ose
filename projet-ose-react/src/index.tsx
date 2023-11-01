@@ -18,9 +18,9 @@ import EmployeurHomePage from "./pages/EmployeurHomePage";
 import EmployeurOffer from "./components/common/EmployeurOffer";
 import CandidatureOffer from "./components/common/CandidatureOffer";
 import StudentAppliedOffers from "./components/common/student/offers/StudentAppliedOffers";
-import EtudiantStage from "./components/common/student/StudentInternship";
 import InternshipManagerOffersPage from "./pages/internshipManager/InternshipManagerOffersPage";
 import ErrorPage from "./pages/ErrorPage";
+import StudentInterviewPage from "./pages/student/StudentInterviewPage";
 import AppRouter from "./router/appRoutes";
 import {AuthProvider} from "./authentication/AuthContext";
 import InternshipOfferForm from "./components/common/internshipManager/form/InternshipOfferForm";
@@ -85,13 +85,16 @@ const router = createBrowserRouter([
         element: <StudentInternshipPage/>,
         children: [
             {
-                path: "/etudiant/home/offre",
-                element: <EtudiantStage/>,
-                children: []
+                path: "/etudiant/home/offers",
+                element: <StudentInternshipPage/>,
             },
             {
                 path: "/etudiant/home/offreApplique",
                 element: <StudentAppliedOffers/>,
+            },
+            {
+                path: "/etudiant/home/interview",
+                element: <StudentInterviewPage/>,
             },
             {
                 path: "/etudiant/home/TeleverserCV",

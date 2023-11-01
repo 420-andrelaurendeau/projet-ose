@@ -1,12 +1,13 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
-import StudentRoutes from "./studentRoutes";
+import StudentRoutes from "./StudentRoutes";
 import InternshipManagerRouter from "./InternshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
 import ConnectPage from "../pages/ConnectPage";
 import ErrorPage from "../pages/ErrorPage";
 import {AuthProvider} from "../authentication/AuthContext";
+import Registration from "../pages/Registration";
 
 const AppRouter: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter: React.FC = () => {
                     <Route path="/student/*" element={<StudentRoutes />} />
                     <Route path="/employer/*" element={<EmployerRouter/>}/>
                     <Route path="/internshipmanager/*" element={<InternshipManagerRouter/>}/>
+                    <Route path="/inscription" element={<Registration/>}/>
                 </Routes>
             </AuthProvider>
         </Router>

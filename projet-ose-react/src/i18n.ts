@@ -358,6 +358,10 @@ i18n
                                 name: 'CV',
                                 text: 'Upload your CV',
                             },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Interview',
+                            },
                             sidebar: {
                                 stage: {
                                     name: 'stage',
@@ -601,8 +605,29 @@ i18n
                         }
                     },
                     cv: CV.en,
-                }
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Title',
+                            location: 'Location',
+                            date: 'Date of the interview',
+                            company: 'Company',
+                            action: {
+                                name: 'action',
+                                text: 'Action',
+                                button : {
+                                    accept: 'Accept',
+                                    decline: 'Decline',
+                                },
+                                status:{
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                }
+                            },
+                        }
+                    }
 
+                },
             },
             fr: {
                 translation: {
@@ -951,6 +976,10 @@ i18n
                                 name: 'CV',
                                 text: 'Televerser votre CV',
                             },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Entrevue',
+                            },
                             sidebar: {
                                 stage: {
                                     name: 'stage',
@@ -960,7 +989,6 @@ i18n
                                     name: 'offre applique',
                                     text: "Offre appliqué"
                                 },
-
                             },
                             profilMenu: {
                                 signOut: {
@@ -1176,6 +1204,27 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Titre',
+                            location: 'Lieu de travail',
+                            date: 'Date de l\'entrevue',
+                            company: 'Compagnie',
+                            action: {
+                                name: 'action',
+                                text: 'Actions',
+                                button : {
+                                    accept: 'Accepter',
+                                    decline: 'Decliner',
+                                },
+                                status:{
+                                    accepted: "Accepté",
+                                    declined: "Decliné",
+                                }
+                            },
+                        }
+                    }
                 }
             }
         }

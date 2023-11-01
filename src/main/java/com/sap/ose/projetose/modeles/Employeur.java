@@ -26,7 +26,7 @@ public class Employeur extends Utilisateur {
     private List<InternOffer> internOffers;
 
     public Employeur(long id, String nom, String prenom, String phone, String email, String password, String entreprise, Programme programme) {
-        super(id, nom, prenom, phone, Role.employer, phone, password);
+        super(id,nom,prenom,phone,Role.employer,email,password);
         this.entreprise = entreprise;
         this.programme = programme;
     }

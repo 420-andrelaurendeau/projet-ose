@@ -1,7 +1,5 @@
 package com.sap.ose.projetose.config;
 
-
-
 import com.sap.ose.projetose.service.UtilisateurService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

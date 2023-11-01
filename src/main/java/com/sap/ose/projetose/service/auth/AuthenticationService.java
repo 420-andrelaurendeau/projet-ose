@@ -131,7 +131,6 @@ public class AuthenticationService {
             var jwtToken = jwtService.generateToken(extractClaims,utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
-
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();

@@ -134,9 +134,9 @@ export const getStudentAppliedOffers = async (studentId: number): Promise<Applie
     try {
         const response = await apiClient.get('/student/' + studentId + '/offersApplied');
         return response.data.map((item: any) => ({
-            appliedOffer: item.appliedOffer,
-            appliedFiles: item.appliedFiles
-        }));
+                appliedOffer: item.appliedOffer,
+                appliedFiles: item.appliedFiles
+            }));
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;
