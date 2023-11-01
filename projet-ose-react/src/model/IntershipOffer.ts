@@ -11,6 +11,7 @@ export interface InternshipOffer {
     internshipCandidates?: any[]; //TODO à remplacer par le bon type
     file?: File;
     state: string;
+    offerReviewRequestId?: number;
     programmeId: number;
     programmeNom?: String;
     employeurId: number;

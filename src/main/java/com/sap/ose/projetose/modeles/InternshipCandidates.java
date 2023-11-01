@@ -29,15 +29,26 @@ public class InternshipCandidates {
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<File> files;
 
+    private State state;
+
+    public InternshipCandidates(Etudiant etudiant, InternOffer internOffer, List<File> files, State state) {
+        this.etudiant = etudiant;
+        this.internOffer = internOffer;
+        this.files = files;
+        this.state = state;
+    }
+
     public InternshipCandidates(Etudiant etudiant, InternOffer internOffer, List<File> files) {
         this.etudiant = etudiant;
         this.internOffer = internOffer;
         this.files = files;
+        this.state = State.PENDING;
     }
 
     public InternshipCandidates(InternshipCandidates internshipCandidates) {
         this.etudiant = internshipCandidates.getEtudiant();
         this.internOffer = internshipCandidates.getInternOffer();
         this.files = internshipCandidates.getFiles();
+        this.state = internshipCandidates.getState();
     }
 }

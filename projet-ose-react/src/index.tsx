@@ -1,70 +1,142 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import './index.css';
-
+import './tailwind.css';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
-
-import './i18n.ts';
-
-import ErrorPage from "./pages/ErrorPage";
+import {createBrowserRouter} from "react-router-dom";
 import TestBackEndConnection from "./components/common/testBackEndConnection";
+import ConnectPage from "./pages/ConnectPage";
+import './i18n.ts';
+import StudentInscriptionPage from "./pages/student/StudentInscriptionPage";
+import PageEmployeurInscription from "./pages/PageEmployeurInscription";
+import StudentInternshipPage from "./pages/student/StudentInternshipPage";
+import UploadCVForm from "./components/common/student/form/UploadCVForm";
+import {ToastContextProvider} from "./hooks/context/ToastContext";
+import InterviewForm from "./components/common/InterviewForm";
+import EmployeurHomePage from "./pages/EmployeurHomePage";
+import EmployeurOffer from "./components/common/EmployeurOffer";
+import CandidatureOffer from "./components/common/CandidatureOffer";
+import StudentAppliedOffers from "./components/common/student/offers/StudentAppliedOffers";
+import InternshipManagerOffersPage from "./pages/internshipManager/InternshipManagerOffersPage";
+import ErrorPage from "./pages/ErrorPage";
+import StudentInterviewPage from "./pages/student/StudentInterviewPage";
+import AppRouter from "./router/appRoutes";
+import {AuthProvider} from "./authentication/AuthContext";
+import InternshipOfferForm from "./components/common/internshipManager/form/InternshipOfferForm";
 
-import LoginPage from "./pages/LoginPage";
-import StudentRegistrationPage from "./pages/student/StudentRegistrationPage";
-import EmployerRegistrationPage from "./pages/employer/EmployerRegistrationPage";
-import StudentInternshipOfferPage from "./pages/student/InternshipOfferPage";
-import ManagementInternshipOfferPage from './pages/management/offers/InternshipOfferPage';
-import AssessCvPage from "./pages/management/student/AssessCv";
 
+if (window.location.pathname == "/employeur/home" || window.location.pathname == "/employeur/home/") {
+    window.location.pathname = "/employeur/home/offre"
+}
 
 
 const portalDiv = document.getElementById('root')!;
 const root = ReactDOM.createRoot(portalDiv);
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <Navigate to={"/signIn"}/>,
-    },
-    {
         path: "/signIn",
-        element: <LoginPage/>
+        element: <ConnectPage/>
     },
     {
         path: "/signInTemp",
         element: <TestBackEndConnection/>
     },
     {
-        path: "/home",
+        path: "/",
+        element: <App/>,
+    },
+    {
+        path: "/employeur/home",
+        element: <EmployeurHomePage/>,
+        children: [
+            {
+                path: "offre",
+                element: <EmployeurOffer/>,
+                children: [
+                    {
+                        path: "candidature",
+                        element: <CandidatureOffer/>,
+                        children: [
+                            {
+                                path: "InterviewForm",
+                                element: <InterviewForm/>
+                            }
+                        ]
+                    },
+                    {
+                        path: "contrat",
+                        element: <p>Contrat</p>,
+                    },
+                    {
+                        path: "offreAttente",
+                        element: <p>Offre en attente</p>,
+                    },
+                    {
+                        path: "nouvelleOffre",
+                        element: <InternshipOfferForm/>,
+                    }
+                ]
+            },
+        ]
+    },
+    {
+        path: "/etudiant/home",
+        element: <StudentInternshipPage/>,
+        children: [
+            {
+                path: "/etudiant/home/offers",
+                element: <StudentInternshipPage/>,
+            },
+            {
+                path: "/etudiant/home/offreApplique",
+                element: <StudentAppliedOffers/>,
+            },
+            {
+                path: "/etudiant/home/interview",
+                element: <StudentInterviewPage/>,
+            },
+            {
+                path: "/etudiant/home/TeleverserCV",
+                element: <UploadCVForm/>
+            },
+        ]
+    },
+
+    {
+        path: "/gs/home",
+        element: <InternshipManagerOffersPage/>,
+        children: [
+            {
+                path: "/gs/home/offre",
+                element: <InternshipManagerOffersPage/>,
+            },
+        ]
+    },
+    {
+        path: "/etudiantInscription",
+        element: <StudentInscriptionPage/>
+    },
+    {
+        path: "/employeurInscription",
+        element: <PageEmployeurInscription/>
+    },
+    {
+        path: "/etudiantStage",
+        element: <StudentInternshipPage/>
+    },
+    {
+        path: "/*",
         element: <ErrorPage/>
-    },
-    {
-        path: "/etudiant/inscription",
-        element: <StudentRegistrationPage/>
-    },
-    {
-        path: "/etudiant/offre",
-        element: <StudentInternshipOfferPage/>
-    },
-    {
-        path: "/employeur/inscription",
-        element: <EmployerRegistrationPage/>
-    },
-    {
-        path: "/gestion/offers",
-        element: <ManagementInternshipOfferPage/>
-    },
-    {
-        path: "/gestion/etudiants/cv",
-        element: <AssessCvPage/>
     }
 
 ])
 
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <ToastContextProvider>
+            <AppRouter/>
+        </ToastContextProvider>
     </React.StrictMode>
 );
 // If you want to start measuring performance in your app, pass a function

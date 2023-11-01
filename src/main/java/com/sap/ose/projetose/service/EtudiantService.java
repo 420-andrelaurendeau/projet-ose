@@ -1,10 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
-import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.FileDto;
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -48,6 +45,20 @@ public class EtudiantService {
         }
     }
 
+    @Transactional
+    public Optional<EtudiantDto> saveEtudiantInscription(EtudiantInscriptionDto etudiant) {
+        try {
+            Etudiant savingStudent = etudiant.fromDto();
+            Programme programme = programmeService.findById(etudiant.getProgramme_id());
+            savingStudent.setProgramme(programme);
+            return Optional.of(new EtudiantDto(etudiantRepository.save(savingStudent)));
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Error lors de la sauvegarde de l'etudiant") {
+            };
+        }
+    }
+
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
@@ -61,7 +72,7 @@ public class EtudiantService {
         return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv().stream().map(File::getId).toList(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
-    public Etudiant findEtudiantById(Long id) {
+    Etudiant findEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
         return etudiant.orElse(null);
     }
@@ -71,14 +82,20 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
-    public Etudiant updateCVByMatricule(String matricule, File cv){
+    @Transactional
+    public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        etudiant.setCv(List.of(cv));
-        return etudiant;
+        List<File> cvs = new ArrayList<File>();
+        cvs.add(cv);
+        cv.setEtudiant(etudiant);
+        etudiant.setCv(cvs);
+        etudiantRepository.save(etudiant);
+        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
+        return etudiantDto;
     }
 
-    Etudiant getEtudiantByCourriel(String courriel) {
-        return etudiantRepository.findByCourriel(courriel).orElse(null);
+    Etudiant findByEmail(String courriel) {
+        return etudiantRepository.findByEmail(courriel).orElse(null);
     }
 
     @Transactional

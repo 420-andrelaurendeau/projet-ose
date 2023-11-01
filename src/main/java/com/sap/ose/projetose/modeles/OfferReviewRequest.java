@@ -14,15 +14,15 @@ public class OfferReviewRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(length = 1000000000)
     private String comment;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn
+    @JoinColumn(name = "internOffer_id")
     private InternOffer internOffer;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "internshipmanager_id")
     public Internshipmanager internshipmanager;
 
     public OfferReviewRequest(InternOffer internOffer, String comment, Internshipmanager internshipmanager) {

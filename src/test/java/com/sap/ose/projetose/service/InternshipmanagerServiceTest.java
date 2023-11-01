@@ -1,12 +1,10 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.InternshipmanagerDto;
-import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
-import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +14,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mapping.PropertyReferenceException;
+import org.springframework.data.util.TypeInformation;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -35,6 +37,10 @@ public class InternshipmanagerServiceTest {
     private InternshipmanagerService internshipmanagerService;
     @MockBean
     private InternshipmanagerRepository internshipmanagerRepository;
+    @MockBean
+    private InternOfferService internOfferService;
+    @MockBean
+    private InternOfferRepository internOfferRepository;
     @MockBean
     private ProgrammeService programmeService;
     @MockBean
@@ -122,6 +128,41 @@ public class InternshipmanagerServiceTest {
         ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.getById(anyLong()));
         assertEquals("Erreur inconnue lors de la récupération du gestionnaire de stage", result.getMessage());
     }
+
+    @Test
+    public void getSortedOffersByPage_InvalidStateException() {
+        when(internOfferService.getSortedByPage(1, 10, Sort.by("title").descending(), "wrongState")).thenThrow(new InvalidStateException("WrongState"));
+
+        InvalidStateException result = assertThrows(InvalidStateException.class, () -> internshipmanagerService.getSortedOffersByPage(1, 10, "wrongState", "title", "desc"));
+        assertEquals("Cette état n'est pas valide : WrongState", result.getMessage());
+    }
+
+    @Test
+    public void getSortedOffersByPage_Databaseexception(){
+        when(internOfferService.getSortedByPage(1, 10,Sort.by("title").descending() , "PENDING")).thenThrow(new DatabaseException());
+
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internshipmanagerService.getSortedOffersByPage(1, 10, "PENDING", "title", "desc"));
+        assertEquals("Erreur d'accès a la base de données", result.getMessage());
+    }
+
+    @Test
+    public void getSortedOffersByPage_ServiceException(){
+        when(internOfferService.getSortedByPage(1, 10,Sort.by("title").descending() , "PENDING")).thenThrow(new ServiceException());
+
+        ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.getSortedOffersByPage(1, 10, "PENDING", "title", "desc"));
+        assertEquals("Erreur au niveau du service", result.getMessage());
+    }
+
+    @Test
+    public void getSortedOffersByPage_BadSortingFieldException(){
+
+        when(internOfferService.getSortedByPage(1, 10,Sort.by("wrongField").ascending() , "PENDING")).thenThrow(new BadSortingFieldException("wrongField"));
+
+        BadSortingFieldException result = assertThrows(BadSortingFieldException.class, () -> internshipmanagerService.getSortedOffersByPage(1, 10, "PENDING", "wrongField", "asc"));
+        assertEquals("Le champ wrongField n'existe pas", result.getMessage());
+    }
+
+
 
 
 }

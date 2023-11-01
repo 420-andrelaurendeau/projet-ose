@@ -18,6 +18,10 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -170,5 +174,62 @@ class InternOfferServiceTest {
         ServiceException result = assertThrows(ServiceException.class, () -> internOfferService.findById(anyLong()));
         assertEquals("Erreur lors de la récupération de l'offre d'emploi.", result.getMessage());
     }
+
+
+    @Test
+    public void getSortedByPage_IllegalStateException() {
+        InvalidStateException result = assertThrows(InvalidStateException.class, () -> internOfferService.getSortedByPage(1, 1, Sort.by("title"), "wrongState"));
+        assertEquals("Cette état n'est pas valide : wrongState", result.getMessage());
+    }
+
+    @Test
+    public void getSortedByPage_DatabaseException() {
+        Pageable pageable = PageRequest.of(1, 1, Sort.by("title"));
+        when(internOfferRepository.findAll(pageable)).thenThrow(new DataAccessException("") {
+        });
+
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internOfferService.getSortedByPage(1, 1, Sort.by("title"), null));
+        assertEquals("Erreur d'accès a la base de données", result.getMessage());
+    }
+
+    @Test
+    public void getSortedByPage_ServiceException() {
+        Pageable pageable = PageRequest.of(1, 1, Sort.by("title"));
+        when(internOfferRepository.findAll(pageable)).thenThrow(RuntimeException.class);
+
+        ServiceException result = assertThrows(ServiceException.class, () -> internOfferService.getSortedByPage(1, 1, Sort.by("title"), null));
+        assertEquals("Erreur lors de la récupération des offres d'emploi.", result.getMessage());
+    }
+
+    @Test
+    public void getSortedByPage_BadSortedField() {
+
+        when(internOfferRepository.findAll(any(Pageable.class))).thenThrow(PropertyReferenceException.class);
+        BadSortingFieldException result = assertThrows(BadSortingFieldException.class, () -> internOfferService.getSortedByPage(1, 1, Sort.by("wrongField"), null));
+        assertEquals("Le champ wrongField: ASC n'existe pas", result.getMessage());
+    }
+
+    @Test
+    public void getCountByState_DataAccessException() {
+
+        when(internOfferRepository.getCountByState()).thenThrow(new DataAccessException("") {
+        });
+        DatabaseException result = assertThrows(DatabaseException.class, () -> internOfferService.getCountByState());
+        assertEquals("Erreur d'accès a la base de données", result.getMessage());
+
+    }
+
+    @Test
+    public void getCountByState_ServiceException() {
+
+        when(internOfferRepository.getCountByState()).thenThrow(new ServiceException(""));
+        ServiceException result = assertThrows(ServiceException.class, () -> internOfferService.getCountByState());
+        assertEquals("Erreur lors de la récupération des offres d'emploi.", result.getMessage());
+
+    }
+
+
 }
+
+
 

@@ -6,14 +6,19 @@ import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.service.EtudiantService;
+
+
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/etudiant")
+@RequestMapping("/api/student")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EtudiantController {
 
@@ -27,7 +32,7 @@ public class EtudiantController {
 
     @PostMapping("/ajouter")
     public ResponseEntity<Etudiant> saveEtudiant(@RequestBody Etudiant etudiant) {
-        System.out.println(etudiant);
+
         return etudiantService.saveEtudiant(etudiant).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
@@ -38,19 +43,22 @@ public class EtudiantController {
     }
 
     @GetMapping("/etudiants")
+    @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<List<EtudiantDto>> getEtudiants() {
         logger.info("getEtudiants");
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
     @PostMapping("/addCv/{matricule}")
-    public ResponseEntity<Etudiant> addCv(@PathVariable String matricule, @RequestBody String cv){
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<EtudiantDto> addCv(@PathVariable String matricule, @RequestBody File cv){
         logger.info("add cv to " + matricule );
-        Etudiant etudiant = etudiantService.updateCVByMatricule(matricule, null);
-        return ResponseEntity.ok().body(etudiant);
+        EtudiantDto etudiantDto = etudiantService.updateCVByMatricule(matricule, cv);
+        return ResponseEntity.ok().body(etudiantDto);
     }
 
     @GetMapping("{id}/offersApplied")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
 
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));

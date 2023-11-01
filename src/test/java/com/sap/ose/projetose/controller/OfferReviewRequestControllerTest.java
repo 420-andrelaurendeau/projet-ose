@@ -74,7 +74,8 @@ public class OfferReviewRequestControllerTest {
 
         ResultActions resultActions = MockMvcBuilders
                                         .standaloneSetup(offerReviewRequestController)
-                                        .setControllerAdvice(new GlobalExceptionHandler()).build()
+                                        .setControllerAdvice(new GlobalExceptionHandler())
+                                        .build()
                                         .perform(requestBuilder);
 
         resultActions

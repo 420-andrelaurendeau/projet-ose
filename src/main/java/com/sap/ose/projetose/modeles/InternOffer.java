@@ -22,6 +22,7 @@ public class InternOffer {
     private long id;
     private String title;
     private String location;
+    @Column(length = 1000000000)
     private String description;
     private double salaryByHour;
     private LocalDate startDate;
@@ -29,23 +30,23 @@ public class InternOffer {
     private String status;
     private State state;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipCandidates;
 
     @ManyToOne()
-    @JoinColumn
+    @JoinColumn(name = "program_id")
     private Programme programme;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn
+    @JoinColumn(name = "file_id")
     private File file;
 
     @ManyToOne()
-    @JoinColumn
+    @JoinColumn(name = "employeur_id")
     private Employeur employeur;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn
+    @JoinColumn(name = "offerReviewRequest_id")
     private OfferReviewRequest offerReviewRequest;
 
     public InternOffer(String title,

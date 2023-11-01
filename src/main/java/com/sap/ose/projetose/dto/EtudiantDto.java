@@ -29,16 +29,18 @@ public class EtudiantDto extends UtilisateurDto {
         this.internships_id = internships_id;
     }
 
+
     public EtudiantDto(Etudiant etudiant) {
         super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
         this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();
-        this.internships_id = etudiant.getInternshipsCandidate() == null ? null : etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList();
     }
 
     public Etudiant fromDto() {
         return new Etudiant(getNom(), getPrenom(), getPhone(), getEmail(), getMatricule(), (Programme) null,null,null);
     }
 
+    public Etudiant fromDtoWithId(){
+        return new Etudiant(getId(),getNom(), getPrenom(), getPhone(), getEmail(), getMatricule(), getMatricule(),(Programme) null,null);}
 }

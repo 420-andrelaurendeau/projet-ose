@@ -1,33 +1,67 @@
-const plugin = require("tailwindcss/plugin");
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-    darkMode: 'media', // Utilise le mode sombre en fonction des préférences du système
-    theme: {
-        extend: {
-            colors: {
-                'blue': '#306bac',
-                'orange': '#F57A00',
-                'gray': '#D0CCD0',
-                'offwhite': '#FBFCFF',
-                'dark': '#121420',
-                'softdark': '#1A1C23',
-            },
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      backgroundImage: (theme) => ({
+        'logo': "./src/assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png",
+        'logoDark': "./src/assets/images/Cegep-Andre-Laurendeau.png",
+      }),
+      animation: {
+        slideInDown: 'slideInDown 0.5s ease-out',
+        slideOutRight: 'slideOutRight 0.5s ease-out',
+      },
+      keyframes: {
+        slideInDown: {
+          '0%': { transform: 'translateY(-100%)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-    },
-    variants: {
-        extend: {
-            borderColor: ['focus-visible'],
-            opacity: ['disabled'],
+        slideOutRight: {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(100%)', opacity: '0' },
         },
+      },
+      colors: {
+        'blue': '#306bac',
+        'orange': '#F57A00',
+        'gray': '#D0CCD0',
+        'lightgray': '#e7e7e7',
+        'offwhite': '#FBFCFF',
+        'dark': '#121420',
+        'softdark': '#1A1C23',
+        'red' : '#FF0000',
+        'darkwhite': '#F0F0F0',
+        'darkgray': '#21253a',
+        'green': '#22d722',
+        'darkergray': '#1A1C23',
+      },
+      backgroundColor: {
+        'bleu': '#306bac',
+        'red' : '#FF0000',
+        'gray': '#727172',
+      },
+      placeholderColor: {
+        'gray': '#727172',
+        'orange': '#F57A00',
+      },
     },
-    plugins: [
-        plugin(function({addUtilities}) {
-            addUtilities({
-                '.no-scrollbar': {
-                    '-ms-overflow-style': 'none',
-                    'scrollbar-width': 'none'
-                }
-            })
-        })
-    ],
+    screens: {
+        'xxxs': '280px',
+        'xxs': '320px',
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+    },
+  },
+  variants: {
+    extend: {
+      borderColor: ['focus-visible'],
+      opacity: ['disabled'],
+      backgroundImage: ['dark'],
+    },
+  },
+  plugins: [],
 }

@@ -1,24 +1,16 @@
 import React from "react";
-import ConnectForm from "../components/common/ConnectForm";
+import ConnectForm from "../components/common/shared/authentication/ConnectForm";
 
-function LoginPage() {
-    const [darkMode, setDarkMode] = React.useState(false)
 
-    function toggleDarkMode() {
-        setDarkMode(prevDarkMode => !prevDarkMode)
-    }
+function ConnectPage() {
 
     return (
 
-        <div className={darkMode ? "h-screen w-full bg-dark" : "h-screen w-full bg-white"}>
+        <div className="h-screen w-full bg-white dark:bg-dark">
             <div className="items-center">
-                <ConnectForm
-                    darkMode={darkMode}
-                    toggleDarkMode={toggleDarkMode}
-                />
+                <ConnectForm/>
             </div>
         </div>
     );
 }
-
-export default LoginPage;
+export default ConnectPage;
