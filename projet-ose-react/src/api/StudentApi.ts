@@ -1,5 +1,6 @@
 import api from './ConfigAPI'
 import {Interview} from "../model/Interview";
+import {Stage} from "../model/Stage";
 export const saveCvStudent = async (matricule: number, cv: any) => {
     try {
         const response = await api.post(`etudiant/addCv/${matricule}`, cv)
@@ -29,16 +30,15 @@ export const fetchInterviews = async (userId: number): Promise<Interview[]> => {
     }
 }
 
-export const fetchInterviewsStagePending = async (userId: number): Promise<Interview[]> => {
+export const fetchStagePending = async (userId: number): Promise<Stage[]> => {
     try{
-        const res = await api.get(`interview/getByStudentId/`+ userId)
+        const res = await api.get(`stage/getByStudentId/`+ userId)
         return res.data.map((item: any) => ({
             id: item.id,
             student: item.student,
             internOffer: item.internOffer,
-            date: item.date,
-            description: item.description,
-            state: item.state,
+            stateStudent: item.stateStudent,
+            stateEmployeur: item.stateEmployeur
         }))
     }catch (error){
         throw error

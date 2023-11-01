@@ -20,6 +20,10 @@ public class Stage {
     @JoinColumn(name = "student_id")
     private Etudiant student;
 
+    @ManyToOne
+    @JoinColumn(name = "employeur_id")
+    private Employeur employeur;
+
     @ManyToOne()
     @JoinColumn(name = "Internshipoffer_id")
     private InternOffer offer;
