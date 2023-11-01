@@ -1,6 +1,7 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {validateFile} from "../../../../utils/validation/validationInteOfferForm";
+import {validateFile} from "../../../../utils/validation/ValidateInternshipOfferForm";
+// @ts-ignore
 import {FileEntity} from "../../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

@@ -3,7 +3,7 @@ import axios from "axios";
 import {useTranslation} from "react-i18next";
 import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
 import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
-import {Programme} from "../../model/Programme";
+import {Program} from "../../model/Program";
 import {useNavigate} from "react-router-dom";
 import {useToast} from "../../hooks/state/useToast";
 
@@ -27,7 +27,7 @@ function InscriptionEmployeur(props: any) {
     });
 
     const [showPassword, setShowPasswprd] = useState(false);
-    const [programmes, setProgrammes] = useState<Programme[]>([]);
+    const [programmes, setProgrammes] = useState<Program[]>([]);
 
     const tooglePasswordVisibility = () => {
         setShowPasswprd(!showPassword);

@@ -1,6 +1,4 @@
 import axios from "axios";
-import {InterOfferJob} from "../model/IntershipOffer";
-
 const API_BASE_URL = 'http://localhost:8080/api/';
 
 const apiClient = axios.create({

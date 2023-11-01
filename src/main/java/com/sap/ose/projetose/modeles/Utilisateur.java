@@ -32,9 +32,6 @@ public class Utilisateur implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToOne
-    @JoinColumn
-    private Programme programme;
 
     public Utilisateur(String nom, String prenom, String phone,Role role, String email, String password) {
         this.nom = nom;

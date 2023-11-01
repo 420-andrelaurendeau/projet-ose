@@ -19,14 +19,14 @@ public class InternshipCandidates {
     private long id;
 
     @ManyToOne()
-    @JoinColumn
+    @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
     @ManyToOne()
-    @JoinColumn
+    @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.REMOVE)
     private List<File> files;
 
     private State state;
