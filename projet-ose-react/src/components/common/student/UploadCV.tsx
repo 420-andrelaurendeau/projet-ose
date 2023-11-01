@@ -62,21 +62,6 @@ function UploadCV(): ReactElement {
             {errorMsg || ""}
         </p>);
 
-    const handleValidation = (fieldName: string) => {
-        let fieldError = "";
-
-        switch (fieldName) {
-            case "file":
-                fieldError = validateFile(files[0], t);
-                break;
-        }
-
-        setErrors(prevErrors => ({
-            ...prevErrors, [fieldName]: fieldError
-        }));
-
-    }
-
     const handleSubmit = async () => {
         console.log(files)
         if (files.length !== 0) {
@@ -124,7 +109,6 @@ function UploadCV(): ReactElement {
                             onChange={(e) => {
                                 handleFileChange(e);
                             }}
-                            onLoad={() => handleValidation("file")}
                         />
                         <div className="flex flex-col items-center justify-center py-10 text-center">
                             <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>

@@ -74,7 +74,7 @@ describe("UploadCV Component", () => {
 
     });
 
-    it("validates the selected file", async () => {
+    it("validates the selected file error", async () => {
         render(<UploadCV/>);
         const invalidFile = new File(["Invalid file content"], "invalid-file.exe", {
             type: "application/octet-stream",
@@ -88,6 +88,10 @@ describe("UploadCV Component", () => {
         const errorMessage = await screen.findByText("formField.InternshipOfferForm.file.validation.BadTypeFile");
         expect(errorMessage).toBeInTheDocument();
 
+        fireEvent.load(fileInput, {
+            target: {files: [invalidFile]},
+        })
+
         const button = screen.getByLabelText("upload_button");
         expect(button).toBeInTheDocument();
         expect(button.classList.contains("bg-gray")).toBe(true)
@@ -96,7 +100,6 @@ describe("UploadCV Component", () => {
 
 
     it("handles file submission and shows a success message", async () => {
-        //TODO test with backend calls need to be figured out
         let response = Promise.resolve({data: "success"});
         (saveCvStudent as jest.Mock).mockResolvedValue(response);
         render(
@@ -131,5 +134,43 @@ describe("UploadCV Component", () => {
         }
 
         expect(successMessage).toBeInTheDocument();
+    });
+
+    it("handles unsuccessful file submission and shows an error message", async () => {
+        // Mock the saveCvStudent function to reject the promise
+        (saveCvStudent as jest.Mock).mockRejectedValue(new Error("CV upload failed"));
+
+        render(
+            <ToastContextProvider>
+                <UploadCV />
+            </ToastContextProvider>
+        );
+
+        const sampleFile = new File(["Sample file content"], "test.pdf");
+        const fileInput = screen.getByLabelText("file");
+
+        act(() => {
+            fireEvent.change(fileInput, {
+                target: { files: [sampleFile] },
+            });
+        });
+
+        // Ensure the selected file is displayed
+        const selectedFile = await screen.findByText("test.pdf");
+        expect(selectedFile).toBeInTheDocument();
+
+        const submitButton = await screen.findByLabelText("upload_button");
+
+        act(() => {
+            fireEvent.click(submitButton);
+        });
+
+
+        // Check that the error message is displayed
+        const errorMessage = await screen.findByText("cv.error");
+        expect(errorMessage).toBeInTheDocument();
+
+        const selectedFileAgain = await screen.findByText("test.pdf");
+        expect(selectedFileAgain).toBeInTheDocument();
     });
 });
