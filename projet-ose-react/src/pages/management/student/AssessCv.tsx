@@ -1,21 +1,50 @@
 import {useEffect, useState} from "react";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faFileSignature} from '@fortawesome/free-solid-svg-icons'
-import {getStudentPendingCv} from "../../../api/InternshipManagerAPI";
+import {getStudentPendingCv, acceptStudentCv, declineStudentCv} from "../../../api/InternshipManagerAPI";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import {FileEntity} from "../../../model/FileEntity";
+import {ReviewFile} from "../../../model/ReviewFile";
 function EvaluerCV() {
-    const [CvInView, setCvInView] = useState(null as FileEntity | null);
-    const [displayAssessmentPopup, setDisplayAssessmentPopup] = useState(null as FileEntity | null);
-    const [files, setFiles] = useState([] as Array<FileEntity>);
+    const [files, setFiles] = useState([] as Array<ReviewFile>);
 
 
-    async function ApproveFile(file: FileEntity) {
-        return axios.post('/api/management/approve_cv?id=' + file.id).then((_) => getStudentPendingCv());
+    async function ApproveFile(file: ReviewFile) {
+        acceptStudentCv(file.id).then(r => {
+            console.log(r);
+        }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
+    async function DeclineFile(file: ReviewFile) {
+        declineStudentCv(file.id).then(r => {
+            console.log(r);
+        }).then(getStudentPendingCv).then(r => setFiles(r));
+    }
+
+    const handleDownloadFile = (file: ReviewFile) => {
+        // Create a Blob from the base64 content
+        const byteCharacters = atob(file.content);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        // Create a URL for the blob and trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.fileName;
+        a.click();
+
+        // Clean up the URL
+        window.URL.revokeObjectURL(url);
+    };
+
+
     useEffect(() => {
-        getStudentPendingCv().then(r => setFiles(r));
+        getStudentPendingCv().then(r => setFiles(r)).then(getStudentPendingCv).then(r => setFiles(r));
+        console.log(files);
     }, []);
 
     return (
@@ -24,76 +53,38 @@ function EvaluerCV() {
                 <h1 className="font-extrabold text-2xl">CVs &aacute; &Eacute;valuer</h1>
                 {files.map((file) =>
                     <>
-                        <div onClick={() => {
-                            setCvInView(file)
-                        }}
-                             className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-wrap">
-                            <p className="basis-full flex-grow pb-2 md:pb-0">Nom, Prenom</p>
-                            <p className="basis-full md:basis-1/2">Formation</p>
-                            <p className="basis-full md:basis-1/2 md:text-end pb-2 md:pb-0">Matricule</p>
-                            <p className="basis-full md:basis-1/2 flex-grow">{file.fileName}</p>
-                            <p className="basis-full md:basis-1/2 flex-grow md:text-end">Date de Remise</p>
+                        <div
+                             className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-wrap justify-between">
+
+                            <div className="flex flex-col md:flex-row md:flex-wrap">
+                                <p className="basis-full flex-grow pb-2 md:pb-0">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
+                                <p className="basis-full flex-grow">{file.etudiant?.matricule}</p>
+                                <p className="basis-full flex-grow">{file.etudiant?.email}</p>
+                                <p className="basis-full flex-grow">{file.fileName}</p>
+                            </div>
+                            <div className="flex flex-col md:flex-row md:flex-wrap">
+                                <button
+                                    className="text-blue-500 hover:text-blue-700"
+                                    onClick={() => handleDownloadFile(file)}
+                                >
+                                    <FontAwesomeIcon icon={faDownload} className="scale-150" />
+                                </button>
+                            </div>
+                            <div className="flex flex-col md:flex-row md:flex-wrap">
+                                <button className="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                                        onClick={_ => ApproveFile(file)}>
+                                    Approuver
+                                </button>
+                                <button className="bg-red hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+                                        onClick={_ => DeclineFile(file)}>
+                                    Refuser
+                                </button>
+                            </div>
+
                         </div>
                     </>
                 )}
             </div>
-
-            {
-                CvInView ?
-                    (
-                        <>
-                            <div className="absolute top-0 bg-dark w-full h-8 z-20 flex justify-end items-center px-3 ">
-                                <FontAwesomeIcon icon={faFileSignature} className="text-gray hover:text-white" onClick={_ => {
-                                    setCvInView(null);
-                                    setDisplayAssessmentPopup(CvInView);
-                                }}/>
-                            </div>
-                            <div className="fixed bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={_ =>
-                                setCvInView(null)
-                            }></div>
-                            <div className="absolute bottom-0 overflow-scroll no-scrollbar z-10 h-[calc(100vh-2rem)] -translate-x-1/2 left-1/2">
-                                <div className="justify-end items-center px-3">
-                                    <div
-                                        className="my-5 bg-white w-[80vw] aspect-[216/279]">
-                                        Je suis un document. Page 1
-                                    </div>
-                                    <div
-                                        className="my-5 bg-white w-[80vw] aspect-[216/279]">
-                                        Je suis un document. Page 2
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                    ) : null
-            }
-            {
-                displayAssessmentPopup ? (
-                    <>
-                        <div className="absolute bottom-0 bg-dark w-full h-full opacity-75 z-0" onClick={() =>
-                            setDisplayAssessmentPopup(null)
-                        }></div>
-                        <div className="absolute bg-white rounded-md w-2/3 md:w-1/3 z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
-                            <div className="flex flex-col justify-start h-full">
-                                <h1 className="font-bold text-2xl relative px-5 py-3 w-100 text-center">Evaluer le CV: {displayAssessmentPopup.fileName}</h1>
-                                <div className="flex flex-col justify-between px-5 py-3 grow-1 basis-full">
-                                    <div className="flex flex-col">
-                                        <label className="font-bold text-lg">Commentaires:</label>
-                                        <textarea className="border-2 border-slate-200 rounded-md resize-none h-52"/>
-                                    </div>
-                                    <div className="flex flex-col md:flex-row justify-around transition-colors mb-5">
-                                        <button className="bg-green-600 hover:bg-green-500 text-white rounded-md px-3 py-1 mt-3"
-                                        onClick={
-                                            _ =>
-                                                ApproveFile(displayAssessmentPopup)
-                                                    .then(_ => setDisplayAssessmentPopup(null))
-                                        }>Accepter</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                ) : null
-            }
         </>
     );
 }
