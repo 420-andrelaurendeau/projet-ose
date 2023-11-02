@@ -57,20 +57,22 @@ function EvaluerCV() {
                 {files.map((file) =>
                     <>
                         <div className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-wrap justify-between dark:bg-dark">
-                            <div className="flex flex-col md:flex-row md:flex-wrap">
+                            <div className="flex flex-col flex-grow md:flex-row md:flex-wrap">
                                 <p className="basis-full flex-grow pb-2 md:pb-0 dark:text-white">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.etudiant?.matricule}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.etudiant?.email}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.fileName}</p>
                             </div>
-                            <div className="rounded flex flex-col md:flex-row md:flex-wrap bg-gray">
-                                <button
-                                    className="text-blue-500 hover:text-blue-700"
-                                    onClick={() => handleDownloadFile(file)}
-                                >
-                                    <p className="dark:text-white">{fields.button.download}</p>
-                                    <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white" />
-                                </button>
+                            <div className="flex flex-col flex-grow md:flex-row md:flex-wrap">
+                                <div className="rounded  md:flex-row md:flex-wrap bg-gray ">
+                                    <button
+                                        className="text-blue-500 hover:text-blue-700"
+                                        onClick={() => handleDownloadFile(file)}
+                                    >
+                                        <p className="dark:text-white">{fields.button.download}</p>
+                                        <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white" />
+                                    </button>
+                                </div>
                             </div>
                             <div className="flex flex-col md:flex-row md:flex-wrap">
                                 <button className="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
