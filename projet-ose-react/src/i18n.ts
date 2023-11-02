@@ -38,13 +38,13 @@ i18n
                                 title: "Title",
                                 enterprise: "Enterprise",
                                 student: "Student",
-                                status: "Status",
+                                statut: "Status",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
                             },
-                            status: {
-                                accepted: "Accepted",
-                                declined: "Declined",
-                                pending: "Pending",
-                            }
                         },
                         InternshipOfferList : {
                             header: {
@@ -653,13 +653,13 @@ i18n
                                 title: "Titre",
                                 enterprise: "Entreprise",
                                 student: "Étudiant",
-                                status: "Statut",
+                                statut: "Statut",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
                             },
-                            status: {
-                                accepted: "Accepted",
-                                declined: "Declined",
-                                pending: "Pending",
-                            }
                         },
                         InternshipOfferList : {
                             header: {

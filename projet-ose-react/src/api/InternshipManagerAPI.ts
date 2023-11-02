@@ -101,24 +101,12 @@ export const getStages = async ({ page, size, state, sortField, sortDirection }:
     }
 };
 
-
-export const getStudentById = async (id: number) => {
+export const getStageById = async (id: string) => {
     try {
-        const response = await api.get(`student/${id}`);
+        const response = await api.get(`stage/${id}`);
         return response.data;
     } catch (error) {
-        console.error('Erreur lors de la récupération de l\'étudiant:', error);
+        console.error('Erreur lors de la récupération de l\'entente de stage:', error);
         throw error;
     }
 }
-
-export const getEmployerById = async (employerId: any) => {
-    try {
-        const response = await api.get(`employeur/${employerId}`);
-        return response.data;
-    } catch (error) {
-        console.error('Erreur lors de la récupération de l\'employeur:', error);
-        throw error;
-    }
-}
-

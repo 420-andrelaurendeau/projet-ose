@@ -1,13 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ReactPainter} from "react-painter";
 import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 import {useToast} from "../../../../hooks/state/useToast";
 // todo : change the sort field with correct name of the api
 
-export default function InternshipManagerInternshipAgreement(props: any) {
+export default function InternshipManagerInternshipAgreement(intershipAggreement:any) {
 
-    const {id} = useParams();
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -17,7 +16,7 @@ export default function InternshipManagerInternshipAgreement(props: any) {
     const isLoading = useRef(false);
 
     useEffect(() => {
-
+        console.log(intershipAggreement)
         function fetchReviewRequest() {
             isLoading.current = true;
             // todo : fetch the review request
@@ -33,9 +32,6 @@ export default function InternshipManagerInternshipAgreement(props: any) {
             fetchReviewRequest();
 
     }, []);
-
-
-
 
     function blobToBase64(blob: Blob, callback: (arg0: string | ArrayBuffer | null) => void) {
         const reader = new FileReader();
@@ -82,14 +78,12 @@ export default function InternshipManagerInternshipAgreement(props: any) {
 
                     <div className="ml-8 p-1">
 
-                        <p className="p-1"> Étudiant prénom et Nom de famille</p>
+                        <p className="p-1"> {intershipAggreement.etudiantDto.nom + intershipAggreement.etudiantDto.prenom}</p>
 
-                        {/* Company field */}
-                        <p className="p-1"> Programme de l'étudiant</p>
 
-                        <p className="p-1"> Addrèsse email de l'étudiant</p>
+                        <p className="p-1">{intershipAggreement.etudiantDto.email}</p>
 
-                        <p className="p-1"> Statut de l'entrevue </p>
+                        <p className="p-1"> {intershipAggreement.stateStudent} </p>
                     </div>
 
                 </div>
@@ -100,15 +94,14 @@ export default function InternshipManagerInternshipAgreement(props: any) {
 
                     <div className="sm:mr-8 ml-8 p-1">
 
-                        <p className="p-1"> Employeur prénom et Nom de famille</p>
+                        <p className="p-1"> {intershipAggreement.stateEmployeur}</p>
 
                         {/* Company field */}
-                        <p className="p-1"> Nom de l'entreprise</p>
+                        <p className="p-1"> {intershipAggreement.employeur.nom + " " + intershipAggreement.employeur.prenom}</p>
 
-                        <p className="p-1"> Addrèsse email de la compagnie</p>
+                        <p className="p-1"> {intershipAggreement.employeur.email}</p>
 
-
-                        <p className="p-1"> Statut de l'entrevue </p>
+                        <p className="p-1"> {intershipAggreement.stateEmployeur} </p>
                     </div>
                 </div>
             </div>

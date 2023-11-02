@@ -1,9 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
-import React, {useEffect, useRef, useState} from "react";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
-import InternshipManagerOfferPage from "../../../../pages/internshipManager/InternshipManagerOfferPage";
-import useModal from "../../../../hooks/useModal";
+import {faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
+import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 // todo : change the sort field with correct name of the api
@@ -11,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 export default function InternshipManagerInternshipsAgreement(props: any) {
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipsAgreementPage.internshipsAgreement");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage.internshipsAgreement");
 
     const navigate = useNavigate();
 
@@ -45,7 +42,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
 
                         <div
                             role="columnheader"
-                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
+                            className="xxxs:text-xs sm:text-sm sm:w-1/5 w-1/2 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
                             onClick={() => handleSortClick("title")}
                         >
                             {fields.title}
@@ -58,7 +55,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="xxxs:text-xs sm:text-sm w-1/3 md:w-1/5  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
+                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
                             onClick={() => handleSortClick("employeurEntreprise")}
                         >
                             {fields.enterprise}
@@ -71,7 +68,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="xxxs:text-xs sm:text-sm w-1/3 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
+                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
                             onClick={() => handleSortClick("location")}
                         >
                             {fields.student}
@@ -84,10 +81,10 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </div>
                         <div
                             role="columnheader"
-                            className="xxxs:text-xs sm:text-sm w-1/4 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
+                            className="xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
                             onClick={() => handleSortClick("state")}
                         >
-                            {fields.status}
+                            {fields.statut}
                             <div
                                 className={props.sortField === "state" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -122,13 +119,18 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
                                             <span
                                                 className={
-                                                    offer.stateEmployeur || offer.stateStudent === "DECLINED" ?
-                                                        "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
-                                                        : (offer.stateEmployeur || offer.stateStudent == "PENDING" ?
+                                                    (offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
+                                                        "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite " :
+                                                        offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
                                                             "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                             : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite ")}
                                             >
-                                                {fields.status[offer.state]}
+                                                {offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
+                                                    fields.status.declined
+                                                    : offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
+                                                        fields.status.pending
+                                                        : fields.status.accepted
+                                                }
                                             </span>
                             </div>
 
@@ -139,7 +141,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                                  onClick={() => handleOfferClick(offer.id!)}/>
                             </div>
                         </div>
-                        ))
+                    ))
                     }
                 </div>
             </div>
@@ -148,16 +150,4 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
 }
 
 /**
- <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
- <span
- className={
- offer.stateEmployeur || offer.stateStudent === "DECLINED" ?
- "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
- : (offer.stateEmployeur || offer.stateStudent == "PENDING" ?
- "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
- : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite ")}
- >
- {fields.table[offer.state]}
- </span>
- </div>
  */

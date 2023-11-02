@@ -6,6 +6,7 @@ import Layout from "../components/layout/Layout";
 import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
 import InternshipManagerInternshipsAgreementPage
     from "../pages/internshipManager/InternshipManagerInternshipsAgreementPage";
+import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
 
 const InternshipManagerRouter: React.FC = () => {
     return (
@@ -16,6 +17,7 @@ const InternshipManagerRouter: React.FC = () => {
                     <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
                     <Route path="offer/:id" element={<InternshipManagerOfferPage/>}/>
                     <Route path="internshipsagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
+                    <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}/>
                 </Route>
             </Routes>
         </ProtectedRoute>
