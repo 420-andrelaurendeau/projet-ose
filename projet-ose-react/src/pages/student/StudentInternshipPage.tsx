@@ -96,7 +96,7 @@ function StudentInternshipPage() {
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
                             <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:aria-[current='page']:text-orange dark:text-white" size="lg" />
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
                                 <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
@@ -110,7 +110,7 @@ function StudentInternshipPage() {
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
                             <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:aria-[current='page']:text-orange dark:text-white" size="lg" />
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
                                 <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.cv.text}</p>
