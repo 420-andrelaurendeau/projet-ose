@@ -606,6 +606,14 @@ i18n
                                 }
                             },
                         }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV to evaluate',
+                        button: {
+                            accept: 'Accept',
+                            decline: 'Decline',
+                        }
                     }
 
                 },
@@ -1185,6 +1193,14 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
+                        }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV à évaluer',
+                        button: {
+                            accept: 'Accepter',
+                            decline: 'Decliner',
                         }
                     }
                 }

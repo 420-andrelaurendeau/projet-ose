@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import {ReviewFile} from "../../../model/ReviewFile";
+import {useTranslation} from "react-i18next";
 function EvaluerCV() {
+    const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","StudentCvEvaluation");
     const [files, setFiles] = useState([] as Array<ReviewFile>);
 
 
@@ -50,7 +53,7 @@ function EvaluerCV() {
     return (
         <>
             <div className="md:p-16 p-4">
-                <h1 className="font-extrabold text-2xl">CVs &aacute; &Eacute;valuer</h1>
+                <h1 className="text-center font-extrabold text-2xl">{fields.title}</h1>
                 {files.map((file) =>
                     <>
                         <div
@@ -73,11 +76,11 @@ function EvaluerCV() {
                             <div className="flex flex-col md:flex-row md:flex-wrap">
                                 <button className="bg-green hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                                         onClick={_ => ApproveFile(file)}>
-                                    Approuver
+                                    {fields.button.accept}
                                 </button>
                                 <button className="bg-red hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
                                         onClick={_ => DeclineFile(file)}>
-                                    Refuser
+                                    {fields.button.decline}
                                 </button>
                             </div>
 
