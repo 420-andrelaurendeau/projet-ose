@@ -46,7 +46,7 @@ function EvaluerCV() {
 
 
     useEffect(() => {
-        getStudentPendingCv().then(r => setFiles(r)).then(getStudentPendingCv).then(r => setFiles(r));
+        getStudentPendingCv().then(r => setFiles(r));
         console.log(files);
     }, []);
 

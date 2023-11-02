@@ -617,6 +617,7 @@ i18n
                         button: {
                             accept: 'Accept',
                             decline: 'Decline',
+                            download: "Download",
                         }
                     }
 
@@ -1209,6 +1210,7 @@ i18n
                         button: {
                             accept: 'Accepter',
                             decline: 'Decliner',
+                            download: "Télécharger",
                         }
                     }
                 }
