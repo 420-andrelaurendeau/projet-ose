@@ -335,6 +335,10 @@ i18n
                                 name: 'stage',
                                 text: 'Intership Offer',
                             },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Student CV Review',
+                            },
                             cv: {
                                 name: 'CV',
                                 text: 'Upload your CV',
@@ -941,6 +945,10 @@ i18n
                             stage: {
                                 name: 'stage',
                                 text: 'Offre stages',
+                            },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Revue de CV',
                             },
                             cv: {
                                 name: 'CV',

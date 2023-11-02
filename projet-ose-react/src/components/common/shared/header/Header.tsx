@@ -20,6 +20,7 @@ import {getUser} from "../../../../api/UtilisateurAPI";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.Header");
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
@@ -89,7 +90,7 @@ const Header = (userd: any) => {
                                 <NavLink to={"offers"}>
                                     <div className="flex-shrink-0 hidden md:block text-center">
                                         <FontAwesomeIcon icon={faFileLines} className="text-blue dark:text-orange" size="xl"/>
-                                        <p>Offre de stage</p>
+                                        <p>{fields.stage.text}</p>
                                     </div>
                                 </NavLink>
                             }
@@ -97,7 +98,7 @@ const Header = (userd: any) => {
                                 <NavLink to={"studentCvReview"}>
                                     <div className="flex-shrink-0 hidden md:block text-center">
                                         <FontAwesomeIcon icon={faFile} className="text-blue dark:text-orange" size="xl"/>
-                                        <p>Student CV review</p>
+                                        <p>{fields.cvReview.text}</p>
                                     </div>
                                 </NavLink>
                             }
