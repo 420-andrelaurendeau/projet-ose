@@ -31,6 +31,7 @@ public class JwtService {
 
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails){
         extractClaims.put("role",userDetails.getAuthorities());
+        System.out.println(extractClaims);
         return Jwts
                 .builder()
                 .setClaims(extractClaims)

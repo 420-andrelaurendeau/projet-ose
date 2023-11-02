@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
-import {Program} from "../../model/Program";
+import img from "../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
+import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
+import {Programme} from "../../../model/Programme";
 import {useNavigate} from "react-router-dom";
-import {useToast} from "../../hooks/state/useToast";
+import {useToast} from "../../../hooks/state/useToast";
 
 function InscriptionEmployeur(props: any) {
     const {i18n} = useTranslation();
@@ -27,7 +27,7 @@ function InscriptionEmployeur(props: any) {
     });
 
     const [showPassword, setShowPasswprd] = useState(false);
-    const [programmes, setProgrammes] = useState<Program[]>([]);
+    const [programmes, setProgrammes] = useState<Programme[]>([]);
 
     const tooglePasswordVisibility = () => {
         setShowPasswprd(!showPassword);
@@ -117,7 +117,7 @@ function InscriptionEmployeur(props: any) {
 
     return (
         <div>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-4 lg:px-8">
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
                         className="mx-auto h-16 w-auto"

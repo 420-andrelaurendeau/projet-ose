@@ -8,7 +8,7 @@ import {
     faXmark,
     faFileLines, faFile
 } from "@fortawesome/free-solid-svg-icons";
-import SidebarEmployeurHome from "../../SidebarEmployeurHome";
+import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
 import {NavLink, useLocation} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";

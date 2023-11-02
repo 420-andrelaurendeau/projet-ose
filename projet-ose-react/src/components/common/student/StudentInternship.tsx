@@ -22,23 +22,18 @@ function StudentInternship() {
     const isloading = useRef(false);
 
     useEffect(() => {
-
-        const fetchUser = async () => {
-            isloading.current = true;
-
-            getUser(auth.userEmail!).then((res) => {
-                    setUser(res);
-                    getStudentAppliedOffers(res.id).then((res) => {
-                        setAppliedOffers(res);
-                    })
-                    allStudentInternshipOffers().then((res) => {
-                        setOffers(res);
-                    })
-                }
-            ).finally(() => {
-                isloading.current = false;
+        getUser(auth.userEmail!).then((res) => {
+                setUser(res);
+            getStudentAppliedOffers(res.id).then((res) => {
+                setAppliedOffers(res);
             })
-        }
+            }
+        ).finally(() => {
+            allStudentInternshipOffers().then((res) => {
+                setOffers(res);
+            })
+
+        })
 
         if (!isloading.current)
             fetchUser();

@@ -38,4 +38,11 @@ public class Employeur extends Utilisateur {
         this.internOffers = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Employeur{" +
+                "entreprise='" + entreprise + '\'' +
+                ", programme=" + programme +
+                '}';
+    }
 }
