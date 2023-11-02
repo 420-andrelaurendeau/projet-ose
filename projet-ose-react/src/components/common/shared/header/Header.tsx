@@ -90,7 +90,7 @@ const Header = (userd: any) => {
                                 <NavLink to={"offers"}>
                                     <div className="flex-shrink-0 hidden md:block text-center">
                                         <FontAwesomeIcon icon={faFileLines} className="text-blue dark:text-orange" size="xl"/>
-                                        <p>{fields.stage.text}</p>
+                                        <p className="dark:text-white">{fields.stage.text}</p>
                                     </div>
                                 </NavLink>
                             }
@@ -98,7 +98,7 @@ const Header = (userd: any) => {
                                 <NavLink to={"studentCvReview"}>
                                     <div className="flex-shrink-0 hidden md:block text-center">
                                         <FontAwesomeIcon icon={faFile} className="text-blue dark:text-orange" size="xl"/>
-                                        <p>{fields.cvReview.text}</p>
+                                        <p className="dark:text-white">{fields.cvReview.text}</p>
                                     </div>
                                 </NavLink>
                             }

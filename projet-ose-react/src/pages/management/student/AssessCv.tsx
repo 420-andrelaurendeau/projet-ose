@@ -46,31 +46,30 @@ function EvaluerCV() {
 
 
     useEffect(() => {
-        getStudentPendingCv().then(r => setFiles(r)).then(getStudentPendingCv).then(r => setFiles(r));
+        getStudentPendingCv().then(r => setFiles(r));
         console.log(files);
     }, []);
 
     return (
         <>
             <div className="md:p-16 p-4">
-                <h1 className="text-center font-extrabold text-2xl">{fields.title}</h1>
+                <h1 className="text-center font-extrabold text-2xl dark:text-gray">{fields.title}</h1>
                 {files.map((file) =>
                     <>
-                        <div
-                             className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-wrap justify-between">
-
+                        <div className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-wrap justify-between dark:bg-dark">
                             <div className="flex flex-col md:flex-row md:flex-wrap">
-                                <p className="basis-full flex-grow pb-2 md:pb-0">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
-                                <p className="basis-full flex-grow">{file.etudiant?.matricule}</p>
-                                <p className="basis-full flex-grow">{file.etudiant?.email}</p>
-                                <p className="basis-full flex-grow">{file.fileName}</p>
+                                <p className="basis-full flex-grow pb-2 md:pb-0 dark:text-white">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
+                                <p className="basis-full flex-grow dark:text-white">{file.etudiant?.matricule}</p>
+                                <p className="basis-full flex-grow dark:text-white">{file.etudiant?.email}</p>
+                                <p className="basis-full flex-grow dark:text-white">{file.fileName}</p>
                             </div>
-                            <div className="flex flex-col md:flex-row md:flex-wrap">
+                            <div className="rounded flex flex-col md:flex-row md:flex-wrap bg-gray">
                                 <button
                                     className="text-blue-500 hover:text-blue-700"
                                     onClick={() => handleDownloadFile(file)}
                                 >
-                                    <FontAwesomeIcon icon={faDownload} className="scale-150" />
+                                    <p className="dark:text-white">{fields.button.download}</p>
+                                    <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white" />
                                 </button>
                             </div>
                             <div className="flex flex-col md:flex-row md:flex-wrap">
@@ -78,12 +77,11 @@ function EvaluerCV() {
                                         onClick={_ => ApproveFile(file)}>
                                     {fields.button.accept}
                                 </button>
-                                <button className="bg-red hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+                                <button className="bg-red hover:bg-green-700 text-white font-bold py-2 px-5 rounded"
                                         onClick={_ => DeclineFile(file)}>
                                     {fields.button.decline}
                                 </button>
                             </div>
-
                         </div>
                     </>
                 )}
