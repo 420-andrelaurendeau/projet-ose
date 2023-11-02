@@ -39,6 +39,11 @@ i18n
                                 enterprise: "Enterprise",
                                 student: "Student",
                                 status: "Status",
+                            },
+                            status: {
+                                accepted: "Accepted",
+                                declined: "Declined",
+                                pending: "Pending",
                             }
                         },
                         InternshipOfferList : {
@@ -649,6 +654,11 @@ i18n
                                 enterprise: "Entreprise",
                                 student: "Étudiant",
                                 status: "Statut",
+                            },
+                            status: {
+                                accepted: "Accepted",
+                                declined: "Declined",
+                                pending: "Pending",
                             }
                         },
                         InternshipOfferList : {

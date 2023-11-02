@@ -94,7 +94,7 @@ export const getStages = async ({ page, size, state, sortField, sortDirection }:
         });
         console.log('response', response.data);
 
-        //return response.data;
+        return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des entente de stage:', error);
         throw error;

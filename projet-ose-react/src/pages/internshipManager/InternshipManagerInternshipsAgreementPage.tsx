@@ -60,8 +60,8 @@ const InternshipManagerInternshipsAgreementPage = () => {
                     sortField,
                     sortDirection
                 });
-                //setInternshipsAgreement(response.content);
-                //setTotalPages(response.totalPages);
+                setInternshipsAgreement(response.content);
+                setTotalPages(response.totalPages);
             } catch (error) {
                 console.log(error);
                 toast.error(fields.toast.errorFetchInternshipsAgreement)
