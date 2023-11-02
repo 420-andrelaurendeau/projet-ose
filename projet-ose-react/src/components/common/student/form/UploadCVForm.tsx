@@ -37,7 +37,7 @@ function UploadCVForm(): ReactElement {
     }, [])
 
     function handleFileChange(event: any) {
-        let currFile: FileEntity = {fileName: event.target.files[0].name, content: "", isAccepted: false, uploaderId: user.id}
+        let currFile: FileEntity = {fileName: event.target.files[0].name, content: "", isAccepted: "PENDING", uploaderId: user.id}
         const file = event.target.files[0]
         const reader: FileReader = new FileReader();
         reader.onloadend = () => {

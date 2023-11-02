@@ -67,7 +67,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         Internshipmanager internshipmanager = new Internshipmanager("Jean","Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
         authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
-        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);
+        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",State.PENDING, null, null);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
 
 

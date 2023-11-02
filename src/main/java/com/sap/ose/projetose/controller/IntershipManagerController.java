@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.FileDto;
+import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.InternshipmanagerService;
@@ -56,10 +57,26 @@ public class IntershipManagerController {
     }
 
     @GetMapping("/studentCv/pending")
-    public ResponseEntity<List<FileDto>> getPendingCv() {
+    public ResponseEntity<List<FileDtoAll>> getPendingCv() {
 
-        List<FileDto> pendingCv = internshipmanagerService.getPendingCv();
+        List<FileDtoAll> pendingCv = internshipmanagerService.getPendingCv();
 
         return new ResponseEntity<>(pendingCv, HttpStatus.OK);
+    }
+
+    @PostMapping("/studentCv/{id}/accept")
+    public ResponseEntity<FileDtoAll> acceptCv(@PathVariable Long id) {
+
+        FileDtoAll fileDto = internshipmanagerService.acceptCv(id);
+
+        return new ResponseEntity<>(fileDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/studentCv/{id}/decline")
+    public ResponseEntity<FileDtoAll> declineCv(@PathVariable Long id) {
+
+        FileDtoAll fileDto = internshipmanagerService.declineCv(id);
+
+        return new ResponseEntity<>(fileDto, HttpStatus.OK);
     }
 }

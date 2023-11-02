@@ -1,6 +1,8 @@
 package com.sap.ose.projetose.service;
 
+import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.FileDto;
+import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.Programme;
@@ -33,14 +35,15 @@ public class FileService {
         fileEntityRepository.save(file);
     }
 
-    public FileDto getFileById(Long id) {
+
+    public FileDtoAll getFileById(Long id) {
         Optional<File> file = fileEntityRepository.findById(id);
-        return file.map(value -> new FileDto(value.getId(),value.getContent(),value.getFileName(),value.isAccepted())).orElse(null);
+        return file.map(value -> new FileDtoAll(value.getId(),value.getContent(),value.getFileName(),value.getIsAccepted(),new EtudiantDto(value.getEtudiant()))).orElse(null);
     }
     @Transactional
-    public List<FileDto> getAllStudentPendingCv() {
+    public List<FileDtoAll> getAllStudentPendingCv() {
         Optional<List<File>> optionalFiles = fileEntityRepository.findAllStudentCvPending();
         List<File> files = optionalFiles.orElse(null);
-        return files == null ? null : files.stream().map(file -> new FileDto(file.getId(),file.getContent(),file.getFileName(),file.isAccepted())).toList();
+        return files == null ? null : files.stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList();
     }
 }

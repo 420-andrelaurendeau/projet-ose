@@ -65,3 +65,23 @@ export const getStudentPendingCv = async () => {
     }
 }
 
+export const acceptStudentCv = async (id: number) => {
+    try {
+        const response = await api.post(`internshipManager/studentCv/${id}/accept`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation du CV:', error);
+        throw error;
+    }
+}
+
+export const declineStudentCv = async (id: number) => {
+    try {
+        const response = await api.post(`internshipManager/studentCv/${id}/decline`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation du CV:', error);
+        throw error;
+    }
+}
+
