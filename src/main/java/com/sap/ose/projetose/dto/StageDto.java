@@ -14,15 +14,14 @@ import lombok.NoArgsConstructor;
 public class StageDto {
     private long id;
     private long student_id;
-    private long offer_id;
+    private InternOfferDto offer;
     private State stateStudent;
     private State stateEmployeur;
-
 
     public StageDto(Stage stage){
         this.id = stage.getId();
         this.student_id = stage.getStudent().getId();
-        this.offer_id = stage.getOffer().getId();
+        this.offer = new InternOfferDto(stage.getOffer());
         this.stateStudent = stage.getStateStudent();
         this.stateEmployeur = stage.getStateEmployeur();
     }

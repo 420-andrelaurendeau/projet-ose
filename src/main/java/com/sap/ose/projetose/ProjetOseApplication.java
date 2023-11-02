@@ -12,6 +12,7 @@ import com.sap.ose.projetose.service.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.SpringApplicationAotProcessor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.nio.charset.StandardCharsets;
@@ -31,16 +32,14 @@ public class ProjetOseApplication implements CommandLineRunner {
     private AuthenticationService authenticationService;
     @Autowired
     private InternOfferService internOfferService;
-
     @Autowired
-    private  InternshipmanagerService internshipmanagerService;
-
+    private StageService stageService;
+    @Autowired
+    private InternshipmanagerService internshipmanagerService;
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
-
     @Autowired
     private InterviewService interviewService;
-
     @Autowired
     ProgrammeRepository programmeRepository;
 
@@ -79,6 +78,7 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         InternOffer internOffer1 = new InternOffer("Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
+
         internOfferService.saveInterOfferJob(internOfferDto1);
 
         InternOffer internOffer2 = new InternOffer("Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
@@ -88,6 +88,12 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
+
+        Stage stage = new Stage(etudiant2,internOffer,State.PENDING,State.PENDING);
+        stageService.save(stage);
+
+
+        System.out.println(stageService.getStageStudentPending(1L));
         System.out.println("DONE");
     }
 }

@@ -55,6 +55,7 @@ export default function StudentInterviewPage() {
                     fetchInterviews(resUser.id).then((res) => {
                         setInterviews(res);
                     });
+
                 })
                 .catch((err) => {
                     console.log(err);
