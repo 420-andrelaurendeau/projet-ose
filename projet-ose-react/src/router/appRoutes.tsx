@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import StudentRoutes from "./StudentRoutes";
 import InternshipManagerRouter from "./internshipManagerRouter";
 import EmployerRouter from "./EmployerRouter";
-import ConnectPage from "../pages/ConnectPage";
+import ConnectPage from "../pages/LoginPage";
 import ErrorPage from "../pages/ErrorPage";
 import {AuthProvider} from "../authentication/AuthContext";
 import Registration from "../pages/Registration";

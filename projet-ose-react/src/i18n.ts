@@ -335,6 +335,10 @@ i18n
                                 name: 'stage',
                                 text: 'Intership Offer',
                             },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Student CV Review',
+                            },
                             cv: {
                                 name: 'CV',
                                 text: 'Upload your CV',
@@ -605,6 +609,15 @@ i18n
                                     declined: "Declined",
                                 }
                             },
+                        }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV to evaluate',
+                        button: {
+                            accept: 'Accept',
+                            decline: 'Decline',
+                            download: "Download",
                         }
                     }
 
@@ -934,6 +947,10 @@ i18n
                                 name: 'stage',
                                 text: 'Offre stages',
                             },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Revue de CV',
+                            },
                             cv: {
                                 name: 'CV',
                                 text: 'Televerser votre CV',
@@ -1185,6 +1202,15 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
+                        }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV à évaluer',
+                        button: {
+                            accept: 'Accepter',
+                            decline: 'Decliner',
+                            download: "Télécharger",
                         }
                     }
                 }

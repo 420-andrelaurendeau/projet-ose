@@ -1,7 +1,6 @@
 import {FileEntity} from "./FileEntity";
-import {Programme} from "./Programme";
 
-export interface InterOfferJob {
+export interface InternshipOffer {
     id?: number;
     title: string;
     location: string;
