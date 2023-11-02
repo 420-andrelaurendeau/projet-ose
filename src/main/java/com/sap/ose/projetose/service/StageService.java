@@ -12,10 +12,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
@@ -117,7 +114,7 @@ public class StageService {
                         stage.getStateEmployeur()
                 ));
             else {
-                internshipAgreementDtos = stageRepository.findAllByState(State.valueOf(state), pageable).map(stage -> new InternshipAgreementDto(
+                internshipAgreementDtos = stageRepository.findAllByState(state, pageable).map(stage -> new InternshipAgreementDto(
                         stage.getId(),
                         new EmployeurDto(stage.getEmployeur()),
                         new EtudiantDto(stage.getStudent()),
@@ -144,4 +141,27 @@ public class StageService {
         }
     }
 
+    public InternshipAgreementDto findById(long id) {
+        try {
+            Stage stage = stageRepository.findById(id).orElseThrow();
+            return new InternshipAgreementDto(
+                    stage.getId(),
+                    new EmployeurDto(stage.getEmployeur()),
+                    new EtudiantDto(stage.getStudent()),
+                    new InternOfferDto(stage.getOffer()),
+                    stage.getStateStudent(),
+                    stage.getStateEmployeur()
+            );
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des offres d'emploi.", e);
+            throw new DatabaseException();
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres d'emploi.", e);
+            throw new com.sap.ose.projetose.exception.ServiceException("Erreur lors de la récupération des offres d'emploi.");
+        }
+    }
+
+    Stage getById(long id) {
+        return stageRepository.findById(id).get();
+    }
 }

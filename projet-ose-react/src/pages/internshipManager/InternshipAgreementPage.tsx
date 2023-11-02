@@ -1,11 +1,16 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router-dom";
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {InterOfferJob} from "../../model/IntershipOffer";
-import {ToastContext} from "../../hooks/context/ToastContext";
-import {getStageById} from "../../api/InternshipManagerAPI";
+import React, {JSX, useEffect, useRef, useState} from "react";
+import {getStageById, signDocument} from "../../api/InternshipManagerAPI";
 import {ReactPainter} from "react-painter";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
+import {useToast} from "../../hooks/state/useToast";
+import {Document, Page, pdfjs} from "react-pdf";
+// @ts-ignore
+import sodapdf from '../../assets/images/sodapdf.pdf';
+import useModal from "../../hooks/useModal";
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
+
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
     return (
@@ -19,6 +24,17 @@ const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({er
     );
 }
 
+const ModalComponent: React.FC<{ children: any, onClose:any }> = ({children, onClose}) => {
+    return (
+        <div className="modal">
+            <div className="modal-content">
+                <button onClick={onClose} className="modal-close-button">Fermer</button>
+                {children}
+            </div>
+        </div>
+    );
+};
+
 
 const InternshipAgreementPage: React.FC<any> = () => {
     const {id} = useParams();
@@ -27,7 +43,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
     const [canvasReset, setCanvasReset] = useState(0);
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const toast = useContext(ToastContext);
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
@@ -35,6 +50,13 @@ const InternshipAgreementPage: React.FC<any> = () => {
     const [signature, setSignature] = useState(null);
 
     const fetchedintershipAggreementRef = useRef(false);
+
+    const toasts = useToast();
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [pageNumber, setPageNumber] = useState(1);
+
+
 
     function blobToBase64(blob: Blob, callback: (arg0: string | ArrayBuffer | null) => void) {
         const reader = new FileReader();
@@ -47,16 +69,72 @@ const InternshipAgreementPage: React.FC<any> = () => {
         reader.readAsDataURL(blob);
     }
 
+    const [signatureBase64, setSignatureBase64] = useState<string | ArrayBuffer | null>("");
 
-    function sendsignature(blop: Blob) {
-        blobToBase64(blop, function (base64String) {
-            console.log(base64String);
-        });
+    async function sendsignature(blop: Blob) {
+        let signatureBase64: string | ArrayBuffer = "";
+        let form;
 
-        // todo send the signature to the api
-        // id: employé, id: étudiant, id: offre de stage, signature: base64String
+        const reader = new FileReader();
+
+        reader.onload = async () => {
+            const base64String = reader.result;
+            form = {
+                id: 0,
+                idStage: intershipAggreement.id,
+                idEmployer: intershipAggreement.employeur.id,
+                idStudent: intershipAggreement.etudiantDto.id,
+                idInternOffer: intershipAggreement.internOfferDto.id,
+                signatureInternShipManager: base64String,
+                contract: ""
+            }
+            console.log(form);
+
+            try {
+                const response = await signDocument(form);
+                toasts.success('Le document a été signé avec succès');
+
+                console.log(response);
+                const blob = base64toBlob("data:application/pdf;base64, "+response.contract);
+                setSignatureBase64(URL.createObjectURL(blob));
+            } catch (error) {
+                toasts.error("Une erreur est survenue lors de la signature du document");
+            }
+        };
+
+        reader.readAsDataURL(blop);
+
+        openModal();
     }
 
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    // Fonction pour gérer la fermeture de la modal
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
+    // Fonction pour gérer le changement de page
+    const handlePageChange = (newPage: number) => {
+        setPageNumber(newPage);
+    };
+
+    const base64toBlob = (data: string) => {
+        // Cut the prefix `data:application/pdf;base64` from the raw base 64
+        const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
+
+        const bytes = atob(base64WithoutPrefix);
+        let length = bytes.length;
+        let out = new Uint8Array(length);
+
+        while (length--) {
+            out[length] = bytes.charCodeAt(length);
+        }
+
+        return new Blob([out], {type: 'application/pdf'});
+    };
 
 
     const [errors, setErrors] = useState<{
@@ -68,9 +146,10 @@ const InternshipAgreementPage: React.FC<any> = () => {
             try {
                 fetchedintershipAggreementRef.current = true;
                 const response = await getStageById(id!);
+                console.log(response)
                 setintershipAggreement(response);
             } catch (error) {
-                toast.error("Une erreur est survenue lors du chargement de l'offre");
+                toasts.error("Une erreur est survenue lors du chargement de l'offre");
             }
         }
 
@@ -90,7 +169,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
     }
 
 
-
     const renderError = () => (
         errors.comment ? (
             <p className="text-red text-xs mt-1 error-message" style={{minHeight: '30px'}}>
@@ -98,6 +176,12 @@ const InternshipAgreementPage: React.FC<any> = () => {
             </p>
         ) : null
     );
+    const [numPages, setNumPages] = useState<number>();
+
+
+    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+        setNumPages(numPages);
+    }
 
 
     return (<>
@@ -158,20 +242,43 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     height={300}
                     onSave={blob => sendsignature(blob)}
                     lineCap={"round"}
-                    render={({ triggerSave, canvas }) => (
+                    render={({triggerSave, canvas}) => (
                         <div className="text-center">
-                            <div className="border border-1 border-black" style={{ height: 300 + "px", width: 300 + "px" }}>
+                            <div className="border border-1 border-black"
+                                 style={{height: 300 + "px", width: 300 + "px"}}>
                                 {canvas}
                             </div>
-                            <button className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36 mx-8`} onClick={triggerSave}>Signer le contrat</button>
-                            <button className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36`} onClick={clearCanvas}>Clear</button>
+                            <button
+                                className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36 mx-8`}
+                                onClick={triggerSave}>Signer le contrat
+                            </button>
+                            <button className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36`}
+                                    onClick={clearCanvas}>Clear
+                            </button>
                         </div>
                     )}
                 />
-
+                {modalOpen && (
+                    <ModalComponent onClose={closeModal}>
+                        <Document file={signatureBase64} onLoadSuccess={onDocumentLoadSuccess}>
+                            <Page pageNumber={pageNumber} />
+                        </Document>
+                        <div>
+                            <p>
+                                Page {pageNumber} of {numPages}
+                            </p>
+                            <button onClick={() => handlePageChange(pageNumber - 1)}>Page précédente</button>
+                            <button onClick={() => handlePageChange(pageNumber + 1)}>Page suivante</button>
+                        </div>
+                    </ModalComponent>
+                )}
             </div>
+
+
         )}
     </>);
 }
 
-export default InternshipAgreementPage;
+export default InternshipAgreementPage
+
+

@@ -5,6 +5,7 @@ import {webcrypto} from "crypto";
 import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
 import {getOfferById} from "./InterOfferJobAPI";
+import {useToast} from "../hooks/state/useToast";
 
 interface GetInternshipOffersParams {
     page: number;
@@ -105,6 +106,19 @@ export const getStageById = async (id: string) => {
     try {
         const response = await api.get(`stage/${id}`);
         return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération de l\'entente de stage:', error);
+        throw error;
+    }
+}
+
+
+export const signDocument = async (form: any) => {
+    try {
+        const response = await api.post(`contract/save`, form);
+        console.log('response', response.data);
+        return response.data;
+
     } catch (error) {
         console.error('Erreur lors de la récupération de l\'entente de stage:', error);
         throw error;

@@ -1,0 +1,68 @@
+Contrat de Stage
+
+Entre l'Employeur :
+Nom de l'Entreprise
+Adresse de l'Entreprise
+Téléphone de l'Entreprise
+Courriel de l'Entreprise
+
+Et l'Étudiant :
+Nom de l'Étudiant
+Adresse de l'Étudiant
+Téléphone de l'Étudiant
+Courriel de l'Étudiant
+
+Date de début du stage : [Date de début]
+Date de fin du stage : [Date de fin]
+
+1. Objet du Contrat
+
+Le présent contrat a pour objet de définir les termes et conditions du stage de l'étudiant au sein de l'entreprise. Le stage vise à permettre à l'étudiant d'acquérir une expérience professionnelle et des compétences dans le domaine d'études pertinent.
+
+2. Durée du Stage
+
+Le stage débutera le [Date de début] et se terminera le [Date de fin]. La durée totale du stage sera de [Nombre de semaines/mois].
+
+3. Responsabilités de l'Étudiant
+
+L'étudiant s'engage à :
+- Respecter les règles et les politiques de l'entreprise.
+- Travailler sous la supervision de [Nom du Superviseur].
+- Réaliser les tâches assignées de manière professionnelle et diligente.
+- Participer activement et s'engager dans les activités liées au stage.
+
+4. Responsabilités de l'Employeur
+
+L'employeur s'engage à :
+- Fournir à l'étudiant un environnement de travail sûr et approprié.
+- Assigner des tâches pertinentes à son domaine d'études.
+- Fournir une supervision adéquate et des opportunités d'apprentissage.
+- Évaluer les performances de l'étudiant tout au long du stage.
+
+5. Confidentialité
+
+L'étudiant s'engage à respecter la confidentialité de toutes les informations et données auxquelles il aura accès pendant son stage. Il ne divulguera aucune information confidentielle de l'entreprise à des tiers.
+
+6. Rémunération
+
+Le stage est non rémunéré. L'étudiant ne percevra pas de salaire pour sa participation au stage.
+
+7. Fin du Stage
+
+À la fin du stage, l'employeur fournira une évaluation de la performance de l'étudiant. L'étudiant remettra à l'employeur tout le matériel ou équipement fourni pendant le stage.
+
+8. Résiliation
+
+Les deux parties ont le droit de résilier ce contrat de stage à tout moment, moyennant un préavis écrit de [Nombre de jours] jours.
+
+9. Loi Applicable
+
+Ce contrat est régi par les lois de [Votre Juridiction] et tout litige découlant de ce contrat sera soumis à la juridiction des tribunaux de [Votre Juridiction].
+
+Signature de l'Employeur : _______________________
+Nom du Signataire de l'Employeur : [Nom du Signataire]
+
+Signature de l'Étudiant : _______________________
+Nom de l'Étudiant : [Nom de l'Étudiant]
+
+Date : [Date de Signature]

@@ -59,7 +59,7 @@ public class StageController {
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state) {
 
-
+        System.out.println(state);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPage(page, size,sort, state);
@@ -67,4 +67,13 @@ public class StageController {
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('internshipmanager')")
+    @GetMapping("/{id}")
+    public ResponseEntity<InternshipAgreementDto> getStage(@PathVariable long id){
+        logger.info("Stage request received");
+        return new ResponseEntity<>(stageService.findById(id), HttpStatus.OK);
+    }
+
+
 }
