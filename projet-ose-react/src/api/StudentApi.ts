@@ -63,7 +63,7 @@ export const declineInterview = async (interviewId: number, studentId: number) =
     }
 }
 
-export const saveStageEtudaint = async (stage : any)=>{
+export const saveStageStudent = async (stage : any)=>{
     try{
         const response = await api.post('stage/save',stage)
         return response.data

@@ -18,11 +18,12 @@ function StudentStagePage(){
         acceptStage(stage).then((res) => {
             console.log(res);
             if (res === true) {
-                setStages(stages.map((stage) => {
-                    stage.stateStudent = "ACCEPTED";
-                    return stage;
+                setStages(stages.map((element) => {
+                    if(element.id == stage.id){
+                        element.stateStudent = "ACCEPTED";
+                    }
+                    return element;
                 }));
-                console.log(stages);
             }
         });
     }
@@ -31,9 +32,11 @@ function StudentStagePage(){
         declineStage(stage).then((res) => {
             console.log(res);
             if (res === true) {
-                setStages(stages.map((stage) => {
-                    stage.stateStudent = "DECLINED";
-                    return stage;
+                setStages(stages.map((element) => {
+                    if(element.id === stage.id){
+                        element.stateStudent = "DECLINED";
+                    }
+                    return element;
                 }));
             }
         });

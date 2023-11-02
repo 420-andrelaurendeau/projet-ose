@@ -89,11 +89,9 @@ public class ProjetOseApplication implements CommandLineRunner {
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
 
-        Stage stage = new Stage(etudiant2,internOffer,State.PENDING,State.PENDING);
-        stageService.save(stage);
+//        Stage stage = new Stage(etudiant2,internOffer,State.PENDING,State.PENDING);
+//        stageService.save(stage);
 
-
-        System.out.println(stageService.getStageStudentPending(1L));
         System.out.println("DONE");
     }
 }
