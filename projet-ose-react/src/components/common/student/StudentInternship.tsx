@@ -22,6 +22,7 @@ function StudentInternship() {
     const isloading = useRef(false);
 
     useEffect(() => {
+        if (!isloading.current)
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
             getStudentAppliedOffers(res.id).then((res) => {
@@ -35,8 +36,7 @@ function StudentInternship() {
 
         })
 
-        if (!isloading.current)
-            fetchUser();
+
 
     }, []);
 
