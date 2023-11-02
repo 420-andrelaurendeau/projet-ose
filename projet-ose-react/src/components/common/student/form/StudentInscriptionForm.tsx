@@ -7,6 +7,8 @@ import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-re
 import imgDark from '../../../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link, useNavigate} from "react-router-dom";
 
+//TODO change i18n is not using fields and instead t
+
 function StudentInscriptionForm(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
