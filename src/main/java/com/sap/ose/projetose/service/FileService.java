@@ -38,12 +38,12 @@ public class FileService {
 
     public FileDtoAll getFileById(Long id) {
         Optional<File> file = fileEntityRepository.findById(id);
-        return file.map(value -> new FileDtoAll(value.getId(),value.getContent(),value.getFileName(),value.getIsAccepted(),new EtudiantDto(value.getEtudiant()))).orElse(null);
+        return file.map(value -> new FileDtoAll(value.getId(),value.getContent(),value.getFileName(),value.getIsAccepted(),new EtudiantDto(value.getEtudiant()),value.isDefaultFile())).orElse(null);
     }
     @Transactional
     public List<FileDtoAll> getAllStudentPendingCv() {
         Optional<List<File>> optionalFiles = fileEntityRepository.findAllStudentCvPending();
         List<File> files = optionalFiles.orElse(null);
-        return files == null ? null : files.stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList();
+        return files == null ? null : files.stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList();
     }
 }

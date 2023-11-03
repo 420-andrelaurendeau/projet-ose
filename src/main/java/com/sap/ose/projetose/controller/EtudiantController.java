@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.service.EtudiantService;
@@ -62,5 +63,19 @@ public class EtudiantController {
     public ResponseEntity<List<StudentAppliedOffersDto>> getOffersApplied(@PathVariable long id) {
 
         return ResponseEntity.ok().body(etudiantService.getOffersAppliedByEtudiant(id));
+    }
+
+    @GetMapping("{id}/cvs")
+    @PreAuthorize("hasAuthority('student')")
+    public ResponseEntity<List<FileDtoAll>> getEtudiantsWithCv(@PathVariable long id) {
+        logger.info("getEtudiantsWithCv");
+        return ResponseEntity.ok().body(etudiantService.getAllCvfromStudentById(id));
+    }
+
+    @PostMapping("{id}/cv/{cvId}/setDefault")
+    @PreAuthorize("hasAuthority('student')")
+    public ResponseEntity<FileDtoAll> setDefaultCv(@PathVariable long id, @PathVariable long cvId) {
+        logger.info("setDefaultCv");
+        return ResponseEntity.ok().body(etudiantService.setDefaultCv(id, cvId));
     }
 }

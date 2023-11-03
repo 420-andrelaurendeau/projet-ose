@@ -150,7 +150,7 @@ public class InternshipmanagerService {
     @Transactional
     public List<FileDtoAll> getPendingCv() {
         try {
-            List<FileDtoAll> pendingCv = fileEntityRepository.findAllStudentCvPending().isPresent() ? fileEntityRepository.findAllStudentCvPending().get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList() : null;
+            List<FileDtoAll> pendingCv = fileEntityRepository.findAllStudentCvPending().isPresent() ? fileEntityRepository.findAllStudentCvPending().get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList() : null;
             return pendingCv;
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);

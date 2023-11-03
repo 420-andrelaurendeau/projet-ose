@@ -32,18 +32,29 @@ public class File {
     @JoinColumn(name = "internship_id")
     private InternshipCandidates internshipCandidates;
 
+    private boolean defaultFile;
+
 
     public File(byte[] content, String fileName, State isAccepted) {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;
+        defaultFile = false;
     }
-
-    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant) {
+    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant, InternshipCandidates internshipCandidates) {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;
         this.etudiant = etudiant;
+        this.defaultFile = false;
+        this.internshipCandidates = internshipCandidates;
+    }
+    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant,boolean defaultFile) {
+        this.content = content;
+        this.fileName = fileName;
+        this.isAccepted = isAccepted;
+        this.etudiant = etudiant;
+        this.defaultFile = defaultFile;
     }
 
     public File(byte[] content, String fileName, Etudiant etudiant) {
@@ -51,6 +62,7 @@ public class File {
         this.fileName = fileName;
         this.isAccepted = State.PENDING;
         this.etudiant = etudiant;
+        defaultFile = false;
     }
 
     @Override

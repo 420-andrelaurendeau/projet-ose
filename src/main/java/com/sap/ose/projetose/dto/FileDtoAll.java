@@ -19,6 +19,7 @@ public class FileDtoAll {
     private String fileName;
     private State isAccepted;
     private EtudiantDto etudiant;
+    private boolean defaultFile;
 
     public FileDtoAll(File file) {
         this.id = file.getId();
@@ -26,9 +27,10 @@ public class FileDtoAll {
         this.fileName = file.getFileName();
         this.isAccepted = file.getIsAccepted();
         this.etudiant = new EtudiantDto(file.getEtudiant());
+        this.defaultFile = file.isDefaultFile();
     }
 
     public File fromDto() {
-        return new File(content, fileName, isAccepted, etudiant.fromDto());
+        return new File(content, fileName, isAccepted, etudiant.fromDto(), defaultFile);
     }
 }

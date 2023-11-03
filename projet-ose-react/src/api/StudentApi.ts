@@ -111,3 +111,23 @@ export const declineStage = async (stage: any) => {
         throw err
     }
 }
+
+export const fetchAllStudentCvs = async (studentId: number) => {
+    try {
+        const res = await api.get(`student/${studentId}/cvs`)
+        return res.data
+    } catch (err) {
+        console.log('Error while fetching student cvs' + err)
+        throw err
+    }
+}
+
+export const setDefaultCv = async (studentId: number, cvId: number) => {
+    try {
+        const res = await api.post(`student/${studentId}/cv/${cvId}/setDefault`)
+        return res.data
+    } catch (err) {
+        console.log('Error while setting default cv' + err)
+        throw err
+    }
+}

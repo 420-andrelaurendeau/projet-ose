@@ -4,22 +4,24 @@ import {validateFile} from "../../../../utils/validation/ValidateInternshipOffer
 import {FileEntity} from "../../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faDownload, faSpinner, faX, faCheckSquare, faSquare} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router-dom";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {getUser} from "../../../../api/UtilisateurAPI";
-import {saveCvStudent} from "../../../../api/StudentApi";
+import {saveCvStudent, fetchAllStudentCvs, setDefaultCv} from "../../../../api/StudentApi";
 import {useToast} from "../../../../hooks/state/useToast";
+import {ReviewFile} from "../../../../model/ReviewFile";
+import {User} from "../../../../model/User";
 
 
 function UploadCVForm(): ReactElement {
 
-    let toast = useToast();
-
+    const toast = useToast(); // Move the hook call here
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
-    const [user, setUser] = useState<any>(null)
+    const [user, setUser] = useState<User>({} as User)
     const [uploadState, setUploadState] = useState({status: "None"})
+    const [cvs, setCvs] = useState<ReviewFile[]>([]);
     const auth = useAuth();
 
     const [errors, setErrors] = useState<{
@@ -31,13 +33,25 @@ function UploadCVForm(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
+            console.log(user)
+        }).catch((error) => {
+            console.log("Error fetching user data:", error)
+        })
+        fetchAllStudentCvs(user.id).then((res) => {
+            setCvs(res)
+            console.log(cvs)
         }).catch((error) => {
             console.log("Error fetching user data:", error)
         })
     }, [])
 
     function handleFileChange(event: any) {
-        let currFile: FileEntity = {fileName: event.target.files[0].name, content: "", isAccepted: "PENDING", uploaderId: user.id}
+        let currFile: FileEntity = {
+            fileName: event.target.files[0].name,
+            content: "",
+            isAccepted: "PENDING",
+            uploaderId: user.id
+        }
         const file = event.target.files[0]
         const reader: FileReader = new FileReader();
         reader.onloadend = () => {
@@ -66,11 +80,16 @@ function UploadCVForm(): ReactElement {
         console.log(files)
         if (files.length !== 0) {
             setUploadState({status: "Uploading"})
-            saveCvStudent(user!.matricule, files[0]).then(res => {
+            saveCvStudent(parseInt(user!.matricule), files[0]).then(res => {
                 console.log(res)
                 setUploadState({status: "Done"})
                 toast.success(t('cv.success'))
                 setFiles([])
+                fetchAllStudentCvs(user.id).then((res) => {
+                    setCvs(res)
+                }).catch((error) => {
+                    console.log("Error fetching user data:", error)
+                })
             }).catch(err => {
                 console.log(err)
                 toast.error(t('cv.error'))
@@ -90,6 +109,43 @@ function UploadCVForm(): ReactElement {
             default:
                 return null
         }
+    }
+
+    const handleDownloadFile = (file: ReviewFile) => {
+        // Create a Blob from the base64 content
+        const byteCharacters = atob(file.content);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], {type: 'application/pdf'});
+
+        // Create a URL for the blob and trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.fileName;
+        a.click();
+
+        // Clean up the URL
+        window.URL.revokeObjectURL(url);
+    };
+
+    async function setDefaultFile(file: ReviewFile) {
+        setDefaultCv(user.id, file.id).then(res => {
+            console.log(res);
+            toast.success(t('CV par défaut défini avec succès'));
+        }).catch(err => {
+            console.log(err);
+            toast.error(t('Erreur lors de la définition du CV par défaut'));
+        }).finally(() => {
+            fetchAllStudentCvs(user.id).then((res) => {
+                setCvs(res);
+            }).catch((error) => {
+                console.log("Error fetching user data:", error);
+            });
+        });
     }
 
     return (
@@ -137,10 +193,35 @@ function UploadCVForm(): ReactElement {
                          onClick={handleSubmit}>
                         {t('cv.upload_button')} {renderUploadStatus()}
                     </div>
-
-
                 </form>
             </div>
+            {cvs.map((file) =>
+                <>
+                    <div
+                        className="w-full my-2 px-4 py-1 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
+                        <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
+                            <p className="basis-full dark:text-white">{file.fileName}</p>
+                        </div>
+                        <div className="flex-item overflow-ellipsis pb-2">
+                            <button
+                                className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
+                                onClick={() => setDefaultFile(file)}
+                            >
+                                {file.defaultFile ? <FontAwesomeIcon icon={faCheckSquare} className="scale-150 dark:text-white"/> : <FontAwesomeIcon icon={faSquare} className="scale-150 dark:text-white"/>}
+                            </button>
+                        </div>
+                        <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
+                            <button
+                                className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
+                                onClick={() => handleDownloadFile(file)}
+                            >
+                                <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white"/>
+                            </button>
+                        </div>
+                    </div>
+                </>
+
+            )}
         </div>
     )
 }
