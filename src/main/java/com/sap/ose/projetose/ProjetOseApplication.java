@@ -95,10 +95,11 @@ public class ProjetOseApplication implements CommandLineRunner {
         StageDto stage3 = new StageDto(0L,2L, 2L,State.DECLINED, State.ACCEPTED);
         StageDto stage4 = new StageDto(0L,2L, 2L,null, State.DECLINED);
 
-        stageService.save(stage);
-        stageService.save(stage2);
-        stageService.save(stage3);
-        stageService.save(stage4);
+        stageService.saveTEST(stage);
+        stageService.saveTEST(stage2);
+        stageService.saveTEST(stage3);
+        stageService.saveTEST(stage4);
+
 
 
         System.out.println("DONE");

@@ -63,6 +63,31 @@ public class StageService {
         return Optional.of(stageReturn);
     }
 
+    // TODO TEST
+    @Transactional
+    public Optional<StageDto> saveTEST(StageDto stageDto) {
+        Etudiant etudiant = etudiantService.findEtudiantById(stageDto.getStudent_id());
+        InternOffer internOffer = internOfferService.findById(stageDto.getOffer_id());
+        Employeur employeur = internOffer.getEmployeur();
+
+        Stage stage = new Stage();
+        stage.setStudent(etudiant);
+        stage.setEmployeur(employeur);
+        stage.setStateStudent(stageDto.getStateStudent());
+        stage.setStateEmployeur(stageDto.getStateEmployeur());
+        stage.setOffer(internOffer);
+
+        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur())) {
+            System.out.println("CREATED CONTRACT");
+            addContract(stage);
+        }
+        else
+            stageRepository.save(stage);
+
+        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur());
+        return Optional.of(stageReturn);
+    }
+
     @Transactional
     public List<StageDto> getStageStudentPending(long studentId) {
         return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur())).toList() : null;
