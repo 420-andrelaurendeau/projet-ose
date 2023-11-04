@@ -180,17 +180,14 @@ const InternshipAgreementPage: React.FC<any> = () => {
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             contentLabel="Document PDF"
-            className="fixed inset-0 z-50 mt-5 overflow-y-auto"
+            id="modalContent"
+            className="fixed inset-0 z-50 mt-8 p-2"
             overlayClassName="fixed inset-0 bg-black/30 backdrop-blur-sm"
         >
             <div className="flex justify-center items-center min-h-screen">
-                <div className="bg-white rounded-lg shadow-2xl shadow-black/50 overflow-hidden max-w-4xl max-h-[95vh] mx-auto my-8">
-                    <div className="p-4">
-                        {/* PDF Viewer Container */}
-                        <div className="pdf-container overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(95vh - 64px)' }}>
-                            {/* Le composant PDF ici */}
+                <div className="bg-white rounded-lg shadow-2xl shadow-black/50 overflow-hidden  mx-auto ">
+                    <div className="p-2">
                             <SignContract />
-                        </div>
                     </div>
                 </div>
             </div>

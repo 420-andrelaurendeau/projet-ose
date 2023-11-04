@@ -9,6 +9,7 @@ import DraggableSignature from "./DraggableSignature";
 import dayjs from "dayjs";
 import pdff from './pdf/Internshipe_Contract_Contract.pdf';
 import DraggableText from "./DraggableText";
+import "./utils/scrollBar.css";
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -69,13 +70,15 @@ function SignContract() {
     }
 
     const getWidth = (): number => {
-        const container = document.getElementById("container");
+        const container = document.getElementById("modalContent");
         if (container) {
+            console.log(container.clientWidth)
+            if (container.clientWidth > 800)
+                return 800;
             return container.clientWidth;
         }
         return 0;
     }
-
     useEffect(() => {
         setWidth(getWidth());
         window.addEventListener("resize", () => {
@@ -200,8 +203,8 @@ function SignContract() {
     }
 
     return (
-        <div>
-            <div id="container" style={styles.container}>
+        <div className="relative">
+            <div id="container" style={styles.container} className="max-h-[85vh] xxxs:overflow-y-hidden overflow-x-hidden custom-scrollbar sm:overflow-y-auto">
                 {signatureDialogVisible ? (
                     <AddSigDialog
                         autoDate={autoDate}
@@ -245,7 +248,7 @@ function SignContract() {
                         </div>
                         <div ref={documentRef}>
                             <Document
-                                className="mt-4"
+                                className="mt-4 mb-14"
                                 file={pdf}
                                 onLoadSuccess={(data) => {
                                     setTotalPages(data.numPages);
@@ -254,7 +257,7 @@ function SignContract() {
                                 <div id="parent" className={"relative"}>
                                     <Page
                                         onClick={click}
-                                        className="relative border border-[#999]"
+                                        className="relative m-0 p-0"
                                         renderTextLayer={false}
                                         renderAnnotationLayer={false}
                                         pageNumber={pageNum + 1}
@@ -286,14 +289,16 @@ function SignContract() {
                                                 onSet={getOnSetText}
                                             />
                                         ) : null}
-                                        <PagingControl
-                                            pageNum={pageNum}
-                                            setPageNum={setPageNum}
-                                            totalPages={totalPages}
-                                        />
                                     </Page>
                                 </div>
                             </Document>
+                        </div>
+                        <div className="absolute bottom-0 left-0 w-full"> {/* Position fixe en bas du div "container" */}
+                            <PagingControl
+                                pageNum={pageNum}
+                                setPageNum={setPageNum}
+                                totalPages={totalPages}
+                            />
                         </div>
                     </div>
                 ) : null}

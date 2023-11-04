@@ -47,7 +47,6 @@ export function BigButton({
     isHovered && !noHover ? `bg-${hoverBg}` : `bg-${initialBg}`,
     isHovered && !noHover && !disabled ? `text-${hoverColor}` : disabled ? 'text-gray-400' : `text-${initialColor}`,
     'rounded-lg',
-    small ? 'p-2' : 'p-6',
     small ? 'text-sm' : null,
     `border-${fillColor}`,
     !disabled ? 'cursor-pointer' : null,
