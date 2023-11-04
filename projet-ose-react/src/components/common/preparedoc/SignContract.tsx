@@ -21,11 +21,11 @@ function downloadURI(uri:any, name:any) {
   link.click();
   document.body.removeChild(link);
 }
-
 type Props = {
     pdfBase64: String;
     signContract: Function;
 }
+
 
 function SignContract( {pdfBase64, signContract}: Props) {
   const styles = {

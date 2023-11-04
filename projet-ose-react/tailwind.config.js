@@ -63,5 +63,6 @@ module.exports = {
       backgroundImage: ['dark'],
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
