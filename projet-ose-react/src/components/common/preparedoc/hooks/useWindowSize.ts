@@ -11,19 +11,27 @@ export function useWindowSize() {
   }
 
   const [windowSize, setWindowSize] = useState(getSize);
+  const [state, setState] = <any>useState(null);
 
-  useEffect(() => {
+  useEffect(()=> {
     if (!isClient) {
-      return false;
-    }
-
-    function handleResize() {
-      setWindowSize(getSize());
+      setState(false);
     }
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    setState(true);
   }, []); // Empty array ensures that effect is only run on mount and unmount
 
-  return windowSize;
+  function handleResize() {
+    setWindowSize(getSize());
+  }
+
+  if (state === null) {
+    return windowSize;
+  }else if (state === false) {
+    return false;
+  }else if (state === true) {
+
+    return () => window.removeEventListener('resize', handleResize);
+  }
 }

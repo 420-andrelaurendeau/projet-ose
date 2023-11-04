@@ -6,10 +6,10 @@ export default function useHover() {
   const handleMouseOver = useCallback(() => setValue(true), []);
   const handleMouseOut = useCallback(() => setValue(false), []);
 
-  const ref = useRef();
+  const ref = <any>useRef();
 
   const callbackRef = useCallback(
-    (node) => {
+    (node:any) => {
       if (ref.current) {
         ref.current.removeEventListener('mouseenter', handleMouseOver);
         ref.current.removeEventListener('mouseleave', handleMouseOut);

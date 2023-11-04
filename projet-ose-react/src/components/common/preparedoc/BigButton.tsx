@@ -1,6 +1,6 @@
 import React from "react";
-import { primary45 } from "../utils/colors";
-import useHover from "../hooks/useHover";
+import { primary45 } from "./utils/colors";
+import useHover from "./hooks/useHover";
 
 export function BigButton({
   title,
@@ -9,13 +9,12 @@ export function BigButton({
   fullWidth,
   customFillColor,
   customWhiteColor,
-  style,
   noHover,
   id,
   small,
   disabled,
   marginRight,
-}) {
+}:any) {
   const [hoverRef, isHovered] = useHover();
 
   let fillColor = customFillColor || primary45;
@@ -40,35 +39,28 @@ export function BigButton({
     fillColor = "#ddd";
   }
 
-  const styles = {
-    container: {
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      width: fullWidth ? "100%" : null,
-      backgroundColor: isHovered && !noHover ? hoverBg : initialBg,
-      color:
-        isHovered && !noHover && !disabled
-          ? hoverColor
-          : disabled
-          ? "#999"
-          : initialColor,
-      borderRadius: 4,
-      padding: small ? "2px 4px" : "6px 8px",
-      fontSize: small ? 14 : null,
-      border: `1px solid ${fillColor}`,
-      cursor: !disabled ? "pointer" : null,
-      userSelect: "none",
-      boxSizing: "border-box",
-      marginRight,
-    },
-  };
+  const containerClasses = [
+    'inline-flex',
+    'items-center',
+    'justify-center',
+    fullWidth ? 'w-full' : null,
+    isHovered && !noHover ? `bg-${hoverBg}` : `bg-${initialBg}`,
+    isHovered && !noHover && !disabled ? `text-${hoverColor}` : disabled ? 'text-gray-400' : `text-${initialColor}`,
+    'rounded-lg',
+    small ? 'p-2' : 'p-6',
+    small ? 'text-sm' : null,
+    `border-${fillColor}`,
+    !disabled ? 'cursor-pointer' : null,
+    'select-none',
+    'box-border',
+    marginRight,
+  ];
 
   return (
     <div
       id={id}
-      ref={hoverRef}
-      style={{ ...styles.container, ...style }}
+      ref={hoverRef as any}
+      className={containerClasses.filter((c) => c).join(' ')}
       onClick={() => {
         if (!disabled) {
           onClick();

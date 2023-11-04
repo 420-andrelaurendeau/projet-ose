@@ -78,7 +78,8 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.2",
-    "@types/jsonwebtoken": "^9.0.4"
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/react-signature-canvas": "^1.0.4"
   },
   "jest": {
     "moduleNameMapper": {

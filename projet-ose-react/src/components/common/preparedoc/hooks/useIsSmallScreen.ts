@@ -1,6 +1,6 @@
 import {useWindowSize} from './useWindowSize';
 
 export function useIsSmallScreen() {
-  const windowSize = useWindowSize();
+  const windowSize:any = useWindowSize();
   return windowSize.width < 600;
 }

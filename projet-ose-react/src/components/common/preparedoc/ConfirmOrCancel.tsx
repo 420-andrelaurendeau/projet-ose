@@ -8,27 +8,17 @@ export function ConfirmOrCancel({
   leftBlock,
   hideCancel,
   disabled
-}) {
-  const styles = {
-    actions: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    cancel: {
-      marginRight: 8,
-    },
-  };
+}:any) {
 
   return (
-    <div style={styles.actions}>
+    <div className="flex justify-between">
       <div>{leftBlock}</div>
       <div>
         {!hideCancel ? (
           <BigButton
-            title={"Cancel"}
-            style={styles.cancel}
-            onClick={onCancel}
-          />
+              title={"Cancel"}
+              className="mr-8"
+              onClick={onCancel}/>
         ) : null}
         <BigButton title={confirmTitle} inverted={true} onClick={onConfirm} disabled={disabled}/>
       </div>

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import Draggable from "react-draggable";
 import { FaCheck, FaTimes } from "react-icons/fa";
-import { errorColor, goodColor } from "../utils/colors";
+import { errorColor, goodColor } from "./utils/colors";
 
 export default function DraggableSignature({ url, onEnd, onSet, onCancel }:any) {
     const draggableRef = useRef(null);
@@ -9,7 +9,8 @@ export default function DraggableSignature({ url, onEnd, onSet, onCancel }:any) 
     return (
         <Draggable nodeRef={draggableRef} onStop={onEnd}>
             <div
-                className="absolute z-50 border-2 border-[hsl(218,49%,66%)]"
+                id={"child"}
+                className="absolute top-0 z-50 border-2 border-[hsl(218,49%,66%)] cursor-move"
                 ref={draggableRef}
             >
                 <div className="absolute right-0 inline-block bg-[hsl(218,49%,66%)]">

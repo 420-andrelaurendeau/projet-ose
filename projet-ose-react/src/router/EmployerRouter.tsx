@@ -12,8 +12,7 @@ import InternshipOfferForm from "../components/common/internshipManager/form/Int
 import EmployerOfferDetails from "../components/common/Employer/offer/EmployerOfferDetails";
 import ApplicationOffer from "../components/common/Employer/application/ApplicationOffer";
 import ApplicationDetails from "../components/common/Employer/application/ApplicationDetails";
-import DocViewer from "../components/common/preparedoc/DocViewer";
-import Test from "../components/common/preparedoc/Test";
+import SignContract from "../components/common/preparedoc/SignContract";
 
 const EmployerRouter: React.FC = () => {
     return (
@@ -28,7 +27,7 @@ const EmployerRouter: React.FC = () => {
                             <Route path=":idApplication/review" element={<ApplicationDetails/>}/>
                         </Route>
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
-                        <Route path="contract" element={<Test/>}/>
+                        <Route path="contract" element={<SignContract/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>

@@ -60,7 +60,7 @@ public class OfferReviewRequestServiceTest {
 
         Programme mockedProgramme = new Programme(1L, "Programme Nom", "Programme Description");
         Employeur mockedEmployeur = new Employeur(1, "Employeur Nom", "Employeur Prenom", "Employeur Entreprise", "Employeur Email", "dsdsfsf", "fdfdd", new Programme());
-        File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8), "Test", true);
+        File mockedFile = new File("hello".getBytes(StandardCharsets.UTF_8), "SignContract", true);
         InternOffer mockedInternOffer = new InternOffer("ff", "ff", "ff", 20.50, LocalDate.now(), LocalDate.now(), new ArrayList<>(), mockedProgramme, mockedFile, mockedEmployeur, State.PENDING, null);
         Internshipmanager mockedInternshipmanager = new Internshipmanager(1L, "nom", "name", "lastName", "email", "password", null);
         OfferReviewRequest mockedOfferReviewRequest = offerReviewRequestDto.fromDto();
@@ -127,7 +127,7 @@ public class OfferReviewRequestServiceTest {
     @Test
     public void saveOfferReviewRequest_UnknownError() {
         when(internOfferService.findById(anyLong())).thenReturn(new InternOffer());
-        when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
+        when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("SignContract case"));
 
         ServiceException result = assertThrows(ServiceException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Erreur inconnue lors de la sauvegarde de la revue de l'offre d'emploi.", result.getMessage());
