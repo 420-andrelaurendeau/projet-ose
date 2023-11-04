@@ -6,6 +6,7 @@ import com.sap.ose.projetose.exception.BadSortingFieldException;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InvalidStateException;
 import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.StageRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.service.spi.ServiceException;
@@ -65,6 +66,35 @@ public class StageService {
     @Transactional
     public List<StageDto> getStageStudentPending(long studentId) {
         return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur())).toList() : null;
+    }
+
+    @Transactional
+    public void updateStateStudent(long stageId, State state) {
+        Stage stage = stageRepository.findById(stageId).orElseThrow();
+        stage.setStateStudent(state);
+        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur()))
+            addContract(stage);
+        stageRepository.save(stage);
+    }
+
+    @Transactional
+    public void updateStateEmployer(long stageId, State state) {
+        Stage stage = stageRepository.findById(stageId).get();
+        stage.setStateEmployeur(state);
+        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur()))
+            addContract(stage);
+        stageRepository.save(stage);
+    }
+
+    public boolean isAcceptedByAll(State student, State employer){
+        return student == State.ACCEPTED && employer == State.ACCEPTED;
+    }
+
+    @Transactional
+    public void addContract(Stage stage) {
+        // TODO Ajout du contract via le BD
+        Contract newContract = new Contract(stage, stage.getEmployeur(), stage.getStudent(), stage.getOffer(), false, false, false, "");
+        stage.setContract(newContract);
     }
 
     @Transactional

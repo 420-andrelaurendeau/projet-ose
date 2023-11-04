@@ -35,16 +35,16 @@ public class Contract {
     @JoinColumn(name = "internOffer_id")
     public InternOffer internOffer;
 
-    @Lob
-    public String signatureInternShipManager;
-    @Lob
-    public String signatureEmployer;
-    @Lob
-    public String signatureStudent;
+
+    public boolean signatureInternShipManager;
+
+    public boolean signatureEmployer;
+
+    public boolean signatureStudent;
     @Lob
     public String contract;
 
-    public Contract(Stage stage, Employeur employeur, Etudiant student,InternOffer internOffer, String signatureInternShipManager, String signatureEmployer, String signatureStudent, String contract) {
+    public Contract(Stage stage, Employeur employeur, Etudiant student, InternOffer internOffer, boolean signatureInternShipManager, boolean signatureEmployer, boolean signatureStudent, String contract) {
         this.stage = stage;
         this.employeur = employeur;
         this.student = student;

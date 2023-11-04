@@ -57,11 +57,8 @@ public class ContractService {
             InternOffer internOffer = internOfferService.findById(contractDto.getIdInternOffer());
             Stage stage = stageService.getById(contractDto.getIdStage());
 
-            String base64Contract = addImageToExistingPDF(contractDto.signatureInternShipManager, "src/main/java/com/sap/ose/projetose/sodapdf-converted.pdf");
-            System.out.println(base64Contract);
-
-            Contract contract = contractRepository.save(new Contract(stage, employeur, student, internOffer, contractDto.signatureInternShipManager, null, null, base64Contract));
-            return new ContractDto(contract.getId(), contract.getStage().getId(), contract.getEmployeur().getId(), contract.getStudent().getId(), contract.getInternOffer().getId(), contract.getSignatureInternShipManager(), contract.getSignatureEmployer(), contract.getSignatureStudent(), contract.getContract());
+            Contract contract = contractRepository.save(new Contract(stage, employeur, student, internOffer, true, false, false, contractDto.getContract()));
+            return new ContractDto(contract.getId(), contract.getStage().getId(), contract.getEmployeur().getId(), contract.getStudent().getId(), contract.getInternOffer().getId(), true, false, false, contract.getContract());
         } catch (Exception e) {
             throw new IllegalStateException("Impossible de sauvegarder le contrat");
         }

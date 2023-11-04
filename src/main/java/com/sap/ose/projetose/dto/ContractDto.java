@@ -16,12 +16,10 @@ public class ContractDto {
     public long idEmployer;
     public long idStudent;
     public long idInternOffer;
+    public boolean signatureInternShipManager;
+    public boolean signatureEmployer;
+    public boolean signatureStudent;
     @Lob
-    public String signatureInternShipManager;
-    @Lob
-    public String signatureEmployer;
-    @Lob
-    public String signatureStudent;
     public String contract;
 
 }
