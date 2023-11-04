@@ -1,15 +1,21 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router-dom";
-import React, {JSX, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {getStageById, signDocument} from "../../api/InternshipManagerAPI";
-import {ReactPainter} from "react-painter";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useToast} from "../../hooks/state/useToast";
-import {Document, Page, pdfjs} from "react-pdf";
+import {pdfjs} from "react-pdf";
 // @ts-ignore
 import sodapdf from '../../assets/images/sodapdf.pdf';
-import useModal from "../../hooks/useModal";
+import Modal from 'react-modal';
+import SignContract from "../../components/common/preparedoc/SignContract";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
+
+
+
+
+Modal.setAppElement('#root');
 
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
@@ -23,18 +29,6 @@ const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({er
         </div>
     );
 }
-
-const ModalComponent: React.FC<{ children: any, onClose:any }> = ({children, onClose}) => {
-    return (
-        <div className="modal">
-            <div className="modal-content">
-                <button onClick={onClose} className="modal-close-button">Fermer</button>
-                {children}
-            </div>
-        </div>
-    );
-};
-
 
 const InternshipAgreementPage: React.FC<any> = () => {
     const {id} = useParams();
@@ -55,7 +49,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
-
 
 
     function blobToBase64(blob: Blob, callback: (arg0: string | ArrayBuffer | null) => void) {
@@ -95,7 +88,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
                 toasts.success('Le document a été signé avec succès');
 
                 console.log(response);
-                const blob = base64toBlob("data:application/pdf;base64, "+response.contract);
+                const blob = base64toBlob("data:application/pdf;base64, " + response.contract);
                 setSignatureBase64(URL.createObjectURL(blob));
             } catch (error) {
                 toasts.error("Une erreur est survenue lors de la signature du document");
@@ -107,14 +100,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
         openModal();
     }
 
-    const openModal = () => {
-        setModalOpen(true);
-    };
-
-    // Fonction pour gérer la fermeture de la modal
-    const closeModal = () => {
-        setModalOpen(false);
-    };
 
     // Fonction pour gérer le changement de page
     const handlePageChange = (newPage: number) => {
@@ -179,9 +164,42 @@ const InternshipAgreementPage: React.FC<any> = () => {
     const [numPages, setNumPages] = useState<number>();
 
 
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+    function onDocumentLoadSuccess({numPages}: { numPages: number }): void {
         setNumPages(numPages);
     }
+
+    const [modalIsOpen, setModalIsOpen] = useState(true);
+
+    const openModal = () => setModalIsOpen(true);
+    const closeModal = () => setModalIsOpen(false);
+
+    // ... Autres parties de votre composant ...
+
+    const CustomModal: React.FC<{ pdfUrl: string }> = () => (
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Document PDF"
+            className="fixed inset-0 z-50 mt-5 overflow-y-auto"
+            overlayClassName="fixed inset-0 bg-black/30 backdrop-blur-sm"
+        >
+            <div className="flex justify-center items-center min-h-screen">
+                <div className="bg-white rounded-lg shadow-2xl shadow-black/50 overflow-hidden max-w-4xl max-h-[95vh] mx-auto my-8">
+                    <div className="p-4">
+                        {/* PDF Viewer Container */}
+                        <div className="pdf-container overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(95vh - 64px)' }}>
+                            {/* Le composant PDF ici */}
+                            <SignContract />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Modal>
+    );
+
+
+
+
 
 
     return (<>
@@ -189,7 +207,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
         {intershipAggreement && (
             <div className="h-max pt-20">
                 <button
-                    className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
+                    className="fixed z-1 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
                     onClick={() => navigate("/internshipmanager/home/offers")}
                 >
                     <Icon className="w-5 h-5 fill-current hover:font-bold"/>
@@ -236,49 +254,54 @@ const InternshipAgreementPage: React.FC<any> = () => {
                 </div>
 
 
-                <ReactPainter
-                    key={canvasReset} // Cela forcera le composant à se rendre à nouveau lorsque canvasReset change
-                    width={300}
-                    height={300}
-                    onSave={blob => sendsignature(blob)}
-                    lineCap={"round"}
-                    render={({triggerSave, canvas}) => (
-                        <div className="text-center">
-                            <div className="border border-1 border-black"
-                                 style={{height: 300 + "px", width: 300 + "px"}}>
-                                {canvas}
-                            </div>
-                            <button
-                                className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36 mx-8`}
-                                onClick={triggerSave}>Signer le contrat
-                            </button>
-                            <button className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36`}
-                                    onClick={clearCanvas}>Clear
-                            </button>
-                        </div>
-                    )}
-                />
-                {modalOpen && (
-                    <ModalComponent onClose={closeModal}>
-                        <Document file={signatureBase64} onLoadSuccess={onDocumentLoadSuccess}>
-                            <Page pageNumber={pageNumber} />
-                        </Document>
-                        <div>
-                            <p>
-                                Page {pageNumber} of {numPages}
-                            </p>
-                            <button onClick={() => handlePageChange(pageNumber - 1)}>Page précédente</button>
-                            <button onClick={() => handlePageChange(pageNumber + 1)}>Page suivante</button>
-                        </div>
-                    </ModalComponent>
-                )}
+
             </div>
 
 
         )}
+        <CustomModal pdfUrl={""}/>
     </>);
 }
 
 export default InternshipAgreementPage
 
 
+/**
+
+ <ReactPainter
+ key={canvasReset} // Cela forcera le composant à se rendre à nouveau lorsque canvasReset change
+ width={300}
+ height={300}
+ onSave={blob => sendsignature(blob)}
+ lineCap={"round"}
+ render={({triggerSave, canvas}) => (
+ <div className="text-center">
+ <div className="border border-1 border-black"
+ style={{height: 300 + "px", width: 300 + "px"}}>
+ {canvas}
+ </div>
+ <button
+ className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36 mx-8`}
+ onClick={triggerSave}>Signer le contrat
+ </button>
+ <button className={`flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange w-36`}
+ onClick={clearCanvas}>Clear
+ </button>
+ </div>
+ )}
+ />
+ {modalOpen && (
+ <ModalComponent onClose={closeModal}>
+ <Document file={signatureBase64} onLoadSuccess={onDocumentLoadSuccess}>
+ <Page pageNumber={pageNumber} />
+ </Document>
+ <div>
+ <p>
+ Page {pageNumber} of {numPages}
+ </p>
+ <button onClick={() => handlePageChange(pageNumber - 1)}>Page précédente</button>
+ <button onClick={() => handlePageChange(pageNumber + 1)}>Page suivante</button>
+ </div>
+ </ModalComponent>
+ )}
+ */
