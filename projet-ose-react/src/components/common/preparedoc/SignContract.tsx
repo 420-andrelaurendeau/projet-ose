@@ -22,7 +22,12 @@ function downloadURI(uri:any, name:any) {
   document.body.removeChild(link);
 }
 
-function SignContract() {
+type Props = {
+    pdfBase64: String;
+    signContract: Function;
+}
+
+function SignContract( {pdfBase64, signContract}: Props) {
   const styles = {
     container: {
       margin: "0 auto",
@@ -214,7 +219,7 @@ function SignContract() {
         ) : null}
         {pdf ? (
           <div>
-            <div style={styles.controls}>
+            <div style={styles.controls} className=" mx-auto">
               {!signatureURL ? (
                 <BigButton
                     marginRight={8}
@@ -241,6 +246,11 @@ function SignContract() {
                       downloadURI(pdf, "file.pdf");
                     }}              />
               ) : null}
+              <BigButton
+                  marginRight={8}
+                  title={"Validate signature"}
+                  onClick={() => signContract(pdf)}
+              />
             </div>
             <div ref={documentRef} >
               <Document

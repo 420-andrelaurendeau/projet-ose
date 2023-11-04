@@ -60,7 +60,7 @@ export function BigButton({
     <div
       id={id}
       ref={hoverRef as any}
-      className={containerClasses.filter((c) => c).join(' ')}
+      className={containerClasses.filter((c) => c).join(' ') + " bg-blue mx-4" }
       onClick={() => {
         if (!disabled) {
           onClick();
