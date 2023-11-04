@@ -2,26 +2,42 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
-import {UpdateOffers} from "../api/InterOfferJobAPI";
+import {UpdateOffers} from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
-import Header from "../components/common/shared/header/Header";
-import {getUser} from "../api/UtilisateurAPI";
-import {useAuth} from "../authentication/AuthContext";
-import {User} from "../model/User";
+import Header from "../../components/common/shared/header/Header";
+import {getUser} from "../../api/UtilisateurAPI";
+import {useAuth} from "../../authentication/AuthContext";
+import {User} from "../../model/User";
 import {data} from "autoprefixer";
+import {useToast} from "../../hooks/state/useToast";
 
 interface Props {
     isModalOpen: boolean,
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
     offers: any[],
     setOffers: React.Dispatch<React.SetStateAction<any[]>>,
-    user: any
+    user: any,
+    setSortField: React.Dispatch<React.SetStateAction<string>>,
+    setSortDirection: React.Dispatch<React.SetStateAction<string>>,
+    sortField: string,
+    sortDirection: string,
+    totalPages: number,
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>,
+    handleChangeNumberElement: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+    onPageChange: (newPage: number) => void,
+    numberElementByPage: number,
+    page: number,
 }
 
 function EmployeurHomePage() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [sortField, setSortField] = useState("id");
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [totalPages, setTotalPages] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
     const { userEmail, userRole, logoutUser } = useAuth();
@@ -37,6 +53,7 @@ function EmployeurHomePage() {
         matricule: "",
 
     });
+    const toast = useToast();
 
     useEffect(() => {
         const getUtilisateur = async () => {
@@ -44,7 +61,6 @@ function EmployeurHomePage() {
             if (userEmail != null){
                 console.log(userEmail)
                 data = await getUser(userEmail)
-                console.log(data)
                 setUser(data)
             }
         }
@@ -54,8 +70,19 @@ function EmployeurHomePage() {
     useEffect(() => {
         console.log(user)
         if (userEmail)
-            UpdateOffers(userEmail,setOffers)
-    }, []);
+            try {
+                UpdateOffers(userEmail,setOffers, setTotalPages,{
+                    page: currentPage,
+                    size: numberElementByPage,
+                    sortField,
+                    sortDirection
+                })
+            } catch (error) {
+                console.log(error);
+                toast.error(fields.toast.errorFetchOffers)
+            }
+
+    }, [currentPage, numberElementByPage, sortField, sortDirection]);
 
     useEffect(() => {
         let i = 0;
@@ -65,15 +92,32 @@ function EmployeurHomePage() {
         setNbCandidature(i);
     }, [offers]);
 
+    const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentPage(0);
+        setNumberElementByPage(Number(event.target.value));
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
     const context =  {
         isModalOpen: isModalOpen,
         setIsModalOpen: setIsModalOpen,
         offers: offers,
         setOffers: setOffers,
         user: user,
+        setSortField: setSortField,
+        setSortDirection: setSortDirection,
+        sortField: sortField,
+        sortDirection: sortDirection,
+        totalPages: totalPages,
+        setCurrentPage: setCurrentPage,
+        handleChangeNumberElement: handleChangePage,
+        onPageChange: handlePageChange,
+        numberElementByPage: numberElementByPage,
+        page: currentPage,
     }
-
-    console.log(context)
 
     return (
         <div className="min-h-screen h-full">
@@ -111,12 +155,18 @@ function EmployeurHomePage() {
                                 </div>
                             </NavLink>
 
-                            <div className="flex space-x-2 items-center h-14 px-5 justify-center">
-                                <FontAwesomeIcon icon={faSignature} className="dark:text-white" size="sm" />
+                            <NavLink
+                                to="contract"
+                                className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
+                                    + (location.pathname === `/${userRole}/home/contract` || location.pathname === `/${userRole}/home/contract/` ? " border-b-2" : "")
+                                }
+                                state={user}
+                            >
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm" />
                                 <div className="pl-2">
                                     <p className="text-black dark:text-white">{fields.contract.text}</p>
                                 </div>
-                            </div>
+                            </NavLink>
                         </div>
                     </div>
                     <div className="w-full">

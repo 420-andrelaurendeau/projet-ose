@@ -66,10 +66,15 @@ public class InterviewController {
         return interviewService.studentAcceptsInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/getInterviewsByStudentIdAndInternOfferId")
+    public ResponseEntity<InterviewDTO> getInterview(@RequestBody studentHasInterviewWithInternOffer studentHasInterviewWithInternOffer){
+        logger.info("Interview request received");
+        return interviewService.getInterview(studentHasInterviewWithInternOffer.studentId,studentHasInterviewWithInternOffer.internOfferId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/studentDeclineInterviewByStudentId/{studentId}/{InterviewId}")
     public ResponseEntity<Boolean> studentRefuseInterviewByStudentId(@PathVariable long studentId,@PathVariable long InterviewId){
         logger.info("Interview decline request received");
         return interviewService.studentDeclineInterviewByStudentId(studentId,InterviewId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
-
 }

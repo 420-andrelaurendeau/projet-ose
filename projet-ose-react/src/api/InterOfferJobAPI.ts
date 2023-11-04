@@ -19,6 +19,7 @@ const apiClient = axios.create({
 export const offresEtudiant = async () => {
     try {
         const response = await apiClient.get('interOfferJob/OffersEtudiant')
+        console.log(response.data)
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/OffersEtudiant' + err)
@@ -117,9 +118,11 @@ export const getOfferReviewRequestById = async (id: number) => {
 };
 
 
-export const getInterOfferJob = async (email: string) => {
+export const getInterOfferJob = async (email: string, params:{}) => {
     try {
-        const response = await apiClient.get('interOfferJob/OffersEmp/' + email);
+        const response = await apiClient.get('interOfferJob/OffersEmp/' + email,{
+            params: params
+        });
         return response.data;
 
     } catch (error) {
@@ -143,12 +146,13 @@ export const getStudentAppliedOffers = async (studentId: number): Promise<Applie
     }
 }
 
-export function UpdateOffers(email: string, setOffers: any) {
+export function UpdateOffers(email: string, setOffers: any, setTotalPages:any, params:{}) {
     const loadOffers = async () => {
         try {
-            const data = await getInterOfferJob(email);
+            const data = await getInterOfferJob(email, params);
             console.log(data);
-            setOffers(data);
+            setOffers(data.content);
+            setTotalPages(data.totalPages);
         } catch (error) {
             console.error('Erreur lors du chargement des programmes:', error);
         }

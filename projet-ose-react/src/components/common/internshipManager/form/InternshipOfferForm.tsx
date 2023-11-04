@@ -16,7 +16,7 @@ import {
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
-import {useProps} from "../../../../pages/EmployeurHomePage";
+import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 
 
 const initialFormState: InterOfferJob = {

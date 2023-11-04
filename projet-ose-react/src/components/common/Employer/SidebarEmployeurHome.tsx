@@ -3,7 +3,7 @@ import {faCircleUser, faFileLines, faPencil, faSignature, faSpinner, faUsers} fr
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {NavLink, useLocation, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {useAuth} from "../../authentication/AuthContext";
+import {useAuth} from "../../../authentication/AuthContext";
 
 export default function SidebarEmployeurHome(props: any) {
     const {i18n} = useTranslation();

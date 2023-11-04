@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/employeur")
 public class EmployeurController {
 
-    private final EmployeurService employeurService;
-
     public EmployeurController(EmployeurService employeurService) {
-        this.employeurService = employeurService;
     }
 
     @GetMapping("/{id}")

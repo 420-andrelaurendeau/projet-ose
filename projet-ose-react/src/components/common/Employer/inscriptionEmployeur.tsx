@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
-import img from "../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
-import imgDark from "../../assets/images/Cegep-Andre-Laurendeau.png";
-import {Programme} from "../../model/Programme";
+import img from "../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png"
+import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
+import {Programme} from "../../../model/Programme";
 import {useNavigate} from "react-router-dom";
-import {useToast} from "../../hooks/state/useToast";
+import {useToast} from "../../../hooks/state/useToast";
 
 function InscriptionEmployeur(props: any) {
     const {i18n} = useTranslation();

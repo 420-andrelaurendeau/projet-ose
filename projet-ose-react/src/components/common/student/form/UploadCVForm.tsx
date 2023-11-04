@@ -16,8 +16,6 @@ function UploadCVForm(): ReactElement {
 
     let toast = useToast();
 
-    let location = useLocation();
-
     const [files, setFiles] = useState<any[]>([])
     const [utilisateurs, setUtilisateurs] = useState([])
     const [user, setUser] = useState<any>(null)
@@ -33,6 +31,8 @@ function UploadCVForm(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
+        }).catch((error) => {
+            console.log("Error fetching user data:", error)
         })
     }, [])
 
@@ -50,8 +50,9 @@ function UploadCVForm(): ReactElement {
             }));
             if (fileError === "") {
                 let newFile = [currFile]
-                setFiles(files => [...newFile])
+                setFiles([...newFile])
             }
+            console.log(fileError)
         }
         reader.readAsDataURL(file)
     }
@@ -61,34 +62,21 @@ function UploadCVForm(): ReactElement {
             {errorMsg || ""}
         </p>);
 
-    const handleValidation = (fieldName: string) => {
-        let fieldError = "";
-
-        switch (fieldName) {
-            case "file":
-                fieldError = validateFile(files[0], t);
-                break;
-        }
-
-        setErrors(prevErrors => ({
-            ...prevErrors, [fieldName]: fieldError
-        }));
-
-    }
-
     const handleSubmit = async () => {
         console.log(files)
-        setUploadState({status: "Uploading"})
-        saveCvStudent(user!.matricule, files[0]).then(res => {
-            console.log(res)
-            setUploadState({status: "Done"})
-            toast.success(t('cv.success'))
-            setFiles([])
-        }).catch(err => {
-            console.log(err)
-            toast.error(t('cv.error'))
-            setUploadState({status: "Error"})
-        })
+        if (files.length !== 0) {
+            setUploadState({status: "Uploading"})
+            saveCvStudent(user!.matricule, files[0]).then(res => {
+                console.log(res)
+                setUploadState({status: "Done"})
+                toast.success(t('cv.success'))
+                setFiles([])
+            }).catch(err => {
+                console.log(err)
+                toast.error(t('cv.error'))
+                setUploadState({status: "Error"})
+            })
+        }
     }
 
     const renderUploadStatus = (): ReactElement | null => {
@@ -114,13 +102,13 @@ function UploadCVForm(): ReactElement {
                     <div
                         className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5 px-9">
                         <input
+                            aria-label="file"
                             name='file'
                             type="file"
                             className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
                             onChange={(e) => {
                                 handleFileChange(e);
                             }}
-                            onLoad={() => handleValidation("file")}
                         />
                         <div className="flex flex-col items-center justify-center py-10 text-center">
                             <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
@@ -144,7 +132,9 @@ function UploadCVForm(): ReactElement {
                         </div>
                     </div>
                     <br/>
-                    <div className={"bg-blue text-white p-1 w-2/4 text-center cursor-pointer"} onClick={handleSubmit}>
+                    <div aria-label="upload_button"
+                         className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`}
+                         onClick={handleSubmit}>
                         {t('cv.upload_button')} {renderUploadStatus()}
                     </div>
 

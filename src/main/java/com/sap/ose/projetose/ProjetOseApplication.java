@@ -19,7 +19,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
 
@@ -69,7 +68,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         Internshipmanager internshipmanager = new Internshipmanager("Jean","Dupont", "4387996589",  "dupont@gmail.com", "popo", programme1);
         authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
-        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"Test",true, null, null);
+        File file = new File(1L,"hello".getBytes(StandardCharsets.UTF_8),"SignContract",true, null, null);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
 
 
@@ -79,9 +78,10 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
-        InternOffer internOffer1 = new InternOffer("Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer1 = new InternOffer("IT Internship: Nurturing Tomorrow's Tech Wizards","Montreal, Quebec","Are you a student in the field of \"Technique de l'Informatique\" seeking an immersive learning experience in one of the most vibrant tech ecosystems in North America? Look no further! Our Montreal IT Internship offers a unique opportunity to gain hands-on experience, expand your skillset, and embark on an exciting journey into the world of technology.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
         internOfferService.saveInterOfferJob(internOfferDto1);
+
 
         InternOffer internOffer2 = new InternOffer("Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
