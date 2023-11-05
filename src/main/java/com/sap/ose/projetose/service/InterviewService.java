@@ -11,6 +11,8 @@ import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Interview;
+import com.sap.ose.projetose.dto.*;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
@@ -39,6 +41,7 @@ public class InterviewService {
     private final EtudiantRepository etudiantRepository;
 
     private final InternOfferRepository internOfferRepository;
+
     Logger logger = LoggerFactory.getLogger(InterviewService.class);
 
     @Autowired
@@ -94,6 +97,22 @@ public class InterviewService {
         return interviewRepository.findAll().stream().filter(interview -> interview.getStudent().getId() == studentId && interview.getInternshipOffer().getId() == employerId).findFirst().orElse(null) != null;
     }
 
+    @Transactional
+    public Optional<InterviewDTO> getInterview(long studentId, long internOfferId) {
+        try {
+            InterviewDTO interviewDTO = new InterviewDTO();
+            Interview inte = interviewRepository.findByStudentIdAndInternOfferId(studentId, internOfferId);
+            if (inte != null) {
+                interviewDTO = new InterviewDTO(new EtudiantDto(inte.getStudent()), new InternOfferDto(inte.getInternshipOffer()), inte.getDate(), inte.getDescription(), inte.getState());
+            }
+            return Optional.of(interviewDTO);
+        }catch (Exception e){
+            logger.error("Error while getting interview",e);
+            return Optional.empty();
+        }
+
+    }
+
     public List<InterviewDTO> getAllInterviews() {
         return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList();
     }
@@ -129,19 +148,19 @@ public class InterviewService {
     }
 
 
-    @Transactional
-    public Optional<InterviewDTO> getInterview(long studentId, long internOfferId) {
-        try {
-            InterviewDTO interviewDTO = new InterviewDTO();
-            Interview inte = interviewRepository.findByStudentIdAndInternOfferId(studentId, internOfferId);
-            if (inte != null) {
-                interviewDTO = new InterviewDTO(inte.getId(), null, null, inte.getDate(), inte.getDescription(), inte.getState());
-            }
-            return Optional.of(interviewDTO);
-        }catch (Exception e){
-            logger.error("Error while getting interview",e);
-            return Optional.empty();
-        }
-
-    }
+//    @Transactional
+//    public Optional<InterviewDTO> getInterview(long studentId, long internOfferId) {
+//        try {
+//            InterviewDTO interviewDTO = new InterviewDTO();
+//            Interview inte = interviewRepository.findByStudentIdAndInternOfferId(studentId, internOfferId);
+//            if (inte != null) {
+//                interviewDTO = new InterviewDTO(inte.getId(), null, null, inte.getDate(), inte.getDescription(), inte.getState());
+//            }
+//            return Optional.of(interviewDTO);
+//        }catch (Exception e){
+//            logger.error("Error while getting interview",e);
+//            return Optional.empty();
+//        }
+//
+//    }
 }

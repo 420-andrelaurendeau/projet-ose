@@ -5,7 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faBars,
     faCircleUser,
-    faXmark
+    faXmark,
+    faFileLines, faFile
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
@@ -19,6 +20,7 @@ import {getUser} from "../../../../api/UtilisateurAPI";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.Header");
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
@@ -57,6 +59,7 @@ const Header = (userd: any) => {
             getUtilisateur().then(r => console.log(r))
     }, [])
 
+
     return (
         <>
             {
@@ -84,6 +87,22 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             </div>
+                            {userRole === "internshipmanager" &&
+                                <NavLink to={"offers"}>
+                                    <div className="flex-shrink-0 hidden md:block text-center">
+                                        <FontAwesomeIcon icon={faFileLines} className="text-blue dark:text-orange" size="xl"/>
+                                        <p className="dark:text-white">{fields.stage.text}</p>
+                                    </div>
+                                </NavLink>
+                            }
+                            {userRole === "internshipmanager" &&
+                                <NavLink to={"studentCvReview"}>
+                                    <div className="flex-shrink-0 hidden md:block text-center">
+                                        <FontAwesomeIcon icon={faFile} className="text-blue dark:text-orange" size="xl"/>
+                                        <p className="dark:text-white">{fields.cvReview.text}</p>
+                                    </div>
+                                </NavLink>
+                            }
                             { userRole === "internshipmanager" && (
                                 <div onClick={() => navigate("internshipsagreement")}  className="text-blue dark:text-orange">
 

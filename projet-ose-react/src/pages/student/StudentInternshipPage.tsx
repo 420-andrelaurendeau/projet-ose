@@ -77,56 +77,56 @@ function StudentInternshipPage() {
                 <div className="pt-24 flex-row flex md:justify-center w-full">
                     <NavLink
                         to="offers"
-                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="group border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-blue-500 hover:text-white aria-[current='page']:bg-blue-700 dark:aria-[current='page']:bg-orange-700 aria-[current='page']:text-white dark:aria-[current='page']:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg" />
+                            <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{fields.Header.sidebar.stage.text}</p>
+                                <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.sidebar.stage.text}</p>
                             </div>
                         </div>
                     </NavLink>
                     <NavLink
                         to="appliedOffers"
-                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="group border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-blue-500 hover:text-white aria-[current='page']:bg-blue-700 dark:aria-[current='page']:bg-orange-700 aria-[current='page']:text-white dark:aria-[current='page']:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg" />
+                            <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
+                                <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.sidebar.offre_applique.text}</p>
                             </div>
                         </div>
                     </NavLink>
                     <NavLink
                         to="cv"
-                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="group border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-blue-500 hover:text-white aria-[current='page']:bg-blue-700 dark:aria-[current='page']:bg-orange-700 aria-[current='page']:text-white dark:aria-[current='page']:text-white px-3 py-2 rounded-md text-sm font-medium"
                         state={user}
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg" />
+                            <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faFileLines} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{fields.Header.cv.text}</p>
+                                <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.cv.text}</p>
                             </div>
                         </div>
                     </NavLink>
                     <NavLink
                         to="interview"
-                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="group border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-blue-500 hover:text-white aria-[current='page']:bg-blue-700 dark:aria-[current='page']:bg-orange-700 aria-[current='page']:text-white dark:aria-[current='page']:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faMicrophone} className="group-hover:text-white dark:text-white" size="lg" />
+                            <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faMicrophone} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">{fields.Header.interview.text}</p>
+                                <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">{fields.Header.interview.text}</p>
                             </div>
                             {interviewsNb > 0 ? (
                                 <p className="text-black dark:text-white">{interviewsNb}</p>
@@ -137,14 +137,14 @@ function StudentInternshipPage() {
                     </NavLink>
                     <NavLink
                         to="stage"
-                        className="border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-gray hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="group border border-gray dark:border-darkgray bg-white dark:bg-dark basis-1/4 text-white hover:bg-blue-500 hover:text-white aria-[current='page']:bg-blue-700 dark:aria-[current='page']:bg-orange-700 aria-[current='page']:text-white dark:aria-[current='page']:text-white px-3 py-2 rounded-md text-sm font-medium"
                     >
                         <div className="flex space-x-2 items-center h-16 w-auto">
-                            <div className="bg-blue dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
-                                <FontAwesomeIcon icon={faPersonDigging} className="group-hover:text-white dark:text-white" size="lg" />
+                            <div className="transition-colors bg-blue group-hover:bg-white dark:group-hover:bg-white group-aria-[current='page']:bg-white dark:group-aria-[current='page']:bg-white dark:bg-orange rounded-full h-12 w-12 flex items-center justify-center">
+                                <FontAwesomeIcon icon={faPersonDigging} className="group-hover:text-blue dark:group-hover:text-orange group-aria-[current='page']:text-blue dark:group-aria-[current='page']:text-orange dark:text-white" size="lg" />
                             </div>
                             <div className="pl-2">
-                                <p className="text-blue dark:text-orange">Stage</p>
+                                <p className="text-blue group-hover:text-white dark:group-hover:text-white group-aria-[current='page']:text-white dark:group-aria-[current='page']:text-white dark:text-orange">Stage</p>
                             </div>
                         </div>
                     </NavLink>

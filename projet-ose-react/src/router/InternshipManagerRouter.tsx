@@ -4,6 +4,7 @@ import ProtectedRoute from './ProtectedRoute';
 import InternshipManagerOffersPage from "../pages/internshipManager/InternshipManagerOffersPage";
 import Layout from "../components/layout/Layout";
 import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
+import EvaluerCV from "../pages/management/student/AssessCv";
 import InternshipManagerInternshipsAgreementPage
     from "../pages/internshipManager/InternshipManagerInternshipsAgreementPage";
 import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
@@ -14,6 +15,7 @@ const InternshipManagerRouter: React.FC = () => {
             <Routes>
                 <Route path="/home/" element={<Layout/>}>
                     <Route element={<Layout/>}/>
+                    <Route index path="studentCvReview" element={<EvaluerCV/>}/>
                     <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
                     <Route path="offer/:id" element={<InternshipManagerOfferPage/>}/>
                     <Route path="internshipsagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
@@ -23,5 +25,5 @@ const InternshipManagerRouter: React.FC = () => {
         </ProtectedRoute>
     );
 };
-// @ts-ignore
+
 export default InternshipManagerRouter;

@@ -31,13 +31,15 @@ public class StageController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<StageDto> saveInterview(@RequestBody StageDto stageDto){
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<StageDto> saveStage(@RequestBody StageDto stageDto){
         logger.info("Interview request received");
         return stageService.save(stageDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/Stage/{studentId}")
-    public ResponseEntity<List<StageDto>> getStagePendingStudent(@RequestBody long studentId){
+    @GetMapping("/pending/{studentId}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<List<StageDto>> getStagePendingStudent(@PathVariable long studentId){
         logger.info("Stage Pending request received");
         return Optional.of(stageService.getStageStudentPending(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
@@ -67,6 +69,22 @@ public class StageController {
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
-    
+
 }
 
+
+
+    @PostMapping("/acceptedStudent")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<Boolean> getStudentAccepted(@RequestBody StageDto stageDto){
+        logger.info("Interview accept request received");
+        return stageService.setStudentAccepted(stageDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/declinedStudent")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<Boolean> getStudentDeclined(@RequestBody StageDto stageDto){
+        logger.info("Interview accept request received");
+        return stageService.setStudentDeclined(stageDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+}

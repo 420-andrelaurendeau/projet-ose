@@ -105,10 +105,10 @@ public class InternshipCandidatesService {
             }
             List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllById(idsLong);
             List<InternshipCandidatesDto> internshipCandidatesDtoList = InternshipCandidatesDto.fromList(internshipCandidates);
-            for (InternshipCandidatesDto internshipCandidatesDto : internshipCandidatesDtoList) {
-                Date date = Objects.requireNonNull(interviewService.getInterview(internshipCandidatesDto.getEtudiant().getId(), internshipCandidatesDto.getInternOfferJob().getId()).orElse(null)).getDate();
-                internshipCandidatesDto.setDate(date);
-            }
+//            for (InternshipCandidatesDto internshipCandidatesDto : internshipCandidatesDtoList) {
+//                Date date = Objects.requireNonNull(interviewService.getInterview(internshipCandidatesDto.getEtudiant().getId(), internshipCandidatesDto.getInternOfferJob().getId()).orElse(null)).getDate();
+//                internshipCandidatesDto.setDate(date);
+//            }
             return internshipCandidatesDtoList;
         }catch (DataAccessException e){
             logger.info(e.getMessage());

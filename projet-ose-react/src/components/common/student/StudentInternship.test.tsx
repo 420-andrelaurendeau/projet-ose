@@ -1,10 +1,9 @@
-import {render, screen, fireEvent} from "@testing-library/react";
-import StudentStage from "./StudentStage";
+import {render, screen, fireEvent, act} from "@testing-library/react";
+import StudentInternship from "./StudentInternship";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {useTransition} from "react";
-import {act} from "react-dom/test-utils";
 
 jest.mock("../../../api/UtilisateurAPI", () => ({
     getUser: jest.fn(),
@@ -42,7 +41,7 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-describe("StudentStage Component", () => {
+describe("StudentInternship Component", () => {
     const mockUser = {id: 1, name: "John Doe"};
     const mockAppliedOffers = [
         {appliedOffer: {id: 1, title: "Internship 1"}},
@@ -63,8 +62,8 @@ describe("StudentStage Component", () => {
         (saveStudentInternshipOffer as jest.Mock).mockResolvedValue(mockSaveStudentInterships)
     });
 
-    it("renders the StudentStage component", async () => {
-        render(<StudentStage/>);
+    it("renders the StudentInternship component", async () => {
+        render(<StudentInternship/>);
 
         // Assert that the component and its content are correctly rendered
         const titleElement = screen.getByText("formField.EtudiantStage.titre.text");
@@ -74,24 +73,23 @@ describe("StudentStage Component", () => {
     });
 
     it("handles applying for an internship offer", async () => {
-        render(<StudentStage/>);
+        render(<StudentInternship/>);
         const applyButtons = await screen.findAllByLabelText("apply");
 
-        act(() => {
+        await act(async () => {
             fireEvent.click(applyButtons[1]);
 
-        })
-        //Puisque les button apply ne sont pas encore re rendered mais encore la il vas pas wait pour update de state
-        setTimeout(async () => {
-            const offers = await screen.findAllByLabelText("apply");
-            expect(offers[1]).toBeDisabled();
-        }, 1)
+        });
+
+        const offers = screen.getAllByLabelText("apply");
+        expect(offers[1]).toBeDisabled();
+
 
     });
 
 
     it("handles loading applied offers and internship offers", async () => {
-        render(<StudentStage/>);
+        render(<StudentInternship/>);
 
         // Assert that the applied offers and available offers are loaded and displayed correctly
         const appliedOffer1 = await screen.findByText("Internship 1");
@@ -103,6 +101,4 @@ describe("StudentStage Component", () => {
         const offers = await screen.findAllByLabelText("apply");
         expect(offers[0]).toBeDisabled();
     });
-
-    // Add more test cases to cover different scenarios in your component
 });

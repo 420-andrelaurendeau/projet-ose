@@ -14,14 +14,14 @@ const StudentRoutes: React.FC = () => {
         <ProtectedRoute requiredRoles={['student']}>
             <Routes>
                 <Route path="/home/" element={<StudentInternshipPage/>}>
-                        <Route path="offers" element={<StudentInternship/>}/>
-                        <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                        <Route path="cv" element={<UploadCVForm/>}/>
-                        <Route path="interview" element={<StudentInterviewPage/>}/>
-                        <Route path="*" element={<ErrorPage/>}/>
-                        <Route path="stage" element={<StudentStagePage />}/>
-                    </Route>
+                    <Route path="offers" element={<StudentInternship/>}/>
+                    <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
+                    <Route path="cv" element={<UploadCVForm/>}/>
+                    <Route path="interview" element={<StudentInterviewPage/>}/>
                     <Route path="*" element={<ErrorPage/>}/>
+                    <Route path="stage" element={<StudentStagePage />}/>
+                </Route>
+                <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </ProtectedRoute>
     );

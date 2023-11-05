@@ -8,13 +8,11 @@
 
 *Point d'action*
 
-1. Pour chaque Sprint tout le monde doit avoir entre 12 heures de travail minimum avant la fin de la premiere semaine.
-2. Passer en revue tous les plandemos 3 jours avant la presentation et faire une pratique le jour que suit.
+1. Faire un daily en ecrit a chaque jour.
+2. Faire deux ou trois daily vocal a chaque semaine.
 
 *Pont negatif*
 
 1. Tout les membres ne sont pas present lors des periodes disponible
-
-
 
 

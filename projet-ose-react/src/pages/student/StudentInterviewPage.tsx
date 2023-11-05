@@ -1,5 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {fetchInterviews, acceptInterview, declineInterview} from "../../api/StudentApi";
+import {
+    fetchInterviews,
+    acceptInterview,
+    declineInterview,
+    saveStageStudent
+} from "../../api/StudentApi";
 import {getUser} from "../../api/UtilisateurAPI";
 import {useAuth} from "../../authentication/AuthContext";
 import {Interview} from "../../model/Interview";
@@ -19,9 +24,11 @@ export default function StudentInterviewPage() {
             if (res === true) {
                 {/*Change the interview status to accepted*/}
                 setInterviews(interviews.map((interview) => {
-                    if (interview.id === interviewId) {
+                    console.log(interview)
+                   if (interview.id === interviewId) {
                         interview.state = "ACCEPTED";
-                    }
+                        saveStageStudent({id : 0, student_id: user.id, offer : interview.internOffer, stateStudent: "PENDING", stateEmployeur: "PENDING" })
+                   }
                     return interview;
                 }));
                 console.log(interviews);
@@ -55,6 +62,7 @@ export default function StudentInterviewPage() {
                     fetchInterviews(resUser.id).then((res) => {
                         setInterviews(res);
                     });
+
                 })
                 .catch((err) => {
                     console.log(err);

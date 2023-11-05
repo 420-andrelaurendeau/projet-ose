@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {InterOfferJob} from "../../../../model/IntershipOffer";
-import {Programme} from "../../../../model/Programme";
+import {InternshipOffer} from "../../../../model/IntershipOffer";
+import {Program} from "../../../../model/Program";
 import {saveInterOfferJob, UpdateOffers} from "../../../../api/InterOfferJobAPI";
 import {getProgrammes} from "../../../../api/ProgrammeAPI";
 import {
@@ -12,14 +12,14 @@ import {
     validateSalary,
     validateStartDate,
     validateTitle
-} from "../../../../utils/validation/validationInteOfferForm";
+} from "../../../../utils/validation/ValidateInternshipOfferForm";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
 import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 
 
-const initialFormState: InterOfferJob = {
+const initialFormState: InternshipOffer = {
     title: '',
     location: '',
     description: '',
@@ -45,9 +45,9 @@ const InternshipOfferForm: React.FC<any> = () => {
         endDate?: string,
         file?: string
     }>({});
-    const [formState, setFormState] = useState<InterOfferJob>(initialFormState);
+    const [formState, setFormState] = useState<InternshipOffer>(initialFormState);
     const {setIsModalOpen, setOffers, user} = useProps()
-    const [programmes, setProgrammes] = useState<Programme[]>([]);
+    const [programmes, setProgrammes] = useState<Program[]>([]);
 
     useEffect(() => {
         const loadProgrammes = async () => {
@@ -66,9 +66,10 @@ const InternshipOfferForm: React.FC<any> = () => {
         const {name, value} = e.target;
 
 
-            setFormState(prevState => ({
-                ...prevState, [name]: value
-            }));
+        // @ts-ignore
+        setFormState(prevState => ({
+            ...prevState, [name]: value
+        }));
 
     };
 
@@ -103,7 +104,7 @@ const InternshipOfferForm: React.FC<any> = () => {
             const savedInterOfferJob = await saveInterOfferJob(formState, user.id);
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
             setFormState(initialFormState);
-            setOffers((prevOffers: InterOfferJob[]) => ([...prevOffers, savedInterOfferJob]));
+            setOffers((prevOffers: InternshipOffer[]) => ([...prevOffers, savedInterOfferJob]));
             setIsModalOpen(false);
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);

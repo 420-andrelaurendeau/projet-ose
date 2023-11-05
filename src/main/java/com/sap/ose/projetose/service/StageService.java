@@ -8,6 +8,7 @@ import com.sap.ose.projetose.exception.InvalidStateException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.StageRepository;
+import io.micrometer.observation.ObservationFilter;
 import jakarta.transaction.Transactional;
 import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
@@ -46,13 +47,20 @@ public class StageService {
 
     @Transactional
     public List<StageDto> getAllStage() {
-        return stageRepository.findAll().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0)).toList();
+        return stageRepository.findAll().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0)).toList();
+    }
+
+    @Transactional
+    public void save(Stage stage){
+        Employeur employeur = stage.getOffer().getEmployeur();
+        stage.setEmployeur(employeur);
+        stageRepository.save(stage);
     }
 
     @Transactional
     public Optional<StageDto> save(StageDto stageDto) {
         Etudiant etudiant = etudiantService.findEtudiantById(stageDto.getStudent_id());
-        InternOffer internOffer = internOfferService.findById(stageDto.getOffer_id());
+        InternOffer internOffer = internOfferService.findById(stageDto.getOffer().getId());
         Employeur employeur = internOffer.getEmployeur();
 
         Stage stage = new Stage();
@@ -64,7 +72,7 @@ public class StageService {
 
         stageRepository.save(stage);
 
-        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur(),stage.getContract() != null ? stage.getContract().id : 0);
+        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(),stage.getContract() != null ? stage.getContract().id : 0);
         return Optional.of(stageReturn);
     }
 
@@ -72,7 +80,7 @@ public class StageService {
     @Transactional
     public Optional<StageDto> saveTEST(StageDto stageDto) {
         Etudiant etudiant = etudiantService.findEtudiantById(stageDto.getStudent_id());
-        InternOffer internOffer = internOfferService.findById(stageDto.getOffer_id());
+        InternOffer internOffer = internOfferService.findById(stageDto.getOffer().getId());
         Employeur employeur = internOffer.getEmployeur();
 
         Stage stage = new Stage();
@@ -90,16 +98,53 @@ public class StageService {
         }
         stageRepository.save(stage);
 
-
         StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0);
+        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur());
         return Optional.of(stageReturn);
     }
 
     @Transactional
     public List<StageDto> getStageStudentPending(long studentId) {
-        return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), stage.getOffer().getId(), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0)).toList() : null;
+        return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur())).toList() : null;
     }
 
+    public Optional<Boolean> setStudentAccepted(StageDto stageDto) {
+        Stage stage = stageRepository.findById(stageDto.getId()).orElse(null);
+        if (stage != null) {
+            stage.setStateStudent(State.ACCEPTED);
+            stageRepository.save(stage);
+            return Optional.of(true);
+        }
+        return Optional.of(false);
+    }
+
+    public Optional<Boolean> setStudentDeclined(StageDto stageDto) {
+        Stage stage = stageRepository.findById(stageDto.getId()).orElse(null);
+        if (stage != null) {
+            stage.setStateStudent(State.DECLINED);
+            stageRepository.save(stage);
+            return Optional.of(true);
+        }
+        return Optional.of(false);
+    }
+
+    @Transactional
+    public void updateStateStudent(long stageId, State state) {
+        Stage stage = stageRepository.findById(stageId).orElseThrow();
+        stage.setStateStudent(state);
+        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur()))
+            createContract(stage);
+        stageRepository.save(stage);
+    }
+
+    @Transactional
+    public void updateStateEmployer(long stageId, State state) {
+        Stage stage = stageRepository.findById(stageId).get();
+        stage.setStateEmployeur(state);
+        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur()))
+            createContract(stage);
+        stageRepository.save(stage);
+    }
 
     public boolean isAcceptedByAll(State student, State employer) {
         return student == State.ACCEPTED && employer == State.ACCEPTED;

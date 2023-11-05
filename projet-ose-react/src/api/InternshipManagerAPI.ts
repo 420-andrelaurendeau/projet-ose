@@ -1,8 +1,3 @@
-import axios from 'axios';
-import {InterOfferJob} from "../model/IntershipOffer";
-import {OfferReviewRequest} from "../model/OfferReviewRequest";
-import {webcrypto} from "crypto";
-import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
 import {getOfferById} from "./InterOfferJobAPI";
 import {useToast} from "../hooks/state/useToast";
@@ -58,6 +53,36 @@ export const getOfferReviewById = async (id: number) => {
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération de l\'avis de l\'offre de stage:', error);
+        throw error;
+    }
+}
+
+export const getStudentPendingCv = async () => {
+    try {
+        const response = await api.get(`internshipManager/studentCv/pending`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des CV en attente:', error);
+        throw error;
+    }
+}
+
+export const acceptStudentCv = async (id: number) => {
+    try {
+        const response = await api.post(`internshipManager/studentCv/${id}/accept`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation du CV:', error);
+        throw error;
+    }
+}
+
+export const declineStudentCv = async (id: number) => {
+    try {
+        const response = await api.post(`internshipManager/studentCv/${id}/decline`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'acceptation du CV:', error);
         throw error;
     }
 }

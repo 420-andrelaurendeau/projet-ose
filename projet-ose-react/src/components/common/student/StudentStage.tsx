@@ -16,7 +16,7 @@ import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentStage() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     // eslint-disable-next-line react-hooks/rules-of-hooks
     let anError = false;
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -40,8 +40,6 @@ function StudentStage() {
             })
 
         })
-
-
     }, []);
 
 
