@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {JSX, useEffect, useRef, useState} from "react";
-import {getStageById, signDocument} from "../../api/InternshipManagerAPI";
+import {getContractById, signDocument} from "../../api/InternshipManagerAPI";
 import {ReactPainter} from "react-painter";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useToast} from "../../hooks/state/useToast";
@@ -30,7 +30,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
         const fetchintershipAggreement = async () => {
             try {
                 fetchedintershipAggreementRef.current = true;
-                const response = await getStageById(id!);
+                const response = await getContractById(id!);
                 console.log(response)
                 setintershipAggreement(response);
             } catch (error) {

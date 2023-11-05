@@ -90,10 +90,10 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
-        StageDto stage = new StageDto(0L,1L, 1L,null, State.ACCEPTED);
-        StageDto stage2 = new StageDto(0L,2L, 2L, State.ACCEPTED, State.ACCEPTED);
-        StageDto stage3 = new StageDto(0L,2L, 2L,State.DECLINED, State.ACCEPTED);
-        StageDto stage4 = new StageDto(0L,2L, 2L,null, State.DECLINED);
+        StageDto stage = new StageDto(0L,1L, 1L,State.PENDING, State.ACCEPTED, 0L);
+        StageDto stage2 = new StageDto(0L,2L, 2L, State.ACCEPTED, State.ACCEPTED, 0L);
+        StageDto stage3 = new StageDto(0L,2L, 2L,State.DECLINED, State.ACCEPTED, 0L);
+        StageDto stage4 = new StageDto(0L,2L, 2L,State.PENDING, State.DECLINED, 0L);
 
         stageService.saveTEST(stage);
         stageService.saveTEST(stage2);

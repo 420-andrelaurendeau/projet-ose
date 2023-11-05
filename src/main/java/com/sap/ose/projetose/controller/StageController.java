@@ -67,13 +67,6 @@ public class StageController {
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
-
-    @PreAuthorize("hasAuthority('internshipmanager')")
-    @GetMapping("/{id}")
-    public ResponseEntity<InternshipAgreementDto> getStage(@PathVariable long id){
-        logger.info("Stage request received");
-        return new ResponseEntity<>(stageService.findById(id), HttpStatus.OK);
-    }
-
-
+    
 }
+

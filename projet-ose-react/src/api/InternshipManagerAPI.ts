@@ -102,9 +102,10 @@ export const getStages = async ({ page, size, state, sortField, sortDirection }:
     }
 };
 
-export const getStageById = async (id: string) => {
+export const getContractById = async (id: string) => {
     try {
-        const response = await api.get(`stage/${id}`);
+        console.log(id);
+        const response = await api.get(`contract/${id}`);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération de l\'entente de stage:', error);

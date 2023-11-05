@@ -11,19 +11,14 @@ import jakarta.transaction.Transactional;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 
 @Service
@@ -35,35 +30,61 @@ public class ContractService {
     private final InternOfferService internOfferService;
     private final EtudiantService studentService;
 
-    private final StageService stageService;
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, InternOfferService internOfferService, EtudiantService studentService, StageService stageService) {
+    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, InternOfferService internOfferService, EtudiantService studentService) {
         this.contractRepository = contractRepository;
         this.employeurService = employeurService;
         this.internOfferService = internOfferService;
         this.studentService = studentService;
-        this.stageService = stageService;
+    }
+
+    @Transactional
+    public ContractDto getById(long id) {
+        Contract contract = contractRepository.findById(id).orElseThrow(() -> new IllegalStateException("Le contrat n'existe pas"));
+        return new ContractDto(contract);
     }
 
 
-
-
     @Transactional
-    public ContractDto saveContract(ContractDto contractDto) {
+    public ContractDto saveContractDto(ContractDto contractDto) {
         try {
-            Etudiant student = studentService.findEtudiantById(contractDto.getIdStudent());
-            Employeur employeur = employeurService.findById(contractDto.getIdEmployer());
-            InternOffer internOffer = internOfferService.findById(contractDto.getIdInternOffer());
-            Stage stage = stageService.getById(contractDto.getIdStage());
+            Etudiant student = studentService.findEtudiantById(contractDto.getEtudiantDto().getId());
+            Employeur employeur = employeurService.findById(contractDto.getEmployeur().getId());
+            InternOffer internOffer = internOfferService.findById(contractDto.getInternOfferDto().getId());
 
-            Contract contract = contractRepository.save(new Contract(stage, employeur, student, internOffer, true, false, false, contractDto.getContract()));
-            return new ContractDto(contract.getId(), contract.getStage().getId(), contract.getEmployeur().getId(), contract.getStudent().getId(), contract.getInternOffer().getId(), true, false, false, contract.getContract());
+            Contract contract = contractRepository.save(new Contract(employeur, student, internOffer, true, false, false, contractDto.getContract()));
+            return new ContractDto(contract);
         } catch (Exception e) {
             throw new IllegalStateException("Impossible de sauvegarder le contrat");
         }
     }
 
+    @Transactional
+    public long saveContract(Contract contract) {
+        try {
+            Contract contractSaved = contractRepository.save(contract);
+            return contractSaved.id;
+        } catch (Exception e) {
+            throw new IllegalStateException("Impossible de sauvegarder le contrat");
+        }
+    }
+
+
+    @Transactional
+    public long createContract(Stage stage) {
+        try {
+            // TODO changement de la valeur contrat
+            Contract contract = new Contract(stage.getEmployeur(), stage.getStudent(), stage.getOffer(), false, false, false, "");
+            return contractRepository.save(contract).getId();
+        } catch (Exception e) {
+            throw new IllegalStateException("Impossible de sauvegarder le contrat");
+        }
+    }
+
+    Contract findById(long id) {
+        return contractRepository.findById(id).orElseThrow(() -> new IllegalStateException("Le contrat n'existe pas"));
+    }
 
     public String addImageToExistingPDF(String base64Image, String inputPath) throws IOException {
         try (PDDocument document = PDDocument.load(new File(inputPath))) {
@@ -92,8 +113,6 @@ public class ContractService {
 
         }
     }
-
-
 
 
     public byte[] decodeBase64(String base64Image) throws IOException {

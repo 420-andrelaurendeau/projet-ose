@@ -17,6 +17,7 @@ public class StageDto {
     private long offer_id;
     private State stateStudent;
     private State stateEmployeur;
+    private long contract_id;
 
 
     public StageDto(Stage stage){
@@ -25,5 +26,6 @@ public class StageDto {
         this.offer_id = stage.getOffer().getId();
         this.stateStudent = stage.getStateStudent();
         this.stateEmployeur = stage.getStateEmployeur();
+        this.contract_id = stage.getContract().getId();
     }
 }

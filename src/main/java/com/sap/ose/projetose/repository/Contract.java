@@ -20,10 +20,6 @@ public class Contract {
     public long id;
 
     @ManyToOne()
-    @JoinColumn(name = "stage_id")
-    public Stage stage;
-
-    @ManyToOne()
     @JoinColumn(name = "employeur_id")
     public Employeur employeur;
 
@@ -44,8 +40,7 @@ public class Contract {
     @Lob
     public String contract;
 
-    public Contract(Stage stage, Employeur employeur, Etudiant student, InternOffer internOffer, boolean signatureInternShipManager, boolean signatureEmployer, boolean signatureStudent, String contract) {
-        this.stage = stage;
+    public Contract( Employeur employeur, Etudiant student, InternOffer internOffer, boolean signatureInternShipManager, boolean signatureEmployer, boolean signatureStudent, String contract) {
         this.employeur = employeur;
         this.student = student;
         this.internOffer = internOffer;

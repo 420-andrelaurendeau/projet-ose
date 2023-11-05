@@ -29,7 +29,7 @@ public class Stage {
     @JoinColumn(name = "Internshipoffer_id")
     private InternOffer offer;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "contract_id")
     private Contract contract;
 

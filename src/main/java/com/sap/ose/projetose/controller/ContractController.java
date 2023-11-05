@@ -24,8 +24,13 @@ public class ContractController {
     @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<ContractDto> saveContract(@RequestBody ContractDto contractDto) {
         System.out.println(contractDto);
-        return new ResponseEntity<>(contractService.saveContract(contractDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(contractService.saveContractDto(contractDto), HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('internshipmanager')")
+    public ResponseEntity<ContractDto> getContract(@PathVariable long id) {
+        return new ResponseEntity<>(contractService.getById(id), HttpStatus.OK);
+    }
 
 }
