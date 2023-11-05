@@ -1,17 +1,11 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InterviewDTO;
 import com.sap.ose.projetose.dto.StageDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.StageRepository;
-import io.micrometer.observation.ObservationFilter;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.security.PublicKey;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +58,7 @@ public class InternOfferService {
             InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
+            internOffer.setSession(getInternOfferByDates(internOfferDto.fromDto().getStartDate()));
             internOffer.setState(State.PENDING);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
@@ -224,6 +226,23 @@ public class InternOfferService {
     public InternOfferDto getById(Long id) {
         InternOffer internOffer = offerJobRepository.findById(id).orElse(null);
         return new InternOfferDto(internOffer);
+    }
+
+    public String getInternOfferByDates(LocalDate date){
+        int month = date.getMonthValue(); // Retrieve the month as an integer (1-12)
+
+        if (month >= 3 && month <= 5) {
+            return "Spring"+date.getYear();
+        } else if (month >= 6 && month <= 8) {
+            return "Summer"+date.getYear();
+        } else if (month >= 9 && month <= 11) {
+            return "Autumn"+date.getYear();
+        } else if (month == 12 || month <= 2) {
+           return "Winter"+date.getYear();
+        }else {
+            return "No specific offers for this month";
+        }
+
     }
 
 }

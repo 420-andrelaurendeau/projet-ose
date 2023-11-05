@@ -29,6 +29,7 @@ public class InternOffer {
     private LocalDate endDate;
     private String status;
     private State state;
+    private String session;
 
     @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipCandidates;
