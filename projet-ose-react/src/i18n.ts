@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import CV from './components/common/student/i18n/CV';
+import application from "./components/common/Employer/application/i18n/application";
+import employerOffer from "./components/common/Employer/offer/i18n/offer";
 
 
 i18n
@@ -22,6 +24,32 @@ i18n
             en: {
                 translation: {
                     formField: {
+                        application,
+                        employerOffer,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Accepted",
+                                declinedInternshipsAgreement: "Declined",
+                                pendingInternshipsAgreement: "Pending",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
+                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
+                            },
+                            title: "Internships agreement",
+                            internshipsAgreement: {
+                                title: "Title",
+                                enterprise: "Enterprise",
+                                student: "Student",
+                                statut: "Status",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -35,6 +63,7 @@ i18n
                                 location: "Location",
                                 status: "Status",
                                 startDate: "Start date",
+                                salary: "Salary",
                                 PENDING: "Pending",
                                 ACCEPTED: "Accepted",
                                 DECLINED: "Declined",
@@ -328,6 +357,10 @@ i18n
                                     name: 'apply',
                                     text: 'Apply',
                                 }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'No internship available'
                             }
                         },
                         Header: {
@@ -343,10 +376,6 @@ i18n
                                 name: 'CV',
                                 text: 'Upload your CV',
                             },
-                            interview : {
-                                name: 'Interview',
-                                text: 'Interview',
-                            },
                             sidebar: {
                                 stage: {
                                     name: 'stage',
@@ -356,6 +385,10 @@ i18n
                                     name: 'offre applique',
                                     text: "Applied offer"
                                 }
+                            },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Interview',
                             },
                             profilMenu: {
                                 signOut: {
@@ -433,7 +466,7 @@ i18n
                                 name: 'titre',
                                 text: 'Dashboard'
                             },
-                            condidature: {
+                            candidature: {
                                 name: 'totalCondidature',
                                 text: 'Application'
                             },
@@ -481,7 +514,15 @@ i18n
                                 DECLINED: {
                                     name: 'DECLINED',
                                     text: 'Declined'
+                                },
+                                salary: {
+                                    name: "salary",
+                                    text: "Salary"
                                 }
+                            },
+                            toast:{
+                                errorFetchOffers:"An error occurred while fetching the offers",
+                                errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
                             }
                         },
                         profilMenu : {
@@ -626,6 +667,32 @@ i18n
             fr: {
                 translation: {
                     formField: {
+                        application,
+                        employerOffer,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Acceptées",
+                                declinedInternshipsAgreement: "Refusées",
+                                pendingInternshipsAgreement: "Attente",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
+                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
+                            },
+                            title: "Ententes de stage",
+                            internshipsAgreement: {
+                                title: "Titre",
+                                enterprise: "Entreprise",
+                                student: "Étudiant",
+                                statut: "Statut",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total des offres",
@@ -639,6 +706,7 @@ i18n
                                 location: "Localisation",
                                 status: "Statut",
                                 startDate: "Date de commencement",
+                                salary: "Salaire",
                                 PENDING: "Attente",
                                 ACCEPTED: "Accepté",
                                 DECLINED: "Refusé",
@@ -940,6 +1008,10 @@ i18n
                                     name: 'Apply',
                                     text: 'Postuler',
                                 }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'Aucun stage disponible'
                             }
                         },
                         Header: {
@@ -968,6 +1040,7 @@ i18n
                                     name: 'offre applique',
                                     text: "Offre appliqué"
                                 },
+
                             },
                             profilMenu: {
                                 signOut: {
@@ -1045,7 +1118,7 @@ i18n
                                 name: 'titre',
                                 text: 'Tableau de bord'
                             },
-                            condidature: {
+                            candidature: {
                                 name: 'totalCondidature',
                                 text: 'Candidature'
                             },
@@ -1093,7 +1166,15 @@ i18n
                                 DECLINED: {
                                     name: 'DECLINED',
                                     text: 'Refusé'
+                                },
+                                salary: {
+                                    name: "salary",
+                                    text: "Salaire"
                                 }
+                            },
+                            toast:{
+                                errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
+                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
                             }
                         },
                         sidebarEmployeur : {

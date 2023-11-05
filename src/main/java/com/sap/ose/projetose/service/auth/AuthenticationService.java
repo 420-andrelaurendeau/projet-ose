@@ -10,16 +10,22 @@ import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import com.sap.ose.projetose.service.EmployeurService;
 import com.sap.ose.projetose.service.ProgrammeService;
 import com.sap.ose.projetose.service.UtilisateurService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -34,6 +40,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UtilisateurService utilisateurService;
+    private final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     public AuthenticationResponse registerEmployeur(EmployeurAuthDto employeurAuthDto) {
 
@@ -122,11 +129,14 @@ public class AuthenticationService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
+            System.out.println(request.getEmail());
             Utilisateur utilisateur = utilisateurService.getUserByEmail(request.getEmail());
-            var jwtToken = jwtService.generateToken(utilisateur);
+            Map<String, Object> extractClaims = new HashMap<>();
+            extractClaims.put("id", utilisateur.getId());
+            var jwtToken = jwtService.generateToken(extractClaims,utilisateur);
             return AuthenticationResponse.builder().token(jwtToken).build();
         } catch (AuthenticationException e) {
-            System.out.println("erreur dans authentication service avec l'authenticationManager ");
+            logger.info(e.getMessage());
             return AuthenticationResponse.builder()
                     .token(null)
                     .build();

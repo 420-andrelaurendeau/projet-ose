@@ -10,14 +10,10 @@ import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class InternshipCandidatesService {
@@ -25,15 +21,17 @@ public class InternshipCandidatesService {
     private final InternshipCandidatesRepository internshipCandidatesRepository;
     private final InternOfferService internOfferService;
     private final EtudiantService etudiantService;
+    private final InterviewService interviewService;
 
     private final FileService fileService;
 
     private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
 
-    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, FileService fileService) {
+    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, InterviewService interviewService, FileService fileService) {
         this.internshipCandidatesRepository = internshipCandidatesRepository;
         this.internOfferService = internOfferService;
         this.etudiantService = etudiantService;
+        this.interviewService = interviewService;
         this.fileService = fileService;
     }
 
@@ -106,7 +104,12 @@ public class InternshipCandidatesService {
                 idsLong.add(Long.parseLong(id));
             }
             List<InternshipCandidates> internshipCandidates = internshipCandidatesRepository.findAllById(idsLong);
-            return InternshipCandidatesDto.fromList(internshipCandidates);
+            List<InternshipCandidatesDto> internshipCandidatesDtoList = InternshipCandidatesDto.fromList(internshipCandidates);
+//            for (InternshipCandidatesDto internshipCandidatesDto : internshipCandidatesDtoList) {
+//                Date date = Objects.requireNonNull(interviewService.getInterview(internshipCandidatesDto.getEtudiant().getId(), internshipCandidatesDto.getInternOfferJob().getId()).orElse(null)).getDate();
+//                internshipCandidatesDto.setDate(date);
+//            }
+            return internshipCandidatesDtoList;
         }catch (DataAccessException e){
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde du candidats") {};

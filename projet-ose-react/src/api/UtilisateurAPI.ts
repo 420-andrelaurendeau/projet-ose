@@ -1,4 +1,3 @@
-import axios from 'axios';
 import api from "./ConfigAPI";
 
 export const getUser = async (email: string) => {

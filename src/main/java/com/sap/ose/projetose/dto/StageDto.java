@@ -6,10 +6,12 @@ import com.sap.ose.projetose.modeles.Stage;
 import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Data
 public class StageDto {
     private long id;
@@ -17,6 +19,7 @@ public class StageDto {
     private InternOfferDto offer;
     private State stateStudent;
     private State stateEmployeur;
+    private long contract_id;
 
     public StageDto(Stage stage){
         this.id = stage.getId();
@@ -24,5 +27,6 @@ public class StageDto {
         this.offer = new InternOfferDto(stage.getOffer());
         this.stateStudent = stage.getStateStudent();
         this.stateEmployeur = stage.getStateEmployeur();
+        this.contract_id = stage.getContract().getId();
     }
 }

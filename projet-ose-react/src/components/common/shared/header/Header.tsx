@@ -8,9 +8,9 @@ import {
     faXmark,
     faFileLines, faFile
 } from "@fortawesome/free-solid-svg-icons";
-import SidebarEmployeurHome from "../../SidebarEmployeurHome";
+import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import SidebarEtudiant from "../../student/SidebarEtudiant";
 import ProfilMenu from "./ProfilMenu";
@@ -24,7 +24,8 @@ const Header = (userd: any) => {
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
     const [isOpen, setIsOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
-    const { userEmail, userRole, logoutUser } = useAuth();
+    const { userEmail , userRole, logoutUser } = useAuth();
+    const navigate = useNavigate();
     const [user, setUser] = useState<User>({
         id: 0,
         nom: "",
@@ -102,6 +103,13 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             }
+                            { userRole === "internshipmanager" && (
+                                <div onClick={() => navigate("internshipsagreement")}  className="text-blue dark:text-orange">
+
+                                    <span className="text-2xl font-bold">Contrat</span>
+                                </div>
+                            )}
+
                             <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
                                 <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                             </button>

@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import {InternshipOffer} from "../../../../model/IntershipOffer";
 import InternshipManagerOfferPage from "../../../../pages/internshipManager/InternshipManagerOfferPage";
 import useModal from "../../../../hooks/useModal";
@@ -12,7 +12,7 @@ export default function InternshipManagerOffers(props: any) {
     const [offer, setOffer] = useState<InternshipOffer>();
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
     const navigate = useNavigate();
 

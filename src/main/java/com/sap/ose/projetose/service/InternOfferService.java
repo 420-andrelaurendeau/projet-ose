@@ -214,13 +214,32 @@ public class InternOfferService {
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferByEmployeurEmail(String email) {
-        List<InternOfferDto> internOfferDtos = new ArrayList<>();
-        List<InternOffer> internOffers = employeurRepository.findByEmail(email).get().getInternOffers();
-        for (InternOffer internOffer : internOffers) {
-            internOfferDtos.add(new InternOfferDto(internOffer));
+    public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection) {
+
+        Sort sort = null;
+        try {
+            sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                    Sort.by(sortField).descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<InternOfferDto> pageOffer;
+            Long id = employeurRepository.findByEmail(email).get().getId();
+            pageOffer = offerJobRepository.findAllById(id, pageable).map(InternOfferDto::new);
+            return pageOffer;
+        } catch (PropertyReferenceException e) {
+            logger.error("Le champ de tri n'est pas valide : " + sort);
+            assert sort != null;
+            throw new BadSortingFieldException(sort.toString());
+        } catch (IllegalArgumentException e) {
+            logger.error("L'état de l'offre d'emploi est invalide : " + sort);
+            assert sort != null;
+            throw new InvalidStateException(sort.toString());
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des offres d'emploi.", e);
+            throw new DatabaseException();
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres d'emploi.", e);
+            throw new ServiceException("Erreur lors de la récupération des offres d'emploi.");
         }
-        return internOfferDtos;
     }
 
     public InternOfferDto getById(Long id) {

@@ -5,8 +5,11 @@ import InternshipManagerOffersPage from "../pages/internshipManager/InternshipMa
 import Layout from "../components/layout/Layout";
 import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
 import EvaluerCV from "../pages/management/student/AssessCv";
+import InternshipManagerInternshipsAgreementPage
+    from "../pages/internshipManager/InternshipManagerInternshipsAgreementPage";
+import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
 
-const InternshipManager: React.FC = () => {
+const InternshipManagerRouter: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['internshipmanager']}>
             <Routes>
@@ -14,11 +17,13 @@ const InternshipManager: React.FC = () => {
                     <Route element={<Layout/>}/>
                     <Route index path="studentCvReview" element={<EvaluerCV/>}/>
                     <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
-                    <Route path="offer/:id" element={<InternshipManagerOfferPage/>} />
+                    <Route path="offer/:id" element={<InternshipManagerOfferPage/>}/>
+                    <Route path="internshipsagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
+                    <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}/>
                 </Route>
             </Routes>
         </ProtectedRoute>
     );
 };
 
-export default InternshipManager;
+export default InternshipManagerRouter;

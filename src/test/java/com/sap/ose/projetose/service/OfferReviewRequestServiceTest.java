@@ -127,7 +127,7 @@ public class OfferReviewRequestServiceTest {
     @Test
     public void saveOfferReviewRequest_UnknownError() {
         when(internOfferService.findById(anyLong())).thenReturn(new InternOffer());
-        when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("Test case"));
+        when(offerReviewRequestRepository.save(any())).thenThrow(new IllegalArgumentException("SignContract case"));
 
         ServiceException result = assertThrows(ServiceException.class, () -> offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto));
         assertEquals("Erreur inconnue lors de la sauvegarde de la revue de l'offre d'emploi.", result.getMessage());
