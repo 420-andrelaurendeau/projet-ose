@@ -12,27 +12,38 @@ import useModal from "../../hooks/useModal";
 import Modal from "react-modal";
 import SignContract from "../../components/common/preparedoc/SignContract";
 
+interface InternshipAgreementPageProps {
+    id: string,
+    idEmployer: string ,
+    idStudent: string,
+    idInternOffer: string,
+    signatureInternShipManager: boolean,
+    signatureEmployer: boolean,
+    signatureStudent: boolean,
+    contract: string
+
+}
+
 const InternshipAgreementPage: React.FC<any> = () => {
     const {id} = useParams();
     const [intershipAggreement, setintershipAggreement] = useState<any>();
 
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
-
     const fetchedintershipAggreementRef = useRef(false);
-
     const toasts = useToast();
 
     useEffect(() => {
         const fetchintershipAggreement = async () => {
             try {
                 fetchedintershipAggreementRef.current = true;
-                const response = await getContractById(id!);
-                console.log(response)
-                setintershipAggreement(response);
+                await getContractById(id!).then(
+                    (response) => {
+                        setintershipAggreement(response);
+                    }
+                );
             } catch (error) {
                 toasts.error("Une erreur est survenue lors du chargement de l'offre");
             }
@@ -51,8 +62,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
     async function signContract(pdf: any) {
         let form = {
-            id: 0,
-            idStage: id,
+            id: id,
             idEmployer: intershipAggreement.employeur.id,
             idStudent: intershipAggreement.etudiantDto.id,
             idInternOffer: intershipAggreement.internOfferDto.id,
@@ -61,9 +71,17 @@ const InternshipAgreementPage: React.FC<any> = () => {
             signatureStudent: false,
             contract: pdf
         }
-        await signDocument(form)
 
-        console.log(pdf)
+        try {
+            await signDocument(form).then(
+                () => {
+                    toasts.success("Le contrat a été signé avec succès");
+                    fetchedintershipAggreementRef.current = false;
+                }
+            );
+        } catch (error) {
+            toasts.error("Une erreur est survenue lors de la signature du contrat");
+        }
     }
 
 
@@ -117,9 +135,18 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     </div>
                 </div>
 
+                {
+                    //TODO : Add the pdf button
+                    // TODO : Add the signature button
+                }
+
+                <button onClick={() => signContract("")}> SIGNER LE DOCUMENT</button>
+
+                {/**
                 <div className="px-20 mx-auto">
                     <SignContract pdfBase64={""} signContract={signContract}/>
                 </div>
+                **/}
 
 
             </div>

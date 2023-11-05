@@ -70,10 +70,6 @@ public class StageController {
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
 
-}
-
-
-
     @PostMapping("/acceptedStudent")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public ResponseEntity<Boolean> getStudentAccepted(@RequestBody StageDto stageDto){

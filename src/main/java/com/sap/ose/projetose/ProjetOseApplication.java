@@ -60,7 +60,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         Internshipmanager internshipmanager = new Internshipmanager("Jean", "Dupont", "4387996589", "dupont@gmail.com", "popo", programme1);
         authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
-        File file = new File(1L, "hello".getBytes(StandardCharsets.UTF_8), "Test", true, null, null);
+        File file = new File(1L, "hello".getBytes(StandardCharsets.UTF_8), "Test", State.ACCEPTED, null, null);
         List<InternshipCandidates> internshipCandidates = new ArrayList<>();
 
 
@@ -68,25 +68,26 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         InternOffer internOffer = new InternOffer(1L, "Stage Informatique", "Laval", "En tant que stagiaire en informatique chez Cisco, vous aurez l'opportunité de travailler au sein de notre équipe de professionnels de l'informatique, d'apprendre de nouvelles compétences", 20, LocalDate.now(), LocalDate.now(), internshipCandidates, programme1, file, employeur, State.ACCEPTED, offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
-        internOfferService.saveInterOfferJob(internOfferDto);
+        internOfferDto = internOfferService.saveInterOfferJob(internOfferDto);
 
         InternOffer internOffer1 = new InternOffer("IT Internship: Nurturing Tomorrow's Tech Wizards", "Montreal, Quebec", "Are you a student in the field of \"Technique de l'Informatique\" seeking an immersive learning experience in one of the most vibrant tech ecosystems in North America? Look no further! Our Montreal IT Internship offers a unique opportunity to gain hands-on experience, expand your skillset, and embark on an exciting journey into the world of technology.", 20, LocalDate.now(), LocalDate.now(), internshipCandidates, programme1, file, employeur2, State.ACCEPTED, offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
-        internOfferService.saveInterOfferJob(internOfferDto1);
+        internOfferDto1 = internOfferService.saveInterOfferJob(internOfferDto1);
 
 
         InternOffer internOffer2 = new InternOffer("Stage Réseaux", "Quebec", "En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.", 20, LocalDate.now(), LocalDate.now(), internshipCandidates, programme1, file, employeur, State.ACCEPTED, offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
-        InternOfferDto internOfferDto3 = internOfferService.saveInterOfferJob(internOfferDto2);
+        internOfferDto2 = internOfferService.saveInterOfferJob(internOfferDto2);
+
 
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
 
-        StageDto stage = new StageDto(0L,1L, 1L,State.PENDING, State.ACCEPTED, 0L);
-        StageDto stage2 = new StageDto(0L,2L, 2L, State.ACCEPTED, State.ACCEPTED, 0L);
-        StageDto stage3 = new StageDto(0L,2L, 2L,State.DECLINED, State.ACCEPTED, 0L);
-        StageDto stage4 = new StageDto(0L,2L, 2L,State.PENDING, State.DECLINED, 0L);
+        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
+        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
+        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
+        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
 
         stageService.saveTEST(stage);
         stageService.saveTEST(stage2);

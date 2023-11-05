@@ -1,9 +1,6 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.ContractDto;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Stage;
 import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.ContractRepository;
@@ -49,11 +46,13 @@ public class ContractService {
     @Transactional
     public ContractDto saveContractDto(ContractDto contractDto) {
         try {
-            Etudiant student = studentService.findEtudiantById(contractDto.getEtudiantDto().getId());
-            Employeur employeur = employeurService.findById(contractDto.getEmployeur().getId());
-            InternOffer internOffer = internOfferService.findById(contractDto.getInternOfferDto().getId());
 
-            Contract contract = contractRepository.save(new Contract(employeur, student, internOffer, true, false, false, contractDto.getContract()));
+            Contract contract = findById(contractDto.getId());
+            contract.setContract(contractDto.getContract());
+            contract.setSignatureInternShipManager(true);
+
+            contractRepository.save(contract);
+
             return new ContractDto(contract);
         } catch (Exception e) {
             throw new IllegalStateException("Impossible de sauvegarder le contrat");
