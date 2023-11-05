@@ -188,7 +188,8 @@ public class StageService {
                         stage.getContract() != null ? stage.getContract().id : 0
                 ));
             else {
-                internshipAgreementDtos = stageRepository.findAllByState(state, pageable).map(stage -> new InternshipAgreementDto(
+                State stateEnum = State.valueOf(state);
+                internshipAgreementDtos = stageRepository.findAllByState(stateEnum, pageable).map(stage -> new InternshipAgreementDto(
                         stage.getId(),
                         new EmployeurDto(stage.getEmployeur()),
                         new EtudiantDto(stage.getStudent()),
