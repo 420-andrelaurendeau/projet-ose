@@ -1,4 +1,3 @@
-import {EasingFunction} from "framer-motion";
 
 let application = {
     en: {

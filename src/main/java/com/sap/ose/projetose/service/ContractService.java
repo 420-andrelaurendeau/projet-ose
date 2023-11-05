@@ -5,17 +5,8 @@ import com.sap.ose.projetose.modeles.Stage;
 import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.ContractRepository;
 import jakarta.transaction.Transactional;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 
 
 @Service

@@ -9,6 +9,7 @@ import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
+import FilterBySeason from "../shared/filters/FilterBySeasons";
 
 function StudentInternship() {
     const {i18n} = useTranslation();
@@ -76,6 +77,9 @@ function StudentInternship() {
                         <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {fields.titre.text}
                         </h1>
+                        <div>
+                            <FilterBySeason data={offers}/>
+                        </div>
                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className="w-full divide-y divide-gray dark:divide-darkgray">
                                 <thead className="bg-blue dark:bg-orange ">
