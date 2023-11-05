@@ -60,17 +60,6 @@ public class ContractService {
     }
 
     @Transactional
-    public long saveContract(Contract contract) {
-        try {
-            Contract contractSaved = contractRepository.save(contract);
-            return contractSaved.id;
-        } catch (Exception e) {
-            throw new IllegalStateException("Impossible de sauvegarder le contrat");
-        }
-    }
-
-
-    @Transactional
     public long createContract(Stage stage) {
         try {
             // TODO changement de la valeur contrat
@@ -83,48 +72,6 @@ public class ContractService {
 
     Contract findById(long id) {
         return contractRepository.findById(id).orElseThrow(() -> new IllegalStateException("Le contrat n'existe pas"));
-    }
-
-    public String addImageToExistingPDF(String base64Image, String inputPath) throws IOException {
-        try (PDDocument document = PDDocument.load(new File(inputPath))) {
-            PDPage page = new PDPage();
-            document.addPage(page);
-
-            // Charger l'image depuis la base64
-            byte[] imageBytes = decodeBase64(base64Image);
-            PDImageXObject pdImage = PDImageXObject.createFromByteArray(document, imageBytes, "image");
-
-            try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
-                // Ajustez les coordonnées et la taille de l'image selon vos besoins
-                contentStream.drawImage(pdImage, 10, 10, 100, 100);
-            }
-
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            document.save(outputStream);
-
-            byte[] pdfBytes = outputStream.toByteArray();
-            String encodedPDF = Base64.encodeBase64String(pdfBytes);
-
-            System.out.println(encodedPDF);
-
-            document.close();
-            return encodedPDF;
-
-        }
-    }
-
-
-    public byte[] decodeBase64(String base64Image) throws IOException {
-        // Recherchez la virgule pour obtenir la partie réelle des données base64
-        int commaIndex = base64Image.indexOf(',');
-        if (commaIndex < 0) {
-            throw new IllegalArgumentException("La chaîne base64 ne contient pas de virgule.");
-        }
-
-        String base64Data = base64Image.substring(commaIndex + 1);
-
-        // Décodez la chaîne base64 en un tableau de bytes
-        return Base64.decodeBase64(base64Data);
     }
 
 
