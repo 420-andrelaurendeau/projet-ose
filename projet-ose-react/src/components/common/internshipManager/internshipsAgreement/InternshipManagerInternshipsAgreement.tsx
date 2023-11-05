@@ -134,12 +134,15 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                             </span>
                             </div>
 
-                            <div role="cell"
-                                 className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
-                                <FontAwesomeIcon icon={faEye}
-                                                 className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
-                                                 onClick={() => handleOfferClick(offer.contractId!)}/>
-                            </div>
+                            {
+                                offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
+                                    <div role="cell"
+                                         className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
+                                        <FontAwesomeIcon icon={faEye}
+                                                         className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
+                                                         onClick={() => handleOfferClick(offer.contractId!)}/>
+                                    </div>: <></>
+                            }
                         </div>
                     ))
                     }
