@@ -5,14 +5,15 @@ import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.BadSortingFieldException;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.InvalidStateException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.StageRepository;
 import io.micrometer.observation.ObservationFilter;
 import jakarta.transaction.Transactional;
-import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,17 +30,19 @@ import java.util.Optional;
 @Service
 public class StageService {
 
+
     private final StageRepository stageRepository;
-    private final EmployeurService employeurService;
+
     private final InternOfferService internOfferService;
+
     private final EtudiantService etudiantService;
 
     private final ContractService contractService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public StageService(StageRepository stageRepository, EmployeurService employeurService, InternOfferService internOfferService, EtudiantService etudiantService, ContractService contractService) {
+    @Autowired
+    public StageService(StageRepository stageRepository, InternOfferService internOfferService, EtudiantService etudiantService, ContractService contractService) {
         this.stageRepository = stageRepository;
-        this.employeurService = employeurService;
         this.internOfferService = internOfferService;
         this.etudiantService = etudiantService;
         this.contractService = contractService;
@@ -159,11 +162,11 @@ public class StageService {
             countMap.forEach((key, value) -> logger.info(key + " : " + value));
             return countMap;
         } catch (DataAccessException e) {
-            logger.error("Erreur d'accès à la base de données lors de la récupération des offres d'emploi.", e);
+            logger.error("Erreur d'accès à la base de données lors de la récupération du compte des ententes de stages.", e);
             throw new DatabaseException();
         } catch (Exception e) {
-            logger.error("Erreur inconnue lors de la récupération des offres d'emploi.", e);
-            throw new ServiceException("Erreur lors de la récupération des offres d'emploi.");
+            logger.error("Erreur lors de la récupération du compte des ententes de stages.", e);
+            throw new ServiceException("Erreur lors de la récupération du compte des ententes de stages.");
         }
     }
 
