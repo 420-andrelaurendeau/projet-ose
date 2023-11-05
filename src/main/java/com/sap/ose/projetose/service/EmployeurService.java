@@ -98,7 +98,7 @@ public class EmployeurService {
         return employeurDTOS;
     }
 
-    EmployeurDto getEmployeurById(Long id){
+    public EmployeurDto getEmployeurById(Long id){
         System.out.println(id);
         Employeur employeur = employeurRepository.findById(id).orElse(null);
         if (employeur == null){

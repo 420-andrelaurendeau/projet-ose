@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {render} from "@testing-library/react";
-import InscriptionEmployeur from "../components/common/Employer/inscriptionEmployeur";
 import EtudiantInscription from "../components/common/student/form/StudentInscriptionForm";
 import StudentInscriptionForm from "../components/common/student/form/StudentInscriptionForm";
+import InscriptionEmployeur from "../components/common/Employer/inscriptionEmployeur";
 
 
 function Registration() {

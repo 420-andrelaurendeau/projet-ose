@@ -155,12 +155,18 @@ function EmployeurHomePage() {
                                 </div>
                             </NavLink>
 
-                            <div className="flex space-x-2 items-center h-14 px-5 justify-center">
-                                <FontAwesomeIcon icon={faSignature} className="dark:text-white" size="sm" />
+                            <NavLink
+                                to="contract"
+                                className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
+                                    + (location.pathname === `/${userRole}/home/contract` || location.pathname === `/${userRole}/home/contract/` ? " border-b-2" : "")
+                                }
+                                state={user}
+                            >
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm" />
                                 <div className="pl-2">
                                     <p className="text-black dark:text-white">{fields.contract.text}</p>
                                 </div>
-                            </div>
+                            </NavLink>
                         </div>
                     </div>
                     <div className="w-full">

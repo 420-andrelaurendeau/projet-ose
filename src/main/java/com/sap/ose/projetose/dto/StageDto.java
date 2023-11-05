@@ -6,10 +6,12 @@ import com.sap.ose.projetose.modeles.Stage;
 import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Data
 public class StageDto {
     private long id;
