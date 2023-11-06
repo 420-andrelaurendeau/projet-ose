@@ -3,11 +3,13 @@ package com.sap.ose.projetose.dto;
 import com.sap.ose.projetose.modeles.State;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
 
 @NoArgsConstructor
+@Getter
 @Data
 public class InternshipAgreementDto {
 

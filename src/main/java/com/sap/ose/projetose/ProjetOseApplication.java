@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringApplicationAotProcessor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -32,6 +33,9 @@ public class ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
     private StageService stageService;
+
+    @Autowired
+    private EmployeurService employeurService;
 
     @Autowired
     ProgrammeRepository programmeRepository;

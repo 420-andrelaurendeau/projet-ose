@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
@@ -10,6 +10,7 @@ import {useAuth} from "../../authentication/AuthContext";
 import {User} from "../../model/User";
 import {data} from "autoprefixer";
 import {useToast} from "../../hooks/state/useToast";
+import {getStageByEmployeurId, getStages} from "../../api/InternshipManagerAPI";
 
 interface Props {
     isModalOpen: boolean,
@@ -27,20 +28,28 @@ interface Props {
     onPageChange: (newPage: number) => void,
     numberElementByPage: number,
     page: number,
+    stageAgreement: any[],
 }
 
 function EmployeurHomePage() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
+
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
-    const [totalPages, setTotalPages] = useState(0);
+
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
     const { userEmail, userRole, logoutUser } = useAuth();
+
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [internshipsAgreement, setInternshipsAgreement] = useState([]);
+    const [offerState, setOfferState] = useState(undefined);
+    const [isUpdate, setIsUpdate] = useState(false);
+
     const location = useLocation();
     const [user, setUser] = useState<User>({
         id: 0,
@@ -55,7 +64,32 @@ function EmployeurHomePage() {
     });
     const toast = useToast();
 
+    const fetchedInternshipsAgreementRef = useRef(false);
+
+    const fetchInternshipsAgreement = async () => {
+        try {
+            fetchedInternshipsAgreementRef.current = true
+
+            const response = await getStageByEmployeurId ({
+                page: currentPage,
+                size: numberElementByPage,
+                state: offerState,
+                sortField,
+                sortDirection
+            }, user.id);
+            setInternshipsAgreement(response.content);
+            setTotalPages(response.totalPages);
+        } catch (error) {
+            console.log(error);
+            toast.error(fields.toast.errorFetchInternshipsAgreement)
+        } finally {
+            setIsUpdate(false);
+            fetchedInternshipsAgreementRef.current = false;
+        }
+    };
+
     useEffect(() => {
+        fetchInternshipsAgreement()
         const getUtilisateur = async () => {
             let  data = null;
             if (userEmail != null){
@@ -117,6 +151,7 @@ function EmployeurHomePage() {
         onPageChange: handlePageChange,
         numberElementByPage: numberElementByPage,
         page: currentPage,
+        stageAgreement: internshipsAgreement,
     }
 
     return (
