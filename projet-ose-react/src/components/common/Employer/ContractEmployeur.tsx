@@ -21,6 +21,12 @@ import {useProps} from "../../../pages/employer/EmployeurHomePage";
 
 
 export default function ContractEmployeur() {
+
+    const [totalInternshipsAgreement, setTotalInternshipsAgreement] = useState(0);
+    const [totalApprouved, setTotalApprouved] = useState(0);
+    const [totalPending, setTotalPending] = useState(0);
+    const [totalDeclined, setTotalDeclined] = useState(0);
+
     const {
         stageAgreement,
         page,
@@ -35,6 +41,25 @@ export default function ContractEmployeur() {
         user,
     } = useProps();
 
+    useEffect(() => {
+        let totalDec: number = 0
+        let totalAp: number = 0
+        let totalPen: number = 0
+        setTotalInternshipsAgreement(stageAgreement.length);
+        stageAgreement.forEach((stage) => {
+            if (stage.stateStudent == "DECLINED" || stage.stateEmployeur == "DECLINED") {
+                totalDec++;
+            } else if (stage.stateStudent == "PENDING" || stage.stateEmployeur == "PENDING") {
+                totalPen++;
+            } else {
+                totalAp++;
+            }
+        })
+        setTotalApprouved(totalAp);
+        setTotalPending(totalPen);
+        setTotalDeclined(totalDec);
+    }, [stageAgreement]);
+
     const [offerState, setOfferState] = useState(undefined);
     const [isUpdate, setIsUpdate] = useState(false);
 
@@ -46,8 +71,14 @@ export default function ContractEmployeur() {
         onPageChange(0);
     };
 
-    const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={stageAgreement} isUpdate={setIsUpdate} sortField={sortField}
-                                                               setsortField={setSortField} setSortDirection={setSortDirection}
+    //TODO fix sorting
+    //TODO fix paginaiton
+    //TODO fix state display //shows declined on approuved
+
+    const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={stageAgreement}
+                                                               isUpdate={setIsUpdate} sortField={sortField}
+                                                               setsortField={setSortField}
+                                                               setSortDirection={setSortDirection}
                                                                sortDirection={sortDirection}/>;
 
     return (
@@ -62,10 +93,10 @@ export default function ContractEmployeur() {
                     <InternshipManagerInternshipsAgreementDashoardHeader
                         internshipsAgreementByState={handleChangeStateSort}
                         fields={fields}
-                        totalOffers={1}
-                        totalApprouved={1}
-                        totalPending={1}
-                        totalDeclined={1}
+                        totalOffers={totalInternshipsAgreement}
+                        totalApprouved={totalApprouved}
+                        totalPending={totalPending}
+                        totalDeclined={totalDeclined}
                     />
 
 

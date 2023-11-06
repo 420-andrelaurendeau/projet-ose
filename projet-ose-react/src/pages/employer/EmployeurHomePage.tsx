@@ -66,7 +66,7 @@ function EmployeurHomePage() {
 
     const fetchedInternshipsAgreementRef = useRef(false);
 
-    const fetchInternshipsAgreement = async () => {
+    const fetchInternshipsAgreement = async (id:number) => {
         try {
             fetchedInternshipsAgreementRef.current = true
 
@@ -76,7 +76,7 @@ function EmployeurHomePage() {
                 state: offerState,
                 sortField,
                 sortDirection
-            }, user.id);
+            }, id);
             setInternshipsAgreement(response.content);
             setTotalPages(response.totalPages);
         } catch (error) {
@@ -95,11 +95,14 @@ function EmployeurHomePage() {
                 console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
+                fetchInternshipsAgreement(data.id).then(r => console.log(internshipsAgreement))
             }
         }
-        getUtilisateur().then(r => console.log(r))
-        console.log("USER EFFECT AGREEMENT")
-        fetchInternshipsAgreement().then(r => console.log(internshipsAgreement))
+        getUtilisateur().then((r)=>{
+            console.log(r)
+            console.log("USER EFFECT AGREEMENT")
+
+        })
     }, [localStorage.getItem('token')])
 
     useEffect(() => {
