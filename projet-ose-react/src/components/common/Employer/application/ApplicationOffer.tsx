@@ -288,7 +288,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                                 <div className="flex space-x-4 font-medium h-10 items-center text-black dark:text-white">
                                                     <button
                                                         type="button"
-                                                        className="inline-flex items-center px-4 py-2 border border-transparent disabled:bg-blue dark:disabled:text-white disabled:dark:bg-orange shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-blue dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                                        className="inline-flex items-center px-4 py-2 border border-transparent disabled:bg-blue dark:FDSdisabled:text-white disabled:dark:bg-orange shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-blue dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                                         onClick={() => handleReview(candidate, candidate.etudiant.id)}
                                                         disabled={idApplication == candidate.id}
                                                     >
@@ -298,7 +298,6 @@ const ApplicationOffer: React.FC<any> = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </dd>
                                 </div>
                             )
