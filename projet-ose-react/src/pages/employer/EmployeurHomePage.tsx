@@ -89,7 +89,6 @@ function EmployeurHomePage() {
     };
 
     useEffect(() => {
-        fetchInternshipsAgreement()
         const getUtilisateur = async () => {
             let  data = null;
             if (userEmail != null){
@@ -99,6 +98,8 @@ function EmployeurHomePage() {
             }
         }
         getUtilisateur().then(r => console.log(r))
+        console.log("USER EFFECT AGREEMENT")
+        fetchInternshipsAgreement().then(r => console.log(internshipsAgreement))
     }, [localStorage.getItem('token')])
 
     useEffect(() => {
