@@ -11,6 +11,7 @@ import {User} from "../../model/User";
 import {data} from "autoprefixer";
 import {useToast} from "../../hooks/state/useToast";
 import {getStageByEmployeurId, getStages} from "../../api/InternshipManagerAPI";
+import {log} from "util";
 
 interface Props {
     isModalOpen: boolean,
@@ -29,11 +30,17 @@ interface Props {
     numberElementByPage: number,
     page: number,
     stageAgreement: any[],
+
+    pageAgreement: number,
+    totalPageAgreement: number,
+    handleChangeNumberElementAgreement:(event: React.ChangeEvent<HTMLSelectElement>) => void,
+    onPageChangeAgreement: (newPage: number) => void,
+    numberElementAgreementByPage: number,
 }
 
 function EmployeurHomePage() {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
 
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
@@ -42,13 +49,22 @@ function EmployeurHomePage() {
 
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
-    const { userEmail, userRole, logoutUser } = useAuth();
+    const {userEmail, userRole, logoutUser} = useAuth();
 
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [internshipsAgreement, setInternshipsAgreement] = useState([]);
     const [offerState, setOfferState] = useState(undefined);
     const [isUpdate, setIsUpdate] = useState(false);
+
+    const [numberElementAgreementByPage, setNumberElementAgreementByPage] = useState<number>(5)
+    const [totalAgreementPages, setTotalAgreementPages] = useState(0);
+    const [currentAgreementPage, setCurrentAgreementPage] = useState(0);
+    const [agreementState, setAgreementState] = useState(undefined);
+    const [isAgreementUpdate, setIsAgreementUpdate] = useState(false);
+    const [agreementSortField, setAgreementSortField] = useState("id");
+    const [agreementSortDirection, setAgreementSortDirection] = useState("asc");
+
 
     const location = useLocation();
     const [user, setUser] = useState<User>({
@@ -66,19 +82,22 @@ function EmployeurHomePage() {
 
     const fetchedInternshipsAgreementRef = useRef(false);
 
-    const fetchInternshipsAgreement = async (id:number) => {
+    const fetchInternshipsAgreement = async (id: number) => {
         try {
             fetchedInternshipsAgreementRef.current = true
-
-            const response = await getStageByEmployeurId ({
-                page: currentPage,
-                size: numberElementByPage,
+            console.log("DATA")
+            console.log(currentPage, numberElementByPage, offerState, sortField, sortDirection)
+            const response = await getStageByEmployeurId({
+                page: currentAgreementPage,
+                size: numberElementAgreementByPage,
                 state: offerState,
                 sortField,
                 sortDirection
             }, id);
+            console.log("REPSONSE!!")
+            console.log(response)
             setInternshipsAgreement(response.content);
-            setTotalPages(response.totalPages);
+            setTotalAgreementPages(response.totalPages);
         } catch (error) {
             console.log(error);
             toast.error(fields.toast.errorFetchInternshipsAgreement)
@@ -90,15 +109,15 @@ function EmployeurHomePage() {
 
     useEffect(() => {
         const getUtilisateur = async () => {
-            let  data = null;
-            if (userEmail != null){
+            let data = null;
+            if (userEmail != null) {
                 console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
-                fetchInternshipsAgreement(data.id).then(r => console.log(internshipsAgreement))
+                fetchInternshipsAgreement(data.id).then(r => console.log("internship agreement fetched"))
             }
         }
-        getUtilisateur().then((r)=>{
+        getUtilisateur().then((r) => {
             console.log(r)
             console.log("USER EFFECT AGREEMENT")
 
@@ -109,7 +128,7 @@ function EmployeurHomePage() {
         console.log(user)
         if (userEmail)
             try {
-                UpdateOffers(userEmail,setOffers, setTotalPages,{
+                UpdateOffers(userEmail, setOffers, setTotalPages, {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
@@ -119,12 +138,17 @@ function EmployeurHomePage() {
                 console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             }
+    }, [currentPage, offerState, numberElementByPage, isUpdate]);
 
-    }, [currentPage, numberElementByPage, sortField, sortDirection]);
+    useEffect(() => {
+        if (user) {
+            fetchInternshipsAgreement(user.id).then(r => console.log(internshipsAgreement))
+        }
+    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate]);
 
     useEffect(() => {
         let i = 0;
-        offers.map((offer:any) => {
+        offers.map((offer: any) => {
             i += offer.internshipCandidates.length;
         })
         setNbCandidature(i);
@@ -135,11 +159,20 @@ function EmployeurHomePage() {
         setNumberElementByPage(Number(event.target.value));
     };
 
+    const handleAgreementChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentAgreementPage(0);
+        setNumberElementAgreementByPage(Number(event.target.value));
+    }
+
+    const handleAgreementPageChange = (newPage: number) => {
+        setCurrentAgreementPage(newPage);
+    }
+
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
 
-    const context =  {
+    const context = {
         isModalOpen: isModalOpen,
         setIsModalOpen: setIsModalOpen,
         offers: offers,
@@ -156,6 +189,12 @@ function EmployeurHomePage() {
         numberElementByPage: numberElementByPage,
         page: currentPage,
         stageAgreement: internshipsAgreement,
+
+        pageAgreement: currentAgreementPage,
+        totalPageAgreement: totalAgreementPages,
+        onPageChangeAgreement: handleAgreementPageChange,
+        handleChangeNumberElementAgreement: handleAgreementChangePage ,
+        numberElementAgreementByPage: numberElementAgreementByPage,
     }
 
     return (
@@ -167,15 +206,16 @@ function EmployeurHomePage() {
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
-                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
+                    <div
+                        className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
-                                         (location.pathname ===  `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
+                                         (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
                                      }
                                      state={user}
                             >
-                                <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm" />
+                                <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
                                     <p className="text-black dark:text-white">{fields.offre.text}</p>
                                 </div>
@@ -188,7 +228,7 @@ function EmployeurHomePage() {
                                 }
                                 state={user}
                             >
-                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm" />
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
                                     <p className="text-black dark:text-white">{fields.newOffre.text}</p>
                                 </div>
@@ -201,7 +241,7 @@ function EmployeurHomePage() {
                                 }
                                 state={user}
                             >
-                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm" />
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
                                     <p className="text-black dark:text-white">{fields.contract.text}</p>
                                 </div>
@@ -220,7 +260,8 @@ function EmployeurHomePage() {
 }
 
 
-export function useProps(){
+export function useProps() {
     return useOutletContext<Props>();
 }
+
 export default EmployeurHomePage;

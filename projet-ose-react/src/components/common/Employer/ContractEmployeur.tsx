@@ -30,15 +30,15 @@ export default function ContractEmployeur() {
 
     const {
         stageAgreement,
-        page,
-        totalPages,
-        onPageChange,
+        pageAgreement,
+        totalPageAgreement,
+        onPageChangeAgreement,
         setSortField,
         setSortDirection,
         sortField,
         sortDirection,
-        numberElementByPage,
-        handleChangeNumberElement,
+        numberElementAgreementByPage,
+        handleChangeNumberElementAgreement,
         user,
     } = useProps();
 
@@ -69,7 +69,7 @@ export default function ContractEmployeur() {
 
     const handleChangeStateSort = (state: any) => {
         setOfferState(state);
-        onPageChange(0);
+        onPageChangeAgreement(0);
     };
 
     //TODO fix sorting
@@ -108,11 +108,11 @@ export default function ContractEmployeur() {
 
                     <PaginatedList
                         renderItem={renderOffer}
-                        page={page}
-                        totalPages={totalPages}
-                        onPageChange={onPageChange}
-                        numberElement={numberElementByPage}
-                        handleChangeNumberElement={handleChangeNumberElement}
+                        page={pageAgreement}
+                        totalPages={totalPageAgreement}
+                        onPageChange={onPageChangeAgreement}
+                        numberElement={numberElementAgreementByPage}
+                        handleChangeNumberElement={handleChangeNumberElementAgreement}
                     />
                 </div>
             </main>
