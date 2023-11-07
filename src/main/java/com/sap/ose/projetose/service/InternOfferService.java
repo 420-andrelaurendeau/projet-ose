@@ -264,4 +264,7 @@ public class InternOfferService {
 
     }
 
+    public List<String> getAllSeasons() {
+        return offerJobRepository.getAllSeasons();
+    }
 }

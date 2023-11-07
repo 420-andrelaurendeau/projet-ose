@@ -4,12 +4,11 @@ import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {allStudentInternshipOffers, getStudentAppliedOffers, getAllSeasons} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
-import FilterBySeason from "../shared/filters/FilterBySeasons";
 
 function StudentInternship() {
     const {i18n} = useTranslation();
@@ -17,6 +16,8 @@ function StudentInternship() {
     let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
@@ -29,6 +30,10 @@ function StudentInternship() {
             getStudentAppliedOffers(res.id).then((res) => {
                 setAppliedOffers(res);
             })
+
+            getAllSeasons().then((res)=>{
+              setSeasons(res);
+            })
             }
         ).finally(() => {
             allStudentInternshipOffers().then((res) => {
@@ -37,10 +42,13 @@ function StudentInternship() {
 
         })
 
-
-
     }, []);
 
+
+    const handleOptionChange = (event:any) => {
+        setSelectedOption(event.target.value);
+        console.log()
+    };
 
     const applyOffer = (offer: any, student: any) => {
         console.log(offer);
@@ -66,6 +74,7 @@ function StudentInternship() {
         )
     }
 
+
     return (
         <div className="flex flex-col mt-14">
             <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
@@ -78,7 +87,13 @@ function StudentInternship() {
                             {fields.titre.text}
                         </h1>
                         <div>
-                            <FilterBySeason data={offers}/>
+                            <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                            <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                                <option value="">Tout</option>
+                                {seasons.map((season:any) => (
+                                    <option key={season.index} value={season}>{season}</option>
+                                ))}
+                            </select>
                         </div>
                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className="w-full divide-y divide-gray dark:divide-darkgray">

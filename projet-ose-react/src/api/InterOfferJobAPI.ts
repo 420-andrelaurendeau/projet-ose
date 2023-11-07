@@ -170,3 +170,13 @@ export async function getOfferById(id: number) {
         throw error;
     }
 }
+
+export async function getAllSeasons(){
+    try{
+        const response = await api.get('interOfferJob/getAllPossibleSeasons');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}

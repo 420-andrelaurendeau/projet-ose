@@ -94,7 +94,7 @@ public class ProjetOseApplication implements CommandLineRunner {
         stageService.saveTEST(stage3);
         stageService.saveTEST(stage4);
 
-
+        System.out.println(internOfferService.getAllSeasons());
         System.out.println("DONE");
     }
 }

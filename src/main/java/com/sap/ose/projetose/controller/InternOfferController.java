@@ -66,5 +66,12 @@ public class InternOfferController {
 
         return offerJobService.getInternOfferByEmployeurEmail(email, page, size, sortField, sortDirection);
     }
+
+
+    @GetMapping("/getAllPossibleSeasons")
+    public ResponseEntity<List<String>> getAllSeasons(){
+        List<String> seasons = offerJobService.getAllSeasons();
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
 }
 
