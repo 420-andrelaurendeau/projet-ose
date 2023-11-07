@@ -73,7 +73,6 @@ export default function ContractEmployeur() {
     };
 
     //TODO fix sorting
-    //TODO fix paginaiton
 
     const handleOfferClick = (id: number) => {
         console.log(id)

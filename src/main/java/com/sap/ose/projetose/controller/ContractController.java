@@ -27,6 +27,7 @@ public class ContractController {
         return new ResponseEntity<>(contractService.saveContractDto(contractDto), HttpStatus.CREATED);
     }
 
+    //TODO ajouter validation que employeur est le meme que le contract a chercher
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employeur')")
     public ResponseEntity<ContractDto> getContract(@PathVariable long id) {

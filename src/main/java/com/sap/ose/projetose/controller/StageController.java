@@ -62,7 +62,6 @@ public class StageController {
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state
     ) {
-        System.out.println(state);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfEmployeur(page, size, sort, state, id);

@@ -19,10 +19,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -168,15 +165,53 @@ public class StageService {
         }
     }
 
+
     private Page<InternshipAgreementDto> filterPageByEmployeur(Page<InternshipAgreementDto> internshipAgreementDtos, long id) {
-        //Takes the page then filters it so that the employeur ID matches the id then returns it as a page
-        return new PageImpl<InternshipAgreementDto>(internshipAgreementDtos.stream().filter(internshipAgreementDto -> internshipAgreementDto.getEmployeur().getId() == id).collect(Collectors.toList()));
+        List<InternshipAgreementDto> filteredList = new ArrayList<>();
+        Pageable pageable = internshipAgreementDtos.getPageable();
+
+        System.out.println("TOTAL ELEMENTS");
+        System.out.println(internshipAgreementDtos.getTotalElements());
+        System.out.println("TOTAL PAGES");
+        System.out.println(internshipAgreementDtos.getTotalPages());
+
+
+        for (InternshipAgreementDto dto :internshipAgreementDtos) {;
+            if (dto.getEmployeur().getId() == id) {
+                System.out.println("EMPLOYER ID?");
+                System.out.println(dto.getEmployeur().getId());
+                filteredList.add(dto);
+            }
+        }
+
+        return new PageImpl<>(filteredList, pageable, filteredList.size());
     }
 
+
+    private Page<InternshipAgreementDto> stageToDtoPage(Page<Stage> stagePage){
+        return stagePage.map(stage -> new InternshipAgreementDto(
+                stage.getId(),
+                new EmployeurDto(stage.getEmployeur()),
+                new EtudiantDto(stage.getStudent()),
+                new InternOfferDto(stage.getOffer()),
+                stage.getStateStudent(),
+                stage.getStateEmployeur(),
+                stage.getContract() != null ? stage.getContract().id : 0
+        ));
+    }
     @Transactional
     public Page<InternshipAgreementDto> getSortedByPageOfEmployeur(int page, int size, Sort sort, String state, long id) {
-        Page<InternshipAgreementDto> internshipAgreementDtos = getSortedByPage(page, size, sort, state);
-        return filterPageByEmployeur(internshipAgreementDtos, id);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<InternshipAgreementDto> internshipAgreementDtos;
+
+        if (state == null)
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByEmployeurId(id, pageable));
+        else {
+            State stateEnum = State.valueOf(state);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
+        }
+
+        return internshipAgreementDtos;
     }
 
     @Transactional
@@ -197,7 +232,7 @@ public class StageService {
                 ));
             else {
                 State stateEnum = State.valueOf(state);
-                internshipAgreementDtos = stageRepository.findAllByState(stateEnum, pageable).map(stage -> new InternshipAgreementDto(
+                internshipAgreementDtos = stageRepository.findAllByState(stateEnum.name(), pageable).map(stage -> new InternshipAgreementDto(
                         stage.getId(),
                         new EmployeurDto(stage.getEmployeur()),
                         new EtudiantDto(stage.getStudent()),

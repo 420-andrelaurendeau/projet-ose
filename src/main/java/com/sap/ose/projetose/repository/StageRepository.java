@@ -38,6 +38,8 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "WHERE ( (:state = 'DECLINED') AND (s.stateStudent = 2 OR s.stateEmployeur = 2)) " +
             "OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 1) AND (s.stateStudent != 2 AND s.stateEmployeur != 2))) " +
             "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0) )")
-    Page<Stage> findAllByState(@Param("state") State state, Pageable pageable);
+    Page<Stage> findAllByState(@Param("state") String state, Pageable pageable);
 
+    @Query("SELECT s FROM Stage s WHERE s.employeur.id = :id")
+    Page<Stage> findAllByEmployeurId(long id, Pageable pageable);
 }
