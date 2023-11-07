@@ -1,5 +1,5 @@
 import {ReactElement, useEffect, useRef, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {
     getIntershipOffers,
     getStageCountByState,
@@ -26,6 +26,7 @@ export default function ContractEmployeur() {
     const [totalApprouved, setTotalApprouved] = useState(0);
     const [totalPending, setTotalPending] = useState(0);
     const [totalDeclined, setTotalDeclined] = useState(0);
+    const navigate = useNavigate();
 
     const {
         stageAgreement,
@@ -73,13 +74,18 @@ export default function ContractEmployeur() {
 
     //TODO fix sorting
     //TODO fix paginaiton
-    //TODO fix state display //shows declined on approuved
+
+    const handleOfferClick = (id: number) => {
+        console.log(id)
+        navigate(`/employer/home/internshipagreement/${id}`);
+    };
+
 
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={stageAgreement}
                                                                isUpdate={setIsUpdate} sortField={sortField}
                                                                setsortField={setSortField}
                                                                setSortDirection={setSortDirection}
-                                                               sortDirection={sortDirection}/>;
+                                                               sortDirection={sortDirection} handleOfferClick={handleOfferClick}/>;
 
     return (
         <div className="px-4">

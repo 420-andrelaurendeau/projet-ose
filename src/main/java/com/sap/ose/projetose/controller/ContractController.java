@@ -28,7 +28,7 @@ public class ContractController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('internshipmanager')")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employeur')")
     public ResponseEntity<ContractDto> getContract(@PathVariable long id) {
         return new ResponseEntity<>(contractService.getById(id), HttpStatus.OK);
     }

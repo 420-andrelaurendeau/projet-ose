@@ -14,6 +14,7 @@ import ApplicationOffer from "../components/common/Employer/application/Applicat
 import ApplicationDetails from "../components/common/Employer/application/ApplicationDetails";
 import SignContract from "../components/common/preparedoc/SignContract";
 import ContractEmployeur from "../components/common/Employer/ContractEmployeur";
+import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
 
 const EmployerRouter: React.FC = () => {
     return (
@@ -31,6 +32,7 @@ const EmployerRouter: React.FC = () => {
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
                         {/* <Route path="contract" element={<SignContract/>}/> */}
                         <Route path="*" element={<ErrorPage/>}/>
+                        <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>
