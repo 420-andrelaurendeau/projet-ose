@@ -36,6 +36,15 @@ interface Props {
     handleChangeNumberElementAgreement:(event: React.ChangeEvent<HTMLSelectElement>) => void,
     onPageChangeAgreement: (newPage: number) => void,
     numberElementAgreementByPage: number,
+    agreementState: string,
+    setAgreementState: React.Dispatch<React.SetStateAction<string>>,
+    agreementIsUpdate: boolean
+    setAgreementIsUpdate: React.Dispatch<React.SetStateAction<boolean>>
+    sortAgreementField: string,
+    setAgreementSortField: React.Dispatch<React.SetStateAction<string>>,
+    sortAgreementDirection: string,
+    setAgreementSortDirection: React.Dispatch<React.SetStateAction<string>>,
+
 }
 
 function EmployeurHomePage() {
@@ -65,7 +74,6 @@ function EmployeurHomePage() {
     const [agreementSortField, setAgreementSortField] = useState("id");
     const [agreementSortDirection, setAgreementSortDirection] = useState("asc");
 
-
     const location = useLocation();
     const [user, setUser] = useState<User>({
         id: 0,
@@ -90,9 +98,9 @@ function EmployeurHomePage() {
             const response = await getStageByEmployeurId({
                 page: currentAgreementPage,
                 size: numberElementAgreementByPage,
-                state: offerState,
-                sortField,
-                sortDirection
+                state: agreementState,
+                sortField: agreementSortField,
+                sortDirection : agreementSortDirection
             }, id);
             console.log("REPSONSE!!")
             console.log(response)
@@ -138,13 +146,13 @@ function EmployeurHomePage() {
                 console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             }
-    }, [currentPage, offerState, numberElementByPage, isUpdate]);
+    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
 
     useEffect(() => {
         if (user) {
             fetchInternshipsAgreement(user.id).then(r => console.log(internshipsAgreement))
         }
-    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate]);
+    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField]);
 
     useEffect(() => {
         let i = 0;
@@ -195,6 +203,14 @@ function EmployeurHomePage() {
         onPageChangeAgreement: handleAgreementPageChange,
         handleChangeNumberElementAgreement: handleAgreementChangePage ,
         numberElementAgreementByPage: numberElementAgreementByPage,
+        agreementState: agreementState,
+        setAgreementState: setAgreementState,
+        setAgreementIsUpdate:setIsAgreementUpdate,
+        agreementIsUpdate: isAgreementUpdate,
+        sortAgreementField: agreementSortField,
+        setAgreementSortField: setAgreementSortField,
+        sortAgreementDirection: agreementSortDirection,
+        setAgreementSortDirection: setAgreementSortDirection,
     }
 
     return (

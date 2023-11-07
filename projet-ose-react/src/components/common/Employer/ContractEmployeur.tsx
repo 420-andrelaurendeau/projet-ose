@@ -33,13 +33,15 @@ export default function ContractEmployeur() {
         pageAgreement,
         totalPageAgreement,
         onPageChangeAgreement,
-        setSortField,
-        setSortDirection,
-        sortField,
-        sortDirection,
         numberElementAgreementByPage,
         handleChangeNumberElementAgreement,
+        setAgreementIsUpdate,
         user,
+        sortAgreementDirection,
+        sortAgreementField,
+        setAgreementSortField,
+        setAgreementSortDirection,
+        setAgreementState,
     } = useProps();
 
     useEffect(() => {
@@ -61,18 +63,15 @@ export default function ContractEmployeur() {
         setTotalDeclined(totalDec);
     }, [stageAgreement]);
 
-    const [offerState, setOfferState] = useState(undefined);
-    const [isUpdate, setIsUpdate] = useState(false);
-
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
 
     const handleChangeStateSort = (state: any) => {
-        setOfferState(state);
+        setAgreementState(state);
         onPageChangeAgreement(0);
     };
 
-    //TODO fix sorting
+    //TODO fix sorting (back-end needs to have proper field names"
 
     const handleOfferClick = (id: number) => {
         console.log(id)
@@ -81,10 +80,10 @@ export default function ContractEmployeur() {
 
 
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={stageAgreement}
-                                                               isUpdate={setIsUpdate} sortField={sortField}
-                                                               setsortField={setSortField}
-                                                               setSortDirection={setSortDirection}
-                                                               sortDirection={sortDirection} handleOfferClick={handleOfferClick}/>;
+                                                               isUpdate={setAgreementIsUpdate} sortField={sortAgreementField}
+                                                               setsortField={setAgreementSortField}
+                                                               setSortDirection={setAgreementSortDirection}
+                                                               sortDirection={sortAgreementDirection} handleOfferClick={handleOfferClick}/>;
 
     return (
         <div className="px-4">

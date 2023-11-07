@@ -208,7 +208,7 @@ public class StageService {
             internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByEmployeurId(id, pageable));
         else {
             State stateEnum = State.valueOf(state);
-            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateEmployeur(stateEnum.name(), pageable, id));
         }
 
         return internshipAgreementDtos;
@@ -221,26 +221,10 @@ public class StageService {
             Page<InternshipAgreementDto> internshipAgreementDtos;
 
             if (state == null)
-                internshipAgreementDtos = stageRepository.findAll(pageable).map(stage -> new InternshipAgreementDto(
-                        stage.getId(),
-                        new EmployeurDto(stage.getEmployeur()),
-                        new EtudiantDto(stage.getStudent()),
-                        new InternOfferDto(stage.getOffer()),
-                        stage.getStateStudent(),
-                        stage.getStateEmployeur(),
-                        stage.getContract() != null ? stage.getContract().id : 0
-                ));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAll(pageable));
             else {
                 State stateEnum = State.valueOf(state);
-                internshipAgreementDtos = stageRepository.findAllByState(stateEnum.name(), pageable).map(stage -> new InternshipAgreementDto(
-                        stage.getId(),
-                        new EmployeurDto(stage.getEmployeur()),
-                        new EtudiantDto(stage.getStudent()),
-                        new InternOfferDto(stage.getOffer()),
-                        stage.getStateStudent(),
-                        stage.getStateEmployeur(),
-                        stage.getContract() != null ? stage.getContract().id : 0
-                ));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
             }
 
             return internshipAgreementDtos;
