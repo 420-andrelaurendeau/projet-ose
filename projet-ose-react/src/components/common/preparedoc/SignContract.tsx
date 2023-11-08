@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import { pdfjs } from "react-pdf";
-import { blobToURL } from "./utils/Utils";
+import {blobToURL, downloadURI, getWidth} from "./utils/Utils";
 import PagingControl from "./PagingControl";
 import { AddSigDialog } from "./AddSigDialog";
 import pdff from './pdf/Internshipe_Contract_Contract.pdf';
@@ -10,14 +10,6 @@ import ViewPDF from "./ViewPDF";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-function downloadURI(uri:any, name:any) {
-  var link = document.createElement("a");
-  link.download = name;
-  link.href = uri;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
 
 function SignContract() {
   const [pdf, setPdf] = useState(null);
@@ -37,14 +29,6 @@ function SignContract() {
   });
   const [selectedOption, setSelectedOption] = useState<string>("none");
   const optionsClassname = "flex justify-center items-center h-10 w-10 dark:text-white rounded cursor-pointer";
-
-  const getWidth = ():number => {
-    const container = document.getElementById("container");
-    if (container) {
-        return container.clientWidth;
-    }
-    return 0;
-  }
 
   useEffect(() => {
     setWidth(getWidth());

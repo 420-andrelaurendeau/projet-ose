@@ -117,13 +117,12 @@ function ViewPDF(props: any) {
 
     return <div ref={documentRef}>
         <Document
-            className="mt-8 w-full"
+            className="w-full"
             file={props.file}
             onLoadSuccess={props.onLoadSuccess}
         >
             <div id="parent" className={"relative"}>
                 <Page
-                    onClick={props.onClick}
                     className="relative"
                     renderTextLayer={false}
                     renderAnnotationLayer={false}
