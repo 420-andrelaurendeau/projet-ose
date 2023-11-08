@@ -20,7 +20,7 @@ import InternshipManagerInternshipsAgreement
 import {useProps} from "../../../pages/employer/EmployeurHomePage";
 
 
-export default function ContractEmployeur() {
+export default function EmployerContractPage() {
 
     const [totalInternshipsAgreement, setTotalInternshipsAgreement] = useState(0);
     const [totalApprouved, setTotalApprouved] = useState(0);
