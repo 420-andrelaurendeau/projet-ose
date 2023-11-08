@@ -166,27 +166,6 @@ public class StageService {
     }
 
 
-    private Page<InternshipAgreementDto> filterPageByEmployeur(Page<InternshipAgreementDto> internshipAgreementDtos, long id) {
-        List<InternshipAgreementDto> filteredList = new ArrayList<>();
-        Pageable pageable = internshipAgreementDtos.getPageable();
-
-        System.out.println("TOTAL ELEMENTS");
-        System.out.println(internshipAgreementDtos.getTotalElements());
-        System.out.println("TOTAL PAGES");
-        System.out.println(internshipAgreementDtos.getTotalPages());
-
-
-        for (InternshipAgreementDto dto :internshipAgreementDtos) {;
-            if (dto.getEmployeur().getId() == id) {
-                System.out.println("EMPLOYER ID?");
-                System.out.println(dto.getEmployeur().getId());
-                filteredList.add(dto);
-            }
-        }
-
-        return new PageImpl<>(filteredList, pageable, filteredList.size());
-    }
-
 
     private Page<InternshipAgreementDto> stageToDtoPage(Page<Stage> stagePage){
         return stagePage.map(stage -> new InternshipAgreementDto(
