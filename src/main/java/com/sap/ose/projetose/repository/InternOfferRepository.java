@@ -37,5 +37,8 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
 
     @Query("SELECT DISTINCT i.session FROM InternOffer i")
     List<String> getAllSeasons();
+
+    @Query("SELECT i FROM InternOffer i WHERE i.session = ?1")
+    List<InternOffer> getStudentOffersBySeason(String season);
 }
 

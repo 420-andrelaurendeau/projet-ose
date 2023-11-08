@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.exception.*;
@@ -267,4 +268,19 @@ public class InternOfferService {
     public List<String> getAllSeasons() {
         return offerJobRepository.getAllSeasons();
     }
+
+    public List<InternOfferDto> getStudentOfferBySeason(String season) {
+        System.out.println(season);
+
+        List<InternOffer> internOffers = offerJobRepository.getStudentOffersBySeason(season);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        System.out.println(internOfferDtoList);
+        return internOfferDtoList;
+    }
+
 }

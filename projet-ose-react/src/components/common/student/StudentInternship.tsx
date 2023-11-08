@@ -7,7 +7,12 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers, getStudentAppliedOffers, getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {
+    allStudentInternshipOffersBySeason,
+    getStudentAppliedOffers,
+    getAllSeasons,
+    allStudentInternshipOffers
+} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
 function StudentInternship() {
@@ -17,7 +22,7 @@ function StudentInternship() {
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
+    const [selectedOption, setSelectedOption] = useState('All'); // State to store the selected option
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
@@ -36,10 +41,10 @@ function StudentInternship() {
             })
             }
         ).finally(() => {
-            allStudentInternshipOffers().then((res) => {
+
+            allStudentInternshipOffers().then((res)=> {
                 setOffers(res);
             })
-
         })
 
     }, []);
@@ -47,7 +52,9 @@ function StudentInternship() {
 
     const handleOptionChange = (event:any) => {
         setSelectedOption(event.target.value);
-        console.log()
+        allStudentInternshipOffersBySeason(selectedOption).then((res) => {
+            setOffers(res);
+        })
     };
 
     const applyOffer = (offer: any, student: any) => {
@@ -74,6 +81,7 @@ function StudentInternship() {
         )
     }
 
+    console.log(selectedOption)
 
     return (
         <div className="flex flex-col mt-14">
