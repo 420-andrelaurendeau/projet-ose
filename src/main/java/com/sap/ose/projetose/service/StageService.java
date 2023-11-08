@@ -134,13 +134,23 @@ public class StageService {
         return contractService.createContract(stage);
     }
 
+    @Transactional
+    public Map<String, Long> getCountByStateGS(){
+        List<Object[]> counts = stageRepository.getCountByState();
+        return getCountByState(counts);
+    }
 
     @Transactional
-    public Map<String, Long> getCountByState() {
+    public Map<String, Long> getCountByStateEmployeur(long id){
+        List<Object[]> counts = stageRepository.getCountByStateByEmployeur(id);
+        return getCountByState(counts);
+    }
+
+    @Transactional
+    public Map<String, Long> getCountByState(List<Object[]> counts) {
         HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
 
         try {
-            List<Object[]> counts = stageRepository.getCountByState();
             long totalOffers = 0;
 
             for (Object[] count : counts) {

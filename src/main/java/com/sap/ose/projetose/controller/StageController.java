@@ -49,7 +49,15 @@ public class StageController {
     @GetMapping("/count")
     public ResponseEntity<Map<String, Long>> getStageCount() {
         logger.info("Stage count request received");
-        return Optional.of(stageService.getCountByState()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(stageService.getCountByStateGS()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @GetMapping("/countEmployeur/{id}")
+    @PreAuthorize("hasAuthority('employeur')")
+    public ResponseEntity<Map<String, Long>> getStageCountEmployeur(@PathVariable long id) {
+        logger.info("Stage count request received");
+        return Optional.of(stageService.getCountByStateEmployeur(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/employeurStage/{id}")

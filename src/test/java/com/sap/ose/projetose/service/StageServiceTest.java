@@ -46,14 +46,14 @@ public class StageServiceTest {
     public void getCountByState_DataAccessException() {
         when(stageRepository.getCountByState()).thenThrow(new DataAccessException("") {
         });
-        DatabaseException result = assertThrows(DatabaseException.class, () -> stageService.getCountByState());
+        DatabaseException result = assertThrows(DatabaseException.class, () -> stageService.getCountByStateGS());
         assertEquals("Erreur d'accès a la base de données", result.getMessage());
     }
 
     @Test
     public void getCountByState_ServiceException() {
         when(stageRepository.getCountByState()).thenThrow(new ServiceException(""));
-        ServiceException result = assertThrows(ServiceException.class, () -> stageService.getCountByState());
+        ServiceException result = assertThrows(ServiceException.class, () -> stageService.getCountByStateGS());
         assertEquals("Erreur lors de la récupération du compte des ententes de stages.", result.getMessage());
     }
 

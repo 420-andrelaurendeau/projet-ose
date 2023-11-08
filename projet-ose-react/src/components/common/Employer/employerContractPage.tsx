@@ -2,7 +2,7 @@ import {ReactElement, useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {
     getIntershipOffers,
-    getStageCountByState,
+    getStageCountByState, getStageCountByStateEmployeur,
     getStages,
     getTotalOfferByState
 } from "../../../api/InternshipManagerAPI";
@@ -43,24 +43,29 @@ export default function EmployerContractPage() {
         setAgreementSortDirection,
         setAgreementState,
     } = useProps();
+    const handleTotalOffersByState = async () => {
+        const responseTotal = await getStageCountByStateEmployeur(user.id);
+        setTotalInternshipsAgreement(0);
+        setTotalApprouved(0);
+        setTotalPending(0);
+        setTotalDeclined(0);
+
+        if (responseTotal["PENDING"])
+            setTotalPending(responseTotal["PENDING"]);
+
+        if (responseTotal["ACCEPTED"])
+            setTotalApprouved(responseTotal["ACCEPTED"])
+
+        if (responseTotal["DECLINED"])
+            setTotalDeclined(responseTotal["DECLINED"])
+
+        if (responseTotal["TOTAL"])
+            setTotalInternshipsAgreement(responseTotal["TOTAL"])
+    }
+
 
     useEffect(() => {
-        let totalDec: number = 0
-        let totalAp: number = 0
-        let totalPen: number = 0
-        setTotalInternshipsAgreement(stageAgreement.length);
-        stageAgreement.forEach((stage) => {
-            if (stage.stateStudent == "DECLINED" || stage.stateEmployeur == "DECLINED") {
-                totalDec++;
-            } else if (stage.stateStudent == "PENDING" || stage.stateEmployeur == "PENDING") {
-                totalPen++;
-            } else {
-                totalAp++;
-            }
-        })
-        setTotalApprouved(totalAp);
-        setTotalPending(totalPen);
-        setTotalDeclined(totalDec);
+        handleTotalOffersByState();
     }, [stageAgreement]);
 
     const {i18n} = useTranslation();

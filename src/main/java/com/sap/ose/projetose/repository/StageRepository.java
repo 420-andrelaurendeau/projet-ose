@@ -35,6 +35,22 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "END")
     List<Object[]> getCountByState();
 
+    @Query("SELECT CASE " +
+            "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN 'DECLINED' " +
+            "WHEN (s.stateStudent = 1 OR s.stateEmployeur = 1)THEN 'PENDING' " +
+            "ELSE 'ACCEPTED' " +
+            "END, COUNT(s) " +
+            "FROM Stage s " +
+            "WHERE (s.employeur.id = :id) " +
+            "GROUP BY " +
+            "CASE " +
+            "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN 'DECLINED' " +
+            "WHEN (s.stateStudent = 1 OR s.stateEmployeur = 1) THEN 'PENDING' " +
+            "ELSE 'ACCEPTED' " +
+            "END")
+    List<Object[]> getCountByStateByEmployeur(long id);
+
+
     @Query("SELECT s FROM Stage s " +
             "WHERE ( (:state = 'DECLINED') AND (s.stateStudent = 2 OR s.stateEmployeur = 2)) " +
             "OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 1) AND (s.stateStudent != 2 AND s.stateEmployeur != 2))) " +

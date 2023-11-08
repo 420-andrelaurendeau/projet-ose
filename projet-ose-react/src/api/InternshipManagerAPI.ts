@@ -100,6 +100,16 @@ export const getStageCountByState = async () => {
     }
 }
 
+export const getStageCountByStateEmployeur = async (id:number) => {
+    try {
+        console.log(id)
+        const response = await api.get(`stage/countEmployeur/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+}
 
 
 interface GetInternshipOffersParams {

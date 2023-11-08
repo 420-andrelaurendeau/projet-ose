@@ -3,7 +3,6 @@ import {faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-ico
 import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
-// todo : change the sort field with correct name of the api
 
 export default function InternshipManagerInternshipsAgreement(props: any) {
 
