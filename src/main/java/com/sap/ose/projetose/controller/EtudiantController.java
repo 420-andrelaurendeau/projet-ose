@@ -78,4 +78,11 @@ public class EtudiantController {
         logger.info("setDefaultCv");
         return ResponseEntity.ok().body(etudiantService.setDefaultCv(id, cvId));
     }
+
+    @GetMapping("{id}/defaultCv")
+    @PreAuthorize("hasAuthority('student')")
+    public ResponseEntity<FileDtoAll> getDefaultCv(@PathVariable long id) {
+        logger.info("getDefaultCv");
+        return ResponseEntity.ok().body(etudiantService.getDefaultCv(id));
+    }
 }

@@ -18,7 +18,6 @@ function UploadCVForm(): ReactElement {
 
     const toast = useToast(); // Move the hook call here
     const [files, setFiles] = useState<any[]>([])
-    const [utilisateurs, setUtilisateurs] = useState([])
     const [user, setUser] = useState<User>({} as User)
     const [uploadState, setUploadState] = useState({status: "None"})
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
@@ -34,15 +33,16 @@ function UploadCVForm(): ReactElement {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
             console.log(user)
+            fetchAllStudentCvs(res['id']).then((res) => {
+                setCvs(res)
+                console.log(cvs)
+            }).catch((error) => {
+                console.log("Error fetching user data:", error)
+            });
         }).catch((error) => {
             console.log("Error fetching user data:", error)
-        })
-        fetchAllStudentCvs(user.id).then((res) => {
-            setCvs(res)
-            console.log(cvs)
-        }).catch((error) => {
-            console.log("Error fetching user data:", error)
-        })
+        });
+
     }, [])
 
     function handleFileChange(event: any) {
@@ -66,7 +66,6 @@ function UploadCVForm(): ReactElement {
                 let newFile = [currFile]
                 setFiles([...newFile])
             }
-            console.log(fileError)
         }
         reader.readAsDataURL(file)
     }
@@ -138,7 +137,7 @@ function UploadCVForm(): ReactElement {
             toast.success(t('CV par défaut défini avec succès'));
         }).catch(err => {
             console.log(err);
-            toast.error(t('Erreur lors de la définition du CV par défaut'));
+            toast.error(t(err.response.data));
         }).finally(() => {
             fetchAllStudentCvs(user.id).then((res) => {
                 setCvs(res);

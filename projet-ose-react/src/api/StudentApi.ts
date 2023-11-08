@@ -131,3 +131,13 @@ export const setDefaultCv = async (studentId: number, cvId: number) => {
         throw err
     }
 }
+
+export const fetchDefaultCvByStudentId = async (studentId: number) => {
+    try {
+        const res = await api.get(`student/${studentId}/defaultCv`)
+        return res.data
+    } catch (err) {
+        console.log('Error while fetching default cv' + err)
+        throw err
+    }
+}

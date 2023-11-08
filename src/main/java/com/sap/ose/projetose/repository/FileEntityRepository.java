@@ -14,4 +14,7 @@ public interface FileEntityRepository extends JpaRepository<File, Long> {
     Optional<List<File>> findAllStudentCvPending();
     @Query("select f from File f where f.etudiant.id = ?1")
     Optional<List<File>> findAllCvByEtudiantId(long id);
+
+    @Query("select f from File f where f.defaultFile = true and f.etudiant.id = ?1")
+    Optional<File> findDefaultCvByStudentId(long id);
 }

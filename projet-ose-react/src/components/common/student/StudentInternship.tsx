@@ -9,6 +9,10 @@ import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
+import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
+import {FileEntity} from "../../../model/FileEntity";
+import {useToast} from "../../../hooks/state/useToast";
+import toast from "../shared/toast/Toast";
 
 function StudentInternship() {
     const {i18n} = useTranslation();
@@ -16,10 +20,12 @@ function StudentInternship() {
     let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
+    const [cv,setCv] = useState<FileEntity>()
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
+    const toast = useToast();
 
     useEffect(() => {
         if (!isloading.current)
@@ -27,6 +33,14 @@ function StudentInternship() {
                 setUser(res);
             getStudentAppliedOffers(res.id).then((res) => {
                 setAppliedOffers(res);
+            })
+            fetchDefaultCvByStudentId(res.id).then((res) => {
+                setCv(res)
+                console.log(res)
+                toast.success("Vous avez un CV par défaut, vous pouvez postuler")
+            }).catch((error) => {
+                console.log("Error fetching user data:", error)
+                toast.error("Vous n'avez pas de CV par défaut, veuillez en ajouter un")
             })
             }
         ).finally(() => {
@@ -41,11 +55,12 @@ function StudentInternship() {
     }, []);
 
 
-    const applyOffer = (offer: any, student: any) => {
+    const applyOffer = (offer: any, student: any, cv: any) => {
         console.log(offer);
         console.log(student);
+        console.log(cv);
 
-        saveStudentInternshipOffer(offer, student).then(
+        saveStudentInternshipOffer(offer, student, cv).then(
             res => {
                 let appliedOffer: AppliedOffers = {
                     appliedOffer: res.internOfferJob,
@@ -148,10 +163,10 @@ function StudentInternship() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
                                             <button
-                                                onClick={() => applyOffer(offer, user)}
+                                                onClick={() => applyOffer(offer, user, cv)}
                                                 type="submit"
                                                 disabled={
-                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || cv == null
                                                 }
                                                 className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                             >

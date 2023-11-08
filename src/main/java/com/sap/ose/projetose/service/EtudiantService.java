@@ -6,10 +6,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.FileNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.FileEntityRepository;
 import jakarta.transaction.Transactional;
@@ -171,6 +168,9 @@ public class EtudiantService {
             }
             for (File cv : cvs) {
                 if (cv.getId() == cvId) {
+                    if (cv.getIsAccepted() != State.ACCEPTED) {
+                        throw new ServiceException("Le CV n'est pas encore accepté");
+                    }
                     cv.setDefaultFile(true);
                     fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()),cv.isDefaultFile());
                 } else {
@@ -178,6 +178,32 @@ public class EtudiantService {
                 }
                 fileEntityRepository.save(cv);
             }
+            if (fileDtoAll == null) {
+                throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
+            }
+            return fileDtoAll;
+        }
+        catch (ServiceException e) {
+            logger.error("Le CV n'est pas encore accepté", e);
+            throw e;
+        }
+        catch (FileNotFoundException e) {
+            logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
+            throw e;
+        }
+        catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+        catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new ServiceException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+    }
+    @Transactional
+    public FileDtoAll getDefaultCv(long id) {
+        try {
+            FileDtoAll fileDtoAll = fileEntityRepository.findDefaultCvByStudentId(id).isPresent() ? new FileDtoAll(fileEntityRepository.findDefaultCvByStudentId(id).get()) : null;
             if (fileDtoAll == null) {
                 throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
             }
