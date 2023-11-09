@@ -5,9 +5,7 @@ import {FileEntity} from "../../../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
-import Header from "../../shared/header/Header";
 import {useTranslation} from "react-i18next";
-import {ReviewFile} from "../../../../model/ReviewFile";
 
 export default function StudentAppliedOffers() {
     const {t} = useTranslation();
@@ -32,11 +30,10 @@ export default function StudentAppliedOffers() {
 
     const handleDownloadFile = (file: FileEntity) => {
         // Create a Blob from the base64 content
-        const byteCharacters = atob(file.content);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
+        const byteNumbers = atob(file.content)
+                                        .split('')
+                                        .map((value) => value.charCodeAt(0))
+
         const byteArray = new Uint8Array(byteNumbers);
         const blob = new Blob([byteArray], { type: 'application/pdf' });
 

@@ -2,10 +2,7 @@ package com.sap.ose.projetose.modeles;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +22,15 @@ public class Etudiant extends Utilisateur{
     private Programme programme;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<File> cv;
 
     @OneToOne
+    @ToString.Exclude
     private File activeCv;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<InternshipCandidates> internshipsCandidate;
 
     public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
@@ -71,14 +71,5 @@ public class Etudiant extends Utilisateur{
         this.programme = programme;
         this.cv = null;
         this.internshipsCandidate = new ArrayList<>();
-    }
-
-    @Override
-    public String toString() {
-        return "Etudiant{" +
-                "matricule='" + matricule + '\'' +
-                ", programme=" + programme +
-                ", cv=" + cv +
-                '}';
     }
 }
