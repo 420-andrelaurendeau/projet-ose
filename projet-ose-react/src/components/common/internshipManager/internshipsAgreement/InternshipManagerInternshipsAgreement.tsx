@@ -27,9 +27,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
         }
         console.log(props.sortField === "employeurEntreprise" ? "visible" : "hidden")
     };
-
-    //todo remove sort by status in tableit is redundant and doesnt really work
-
+    
     return (
         <div className="pt-4 pb-4">
             <div className="">
@@ -78,9 +76,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
 
                         <div
                             role="columnheader"
-                            className="xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
-                            onClick={() => handleSortClick("stateEmployeur")}
-                        >
+                            className={"xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-default overflow-hidden truncate flex"}>
                             {fields.statut}
                             <div
                                 className={props.sortField === "stateEmployeur" ? "visible" : "hidden"}>

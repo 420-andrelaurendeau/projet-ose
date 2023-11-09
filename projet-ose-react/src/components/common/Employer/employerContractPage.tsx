@@ -75,9 +75,6 @@ export default function EmployerContractPage() {
         setAgreementState(state);
         onPageChangeAgreement(0);
     };
-
-    //TODO fix sorting (back-end needs to have proper field names"
-
     const handleOfferClick = (id: number) => {
         console.log(id)
         navigate(`/employer/home/internshipagreement/${id}`);
