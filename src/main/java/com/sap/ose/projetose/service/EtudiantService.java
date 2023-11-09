@@ -139,7 +139,7 @@ public class EtudiantService {
     @Transactional
     public List<FileDtoAll> getAllCvfromStudentById(long id) {
         try {
-            List<FileDtoAll> cvs = fileEntityRepository.findAllCvByEtudiantId(id).isPresent() ? fileEntityRepository.findAllCvByEtudiantId(id).get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList() : null;
+            List<FileDtoAll> cvs = fileEntityRepository.findAllByEtudiant_IdIs(id).isPresent() ? fileEntityRepository.findAllByEtudiant_IdIs(id).get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList() : null;
             if (cvs == null) {
                 throw new FileNotFoundException("Aucun CV trouvé pour l'étudiant avec l'id " + id);
             }
@@ -162,7 +162,7 @@ public class EtudiantService {
     public FileDtoAll setDefaultCv(long id, long cvId) {
         try {
             FileDtoAll fileDtoAll = null;
-            List<File> cvs = fileEntityRepository.findAllCvByEtudiantId(id).isPresent() ? fileEntityRepository.findAllCvByEtudiantId(id).get() : null;
+            List<File> cvs = fileEntityRepository.findAllByEtudiant_IdIs(id).isPresent() ? fileEntityRepository.findAllByEtudiant_IdIs(id).get() : null;
             if (cvs == null || cvs.isEmpty()) {
                 throw new FileNotFoundException("Aucun CV trouvé pour l'étudiant avec l'id " + id);
             }

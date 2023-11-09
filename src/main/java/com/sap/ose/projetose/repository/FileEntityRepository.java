@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface FileEntityRepository extends JpaRepository<File, Long> {
     @Query("select f from File f where f.isAccepted = com.sap.ose.projetose.modeles.State.PENDING and f.etudiant is not null")
     Optional<List<File>> findAllStudentCvPending();
-    @Query("select f from File f where f.etudiant.id = ?1")
-    Optional<List<File>> findAllCvByEtudiantId(long id);
+
+
+    Optional<List<File>> findAllByEtudiant_IdIs(long id);
 
     @Query("select f from File f where f.defaultFile = true and f.etudiant.id = ?1")
     Optional<File> findDefaultCvByStudentId(long id);
