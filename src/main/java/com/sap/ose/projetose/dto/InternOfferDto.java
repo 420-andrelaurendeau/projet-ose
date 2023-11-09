@@ -36,6 +36,7 @@ public class InternOfferDto {
     private String employeurEntreprise;
     private long offerReviewRequestId;
     private State state;
+    private String session;
 
     public InternOfferDto(InternOffer internOffer) {
         this.id = internOffer.getId();
@@ -55,6 +56,7 @@ public class InternOfferDto {
         this.state = internOffer.getState();
         this.offerReviewRequestId = internOffer.getOfferReviewRequest() == null ? 0 : internOffer.getOfferReviewRequest().getId();
         this.salaryByHour = internOffer.getSalaryByHour();
+        this.session = internOffer.getSession();
     }
 
     public InternOfferDto(String title, String location, String description, double salaryByHour, String startDate, String endDate, List<InternshipCandidatesDto> internshipCandidates, long programmeId, FileDto file,State state, long offerReviewRequestId) {

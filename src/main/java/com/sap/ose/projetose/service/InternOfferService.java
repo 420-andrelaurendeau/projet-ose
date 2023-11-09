@@ -270,8 +270,6 @@ public class InternOfferService {
     }
 
     public List<InternOfferDto> getStudentOfferBySeason(String season) {
-        System.out.println(season);
-
         List<InternOffer> internOffers = offerJobRepository.getStudentOffersBySeason(season);
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 

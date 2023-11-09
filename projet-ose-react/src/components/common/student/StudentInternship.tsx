@@ -21,11 +21,11 @@ function StudentInternship() {
     let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
+    const [filteredOffers, setFilteredOffers] = useState<any[]>([])
     const [seasons,setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState('All'); // State to store the selected option
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
-    //const token = localStorage.getItem('token');
     const isloading = useRef(false);
 
     useEffect(() => {
@@ -41,20 +41,32 @@ function StudentInternship() {
             })
             }
         ).finally(() => {
-
             allStudentInternshipOffers().then((res)=> {
                 setOffers(res);
+                setFilteredOffers(res)
             })
         })
 
     }, []);
 
+    useEffect(() => {
+        console.log(filteredOffers);
+        console.log("offers"+offers)
+    }, [filteredOffers]);
 
-    const handleOptionChange = (event:any) => {
-        setSelectedOption(event.target.value);
-        allStudentInternshipOffersBySeason(selectedOption).then((res) => {
-            setOffers(res);
-        })
+
+    const handleOptionChange = (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+        if (selected === 'All') {
+            setFilteredOffers(offers); // Show all offers
+        } else {
+            const filtered = offers.filter(offer => offer.session === selected);
+            setFilteredOffers(filtered); // Update filtered offers
+        }
     };
 
     const applyOffer = (offer: any, student: any) => {
@@ -81,8 +93,6 @@ function StudentInternship() {
         )
     }
 
-    console.log(selectedOption)
-
     return (
         <div className="flex flex-col mt-14">
             <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
@@ -97,9 +107,11 @@ function StudentInternship() {
                         <div>
                             <label htmlFor="options" className="text-bold">Filtre par saison: </label>
                             <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                                <option value="">Tout</option>
-                                {seasons.map((season:any) => (
-                                    <option key={season.index} value={season}>{season}</option>
+                                <option value="All">Tout</option>
+                                {seasons.map((season: string, index: number) => (
+                                    <option key={index} value={season}>
+                                        {season}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -149,7 +161,7 @@ function StudentInternship() {
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                                {offers.map((offer: any) => (
+                                {filteredOffers.map((offer: any) => (
                                     <tr key={offer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
