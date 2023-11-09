@@ -14,7 +14,7 @@ const apiClient = axios.create({
 
 export const saveCvStudent = async (matricule: number, cv: any) => {
     try {
-        const response = await apiClient.post(`etudiant/addCv/${matricule}`, cv)
+        const response = await apiClient.post(`student/addCv/${matricule}`, cv)
         return response.data
     } catch (err) {
         console.log('Error while saving cv' + err)
