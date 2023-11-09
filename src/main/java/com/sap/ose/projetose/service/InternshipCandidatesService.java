@@ -48,10 +48,7 @@ public class InternshipCandidatesService {
             internshipCandidates.setInternOffer(internOffer);
             internshipCandidates.setFiles(files);
 
-            for (File file : files) {
-                file.setInternshipCandidates(internshipCandidates);
-                fileEntityRepository.save(file);
-            }
+            fileEntityRepository.saveAll(files);
 
             internshipCandidatesRepository.save(internshipCandidates);
             return new InternshipCandidatesDto(internshipCandidates);
