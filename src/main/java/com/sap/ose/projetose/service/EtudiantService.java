@@ -203,7 +203,7 @@ public class EtudiantService {
     @Transactional
     public FileDtoAll getDefaultCv(long id) {
         try {
-            FileDtoAll fileDtoAll = fileEntityRepository.findDefaultCvByStudentId(id).isPresent() ? new FileDtoAll(fileEntityRepository.findDefaultCvByStudentId(id).get()) : null;
+            FileDtoAll fileDtoAll = fileEntityRepository.findByDefaultFileTrueAndEtudiant_Id(id).isPresent() ? new FileDtoAll(fileEntityRepository.findByDefaultFileTrueAndEtudiant_Id(id).get()) : null;
             if (fileDtoAll == null) {
                 throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
             }
