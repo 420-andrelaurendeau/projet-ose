@@ -22,6 +22,9 @@ public class InternshipCandidates {
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
+    @OneToOne
+    private File studentCv;
+
     @ManyToOne()
     @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;

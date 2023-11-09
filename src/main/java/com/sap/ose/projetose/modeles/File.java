@@ -32,8 +32,6 @@ public class File {
     @JoinColumn(name = "internship_id")
     private InternshipCandidates internshipCandidates;
 
-    private boolean defaultFile;
-
 
     public File(byte[] content, String fileName, State isAccepted) {
         this.content = content;

@@ -19,7 +19,6 @@ public class FileDtoAll {
     private String fileName;
     private State isAccepted;
     private EtudiantDto etudiant;
-    private boolean defaultFile;
 
     public FileDtoAll(File file) {
         this.id = file.getId();

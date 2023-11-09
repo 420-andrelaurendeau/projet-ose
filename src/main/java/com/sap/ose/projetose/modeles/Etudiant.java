@@ -27,6 +27,9 @@ public class Etudiant extends Utilisateur{
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<File> cv;
 
+    @OneToOne
+    private File activeCv;
+
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipsCandidate;
 

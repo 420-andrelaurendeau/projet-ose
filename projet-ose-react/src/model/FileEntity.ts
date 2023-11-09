@@ -4,5 +4,4 @@ export interface FileEntity {
     content: string;
     isAccepted: string;
     uploaderId: number;
-    defaultFile?: boolean;
 }
