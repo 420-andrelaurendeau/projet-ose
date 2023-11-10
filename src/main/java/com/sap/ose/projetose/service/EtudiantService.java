@@ -200,7 +200,12 @@ public class EtudiantService {
     @Transactional
     public FileDtoAll getDefaultCv(long id) {
         try {
-            return new FileDtoAll(etudiantRepository.findById(id).orElseThrow(FileNotFoundException::new).getActiveCv());
+            return new FileDtoAll(
+                    Optional.ofNullable(etudiantRepository
+                                    .findById(id)
+                                    .orElseThrow(EtudiantNotFoundException::new)
+                                    .getActiveCv())
+                            .orElseThrow(FileNotFoundException::new));
         }
         catch (FileNotFoundException e) {
             logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
