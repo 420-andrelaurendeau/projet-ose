@@ -171,6 +171,7 @@ public class EtudiantService {
                         throw new ServiceException("Le CV n'est pas encore accepté");
                     }
                     fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()));
+                    cv.getEtudiant().setActiveCv(cv);
                 }
                 fileEntityRepository.save(cv);
             }
@@ -199,11 +200,7 @@ public class EtudiantService {
     @Transactional
     public FileDtoAll getDefaultCv(long id) {
         try {
-            FileDtoAll fileDtoAll = fileEntityRepository.findByDefaultFileTrueAndEtudiant_Id(id).isPresent() ? new FileDtoAll(fileEntityRepository.findByDefaultFileTrueAndEtudiant_Id(id).get()) : null;
-            if (fileDtoAll == null) {
-                throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
-            }
-            return fileDtoAll;
+            return new FileDtoAll(etudiantRepository.findById(id).orElseThrow(FileNotFoundException::new).getActiveCv());
         }
         catch (FileNotFoundException e) {
             logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
