@@ -1,11 +1,7 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.State;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,10 +22,9 @@ public class FileDtoAll {
         this.fileName = file.getFileName();
         this.isAccepted = file.getIsAccepted();
         this.etudiant = new EtudiantDto(file.getEtudiant());
-        this.defaultFile = file.isDefaultFile();
     }
 
     public File fromDto() {
-        return new File(content, fileName, isAccepted, etudiant.fromDto(), defaultFile);
+        return new File(content, fileName, isAccepted, etudiant.fromDto());
     }
 }

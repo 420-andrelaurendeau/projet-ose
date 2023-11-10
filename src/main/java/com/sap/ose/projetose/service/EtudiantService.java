@@ -87,13 +87,12 @@ public class EtudiantService {
     @Transactional
     public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        List<File> cvs = new ArrayList<File>();
+        List<File> cvs = new ArrayList<>();
         cvs.add(cv);
         cv.setEtudiant(etudiant);
         etudiant.setCv(cvs);
         etudiantRepository.save(etudiant);
-        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
-        return etudiantDto;
+        return new EtudiantDto(etudiant);
     }
 
     Etudiant findByEmail(String courriel) {
@@ -139,7 +138,7 @@ public class EtudiantService {
     @Transactional
     public List<FileDtoAll> getAllCvfromStudentById(long id) {
         try {
-            List<FileDtoAll> cvs = fileEntityRepository.findAllByEtudiant_IdIs(id).isPresent() ? fileEntityRepository.findAllByEtudiant_IdIs(id).get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList() : null;
+            List<FileDtoAll> cvs = fileEntityRepository.findAllByEtudiant_IdIs(id).isPresent() ? fileEntityRepository.findAllByEtudiant_IdIs(id).get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList() : null;
             if (cvs == null) {
                 throw new FileNotFoundException("Aucun CV trouvé pour l'étudiant avec l'id " + id);
             }
@@ -171,10 +170,7 @@ public class EtudiantService {
                     if (cv.getIsAccepted() != State.ACCEPTED) {
                         throw new ServiceException("Le CV n'est pas encore accepté");
                     }
-                    cv.setDefaultFile(true);
-                    fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()),cv.isDefaultFile());
-                } else {
-                    cv.setDefaultFile(false);
+                    fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()));
                 }
                 fileEntityRepository.save(cv);
             }

@@ -45,7 +45,7 @@ public class File {
         this.etudiant = etudiant;
         this.internshipCandidates = internshipCandidates;
     }
-    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant,boolean defaultFile) {
+    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant) {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;

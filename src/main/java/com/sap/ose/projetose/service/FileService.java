@@ -1,30 +1,21 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.FileDto;
 import com.sap.ose.projetose.dto.FileDtoAll;
-import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.FileEntityRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.AssertTrue;
-import org.hibernate.annotations.NaturalId;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class FileService {
 
-    private FileEntityRepository fileEntityRepository;
-
-    @Autowired
-    public FileService(FileEntityRepository fileEntityRepository) {
-        this.fileEntityRepository = fileEntityRepository;
-    }
+    private final FileEntityRepository fileEntityRepository;
 
     File findById(Long id) {
         return fileEntityRepository.findById(id).orElse(null);
@@ -38,12 +29,12 @@ public class FileService {
 
     public FileDtoAll getFileById(Long id) {
         Optional<File> file = fileEntityRepository.findById(id);
-        return file.map(value -> new FileDtoAll(value.getId(),value.getContent(),value.getFileName(),value.getIsAccepted(),new EtudiantDto(value.getEtudiant()),value.isDefaultFile())).orElse(null);
+        return file.map(value -> new FileDtoAll(value.getId(),value.getContent(),value.getFileName(),value.getIsAccepted(),new EtudiantDto(value.getEtudiant()))).orElse(null);
     }
     @Transactional
     public List<FileDtoAll> getAllStudentPendingCv() {
         Optional<List<File>> optionalFiles = fileEntityRepository.findAllStudentCvPending();
         List<File> files = optionalFiles.orElse(null);
-        return files == null ? null : files.stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()),file.isDefaultFile())).toList();
+        return files == null ? null : files.stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList();
     }
 }
