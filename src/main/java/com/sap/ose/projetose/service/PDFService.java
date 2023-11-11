@@ -50,4 +50,15 @@ public class PDFService {
             throw e;
         }
     }
+
+    @Transactional
+    public PDFDto getCurrentPDF(){
+        try {
+            PDF pdf = pdfRepository.findPDFByIsActive();
+            return new PDFDto(pdf);
+        } catch (Exception e) {
+            logger.error("Erreur lors de la récupération du PDF par défaut", e);
+            throw e;
+        }
+    }
 }
