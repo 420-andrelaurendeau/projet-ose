@@ -25,7 +25,9 @@ const EmployerRouter: React.FC = () => {
                     <Route index path="home" element={<EmployeurHomePage/>}/>
                     <Route path="home" element={<EmployeurHomePage/>}>
                         <Route index path="offers" element={<EmployeurOffer/>}/>
-                        <Route path={"contract"} element={<EmployerContractPage/>}/>
+                        <Route path={"contract"} element={<EmployerContractPage/>}>
+                            <Route path=":id" element={<ViewPDFModal/>}/>
+                        </Route>
                         <Route path="offers/:id" element={<EmployerOfferDetails/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>

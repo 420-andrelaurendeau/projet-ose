@@ -94,11 +94,10 @@ function EmployeurHomePage() {
         try {
             fetchedInternshipsAgreementRef.current = true
             console.log("DATA")
-            console.log(currentPage, numberElementByPage, offerState, sortField, sortDirection)
+            console.log(currentPage, numberElementByPage, sortField, sortDirection)
             const response = await getStageByEmployeurId({
                 page: currentAgreementPage,
                 size: numberElementAgreementByPage,
-                state: agreementState,
                 sortField: agreementSortField,
                 sortDirection : agreementSortDirection
             }, id);
