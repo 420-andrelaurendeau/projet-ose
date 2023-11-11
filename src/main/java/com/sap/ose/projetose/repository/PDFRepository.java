@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PDFRepository extends JpaRepository<PDF, Long> {
+
+    PDF findPDFByIsActive();
 }

@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.dto;
 
+import com.sap.ose.projetose.modeles.PDF;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,13 @@ public class PDFDto {
         this.fileId = fileId;
         this.fileName = fileName;
         this.content = content;
+    }
+
+    public PDFDto(PDF pdf) {
+        this.createdDate = pdf.getCreatedDate().toString();
+        this.isActive = pdf.getIsActive();
+        this.fileId = pdf.getFile().getId();
+        this.fileName = pdf.getFile().getFileName();
+        this.content = pdf.getFile().getContent();
     }
 }
