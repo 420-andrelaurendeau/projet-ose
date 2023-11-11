@@ -36,5 +36,4 @@ public class PDFController {
         return ResponseEntity.ok(currentPDF);
     }
 
-
 }
