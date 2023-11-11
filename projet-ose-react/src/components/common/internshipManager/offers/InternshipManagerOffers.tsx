@@ -1,7 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
-import React, {useRef, useState} from "react";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
+import React, {useState} from "react";
+import {InternshipOffer} from "../../../../model/IntershipOffer";
 import InternshipManagerOfferPage from "../../../../pages/internshipManager/InternshipManagerOfferPage";
 import useModal from "../../../../hooks/useModal";
 import {useTranslation} from "react-i18next";
@@ -9,10 +9,10 @@ import {useNavigate} from "react-router-dom";
 
 
 export default function InternshipManagerOffers(props: any) {
-    const [offer, setOffer] = useState<InterOfferJob>();
+    const [offer, setOffer] = useState<InternshipOffer>();
 
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
     const navigate = useNavigate();
 
@@ -111,7 +111,7 @@ export default function InternshipManagerOffers(props: any) {
                     </div>
                 </div>
                 <div className="bg-white dark:bg-dark rounded border-b-2 border-x-2 border-gray rounded">
-                    {props.offers.map((offer: InterOfferJob) => (
+                    {props.offers.map((offer: InternshipOffer) => (
                         <div role="row" className="flex p-3"
                              key={offer.id}>
 

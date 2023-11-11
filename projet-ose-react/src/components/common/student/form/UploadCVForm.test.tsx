@@ -1,22 +1,22 @@
 import {fireEvent, render, screen} from "@testing-library/react";
+import UploadCVForm from "./UploadCVForm";
 import React from "react";
-import {ToastContextProvider} from "../../../hooks/context/ToastContext";
-import {getUser} from "../../../api/UtilisateurAPI";
-import {saveCvStudent} from "../../../api/StudentApi";
+import {ToastContextProvider} from "../../../../hooks/context/ToastContext";
+import {getUser} from "../../../../api/UtilisateurAPI";
+import {saveCvStudent} from "../../../../api/StudentApi";
 import {act} from "react-dom/test-utils";
-import UploadCV from "./UploadCV";
 
 
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-jest.mock("../../../api/UtilisateurAPI", () => {
+jest.mock("../../../../api/UtilisateurAPI", () => {
     return {
         getUser: jest.fn(),
     };
 });
 
-jest.mock("../../../api/StudentApi", () => {
+jest.mock("../../../../api/StudentApi", () => {
     return {
         saveCvStudent: jest.fn(),
     };
@@ -47,7 +47,7 @@ describe("UploadCV Component", () => {
     })
 
     it("renders the component upload button to be greyed out and cursor default", () => {
-        render(<UploadCV/>);
+        render(<UploadCVForm/>);
         const button = screen.getByLabelText("upload_button");
         expect(button).toBeInTheDocument();
         expect(button.classList.contains("bg-gray")).toBe(true)
@@ -55,7 +55,7 @@ describe("UploadCV Component", () => {
     });
 
     it("handles file selection and displays the selected file", async () => {
-        render(<UploadCV/>);
+        render(<UploadCVForm/>);
         const sampleFile = new File(["Sample file content"], "test.pdf");
         const fileInput = screen.getByLabelText("file");
 
@@ -75,7 +75,7 @@ describe("UploadCV Component", () => {
     });
 
     it("validates the selected file error", async () => {
-        render(<UploadCV/>);
+        render(<UploadCVForm/>);
         const invalidFile = new File(["Invalid file content"], "invalid-file.exe", {
             type: "application/octet-stream",
         });
@@ -104,7 +104,7 @@ describe("UploadCV Component", () => {
         (saveCvStudent as jest.Mock).mockResolvedValue(response);
         render(
             <ToastContextProvider>
-                <UploadCV/>
+                <UploadCVForm/>
             </ToastContextProvider>);
 
         const sampleFile = new File(["Sample file content"], "test.pdf");
@@ -142,7 +142,7 @@ describe("UploadCV Component", () => {
 
         render(
             <ToastContextProvider>
-                <UploadCV />
+                <UploadCVForm />
             </ToastContextProvider>
         );
 

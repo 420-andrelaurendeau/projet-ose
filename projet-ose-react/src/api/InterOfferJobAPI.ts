@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {InterOfferJob} from "../model/IntershipOffer";
+import {InternshipOffer} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
@@ -38,7 +38,7 @@ export const allStudentInternshipOffers = async (): Promise<any[]> => {
     }
 }
 
-export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number) => {
+export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: number) => {
     const interOfferJobDto = {
         title: interOfferJob.title,
         location: interOfferJob.location,
@@ -61,7 +61,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number
     }
 };
 
-export const getAllPendingInterOfferJob = async (): Promise<InterOfferJob[]> => {
+export const getAllPendingInterOfferJob = async (): Promise<InternshipOffer[]> => {
     try {
         const response = await axios.create({
             baseURL: API_BASE_URL,
@@ -137,9 +137,9 @@ export const getStudentAppliedOffers = async (studentId: number): Promise<Applie
     try {
         const response = await apiClient.get('/student/' + studentId + '/offersApplied');
         return response.data.map((item: any) => ({
-            appliedOffer: item.appliedOffer,
-            appliedFiles: item.appliedFiles
-        }));
+                appliedOffer: item.appliedOffer,
+                appliedFiles: item.appliedFiles
+            }));
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;

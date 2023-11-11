@@ -22,7 +22,7 @@ public class File {
 
     private String fileName;
 
-    private boolean isAccepted;
+    private State isAccepted;
 
     @ManyToOne
     @JoinColumn(name = "etudiant_id")
@@ -33,10 +33,24 @@ public class File {
     private InternshipCandidates internshipCandidates;
 
 
-    public File(byte[] content, String fileName, boolean isAccepted) {
+    public File(byte[] content, String fileName, State isAccepted) {
         this.content = content;
         this.fileName = fileName;
         this.isAccepted = isAccepted;
+    }
+
+    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant) {
+        this.content = content;
+        this.fileName = fileName;
+        this.isAccepted = isAccepted;
+        this.etudiant = etudiant;
+    }
+
+    public File(byte[] content, String fileName, Etudiant etudiant) {
+        this.content = content;
+        this.fileName = fileName;
+        this.isAccepted = State.PENDING;
+        this.etudiant = etudiant;
     }
 
     @Override

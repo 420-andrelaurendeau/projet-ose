@@ -1,5 +1,3 @@
-import {FileEntity} from "./FileEntity";
-import {State} from "./State";
 
 export interface OfferReviewRequest {
     id?: number;

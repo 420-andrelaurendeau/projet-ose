@@ -1,10 +1,10 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.InternOfferDto;
-import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.FileEntityRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class InternshipmanagerService {
 
@@ -24,13 +26,19 @@ public class InternshipmanagerService {
     private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
 
+    private final FileEntityRepository fileEntityRepository;
+
+    private final EtudiantRepository etudiantRepository;
+
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
     @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService) {
+    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService, FileEntityRepository fileEntityRepository, EtudiantRepository etudiantRepository) {
         this.internshipmanagerRepository = internshipmanagerRepository;
         this.internOfferService = internOfferService;
         this.programmeService = programmeService;
+        this.fileEntityRepository = fileEntityRepository;
+        this.etudiantRepository = etudiantRepository;
     }
 
     @Transactional
@@ -51,7 +59,7 @@ public class InternshipmanagerService {
         }
     }
 
-    Internshipmanager findById(long id) {
+    public Internshipmanager findById(long id) {
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
         } catch (InternshipmanagerNotFoundException e) {
@@ -68,11 +76,38 @@ public class InternshipmanagerService {
     }
 
     @Transactional
-    public void save(InternshipmanagerDto internshipmanagerDto) {
+    public Internshipmanager save(InternshipmanagerDto internshipmanagerDto) {
+        Internshipmanager internshipmanager = null;
         try {
             Programme program = programmeService.findById(internshipmanagerDto.getProgrammeId());
 
-            Internshipmanager internshipmanager = internshipmanagerDto.fromDto();
+            internshipmanager = internshipmanagerDto.fromDto();
+            internshipmanager.setProgramme(program);
+
+            internshipmanagerRepository.save(internshipmanager);
+
+        } catch (DataIntegrityViolationException e) {
+            logger.info(e.getMessage());
+            throw new DataIntegrityViolationException("Erreur d'intégrité des données lors de la sauvegarde de l'offre d'emploi.");
+        } catch (DataAccessException e) {
+            logger.info(e.getMessage());
+            throw new DataAccessException("Erreur d'accès aux données lors de la sauvegarde de l'offre d'emploi.") {
+            };
+        } catch (NullPointerException e) {
+            logger.info(e.getMessage());
+            throw new NullPointerException(e.getMessage());
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException("Erreur inconnue lors de la sauvegarde de l'offre d'emploi.");
+        }
+        return internshipmanager;
+    }
+
+    @Transactional
+    public void save(Internshipmanager internshipmanager) {
+        try {
+            Programme program = programmeService.findById(internshipmanager.getId());
+
             internshipmanager.setProgramme(program);
 
             internshipmanagerRepository.save(internshipmanager);
@@ -109,6 +144,55 @@ public class InternshipmanagerService {
             throw e;
         } catch (ServiceException e) {
             logger.error("Erreur inconnue lors de la récupération des offres de stage", e);
+            throw e;
+        }
+    }
+    @Transactional
+    public List<FileDtoAll> getPendingCv() {
+        try {
+            List<FileDtoAll> pendingCv = fileEntityRepository.findAllStudentCvPending().isPresent() ? fileEntityRepository.findAllStudentCvPending().get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList() : null;
+            return pendingCv;
+        } catch (DatabaseException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
+            throw e;
+        } catch (ServiceException e) {
+            logger.error("Erreur inconnue lors de la récupération des CV", e);
+            throw e;
+        }
+    }
+    @Transactional
+    public FileDtoAll acceptCv(Long id) {
+        try {
+            File file = fileEntityRepository.findById(id).orElse(null);
+            Etudiant etudiant = etudiantRepository.getById(file.getEtudiant().getId());
+            file.setIsAccepted(State.ACCEPTED);
+            file.setEtudiant(etudiant);
+            fileEntityRepository.save(file);
+            FileDtoAll fileDtoAll = new FileDtoAll(file);
+            return fileDtoAll;
+        } catch (DatabaseException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
+            throw e;
+        } catch (ServiceException e) {
+            logger.error("Erreur inconnue lors de la récupération des CV", e);
+            throw e;
+        }
+    }
+    @Transactional
+    public FileDtoAll declineCv(Long id) {
+        try {
+            File file = fileEntityRepository.findById(id).orElse(null);
+            Etudiant etudiant = etudiantRepository.getById(file.getEtudiant().getId());
+            file.setIsAccepted(State.DECLINED);
+            file.setEtudiant(etudiant);
+            fileEntityRepository.save(file);
+            FileDtoAll fileDtoAll = new FileDtoAll(file);
+            return fileDtoAll;
+        } catch (DatabaseException e) {
+            logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
+            throw e;
+        } catch (ServiceException e) {
+            logger.error("Erreur inconnue lors de la récupération des CV", e);
             throw e;
         }
     }

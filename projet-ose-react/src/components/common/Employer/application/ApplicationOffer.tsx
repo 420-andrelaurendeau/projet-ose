@@ -5,7 +5,6 @@ import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-r
 import {getInterOfferCandidates} from "../../../../api/intershipCandidatesAPI";
 import axios from "axios";
 import {useProps} from "../../../../pages/employer/EmployeurHomePage";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
 import {useTranslation} from "react-i18next";
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
@@ -40,7 +39,7 @@ const ApplicationOffer: React.FC<any> = () => {
     const {offers, user} = useProps();
     const [date, setDate] = useState<Date>(new Date());
     const [studentId, setStudentId] = useState<number>(0);
-    const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);

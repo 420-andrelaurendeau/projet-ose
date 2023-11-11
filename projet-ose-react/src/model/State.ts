@@ -1,6 +1,6 @@
 
 export enum State{
-    ACCEPTED,
+    APPROVED,
     PENDING,
-    DECLINED
+    REJECTED
 }

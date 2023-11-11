@@ -119,7 +119,7 @@ public class InternOfferService {
         return new InternOfferDto(internOffer);
     }
 
-    InternOffer findById(long id) {
+    public InternOffer findById(long id) {
         try {
             return offerJobRepository.findById(id).orElseThrow(OfferNotFoundException::new);
         } catch (OfferNotFoundException e) {

@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
+import {InternshipOffer} from "../../../../model/IntershipOffer";
 import {getOfferReviewById} from "../../../../api/InternshipManagerAPI";
 import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
@@ -10,15 +10,15 @@ import {useToast} from "../../../../hooks/state/useToast";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
-    internshipOffer: InterOfferJob;
+    internshipOffer: InternshipOffer;
     renderError: any;
 }
 
 const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
-                                                           handleFormChange,
-                                                           internshipOffer,
-                                                           renderError
-                                                       }) => {
+                                                                          handleFormChange,
+                                                                          internshipOffer,
+                                                                          renderError
+                                                                      }) => {
 
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -28,7 +28,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
     const [formStateReview, setFormStateReview] = React.useState({
-       comment: "", state: ""
+        comment: "", state: ""
     });
     const toast = useToast();
 
@@ -170,7 +170,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         id="commentary_placeholder"
                         placeholder={formStateReview.comment}
                         disabled={true}
-                        >
+                    >
 
                     </textarea>
                     <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
@@ -193,3 +193,5 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 }
 
 export default InternshipManagerOfferDetails;
+
+

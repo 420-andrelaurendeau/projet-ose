@@ -5,6 +5,8 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.service.InternOfferService;
+import jakarta.transaction.Transactional;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

@@ -26,6 +26,30 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Accepted",
+                                declinedInternshipsAgreement: "Declined",
+                                pendingInternshipsAgreement: "Pending",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
+                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
+                            },
+                            title: "Internships agreement",
+                            internshipsAgreement: {
+                                title: "Title",
+                                enterprise: "Enterprise",
+                                student: "Student",
+                                statut: "Status",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -344,6 +368,10 @@ i18n
                                 name: 'stage',
                                 text: 'Intership Offer',
                             },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Student CV Review',
+                            },
                             cv: {
                                 name: 'CV',
                                 text: 'Upload your CV',
@@ -357,6 +385,10 @@ i18n
                                     name: 'offre applique',
                                     text: "Applied offer"
                                 }
+                            },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Interview',
                             },
                             profilMenu: {
                                 signOut: {
@@ -599,14 +631,68 @@ i18n
                         }
                     },
                     cv: CV.en,
-                }
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Title',
+                            location: 'Location',
+                            date: 'Date of the interview',
+                            company: 'Company',
+                            action: {
+                                name: 'action',
+                                text: 'Action',
+                                button : {
+                                    accept: 'Accept',
+                                    decline: 'Decline',
+                                },
+                                status:{
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                }
+                            },
+                        }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV to evaluate',
+                        button: {
+                            accept: 'Accept',
+                            decline: 'Decline',
+                            download: "Download",
+                        }
+                    }
 
+                },
             },
             fr: {
                 translation: {
                     formField: {
                         application,
                         employerOffer,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Acceptées",
+                                declinedInternshipsAgreement: "Refusées",
+                                pendingInternshipsAgreement: "Attente",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
+                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
+                            },
+                            title: "Ententes de stage",
+                            internshipsAgreement: {
+                                title: "Titre",
+                                enterprise: "Entreprise",
+                                student: "Étudiant",
+                                statut: "Statut",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total des offres",
@@ -933,9 +1019,17 @@ i18n
                                 name: 'stage',
                                 text: 'Offre stages',
                             },
+                            cvReview : {
+                                name: 'CV Review',
+                                text: 'Revue de CV',
+                            },
                             cv: {
                                 name: 'CV',
                                 text: 'Televerser votre CV',
+                            },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Entrevue',
                             },
                             sidebar: {
                                 stage: {
@@ -1170,6 +1264,36 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInterview: {
+                        table: {
+                            name: 'table',
+                            title: 'Titre',
+                            location: 'Lieu de travail',
+                            date: 'Date de l\'entrevue',
+                            company: 'Compagnie',
+                            action: {
+                                name: 'action',
+                                text: 'Actions',
+                                button : {
+                                    accept: 'Accepter',
+                                    decline: 'Decliner',
+                                },
+                                status:{
+                                    accepted: "Accepté",
+                                    declined: "Decliné",
+                                }
+                            },
+                        }
+                    },
+                    StudentCvEvaluation: {
+                        name: 'StudentCvEvaluation',
+                        title: 'CV à évaluer',
+                        button: {
+                            accept: 'Accepter',
+                            decline: 'Decliner',
+                            download: "Télécharger",
+                        }
+                    }
                 }
             }
         }

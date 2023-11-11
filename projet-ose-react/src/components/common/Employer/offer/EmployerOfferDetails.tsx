@@ -3,7 +3,7 @@ import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-r
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import {useTranslation} from "react-i18next";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
+import {InternshipOffer} from "../../../../model/IntershipOffer";
 import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
 import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
@@ -13,7 +13,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const toast = useContext(ToastContext);
-    const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);

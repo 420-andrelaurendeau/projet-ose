@@ -23,8 +23,34 @@ module.exports = {
         },
       },
       colors: {
-        'blue': '#306bac',
-        'orange': '#F57A00',
+        'blue': {
+          '50': '#f3f6fc',
+          '100': '#e6eef8',
+          '200': '#c8dbef',
+          '300': '#98bce1',
+          '400': '#6199cf',
+          '500': '#3d7cba',
+          '600': '#306bac',
+          '700': '#254e7f',
+          '800': '#22446a',
+          '900': '#213a59',
+          '950': '#16253b',
+          DEFAULT: '#306bac'
+        },
+        'orange': {
+          '50': '#fffaec',
+          '100': '#fff4d3',
+          '200': '#ffe5a5',
+          '300': '#ffd16d',
+          '400': '#ffb132',
+          '500': '#ff970a',
+          '600': '#f57a00',
+          '700': '#cc5c02',
+          '800': '#a1470b',
+          '900': '#823c0c',
+          '950': '#461c04',
+          DEFAULT: '#f57a00'
+        },
         'gray': '#D0CCD0',
         'lightgray': '#e7e7e7',
         'offwhite': '#FBFCFF',
@@ -63,5 +89,6 @@ module.exports = {
       backgroundImage: ['dark'],
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
