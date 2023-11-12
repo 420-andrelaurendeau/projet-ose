@@ -2,14 +2,10 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.*;
-import com.sap.ose.projetose.exception.BadSortingFieldException;
-import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.InvalidStateException;
-import com.sap.ose.projetose.exception.ServiceException;
+import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.Contract;
 import com.sap.ose.projetose.repository.StageRepository;
-import io.micrometer.observation.ObservationFilter;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +77,7 @@ public class StageService {
 
     // TODO TEST temporaire
     @Transactional
-    public Optional<StageDto> saveTEST(StageDto stageDto) {
+    public StageDto saveTEST(StageDto stageDto) {
         Etudiant etudiant = etudiantService.findEtudiantById(stageDto.getStudent_id());
         InternOffer internOffer = internOfferService.findById(stageDto.getOffer().getId());
         Employeur employeur = internOffer.getEmployeur();
@@ -93,15 +89,9 @@ public class StageService {
         stage.setStateEmployeur(stageDto.getStateEmployeur());
         stage.setOffer(internOffer);
 
-        if (isAcceptedByAll(stage.getStateStudent(), stage.getStateEmployeur())) {
-            System.out.println("CREATED CONTRACT");
-            long idContract = createContract(stage);
-            Contract contract = contractService.findById(idContract);
-            stage.setContract(contract);
-        }
-        stageRepository.save(stage);
-        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0);
-        return Optional.of(stageReturn);
+        if(isContractAccepted(stageDto.getId()))
+            stage = setContract(stage);
+        return new StageDto(stage);
     }
 
     @Transactional
@@ -129,14 +119,72 @@ public class StageService {
         return Optional.of(false);
     }
 
-    public boolean isAcceptedByAll(State student, State employer) {
-        if (student == null || employer == null)
-            return false;
-        return student == State.ACCEPTED && employer == State.ACCEPTED;
+    @Transactional
+    public StageDto saveEmployerOpinion(StageDto stageDto, String opinionState) {
+        try {
+            Stage savedStage = setEmployerOpinion(stageDto, opinionState);
+
+            if(isContractAccepted(stageDto.getId()))
+                savedStage = setContract(savedStage);
+            return new StageDto(savedStage);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        } catch (StageNotFoundException e) {
+            throw e;
+        } catch (DatabaseException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceException("Erreur lors de la récupération des offres d'emploi.");
+        }
     }
 
-    long createContract(Stage stage) {
-        return contractService.createContract(stage);
+    @Transactional
+    public Stage setEmployerOpinion(StageDto stageDto, String opinionState) {
+        try {
+            State stateEmployer = State.valueOf(opinionState);
+            Stage stage = stageRepository.findById(stageDto.getId()).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
+
+            if (stateEmployer == State.ACCEPTED)
+                stage.setStateEmployeur(State.ACCEPTED);
+            else
+                stage.setStateEmployeur(State.DECLINED);
+
+            return stageRepository.save(stage);
+        }  catch (IllegalArgumentException | StageNotFoundException e) {
+            logger.error("Erreur d'argument avec l'état de l'employeur sur l'entente de stage", e);
+            throw e;
+        } catch (DataAccessException e) {
+            logger.error("Erreur de basse de données avec l'état de l'employeur sur l'entente de stage", e);
+            throw new DatabaseException("");
+        } catch (Exception e) {
+            logger.error("Erreur avec l'état de l'employeur sur l'entente de stage", e);
+            throw new ServiceException("");
+        }
+    }
+
+    @Transactional
+    public Stage setContract(Stage stage) {
+        try {
+            long idContract = contractService.createContract(stage);
+            Contract contract = contractService.findById(idContract);
+            stage.setContract(contract);
+            return stage;
+        } catch (Exception e) {
+            logger.error("Erreur lors de la création du contrat.", e);
+            throw new ServiceException("");
+        }
+    }
+
+    boolean isContractAccepted(long stageId) {
+        try {
+            return stageRepository.isContractAccepted(stageId);
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la vérification des états d'entente de stage.", e);
+            throw new DatabaseException("");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la vérification des états d'entente de stage.", e);
+            throw new ServiceException("");
+        }
     }
 
 

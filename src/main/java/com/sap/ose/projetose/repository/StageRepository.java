@@ -40,4 +40,12 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0) )")
     Page<Stage> findAllByState(@Param("state") State state, Pageable pageable);
 
+    @Query("SELECT CASE " +
+            "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN false " + // 'DECLINED'
+            "WHEN (s.stateStudent = 1 OR s.stateEmployeur = 1) THEN false " + // 'PENDING'
+            "ELSE true END " + // 'ACCEPTED'
+            "FROM Stage s WHERE s.id = :id")
+    boolean isContractAccepted(@Param("id") long id);
+
+
 }
