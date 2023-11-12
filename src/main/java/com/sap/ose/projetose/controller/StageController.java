@@ -61,7 +61,7 @@ public class StageController {
     }
 
     @GetMapping("/countStudent/{id}")
-    @PreAuthorize("hasAuthority('employeur')")
+    @PreAuthorize("hasAuthority('student')")
     public ResponseEntity<Map<String, Long>> getStageCountStudent(@PathVariable long id) {
         logger.info("Stage count request received");
         return Optional.of(stageService.getCountByStateStudent(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
