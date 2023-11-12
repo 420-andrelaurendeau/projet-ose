@@ -87,10 +87,11 @@ public class EtudiantService {
 
     @Transactional
     public EtudiantDto addCvById(long id, File cv){
+        System.out.println("EtudiantService.addCvById");
         Etudiant etudiant = etudiantRepository.findById(id).orElse(null);
-
+        System.out.println("EtudiantService.addCvById");
         if (etudiant == null) return null;
-
+        System.out.println("EtudiantService.addCvById");
         List<File> cvs = etudiant.getCv();
         if (cvs.isEmpty()) {
             cvs.add(null);
@@ -99,10 +100,14 @@ public class EtudiantService {
         else {
             cvs.add(1, cv);
         }
+        System.out.println("EtudiantService.addCvById");
 
         cv.setEtudiant(etudiant);
+        System.out.println("EtudiantService.addCvById");
         etudiant.setCv(cvs);
+        System.out.println("EtudiantService.addCvById");
         etudiant  = etudiantRepository.save(etudiant);
+        System.out.printf("%b%n", etudiant);
         return new EtudiantDto(etudiant);
     }
 

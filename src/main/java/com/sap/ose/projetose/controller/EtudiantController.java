@@ -52,8 +52,12 @@ public class EtudiantController {
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public ResponseEntity<EtudiantDto> addCv(@PathVariable int id, @RequestBody File cv) {
         logger.info("add cv to user with id" + id );
+        System.out.println("EtudiantController.addCv");
         EtudiantDto etudiantDto = etudiantService.addCvById(id, cv);
-        return ResponseEntity.ok().body(etudiantDto);
+        System.out.println("EtudiantController.addCv");
+        var response = ResponseEntity.ok().body(etudiantDto);
+        ResponseEntity.ok().body(etudiantDto);
+        return response;
     }
 
     @GetMapping("{id}/offersApplied")
