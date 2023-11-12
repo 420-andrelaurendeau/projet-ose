@@ -99,21 +99,30 @@ public class StageService {
         return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(),stage.getContract() != null ? stage.getContract().id : 0)).toList() : null;
     }
 
+    @Transactional
     public Optional<Boolean> setStudentAccepted(StageDto stageDto) {
+
         Stage stage = stageRepository.findById(stageDto.getId()).orElse(null);
         if (stage != null) {
             stage.setStateStudent(State.ACCEPTED);
+            if(isContractAccepted(stageDto.getId()))
+                stage = setContract(stage);
             stageRepository.save(stage);
+
             return Optional.of(true);
         }
         return Optional.of(false);
     }
 
+    @Transactional
     public Optional<Boolean> setStudentDeclined(StageDto stageDto) {
         Stage stage = stageRepository.findById(stageDto.getId()).orElse(null);
         if (stage != null) {
             stage.setStateStudent(State.DECLINED);
+            if(isContractAccepted(stageDto.getId()))
+                stage = setContract(stage);
             stageRepository.save(stage);
+
             return Optional.of(true);
         }
         return Optional.of(false);
@@ -126,6 +135,7 @@ public class StageService {
 
             if(isContractAccepted(stageDto.getId()))
                 savedStage = setContract(savedStage);
+
             return new StageDto(savedStage);
         } catch (IllegalArgumentException | StageNotFoundException | DatabaseException e) {
             throw e;
@@ -140,10 +150,7 @@ public class StageService {
             State stateEmployer = State.valueOf(opinionState);
             Stage stage = stageRepository.findById(stageDto.getId()).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
 
-            if (stateEmployer == State.ACCEPTED)
-                stage.setStateEmployeur(State.ACCEPTED);
-            else
-                stage.setStateEmployeur(State.DECLINED);
+            stage.setStateEmployeur(stateEmployer);
 
             return stageRepository.save(stage);
         }  catch (IllegalArgumentException | StageNotFoundException e) {
