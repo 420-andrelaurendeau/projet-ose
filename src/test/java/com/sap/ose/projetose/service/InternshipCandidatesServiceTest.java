@@ -28,7 +28,7 @@ import com.sap.ose.projetose.modeles.OfferReviewRequest;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.modeles.Role;
 import com.sap.ose.projetose.modeles.State;
-import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
+import com.sap.ose.projetose.repository.*;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
@@ -52,16 +52,34 @@ class InternshipCandidatesServiceTest {
     private EtudiantService etudiantService;
 
     @MockBean
+    private EtudiantRepository etudiantRepository;
+
+    @MockBean
     private FileService fileService;
+
+    @MockBean
+    private FileEntityRepository fileEntityRepository;
 
     @MockBean
     private InternOfferService internOfferService;
 
     @MockBean
+    private InternOfferRepository internOfferRepository;
+
+    @MockBean
     private InternshipCandidatesRepository internshipCandidatesRepository;
+
+    @MockBean
+    private InterviewService interviewService;
+
+    @MockBean
+    private InterviewRepository interviewRepository;
 
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
+
+
+
 
     /**
      * Method under test: {@link InternshipCandidatesService#saveCandidates(InternshipCandidates)}

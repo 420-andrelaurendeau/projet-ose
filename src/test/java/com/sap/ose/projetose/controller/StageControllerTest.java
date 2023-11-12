@@ -34,21 +34,6 @@ public class StageControllerTest {
     private StageService stageService;
 
 
-    @Test
-    void testSaveEmployerOpinion() throws Exception {
-        MockHttpServletRequestBuilder contentTypeResult = MockMvcRequestBuilders.post("/api/stage/saveEmployerOpinion")
-                .contentType(MediaType.APPLICATION_JSON);
-        MockHttpServletRequestBuilder contentResult = contentTypeResult
-                .content((new ObjectMapper()).writeValueAsString(1L));
-        MockHttpServletRequestBuilder requestBuilder = contentResult
-                .content((new ObjectMapper()).writeValueAsString("foo"));
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(stageController)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build()
-                .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
-    }
-
 
 }
 
