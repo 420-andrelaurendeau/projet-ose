@@ -83,4 +83,12 @@ public class StageController {
         logger.info("Interview accept request received");
         return stageService.setStudentDeclined(stageDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/saveEmployerOpinion")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
+    public ResponseEntity<StageDto> saveEmployerOpinion(@RequestBody long stageId, @RequestBody String opinion){
+        StageDto updatedStage = stageService.saveEmployerOpinion(stageId, opinion);
+        return ResponseEntity.ok(updatedStage);
+
+    }
 }

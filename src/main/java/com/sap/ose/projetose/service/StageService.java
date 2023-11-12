@@ -129,11 +129,11 @@ public class StageService {
     }
 
     @Transactional
-    public StageDto saveEmployerOpinion(StageDto stageDto, String opinionState) {
+    public StageDto saveEmployerOpinion(long stageId , String opinionState) {
         try {
-            Stage savedStage = setEmployerOpinion(stageDto, opinionState);
+            Stage savedStage = setEmployerOpinion(stageId, opinionState);
 
-            if(isContractAccepted(stageDto.getId()))
+            if(isContractAccepted(stageId))
                 savedStage = setContract(savedStage);
 
             return new StageDto(savedStage);
@@ -145,10 +145,10 @@ public class StageService {
     }
 
     @Transactional
-    public Stage setEmployerOpinion(StageDto stageDto, String opinionState) {
+    public Stage setEmployerOpinion(long stageId, String opinionState) {
         try {
             State stateEmployer = State.valueOf(opinionState);
-            Stage stage = stageRepository.findById(stageDto.getId()).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
+            Stage stage = stageRepository.findById(stageId).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
 
             stage.setStateEmployeur(stateEmployer);
 

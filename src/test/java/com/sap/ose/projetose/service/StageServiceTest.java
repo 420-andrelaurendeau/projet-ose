@@ -128,40 +128,11 @@ public class StageServiceTest {
     }
 
     @Test
-    void setEmployerOpinion_ThrowsDatabaseException_OnDataAccessException() {
-        StageDto stageDto = mock(StageDto.class);
-        when(stageDto.getId()).thenThrow(new EmptyResultDataAccessException(3));
-        assertThrows(DatabaseException.class, () -> stageService.setEmployerOpinion(stageDto, "DECLINED"));
-        verify(stageDto).getId();
-    }
-
-    @Test
-    void setEmployerOpinion_ThrowsDatabaseException_OnIllegalArgumentException() {
-        StageDto stageDto = mock(StageDto.class);
-        when(stageDto.getId())
-                .thenThrow(new IllegalArgumentException("Erreur d'argument avec l'état de l'employeur sur l'entente de stage"));
-        assertThrows(IllegalArgumentException.class, () -> stageService.setEmployerOpinion(stageDto, "DECLINED"));
-        verify(stageDto).getId();
-    }
-
-    @Test
-    void setEmployerOpinion_ThrowsServiceException_WithNullStageDto() {
-
-        assertThrows(ServiceException.class,
-                () -> stageService.setEmployerOpinion(null, "DECLINED"));
-    }
-
-    @Test
     void saveEmployerOpinion_ThrowsIllegalArgumentException_OnRepositoryFindByIdFailure() {
         when(stageRepository.findById(Mockito.<Long>any()))
                 .thenThrow(new IllegalArgumentException("Erreur lors de la récupération des offres d'emploi."));
-        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(new StageDto(), "DECLINED"));
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(anyLong(), "DECLINED"));
         verify(stageRepository).findById(Mockito.<Long>any());
-    }
-
-    @Test
-    void saveEmployerOpinion_ThrowsServiceException_WithNullStageDto() {
-        assertThrows(ServiceException.class, () -> stageService.saveEmployerOpinion(null, "DECLINED"));
     }
 
     @Test
@@ -170,7 +141,7 @@ public class StageServiceTest {
                 .thenThrow(new IllegalArgumentException("Erreur lors de la récupération des offres d'emploi."));
         StageDto stageDto = mock(StageDto.class);
         when(stageDto.getId()).thenReturn(1L);
-        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto, "DECLINED"));
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto.getId(), "DECLINED"));
         verify(stageDto).getId();
         verify(stageRepository).findById(Mockito.<Long>any());
     }
@@ -180,7 +151,7 @@ public class StageServiceTest {
         StageDto stageDto = mock(StageDto.class);
         when(stageDto.getId())
                 .thenThrow(new IllegalArgumentException("Erreur d'argument avec l'état de l'employeur sur l'entente de stage"));
-        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto, "DECLINED"));
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto.getId(), "DECLINED"));
         verify(stageDto).getId();
     }
 
