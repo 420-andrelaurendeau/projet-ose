@@ -94,7 +94,7 @@ class EtudiantControllerTest {
     @Test
     void testGetEtudiant() throws Exception {
         when(oseService.getEtudiantById(Mockito.<Long>any())).thenReturn(new EtudiantDto("Matricule", 1, null, null));
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/{id}", 1L);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}", 1L);
         MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"id\":0,\"nom\":null,\"prenom\":null,\"phone\":null,\"email\":null,\"matricule\":\"Matricule\",\"programme_id\":1," + "\"cv\":null,\"internships_id\":null}"));
     }
 
@@ -115,7 +115,7 @@ class EtudiantControllerTest {
     @Test
     void testGetEtudiants() throws Exception {
         when(oseService.getEtudiants()).thenReturn(new ArrayList<>());
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/etudiants");
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/etudiants");
         MockMvcBuilders.standaloneSetup(etudiantController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
@@ -124,7 +124,7 @@ class EtudiantControllerTest {
     void getOffersApplied_EtudiantNotFoundException() throws Exception {
         when(etudiantController.getOffersApplied(anyLong())).thenThrow(new EtudiantNotFoundException());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
@@ -140,7 +140,7 @@ class EtudiantControllerTest {
     void getOffersApplied_DatabaseException() throws Exception {
         when(etudiantController.getOffersApplied(anyLong())).thenThrow(new DatabaseException());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
@@ -156,7 +156,7 @@ class EtudiantControllerTest {
     void getOffersApplied_ServiceException() throws Exception {
         when(etudiantController.getOffersApplied(anyLong())).thenThrow(new ServiceException());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(etudiantController)
@@ -173,7 +173,7 @@ class EtudiantControllerTest {
     void getOffersApplied_EmptyArray() throws Exception {
         when(oseService.getOffersAppliedByEtudiant(anyLong())).thenReturn(new ArrayList<>());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         MockMvcBuilders.standaloneSetup(etudiantController)
@@ -191,7 +191,7 @@ class EtudiantControllerTest {
         StudentAppliedOffersDto dto = new StudentAppliedOffersDto(new InternOfferDto(etudiant.getInternshipsCandidate().get(0).getInternOffer()), List.of(new FileDto()));
         when(oseService.getOffersAppliedByEtudiant(anyLong())).thenReturn(List.of(dto));
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/etudiant/1/offersApplied")
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/1/offersApplied")
                 .contentType(MediaType.APPLICATION_JSON);
 
         String expectedJson = new ObjectMapper().writeValueAsString(List.of(dto));

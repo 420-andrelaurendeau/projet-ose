@@ -67,7 +67,7 @@ class InternshipCandidatesControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}]"));
+                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}]"));
     }
 
     /**
@@ -84,7 +84,7 @@ class InternshipCandidatesControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}"));
+                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}"));
     }
 
     /**
@@ -119,7 +119,7 @@ class InternshipCandidatesControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}]"));
+                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}]"));
     }
 
     /**
@@ -154,7 +154,7 @@ class InternshipCandidatesControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}]"));
+                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}]"));
     }
 
     /**
@@ -186,7 +186,7 @@ class InternshipCandidatesControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}"));
+                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}"));
     }
 
     /**
@@ -223,7 +223,7 @@ class InternshipCandidatesControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}]"));
+                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}]"));
     }
 
     /**
@@ -258,7 +258,7 @@ class InternshipCandidatesControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}]"));
+                        .string("[{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}]"));
     }
 
     /**
@@ -286,7 +286,7 @@ class InternshipCandidatesControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null}"));
+                        .string("{\"id\":0,\"etudiant\":null,\"internOfferJob\":null,\"files\":null,\"state\":null,\"date\":null}"));
     }
 }
 
