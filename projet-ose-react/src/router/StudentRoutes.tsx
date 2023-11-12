@@ -8,6 +8,7 @@ import UploadCVForm from "../components/common/student/form/UploadCVForm";
 import StudentAppliedOffers from "../components/common/student/offers/StudentAppliedOffers";
 import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import StudentStagePage from "../pages/student/StudentStagePage";
+import StudentContractPage from "../components/common/student/studentContractPage";
 
 const StudentRoutes: React.FC = () => {
     return (
@@ -20,6 +21,7 @@ const StudentRoutes: React.FC = () => {
                     <Route path="interview" element={<StudentInterviewPage/>}/>
                     <Route path="*" element={<ErrorPage/>}/>
                     <Route path="stage" element={<StudentStagePage />}/>
+                    <Route path="contract" element={<StudentContractPage />}/>
                 </Route>
                 <Route path="*" element={<ErrorPage/>}/>
             </Routes>
