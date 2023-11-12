@@ -1,6 +1,8 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.PDFDto;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.PDF;
 import com.sap.ose.projetose.modeles.State;
@@ -9,14 +11,14 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class PDFService {
 
-    private PDFRepository pdfRepository;
-
     private final Logger logger = LoggerFactory.getLogger(PDFService.class);
+    private PDFRepository pdfRepository;
 
     @Autowired
     public PDFService(PDFRepository pdfRepository) {
@@ -29,36 +31,47 @@ public class PDFService {
             unsetDefaultPDF();
 
             File newFile = new File(pdfDto.getContent(), pdfDto.getFileName(), State.ACCEPTED);
-            PDF newPdf = new PDF(newFile);
-            PDF createdPDF = pdfRepository.save(newPdf);
+            PDF newPDF = new PDF(newFile);
 
-            return new PDFDto(createdPDF);
+            PDF savedPDF = pdfRepository.save(newPDF);
+            return new PDFDto(savedPDF);
+        } catch (DataAccessException | DatabaseException e) {
+            logger.error("Erreur lors de la sauvegarde du PDF", e);
+            throw new DatabaseException("");
         } catch (Exception e) {
             logger.error("Erreur lors de la sauvegarde du PDF", e);
-            throw e;
+            throw new ServiceException("");
         }
     }
 
     @Transactional
-    public void unsetDefaultPDF(){
+    public void unsetDefaultPDF() {
         try {
             PDF pdf = pdfRepository.findPDFByIsActive();
-            pdf.setIsActive(false);
-            pdfRepository.save(pdf);
+            if (pdf != null) {
+                pdf.setIsActive(false);
+                pdfRepository.save(pdf);
+            }
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la mise à jour du PDF par défaut", e);
+            throw new DatabaseException("");
         } catch (Exception e) {
             logger.error("Erreur lors de la mise à jour du PDF par défaut", e);
-            throw e;
+            throw new ServiceException("");
         }
     }
 
     @Transactional
-    public PDFDto getCurrentPDF(){
+    public PDFDto getCurrentPDF() {
         try {
             PDF pdf = pdfRepository.findPDFByIsActive();
             return new PDFDto(pdf);
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération du PDF par défaut", e);
+            throw new DatabaseException("");
         } catch (Exception e) {
             logger.error("Erreur lors de la récupération du PDF par défaut", e);
-            throw e;
+            throw new ServiceException("");
         }
     }
 }

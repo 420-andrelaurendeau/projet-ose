@@ -19,7 +19,7 @@ public class PDF {
     LocalDate createdDate;
     Boolean isActive;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")
     private File file;
 
