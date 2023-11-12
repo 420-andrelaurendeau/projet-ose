@@ -61,6 +61,20 @@ public class PDFService {
         }
     }
 
+
+    @Transactional
+    public PDF findCurrent() {
+        try {
+            return pdfRepository.findPDFByIsActive();
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération du PDF", e);
+            throw new DatabaseException("");
+        } catch (Exception e) {
+            logger.error("Erreur lors de la récupération du PDF", e);
+            throw new ServiceException("");
+        }
+    }
+
     @Transactional
     public PDFDto getCurrentPDF() {
         try {

@@ -4,7 +4,7 @@ import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.*;
-import com.sap.ose.projetose.repository.Contract;
+import com.sap.ose.projetose.modeles.Contract;
 import com.sap.ose.projetose.repository.StageRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -89,8 +89,10 @@ public class StageService {
         stage.setStateEmployeur(stageDto.getStateEmployeur());
         stage.setOffer(internOffer);
 
-        if(isContractAccepted(stageDto.getId()))
+        stage = stageRepository.save(stage);
+        if(isContractAccepted(stage.getId()))
             stage = setContract(stage);
+
         return new StageDto(stage);
     }
 

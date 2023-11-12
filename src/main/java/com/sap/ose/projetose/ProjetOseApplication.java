@@ -36,6 +36,8 @@ public class ProjetOseApplication implements CommandLineRunner {
     @Autowired
     ProgrammeRepository programmeRepository;
 
+    @Autowired
+    PDFService pdfService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
@@ -83,6 +85,8 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
+        PDFDto pdfDto = new PDFDto(LocalDate.now().toString(), true, file.getId(), file.getFileName(), file.getContent());
+        pdfService.save(pdfDto);
 
         StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
         StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
@@ -93,7 +97,6 @@ public class ProjetOseApplication implements CommandLineRunner {
         stageService.saveTEST(stage2);
         stageService.saveTEST(stage3);
         stageService.saveTEST(stage4);
-
 
         System.out.println("DONE");
     }

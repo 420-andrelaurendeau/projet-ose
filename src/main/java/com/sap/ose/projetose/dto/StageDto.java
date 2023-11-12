@@ -27,6 +27,6 @@ public class StageDto {
         this.offer = new InternOfferDto(stage.getOffer());
         this.stateStudent = stage.getStateStudent();
         this.stateEmployeur = stage.getStateEmployeur();
-        this.contract_id = stage.getContract().getId();
+        this.contract_id = stage.getContract() != null ? stage.getContract().getId() : 0;
     }
 }
