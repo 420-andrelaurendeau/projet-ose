@@ -4,7 +4,11 @@ import com.sap.ose.projetose.dto.EmployeurDto;
 import com.sap.ose.projetose.dto.EtudiantDto;
 import com.sap.ose.projetose.dto.UtilisateurDto;
 import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.repository.EmployeurRepository;
+import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.service.OseService;
+import com.sap.ose.projetose.service.UtilisateurService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,18 @@ import static org.mockito.Mockito.when;
 class UtilisateurControllerTest {
     @MockBean
     private OseService oseService;
+
+    @MockBean
+    private EtudiantRepository etudiantRepository;
+
+    @MockBean
+    private EmployeurRepository employeurRepository;
+
+    @MockBean
+    private UtilisateurService utilisateurService;
+
+    @MockBean
+    private InternshipmanagerRepository internshipmanagerRepository;
 
     @Autowired
     private UtilisateurController utilisateurController;
