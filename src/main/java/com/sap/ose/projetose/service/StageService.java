@@ -204,6 +204,19 @@ public class StageService {
     }
 
     @Transactional
+    public Page<InternshipAgreementDto> getSortedByPageOfStudent(int page, int size, Sort sort, String state, long id){
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<InternshipAgreementDto> internshipAgreementDtos;
+        if (state == null)
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStudentId(id, pageable));
+        else {
+            State stateEnum = State.valueOf(state);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateStudent(stateEnum.name(), pageable, id));
+        }
+        return internshipAgreementDtos;
+    }
+
+    @Transactional
     public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state) {
         try {
             Pageable pageable = PageRequest.of(page, size, sort);
