@@ -29,7 +29,6 @@ class PDFServiceTest {
 
     @Autowired
     private PDFService pDFService;
-
     private File file;
     private File file2;
 
