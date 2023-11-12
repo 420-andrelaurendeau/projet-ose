@@ -86,10 +86,20 @@ public class EtudiantService {
     }
 
     @Transactional
-    public EtudiantDto updateCVByMatricule(String matricule, File cv){
-        Etudiant etudiant = findByMatricule(matricule);
-        List<File> cvs = new ArrayList<>();
-        cvs.add(cv);
+    public EtudiantDto addCvById(long id, File cv){
+        Etudiant etudiant = etudiantRepository.findById(id).orElse(null);
+
+        if (etudiant == null) return null;
+
+        List<File> cvs = etudiant.getCv();
+        if (cvs.isEmpty()) {
+            cvs.add(null);
+            cvs.add(cv);
+        }
+        else {
+            cvs.add(1, cv);
+        }
+
         cv.setEtudiant(etudiant);
         etudiant.setCv(cvs);
         etudiant  = etudiantRepository.save(etudiant);
