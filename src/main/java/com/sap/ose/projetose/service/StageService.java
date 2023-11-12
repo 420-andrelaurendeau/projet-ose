@@ -147,6 +147,12 @@ public class StageService {
     }
 
     @Transactional
+    public Map<String, Long> getCountByStateStudent(long id){
+        List<Object[]> counts = stageRepository.getCountByStateByStudent(id);
+        return getCountByState(counts);
+    }
+
+    @Transactional
     public Map<String, Long> getCountByState(List<Object[]> counts) {
         HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
 

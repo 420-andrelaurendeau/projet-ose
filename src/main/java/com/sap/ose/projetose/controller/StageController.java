@@ -60,6 +60,13 @@ public class StageController {
         return Optional.of(stageService.getCountByStateEmployeur(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/countStudent/{id}")
+    @PreAuthorize("hasAuthority('employeur')")
+    public ResponseEntity<Map<String, Long>> getStageCountStudent(@PathVariable long id) {
+        logger.info("Stage count request received");
+        return Optional.of(stageService.getCountByStateStudent(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/employeurStage/{id}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employeur')")
     public ResponseEntity<Page<InternshipAgreementDto>> getEmployeurStage(
