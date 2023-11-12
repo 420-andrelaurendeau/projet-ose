@@ -127,14 +127,10 @@ public class StageService {
             if(isContractAccepted(stageDto.getId()))
                 savedStage = setContract(savedStage);
             return new StageDto(savedStage);
-        } catch (IllegalArgumentException e) {
-            throw e;
-        } catch (StageNotFoundException e) {
-            throw e;
-        } catch (DatabaseException e) {
+        } catch (IllegalArgumentException | StageNotFoundException | DatabaseException e) {
             throw e;
         } catch (Exception e) {
-            throw new ServiceException("Erreur lors de la récupération des offres d'emploi.");
+            throw e;
         }
     }
 

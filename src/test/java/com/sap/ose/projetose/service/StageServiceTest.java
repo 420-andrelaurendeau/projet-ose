@@ -1,15 +1,16 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.exception.BadSortingFieldException;
-import com.sap.ose.projetose.exception.DatabaseException;
-import com.sap.ose.projetose.exception.InvalidStateException;
-import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.repository.StageRepository;
+import com.sap.ose.projetose.dto.StageDto;
+import com.sap.ose.projetose.exception.*;
+import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,10 +18,15 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
 
 
 @ContextConfiguration(classes = {StageService.class})
@@ -91,6 +97,92 @@ public class StageServiceTest {
         assertEquals("Le champ wrongField: ASC n'existe pas", result.getMessage());
     }
 
+    @Test
+    void isContractAccepted_ReturnsTrue_WhenRepositoryConfirms() {
+        when(stageRepository.isContractAccepted(anyLong())).thenReturn(true);
+        boolean actualIsContractAcceptedResult = stageService.isContractAccepted(1L);
+        verify(stageRepository).isContractAccepted(anyLong());
+        assertTrue(actualIsContractAcceptedResult);
+    }
+
+    @Test
+    void isContractAccepted_ReturnsFalse_WhenRepositoryDenies() {
+        when(stageRepository.isContractAccepted(anyLong())).thenReturn(false);
+        boolean actualIsContractAcceptedResult = stageService.isContractAccepted(1L);
+        verify(stageRepository).isContractAccepted(anyLong());
+        assertFalse(actualIsContractAcceptedResult);
+    }
+
+    @Test
+    void isContractAccepted_ThrowsServiceException_OnIllegalArgumentException() {
+        when(stageRepository.isContractAccepted(anyLong())).thenThrow(new IllegalArgumentException("foo"));
+        assertThrows(ServiceException.class, () -> stageService.isContractAccepted(1L));
+        verify(stageRepository).isContractAccepted(anyLong());
+    }
+
+    @Test
+    void isContractAccepted_ThrowsDatabaseException_OnEmptyResultDataAccessException() {
+        when(stageRepository.isContractAccepted(anyLong())).thenThrow(new EmptyResultDataAccessException(3));
+        assertThrows(DatabaseException.class, () -> stageService.isContractAccepted(1L));
+        verify(stageRepository).isContractAccepted(anyLong());
+    }
+
+    @Test
+    void setEmployerOpinion_ThrowsDatabaseException_OnDataAccessException() {
+        StageDto stageDto = mock(StageDto.class);
+        when(stageDto.getId()).thenThrow(new EmptyResultDataAccessException(3));
+        assertThrows(DatabaseException.class, () -> stageService.setEmployerOpinion(stageDto, "DECLINED"));
+        verify(stageDto).getId();
+    }
+
+    @Test
+    void setEmployerOpinion_ThrowsDatabaseException_OnIllegalArgumentException() {
+        StageDto stageDto = mock(StageDto.class);
+        when(stageDto.getId())
+                .thenThrow(new IllegalArgumentException("Erreur d'argument avec l'état de l'employeur sur l'entente de stage"));
+        assertThrows(IllegalArgumentException.class, () -> stageService.setEmployerOpinion(stageDto, "DECLINED"));
+        verify(stageDto).getId();
+    }
+
+    @Test
+    void setEmployerOpinion_ThrowsServiceException_WithNullStageDto() {
+
+        assertThrows(ServiceException.class,
+                () -> stageService.setEmployerOpinion(null, "DECLINED"));
+    }
+
+    @Test
+    void saveEmployerOpinion_ThrowsIllegalArgumentException_OnRepositoryFindByIdFailure() {
+        when(stageRepository.findById(Mockito.<Long>any()))
+                .thenThrow(new IllegalArgumentException("Erreur lors de la récupération des offres d'emploi."));
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(new StageDto(), "DECLINED"));
+        verify(stageRepository).findById(Mockito.<Long>any());
+    }
+
+    @Test
+    void saveEmployerOpinion_ThrowsServiceException_WithNullStageDto() {
+        assertThrows(ServiceException.class, () -> stageService.saveEmployerOpinion(null, "DECLINED"));
+    }
+
+    @Test
+    void saveEmployerOpinion_ThrowsIllegalArgumentException_OnRepositoryFindByIdError() {
+        when(stageRepository.findById(Mockito.<Long>any()))
+                .thenThrow(new IllegalArgumentException("Erreur lors de la récupération des offres d'emploi."));
+        StageDto stageDto = mock(StageDto.class);
+        when(stageDto.getId()).thenReturn(1L);
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto, "DECLINED"));
+        verify(stageDto).getId();
+        verify(stageRepository).findById(Mockito.<Long>any());
+    }
+
+    @Test
+    void saveEmployerOpinion_ThrowsIllegalArgumentException_OnStageDtoIdError() {
+        StageDto stageDto = mock(StageDto.class);
+        when(stageDto.getId())
+                .thenThrow(new IllegalArgumentException("Erreur d'argument avec l'état de l'employeur sur l'entente de stage"));
+        assertThrows(IllegalArgumentException.class, () -> stageService.saveEmployerOpinion(stageDto, "DECLINED"));
+        verify(stageDto).getId();
+    }
 
 
 }
