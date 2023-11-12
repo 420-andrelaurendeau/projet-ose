@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -91,7 +92,7 @@ public class EtudiantService {
         cvs.add(cv);
         cv.setEtudiant(etudiant);
         etudiant.setCv(cvs);
-        etudiantRepository.save(etudiant);
+        etudiant  = etudiantRepository.save(etudiant);
         return new EtudiantDto(etudiant);
     }
 
@@ -147,6 +148,7 @@ public class EtudiantService {
                                               .map(file -> new FileDtoAll(file.getId(), file.getContent(),
                                                                             file.getFileName(), file.getIsAccepted(),
                                                                             new EtudiantDto(file.getEtudiant())))
+                                              .filter(Objects::nonNull)
                                               .toList()
                         : null;
             if (cvs == null) {
@@ -186,7 +188,16 @@ public class EtudiantService {
                 cv = fileEntityRepository.save(cv);
 
                 Etudiant cvEtudiant = cv.getEtudiant();
-                cvEtudiant.setActiveCv(cv);
+                List<File> etudiantCVs = cvEtudiant.getCv();
+
+                if (etudiantCVs.isEmpty()) {
+                    etudiantCVs.add(cv);
+                } else if (etudiantCVs.get(0) == null) {
+                    etudiantCVs.set(0, cv);
+                } else {
+                    etudiantCVs.add(0, null);
+                }
+
                 etudiantRepository.save(cvEtudiant);
             }
             if (fileDtoAll == null) {
@@ -218,7 +229,12 @@ public class EtudiantService {
                     .findById(id)
                     .orElseThrow(EtudiantNotFoundException::new);
 
-            File cv = student.getActiveCv();
+            List<File> cVs = student.getCv();
+
+            if (cVs.isEmpty())
+                throw new FileNotFoundException();
+
+            File cv = cVs.get(0);
 
             return new FileDtoAll(Optional.ofNullable(cv)
                                           .orElseThrow(FileNotFoundException::new));

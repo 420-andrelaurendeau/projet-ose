@@ -25,10 +25,6 @@ public class Etudiant extends Utilisateur{
     @ToString.Exclude
     private List<File> cv;
 
-    @ManyToOne()
-    @ToString.Exclude
-    private File activeCv;
-
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<InternshipCandidates> internshipsCandidate;
