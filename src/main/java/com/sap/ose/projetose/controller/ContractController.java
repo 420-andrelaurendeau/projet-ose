@@ -24,14 +24,14 @@ public class ContractController {
         this.contractService = contractService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("internshipmanager/save")
     @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<ContractDto> saveContract(@RequestBody ContractDto contractDto) {
         System.out.println(contractDto);
         return new ResponseEntity<>(contractService.saveContractDto(contractDto), HttpStatus.CREATED);
     }
 
-    @PostMapping("/save")
+    @PostMapping("student/save")
     @PreAuthorize("hasAuthority('student')")
     public ResponseEntity<ContractDto> saveStudentContract(@RequestBody ContractDto contractDto) {
         System.out.println(contractDto);
@@ -39,7 +39,7 @@ public class ContractController {
     }
 
 
-    @PostMapping("/save")
+    @PostMapping("employer/save")
     @PreAuthorize("hasAuthority('employer')")
     public ResponseEntity<ContractDto> saveEmployerContract(@RequestBody ContractDto contractDto) {
         System.out.println(contractDto);

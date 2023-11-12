@@ -2,12 +2,15 @@ package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.ContractDto;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.ContractRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -129,7 +132,15 @@ public class ContractService {
     }
 
     public List<ContractDto> getAllByStudentID(long id) {
-        return contractRepository.findAllByStudentId(id).stream().map(ContractDto::new).toList();
+        try {
+            return contractRepository.findAllByStudentId(id).stream().map(ContractDto::new).toList();
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des contrats", e);
+            throw new DatabaseException("");
+        } catch (Exception e) {
+            logger.error("Erreur lors de la récupération des contrats", e);
+            throw new ServiceException("");
+        }
     }
 
 
