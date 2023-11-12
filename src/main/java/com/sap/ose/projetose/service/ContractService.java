@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.List;
 
 
 @Service
@@ -67,6 +68,46 @@ public class ContractService {
     }
 
     @Transactional
+    public ContractDto saveContractStudentDto(ContractDto contractDto) {
+        try {
+
+            File file = fileService.findById(contractDto.getContractId());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContractContent().getBytes());
+            file.setContent(encodedString);
+
+            Contract contract = findById(contractDto.getId());
+            contract.setFile(file);
+            contract.setSignatureStudent(true);
+
+            contractRepository.save(contract);
+
+            return new ContractDto(contract);
+        } catch (Exception e) {
+            throw new IllegalStateException("Impossible de sauvegarder le contrat");
+        }
+    }
+
+    @Transactional
+    public ContractDto saveContractEmployerDto(ContractDto contractDto) {
+        try {
+
+            File file = fileService.findById(contractDto.getContractId());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContractContent().getBytes());
+            file.setContent(encodedString);
+
+            Contract contract = findById(contractDto.getId());
+            contract.setFile(file);
+            contract.setSignatureEmployer(true);
+
+            contractRepository.save(contract);
+
+            return new ContractDto(contract);
+        } catch (Exception e) {
+            throw new IllegalStateException("Impossible de sauvegarder le contrat");
+        }
+    }
+
+    @Transactional
     public long createContract(Stage stage) {
         try {
 
@@ -85,6 +126,10 @@ public class ContractService {
 
     Contract findById(long id) {
         return contractRepository.findById(id).orElseThrow(() -> new IllegalStateException("Le contrat n'existe pas"));
+    }
+
+    public List<ContractDto> getAllByStudentID(long id) {
+        return contractRepository.findAllByStudentId(id).stream().map(ContractDto::new).toList();
     }
 
 
