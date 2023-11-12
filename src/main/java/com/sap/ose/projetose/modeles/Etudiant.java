@@ -25,7 +25,7 @@ public class Etudiant extends Utilisateur{
     @ToString.Exclude
     private List<File> cv;
 
-    @OneToOne
+    @ManyToOne()
     @ToString.Exclude
     private File activeCv;
 

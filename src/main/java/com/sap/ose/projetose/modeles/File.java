@@ -25,7 +25,6 @@ public class File {
     private State isAccepted;
 
     @ManyToOne
-    @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
     @ManyToOne
