@@ -2,11 +2,11 @@ package com.sap.ose.projetose.controller;
 
 import static org.mockito.Mockito.when;
 
-import com.sap.ose.projetose.dto.PDFDto;
+import com.sap.ose.projetose.dto.TemplateContractDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.GlobalExceptionHandler;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.service.PDFService;
+import com.sap.ose.projetose.service.TemplateContractService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -21,18 +21,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@ContextConfiguration(classes = {PDFController.class})
+@ContextConfiguration(classes = {TemplateContractController.class})
 @ExtendWith(SpringExtension.class)
-class PDFControllerTest {
+class TemplateContractControllerTest {
     @Autowired
-    private PDFController pDFController;
+    private TemplateContractController pDFController;
 
     @MockBean
-    private PDFService pDFService;
+    private TemplateContractService pDFService;
 
     @Test
     void getCurrentPDF_ReturnsPDFDto_WhenInvoked() throws Exception {
-        when(pDFService.getCurrentPDF()).thenReturn(new PDFDto());
+        when(pDFService.getCurrentPDF()).thenReturn(new TemplateContractDto());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/pdf/getCurrentPDF");
         MockMvcBuilders.standaloneSetup(pDFController)
                 .build()
@@ -75,7 +75,7 @@ class PDFControllerTest {
 
     @Test
     void getCurrentPDF2_ReturnsNotFoundStatus_WhenFormLoginRequested() throws Exception {
-        when(pDFService.getCurrentPDF()).thenReturn(new PDFDto());
+        when(pDFService.getCurrentPDF()).thenReturn(new TemplateContractDto());
         SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(pDFController).build().perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -83,7 +83,7 @@ class PDFControllerTest {
 
     @Test
     void savePDF_ReturnsSuccessAndEmptyPDFDto_OnPostRequest() throws Exception {
-        when(pDFService.save(Mockito.<PDFDto>any())).thenReturn(new PDFDto());
+        when(pDFService.save(Mockito.<TemplateContractDto>any())).thenReturn(new TemplateContractDto());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/pdf/save");
         MockMvcBuilders.standaloneSetup(pDFController)
                 .build()
@@ -97,7 +97,7 @@ class PDFControllerTest {
 
     @Test
     void savePDF_ReturnsErrorResponse_OnServiceException() throws Exception {
-        when(pDFService.save(Mockito.<PDFDto>any())).thenThrow(new ServiceException("Service error occurred"));
+        when(pDFService.save(Mockito.<TemplateContractDto>any())).thenThrow(new ServiceException("Service error occurred"));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/pdf/save");
         MockMvcBuilders.standaloneSetup(pDFController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -110,7 +110,7 @@ class PDFControllerTest {
 
     @Test
     void savePDF_ReturnsErrorResponse_OnDatabaseException() throws Exception {
-        when(pDFService.save(Mockito.<PDFDto>any())).thenThrow(new DatabaseException("Database error occurred"));
+        when(pDFService.save(Mockito.<TemplateContractDto>any())).thenThrow(new DatabaseException("Database error occurred"));
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/pdf/save");
         MockMvcBuilders.standaloneSetup(pDFController)
                 .setControllerAdvice(new GlobalExceptionHandler())

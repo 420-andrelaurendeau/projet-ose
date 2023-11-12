@@ -1,6 +1,5 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.ContractDto;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ServiceException;
@@ -24,7 +23,7 @@ public class ContractService {
     private final ContractRepository contractRepository;
     private final EmployeurService employeurService;
 
-    private final PDFService pdfService;
+    private final TemplateContractService templateContractService;
 
     private final FileService fileService;
     private final InternOfferService internOfferService;
@@ -34,10 +33,10 @@ public class ContractService {
 
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, PDFService pdfService, FileService fileService, InternOfferService internOfferService, EtudiantService studentService) {
+    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, TemplateContractService templateContractService, FileService fileService, InternOfferService internOfferService, EtudiantService studentService) {
         this.contractRepository = contractRepository;
         this.employeurService = employeurService;
-        this.pdfService = pdfService;
+        this.templateContractService = templateContractService;
         this.fileService = fileService;
         this.internOfferService = internOfferService;
         this.studentService = studentService;
@@ -114,10 +113,9 @@ public class ContractService {
     public long createContract(Stage stage) {
         try {
 
-            PDF contractPDF = pdfService.findCurrent();
+            TemplateContract contractTemplateContract = templateContractService.findCurrent();
 
-            File file = new File(contractPDF.getFile().getContent(), contractPDF.getFile().getFileName(), State.ACCEPTED, null);
-            System.out.println("BONJOURfdfsfdsfdf");
+            File file = new File(contractTemplateContract.getFile().getContent(), contractTemplateContract.getFile().getFileName(), State.ACCEPTED, null);
             Contract contract = new Contract(stage.getEmployeur(), stage.getStudent(), stage.getOffer(), false, false, false, file);
 
             return contractRepository.save(contract).getId();

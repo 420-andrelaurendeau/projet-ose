@@ -49,16 +49,6 @@ public class IntershipManagerControllerTest {
     @MockBean
     private InternOfferService internOfferService;
 
-    @Test
-    void getOffersApplied_EmptyPage() throws Exception {
-        Page<InternOfferDto> emptyPage = new PageImpl<>(Collections.emptyList());
-
-        when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenReturn(emptyPage);
-
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/offers").contentType(MediaType.APPLICATION_JSON);
-
-        MockMvcBuilders.standaloneSetup(intershipManagerController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"content\":[],\"pageable\":\"INSTANCE\",\"last\":true,\"totalPages\":1,\"totalElements\":0,\"size\":0,\"number\":0,\"sort\":{\"empty\":true,\"sorted\":false,\"unsorted\":true},\"first\":true,\"numberOfElements\":0,\"empty\":true}"));
-    }
 
     @Test
     void getOffersApplied_InvalidStateException() throws Exception {

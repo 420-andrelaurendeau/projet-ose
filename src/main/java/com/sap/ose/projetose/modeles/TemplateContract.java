@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PDF {
+public class TemplateContract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class PDF {
     @JoinColumn(name = "file_id")
     private File file;
 
-    public PDF(File file) {
+    public TemplateContract(File file) {
         this.file = file;
         this.createdDate = LocalDate.now();
         this.isActive = true;

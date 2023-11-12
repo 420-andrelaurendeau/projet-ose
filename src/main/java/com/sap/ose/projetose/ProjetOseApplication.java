@@ -6,13 +6,11 @@ import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
-import com.sap.ose.projetose.service.OseService;
 import com.sap.ose.projetose.service.*;
 import com.sap.ose.projetose.service.auth.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringApplicationAotProcessor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.nio.charset.StandardCharsets;
@@ -37,7 +35,7 @@ public class ProjetOseApplication implements CommandLineRunner {
     ProgrammeRepository programmeRepository;
 
     @Autowired
-    PDFService pdfService;
+    TemplateContractService templateContractService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
@@ -85,8 +83,8 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
-        PDFDto pdfDto = new PDFDto(LocalDate.now().toString(), true, file.getId(), file.getFileName(), file.getContent());
-        pdfService.save(pdfDto);
+        TemplateContractDto templateContractDto = new TemplateContractDto(LocalDate.now().toString(), true, file.getId(), file.getFileName(), file.getContent());
+        templateContractService.save(templateContractDto);
 
         StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
         StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
