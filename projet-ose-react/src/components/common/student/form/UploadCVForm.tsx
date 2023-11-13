@@ -139,8 +139,9 @@ function UploadCVForm(): ReactElement {
     };
 
     async function setDefaultFile(file: ReviewFile) {
+        console.log("fichier a mettre par defaut",file);
         setDefaultCv(user.id, file.id).then(res => {
-            console.log(res);
+            console.log("Retour de la reponse",res);
             toast.success(t('CV par défaut défini avec succès'));
         }).catch(err => {
             console.log(err);

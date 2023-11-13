@@ -181,13 +181,12 @@ public class EtudiantService {
                         throw new ServiceException("Le CV n'est pas encore accepté");
                     }
                     fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()));
+                    cv = fileEntityRepository.save(cv);
 
+                    Etudiant cvEtudiant = cv.getEtudiant();
+                    cvEtudiant.setActiveCv(cv);
+                    etudiantRepository.save(cvEtudiant);
                 }
-                cv = fileEntityRepository.save(cv);
-
-                Etudiant cvEtudiant = cv.getEtudiant();
-                cvEtudiant.setActiveCv(cv);
-                etudiantRepository.save(cvEtudiant);
             }
             if (fileDtoAll == null) {
                 throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
