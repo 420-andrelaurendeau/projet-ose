@@ -24,14 +24,15 @@ const StudentRoutes: React.FC = () => {
                     <Route path="home" element={<StudentInternshipPage/>}>
                         <Route path="offers" element={<StudentInternship/>}/>
                         <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                        <Route path="cv" element={<UploadCVForm/>}>
-
-                        </Route>
+                        <Route path="cv" element={<UploadCVForm/>}/>
                         <Route path="upload" element={<CVStudant/>}/>
                         <Route path="interview" element={<StudentInterviewPage/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="stage" element={<StudentStagePage />}/>
                         <Route path="contract" element={<StudentContractPage />}/>
+                        <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}>
+                            <Route path=":fileName" element={<ViewPDFModal/>}/>
+                        </Route>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>
