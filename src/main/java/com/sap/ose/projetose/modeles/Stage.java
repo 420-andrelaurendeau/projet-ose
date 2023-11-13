@@ -1,12 +1,9 @@
 package com.sap.ose.projetose.modeles;
 
-import com.sap.ose.projetose.repository.Contract;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Entity
 @Data

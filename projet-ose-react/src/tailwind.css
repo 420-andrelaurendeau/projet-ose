@@ -588,6 +588,10 @@ video {
   left: 2.5rem;
 }
 
+.left-2 {
+  left: 0.5rem;
+}
+
 .left-4 {
   left: 1rem;
 }
@@ -713,10 +717,6 @@ video {
 
 .mb-5 {
   margin-bottom: 1.25rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
 }
 
 .ml-2 {
@@ -1724,10 +1724,6 @@ video {
   padding-top: 0.5rem;
 }
 
-.pt-20 {
-  padding-top: 5rem;
-}
-
 .pt-24 {
   padding-top: 6rem;
 }
@@ -2575,6 +2571,10 @@ video {
     padding-right: 1.5rem;
   }
 
+  .xxxs\:pt-20 {
+    padding-top: 5rem;
+  }
+
   .xxxs\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -2736,6 +2736,10 @@ video {
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:pt-5 {
+    padding-top: 1.25rem;
   }
 
   .sm\:text-end {
@@ -2930,6 +2934,11 @@ video {
   .lg\:px-10 {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  .lg\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .lg\:px-8 {

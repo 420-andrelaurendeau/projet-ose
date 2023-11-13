@@ -2,10 +2,13 @@ import React, {useEffect, useState} from "react";
 import {base64ToArrayBuffer, blobToURL, getWidth} from "../../preparedoc/utils/Utils";
 import PagingControl from "../../preparedoc/PagingControl";
 import ViewPDF from "../../preparedoc/ViewPDF";
-import {useProps} from "./EmployerOfferDetails";
+//import {useProps} from "./EmployerOfferDetails";
 import {useNavigate, useParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {useProps} from "../../../../pages/internshipManager/InternshipAgreementPage";
+import {useAuth} from "../../../../authentication/AuthContext";
+
 
 
 
@@ -16,6 +19,7 @@ const ViewPDFModal = () => {
     const [width, setWidth] = useState(0);
     const [pageNum, setPageNum] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const {userRole} = useAuth();
     const { file,size } = useProps();
     useEffect(() => {
         setWidth(getWidth());
@@ -46,7 +50,7 @@ const ViewPDFModal = () => {
                             type="button"
                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md  bg-red hover:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             onClick={() => {
-                                navigate(`/employer/home/offers/${id}`);
+                                navigate(-1);
                             }}
                         >
                             Close

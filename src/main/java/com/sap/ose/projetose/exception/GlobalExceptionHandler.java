@@ -63,7 +63,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(StageNotFoundException.class)
+    public ResponseEntity<String> handleStageNotFoundException(StageNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+    }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler(InvalidStateException.class)
     public ResponseEntity<String> handleInvalidStateException(InvalidStateException e) {
         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);

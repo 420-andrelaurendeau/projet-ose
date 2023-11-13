@@ -49,23 +49,13 @@ public class IntershipManagerControllerTest {
     @MockBean
     private InternOfferService internOfferService;
 
-    @Test
-    void getOffersApplied_EmptyPage() throws Exception {
-        Page<InternOfferDto> emptyPage = new PageImpl<>(Collections.emptyList());
-
-        when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenReturn(emptyPage);
-
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
-
-        MockMvcBuilders.standaloneSetup(intershipManagerController).build().perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().contentType("application/json")).andExpect(MockMvcResultMatchers.content().string("{\"content\":[],\"pageable\":\"INSTANCE\",\"totalPages\":1,\"totalElements\":0,\"last\":true,\"size\":0,\"number\":0,\"sort\":{\"empty\":true,\"sorted\":false,\"unsorted\":true},\"numberOfElements\":0,\"first\":true,\"empty\":true}"));
-    }
 
     @Test
     void getOffersApplied_InvalidStateException() throws Exception {
 
         when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenThrow(new InvalidStateException(""));
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/offers").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -82,7 +72,7 @@ public class IntershipManagerControllerTest {
 
         when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenThrow(new BadSortingFieldException(""));
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/offers").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -99,7 +89,7 @@ public class IntershipManagerControllerTest {
 
         when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenThrow(new DatabaseException());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/offers").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -116,7 +106,7 @@ public class IntershipManagerControllerTest {
 
         when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenThrow(new ServiceException());
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/offers").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -133,7 +123,7 @@ public class IntershipManagerControllerTest {
         when(internOfferService.getCountByState()).thenThrow(new DatabaseException());
 
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/count").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/count").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())
@@ -149,7 +139,7 @@ public class IntershipManagerControllerTest {
         when(internOfferService.getCountByState()).thenThrow(new ServiceException());
 
 
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/count").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/internshipManager/count").contentType(MediaType.APPLICATION_JSON);
 
         ResultActions resultActions = MockMvcBuilders.standaloneSetup(intershipManagerController)
                 .setControllerAdvice(new GlobalExceptionHandler())

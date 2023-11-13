@@ -4,6 +4,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import CV from './components/common/student/i18n/CV';
 import application from "./components/common/Employer/application/i18n/application";
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
+import header from "./pages/shared/i18n/homeI18N";
 
 
 i18n
@@ -26,6 +27,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        header,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",
@@ -669,6 +671,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        header,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",
