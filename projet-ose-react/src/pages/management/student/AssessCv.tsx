@@ -4,22 +4,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import {ReviewFile} from "../../../model/ReviewFile";
 import {useTranslation} from "react-i18next";
+import {useToast} from "../../../hooks/state/useToast";
 function EvaluerCV() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","StudentCvEvaluation");
     const [files, setFiles] = useState([] as Array<ReviewFile>);
+    const toast = useToast();
 
 
     async function ApproveFile(file: ReviewFile) {
         acceptStudentCv(file.id).then(r => {
             console.log(r);
+            toast.success("CV refusé avec succès");
+        }).catch(err => {
+            console.log(err)
+            toast.error("Une erreur est survenue lors de l'acceptation du CV");
         }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
     async function DeclineFile(file: ReviewFile) {
         declineStudentCv(file.id).then(r => {
             console.log(r);
-        }).then(getStudentPendingCv).then(r => setFiles(r));
+            toast.success("CV refusé avec succès");
+        }).catch(err => {
+            console.log(err)
+            toast.error("Une erreur est survenue lors du refus du CV");
+        } ).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
     const handleDownloadFile = (file: ReviewFile) => {
