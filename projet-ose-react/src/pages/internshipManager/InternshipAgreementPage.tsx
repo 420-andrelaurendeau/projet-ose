@@ -1,13 +1,14 @@
 import {useTranslation} from "react-i18next";
-import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import {getContractById, signDocument} from "../../api/InternshipManagerAPI";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useToast} from "../../hooks/state/useToast";
 import {pdfjs} from "react-pdf";
-import SignContract from "../../components/common/preparedoc/SignContract";
-import {faLock, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass, faPenNib} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ViewPDFModal from "../../components/common/Employer/offer/ViewPDFModal";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface InternshipAgreementPageProps {
@@ -28,10 +29,12 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
     const navigate = useNavigate();
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.internshipAgreement." + i18n.language.slice(0, 2) + ".agreement");
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const fetchedintershipAggreementRef = useRef(false);
     const toasts = useToast();
+
 
     useEffect(() => {
         const fetchintershipAggreement = async () => {
@@ -102,7 +105,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                 </button>
 
-                <h1 className="text-center text-3xl font-bold">{intershipAggreement.internOfferDto.title}</h1>
+                <h1 className="text-center dark:text-white text-3xl font-bold">{intershipAggreement.internOfferDto.title}</h1>
 
                 <div
                     className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto dark:text-offwhite">
@@ -111,7 +114,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
 
                         <div className="flex pb-4">
-                            <h2 className="font-bold text-2xl">Étudiant</h2>
+                            <h2 className="font-bold text-2xl">{fields.student}</h2>
                         </div>
 
                         <div className="ml-8 p-1">
@@ -127,7 +130,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     </div>
                     <div className="block sm:flex flex-col sm:justify-end sm:items-end h-full sm:text-end">
                         <div className="flex pb-4">
-                            <h2 className="font-bold text-2xl">Employeur</h2>
+                            <h2 className="font-bold text-2xl">{fields.employer}</h2>
                         </div>
 
                         <div className="sm:mr-8 ml-8 p-1">
@@ -152,51 +155,34 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     //TODO : Add the pdf button
                     // TODO : Add the signature button
                 }
-                <div className="block sm:flex w-1/5 mx-auto pt-10 gap-x-4">
-                    <button className="inline-flex items-center px-10 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
-                        <NavLink to={intershipAggreement?.fileName!}
-                                 className="font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
-                            <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" size="lg"/>
-                            {intershipAggreement?.fileName!}
-                        </NavLink>
+                <div className="block sm:flex w-1/2 sm:w-1/5 mx-auto pt-10 gap-x-4">
+                    <button
+                        className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 mb-4 sm:mb-0"
+                        onClick={() => setIsModalOpen(true)}>
+                        <p className="text-xl">{fields.viewPDF}</p>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} className="ml-2" size="xl"/>
                     </button>
-                    <button className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
-                        <NavLink to={intershipAggreement?.fileName!}
-                                 className="font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
-                            Sign
+                    <button
+                        className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
+                        <NavLink to={""}
+                                 className="flex items-center font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
+                            <p className="text-xl">{fields.signPDF}</p>
+                            <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
                         </NavLink>
                     </button>
                 </div>
-
-
-                {/**
-                 <SignContract></SignContract>
-                 **/ }
-
-
-                {/**
-                 <div className="px-20 mx-auto">
-                 <SignContract pdfBase64={""} signContract={signContract}/>
-                 </div>
-                 **/}
-
-                <Outlet
-                    context={context}
-                />
+                {
+                    context.file.content !== "" && isModalOpen &&
+                    <div className="">
+                        <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={context.file}/>
+                    </div>
+                }
             </div>
 
         )}
     </>);
 }
 
-interface Props {
-    file: any;
-    size: string;
-}
-
-export function useProps() {
-    return useOutletContext<Props>();
-}
 
 export default InternshipAgreementPage
 
