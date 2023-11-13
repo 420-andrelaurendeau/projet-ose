@@ -8,7 +8,7 @@ import {faCheck, faDownload, faSpinner, faX, faCheckSquare, faSquare} from "@for
 import {useLocation} from "react-router-dom";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {getUser} from "../../../../api/UtilisateurAPI";
-import {saveCvStudent, fetchAllStudentCvs, setDefaultCv} from "../../../../api/StudentApi";
+import {saveCvStudent, fetchAllStudentCvs, setDefaultCv, fetchDefaultCvByStudentId} from "../../../../api/StudentApi";
 import {useToast} from "../../../../hooks/state/useToast";
 import {ReviewFile} from "../../../../model/ReviewFile";
 import {User} from "../../../../model/User";
@@ -21,6 +21,7 @@ function UploadCVForm(): ReactElement {
     const [user, setUser] = useState<User>({} as User)
     const [uploadState, setUploadState] = useState({status: "None"})
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
+    const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
     const auth = useAuth();
 
     const [errors, setErrors] = useState<{
@@ -36,6 +37,12 @@ function UploadCVForm(): ReactElement {
             fetchAllStudentCvs(res['id']).then((res) => {
                 setCvs(res)
                 console.log(cvs)
+            }).catch((error) => {
+                console.log("Error fetching user data:", error)
+            });
+            fetchDefaultCvByStudentId(res['id']).then((res) => {
+                console.log(res);
+                setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
             });
@@ -144,6 +151,12 @@ function UploadCVForm(): ReactElement {
             }).catch((error) => {
                 console.log("Error fetching user data:", error);
             });
+            fetchDefaultCvByStudentId(user.id).then((res) => {
+                console.log(res);
+                setCvDefault(res);
+            }).catch((error) => {
+                console.log("Error fetching user data:", error);
+            });
         });
     }
 
@@ -206,7 +219,7 @@ function UploadCVForm(): ReactElement {
                                 className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
                                 onClick={() => setDefaultFile(file)}
                             >
-                                {file.defaultFile ? <FontAwesomeIcon icon={faCheckSquare} className="scale-150 dark:text-white"/> : <FontAwesomeIcon icon={faSquare} className="scale-150 dark:text-white"/>}
+                                {file.id == cvDefault.id ? <FontAwesomeIcon icon={faCheckSquare} className="scale-150 dark:text-white"/> : <FontAwesomeIcon icon={faSquare} className="scale-150 dark:text-white"/>}
                             </button>
                         </div>
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">

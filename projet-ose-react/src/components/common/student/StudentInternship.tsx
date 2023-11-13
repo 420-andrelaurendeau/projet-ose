@@ -7,7 +7,7 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {offresEtudiant, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import {FileEntity} from "../../../model/FileEntity";
@@ -44,14 +44,10 @@ function StudentInternship() {
             })
             }
         ).finally(() => {
-            allStudentInternshipOffers().then((res) => {
+            offresEtudiant().then((res) => {
                 setOffers(res);
             })
-
         })
-
-
-
     }, []);
 
 
