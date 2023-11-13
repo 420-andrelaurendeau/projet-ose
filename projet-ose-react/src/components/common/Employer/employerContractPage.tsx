@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
 import {employeurGetContractById} from "../../../api/ContractAPI";
+import ViewPDFModal from "./offer/ViewPDFModal";
 
 
 export default function EmployerContractPage() {
@@ -22,21 +23,20 @@ export default function EmployerContractPage() {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
     const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection,} = useProps();
     const [file, setFile] = useState<any>({
-        content: "uy",
+        content: "",
     });
+    const [files, setFiles] = useState<any>([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const getFile = async (id: number) => {
-        const response = await employeurGetContractById(id);
-        console.log(response)
-        if (response) {
-            setFile({
-                content: response.contract
-            });
-            console.log(file)
-        } else {
-            console.log("error");
-        }
-    }
+    useEffect(() => {
+        stageAgreement.map(async (stage: any) => {
+            if (stage.contractId === null) return;
+            await employeurGetContractById(stage.contractId).then(r => {
+                console.log(r)
+                setFiles([...files, r])
+            })
+        })
+    }, []);
 
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortAgreementField && sortAgreementDirection === "desc") {
@@ -131,8 +131,8 @@ export default function EmployerContractPage() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="relative px-6 py-3">
-                                    <span className="sr-only">Option</span>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                                    <span >Option</span>
                                 </th>
                             </tr>
                             </thead>
@@ -156,24 +156,42 @@ export default function EmployerContractPage() {
 
                                         <span
                                             className={
-                                                stage.internOfferDto.state == "PENDING" ?
+                                                (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") && (stage.stateEmployeur != "DECLINED" || stage.stateStudent != "DECLINED") ?
                                                     "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                    : stage.internOfferDto.state === "DECLINED" ?
+                                                    : stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
                                                         "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
-                                            {fields.AgreementTable[stage.internOfferDto.state].text}
+                                            {fields.AgreementTable[
+                                                (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") && (stage.stateEmployeur != "DECLINED" || stage.stateStudent != "DECLINED") ?
+                                                    "PENDING"
+                                                    : stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
+                                                        "DECLINED"
+                                                        : "ACCEPTED"
+                                                ].text}
                                         </span>
                                     </td>
-                                    <td className="flex space-x-5 items-center justify-end px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <FontAwesomeIcon icon={faEye}
-                                                         className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                         onClick={() => {
-                                                             getFile(stage.contractId).then(r => console.log(file))
-                                                             console.log(file)
-                                                             navigate(`/employer/home/contract/${stage.contractId}`);
-                                                         }}
-                                        />
+                                    <td className="flex space-x-5 items-center justify-between px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        {
+                                            !files.isEmpty &&
+                                            <FontAwesomeIcon icon={faEye}
+                                                             className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                             onClick={() => {
+                                                                 files.map((file: any) => {
+                                                                         console.log(file)
+                                                                         console.log(stage)
+                                                                         if (file.id === stage.contractId) {
+                                                                             setFile({
+                                                                                 content: file.contractContent
+                                                                             });
+                                                                             console.log(file)
+                                                                         }
+                                                                     }
+                                                                 )
+                                                                 setIsModalOpen(true);
+                                                             }}
+                                            />
+                                        }
                                         <NavLink
                                             to="#"
                                             className="flex items-center text-green space-x-1"
@@ -195,9 +213,11 @@ export default function EmployerContractPage() {
                     </div>
                 </div>
             </div>
-            <Outlet
-                context={context}
-            />
+            {
+                file.content !== "" && isModalOpen &&
+                <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+            }
+
         </div>
     );
 };

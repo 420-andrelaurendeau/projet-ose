@@ -93,16 +93,12 @@ function EmployeurHomePage() {
     const fetchInternshipsAgreement = async (id: number) => {
         try {
             fetchedInternshipsAgreementRef.current = true
-            console.log("DATA")
-            console.log(currentPage, numberElementByPage, sortField, sortDirection)
             const response = await getStageByEmployeurId({
                 page: currentAgreementPage,
                 size: numberElementAgreementByPage,
                 sortField: agreementSortField,
                 sortDirection : agreementSortDirection
             }, id);
-            console.log("REPSONSE!!")
-            console.log(response)
             setInternshipsAgreement(response.content);
             setTotalAgreementPages(response.totalPages);
         } catch (error) {
@@ -121,12 +117,10 @@ function EmployeurHomePage() {
                 console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
-                fetchInternshipsAgreement(data.id).then(r => console.log("internship agreement fetched"))
+                fetchInternshipsAgreement(data.id).then(r => r)
             }
         }
         getUtilisateur().then((r) => {
-            console.log(r)
-            console.log("USER EFFECT AGREEMENT")
 
         })
     }, [localStorage.getItem('token')])
@@ -149,7 +143,7 @@ function EmployeurHomePage() {
 
     useEffect(() => {
         if (user) {
-            fetchInternshipsAgreement(user.id).then(r => console.log(internshipsAgreement))
+            fetchInternshipsAgreement(user.id).then(r => r)
         }
     }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField]);
 

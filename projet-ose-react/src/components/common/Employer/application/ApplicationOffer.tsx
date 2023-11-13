@@ -78,11 +78,13 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     function getCandidates(offer:any) {
+        console.log(offer)
         if (!fetchedCandidateRef.current) {
             loadCandidates(offer.internshipCandidates!).then(
                 (candidatures) => {
                     console.log("Candidates loaded")
-                    candidatures.forEach((candidature: any) => {
+                    console.log(candidatures)
+                    candidatures.map((candidature: any) => {
                         let interviewList: any[] = []
                         let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
                         apiClient.post("interview/studentHasInterviewWithInternOffer", requestBody,
@@ -96,7 +98,7 @@ const ApplicationOffer: React.FC<any> = () => {
                         candidature.interviewList = interviewList
                     })
                 } ).catch(e => {
-                    toast.error(e);
+                    toast.error(fields.errorFetchCandidate.text);
                     console.log(e)
                 }
             )

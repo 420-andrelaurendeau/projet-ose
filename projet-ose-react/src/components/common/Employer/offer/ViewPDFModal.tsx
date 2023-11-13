@@ -23,10 +23,13 @@ const ViewPDFModal = (props:any) => {
 
     useEffect(() => {
         const loadPDF = async () => {
+            console.log(props.file);
             const pdfBytes = base64ToArrayBuffer(props.file.content)
-            const blob = new Blob([new Uint8Array(pdfBytes)]);
-            const URL:any = await blobToURL(blob);
-            setPdf(URL);
+            if (pdfBytes) {
+                const blob = new Blob([new Uint8Array(pdfBytes)]);
+                const URL: any = await blobToURL(blob);
+                setPdf(URL);
+            }else setPdf(null)
         }
 
         loadPDF();
@@ -35,7 +38,7 @@ const ViewPDFModal = (props:any) => {
     return (
         // modal
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0 bg-black bg-opacity-50 p-10": "p-12 rounded"} w-full h-full bg-white dark:bg-dark `}>
+            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0 bg-black dark:bg-gray bg-opacity-50 dark:bg-opacity-80  ": "rounded bg-white dark:bg-dark"} w-full h-full p-12 `}>
                 <div className="overflow-y-auto h-full">
                     {
                         props.ismodal &&
@@ -44,7 +47,7 @@ const ViewPDFModal = (props:any) => {
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md  bg-red hover:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => {
-                                    navigate(`/employer/home/offers/${id}`);
+                                    props.setIsModalOpen(false);
                                 }}
                             >
                                 Close
@@ -62,7 +65,7 @@ const ViewPDFModal = (props:any) => {
                             />
                         ) :
                         <div className="flex justify-center items-center h-full">
-                            <FontAwesomeIcon icon={faSpinner}  spin size="5x" className="text-blue dark:text-orange" />
+                            <FontAwesomeIcon icon={faSpinner} spin={true} size="5x" className="text-blue dark:text-orange" />
                         </div>
                         }
                     </div>
