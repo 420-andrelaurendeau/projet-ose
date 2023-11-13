@@ -55,7 +55,6 @@ public class InternOfferController {
         return offerJobService.getStudentOfferBySeason(selectedOption);
     }
 
-
     @GetMapping("/OffersEtudiant")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public List<InternOfferDto> getOffersEtudiant() {
