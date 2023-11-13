@@ -269,6 +269,7 @@ public class InternOfferService {
         return offerJobRepository.getAllSeasons();
     }
 
+    @Transactional
     public List<InternOfferDto> getStudentOfferBySeason(String season) {
         List<InternOffer> internOffers = offerJobRepository.getStudentOffersBySeason(season);
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
@@ -277,7 +278,6 @@ public class InternOfferService {
             internOfferDtoList.add(new InternOfferDto(i));
         }
 
-        System.out.println(internOfferDtoList);
         return internOfferDtoList;
     }
 

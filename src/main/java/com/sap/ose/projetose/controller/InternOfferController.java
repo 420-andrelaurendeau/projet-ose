@@ -45,13 +45,14 @@ public class InternOfferController {
     @GetMapping("/allOffers")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public List<InternOfferDto> getAllOffers() {
+        System.out.println("get all");
         return offerJobService.getAllInternOffers();
     }
 
     @GetMapping("/season/{selectedOption}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public List<InternOfferDto> getStudentOffersBySeason(@PathVariable String selectedOption) {
-        System.out.println(selectedOption);
+        System.out.println("selection : "+ selectedOption);
         return offerJobService.getStudentOfferBySeason(selectedOption);
     }
 
