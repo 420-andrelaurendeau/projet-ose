@@ -3,10 +3,11 @@ import {Buffer} from "buffer";
 import ViewPDFModal from "../Employer/offer/ViewPDFModal";
 
 const CVStudant = (props:any) => {
+    console.log(props.file)
     const getFileSize = (): string => {
         let sizeInBytes = 0
-        if (props.user.cv?.content){
-            sizeInBytes = Buffer.from(props.user.cv?.content).length;
+        if (props.file.content){
+            sizeInBytes = Buffer.from(props.file.content).length;
             if (sizeInBytes < 1000) {
                 return sizeInBytes + " B";
             }else if (sizeInBytes < 1000000) {
@@ -18,6 +19,7 @@ const CVStudant = (props:any) => {
         return sizeInBytes + " B";
     }
     return (
+        props.file &&
         <div className="justify-center pb-16">
             <div className="py-6 max-md:pt-24 ">
                 <div className="flex items-center justify-between space-x-2">
@@ -25,7 +27,7 @@ const CVStudant = (props:any) => {
                                 <span
                                     className="px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-blue dark:bg-orange text-white dark:text-offwhite"
                                 >
-                                    {props.user.cv.fileName}
+                                    {props.file.fileName}
                                 </span>
                     </h2>
                     <div className="flex gap-2">
@@ -41,7 +43,7 @@ const CVStudant = (props:any) => {
             </div>
             <ViewPDFModal
                 ismodal={false}
-                file={props.user.cv}
+                file={props.file}
             />
         </div>
     );

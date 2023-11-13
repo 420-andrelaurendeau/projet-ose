@@ -60,7 +60,6 @@ public class File {
                 ", content=" + Arrays.toString(content) +
                 ", fileName='" + fileName + '\'' +
                 ", isAccepted=" + isAccepted +
-                ", etudiant=" + etudiant.getId() +
                 '}';
     }
 }

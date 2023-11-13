@@ -5,10 +5,7 @@ import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.FileEntityRepository;
 import jakarta.transaction.Transactional;
@@ -90,19 +87,22 @@ public class EtudiantService {
     @Transactional
     public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        File oldCv = fileEntityRepository.findByEtudiant_Id(etudiant.getId()).orElse(null);
-        if(oldCv == null){
+        Optional<File> oldCv = fileEntityRepository.findByEtudiant_Id(etudiant.getId());
+        if(oldCv.isPresent()){
+            etudiant.setCv(null);
+            saveEtudiant(etudiant);
+            File old = oldCv.get();
+            old.setIsAccepted(State.PENDING);
+            old.setContent(cv.getContent());
+            old.setFileName(cv.getFileName());
+            old.setEtudiant(etudiant);
+            fileService.saveFile(old);
+        }else {
             cv.setEtudiant(etudiant);
             fileService.saveFile(cv);
-        }else {
-            oldCv.setEtudiant(etudiant);
-            oldCv.setContent(cv.getContent());
-            oldCv.setFileName(cv.getFileName());
-            fileService.saveFile(oldCv);
         }
 
-        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
-        return etudiantDto;
+        return new EtudiantDto(etudiant);
     }
 
     Etudiant findByEmail(String courriel) {

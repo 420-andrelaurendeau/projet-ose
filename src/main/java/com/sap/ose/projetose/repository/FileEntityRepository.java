@@ -1,7 +1,9 @@
 package com.sap.ose.projetose.repository;
 
 import com.sap.ose.projetose.modeles.File;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +17,11 @@ public interface FileEntityRepository extends JpaRepository<File, Long> {
 
     @Query("select f from File f where f.etudiant.id = ?1")
     Optional<File> findByEtudiant_Id(Long id);
+
+
+    @Transactional
+    @Modifying
+    @Query("update File f set f.content = ?1, f.fileName = ?2 where f.id = ?3")
+    void updateFileById(byte[] content, String fileName, Long id);
+
 }

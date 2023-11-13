@@ -56,7 +56,7 @@ function EvaluerCV() {
                 <h1 className="text-center font-extrabold text-2xl dark:text-gray">{fields.title}</h1>
                 {files.map((file) =>
                     <>
-                        <div className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
+                        <div key={file.id} className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
                             <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
                                 <p className="basis-full flex-grow pb-2 lg:pb-0 dark:text-white">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.etudiant?.matricule}</p>

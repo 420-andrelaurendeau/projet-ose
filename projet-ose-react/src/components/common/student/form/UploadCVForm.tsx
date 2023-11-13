@@ -22,22 +22,34 @@ function UploadCVForm(): ReactElement {
     const [user, setUser] = useState<any>(null)
     const [uploadState, setUploadState] = useState({status: "None"})
     const auth = useAuth();
-    const [changeCV, setChangeCV] = useState<boolean>(false)
-
+    const [changeCV, setChangeCV] = useState<boolean>(true)
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     const [errors, setErrors] = useState<{
         file?: string
     }>({});
 
     const {t} = useTranslation();
 
+
+
     useEffect(() => {
+        setIsLoaded(false)
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
             console.log(res);
+            setFiles(res.cv ? [res.cv] : [])
+            setIsLoaded(true)
+            if (res.cv) {
+                setChangeCV(false)
+            }
         }).catch((error) => {
             console.log("Error fetching user data:", error)
         })
     }, [changeCV])
+
+    useEffect(() => {
+
+    }, []);
 
     function handleFileChange(event: any) {
         let currFile: FileEntity = {fileName: event.target.files[0].name, content: "", isAccepted: "PENDING", uploaderId: user.id}
@@ -99,7 +111,9 @@ function UploadCVForm(): ReactElement {
     return (
 
         user ?
-            user.cv == null || changeCV ?
+        isLoaded &&
+            user.cv != null && !changeCV ?
+             <CVStudant user={user} file={files[0]} setChangeCV={setChangeCV}/>:
             <div className={"flex flex-col items-center justify-center"}>
                 <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
                     <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
@@ -146,7 +160,7 @@ function UploadCVForm(): ReactElement {
                         </div>
                     </form>
                 </div>
-            </div>: <CVStudant user={user} setChangeCV={setChangeCV}/> :
+            </div> :
             <div></div>
 
     )
