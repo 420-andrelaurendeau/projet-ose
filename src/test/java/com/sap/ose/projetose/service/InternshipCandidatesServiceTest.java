@@ -92,8 +92,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -128,7 +127,7 @@ class InternshipCandidatesServiceTest {
         programme3.setNom("Nom");
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -141,7 +140,7 @@ class InternshipCandidatesServiceTest {
         etudiant2.setRole(Role.employer);
 
         Etudiant etudiant3 = new Etudiant();
-        etudiant3.setCv(new ArrayList<>());
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -287,7 +286,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -317,7 +316,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -437,7 +436,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(State.ACCEPTED, actualSaveCandidatesResult.getState());
         List<FileDto> files = actualSaveCandidatesResult.getFiles();
         assertTrue(files.isEmpty());
-        assertEquals(cv, internOfferJob.getInternshipCandidates());
+        assertEquals(new File(), internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant6.getCv());
         assertSame(files, etudiant6.getInternships_id());
         byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
@@ -468,7 +467,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -498,7 +497,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -643,7 +642,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -673,7 +672,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -767,7 +766,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("john.smith@example.org");
         etudiant3.setId(2L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -797,7 +796,7 @@ class InternshipCandidatesServiceTest {
         employeur2.setRole(Role.student);
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("john.smith@example.org");
         etudiant4.setId(2L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -990,7 +989,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -1020,7 +1019,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -1107,7 +1106,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -1142,7 +1141,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -1160,7 +1159,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -1252,7 +1251,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());
@@ -1479,7 +1478,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -1509,7 +1508,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -1654,7 +1653,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom(",");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -1684,7 +1683,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -1778,7 +1777,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("john.smith@example.org");
         etudiant3.setId(2L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -1808,7 +1807,7 @@ class InternshipCandidatesServiceTest {
         employeur2.setRole(Role.student);
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("john.smith@example.org");
         etudiant4.setId(2L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -2013,7 +2012,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom(",");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -2043,7 +2042,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -2130,7 +2129,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -2165,7 +2164,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -2183,7 +2182,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -2275,7 +2274,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());
@@ -2481,7 +2480,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -2511,7 +2510,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -2606,7 +2605,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -2641,7 +2640,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -2654,7 +2653,7 @@ class InternshipCandidatesServiceTest {
         etudiant4.setRole(Role.employer);
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -2846,7 +2845,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -2876,7 +2875,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -2982,7 +2981,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -3012,7 +3011,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -3107,7 +3106,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -3142,7 +3141,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -3155,7 +3154,7 @@ class InternshipCandidatesServiceTest {
         etudiant4.setRole(Role.employer);
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -3347,7 +3346,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -3377,7 +3376,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -3495,7 +3494,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -3525,7 +3524,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -3688,7 +3687,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -3718,7 +3717,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -3805,7 +3804,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -3840,7 +3839,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -3858,7 +3857,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -3950,7 +3949,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());
@@ -4166,7 +4165,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -4196,7 +4195,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -4359,7 +4358,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -4389,7 +4388,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -4476,7 +4475,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -4511,7 +4510,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -4529,7 +4528,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -4621,7 +4620,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());
@@ -4837,7 +4836,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -4867,7 +4866,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -5030,7 +5029,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -5060,7 +5059,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -5147,7 +5146,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -5182,7 +5181,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -5200,7 +5199,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -5292,7 +5291,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());
@@ -5496,7 +5495,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -5526,7 +5525,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -5641,7 +5640,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(cv);
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -5671,7 +5670,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -5834,7 +5833,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new ArrayList<>());
+        etudiant.setCv(new File());
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -5864,7 +5863,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new ArrayList<>());
+        etudiant2.setCv(new File());
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -5951,7 +5950,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(cv);
+        etudiant3.setCv(new File());
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -5986,7 +5985,7 @@ class InternshipCandidatesServiceTest {
         programme6.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new ArrayList<>());
+        etudiant4.setCv(new File());
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -6004,7 +6003,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new ArrayList<>());
+        etudiant5.setCv(new File());
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -6096,7 +6095,7 @@ class InternshipCandidatesServiceTest {
         employeur4.setRole(Role.employer);
 
         Etudiant etudiant6 = new Etudiant();
-        etudiant6.setCv(new ArrayList<>());
+        etudiant6.setCv(new File());
         etudiant6.setEmail("jane.doe@example.org");
         etudiant6.setId(1L);
         etudiant6.setInternshipsCandidate(new ArrayList<>());

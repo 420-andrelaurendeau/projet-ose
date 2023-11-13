@@ -11,7 +11,7 @@ import {User} from "../../model/User";
 import {data} from "autoprefixer";
 import {useToast} from "../../hooks/state/useToast";
 import {getStageByEmployeurId, getStages} from "../../api/InternshipManagerAPI";
-import {log} from "util";
+
 
 interface Props {
     isModalOpen: boolean,
@@ -44,6 +44,7 @@ interface Props {
     setAgreementSortField: React.Dispatch<React.SetStateAction<string>>,
     sortAgreementDirection: string,
     setAgreementSortDirection: React.Dispatch<React.SetStateAction<string>>,
+    setOnChangeAgreement: React.Dispatch<React.SetStateAction<boolean>>
 
 }
 
@@ -73,6 +74,7 @@ function EmployeurHomePage() {
     const [isAgreementUpdate, setIsAgreementUpdate] = useState(false);
     const [agreementSortField, setAgreementSortField] = useState("id");
     const [agreementSortDirection, setAgreementSortDirection] = useState("asc");
+    const [onChangeAgreement, setOnChangeAgreement] = useState(false);
 
     const location = useLocation();
     const [user, setUser] = useState<User>({
@@ -93,17 +95,12 @@ function EmployeurHomePage() {
     const fetchInternshipsAgreement = async (id: number) => {
         try {
             fetchedInternshipsAgreementRef.current = true
-            console.log("DATA")
-            console.log(currentPage, numberElementByPage, offerState, sortField, sortDirection)
             const response = await getStageByEmployeurId({
                 page: currentAgreementPage,
                 size: numberElementAgreementByPage,
-                state: agreementState,
                 sortField: agreementSortField,
                 sortDirection : agreementSortDirection
             }, id);
-            console.log("REPSONSE!!")
-            console.log(response)
             setInternshipsAgreement(response.content);
             setTotalAgreementPages(response.totalPages);
         } catch (error) {
@@ -122,12 +119,10 @@ function EmployeurHomePage() {
                 console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
-                fetchInternshipsAgreement(data.id).then(r => console.log("internship agreement fetched"))
+                fetchInternshipsAgreement(data.id).then(r => r)
             }
         }
         getUtilisateur().then((r) => {
-            console.log(r)
-            console.log("USER EFFECT AGREEMENT")
 
         })
     }, [localStorage.getItem('token')])
@@ -150,9 +145,10 @@ function EmployeurHomePage() {
 
     useEffect(() => {
         if (user) {
-            fetchInternshipsAgreement(user.id).then(r => console.log(internshipsAgreement))
+            fetchInternshipsAgreement(user.id).then(r => r)
+            setOnChangeAgreement(false)
         }
-    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField]);
+    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, onChangeAgreement]);
 
     useEffect(() => {
         let i = 0;
@@ -211,6 +207,7 @@ function EmployeurHomePage() {
         setAgreementSortField: setAgreementSortField,
         sortAgreementDirection: agreementSortDirection,
         setAgreementSortDirection: setAgreementSortDirection,
+        setOnChangeAgreement: setOnChangeAgreement
     }
 
     return (

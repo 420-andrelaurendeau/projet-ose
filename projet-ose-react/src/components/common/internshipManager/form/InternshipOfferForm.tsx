@@ -29,7 +29,12 @@ const initialFormState: InternshipOffer = {
     programmeId: 0,
     employeurId: 0,
     state: "PENDING",
-    file: undefined,
+    file: {
+        fileName: '',
+        content: '',
+        isAccepted: "PENDING",
+        uploaderId: 0,
+    },
 };
 
 const InternshipOfferForm: React.FC<any> = () => {
@@ -88,7 +93,7 @@ const InternshipOfferForm: React.FC<any> = () => {
 
                 setFormState((prevState: any) => ({
                     ...prevState, file: {
-                        fileName: file.name, isAccepted: false, content: base64String || ""
+                        fileName: file.name, content: base64String || ""
                     }
                 }));
             };
@@ -101,6 +106,7 @@ const InternshipOfferForm: React.FC<any> = () => {
         e.preventDefault();
         try {
             console.log(formState);
+            formState.file.isAccepted = "PENDING";
             const savedInterOfferJob = await saveInterOfferJob(formState, user.id);
             console.log('InterOfferJob sauvegardé avec succès:', savedInterOfferJob);
             setFormState(initialFormState);

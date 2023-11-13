@@ -77,4 +77,5 @@ public class InternOfferDto {
         }
         return new InternOffer(id, title, location, description, salaryByHour,  LocalDate.parse(startDate), LocalDate.parse(endDate), null , null, file.fromDto(), null,state, null);
     }
+
 }

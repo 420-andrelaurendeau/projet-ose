@@ -40,7 +40,6 @@ public class ContractController {
     @PostMapping("employer/save")
     @PreAuthorize("hasAuthority('employer')")
     public ResponseEntity<ContractDto> saveEmployerContract(@RequestBody ContractDto contractDto) {
-        System.out.println(contractDto);
         return new ResponseEntity<>(contractService.saveContractEmployerDto(contractDto), HttpStatus.CREATED);
     }
 
@@ -58,7 +57,7 @@ public class ContractController {
 
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employeur') OR hasAuthority('student')")
+    @PreAuthorize("hasAuthority('internshipmanager') || hasAuthority('student') || hasAuthority('employer')")
     public ResponseEntity<ContractDto> getContract(@PathVariable long id) {
         return new ResponseEntity<>(contractService.getById(id), HttpStatus.OK);
     }

@@ -18,9 +18,6 @@ export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const {offers,page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
-    console.log(offers);
-    console.log("USEPROPS")
-    console.log(useProps());
     const navigate = useNavigate();
 
     const handleSortClick = (newSortField: any) => {

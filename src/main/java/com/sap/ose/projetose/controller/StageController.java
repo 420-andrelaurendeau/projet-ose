@@ -139,8 +139,8 @@ public class StageController {
 
     @PostMapping("/saveEmployerOpinion")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
-    public ResponseEntity<StageDto> saveEmployerOpinion(@RequestBody long stageId, @RequestBody String opinion){
-        StageDto updatedStage = stageService.saveEmployerOpinion(stageId, opinion);
+    public ResponseEntity<StageDto> saveEmployerOpinion(@RequestBody OpinionDto opinion){
+        StageDto updatedStage = stageService.saveEmployerOpinion(opinion.getStageId(), opinion.getOpinion());
         return ResponseEntity.ok(updatedStage);
 
     }

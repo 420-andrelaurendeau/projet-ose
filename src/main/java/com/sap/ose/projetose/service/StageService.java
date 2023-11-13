@@ -134,8 +134,6 @@ public class StageService {
                 savedStage = setContract(savedStage);
 
             return new StageDto(savedStage);
-        } catch (IllegalArgumentException | StageNotFoundException | DatabaseException e) {
-            throw e;
         } catch (Exception e) {
             throw e;
         }
