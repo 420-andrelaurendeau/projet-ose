@@ -3,14 +3,12 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.ContractDto;
 import com.sap.ose.projetose.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static org.springframework.security.authorization.AuthorityReactiveAuthorizationManager.hasAuthority;
 
 @RestController
 @RequestMapping("/api/contract")
@@ -48,10 +46,16 @@ public class ContractController {
 
     @GetMapping("student/{id}/getAll")
     @PreAuthorize("hasAuthority('student')")
-    public ResponseEntity<List<ContractDto>> getStudentContract(@PathVariable long id) {
+    public ResponseEntity<Page<ContractDto>> getStudentContract(@PathVariable long id,
+                                                                @RequestParam(required = false, defaultValue = "0") int page,
+                                                                @RequestParam(required = false, defaultValue = "10") int size,
+                                                                @RequestParam(required = false, defaultValue = "id") String sortField,
+                                                                @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
 
-        return new ResponseEntity<>(contractService.getAllByStudentID(id), HttpStatus.CREATED);
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+        return new ResponseEntity<>(contractService.getAllByStudentID(id, page, size, sort), HttpStatus.CREATED);
     }
+
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('internshipmanager') || hasAuthority('student') || hasAuthority('employer')")

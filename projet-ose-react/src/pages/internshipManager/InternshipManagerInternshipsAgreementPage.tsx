@@ -137,7 +137,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     return (
         <div className="px-4">
             <title>Offres</title>
-            <header className="pt-24 pb-4">
+            <header className="pt-4 pb-4">
                 <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">

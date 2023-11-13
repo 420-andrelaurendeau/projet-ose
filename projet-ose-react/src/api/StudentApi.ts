@@ -1,9 +1,10 @@
 import api from './ConfigAPI'
 import {Interview} from "../model/Interview";
 import {Stage} from "../model/Stage";
+
 export const saveCvStudent = async (matricule: number, cv: any) => {
     try {
-        const response = await apiClient.post(`student/addCv/${matricule}`, cv)
+        const response = await api.post(`student/addCv/${matricule}`, cv)
         return response.data
     } catch (err) {
         console.log('Error while saving cv' + err)

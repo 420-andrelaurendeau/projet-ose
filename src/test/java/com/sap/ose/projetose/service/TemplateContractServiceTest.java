@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
+import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -81,7 +82,7 @@ class TemplateContractServiceTest {
         assertEquals(1L, actualSaveResult.getFileId());
         assertTrue(actualSaveResult.getIsActive());
         byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
-        assertArrayEquals(expectedContent, actualSaveResult.getContent());
+        assertArrayEquals(expectedContent, Base64.getDecoder().decode(actualSaveResult.getContent()));
     }
 
 
@@ -156,7 +157,7 @@ class TemplateContractServiceTest {
         assertEquals(1L, actualCurrentPDF.getFileId());
         assertTrue(actualCurrentPDF.getIsActive());
         byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
-        assertArrayEquals(expectedContent, actualCurrentPDF.getContent());
+        assertArrayEquals(expectedContent, Base64.getDecoder().decode(actualCurrentPDF.getContent()));
     }
 
     @Test
@@ -189,7 +190,7 @@ class TemplateContractServiceTest {
         assertEquals(1L, actualCurrentPDF.getFileId());
         assertTrue(actualCurrentPDF.getIsActive());
         byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
-        assertArrayEquals(expectedContent, actualCurrentPDF.getContent());
+        assertArrayEquals(expectedContent, Base64.getDecoder().decode(actualCurrentPDF.getContent()));
     }
 
     @Test

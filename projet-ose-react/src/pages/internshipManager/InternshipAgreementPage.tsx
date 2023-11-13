@@ -1,20 +1,15 @@
 import {useTranslation} from "react-i18next";
-import {useNavigate, useParams} from "react-router-dom";
-import React, {JSX, useEffect, useRef, useState} from "react";
+import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
 import {getContractById, signDocument} from "../../api/InternshipManagerAPI";
-import {ReactPainter} from "react-painter";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useToast} from "../../hooks/state/useToast";
-import {Document, Page, pdfjs} from "react-pdf";
-// @ts-ignore
-import sodapdf from '../../assets/images/sodapdf.pdf';
-import useModal from "../../hooks/useModal";
-import Modal from "react-modal";
-import SignContract from "../../components/common/preparedoc/SignContract";
+import {pdfjs} from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface InternshipAgreementPageProps {
     id: string,
-    idEmployer: string ,
+    idEmployer: string,
     idStudent: string,
     idInternOffer: string,
     signatureInternShipManager: boolean,
@@ -41,7 +36,10 @@ const InternshipAgreementPage: React.FC<any> = () => {
                 fetchedintershipAggreementRef.current = true;
                 await getContractById(id!).then(
                     (response) => {
+                        console.log(response);
+                        context.file.content = response.content;
                         setintershipAggreement(response);
+                        console.log(context)
                     }
                 );
             } catch (error) {
@@ -59,6 +57,12 @@ const InternshipAgreementPage: React.FC<any> = () => {
         document.title = fields.title;
     }, []);
 
+    const context = {
+        file: {
+            content: intershipAggreement?.content!,
+        },
+        size: "0",
+    }
 
     async function signContract(pdf: any) {
         let form = {
@@ -87,15 +91,15 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
     return (<>
         {intershipAggreement && (
-            <div className="h-max pt-20">
+            <div className="h-max sm:pt-5 xxxs:pt-20">
                 <button
                     className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
-                    onClick={() => navigate("/internshipmanager/home/offers")}
+                    onClick={() => navigate("/internshipmanager/home/internshipsagreement")}
                 >
                     <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                 </button>
 
-                <h1 className="text-center text-3xl font-bold"> Titre de l'offre de stage </h1>
+                <h1 className="text-center text-3xl font-bold">{intershipAggreement.internOfferDto.title}</h1>
 
                 <div
                     className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto dark:text-offwhite">
@@ -114,7 +118,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
                             <p className="p-1">{intershipAggreement.etudiantDto.email}</p>
 
-                            <p className="p-1"> {intershipAggreement.stateStudent} </p>
+                            <p className="p-1"> {intershipAggreement.signatureStudent == true ? "Signé" : "Non signé"} </p>
                         </div>
 
                     </div>
@@ -130,9 +134,15 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
                             <p className="p-1"> {intershipAggreement.employeur.email}</p>
 
-                            <p className="p-1"> {intershipAggreement.stateEmployeur} </p>
+                            <p className="p-1"> {intershipAggreement.signatureEmployer == true ? "Signé" : "Non signé"} </p>
                         </div>
                     </div>
+                </div>
+
+                <div
+                    className="block pt-4 mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto dark:text-offwhite">
+                    <h2 className="pb-4 font-bold text-2xl">Description</h2>
+                    {intershipAggreement.internOfferDto.description}
                 </div>
 
                 {
@@ -140,18 +150,32 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     // TODO : Add the signature button
                 }
 
-                <button onClick={() => signContract("")}> SIGNER LE DOCUMENT</button>
-
+                <NavLink to={intershipAggreement?.fileName!}
+                         className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
+                    {intershipAggreement?.fileName!}
+                </NavLink>
                 {/**
-                <div className="px-20 mx-auto">
-                    <SignContract pdfBase64={""} signContract={signContract}/>
-                </div>
-                **/}
+                 <div className="px-20 mx-auto">
+                 <SignContract pdfBase64={""} signContract={signContract}/>
+                 </div>
+                 **/}
 
-
+                <Outlet
+                    context={context}
+                />
             </div>
+
         )}
     </>);
+}
+
+interface Props {
+    file: any;
+    size: string;
+}
+
+export function useProps() {
+    return useOutletContext<Props>();
 }
 
 export default InternshipAgreementPage

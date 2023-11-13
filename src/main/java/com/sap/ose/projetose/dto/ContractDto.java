@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Base64;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +19,9 @@ public class ContractDto {
     public boolean signatureInternShipManager;
     public boolean signatureEmployer;
     public boolean signatureStudent;
-    public long contractId;
-    public String contractName;
-    public String contractContent;
+    public long fileId;
+    public String content;
+    public String fileName;
 
 
     public ContractDto(Contract contract) {
@@ -30,7 +32,7 @@ public class ContractDto {
         this.signatureInternShipManager = contract.isSignatureInternShipManager();
         this.signatureEmployer = contract.isSignatureEmployer();
         this.signatureStudent = contract.isSignatureStudent();
-        this.contractName = contract.getFile().getFileName();
-        this.contractContent = new String(contract.getFile().getContent());
+        this.content = Base64.getEncoder().encodeToString(contract.getFile().getContent());
+        this.fileName = contract.getFile().getFileName();
     }
 }

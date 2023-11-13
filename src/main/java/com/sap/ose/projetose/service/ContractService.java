@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.ContractDto;
+import com.sap.ose.projetose.exception.BadSortingFieldException;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
@@ -10,10 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
-import java.util.List;
 
 
 @Service
@@ -53,8 +58,8 @@ public class ContractService {
     public ContractDto saveContractDto(ContractDto contractDto) {
         try {
 
-            File file = fileService.findById(contractDto.getContractId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContractContent().getBytes());
+            File file = fileService.findById(contractDto.getFileId());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
             file.setContent(encodedString);
 
             Contract contract = findById(contractDto.getId());
@@ -73,8 +78,8 @@ public class ContractService {
     public ContractDto saveContractStudentDto(ContractDto contractDto) {
         try {
 
-            File file = fileService.findById(contractDto.getContractId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContractContent().getBytes());
+            File file = fileService.findById(contractDto.getFileId());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
             file.setContent(encodedString);
 
             Contract contract = findById(contractDto.getId());
@@ -93,8 +98,8 @@ public class ContractService {
     public ContractDto saveContractEmployerDto(ContractDto contractDto) {
         try {
 
-            File file = fileService.findById(contractDto.getContractId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContractContent().getBytes());
+            File file = fileService.findById(contractDto.getFileId());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
             file.setContent(encodedString);
 
             Contract contract = findById(contractDto.getId());
@@ -129,9 +134,13 @@ public class ContractService {
         return contractRepository.findById(id).orElseThrow(() -> new IllegalStateException("Le contrat n'existe pas"));
     }
 
-    public List<ContractDto> getAllByStudentID(long id) {
+    public Page<ContractDto> getAllByStudentID(long id, int page, int size, Sort sort) {
         try {
-            return contractRepository.findAllByStudentId(id).stream().map(ContractDto::new).toList();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            return contractRepository.findAllByStudentId(id, pageable).map(ContractDto::new);
+        } catch (PropertyReferenceException e) {
+            logger.error("Le champ de tri n'est pas valide : " + sort);
+            throw new BadSortingFieldException(sort.toString());
         } catch (DataAccessException e) {
             logger.error("Erreur lors de la récupération des contrats", e);
             throw new DatabaseException("");
@@ -140,6 +149,5 @@ public class ContractService {
             throw new ServiceException("");
         }
     }
-
 
 }
