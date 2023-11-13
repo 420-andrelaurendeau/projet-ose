@@ -12,7 +12,6 @@ import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
-import toast from "../shared/toast/Toast";
 
 function StudentInternship() {
     const {i18n} = useTranslation();
@@ -131,6 +130,15 @@ function StudentInternship() {
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                                {offers.length === 0 && (
+                                    <tr>
+                                        <td colSpan={7}>
+                                            <div className="w-full text-center bg-red text-white">
+                                                <div className="">{fields.empty.text}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )}
                                 {offers.map((offer: any) => (
                                     <tr key={offer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
