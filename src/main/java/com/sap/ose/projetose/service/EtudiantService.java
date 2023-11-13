@@ -115,7 +115,11 @@ public class EtudiantService {
                         InternOfferDto offerDto = new InternOfferDto(offerApplied.getInternOffer());
                         offerDto.setInternshipCandidates(null);
 
-                        List<FileDto> fileDtos = offerApplied.getFiles().stream().map(FileDto::new).toList();
+                        List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(offerApplied.getId())
+                                .orElse(new ArrayList<>())
+                                .stream()
+                                .map(FileDto::new)
+                                .toList();
 
                         dto.setAppliedOffer(offerDto);
                         dto.setAppliedFiles(fileDtos);

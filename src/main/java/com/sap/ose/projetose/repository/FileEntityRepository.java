@@ -13,4 +13,6 @@ public interface FileEntityRepository extends JpaRepository<File, Long> {
     @Query("select f from File f where f.isAccepted = com.sap.ose.projetose.modeles.State.PENDING and f.etudiant is not null")
     Optional<List<File>> findAllStudentCvPending();
     Optional<List<File>> findAllByEtudiant_IdIs(long id);
+
+    Optional<List<File>> findAllByInternshipCandidates_IdIs(long id);
 }
