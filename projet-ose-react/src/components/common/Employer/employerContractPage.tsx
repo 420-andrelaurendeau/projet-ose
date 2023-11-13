@@ -173,35 +173,63 @@ export default function EmployerContractPage() {
                                     </td>
                                     <td className="flex space-x-5 items-center justify-between px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         {
+                                            stage.contractId === null ?
+                                            (
                                             !files.isEmpty &&
-                                            <FontAwesomeIcon icon={faEye}
-                                                             className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                             onClick={() => {
-                                                                 files.map((file: any) => {
-                                                                         console.log(file)
-                                                                         console.log(stage)
-                                                                         if (file.id === stage.contractId) {
-                                                                             setFile({
-                                                                                 content: file.contractContent
-                                                                             });
-                                                                             console.log(file)
-                                                                         }
-                                                                     }
-                                                                 )
-                                                                 setIsModalOpen(true);
-                                                             }}
-                                            />
-                                        }
-                                        <NavLink
-                                            to="#"
-                                            className="flex items-center text-green space-x-1"
-                                            onClick={() => {
+                                                <div>
+                                                    <FontAwesomeIcon icon={faEye}
+                                                                     className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                                     onClick={() => {
+                                                                         files.map((file: any) => {
+                                                                                 console.log(file)
+                                                                                 console.log(stage)
+                                                                                 if (file.id === stage.contractId) {
+                                                                                     setFile({
+                                                                                         content: file.contractContent
+                                                                                     });
+                                                                                     console.log(file)
+                                                                                 }
+                                                                             }
+                                                                         )
+                                                                         setIsModalOpen(true);
+                                                                     }}
+                                                    />
+                                                    <NavLink
+                                                        to="#"
+                                                        className="flex items-center text-green space-x-1"
+                                                        onClick={() => {
 
-                                            }}
-                                        >
-                                            <p>Sign</p>
-                                            <FontAwesomeIcon icon={faPenNib} />
-                                        </NavLink>
+                                                        }}
+                                                    >
+                                                        <p>Sign</p>
+                                                        <FontAwesomeIcon icon={faPenNib}/>
+                                                    </NavLink>
+                                                </div>
+
+                                            ) : (
+                                                <div className="flex justify-between">
+                                                    <button
+                                                        className="flex items-center text-green space-x-1 bg-green"
+                                                        onClick={() => {
+                                                            handleOfferClick(stage.id);
+                                                        }}
+                                                    >
+                                                        <p>Sign</p>
+                                                        <FontAwesomeIcon icon={faPenNib}/>
+                                                    </button>
+                                                    <button
+                                                        className="flex items-center text-green space-x-1 bg-red"
+                                                        onClick={() => {
+                                                            handleOfferClick(stage.id);
+                                                        }}
+                                                    >
+                                                        <p>Sign</p>
+                                                        <FontAwesomeIcon icon={faPenNib}/>
+                                                    </button>
+
+                                                </div>
+                                            )
+                                    }
                                     </td>
                                 </tr>
                             ))}
