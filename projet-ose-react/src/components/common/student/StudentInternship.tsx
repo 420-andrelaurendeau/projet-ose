@@ -12,10 +12,12 @@ import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
+import toast from "../shared/toast/Toast";
 
 function StudentInternship() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
+    let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [cv,setCv] = useState<FileEntity>()
@@ -34,16 +36,27 @@ function StudentInternship() {
             })
             fetchDefaultCvByStudentId(res.id).then((res) => {
                 setCv(res)
-                console.log(res)
+                console.log('cv par defaut', res)
+                if (res.isAccepted != "ACCEPTED") {
+                    toast.error("Votre CV par défaut n'est pas encore accepté")
+                }
+                else {
+                    toast.success("Vous avez un CV par défaut, vous pouvez postuler")
+                }
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
+                toast.error("Vous n'avez pas de CV par défaut, veuillez en ajouter un")
             })
             }
         ).finally(() => {
             offresEtudiant().then((res) => {
                 setOffers(res);
             })
+
         })
+
+
+
     }, []);
 
 
@@ -51,26 +64,25 @@ function StudentInternship() {
         console.log(offer);
         console.log(student);
         console.log(cv);
-        if (cv == null) {
-            toast.error(fields.toast.ErrorNoCv)
-        }
-        else {
-            saveStudentInternshipOffer(offer, student, cv).then(
-                res => {
-                    let appliedOffer: AppliedOffers = {
-                        appliedOffer: res.internOfferJob,
-                        appliedFiles: res.files
-                    };
-                    setAppliedOffers([...appliedOffers, appliedOffer]);
-                    toast.success(fields.toast.SuccessOfferApplication + " " + offer.title)
-                }
-            ).catch(
-                err => {
-                    console.log(err);
-                    toast.error(fields.toast.ErrorOfferApplication)
-                }
-            )
-        }
+
+        saveStudentInternshipOffer(offer, student, cv).then(
+            res => {
+                let appliedOffer: AppliedOffers = {
+                    appliedOffer: res.internOfferJob,
+                    appliedFiles: res.files
+                };
+                console.log(appliedOffer);
+
+                setAppliedOffers([...appliedOffers, appliedOffer]);
+
+                console.log(appliedOffers)
+            }
+        ).catch(
+            err => {
+                console.log(err);
+                anError = true;
+            }
+        )
     }
 
     return (
@@ -130,15 +142,6 @@ function StudentInternship() {
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                                {offers.length === 0 && (
-                                    <tr>
-                                        <td colSpan={7}>
-                                            <div className="w-full text-center bg-red text-white">
-                                                <div className="">{fields.empty.text}</div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
                                 {offers.map((offer: any) => (
                                     <tr key={offer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -168,7 +171,7 @@ function StudentInternship() {
                                                 onClick={() => applyOffer(offer, user, cv)}
                                                 type="submit"
                                                 disabled={
-                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || cv == null || cv.isAccepted != "ACCEPTED"
                                                 }
                                                 className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                             >

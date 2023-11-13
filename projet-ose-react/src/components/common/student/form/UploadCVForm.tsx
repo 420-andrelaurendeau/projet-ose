@@ -97,7 +97,7 @@ function UploadCVForm(): ReactElement {
         console.log(files)
         if (files.length !== 0) {
             setUploadState({status: "Uploading"})
-            saveCvStudent(parseInt(user!.matricule), files[0]).then(res => {
+            saveCvStudent(user!.id, files[0]).then(res => {
                 console.log(res)
                 setUploadState({status: "Done"})
                 toast.success(t('cv.success'))

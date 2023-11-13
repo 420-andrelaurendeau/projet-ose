@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -85,13 +86,21 @@ public class EtudiantService {
     }
 
     @Transactional
-    public EtudiantDto updateCVByMatricule(String matricule, File cv){
-        Etudiant etudiant = findByMatricule(matricule);
-        List<File> cvs = new ArrayList<>();
-        cvs.add(cv);
+    public EtudiantDto addCvById(long id, File cv) {
+        Etudiant etudiant = etudiantRepository.findById(id).orElse(null);
+        if (etudiant == null) return null;
+        List<File> cvs = etudiant.getCv();
+        if (cvs.isEmpty()) {
+            cvs.add(null);
+            cvs.add(cv);
+        }
+        else {
+            cvs.add(1, cv);
+        }
+
         cv.setEtudiant(etudiant);
         etudiant.setCv(cvs);
-        etudiantRepository.save(etudiant);
+        etudiant  = etudiantRepository.save(etudiant);
         return new EtudiantDto(etudiant);
     }
 
@@ -115,11 +124,7 @@ public class EtudiantService {
                         InternOfferDto offerDto = new InternOfferDto(offerApplied.getInternOffer());
                         offerDto.setInternshipCandidates(null);
 
-                        List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(offerApplied.getId())
-                                .orElse(new ArrayList<>())
-                                .stream()
-                                .map(FileDto::new)
-                                .toList();
+                        List<FileDto> fileDtos = offerApplied.getFiles().stream().map(FileDto::new).toList();
 
                         dto.setAppliedOffer(offerDto);
                         dto.setAppliedFiles(fileDtos);
@@ -148,6 +153,7 @@ public class EtudiantService {
                         ? fileEntityRepository.findAllByEtudiant_IdIs(id)
                                               .get()
                                               .stream()
+                                              .filter(Objects::nonNull)
                                               .map(file -> new FileDtoAll(file.getId(), file.getContent(),
                                                                             file.getFileName(), file.getIsAccepted(),
                                                                             new EtudiantDto(file.getEtudiant())))
@@ -185,12 +191,22 @@ public class EtudiantService {
                         throw new ServiceException("Le CV n'est pas encore accepté");
                     }
                     fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()));
-                    cv = fileEntityRepository.save(cv);
 
-                    Etudiant cvEtudiant = cv.getEtudiant();
-                    cvEtudiant.setActiveCv(cv);
-                    etudiantRepository.save(cvEtudiant);
                 }
+                cv = fileEntityRepository.save(cv);
+
+                Etudiant cvEtudiant = cv.getEtudiant();
+                List<File> etudiantCVs = cvEtudiant.getCv();
+
+                if (etudiantCVs.isEmpty()) {
+                    etudiantCVs.add(cv);
+                } else if (etudiantCVs.get(0) == null) {
+                    etudiantCVs.set(0, cv);
+                } else {
+                    etudiantCVs.add(0, null);
+                }
+
+                etudiantRepository.save(cvEtudiant);
             }
             if (fileDtoAll == null) {
                 throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
@@ -221,7 +237,12 @@ public class EtudiantService {
                     .findById(id)
                     .orElseThrow(EtudiantNotFoundException::new);
 
-            File cv = student.getActiveCv();
+            List<File> cVs = student.getCv();
+
+            if (cVs.isEmpty())
+                throw new FileNotFoundException();
+
+            File cv = cVs.get(0);
 
             return new FileDtoAll(Optional.ofNullable(cv)
                                           .orElseThrow(FileNotFoundException::new));
