@@ -62,8 +62,8 @@ function StudentInternship() {
                 setOffers(res);
             })
         } else {
-            console.log("in")
-            allStudentInternshipOffersBySeason(selectedOption).then((res)=> {
+            console.log(selected)
+            allStudentInternshipOffersBySeason(selected).then((res)=> {
                 console.log(res)
                 setOffers(res);
             })
