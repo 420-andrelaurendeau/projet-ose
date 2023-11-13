@@ -14,6 +14,7 @@ import {
 import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
 import {employeurGetContractById} from "../../../api/ContractAPI";
 import ViewPDFModal from "./offer/ViewPDFModal";
+import {saveEmployerOpinion} from "../../../api/StageAPI";
 
 
 export default function EmployerContractPage() {
@@ -21,7 +22,7 @@ export default function EmployerContractPage() {
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
-    const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection,} = useProps();
+    const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement} = useProps();
     const [file, setFile] = useState<any>({
         content: "",
     });
@@ -30,7 +31,7 @@ export default function EmployerContractPage() {
 
     useEffect(() => {
         stageAgreement.map(async (stage: any) => {
-            if (stage.contractId === null) return;
+            if (stage.contractId === 0) return;
             await employeurGetContractById(stage.contractId).then(r => {
                 console.log(r)
                 setFiles([...files, r])
@@ -156,27 +157,27 @@ export default function EmployerContractPage() {
 
                                         <span
                                             className={
-                                                (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") && (stage.stateEmployeur != "DECLINED" || stage.stateStudent != "DECLINED") ?
-                                                    "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                    : stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
-                                                        "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                                stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
+                                                    "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING")?
+                                                        "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
                                             {fields.AgreementTable[
-                                                (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") && (stage.stateEmployeur != "DECLINED" || stage.stateStudent != "DECLINED") ?
-                                                    "PENDING"
-                                                    : stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
-                                                        "DECLINED"
+                                                stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
+                                                    "DECLINED"
+                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
+                                                        "PENDING"
                                                         : "ACCEPTED"
                                                 ].text}
                                         </span>
                                     </td>
-                                    <td className="flex space-x-5 items-center justify-between px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         {
-                                            stage.contractId === null ?
+                                            stage.stateEmployeur == "ACCEPTED" && stage.stateStudent == "ACCEPTED" ?
                                             (
                                             !files.isEmpty &&
-                                                <div>
+                                                <div className="flex space-x-5 items-center justify-between">
                                                     <FontAwesomeIcon icon={faEye}
                                                                      className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => {
@@ -206,29 +207,60 @@ export default function EmployerContractPage() {
                                                     </NavLink>
                                                 </div>
 
-                                            ) : (
-                                                <div className="flex justify-between">
-                                                    <button
-                                                        className="flex items-center text-green space-x-1 bg-green"
-                                                        onClick={() => {
-                                                            handleOfferClick(stage.id);
-                                                        }}
-                                                    >
-                                                        <p>Sign</p>
-                                                        <FontAwesomeIcon icon={faPenNib}/>
-                                                    </button>
-                                                    <button
-                                                        className="flex items-center text-green space-x-1 bg-red"
-                                                        onClick={() => {
-                                                            handleOfferClick(stage.id);
-                                                        }}
-                                                    >
-                                                        <p>Sign</p>
-                                                        <FontAwesomeIcon icon={faPenNib}/>
-                                                    </button>
+                                            ) : stage.stateEmployeur == "PENDING" ?
+                                                (
+                                                    <div className="flex ">
+                                                        <div className="flex justify-between gap-4">
+                                                            <button
+                                                                type="button"
+                                                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-green hover:bg-emerald-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                                                onClick={() => saveEmployerOpinion(stage.id, "ACCEPTED").then(r => {
+                                                                    stageAgreement.map((stage: any) => {
+                                                                        if (stage.id === r.id) {
+                                                                            stage.stateEmployeur = r.stateEmployeur;
+                                                                            stage.stateStudent = r.stateStudent;
+                                                                            setOnChangeAgreement(true)
+                                                                        }
+                                                                    })
+                                                                })}
+                                                            >
+                                                                accept
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                                                onClick={() => saveEmployerOpinion(stage.id, "DECLINED").then(r => {
+                                                                    stageAgreement.map((stage: any) => {
+                                                                        if (stage.id === r.id) {
+                                                                            stage.stateEmployeur = r.stateEmployeur;
+                                                                            stage.stateStudent = r.stateStudent;
+                                                                            setOnChangeAgreement(true)
+                                                                        }
+                                                                    })
+                                                                })}
+                                                            >
+                                                                refuse
+                                                            </button>
+                                                        </div>
 
-                                                </div>
-                                            )
+                                                    </div>
+                                                ): stage.stateEmployeur == "DECLINED"?
+                                                    (
+                                                        <div className="flex ">
+                                                            Vous avez refuser
+                                                        </div>
+                                                    )
+                                                    :stage.stateStudent == "DECLINED"?
+                                                    (
+                                                        <div className="flex ">
+                                                            L'étudiant a refuser
+                                                        </div>
+                                                    ):
+                                                    (
+                                                        <div className="flex ">
+                                                            En attente de l'étudiant
+                                                        </div>
+                                                    )
                                     }
                                     </td>
                                 </tr>
