@@ -8,6 +8,7 @@ import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 import {useTranslation} from "react-i18next";
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
+import api from "../../../../api/ConfigAPI";
 
 interface Props {
     user: any
@@ -21,16 +22,6 @@ interface Props {
     isReviewing: boolean
 }
 
-
-const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api/',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-    },
-});
 
 const ApplicationOffer: React.FC<any> = () => {
     const {id} = useParams();
@@ -87,7 +78,7 @@ const ApplicationOffer: React.FC<any> = () => {
                     candidatures.map((candidature: any) => {
                         let interviewList: any[] = []
                         let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
-                        apiClient.post("interview/studentHasInterviewWithInternOffer", requestBody,
+                        api.post("interview/studentHasInterviewWithInternOffer", requestBody,
                         ).then((res) => {
                             interviewList.push({
                                 "offerId": offer.id,
@@ -118,7 +109,7 @@ const ApplicationOffer: React.FC<any> = () => {
 
 
     function handleAccept(id: string) {
-        apiClient.post(`intershipCandidates/acceptCandidats/${id}`).then(
+        api.post(`intershipCandidates/acceptCandidats/${id}`).then(
             (res) => {
                 let newList: any[] = [...interOfferCandidates]
 
@@ -135,7 +126,7 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     function handleRefuse(id: string) {
-        apiClient.post(`intershipCandidates/declineCandidats/${id}`).then(
+        api.post(`intershipCandidates/declineCandidats/${id}`).then(
             (res) => {
                 let newList: any[] = [...interOfferCandidates]
 
@@ -210,7 +201,8 @@ const ApplicationOffer: React.FC<any> = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-full md:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+            <div className="flex justify-center">
+                <div className="w-full md:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
                 <div className=" py-8 flex justify-between">
                     <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
                 </div>
@@ -305,6 +297,7 @@ const ApplicationOffer: React.FC<any> = () => {
                         })}
                     </dl>
                 </div>
+            </div>
             </div>
             <div className="w-full my-6 px-12 border border-gray dark:border-darkgray"/>
             {

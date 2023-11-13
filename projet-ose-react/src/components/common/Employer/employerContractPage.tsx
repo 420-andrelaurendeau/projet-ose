@@ -182,11 +182,12 @@ export default function EmployerContractPage() {
                                                                      className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => {
                                                                          files.map((file: any) => {
+                                                                             console.log(files)
                                                                                  console.log(file)
                                                                                  console.log(stage)
                                                                                  if (file.id === stage.contractId) {
                                                                                      setFile({
-                                                                                         content: file.contractContent
+                                                                                         content: file.content
                                                                                      });
                                                                                      console.log(file)
                                                                                  }

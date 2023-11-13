@@ -30,7 +30,7 @@ const ViewPDFModal = (props:any) => {
 
     useEffect(() => {
         const loadPDF = async () => {
-            const pdfBytes = base64ToArrayBuffer(file.content)
+            const pdfBytes = base64ToArrayBuffer(props.file.content)
             if (pdfBytes) {
                 const blob = new Blob([new Uint8Array(pdfBytes)]);
                 const URL: any = await blobToURL(blob);
