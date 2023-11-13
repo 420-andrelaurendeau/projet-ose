@@ -17,7 +17,7 @@ export default function InternshipManagerOffers(props: any) {
     const navigate = useNavigate();
 
     const handleOfferClick = (id: number) => {
-        navigate(`/internshipmanager/home/offer/${id}`);
+        navigate(`/internshipmanager/home/offers/${id}`);
     };
 
     const handleSortClick = (newSortField: any) => {

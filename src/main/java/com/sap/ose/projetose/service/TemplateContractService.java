@@ -15,6 +15,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+
 @Service
 public class TemplateContractService {
 
@@ -31,8 +33,7 @@ public class TemplateContractService {
         try {
             unsetDefaultPDF();
 
-
-            File newFile = new File(templateContractDto.getContent(), templateContractDto.getFileName(), State.ACCEPTED);
+            File newFile = new File(Base64.getDecoder().decode(templateContractDto.getContent()), templateContractDto.getFileName(), State.ACCEPTED);
             TemplateContract newTemplateContract = new TemplateContract(newFile);
 
             TemplateContract savedTemplateContract = templateContractRepository.save(newTemplateContract);

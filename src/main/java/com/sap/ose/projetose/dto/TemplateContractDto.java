@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Base64;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,9 +17,9 @@ public class TemplateContractDto {
     Boolean isActive;
     long fileId;
     String fileName;
-    byte[] content;
+    String content;
 
-    public TemplateContractDto(String createdDate, Boolean isActive, long fileId, String fileName, byte[] content) {
+    public TemplateContractDto(String createdDate, Boolean isActive, long fileId, String fileName, String content) {
         this.createdDate = createdDate;
         this.isActive = isActive;
         this.fileId = fileId;
@@ -30,6 +32,6 @@ public class TemplateContractDto {
         this.isActive = templateContract.getIsActive();
         this.fileId = templateContract.getFile().getId();
         this.fileName = templateContract.getFile().getFileName();
-        this.content = templateContract.getFile().getContent();
+        this.content = Base64.getEncoder().encodeToString(templateContract.getFile().getContent());
     }
 }
