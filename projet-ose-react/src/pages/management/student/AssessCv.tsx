@@ -5,8 +5,6 @@ import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import {ReviewFile} from "../../../model/ReviewFile";
 import {useTranslation} from "react-i18next";
 import {useToast} from "../../../hooks/state/useToast";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 function EvaluerCV() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","StudentCvEvaluation");
