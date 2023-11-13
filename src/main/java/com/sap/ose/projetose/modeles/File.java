@@ -24,7 +24,7 @@ public class File {
 
     private State isAccepted;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
@@ -60,7 +60,6 @@ public class File {
                 ", content=" + Arrays.toString(content) +
                 ", fileName='" + fileName + '\'' +
                 ", isAccepted=" + isAccepted +
-                ", etudiant=" + etudiant +
                 '}';
     }
 }

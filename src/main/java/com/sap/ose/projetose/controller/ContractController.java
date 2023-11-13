@@ -40,7 +40,6 @@ public class ContractController {
     @PostMapping("employer/save")
     @PreAuthorize("hasAuthority('employer')")
     public ResponseEntity<ContractDto> saveEmployerContract(@RequestBody ContractDto contractDto) {
-        System.out.println(contractDto);
         return new ResponseEntity<>(contractService.saveContractEmployerDto(contractDto), HttpStatus.CREATED);
     }
 

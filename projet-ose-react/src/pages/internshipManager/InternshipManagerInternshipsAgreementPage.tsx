@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {
     getIntershipOffers,
     getStageCountByState,
@@ -43,6 +43,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     const fetchedInternshipsAgreementCountRef = useRef(false);
     const location = useLocation();
     const toast = useToast();
+    const navigate = useNavigate();
 
     //TODO Temporaire
     const user = location.state;
@@ -130,9 +131,14 @@ const InternshipManagerInternshipsAgreementPage = () => {
         setCurrentPage(0);
     };
 
+    const handleOfferClick = (id: number) => {
+        console.log(id)
+        navigate(`/internshipmanager/home/internshipagreement/${id}`);
+    };
+
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
-                                                 sortDirection={sortDirection}/>;
+                                                 sortDirection={sortDirection} handleOfferClick={handleOfferClick}/>;
 
     return (
         <div className="px-4">

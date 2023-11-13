@@ -3,7 +3,6 @@ import {faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-ico
 import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
-// todo : change the sort field with correct name of the api
 
 export default function InternshipManagerInternshipsAgreement(props: any) {
 
@@ -11,10 +10,6 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage.internshipsAgreement");
 
     const navigate = useNavigate();
-
-    const handleOfferClick = (id: number) => {
-        navigate(`/internshipmanager/home/internshipagreement/${id}`);
-    };
 
     useEffect(() => {
         console.log(props.offers)
@@ -32,8 +27,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
         }
         console.log(props.sortField === "employeurEntreprise" ? "visible" : "hidden")
     };
-
-
+    
     return (
         <div className="pt-4 pb-4">
             <div className="">
@@ -43,11 +37,11 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         <div
                             role="columnheader"
                             className="xxxs:text-xs sm:text-sm sm:w-1/5 w-1/2 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
-                            onClick={() => handleSortClick("title")}
+                            onClick={() => handleSortClick("offer.title")}
                         >
                             {fields.title}
                             <div
-                                className={props.sortField === "title" ? "visible" : "hidden"}>
+                                className={props.sortField === "offer.title" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
@@ -56,11 +50,11 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         <div
                             role="columnheader"
                             className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
-                            onClick={() => handleSortClick("employeurEntreprise")}
+                            onClick={() => handleSortClick("employeur.entreprise")}
                         >
                             {fields.enterprise}
                             <div
-                                className={props.sortField === "employeurEntreprise" ? "visible" : "hidden"}>
+                                className={props.sortField === "employeur.entreprise" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
@@ -69,24 +63,23 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         <div
                             role="columnheader"
                             className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
-                            onClick={() => handleSortClick("location")}
+                            onClick={() => handleSortClick("student.nom")}
                         >
                             {fields.student}
                             <div
-                                className={props.sortField === "location" ? "visible" : "hidden"}>
+                                className={props.sortField === "student.nom" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
                             </div>
                         </div>
+
                         <div
                             role="columnheader"
-                            className="xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate flex"
-                            onClick={() => handleSortClick("state")}
-                        >
+                            className={"xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-default overflow-hidden truncate flex"}>
                             {fields.statut}
                             <div
-                                className={props.sortField === "state" ? "visible" : "hidden"}>
+                                className={props.sortField === "stateEmployeur" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
@@ -140,7 +133,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                          className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
                                         <FontAwesomeIcon icon={faEye}
                                                          className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
-                                                         onClick={() => handleOfferClick(offer.contractId!)}/>
+                                                         onClick={() => props.handleOfferClick(offer.contractId!)}/>
                                     </div>: <></>
                             }
                         </div>

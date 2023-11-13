@@ -30,16 +30,20 @@ export function downloadURI(uri:any, name:any) {
 }
 
 export function base64ToArrayBuffer(base64:string) {
-  const binaryString = atob(base64);
-  const length = binaryString.length;
-  const buffer = new ArrayBuffer(length);
-  const view = new Uint8Array(buffer);
+  try {
+    const binaryString = atob(base64);
+    const length = binaryString.length;
+    const buffer = new ArrayBuffer(length);
+    const view = new Uint8Array(buffer);
 
-  for (let i = 0; i < length; i++) {
-    view[i] = binaryString.charCodeAt(i);
+    for (let i = 0; i < length; i++) {
+      view[i] = binaryString.charCodeAt(i);
+    }
+
+    return buffer;
+  }catch (e) {
+    return null;
   }
-
-  return buffer;
 }
 
 export  function getWidth() {

@@ -11,17 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StageService {
@@ -50,7 +45,7 @@ public class StageService {
     }
 
     @Transactional
-    public void save(Stage stage){
+    public void save(Stage stage) {
         Employeur employeur = stage.getOffer().getEmployeur();
         stage.setEmployeur(employeur);
         stageRepository.save(stage);
@@ -71,7 +66,7 @@ public class StageService {
 
         stageRepository.save(stage);
 
-        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(),stage.getContract() != null ? stage.getContract().id : 0);
+        StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0);
         return Optional.of(stageReturn);
     }
 
@@ -98,7 +93,7 @@ public class StageService {
 
     @Transactional
     public List<StageDto> getStageStudentPending(long studentId) {
-        return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(),stage.getContract() != null ? stage.getContract().id : 0)).toList() : null;
+        return stageRepository.findAllStudentPending(studentId).isPresent() ? stageRepository.findAllStudentPending(studentId).get().stream().map(stage -> new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0)).toList() : null;
     }
 
     @Transactional
@@ -139,8 +134,6 @@ public class StageService {
                 savedStage = setContract(savedStage);
 
             return new StageDto(savedStage);
-        } catch (IllegalArgumentException | StageNotFoundException | DatabaseException e) {
-            throw e;
         } catch (Exception e) {
             throw e;
         }
@@ -192,13 +185,29 @@ public class StageService {
         }
     }
 
+    @Transactional
+    public Map<String, Long> getCountByStateGS(){
+        List<Object[]> counts = stageRepository.getCountByState();
+        return getCountByState(counts);
+    }
 
     @Transactional
-    public Map<String, Long> getCountByState() {
+    public Map<String, Long> getCountByStateEmployeur(long id){
+        List<Object[]> counts = stageRepository.getCountByStateByEmployeur(id);
+        return getCountByState(counts);
+    }
+
+    @Transactional
+    public Map<String, Long> getCountByStateStudent(long id){
+        List<Object[]> counts = stageRepository.getCountByStateByStudent(id);
+        return getCountByState(counts);
+    }
+
+    @Transactional
+    public Map<String, Long> getCountByState(List<Object[]> counts) {
         HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
 
         try {
-            List<Object[]> counts = stageRepository.getCountByState();
             long totalOffers = 0;
 
             for (Object[] count : counts) {
@@ -224,6 +233,46 @@ public class StageService {
     }
 
 
+
+    private Page<InternshipAgreementDto> stageToDtoPage(Page<Stage> stagePage){
+        return stagePage.map(stage -> new InternshipAgreementDto(
+                stage.getId(),
+                new EmployeurDto(stage.getEmployeur()),
+                new EtudiantDto(stage.getStudent()),
+                new InternOfferDto(stage.getOffer()),
+                stage.getStateStudent(),
+                stage.getStateEmployeur(),
+                stage.getContract() != null ? stage.getContract().id : 0
+        ));
+    }
+    @Transactional
+    public Page<InternshipAgreementDto> getSortedByPageOfEmployeur(int page, int size, Sort sort, String state, long id) {
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<InternshipAgreementDto> internshipAgreementDtos;
+
+        if (state == null)
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByEmployeurId(id, pageable));
+        else {
+            State stateEnum = State.valueOf(state);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateEmployeur(stateEnum.name(), pageable, id));
+        }
+
+        return internshipAgreementDtos;
+    }
+
+    @Transactional
+    public Page<InternshipAgreementDto> getSortedByPageOfStudent(int page, int size, Sort sort, String state, long id){
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<InternshipAgreementDto> internshipAgreementDtos;
+        if (state == null)
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStudentId(id, pageable));
+        else {
+            State stateEnum = State.valueOf(state);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateStudent(stateEnum.name(), pageable, id));
+        }
+        return internshipAgreementDtos;
+    }
+
     @Transactional
     public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state) {
         try {
@@ -231,26 +280,10 @@ public class StageService {
             Page<InternshipAgreementDto> internshipAgreementDtos;
 
             if (state == null)
-                internshipAgreementDtos = stageRepository.findAll(pageable).map(stage -> new InternshipAgreementDto(
-                        stage.getId(),
-                        new EmployeurDto(stage.getEmployeur()),
-                        new EtudiantDto(stage.getStudent()),
-                        new InternOfferDto(stage.getOffer()),
-                        stage.getStateStudent(),
-                        stage.getStateEmployeur(),
-                        stage.getContract() != null ? stage.getContract().id : 0
-                ));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAll(pageable));
             else {
                 State stateEnum = State.valueOf(state);
-                internshipAgreementDtos = stageRepository.findAllByState(stateEnum, pageable).map(stage -> new InternshipAgreementDto(
-                        stage.getId(),
-                        new EmployeurDto(stage.getEmployeur()),
-                        new EtudiantDto(stage.getStudent()),
-                        new InternOfferDto(stage.getOffer()),
-                        stage.getStateStudent(),
-                        stage.getStateEmployeur(),
-                        stage.getContract() != null ? stage.getContract().id : 0
-                ));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
             }
 
             return internshipAgreementDtos;
