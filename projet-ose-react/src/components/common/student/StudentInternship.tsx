@@ -7,7 +7,7 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {offresEtudiant, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import {FileEntity} from "../../../model/FileEntity";
@@ -36,15 +36,20 @@ function StudentInternship() {
             })
             fetchDefaultCvByStudentId(res.id).then((res) => {
                 setCv(res)
-                console.log(res)
-                toast.success("Vous avez un CV par défaut, vous pouvez postuler")
+                console.log('cv par defaut', res)
+                if (res.isAccepted != "ACCEPTED") {
+                    toast.error("Votre CV par défaut n'est pas encore accepté")
+                }
+                else {
+                    toast.success("Vous avez un CV par défaut, vous pouvez postuler")
+                }
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
                 toast.error("Vous n'avez pas de CV par défaut, veuillez en ajouter un")
             })
             }
         ).finally(() => {
-            allStudentInternshipOffers().then((res) => {
+            offresEtudiant().then((res) => {
                 setOffers(res);
             })
 
@@ -166,7 +171,7 @@ function StudentInternship() {
                                                 onClick={() => applyOffer(offer, user, cv)}
                                                 type="submit"
                                                 disabled={
-                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || cv == null
+                                                    appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || cv == null || cv.isAccepted != "ACCEPTED"
                                                 }
                                                 className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                             >
