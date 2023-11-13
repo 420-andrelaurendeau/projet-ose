@@ -1,18 +1,12 @@
-import React, {useEffect} from "react";
-import {useProps} from "../../../pages/student/StudentInternshipPage";
-import {Outlet, useOutletContext} from "react-router-dom";
+import React from "react";
 import {Buffer} from "buffer";
 import ViewPDFModal from "../Employer/offer/ViewPDFModal";
-import {pdfjs} from "react-pdf/dist/esm";
 
-const CVStudant = () => {
-    const useprops = useProps();
-    console.log(useprops.user);
-
+const CVStudant = (props:any) => {
     const getFileSize = (): string => {
         let sizeInBytes = 0
-        if (useprops.user.cv?.content){
-            sizeInBytes = Buffer.from(useprops.user.cv?.content).length;
+        if (props.user.cv?.content){
+            sizeInBytes = Buffer.from(props.user.cv?.content).length;
             if (sizeInBytes < 1000) {
                 return sizeInBytes + " B";
             }else if (sizeInBytes < 1000000) {
@@ -31,14 +25,14 @@ const CVStudant = () => {
                                 <span
                                     className="px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-blue dark:bg-orange text-white dark:text-offwhite"
                                 >
-                                    {useprops.user.cv.fileName}
+                                    {props.user.cv.fileName}
                                 </span>
                     </h2>
                     <div className="flex gap-2">
                         <button
                             type="button"
                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            onClick={() => {}}
+                            onClick={() => {props.setChangeCV(true)}}
                         >
                             Change CV
                         </button>
@@ -47,7 +41,7 @@ const CVStudant = () => {
             </div>
             <ViewPDFModal
                 ismodal={false}
-                file={useprops.user.cv}
+                file={props.user.cv}
             />
         </div>
     );

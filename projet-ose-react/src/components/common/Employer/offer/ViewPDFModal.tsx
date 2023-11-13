@@ -36,19 +36,22 @@ const ViewPDFModal = (props:any) => {
     return (
         // modal
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0": ""} w-full h-full bg-black bg-opacity-50 p-10`}>
+            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0 bg-black bg-opacity-50 p-10": "p-12 rounded"} w-full h-full bg-white dark:bg-dark `}>
                 <div className="overflow-y-auto h-full">
-                    <div className="fixed top-10 left-10 z-[102] p-3">
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md  bg-red hover:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            onClick={() => {
-                                navigate(`/employer/home/offers/${id}`);
-                            }}
-                        >
-                            Close
-                        </button>
-                    </div>
+                    {
+                        props.ismodal &&
+                        <div className="fixed top-10 left-10 z-[102] p-3">
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md  bg-red hover:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                onClick={() => {
+                                    navigate(`/employer/home/offers/${id}`);
+                                }}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    }
                     <div id="container" className="m-auto h-full">
                         {pdf ? (
                             <ViewPDF

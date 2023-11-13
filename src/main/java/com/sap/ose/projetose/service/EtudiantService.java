@@ -10,6 +10,7 @@ import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.Programme;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.FileEntityRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +25,15 @@ import java.util.Optional;
 public class EtudiantService {
     private final EtudiantRepository etudiantRepository;
     private final FileService fileService;
+    private final FileEntityRepository fileEntityRepository;
 
     private final ProgrammeService programmeService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository, FileService fileService, ProgrammeService programmeService) {
+    public EtudiantService(EtudiantRepository etudiantRepository, FileService fileService, FileEntityRepository fileEntityRepository, ProgrammeService programmeService) {
         this.etudiantRepository = etudiantRepository;
         this.fileService = fileService;
+        this.fileEntityRepository = fileEntityRepository;
         this.programmeService = programmeService;
     }
 
@@ -87,8 +90,17 @@ public class EtudiantService {
     @Transactional
     public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        cv.setEtudiant(etudiant);
-        fileService.saveFile(cv);
+        File oldCv = fileEntityRepository.findByEtudiant_Id(etudiant.getId()).orElse(null);
+        if(oldCv == null){
+            cv.setEtudiant(etudiant);
+            fileService.saveFile(cv);
+        }else {
+            oldCv.setEtudiant(etudiant);
+            oldCv.setContent(cv.getContent());
+            oldCv.setFileName(cv.getFileName());
+            fileService.saveFile(oldCv);
+        }
+
         EtudiantDto etudiantDto = new EtudiantDto(etudiant);
         return etudiantDto;
     }

@@ -2,9 +2,11 @@ import {useRef} from "react";
 import {PDFDocument, rgb} from "pdf-lib";
 import {blobToURL} from "./utils/Utils";
 import dayjs from "dayjs";
-import {Document, Page} from "react-pdf";
+import {Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 import DraggableSignature from "./DraggableSignature";
 import DraggableText from "./DraggableText";
+
 
 function ViewPDF(props: any) {
     const documentRef = useRef<any>(null);
