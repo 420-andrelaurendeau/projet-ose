@@ -9,7 +9,9 @@ import StudentAppliedOffers from "../components/common/student/offers/StudentApp
 import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import StudentStagePage from "../pages/student/StudentStagePage";
 import Layout from "../components/layout/Layout";
-
+import CVStudant from "../components/common/student/CVStudant";
+import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
+import {pdfjs} from "react-pdf/dist/esm";
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
@@ -19,7 +21,9 @@ const StudentRoutes: React.FC = () => {
                     <Route path="home" element={<StudentInternshipPage/>}>
                         <Route path="offers" element={<StudentInternship/>}/>
                         <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                        <Route path="cv" element={<UploadCVForm/>}/>
+                        <Route path="cv" element={<UploadCVForm/>}>
+                            <Route path="upload" element={<UploadCVForm/>}/>
+                        </Route>
                         <Route path="interview" element={<StudentInterviewPage/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="stage" element={<StudentStagePage />}/>

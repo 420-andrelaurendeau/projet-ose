@@ -62,7 +62,10 @@ public class UtilisateurSignInDto {
             }
             if (utilisateur.getClass().getSimpleName().equals("Etudiant")) {
                 assert utilisateur instanceof com.sap.ose.projetose.modeles.Etudiant;
-                this.cv = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getCv();
+                File etudiantCv = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getCv();
+                if (etudiantCv != null)
+                    etudiantCv.setEtudiant(null);
+                this.cv = etudiantCv;
             } else {
                 this.cv = null;
             }

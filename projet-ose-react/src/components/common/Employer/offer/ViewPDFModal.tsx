@@ -2,12 +2,9 @@ import React, {useEffect, useState} from "react";
 import {base64ToArrayBuffer, blobToURL, getWidth} from "../../preparedoc/utils/Utils";
 import PagingControl from "../../preparedoc/PagingControl";
 import ViewPDF from "../../preparedoc/ViewPDF";
-import {useProps} from "./EmployerOfferDetails";
 import {useNavigate, useParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-
-
 
 const ViewPDFModal = (props:any) => {
     const navigate = useNavigate();
@@ -16,7 +13,7 @@ const ViewPDFModal = (props:any) => {
     const [width, setWidth] = useState(0);
     const [pageNum, setPageNum] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const { file,size } = useProps();
+
     useEffect(() => {
         setWidth(getWidth());
         window.addEventListener("resize", () => {
@@ -26,8 +23,8 @@ const ViewPDFModal = (props:any) => {
 
     useEffect(() => {
         const loadPDF = async () => {
-            const pdfBytes = base64ToArrayBuffer(file.content)
-            console.log(file.content)
+            const pdfBytes = base64ToArrayBuffer(props.file.content)
+            console.log(props.file.content)
             const blob = new Blob([new Uint8Array(pdfBytes)]);
             const URL:any = await blobToURL(blob);
             setPdf(URL);
