@@ -6,16 +6,7 @@ import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
-
-const apiClient = axios.create({
-    baseURL: 'http://localhost:8080/api/',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': 'http://localhost:3000',
-    },
-});
+import api from "../../../../api/ConfigAPI";
 
 export default function ApplicationDetails ():ReactElement{
 
@@ -35,7 +26,7 @@ export default function ApplicationDetails ():ReactElement{
     function handleSubmit(){
         clearInputs()
         let requestBody = {"studentId" : studentId, "internOfferId":offerId, "date":date, "description":description}
-        apiClient.post("interview/save", requestBody).then((res)=>{
+        api.post("interview/save", requestBody).then((res)=>{
             console.log(res)
             updateCandidature()
             toast.success(fields.success.text)
