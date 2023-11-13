@@ -1,17 +1,23 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { pdfjs } from "react-pdf";
-import {blobToURL, downloadURI, getWidth} from "./utils/Utils";
+import {base64ToArrayBuffer, blobToURL, downloadURI, getWidth, URLToBase64} from "./utils/Utils";
 import PagingControl from "./PagingControl";
 import { AddSigDialog } from "./AddSigDialog";
-import pdff from './pdf/Internshipe_Contract_Contract.pdf';
 import PDFOptions from "./PDFOptions";
 import ViewPDF from "./ViewPDF";
+import {useLocation, useNavigate} from "react-router-dom";
+import {employeurGetContractById} from "../../../api/ContractAPI";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 
-function SignContract() {
+function SignContract(props:any) {
+  const location = useLocation();
+  const stage = location.state;
+  const [contract, setContract] = useState<any>(null);
   const [pdf, setPdf] = useState(null);
   const [autoDate, setAutoDate] = useState(true);
   const [signatureURL, setSignatureURL] = useState(null);
@@ -29,26 +35,43 @@ function SignContract() {
   });
   const [selectedOption, setSelectedOption] = useState<string>("none");
   const optionsClassname = "flex justify-center items-center h-10 w-10 dark:text-white rounded cursor-pointer";
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [newContent, setNewContent] = useState<any>(false);
 
   useEffect(() => {
+    console.log(stage)
     setWidth(getWidth());
     window.addEventListener("resize", () => {
       setWidth(getWidth());
     });
-  }, []);
+  }, [isLoaded]);
 
   useEffect( () => {
-    const getPDF = async () => {
-
-      const pdfBytes = await fetch(pdff).then((response) => response.arrayBuffer());
-      const blob = new Blob([new Uint8Array(pdfBytes)]);
-      const URL:any = await blobToURL(blob);
-      setPdf(URL);
+    setIsLoaded(false)
+    const getContract = async () => {
+      await employeurGetContractById(stage.contractId).then(async r => {
+        console.log(r)
+        setContract(r)
+        const pdfBytes = base64ToArrayBuffer(r.content)
+        if (pdfBytes) {
+          const blob = new Blob([new Uint8Array(pdfBytes)]);
+          const URL: any = await blobToURL(blob);
+          setPdf(URL);
+        } else setPdf(null)
+        setIsLoaded(true)
+      })
     }
-    getPDF();
+    getContract();
+    setWidth(getWidth());
   }, []);
 
+  const submitContract = async () => {
+    contract.content = URLToBase64(pdf!)
+    console.log(contract.content)
+  }
+
   return (
+      isLoaded ?
     <div>
       <div id="container" className="m-auto">
         {signatureDialogVisible ? (
@@ -66,6 +89,7 @@ function SignContract() {
           <div className="relative">
             <PDFOptions
                 optionsClassname={optionsClassname} selectedOption={selectedOption}
+                newContent={newContent}
                 onClick={() => setSelectedOption('none')}
                 onClick1={() => {
                   setTextInputVisible(true)
@@ -81,6 +105,7 @@ function SignContract() {
                 onClick4={() => {
                   downloadURI(pdf, 'contract.pdf')
                 }}
+                submitContract={submitContract}
             />
             <ViewPDF
                 file={pdf} pageDetails={pageDetails} setPdf={setPdf} pdf={pdf}
@@ -88,6 +113,7 @@ function SignContract() {
                 autoDate={autoDate} setTextInputVisible={setTextInputVisible}
                 pageNum={pageNum} width={width} signatureURL={signatureURL}
                 onEnd={setPosition} textInputVisible={textInputVisible}
+                setNewContent={setNewContent} contract={contract}
                 setSelectedOption={setSelectedOption}
                 onLoadSuccess={(data: any) => {
                   setTotalPages(data.numPages);
@@ -115,7 +141,11 @@ function SignContract() {
           </div>
         ) : null}
       </div>
-    </div>
+    </div>:
+          <div className="flex justify-center items-center">
+            <FontAwesomeIcon icon={faSpinner}  spin size="5x" className="text-blue dark:text-orange" />
+          </div>
+
   );
 }
 

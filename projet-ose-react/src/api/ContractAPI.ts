@@ -11,5 +11,16 @@ export const employeurGetContractById = async (id: number) => {
     }
 }
 
+export const employeurSaveContract = async (contract: any) => {
+    try {
+        const response = await api.post(`contract/employer/save`, contract);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la création du contrat:', error);
+        throw error;
+    }
+}
+
 
 

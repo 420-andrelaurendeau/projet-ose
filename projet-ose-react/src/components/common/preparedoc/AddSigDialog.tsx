@@ -27,13 +27,6 @@ export function AddSigDialog({ onConfirm, onClose, autoDate, setAutoDate }:any) 
           </div>
           <div className="flex justify-between text-center text-blue dark:text-orange mt-8 w-2/3 self-center">
             <div className="flex justify-center">
-              <div>
-                Auto date/time{" "}
-                <input
-                    type={"checkbox"}
-                    checked={autoDate}
-                    onChange={(e) => setAutoDate(e.target.checked)}/>
-              </div>
               <div>Draw your signature above</div>
             </div>
           </div>

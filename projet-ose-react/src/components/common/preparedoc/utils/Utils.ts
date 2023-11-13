@@ -81,3 +81,21 @@ export async function fileToBlob(file:File, handleUpdate:Function) {
   // eslint-disable-next-line no-undef
   return new Blob(chunks);
 }
+
+
+export function URLToBase64(url:string) {
+  //pas de promesse car on ne peut pas attendre le résultat
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+            console.log(reader.result)
+        }
+        reader.readAsDataURL(xhr.response);
+    }
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+
+    return xhr.response.split(',')[1];
+}

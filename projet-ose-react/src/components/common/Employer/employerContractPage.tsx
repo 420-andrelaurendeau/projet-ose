@@ -60,6 +60,19 @@ export default function EmployerContractPage() {
         file: file,
     }
 
+    function getState(stage: any) {
+
+        files.map((file: any) => {
+                    if (file.id === stage.contractId) {
+                        return file
+                    }
+                }
+            )
+
+    }
+
+
+
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
@@ -197,7 +210,8 @@ export default function EmployerContractPage() {
                                                                      }}
                                                     />
                                                     <NavLink
-                                                        to="#"
+                                                        to="/employer/home/contract/sign"
+                                                        state={stage}
                                                         className="flex items-center text-green space-x-1"
                                                         onClick={() => {
 
