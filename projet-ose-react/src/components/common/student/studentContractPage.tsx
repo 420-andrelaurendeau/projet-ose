@@ -54,7 +54,7 @@ export default function StudentContractPage() {
             setTotalDeclined(responseTotal["DECLINED"])
 
         if (responseTotal["TOTAL"])
-            setTotalInternshipsAgreement(responseTotal["TOTAL"])
+            setTotalInternshipsAgreement(responseTotal["TOTAL"]-responseTotal["IRRELEVANT"])
     }
     const fetchInternshipsAgreement = async (id: number) => {
         try {
