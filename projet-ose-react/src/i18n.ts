@@ -376,7 +376,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Upload your CV',
+                                text: 'Your CV',
                             },
                             sidebar: {
                                 stage: {
@@ -1028,7 +1028,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Televerser votre CV',
+                                text: 'Votre CV',
                             },
                             interview : {
                                 name: 'Interview',

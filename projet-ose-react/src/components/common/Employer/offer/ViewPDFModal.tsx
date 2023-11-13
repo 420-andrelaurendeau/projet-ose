@@ -9,7 +9,7 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 
 
-const ViewPDFModal = () => {
+const ViewPDFModal = (props:any) => {
     const navigate = useNavigate();
     const {id} = useParams();
     const [pdf, setPdf] = useState(null);
@@ -39,7 +39,7 @@ const ViewPDFModal = () => {
     return (
         // modal
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-            <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 p-10">
+            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0": ""} w-full h-full bg-black bg-opacity-50 p-10`}>
                 <div className="overflow-y-auto h-full">
                     <div className="fixed top-10 left-10 z-[102] p-3">
                         <button

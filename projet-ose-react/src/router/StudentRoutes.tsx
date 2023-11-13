@@ -8,20 +8,24 @@ import UploadCVForm from "../components/common/student/form/UploadCVForm";
 import StudentAppliedOffers from "../components/common/student/offers/StudentAppliedOffers";
 import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import StudentStagePage from "../pages/student/StudentStagePage";
+import Layout from "../components/layout/Layout";
 
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
             <Routes>
-                <Route path="/home/" element={<StudentInternshipPage/>}>
-                    <Route path="offers" element={<StudentInternship/>}/>
-                    <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                    <Route path="cv" element={<UploadCVForm/>}/>
-                    <Route path="interview" element={<StudentInterviewPage/>}/>
+                <Route path="/" element={<Layout/>}>
+                    <Route index path="home" element={<StudentInternshipPage/>}/>
+                    <Route path="home" element={<StudentInternshipPage/>}>
+                        <Route path="offers" element={<StudentInternship/>}/>
+                        <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
+                        <Route path="cv" element={<UploadCVForm/>}/>
+                        <Route path="interview" element={<StudentInterviewPage/>}/>
+                        <Route path="*" element={<ErrorPage/>}/>
+                        <Route path="stage" element={<StudentStagePage />}/>
+                    </Route>
                     <Route path="*" element={<ErrorPage/>}/>
-                    <Route path="stage" element={<StudentStagePage />}/>
                 </Route>
-                <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </ProtectedRoute>
     );

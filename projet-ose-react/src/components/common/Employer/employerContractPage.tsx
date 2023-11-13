@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useRef, useState} from "react";
-import {Outlet, useLocation, useNavigate, useOutletContext} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useNavigate, useOutletContext} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useProps} from "../../../pages/employer/EmployeurHomePage";
 import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
@@ -9,7 +9,7 @@ import {
     faArrowDown91,
     faArrowDownAZ,
     faArrowUpZA,
-    faEye
+    faEye, faPenNib
 } from "@fortawesome/free-solid-svg-icons";
 import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
 import {employeurGetContractById} from "../../../api/ContractAPI";
@@ -165,15 +165,25 @@ export default function EmployerContractPage() {
                                             {fields.AgreementTable[stage.internOfferDto.state].text}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td className="flex space-x-5 items-center justify-end px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <FontAwesomeIcon icon={faEye}
-                                                         className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                         className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                          onClick={() => {
                                                              getFile(stage.contractId).then(r => console.log(file))
                                                              console.log(file)
                                                              navigate(`/employer/home/contract/${stage.contractId}`);
                                                          }}
                                         />
+                                        <NavLink
+                                            to="#"
+                                            className="flex items-center text-green space-x-1"
+                                            onClick={() => {
+
+                                            }}
+                                        >
+                                            <p>Sign</p>
+                                            <FontAwesomeIcon icon={faPenNib} />
+                                        </NavLink>
                                     </td>
                                 </tr>
                             ))}

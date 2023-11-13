@@ -18,14 +18,14 @@ public class EtudiantAuthDto extends UtilisateurAuthDto {
 
     private String matricule;
     private long programme_id;
-    private List<Long> cv_ids;
+    private File cv;
     private List<Long> internships_ids;
 
-    public EtudiantAuthDto(String nom, String prenom, String phone, String email,String password, String matricule, long programme_id, List<Long> cv_ids, List<Long> internships_ids) {
+    public EtudiantAuthDto(String nom, String prenom, String phone, String email,String password, String matricule, long programme_id, File cv, List<Long> internships_ids) {
         super(nom, prenom, phone, email,password);
         this.matricule = matricule;
         this.programme_id = programme_id;
-        this.cv_ids = cv_ids;
+        this.cv = cv;
         this.internships_ids = internships_ids;
     }
 
@@ -33,7 +33,7 @@ public class EtudiantAuthDto extends UtilisateurAuthDto {
         super(etudiant.getId(),etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getPassword());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
-        this.cv_ids = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();
+        this.cv = etudiant.getCv() == null ? null : etudiant.getCv();
         this.internships_ids = etudiant.getInternshipsCandidate() == null ? null : etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList();
     }
 

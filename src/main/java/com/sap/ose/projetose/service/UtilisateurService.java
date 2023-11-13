@@ -34,12 +34,7 @@ public class UtilisateurService {
             return etudiant;
         }
 
-        Internshipmanager internshipmanager = internshipmanagerRepository.findByEmail(email).orElse(null);
-        if (internshipmanager != null){
-            return internshipmanager;
-        }
-
-        return null;
+        return internshipmanagerRepository.findByEmail(email).orElse(null);
     }
 
     public Role getUserByEmailRole(String email){

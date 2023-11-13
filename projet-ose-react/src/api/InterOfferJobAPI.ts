@@ -48,7 +48,7 @@ export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: numb
         endDate: interOfferJob.endDate,
         programmeId: interOfferJob.programmeId!,
         file: interOfferJob.file,
-        employeurId: id
+        employeurId: id,
     }
 
     try {
