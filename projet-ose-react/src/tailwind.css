@@ -584,6 +584,14 @@ video {
   left: 50%;
 }
 
+.left-10 {
+  left: 2.5rem;
+}
+
+.left-2 {
+  left: 0.5rem;
+}
+
 .left-4 {
   left: 1rem;
 }
@@ -636,6 +644,10 @@ video {
   z-index: 101;
 }
 
+.z-\[102\] {
+  z-index: 102;
+}
+
 .z-\[999\] {
   z-index: 999;
 }
@@ -648,6 +660,10 @@ video {
   margin: 1rem;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .mx-12 {
   margin-left: 3rem;
   margin-right: 3rem;
@@ -656,10 +672,6 @@ video {
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
-}
-
-.m-auto {
-  margin: auto;
 }
 
 .mx-auto {
@@ -1223,6 +1235,12 @@ video {
   margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.25rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1529,6 +1547,10 @@ video {
   padding: 0.25rem;
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .p-14 {
   padding: 3.5rem;
 }
@@ -1700,10 +1722,6 @@ video {
 
 .pt-2 {
   padding-top: 0.5rem;
-}
-
-.pt-20 {
-  padding-top: 5rem;
 }
 
 .pt-24 {
@@ -2038,6 +2056,11 @@ video {
 .hover\:border-black:hover {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
+.hover\:bg-black:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-blue:hover {
@@ -2548,6 +2571,10 @@ video {
     padding-right: 1.5rem;
   }
 
+  .xxxs\:pt-20 {
+    padding-top: 5rem;
+  }
+
   .xxxs\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -2709,6 +2736,10 @@ video {
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:pt-5 {
+    padding-top: 1.25rem;
   }
 
   .sm\:text-end {
@@ -2903,6 +2934,11 @@ video {
   .lg\:px-10 {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
+  }
+
+  .lg\:px-2 {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
   .lg\:px-8 {

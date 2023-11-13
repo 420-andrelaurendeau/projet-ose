@@ -5,6 +5,9 @@ import {getContractById, signDocument} from "../../api/InternshipManagerAPI";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
 import {useToast} from "../../hooks/state/useToast";
 import {pdfjs} from "react-pdf";
+import SignContract from "../../components/common/preparedoc/SignContract";
+import {faLock, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface InternshipAgreementPageProps {
@@ -149,11 +152,28 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     //TODO : Add the pdf button
                     // TODO : Add the signature button
                 }
+                <div className="block sm:flex w-1/5 mx-auto pt-10 gap-x-4">
+                    <button className="inline-flex items-center px-10 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
+                        <NavLink to={intershipAggreement?.fileName!}
+                                 className="font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" size="lg"/>
+                            {intershipAggreement?.fileName!}
+                        </NavLink>
+                    </button>
+                    <button className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
+                        <NavLink to={intershipAggreement?.fileName!}
+                                 className="font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
+                            Sign
+                        </NavLink>
+                    </button>
+                </div>
 
-                <NavLink to={intershipAggreement?.fileName!}
-                         className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
-                    {intershipAggreement?.fileName!}
-                </NavLink>
+
+                {/**
+                 <SignContract></SignContract>
+                 **/ }
+
+
                 {/**
                  <div className="px-20 mx-auto">
                  <SignContract pdfBase64={""} signContract={signContract}/>
