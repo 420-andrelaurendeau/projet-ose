@@ -45,10 +45,13 @@ function StudentInternship() {
             })
         })
 
+    }, []);
+
+    useEffect(() => {
+        console.log(offers)
     }, [offers]);
 
-
-    const handleOptionChange = (event: any) => {
+    const handleOptionChange = async (event: any) => {
         const selected = event.target.value;
 
         console.log(selected)
@@ -59,7 +62,9 @@ function StudentInternship() {
                 setOffers(res);
             })
         } else {
+            console.log("in")
             allStudentInternshipOffersBySeason(selectedOption).then((res)=> {
+                console.log(res)
                 setOffers(res);
             })
         }
