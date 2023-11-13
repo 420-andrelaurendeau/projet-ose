@@ -36,6 +36,10 @@ let employerOffer = {
             name: "download",
             text: "Download",
         },
+        view:{
+            name: "view",
+            text: "View",
+        },
         back:{
             name: "back",
             text: "Back",
@@ -119,6 +123,10 @@ let employerOffer = {
         download:{
             name: "download",
             text: "Télécharger",
+        },
+        view:{
+            name: "view",
+            text: "Voir",
         },
         back:{
             name: "back",

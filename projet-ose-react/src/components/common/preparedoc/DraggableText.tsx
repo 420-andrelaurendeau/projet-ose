@@ -1,42 +1,32 @@
-import Draggable from "react-draggable";
-import { FaCheck, FaTimes } from "react-icons/fa";
-import { cleanBorder, errorColor, goodColor, primary45 } from "./utils/colors";
-import { useState, useEffect, useRef } from "react";
+import Draggable, { DraggableEventHandler } from "react-draggable";
+import {FaCheck, FaTimes} from "react-icons/fa";
+import {cleanBorder, errorColor, goodColor, primary45} from "./utils/colors";
+import {useState, useEffect, useRef, MouseEventHandler, Dispatch} from "react";
 
-export default function DraggableText({ onEnd, onSet, onCancel, initialText }:any) {
+export default function DraggableText(props:any) {
   const [text, setText] = useState("Text");
   const inputRef = useRef<any>(null);
+  const draggableRef = useRef(null);
 
-  useEffect(() => {
-    if (initialText) {
-      setText(initialText)
-    } else {
-      inputRef.current.focus();
-      inputRef.current.select()
-    }
-  }, [])
 
   return (
-    <Draggable onStop={onEnd}>
-      <div id="childText" className="absolute top-0 z-[100000] border-2 border-gray dark:border-darkgray">
-        <div className="absolute right-0 inline-block bg-white dark:bg-dark">
+    <Draggable nodeRef={draggableRef} onStop={props.onEnd}>
+      <div id="childText" className="absolute top-0 z-[100000] " ref={draggableRef}>
+        <div className="flex justify-center bg-white dark:bg-dark border-gray border-2 w-28 rounded dark:border-darkgray shadow">
           <div
-              className="inline-block cursor-pointer p-4"
-              onClick={()=> {
-                console.log('onSet', text)
-                onSet(text)
-              }}>
+              className="inline-block cursor-pointer p-3 my-1 rounded hover:bg-neutral-200 dark:hover:bg-darkgray"
+              onClick={props.onSet(text)}>
             <FaCheck color={goodColor} />
           </div>
           <div
-              className="inline-block cursor-pointer p-4"
-              onClick={onCancel}>
+              className="inline-block cursor-pointer p-3 my-1 rounded hover:bg-neutral-200 dark:hover:bg-darkgray"
+              onClick={props.onCancel}>
             <FaTimes color={errorColor} />
           </div>
         </div>
         <input
           ref={inputRef}
-          className="border-0 text-black dark:text-white bg-transparent cursor-move p-3"
+          className=" text-black bg-transparent cursor-move p-3 mt-2 border border-blue dark:border-orange"
           value={text}
           placeholder={'Text'}
           onChange={(e) => setText(e.target.value)}

@@ -89,7 +89,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                 <div className="fixed inset-0 bg-transparent"/>
             </Transition.Child>
 
-            <div className="fixed inset-0 lg:px-8 px-6 max-w-7xl mx-auto">
+            <div className="fixed inset-0 lg:px-8 px-6 max-w-7xl mx-auto z-[101]">
                 <div className="md:flex justify-end">
                     <Transition.Child
                         as={Fragment}
