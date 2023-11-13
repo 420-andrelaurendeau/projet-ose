@@ -1,16 +1,23 @@
 package com.sap.ose.projetose.exception;
 
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Arrays;
+import java.util.logging.Level;
+
 
 @ControllerAdvice
+@Log
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<String> handleNullPointerException(NullPointerException e) {
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -45,27 +52,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<String> handleDatabaseException(DatabaseException e) {
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(BadSortingFieldException.class)
     public ResponseEntity<String> handleBadSortingFieldException(BadSortingFieldException e) {
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<String> handleServiceException(ServiceException e){
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleUnknownException(Exception e) {
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @ExceptionHandler(InvalidStateException.class)
     public ResponseEntity<String> handleInvalidStateException(InvalidStateException e) {
+        var lastUserCodeExecuted = Arrays.stream(e.getStackTrace()).filter(stackTraceElement -> stackTraceElement.getClassName().contains("com.sap.ose.projetose")).findFirst().orElseThrow();
+        log.log(Level.WARNING, lastUserCodeExecuted.getClassName() + "." + lastUserCodeExecuted.getMethodName(), e);
         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
