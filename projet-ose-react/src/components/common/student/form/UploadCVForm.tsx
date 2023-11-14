@@ -46,6 +46,17 @@ function UploadCVForm(): ReactElement {
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
             });
+            cvs.sort((a, b) => {
+                if (a.id === cvDefault.id) {
+                    return -1;
+                }
+                else if (b.id === cvDefault.id) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
+            });
         }).catch((error) => {
             console.log("Error fetching user data:", error)
         });
@@ -97,6 +108,17 @@ function UploadCVForm(): ReactElement {
                     toast.error("Probleme dans le récuperation de la liste des étudiants.")
                     console.log("Error fetching user data:", error)
                 })
+                cvs.sort((a, b) => {
+                    if (a.id === cvDefault.id) {
+                        return -1;
+                    }
+                    else if (b.id === cvDefault.id) {
+                        return 0;
+                    }
+                    else {
+                        return 1;
+                    }
+                });
             }).catch(err => {
                 console.log(err)
                 toast.error(t('cv.error'))
@@ -158,6 +180,17 @@ function UploadCVForm(): ReactElement {
                 setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error);
+            });
+            cvs.sort((a, b) => {
+                if (a.id === cvDefault.id) {
+                    return -1;
+                }
+                else if (b.id === cvDefault.id) {
+                    return 0;
+                }
+                else {
+                    return 1;
+                }
             });
         });
     }
