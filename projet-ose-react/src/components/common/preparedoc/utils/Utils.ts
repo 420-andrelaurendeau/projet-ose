@@ -10,14 +10,23 @@ export function blobToURL(blob:Blob) {
 }
 
 export function blobToBase64(blob:Blob) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result!.toString().split(",")[1]);
+        reader.onerror = reject;
         reader.readAsDataURL(blob);
-        reader.onloadend = function () {
-        const base64data = reader.result;
-        resolve(base64data);
-        };
     });
+}
+
+export async function urlToBase64(url:string) {
+    try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        return await blobToBase64(blob);
+    } catch (error) {
+        console.error("Erreur lors de la conversion de l'URL en chaîne Base64 :", error);
+        return null;
+    }
 }
 
 export function downloadURI(uri:any, name:any) {

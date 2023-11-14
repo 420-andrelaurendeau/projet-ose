@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { pdfjs } from "react-pdf";
-import {base64ToArrayBuffer, blobToURL, downloadURI, getWidth, URLToBase64} from "./utils/Utils";
+import {base64ToArrayBuffer, blobToURL, downloadURI, getWidth, urlToBase64, URLToBase64} from "./utils/Utils";
 import PagingControl from "./PagingControl";
 import { AddSigDialog } from "./AddSigDialog";
 import PDFOptions from "./PDFOptions";
@@ -67,11 +67,22 @@ function SignContract(props:any) {
     setWidth(getWidth());
   }, []);
 
-  const submitContract = async () => {
-    contract.content = URLToBase64(pdf!,contract.content)
-    await employeurSaveContract(contract).then(r => {
-        console.log(r)
-    })
+  const submitContract = () => {
+    urlToBase64(pdf!)
+        .then(async (base64String) => {
+          if (base64String) {
+            console.log("Chaîne Base64 obtenue :", base64String);
+            contract.content = base64String
+            await employeurSaveContract(contract).then(r => {
+              console.log(r)
+            })
+          } else {
+            console.log("La conversion a échoué.");
+          }
+        })
+        .catch((error) => {
+          console.error("Une erreur s'est produite :", error);
+        });
     navigate("/employer/home/contract")
   }
 
