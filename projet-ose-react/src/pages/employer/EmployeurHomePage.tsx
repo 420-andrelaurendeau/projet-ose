@@ -4,7 +4,7 @@ import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-sol
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {
     allEmployeurInternshipOffersBySeason,
-    allStudentInternshipOffers,
+    allStudentInternshipOffers, getEmployeurSeason,
     UpdateOffers
 } from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
@@ -31,6 +31,7 @@ interface Props {
     onPageChange: (newPage: number) => void,
     numberElementByPage: number,
     page: number,
+    seasons: any[]
 }
 
 function EmployeurHomePage() {
@@ -46,6 +47,8 @@ function EmployeurHomePage() {
     const [nbCandidature, setNbCandidature] = useState(0)
     const { userEmail, userRole, logoutUser } = useAuth();
     const location = useLocation();
+    const [seasons,setSeasons] = useState([])
+
     const [user, setUser] = useState<User>({
         id: 0,
         nom: "",
@@ -97,7 +100,11 @@ function EmployeurHomePage() {
     }, [offers]);
 
     useEffect(() => {
-
+        console.log('email :'+userEmail)
+        getEmployeurSeason(userEmail!).then((res) => {
+            console.log('res: '+res)
+            setSeasons(res)
+        })
     }, []);
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -110,12 +117,12 @@ function EmployeurHomePage() {
     };
 
 
-
     const context =  {
         isModalOpen: isModalOpen,
         setIsModalOpen: setIsModalOpen,
         offers: offers,
         setOffers: setOffers,
+        seasons:seasons,
         user: user,
         setSortField: setSortField,
         setSortDirection: setSortDirection,

@@ -30,7 +30,7 @@ export const offresEtudiant = async () => {
 
 export const allStudentInternshipOffersBySeason = async (selectedOption: string): Promise<any[]> => {
     try {
-        const response = await apiClient.get(`interOfferJob/student/season/${selectedOption}`);
+        const response = await apiClient.get('interOfferJob/student/season/'+selectedOption);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);
@@ -143,7 +143,7 @@ export const getInterOfferJob = async (email: string, params:{}) => {
 
 export const allEmployeurInternshipOffersBySeason = async (selectedOption: string,email: string)=>{
     try {
-        const response = await apiClient.get(`interOfferJob/${email}/season/${selectedOption}`);
+        const response = await apiClient.get('interOfferJob/'+email+'/season/'+selectedOption);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);
@@ -153,7 +153,8 @@ export const allEmployeurInternshipOffersBySeason = async (selectedOption: strin
 
 export async function getEmployeurSeason(email: string){
     try{
-        const response = await api.get('interOfferJob//${email}/getSeason');
+        const response = await api.get('interOfferJob/'+email+'/getSeason');
+        console.log('data:'+response.data)
         return response.data;
     }catch (error){
         console.error('Erreur lors de la recherche de saisons')
@@ -161,6 +162,15 @@ export async function getEmployeurSeason(email: string){
     }
 }
 
+export async function getEmployeurOffers(email: string){
+    try{
+        const response = await api.get('interOfferJob/'+email+'/getOffers');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {

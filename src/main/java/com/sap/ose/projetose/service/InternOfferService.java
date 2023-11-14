@@ -282,9 +282,10 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    @Transactional
     public List<InternOfferDto> getEmployeurOfferBySeason(String selectedOption, String email) {
         Long id = employeurRepository.findByEmail(email).get().getId();
-        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersSeasonById(selectedOption, id);
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
         for (InternOffer i : internOffers){
@@ -294,18 +295,10 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    @Transactional
     public List<String> getEmployeurSeasonsOffers(String email){
         Long id = employeurRepository.findByEmail(email).get().getId();
-        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
-        List<String> seasons = new ArrayList<>();
-
-        if (internOffers.isEmpty()){
-            return null;
-        }
-
-        for(InternOffer i : internOffers){
-            seasons.add(i.getSession());
-        }
+        List<String> seasons = offerJobRepository.findEmployeurOffersSeasons(id);
 
         return seasons;
     }

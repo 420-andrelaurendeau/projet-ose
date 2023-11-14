@@ -55,16 +55,22 @@ public class InternOfferController {
         return offerJobService.getStudentOfferBySeason(selectedOption);
     }
 
-    @GetMapping("/${email}/season/${selectedOption}")
+    @GetMapping("/{email}/season/{selectedOption}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
     public List<InternOfferDto> getEmployeurOffersBySeason(@PathVariable String selectedOption, @PathVariable String email ) {
         return offerJobService.getEmployeurOfferBySeason(selectedOption,email);
     }
 
-    @GetMapping("/${email}/getSeason")
+    @GetMapping("/{email}/getSeason")
     public ResponseEntity<List<String>> getEmployeurSeasons(@PathVariable String email){
         List<String> seasons = offerJobService.getEmployeurSeasonsOffers(email);
         return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}/getOffers")
+    public ResponseEntity<List<InternOfferDto>> getEmployeurOffers(@PathVariable String email){
+        List<InternOfferDto> offers = offerJobService.getOffersByEmployeurEmail(email);
+        return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
     @GetMapping("/OffersEtudiant")
@@ -92,7 +98,6 @@ public class InternOfferController {
             @PathVariable String email) {
         return offerJobService.getOffersByEmployeurEmail(email);
     }
-
 
     @GetMapping("/getAllPossibleSeasons")
     public ResponseEntity<List<String>> getAllSeasons(){

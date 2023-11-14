@@ -11,17 +11,18 @@ import {
     faArrowDownAZ,
     faArrowUpZA, faCircleUser,
     faEye,
-    faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
-import {allEmployeurInternshipOffersBySeason, allStudentInternshipOffers} from "../../../../api/InterOfferJobAPI";
+import {
+    allEmployeurInternshipOffersBySeason,
+    getEmployeurOffers, getEmployeurSeason
+} from "../../../../api/InterOfferJobAPI";
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,setOffers, user, page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {offers,setOffers, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
-    const [seasons,setSeasons] = useState([])
 
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortField && sortDirection === "desc") {
@@ -46,25 +47,28 @@ export default function EmployeurOffer() {
     const handleOptionChange = async (event: any) => {
         const selected = event.target.value;
 
-        console.log(selected)
         setSelectedOption(selected);
+        console.log(selected)
 
         if (selected === 'all') {
-            allStudentInternshipOffers().then((res)=> {
+            getEmployeurOffers(user.email).then((res)=> {
                 setOffers(res);
-            })
-        } else {
-            console.log(selected)
-            allEmployeurInternshipOffersBySeason(selected,user.email).then((res)=> {
                 console.log(res)
+            })
+
+        } else {
+            allEmployeurInternshipOffersBySeason(selected,user.email).then((res)=> {
                 setOffers(res);
+                console.log(res)
             })
         }
     };
 
+
     useEffect(() => {
         console.log(offers)
     }, [offers]);
+
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
