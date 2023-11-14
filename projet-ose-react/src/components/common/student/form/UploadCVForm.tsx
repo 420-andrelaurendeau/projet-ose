@@ -94,6 +94,7 @@ function UploadCVForm(): ReactElement {
                 fetchAllStudentCvs(user.id).then((res) => {
                     setCvs(res)
                 }).catch((error) => {
+                    toast.error("Probleme dans le récuperation de la liste des étudiants.")
                     console.log("Error fetching user data:", error)
                 })
             }).catch(err => {
