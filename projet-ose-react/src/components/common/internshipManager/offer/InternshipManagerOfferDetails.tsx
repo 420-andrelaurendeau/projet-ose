@@ -89,7 +89,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                 <div className="">
                     <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                         onClick={() => navigate("/internshipmanager/home/offers")}
                     >
                         Back <Icon className="w-5 h-5 fill-current hover:font-bold"/>
@@ -166,10 +166,12 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 
             </div>
 
+            {/* File field */}
             <div className="justify-center items-center sm:mx-auto sm:w-3/4">
-                <button className="flex px-4 mb-5 justify-start border border-transparent dark:border-white shadow-sm  font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                <button className="flex px-4 mb-5 justify-start border hover:border-black border-transparent dark:border-white shadow-sm  font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                         onClick={() => setIsModalOpen(true)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill={theme === `light` ? `#000000` : `#FFFFFF`}
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                    className={theme.includes("dark")  ? `#FFFFFF` : `#000000`}
                          height="50" viewBox="0 -960 960 960" width="24">
                         <path
                             d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
@@ -177,7 +179,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     <p className="mt-1 p-2 dark:text-white">{internshipOffer!.file!.fileName}</p>
                 </button>
             </div>
-            {/* File field */}
+
 
 
             {internshipOffer.state! == "PENDING" && (
