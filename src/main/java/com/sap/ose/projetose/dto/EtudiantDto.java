@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -34,7 +35,7 @@ public class EtudiantDto extends UtilisateurDto {
         super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
-        this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();
+        this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().filter(Objects::nonNull).map(File::getId).toList();
     }
 
     public Etudiant fromDto() {
