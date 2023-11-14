@@ -83,19 +83,18 @@ export async function fileToBlob(file:File, handleUpdate:Function) {
 }
 
 
-export function URLToBase64(url:string) {
+export function URLToBase64(url:string,content:any) {
   //pas de promesse car on ne peut pas attendre le résultat
     const xhr = new XMLHttpRequest();
     xhr.onload = function() {
         const reader = new FileReader();
         reader.onloadend = function() {
-            console.log(reader.result)
+            content = reader.result?.toString();
         }
         reader.readAsDataURL(xhr.response);
     }
     xhr.open('GET', url);
     xhr.responseType = 'blob';
     xhr.send();
-
-    return xhr.response.split(',')[1];
+    return content;
 }

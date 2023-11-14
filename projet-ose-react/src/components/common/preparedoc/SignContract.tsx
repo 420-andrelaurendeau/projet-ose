@@ -6,7 +6,7 @@ import { AddSigDialog } from "./AddSigDialog";
 import PDFOptions from "./PDFOptions";
 import ViewPDF from "./ViewPDF";
 import {useLocation, useNavigate} from "react-router-dom";
-import {employeurGetContractById} from "../../../api/ContractAPI";
+import {employeurGetContractById, employeurSaveContract} from "../../../api/ContractAPI";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -17,6 +17,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 function SignContract(props:any) {
   const location = useLocation();
   const stage = location.state;
+  const navigate = useNavigate();
   const [contract, setContract] = useState<any>(null);
   const [pdf, setPdf] = useState(null);
   const [autoDate, setAutoDate] = useState(true);
@@ -56,6 +57,7 @@ function SignContract(props:any) {
         if (pdfBytes) {
           const blob = new Blob([new Uint8Array(pdfBytes)]);
           const URL: any = await blobToURL(blob);
+          console.log(URL)
           setPdf(URL);
         } else setPdf(null)
         setIsLoaded(true)
@@ -66,8 +68,11 @@ function SignContract(props:any) {
   }, []);
 
   const submitContract = async () => {
-    contract.content = URLToBase64(pdf!)
-    console.log(contract.content)
+    contract.content = URLToBase64(pdf!,contract.content)
+    await employeurSaveContract(contract).then(r => {
+        console.log(r)
+    })
+    navigate("/employer/home/contract")
   }
 
   return (

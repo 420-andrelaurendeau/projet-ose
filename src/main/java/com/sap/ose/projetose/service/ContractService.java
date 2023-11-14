@@ -99,13 +99,12 @@ public class ContractService {
         try {
 
             File file = fileService.findById(contractDto.getFileId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
+            byte[] encodedString = Base64.getEncoder().encode(contractDto.getContent().getBytes());
             file.setContent(encodedString);
-
+            fileService.saveFile(file);
             Contract contract = findById(contractDto.getId());
-            contract.setFile(file);
             contract.setSignatureEmployer(true);
-
+            contract.setFile(fileService.findById(contractDto.getFileId()));
             contractRepository.save(contract);
 
             return new ContractDto(contract);

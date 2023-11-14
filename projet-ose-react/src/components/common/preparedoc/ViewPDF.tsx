@@ -79,7 +79,7 @@ function ViewPDF(props: any) {
                     const parentRect = parent.getBoundingClientRect();
 
                     offsetX = (childRect.left - parentRect.left);
-                    offsetY = height - (childRect.top - parentRect.top) - pngDims.height;
+                    offsetY = height - (childRect.top - parentRect.top) - pngDims.height -35;
                 }
 
                 const newOffsetX = offsetX * originalWidth / width;
