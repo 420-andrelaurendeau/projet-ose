@@ -127,7 +127,6 @@ export const getOfferReviewRequestById = async (id: number) => {
     }
 };
 
-
 export const getInterOfferJob = async (email: string, params:{}) => {
     try {
         const response = await apiClient.get('interOfferJob/OffersEmp/' + email,{

@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 import {Outlet, useNavigate} from "react-router-dom";
 import ListItemPageSelector from "../../shared/paginationList/ListItemPageSelector";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ListItemCountSelector from "../../shared/paginationList/ListItemCountSelector";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -13,13 +13,16 @@ import {
     faEye,
     faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
+import {allStudentInternshipOffers, allStudentInternshipOffersBySeason} from "../../../../api/InterOfferJobAPI";
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {offers,setOffers, page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     console.log(offers);
     const navigate = useNavigate();
+    const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
+    const [seasons,setSeasons] = useState([])
 
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortField && sortDirection === "desc") {
@@ -41,6 +44,29 @@ export default function EmployeurOffer() {
         navigate(`/employer/home/offers/${id}/application`);
     }
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+        if (selected === 'all') {
+            allStudentInternshipOffers().then((res)=> {
+                setOffers(res);
+            })
+        } else {
+            console.log(selected)
+            allStudentInternshipOffersBySeason(selected).then((res)=> {
+                console.log(res)
+                setOffers(res);
+            })
+        }
+    };
+
+    useEffect(() => {
+        console.log(offers)
+    }, [offers]);
+
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
@@ -50,6 +76,17 @@ export default function EmployeurOffer() {
                             numberElement={numberElementByPage}
                             handleChangeNumberElement={handleChangeNumberElement}
                         />
+                    </div>
+                    <div>
+                        <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                        <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                            <option value="all">Tout</option>
+                            {seasons.map((season: string, index: number) => (
+                                <option key={index} value={season}>
+                                    {season}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
