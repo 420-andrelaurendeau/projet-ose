@@ -214,6 +214,7 @@ public class InternOfferService {
         return internOfferDtos;
     }
 
+
     @Transactional
     public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection) {
 
@@ -307,5 +308,18 @@ public class InternOfferService {
         }
 
         return seasons;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getOffersByEmployeurEmail(String email){
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtoList;
     }
 }

@@ -19,7 +19,6 @@ export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const {offers,setOffers, user, page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
-    console.log(offers);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
     const [seasons,setSeasons] = useState([])

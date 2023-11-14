@@ -61,6 +61,12 @@ public class InternOfferController {
         return offerJobService.getEmployeurOfferBySeason(selectedOption,email);
     }
 
+    @GetMapping("/${email}/getSeason")
+    public ResponseEntity<List<String>> getEmployeurSeasons(@PathVariable String email){
+        List<String> seasons = offerJobService.getEmployeurSeasonsOffers(email);
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
     @GetMapping("/OffersEtudiant")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public List<InternOfferDto> getOffersEtudiant() {
@@ -78,6 +84,13 @@ public class InternOfferController {
             @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
 
         return offerJobService.getInternOfferByEmployeurEmail(email, page, size, sortField, sortDirection);
+    }
+
+    @GetMapping("/offersEmployeur/{email}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
+    public List<InternOfferDto> getInternOfferJob(
+            @PathVariable String email) {
+        return offerJobService.getOffersByEmployeurEmail(email);
     }
 
 

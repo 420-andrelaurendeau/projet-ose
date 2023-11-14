@@ -2,7 +2,11 @@ import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
-import {UpdateOffers} from "../../api/InterOfferJobAPI";
+import {
+    allEmployeurInternshipOffersBySeason,
+    allStudentInternshipOffers,
+    UpdateOffers
+} from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
 import Header from "../../components/common/shared/header/Header";
 import {getUser} from "../../api/UtilisateurAPI";
@@ -92,6 +96,10 @@ function EmployeurHomePage() {
         setNbCandidature(i);
     }, [offers]);
 
+    useEffect(() => {
+
+    }, []);
+
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
@@ -100,6 +108,8 @@ function EmployeurHomePage() {
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
+
+
 
     const context =  {
         isModalOpen: isModalOpen,

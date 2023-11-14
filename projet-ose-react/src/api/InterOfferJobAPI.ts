@@ -151,6 +151,15 @@ export const allEmployeurInternshipOffersBySeason = async (selectedOption: strin
     }
 }
 
+export async function getEmployeurSeason(email: string){
+    try{
+        const response = await api.get('interOfferJob//${email}/getSeason');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
 
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
