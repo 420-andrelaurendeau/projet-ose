@@ -35,6 +35,9 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1")
     Page<InternOffer> findAllById(Long id, Pageable pageable);
 
+    @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1")
+    List<InternOffer> findInternOffersById(Long id);
+
     @Query("SELECT DISTINCT i.session FROM InternOffer i")
     List<String> getAllSeasons();
 

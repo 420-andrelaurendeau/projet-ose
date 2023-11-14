@@ -282,6 +282,30 @@ public class InternOfferService {
     }
 
     public List<InternOfferDto> getEmployeurOfferBySeason(String selectedOption, String email) {
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
 
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtoList;
+    }
+
+    public List<String> getEmployeurSeasonsOffers(String email){
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
+        List<String> seasons = new ArrayList<>();
+
+        if (internOffers.isEmpty()){
+            return null;
+        }
+
+        for(InternOffer i : internOffers){
+            seasons.add(i.getSession());
+        }
+
+        return seasons;
     }
 }
