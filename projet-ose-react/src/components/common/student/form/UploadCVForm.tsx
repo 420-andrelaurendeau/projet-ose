@@ -4,7 +4,7 @@ import {validateFile} from "../../../../utils/validation/ValidateInternshipOffer
 import {FileEntity} from "../../../../model/FileEntity";
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faDownload, faSpinner, faX, faCheckSquare, faSquare} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faDownload, faSpinner, faX, faStar} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router-dom";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {getUser} from "../../../../api/UtilisateurAPI";
@@ -220,7 +220,7 @@ function UploadCVForm(): ReactElement {
                                 className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
                                 onClick={() => setDefaultFile(file)}
                             >
-                                {file.id == cvDefault.id ? <FontAwesomeIcon icon={faCheckSquare} className="scale-150 dark:text-white"/> : <FontAwesomeIcon icon={faSquare} className="scale-150 dark:text-white"/>}
+                                {file.id == cvDefault.id ? <FontAwesomeIcon icon={faStar} className="scale-150 text-yellow-300"/> : <FontAwesomeIcon icon={faStar} className="scale-150 dark:text-white"/>}
                             </button>
                         </div>
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
