@@ -66,8 +66,11 @@ describe("StudentInternship Component", () => {
         render(<StudentInternship/>);
 
         // Assert that the component and its content are correctly rendered
-        const titleElement = screen.getByText("formField.EtudiantStage.titre.text");
-        expect(titleElement).toBeInTheDocument();
+        const titleElement = screen.getAllByText("formField.EtudiantStage.titre.text");
+        titleElement.forEach((element) => {
+            expect(element).toBeInTheDocument();
+        })
+
         const offerElements = await screen.findAllByLabelText("stage");
         expect(offerElements).toHaveLength(mockInternshipOffers.length);
     });
