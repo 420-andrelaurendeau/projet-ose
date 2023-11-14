@@ -8,6 +8,8 @@ let internshipAgreement = {
             signPDF: "Sign",
             employer: "Employer",
             student: "Student",
+            sign : "Sign",
+            notsign : "Not signed",
         }
 
     },
@@ -18,6 +20,8 @@ let internshipAgreement = {
             signPDF: "Signer",
             employer: "Employeur",
             student: "Étudiant",
+            sign : "Signer",
+            notsign : "Non signé",
 
         }
     }

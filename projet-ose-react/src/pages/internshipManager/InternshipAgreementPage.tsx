@@ -124,7 +124,10 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
                             <p className="p-1">{intershipAggreement.etudiantDto.email}</p>
 
-                            <p className="p-1"> {intershipAggreement.signatureStudent == true ? "Signé" : "Non signé"} </p>
+                            <p className={"p-1 mt-3 px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 text-white dark:text-offwhite "
+                                + (intershipAggreement.signatureStudent ? "bg-green" : "bg-orange")}>
+                                {intershipAggreement.signatureStudent ? fields.sign : fields.notsign}
+                            </p>
                         </div>
 
                     </div>
@@ -140,7 +143,11 @@ const InternshipAgreementPage: React.FC<any> = () => {
 
                             <p className="p-1"> {intershipAggreement.employeur.email}</p>
 
-                            <p className="p-1"> {intershipAggreement.signatureEmployer == true ? "Signé" : "Non signé"} </p>
+                            <p className={"p-1 mt-3 px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 text-white dark:text-offwhite "
+                                        + (intershipAggreement.signatureEmployer ? "bg-green" : "bg-orange")}>
+                                {intershipAggreement.signatureEmployer ? fields.sign : fields.notsign}
+                            </p>
+
                         </div>
                     </div>
                 </div>
@@ -151,10 +158,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     {intershipAggreement.internOfferDto.description}
                 </div>
 
-                {
-                    //TODO : Add the pdf button
-                    // TODO : Add the signature button
-                }
                 <div className="block sm:flex w-1/2 sm:w-1/5 mx-auto pt-10 gap-x-4">
                     <button
                         className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500 mb-4 sm:mb-0"
@@ -162,14 +165,18 @@ const InternshipAgreementPage: React.FC<any> = () => {
                         <p className="text-xl">{fields.viewPDF}</p>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className="ml-2" size="xl"/>
                     </button>
-                    <button
-                        className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
-                        <NavLink to={""}
-                                 className="flex items-center font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
-                            <p className="text-xl">{fields.signPDF}</p>
-                            <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
-                        </NavLink>
-                    </button>
+                    {
+                        intershipAggreement.signatureInternShipManager == false && (
+                            <button
+                                className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
+                                <NavLink to={""}
+                                         className="flex items-center font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
+                                    <p className="text-xl">{fields.signPDF}</p>
+                                    <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
+                                </NavLink>
+                            </button>
+                        )
+                    }
                 </div>
                 {
                     context.file.content !== "" && isModalOpen &&

@@ -78,6 +78,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"An error occurred while fetching the offers",
                                 errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
@@ -724,6 +730,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
                                 errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
