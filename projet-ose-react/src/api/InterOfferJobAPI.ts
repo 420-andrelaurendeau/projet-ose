@@ -40,7 +40,7 @@ export const allStudentInternshipOffersBySeason = async (selectedOption: string)
 
 export const allStudentInternshipOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/allOffers');
+        const response = await apiClient.get('interOfferJob/student/allOffers');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)

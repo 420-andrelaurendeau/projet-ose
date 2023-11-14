@@ -137,11 +137,13 @@ public class InternOfferService {
         }
     }
 
-    public List<InternOfferDto> getAllInternOffers() {
+    @Transactional
+    public List<InternOfferDto> getStudentInternOffers() {
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        for (InternOffer offer : offerJobRepository.findAll()) {
+        for (InternOffer offer : offerJobRepository.findAllApproved()) {
             internOfferDtoList.add(new InternOfferDto(offer));
         }
+        System.out.println(internOfferDtoList);
         return internOfferDtoList;
     }
 

@@ -42,11 +42,10 @@ public class InternOfferController {
         return offerJobService.getInternOfferPending();
     }
 
-    @GetMapping("/allOffers")
+    @GetMapping("/student/allOffers")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
-    public List<InternOfferDto> getAllOffers() {
-        System.out.println("get all");
-        return offerJobService.getAllInternOffers();
+    public List<InternOfferDto> getStudentOffers() {
+        return offerJobService.getStudentInternOffers();
     }
 
     @GetMapping("/student/season/{selectedOption}")
