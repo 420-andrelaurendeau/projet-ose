@@ -429,6 +429,10 @@ i18n
                                     name: 'contract',
                                     text: "Contract"
                                 },
+                                internship: {
+                                    name: "internship",
+                                    text: "Internship"
+                                },
                                 pendingOffer: {
                                     name: 'pendingOffer',
                                     text: "Pending offer"
@@ -485,6 +489,10 @@ i18n
                             contract: {
                                 name: 'totalContract',
                                 text: 'Contract'
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             offerTable: {
                                 titre: {
@@ -559,6 +567,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contract"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',
@@ -1083,6 +1095,10 @@ i18n
                                     name: 'contract',
                                     text: "Contrat"
                                 },
+                                internship: {
+                                    name: "internship",
+                                    text: "Stage"
+                                },
                                 pendingOffer: {
                                     name: 'pendingOffer',
                                     text: "Offre en attente"
@@ -1140,6 +1156,10 @@ i18n
                                 name: 'totalContract',
                                 text: 'Contrat'
                             },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
+                            },
                             offerTable: {
                                 titre: {
                                     name: 'titre',
@@ -1195,6 +1215,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contrat"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',
