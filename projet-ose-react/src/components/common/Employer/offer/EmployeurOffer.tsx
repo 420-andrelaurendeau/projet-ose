@@ -18,7 +18,7 @@ import {allEmployeurInternshipOffersBySeason, allStudentInternshipOffers} from "
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,setOffers, page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {offers,setOffers, user, page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     console.log(offers);
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
@@ -56,7 +56,7 @@ export default function EmployeurOffer() {
             })
         } else {
             console.log(selected)
-            allEmpInternshipOffersBySeason(selected).then((res)=> {
+            allEmployeurInternshipOffersBySeason(selected,user.email).then((res)=> {
                 console.log(res)
                 setOffers(res);
             })
