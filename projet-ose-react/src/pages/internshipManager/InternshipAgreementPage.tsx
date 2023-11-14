@@ -98,12 +98,15 @@ const InternshipAgreementPage: React.FC<any> = () => {
     return (<>
         {intershipAggreement && (
             <div className="h-max sm:pt-5 xxxs:pt-20">
-                <button
-                    className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
-                    onClick={() => navigate("/internshipmanager/home/internshipsagreement")}
-                >
-                    <Icon className="w-5 h-5 fill-current hover:font-bold"/>
-                </button>
+                <div className="flex w-full justify-end sm:w-3/4 sm:mx-auto items-center">
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 border border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => navigate("/internshipmanager/home/offers")}
+                    >
+                        Back <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                    </button>
+                </div>
 
                 <h1 className="text-center dark:text-white text-3xl font-bold">{intershipAggreement.internOfferDto.title}</h1>
 
@@ -170,7 +173,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
                             <button
                                 className="inline-flex items-center px-10 py-2 mx-auto border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
                                 <NavLink to={""}
-                                         className="flex items-center font-medium text-offwhite dark:text-orange dark:hover:text-amber-800">
+                                         className="flex items-center font-medium text-offwhite dark:hover:text-amber-800">
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
                                 </NavLink>
