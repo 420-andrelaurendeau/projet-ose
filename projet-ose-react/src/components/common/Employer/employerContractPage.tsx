@@ -26,7 +26,7 @@ export default function EmployerContractPage() {
     const [file, setFile] = useState<any>({
         content: "",
     });
-    const [files, setFiles] = useState<any>([]);
+    const [contract, setContract] = useState<any>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function EmployerContractPage() {
             if (stage.contractId === 0) return;
             await employeurGetContractById(stage.contractId).then(r => {
                 console.log(r)
-                setFiles([...files, r])
+                setContract([...contract, r])
             })
         })
     }, []);
@@ -56,19 +56,17 @@ export default function EmployerContractPage() {
         navigate(`/employer/home/internshipagreement/${id}`);
     };
 
-    const context = {
-        file: file,
-    }
 
-    function getState(stage: any) {
 
-        files.map((file: any) => {
-                    if (file.id === stage.contractId) {
-                        return file
+    function getContract(stage: any):any {
+
+        contract.map((cont: any) => {
+                    if (cont.id === stage.contractId) {
+                        return cont
                     }
                 }
             )
-
+        return null
     }
 
 
@@ -189,13 +187,13 @@ export default function EmployerContractPage() {
                                         {
                                             stage.stateEmployeur == "ACCEPTED" && stage.stateStudent == "ACCEPTED" ?
                                             (
-                                            !files.isEmpty &&
+                                            !contract.isEmpty &&
                                                 <div className="flex space-x-5 items-center justify-between">
                                                     <FontAwesomeIcon icon={faEye}
                                                                      className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => {
-                                                                         files.map((file: any) => {
-                                                                             console.log(files)
+                                                                         contract.map((file: any) => {
+                                                                             console.log(contract)
                                                                                  console.log(file)
                                                                                  console.log(stage)
                                                                                  if (file.id === stage.contractId) {
@@ -209,17 +207,19 @@ export default function EmployerContractPage() {
                                                                          setIsModalOpen(true);
                                                                      }}
                                                     />
-                                                    <NavLink
-                                                        to="/employer/home/contract/sign"
-                                                        state={stage}
-                                                        className="flex items-center text-green space-x-1"
-                                                        onClick={() => {
+                                                    {
+                                                        getContract(stage) &&
+                                                        !getContract(stage).signatureEmployer &&
+                                                        <NavLink
+                                                            to="/employer/home/contract/sign"
+                                                            state={stage}
+                                                            className="flex items-center text-green space-x-1"
+                                                        >
+                                                            <p>Sign</p>
+                                                            <FontAwesomeIcon icon={faPenNib}/>
+                                                        </NavLink>
+                                                    }
 
-                                                        }}
-                                                    >
-                                                        <p>Sign</p>
-                                                        <FontAwesomeIcon icon={faPenNib}/>
-                                                    </NavLink>
                                                 </div>
 
                                             ) : stage.stateEmployeur == "PENDING" ?
@@ -261,18 +261,18 @@ export default function EmployerContractPage() {
                                                     </div>
                                                 ): stage.stateEmployeur == "DECLINED"?
                                                     (
-                                                        <div className="flex ">
+                                                        <div className="flex dark:text-white">
                                                             Vous avez refuser
                                                         </div>
                                                     )
                                                     :stage.stateStudent == "DECLINED"?
                                                     (
-                                                        <div className="flex ">
+                                                        <div className="flex dark:text-white">
                                                             L'étudiant a refuser
                                                         </div>
                                                     ):
                                                     (
-                                                        <div className="flex ">
+                                                        <div className="flex dark:text-white">
                                                             En attente de l'étudiant
                                                         </div>
                                                     )

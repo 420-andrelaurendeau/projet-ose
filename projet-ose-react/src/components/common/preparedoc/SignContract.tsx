@@ -51,9 +51,10 @@ function SignContract(props:any) {
     setIsLoaded(false)
     const getContract = async () => {
       await employeurGetContractById(stage.contractId).then(async r => {
-        console.log(r)
+        console.log(r.content)
         setContract(r)
-        const pdfBytes = base64ToArrayBuffer(r.content)
+        const pdfBytes = base64ToArrayBuffer(r.content);
+        console.log(pdfBytes)
         if (pdfBytes) {
           const blob = new Blob([new Uint8Array(pdfBytes)]);
           const URL: any = await blobToURL(blob);
@@ -72,9 +73,9 @@ function SignContract(props:any) {
         .then(async (base64String) => {
           if (base64String) {
             console.log("Chaîne Base64 obtenue :", base64String);
-            contract.content = base64String
+            contract.content = base64String.toString();
             await employeurSaveContract(contract).then(r => {
-              console.log(r)
+                console.log(r)
             })
           } else {
             console.log("La conversion a échoué.");
