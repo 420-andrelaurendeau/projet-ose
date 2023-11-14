@@ -30,7 +30,7 @@ export const offresEtudiant = async () => {
 
 export const allStudentInternshipOffersBySeason = async (selectedOption: string): Promise<any[]> => {
     try {
-        const response = await apiClient.get(`interOfferJob/season/${selectedOption}`);
+        const response = await apiClient.get(`interOfferJob/student/season/${selectedOption}`);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);
@@ -140,6 +140,17 @@ export const getInterOfferJob = async (email: string, params:{}) => {
     }
 
 }
+
+export const allEmpInternshipOffersBySeason = async (selectedOption: string)=>{
+    try {
+        const response = await apiClient.get(`interOfferJob/emp/season/${selectedOption}`);
+        return response.data;
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers', err);
+        throw err;
+    }
+}
+
 
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {

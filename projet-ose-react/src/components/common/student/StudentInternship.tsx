@@ -11,7 +11,7 @@ import {
     allStudentInternshipOffersBySeason,
     getStudentAppliedOffers,
     getAllSeasons,
-    allStudentInternshipOffers
+    allStudentInternshipOffers,
 } from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 

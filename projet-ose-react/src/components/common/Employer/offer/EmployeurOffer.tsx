@@ -13,7 +13,7 @@ import {
     faEye,
     faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
-import {allStudentInternshipOffers, allStudentInternshipOffersBySeason} from "../../../../api/InterOfferJobAPI";
+import {allEmpInternshipOffersBySeason, allStudentInternshipOffers} from "../../../../api/InterOfferJobAPI";
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
@@ -56,7 +56,7 @@ export default function EmployeurOffer() {
             })
         } else {
             console.log(selected)
-            allStudentInternshipOffersBySeason(selected).then((res)=> {
+            allEmpInternshipOffersBySeason(selected).then((res)=> {
                 console.log(res)
                 setOffers(res);
             })
