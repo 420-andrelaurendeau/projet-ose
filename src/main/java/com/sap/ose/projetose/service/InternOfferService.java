@@ -281,4 +281,7 @@ public class InternOfferService {
         return internOfferDtoList;
     }
 
+    public List<InternOfferDto> getEmployeurOfferBySeason(String selectedOption, String email) {
+
+    }
 }

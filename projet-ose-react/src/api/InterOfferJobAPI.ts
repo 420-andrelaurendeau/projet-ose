@@ -141,9 +141,9 @@ export const getInterOfferJob = async (email: string, params:{}) => {
 
 }
 
-export const allEmpInternshipOffersBySeason = async (selectedOption: string)=>{
+export const allEmployeurInternshipOffersBySeason = async (selectedOption: string,email: string)=>{
     try {
-        const response = await apiClient.get(`interOfferJob/emp/season/${selectedOption}`);
+        const response = await apiClient.get(`interOfferJob/${email}/season/${selectedOption}`);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);

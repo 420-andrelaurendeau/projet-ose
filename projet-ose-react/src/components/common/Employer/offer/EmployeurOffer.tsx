@@ -13,7 +13,7 @@ import {
     faEye,
     faPenToSquare
 } from "@fortawesome/free-solid-svg-icons";
-import {allEmpInternshipOffersBySeason, allStudentInternshipOffers} from "../../../../api/InterOfferJobAPI";
+import {allEmployeurInternshipOffersBySeason, allStudentInternshipOffers} from "../../../../api/InterOfferJobAPI";
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
