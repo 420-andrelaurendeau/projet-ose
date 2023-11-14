@@ -2,10 +2,8 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {validateFile} from "../../../../utils/validation/ValidateInternshipOfferForm";
 import {FileEntity} from "../../../../model/FileEntity";
-import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faDownload, faSpinner, faX, faStar} from "@fortawesome/free-solid-svg-icons";
-import {useLocation} from "react-router-dom";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {getUser} from "../../../../api/UtilisateurAPI";
 import {saveCvStudent, fetchAllStudentCvs, setDefaultCv, fetchDefaultCvByStudentId} from "../../../../api/StudentApi";
@@ -162,7 +160,6 @@ function UploadCVForm(): ReactElement {
     };
 
     async function setDefaultFile(file: ReviewFile) {
-        //TODO: dire quand c'est decline en toast
         console.log("fichier a mettre par defaut",file);
         setDefaultCv(user.id, file.id).then(res => {
             console.log("Retour de la reponse",res);
@@ -250,20 +247,32 @@ function UploadCVForm(): ReactElement {
                         <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
                             <p className="basis-full dark:text-white">{file.fileName}</p>
                         </div>
+                        <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
+                            <p className={"basis-full "
+                                                + (file.isAccepted == "PENDING"
+                                                        ? "text-zinc-500"
+                                                        : file.isAccepted == "ACCEPTED"
+                                                            ? "text-green"
+                                                            : "text-red")}>({t("formField.InternshipOfferList.table." + file.isAccepted)})</p>
+                        </div>
                         <div className="flex-item overflow-ellipsis pb-2">
 
                             <button
                                 //TODO: Ajouter un state pour le montrer comme GS
-                                className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
+                                className={"rounded py-2 sm:px-4 lg:px-10 text-center align-middle h-full w-full "
+                                                + (file.id == cvDefault.id || file.isAccepted != "ACCEPTED"
+                                                        ? "bg-gray"
+                                                        : "bg-blue dark:bg-orange hover:bg-blue-700 dark:hover:bg-orange-700")}
                                 onClick={() => setDefaultFile(file)}
+                                disabled={file.id == cvDefault.id || file.isAccepted != "ACCEPTED"}
                             >
-                                {file.id == cvDefault.id ? <FontAwesomeIcon icon={faStar} className="scale-150 text-yellow-300"/> : <FontAwesomeIcon icon={faStar} className="scale-150 dark:text-white"/>}
+                                <FontAwesomeIcon icon={faStar} className={"scale-150 " + (file.id == cvDefault.id ? "text-yellow-500" : "text-white")}/>
                             </button>
                         </div>
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button
-                                //TODO: Enlever le gris pour une autre couleur
-                                className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
+
+                                className="text-white rounded bg-blue dark:bg-orange py-2 sm:px-4 lg:px-10 hover:bg-blue-700 dark:hover:bg-orange-700 text-center align-middle h-full w-full"
                                 onClick={() => handleDownloadFile(file)}
                             >
                                 <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white"/>
