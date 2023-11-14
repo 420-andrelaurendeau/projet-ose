@@ -162,6 +162,7 @@ function UploadCVForm(): ReactElement {
     };
 
     async function setDefaultFile(file: ReviewFile) {
+        //TODO: dire quand c'est decline en toast
         console.log("fichier a mettre par defaut",file);
         setDefaultCv(user.id, file.id).then(res => {
             console.log("Retour de la reponse",res);
@@ -250,7 +251,9 @@ function UploadCVForm(): ReactElement {
                             <p className="basis-full dark:text-white">{file.fileName}</p>
                         </div>
                         <div className="flex-item overflow-ellipsis pb-2">
+
                             <button
+                                //TODO: Ajouter un state pour le montrer comme GS
                                 className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
                                 onClick={() => setDefaultFile(file)}
                             >
@@ -259,6 +262,7 @@ function UploadCVForm(): ReactElement {
                         </div>
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button
+                                //TODO: Enlever le gris pour une autre couleur
                                 className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center text-white align-middle h-full w-full"
                                 onClick={() => handleDownloadFile(file)}
                             >
