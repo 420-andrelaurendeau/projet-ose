@@ -331,6 +331,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'No offers available'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Internship for students'
@@ -996,6 +1000,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'Aucune offre disponible'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Stages pour étudiants'
