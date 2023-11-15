@@ -34,5 +34,6 @@ public class ContractDto {
         this.signatureStudent = contract.isSignatureStudent();
         this.content = Base64.getEncoder().encodeToString(contract.getFile().getContent());
         this.fileName = contract.getFile().getFileName();
+        this.fileId = contract.getFile().getId();
     }
 }

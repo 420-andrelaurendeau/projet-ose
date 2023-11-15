@@ -22,7 +22,7 @@ interface Props {
     user: any;
     appliedOffers: AppliedOffers[];
     setAppliedOffers: React.Dispatch<React.SetStateAction<AppliedOffers[]>>;
-    offers: never[];
+    offers: any[];
 }
 
 function StudentInternshipPage() {
@@ -33,6 +33,11 @@ function StudentInternshipPage() {
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
     const auth = useAuth();
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [sortField, setSortField] = useState("id");
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const isLoading = useRef(false);
 
@@ -47,9 +52,6 @@ function StudentInternshipPage() {
                     getStudentAppliedOffers(resUser.id).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
-                    offresEtudiant().then((res) => {
-                        setOffers(res);
-                    });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
                         setInterviewsNb(res);
                         console.log(interviewsNb);
@@ -62,6 +64,22 @@ function StudentInternshipPage() {
         };
         if (!isLoading.current) fetchUser();
     }, []);
+
+    useEffect(() => {
+        const fetchOffers = async () => {
+            isLoading.current = true;
+            offresEtudiant(setOffers, setTotalPages, {
+                    page: currentPage,
+                    size: numberElementByPage,
+                    sortField,
+                    sortDirection
+                }
+            );
+            console.log(offers);
+            isLoading.current = false;
+        };
+        fetchOffers();
+    }, [currentPage, numberElementByPage, sortField, sortDirection]);
 
     const context = {
         user: user,
