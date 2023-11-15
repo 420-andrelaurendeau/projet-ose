@@ -53,7 +53,7 @@ public class IntershipManagerControllerTest {
     void getOffersApplied_EmptyPage() throws Exception {
         Page<InternOfferDto> emptyPage = new PageImpl<>(Collections.emptyList());
 
-        when(internshipmanagerService.getSortedOffersByPage(0, 10, null, "id", "desc")).thenReturn(emptyPage);
+        when(internshipmanagerServicenpm.getSortedOffersByPage(0, 10, null, "id", "desc")).thenReturn(emptyPage);
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/intershipManager/offers").contentType(MediaType.APPLICATION_JSON);
 

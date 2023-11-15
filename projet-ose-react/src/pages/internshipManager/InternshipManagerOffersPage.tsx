@@ -48,7 +48,8 @@ const InternshipManagerOffersPage = () => {
         const fetchOffers = async () => {
             try {
                 fetchedOffersRef.current = true
-
+                console.log(selectedOption)
+                console.log(offerState)
                 const response = await getIntershipOffers({
                     page: currentPage,
                     size: numberElementByPage,
@@ -69,7 +70,7 @@ const InternshipManagerOffersPage = () => {
         };
         if (!fetchedOffersRef.current) fetchOffers();
 
-    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
+    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection, selectedOption]);
 
     useEffect(() => {
         const fetchOffersCount = async () => {
@@ -130,20 +131,7 @@ const InternshipManagerOffersPage = () => {
     const handleOptionChange = async (event: any) => {
         const selected = event.target.value;
 
-        console.log(selected)
         setSelectedOption(selected);
-
-        if (selected === 'all') {
-            getAllOffers().then((res)=> {
-                setOffers(res);
-            })
-        } else {
-            console.log(selected)
-            getOffersBySeason(selected).then((res)=> {
-                console.log(res)
-                setOffers(res);
-            })
-        }
     };
 
     useEffect(() => {
