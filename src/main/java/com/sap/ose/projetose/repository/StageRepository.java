@@ -20,6 +20,8 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
     @Query("SELECT i FROM Stage i WHERE i.stateStudent = 1 AND i.student.id = ?1")
     Optional<List<Stage>> findAllStudentPending(long studentId);
 
+    @Query("SELECT i FROM Stage i WHERE i.id = ?1")
+    Optional<Stage> findById(long id);
 
     @Query("SELECT CASE " +
             "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN 'DECLINED' " +
