@@ -95,7 +95,7 @@ function StudentInternship() {
                             <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
                         </div>
                         <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                            {t("formField.EtudiantStage.titre.text")}
+                            {fields.EtudiantStage.titre.text}
                         </h1>
                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className="w-full divide-y divide-gray dark:divide-darkgray">
@@ -105,40 +105,40 @@ function StudentInternship() {
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.titre.text")}
+                                        {fields.EtudiantStage.titre.text}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.stage.location.text")}
+                                        {fields.EtudiantStage.stage.location.text}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.stage.description.text")}
+                                        {fields.EtudiantStage.stage.description.text}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.stage.salary.text")}
+                                        {fields.EtudiantStage.stage.salary.text}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.stage.startDate.text")}
+                                        {fields.EtudiantStage.stage.startDate.text}
                                     </th>
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                     >
-                                        {t("formField.EtudiantStage.stage.endDate.text")}
+                                        {fields.EtudiantStage.stage.endDate.text}
                                     </th>
                                     <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">{t("formField.EtudiantStage.stage.apply.text")}</span>
+                                        <span className="sr-only">{fields.EtudiantStage.stage.apply.text}</span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -176,7 +176,7 @@ function StudentInternship() {
                                                 }
                                                 className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                             >
-                                                {t("formField.EtudiantStage.stage.apply.text")}
+                                                {fields.EtudiantStage.stage.apply.text}
                                             </button>
                                         </td>
                                     </tr>
