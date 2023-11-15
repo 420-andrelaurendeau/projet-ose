@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.*;
+import com.sap.ose.projetose.modeles.Interview;
 import com.sap.ose.projetose.service.InterviewService;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.RolesAllowed;
@@ -8,6 +9,7 @@ import jakarta.transaction.Transactional;
 import jakarta.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +51,14 @@ public class InterviewController {
 
     @Transactional
     @GetMapping("/getByStudentId/{studentId}")
-    public ResponseEntity<List<InterviewDTO>> getInterviewsByStudentId(@PathVariable long studentId) {
+    public ResponseEntity<Page<InterviewDTO>> getInterviewsByStudentId(@PathVariable long studentId,
+                                                                       @RequestParam(required = false, defaultValue = "0") int page,
+                                                                       @RequestParam(required = false, defaultValue = "10") int size,
+                                                                       @RequestParam(required = false, defaultValue = "id") String sortField,
+                                                                       @RequestParam(required = false, defaultValue = "desc") String sortDirection
+    ) {
         logger.info("Interview get request received");
-        return Optional.of(interviewService.getInterviewsByStudentId(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(interviewService.getInterviewsByStudentId(studentId, page, size,sortField, sortDirection)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @Transactional

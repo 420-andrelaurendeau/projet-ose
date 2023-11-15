@@ -121,19 +121,29 @@ public class InterviewService {
         return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList();
     }
 
-    public List<InterviewDTO> getInterviewsByStudentId(long studentId) {
-        int page = 1;
-        int size = 10;
-        Sort sort = Sort.by("id").ascending();
+    public Page<InterviewDTO> getInterviewsByStudentId(long studentId, int page, int size, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return interviewRepository.findAllByStudentId(studentId, pageable).isPresent() ? interviewRepository.findAllByStudentId(studentId, pageable).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
+        Page<Interview> page1 = interviewRepository.findAllByStudentId(studentId, pageable);
+
+        return page1.map(
+                interview -> new InterviewDTO(
+                        interview.getId(),
+                        new EtudiantDto(interview.getStudent()),
+                        new InternOfferDto(interview.getInternshipOffer()),
+                        interview.getDate(),
+                        interview.getDescription(),
+                        interview.getState()
+                ));
     }
 
     public Optional<Long> getInterviewsCountByStudentId(long studentId) {
         int page = 1;
         int size = 10;
-        Pageable pageable = PageRequest.of(page, size);
-        return interviewRepository.findAllByStudentId(studentId, pageable).isPresent() ? Optional.of((long) interviewRepository.findAllByStudentId(studentId, pageable).get().size()) : Optional.empty();
+        Sort sort = Sort.by("id").ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return Optional.of(1L);
     }
 
     public Optional<Boolean> studentAcceptsInterviewByStudentId(long studentId, long interviewId) {

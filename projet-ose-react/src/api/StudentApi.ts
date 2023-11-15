@@ -12,18 +12,15 @@ export const saveCvStudent = async (matricule: number, cv: any) => {
     }
 }
 
-export const fetchInterviews = async (userId: number): Promise<Interview[]> => {
+export const fetchInterviews = async (userId: number,{page, size, sortField, sortDirection}:any ): Promise<Interview[]> => {
+    const params: any = {page, size, sortField, sortDirection};
+
     try {
-        const res = await api.get(`interview/getByStudentId/`+ userId)
-        return res.data.map((item: any) => ({
-            id: item.id,
-            student: item.student,
-            internOffer: item.internOffer,
-            date: item.date,
-            description: item.description,
-            state: item.state,
-            stage: 0
-        }))
+        const res = await api.get(`interview/getByStudentId/`+ userId, {
+            params: params
+        })
+        console.log(res.data)
+        return res.data.content
     }
     catch (err) {
         console.log('Error while fetching interviews' + err)
