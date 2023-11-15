@@ -60,7 +60,7 @@ public class EtudiantService {
             };
         }
     }
-
+    @Transactional
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
