@@ -23,6 +23,7 @@ public class OfferReviewRequestDto {
         this.comment = offerReviewRequest.getComment();
         this.internOfferId = offerReviewRequest.getInternOffer().getId();
         this.internshipmanagerId = offerReviewRequest.getInternshipmanager().getId();
+        this.state = offerReviewRequest.getInternOffer().getState();
     }
 
     public OfferReviewRequest fromDto(){

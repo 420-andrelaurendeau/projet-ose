@@ -10,6 +10,7 @@ import {StudentInternshipI18n} from "./components/common/student/i18n/StudentInt
 import SidebarEtudiant from "./components/common/student/SidebarEtudiant";
 import {SideBarEtudiantI18n} from "./components/common/student/i18n/SideBarEtudiantI18n";
 import {StudentInternshipPagei18n} from "./pages/student/i18n/StudentInternshipPagei18n";
+import internshipAgreement from "./components/common/internshipManager/internshipsAgreement/agreement";
 import studentOffer from "./components/common/student/i18n/Offer";
 
 
@@ -31,6 +32,7 @@ i18n
             en: {
                 translation: {
                     formField: {
+                        internshipAgreement,
                         application,
                         employerOffer,
                         studentOffer,
@@ -57,6 +59,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refused by the student",
+                                    employer: "Refused by the employer",
                                 }
                             },
                         },
@@ -82,6 +88,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"An error occurred while fetching the offers",
                                 errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
@@ -711,6 +723,7 @@ i18n
             fr: {
                 translation: {
                     formField: {
+                        internshipAgreement,
                         application,
                         employerOffer,
                         studentOffer,
@@ -737,6 +750,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refuser par l'étudiant",
+                                    employer: "Refuser par l'employeur",
                                 }
                             },
                         },
@@ -762,6 +779,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
                                 errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {

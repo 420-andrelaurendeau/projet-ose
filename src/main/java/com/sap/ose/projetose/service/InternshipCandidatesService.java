@@ -7,6 +7,7 @@ import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.FileEntityRepository;
+import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

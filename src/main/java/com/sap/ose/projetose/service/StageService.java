@@ -99,7 +99,7 @@ public class StageService {
     @Transactional
     public Optional<Boolean> setStudentAccepted(StageDto stageDto) {
 
-        Stage stage = stageRepository.findById(stageDto.getId()).orElse(null);
+        Stage stage = stageRepository.findStageById(stageDto.getId()).orElse(null);
         if (stage != null) {
             stage.setStateStudent(State.ACCEPTED);
             if(isContractAccepted(stageDto.getId()))
@@ -143,7 +143,7 @@ public class StageService {
     public Stage setEmployerOpinion(long stageId, String opinionState) {
         try {
             State stateEmployer = State.valueOf(opinionState);
-            Stage stage = stageRepository.findById(stageId).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
+            Stage stage = stageRepository.findStageById(stageId).orElseThrow( () -> new StageNotFoundException("Erreur lors de la récupération des offres d'emploi."));
 
             stage.setStateEmployeur(stateEmployer);
 

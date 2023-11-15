@@ -11,9 +11,9 @@ export const employeurGetContractById = async (id: number) => {
     }
 }
 
-export const employeurSaveContract = async (contract: any) => {
+export const employeurSaveContract = async (contract: any, userRole: string) => {
     try {
-        const response = await api.post(`contract/employer/save`, contract);
+        const response = await api.post(`contract/${userRole}/save`, contract);
         console.log(response.data)
         return response.data;
     } catch (error) {

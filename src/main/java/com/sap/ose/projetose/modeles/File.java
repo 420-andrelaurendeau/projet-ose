@@ -26,6 +26,7 @@ public class File {
     private State isAccepted;
 
     @ManyToOne
+    @ToString.Exclude
     private Etudiant etudiant;
 
     @ManyToOne

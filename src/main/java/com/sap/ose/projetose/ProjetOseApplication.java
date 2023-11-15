@@ -48,11 +48,17 @@ public class ProjetOseApplication implements CommandLineRunner {
     private InternshipCandidatesService internshipCandidatesService;
 
     @Autowired
+    private StageService stageService;
+
+    @Autowired
     ProgrammeRepository programmeRepository;
 
+    @Autowired
+    TemplateContractService templateContractService;
     public static void main(String[] args) {
-		SpringApplication.run(ProjetOseApplication.class, args);
-	}
+        SpringApplication.run(ProjetOseApplication.class, args);
+    }
+
     @Override
     public void run(String... args) throws Exception {
         Programme programme1 = programmeRepository.save(new Programme("Techniques de l'informatique", "Programme de formation en techniques de l'informatique"));
@@ -83,19 +89,54 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
-        InternOffer internOffer1 = new InternOffer("Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer1 = new InternOffer(2L,"Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
 
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        InternOffer internOffer2 = new InternOffer("Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 
         InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
         internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
-//        Stage stage = new Stage(etudiant2,internOffer,State.PENDING,State.PENDING);
-//        stageService.save(stage);
+
+        java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/Internshipe_Contract_Contract.pdf");
+        try {
+
+            FileInputStream fis = new FileInputStream(filePDF);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = fis.read(buffer)) != -1) {
+                bos.write(buffer, 0, read);
+            }
+            fis.close();
+
+
+
+            byte[] byteArray = bos.toByteArray();
+            Base64.getEncoder().encodeToString(byteArray);
+
+            TemplateContractDto templateContractDto = new TemplateContractDto(LocalDate.now().toString(), true, file.getId(), file.getFileName(), Base64.getEncoder().encodeToString(byteArray));
+            templateContractService.save(templateContractDto);
+
+            // Utiliser byteArray selon les besoins
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
+        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
+        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
+        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
+
+        stageService.saveTEST(stage);
+        stageService.saveTEST(stage2);
+        stageService.saveTEST(stage3);
+        stageService.saveTEST(stage4);
 
         System.out.println("DONE");
     }
