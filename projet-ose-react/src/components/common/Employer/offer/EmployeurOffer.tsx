@@ -20,9 +20,8 @@ import {
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,setOffers, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {offers,setOffers,handleOptionChange, selectedOption, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     const navigate = useNavigate();
-    const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
 
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortField && sortDirection === "desc") {
@@ -44,26 +43,6 @@ export default function EmployeurOffer() {
         navigate(`/employer/home/offers/${id}/application`);
     }
 
-    const handleOptionChange = async (event: any) => {
-        const selected = event.target.value;
-
-        setSelectedOption(selected);
-        console.log(selected)
-
-        if (selected === 'all') {
-            getEmployeurOffers(user.email).then((res)=> {
-                setOffers(res);
-                console.log(res)
-            })
-
-        } else {
-            allEmployeurInternshipOffersBySeason(selected,user.email).then((res)=> {
-                setOffers(res);
-                console.log(res)
-            })
-        }
-    };
-
 
     useEffect(() => {
         console.log(offers)
@@ -83,7 +62,7 @@ export default function EmployeurOffer() {
                     <div>
                         <label htmlFor="options" className="text-bold">Filtre par saison: </label>
                         <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                            <option value="all">Tout</option>
+                            <option value="">Tout</option>
                             {seasons.map((season: string, index: number) => (
                                 <option key={index} value={season}>
                                     {season}

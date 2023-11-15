@@ -48,8 +48,7 @@ const InternshipManagerOffersPage = () => {
         const fetchOffers = async () => {
             try {
                 fetchedOffersRef.current = true
-                console.log(selectedOption)
-                console.log(offerState)
+
                 const response = await getIntershipOffers({
                     page: currentPage,
                     size: numberElementByPage,
@@ -68,6 +67,7 @@ const InternshipManagerOffersPage = () => {
                 fetchedOffersRef.current = false;
             }
         };
+
         if (!fetchedOffersRef.current) fetchOffers();
 
     }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection, selectedOption]);

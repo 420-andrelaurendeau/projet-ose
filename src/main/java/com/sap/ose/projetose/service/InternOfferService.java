@@ -218,7 +218,7 @@ public class InternOfferService {
 
 
     @Transactional
-    public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection) {
+    public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection,String session) {
 
         Sort sort = null;
         try {
@@ -227,7 +227,7 @@ public class InternOfferService {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
             Long id = employeurRepository.findByEmail(email).get().getId();
-            pageOffer = offerJobRepository.findAllById(id, pageable).map(InternOfferDto::new);
+            pageOffer = offerJobRepository.findAllById(id,session, pageable).map(InternOfferDto::new);
             return pageOffer;
         } catch (PropertyReferenceException e) {
             logger.error("Le champ de tri n'est pas valide : " + sort);

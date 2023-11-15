@@ -31,7 +31,9 @@ interface Props {
     onPageChange: (newPage: number) => void,
     numberElementByPage: number,
     page: number,
-    seasons: any[]
+    seasons: any[],
+    selectedOption: string,
+    handleOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
 function EmployeurHomePage() {
@@ -48,6 +50,8 @@ function EmployeurHomePage() {
     const { userEmail, userRole, logoutUser } = useAuth();
     const location = useLocation();
     const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
+
 
     const [user, setUser] = useState<User>({
         id: 0,
@@ -82,14 +86,15 @@ function EmployeurHomePage() {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session: selectedOption,
                 })
             } catch (error) {
                 console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             }
 
-    }, [currentPage, numberElementByPage, sortField, sortDirection]);
+    }, [currentPage, numberElementByPage, sortField, sortDirection,selectedOption]);
 
     useEffect(() => {
         let i = 0;
@@ -116,6 +121,16 @@ function EmployeurHomePage() {
         setCurrentPage(newPage);
     };
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        setSelectedOption(selected);
+        console.log(selected)
+
+    };
+
+
+
 
     const context =  {
         isModalOpen: isModalOpen,
@@ -134,6 +149,8 @@ function EmployeurHomePage() {
         onPageChange: handlePageChange,
         numberElementByPage: numberElementByPage,
         page: currentPage,
+        handleOptionChange: handleOptionChange,
+        selectedOption: selectedOption
     }
 
     return (

@@ -38,8 +38,8 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     @Query("SELECT i.state, COUNT(i) FROM InternOffer i GROUP BY i.state")
     List<Object[]> getCountByState();
 
-    @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1")
-    Page<InternOffer> findAllById(Long id, Pageable pageable);
+    @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1 AND (?2 is null OR ?2 = '' OR i.session = ?2)")
+    Page<InternOffer> findAllById(Long id, String session, Pageable pageable);
 
     @Query("SELECT i FROM InternOffer i WHERE i.employeur.id = ?1")
     List<InternOffer> findInternOffersById(Long id);
