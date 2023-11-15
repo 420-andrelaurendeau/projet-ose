@@ -26,7 +26,8 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     List<InternOffer> findByEmployeurId(int id);
 
 
-    Page<InternOffer>  findAllByState(State state, Pageable pageable);
+    Page<InternOffer> findAllBySession(Pageable pageable, String session);
+    Page<InternOffer>  findAllByStateAndSession(State state, String session,Pageable pageable);
 
 
     @Query("SELECT i.state, COUNT(i) FROM InternOffer i GROUP BY i.state")

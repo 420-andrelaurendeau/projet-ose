@@ -30,8 +30,9 @@ public class IntershipManagerController {
             @RequestParam(required = false, defaultValue = "id") String sortField,
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state,
-            @RequestParam(required = false) String session
+            @RequestParam(required = false, defaultValue = "Autumn2023") String session
     ) {
+
 
         Page<InternOfferDto> internOfferDtos = internshipmanagerService.getSortedOffersByPage(page, size, state, sortField, sortDirection,session);
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);

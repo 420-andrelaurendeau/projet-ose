@@ -154,10 +154,10 @@ public class InternOfferService {
             Page<InternOfferDto> pageOffer;
 
             if (state == null)
-                pageOffer = offerJobRepository.findAll(pageable).map(InternOfferDto::new);
+                pageOffer = offerJobRepository.findAllBySession(pageable, session).map(InternOfferDto::new);
             else {
                 State stateEnum = State.valueOf(state);
-                pageOffer = offerJobRepository.findAllByState(stateEnum, pageable).map(InternOfferDto::new);
+                pageOffer = offerJobRepository.findAllByStateAndSession(stateEnum, session, pageable).map(InternOfferDto::new);
             }
 
             return pageOffer;
