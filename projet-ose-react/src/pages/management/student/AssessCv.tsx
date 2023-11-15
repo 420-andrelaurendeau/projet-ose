@@ -15,21 +15,21 @@ function EvaluerCV() {
     async function ApproveFile(file: ReviewFile) {
         acceptStudentCv(file.id).then(r => {
             console.log(r);
-            toast.success("CV refusé avec succès");
-        }).catch(err => {
-            console.log(err)
-            toast.error("Une erreur est survenue lors de l'acceptation du CV");
+            toast.success(fields.toast.acceptSuccess)
+        }).catch((error) => {
+            console.log(error);
+            toast.error(fields.toast.acceptError)
         }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
     async function DeclineFile(file: ReviewFile) {
         declineStudentCv(file.id).then(r => {
             console.log(r);
-            toast.success("CV refusé avec succès");
-        }).catch(err => {
-            console.log(err)
-            toast.error("Une erreur est survenue lors du refus du CV");
-        } ).then(getStudentPendingCv).then(r => setFiles(r));
+            toast.success(fields.toast.declineSuccess)
+        }).catch((error) => {
+            console.log(error);
+            toast.error(fields.toast.declineError)
+        }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
     const handleDownloadFile = (file: ReviewFile) => {

@@ -8,6 +8,8 @@ import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sap.ose.projetose.modeles.File;
+import com.sap.ose.projetose.service.EtudiantService;
+
 
 
 import org.springframework.http.ResponseEntity;
@@ -48,16 +50,12 @@ public class EtudiantController {
         return ResponseEntity.ok().body(etudiantService.getEtudiants());
     }
 
-    @PostMapping("/addCv/{id}")
+    @PostMapping("/addCv/{matricule}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
-    public ResponseEntity<EtudiantDto> addCv(@PathVariable int id, @RequestBody File cv) {
-        logger.info("add cv to user with id" + id );
-        System.out.println("EtudiantController.addCv");
-        EtudiantDto etudiantDto = etudiantService.addCvById(id, cv);
-        System.out.println("EtudiantController.addCv");
-        var response = ResponseEntity.ok().body(etudiantDto);
-        ResponseEntity.ok().body(etudiantDto);
-        return response;
+    public ResponseEntity<EtudiantDto> addCv(@PathVariable String matricule, @RequestBody File cv){
+        logger.info("add cv to " + matricule );
+        EtudiantDto etudiantDto = etudiantService.updateCVByMatricule(matricule, cv);
+        return ResponseEntity.ok().body(etudiantDto);
     }
 
     @GetMapping("{id}/offersApplied")
