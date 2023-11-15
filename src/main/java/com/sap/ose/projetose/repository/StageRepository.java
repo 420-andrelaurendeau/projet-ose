@@ -92,6 +92,7 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 0) AND (s.stateStudent != 2 AND s.stateEmployeur != 2) AND (s.student.id = :id)))" +
             "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0) AND (s.student.id = :id) )")
     Page<Stage> findAllByStateStudent(@Param("state") String state, Pageable pageable, long id);
+
     @Query("SELECT CASE " +
             "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN false " + // 'DECLINED'
             "WHEN (s.stateStudent = 1 OR s.stateEmployeur = 1) THEN false " + // 'PENDING'
@@ -99,8 +100,8 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "FROM Stage s WHERE s.id = :id")
     boolean isContractAccepted(@Param("id") long id);
 
-
     @Query("select s from Stage s where s.id = :id")
     Optional<Stage> findStageById(@Param("id") long id);
+
 
 }

@@ -16,7 +16,7 @@ function HomePage() {
 
 
     return (
-        <div className="min-h-screen h-full">
+        <div className="">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-2">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.title} </h1>
@@ -24,7 +24,7 @@ function HomePage() {
             </header>
             <main>
                 <div className="max-w-9xl mx-auto xxxs:px-6 lg:px-2">
-                    <div className=" max-w-7xl mx-auto border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
+                    <div className=" max-w-7xl mx-auto border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block ">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +

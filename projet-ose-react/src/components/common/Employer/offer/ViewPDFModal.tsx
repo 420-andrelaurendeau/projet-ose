@@ -6,7 +6,6 @@ import ViewPDF from "../../preparedoc/ViewPDF";
 import {useNavigate, useParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {useProps} from "../../../../pages/internshipManager/InternshipAgreementPage";
 import {useAuth} from "../../../../authentication/AuthContext";
 
 
@@ -20,7 +19,6 @@ const ViewPDFModal = (props:any) => {
     const [pageNum, setPageNum] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const {userRole} = useAuth();
-    const { file,size } = useProps();
     useEffect(() => {
         setWidth(getWidth());
         window.addEventListener("resize", () => {

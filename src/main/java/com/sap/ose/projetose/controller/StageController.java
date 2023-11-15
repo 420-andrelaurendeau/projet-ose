@@ -60,6 +60,13 @@ public class StageController {
         return Optional.of(stageService.getCountByStateEmployeur(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/countStudent/{id}")
+    @PreAuthorize("hasAuthority('student')")
+    public ResponseEntity<Map<String, Long>> getStageCountStudent(@PathVariable long id) {
+        logger.info("Stage count request received");
+        return Optional.of(stageService.getCountByStateStudent(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/employeurStage/{id}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employeur')")
     public ResponseEntity<Page<InternshipAgreementDto>> getEmployeurStage(
@@ -77,6 +84,26 @@ public class StageController {
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
+
+    @GetMapping("/studentStage/{id}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<Page<InternshipAgreementDto>> getStudentStage(
+            @PathVariable long id,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "id") String sortField,
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+            @RequestParam(required = false) String state
+    ) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfStudent(page, size, sort, state, id);
+
+        System.out.println(internOfferDtos.get().collect(Collectors.toList()));
+        return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
+    }
+
+
 
     @PreAuthorize("hasAuthority('internshipmanager')")
     @GetMapping("/stages")

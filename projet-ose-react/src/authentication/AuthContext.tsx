@@ -5,8 +5,10 @@ interface AuthContextProps {
     isAuthenticated: boolean;
     userRole: string | null;
     userEmail: string | null;
+    userId: number | null;
     loginUser: (token: string) => void;
     logoutUser: () => void;
+
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -18,6 +20,7 @@ const AuthContext = createContext<AuthContextProps>({
     },
     logoutUser: () => {
     },
+    userId: 0
 });
 
 export const useAuth = () => {
@@ -31,7 +34,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [userRole, setUserRole] = useState<string | null>("");
-    const [userID, setUserID] = useState<number | null>(0);
+    const [userId, setUserID] = useState<number | null>(0);
     const [userEmail, setUserEmail] = useState<string | null>("");
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -77,7 +80,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, userRole, userEmail, loginUser, logoutUser}}>
+        <AuthContext.Provider value={{isAuthenticated, userRole, userEmail, userId, loginUser, logoutUser}}>
             {children}
         </AuthContext.Provider>
     );
