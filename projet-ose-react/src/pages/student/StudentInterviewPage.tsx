@@ -136,7 +136,7 @@ export default function StudentInterviewPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap
                                         text-center text-sm font-medium">
-                                            {interview.date}
+                                            {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap
                                         text-center text-sm font-medium">

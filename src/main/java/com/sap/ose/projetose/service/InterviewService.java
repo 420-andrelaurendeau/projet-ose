@@ -23,6 +23,10 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +49,7 @@ public class InterviewService {
     Logger logger = LoggerFactory.getLogger(InterviewService.class);
 
     @Autowired
-    public InterviewService(InternOfferRepository internOfferRepository,InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
+    public InterviewService(InternOfferRepository internOfferRepository, InterviewRepository interviewRepository, EtudiantService etudiantService, EmployeurService employeurService, EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository) {
         this.internOfferRepository = internOfferRepository;
         this.etudiantRepository = etudiantRepository;
         this.employeurRepository = employeurRepository;
@@ -70,11 +74,11 @@ public class InterviewService {
 
         Interview interview = new Interview(etudiant, internOffer, interviewRequestInDto.getDate(), interviewRequestInDto.getDescription());
 
-       interview = interviewRepository.save(interview);
+        interview = interviewRepository.save(interview);
 
-       EtudiantDto etudiantDto = new EtudiantDto(etudiant);
+        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
 
-       InternOfferDto internOfferDto = new InternOfferDto(internOffer);
+        InternOfferDto internOfferDto = new InternOfferDto(internOffer);
 
         if (interview != null) {
             InterviewDTO returnInterviewDto = new InterviewDTO(interview.getId(), etudiantDto, internOfferDto, interview.getDate(), interview.getDescription(), interview.getState());
@@ -106,8 +110,8 @@ public class InterviewService {
                 interviewDTO = new InterviewDTO(new EtudiantDto(inte.getStudent()), new InternOfferDto(inte.getInternshipOffer()), inte.getDate(), inte.getDescription(), inte.getState());
             }
             return Optional.of(interviewDTO);
-        }catch (Exception e){
-            logger.error("Error while getting interview",e);
+        } catch (Exception e) {
+            logger.error("Error while getting interview", e);
             return Optional.empty();
         }
 
@@ -118,11 +122,18 @@ public class InterviewService {
     }
 
     public List<InterviewDTO> getInterviewsByStudentId(long studentId) {
-        return interviewRepository.findAllByStudentId(studentId).isPresent() ? interviewRepository.findAllByStudentId(studentId).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
+        int page = 1;
+        int size = 10;
+        Sort sort = Sort.by("id").ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return interviewRepository.findAllByStudentId(studentId, pageable).isPresent() ? interviewRepository.findAllByStudentId(studentId, pageable).get().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList() : null;
     }
 
     public Optional<Long> getInterviewsCountByStudentId(long studentId) {
-        return interviewRepository.findAllByStudentId(studentId).isPresent() ? Optional.of((long) interviewRepository.findAllByStudentId(studentId).get().size()) : Optional.empty();
+        int page = 1;
+        int size = 10;
+        Pageable pageable = PageRequest.of(page, size);
+        return interviewRepository.findAllByStudentId(studentId, pageable).isPresent() ? Optional.of((long) interviewRepository.findAllByStudentId(studentId, pageable).get().size()) : Optional.empty();
     }
 
     public Optional<Boolean> studentAcceptsInterviewByStudentId(long studentId, long interviewId) {
