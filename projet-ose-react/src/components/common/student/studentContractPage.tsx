@@ -132,7 +132,7 @@ export default function StudentContractPage() {
         <div className="px-4">
             <title>Offres</title>
             <header className="pt-24 pb-4">
-                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
+                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{t("formField.InternshipsAgreementPage.title")}</h1>
             </header>
             <main className="pb-4">
                 <div className="p-0">

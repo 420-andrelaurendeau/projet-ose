@@ -6,6 +6,7 @@ import application from "./components/common/Employer/application/i18n/applicati
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
 import contractPage from "./components/common/Employer/contract/i18n/contract";
 import header from "./pages/shared/i18n/homeI18N";
+import {StudentInternshipI18n} from "./components/common/student/i18n/StudentInternshipI18n";
 
 
 i18n
@@ -330,43 +331,6 @@ i18n
                             }
 
                         },
-                        EtudiantStage: {
-                            titre: {
-                                name: 'titre',
-                                text: 'Internship for students'
-                            },
-                            stage: {
-                                name: 'stage',
-                                description: {
-                                    name: 'description',
-                                    text: 'Description :',
-                                },
-                                location: {
-                                    name: 'location',
-                                    text: 'Location :',
-                                },
-                                salary: {
-                                    name: 'salary',
-                                    text: 'Salary per hour :'
-                                },
-                                startDate: {
-                                    name: 'startDate',
-                                    text: 'Start date :',
-                                },
-                                endDate: {
-                                    name: 'endDate',
-                                    text: 'End date :',
-                                },
-                                apply: {
-                                    name: 'apply',
-                                    text: 'Apply',
-                                }
-                            },
-                            empty: {
-                                name: 'empty',
-                                text: 'No internship available'
-                            }
-                        },
                         Header: {
                             stage: {
                                 name: 'stage',
@@ -635,6 +599,7 @@ i18n
                         }
                     },
                     cv: CV.en,
+                    StudentInternship: StudentInternshipI18n.en,
                     StudentInterview: {
                         table: {
                             name: 'table',
@@ -983,43 +948,6 @@ i18n
                             }
 
                         },
-                        EtudiantStage: {
-                            titre: {
-                                name: 'titre',
-                                text: 'Stages pour étudiants'
-                            },
-                            stage: {
-                                name: 'stage',
-                                description: {
-                                    name: 'description',
-                                    text: 'Description de l\'offre d\'emploi :',
-                                },
-                                location: {
-                                    name: 'location',
-                                    text: 'Lieu :',
-                                },
-                                salary: {
-                                    name: 'salary',
-                                    text: 'salaire par heure :'
-                                },
-                                startDate: {
-                                    name: 'startDate',
-                                    text: 'Date de début :',
-                                },
-                                endDate: {
-                                    name: 'endDate',
-                                    text: 'Date de fin :',
-                                },
-                                apply: {
-                                    name: 'Apply',
-                                    text: 'Postuler',
-                                }
-                            },
-                            empty: {
-                                name: 'empty',
-                                text: 'Aucun stage disponible'
-                            }
-                        },
                         Header: {
                             stage: {
                                 name: 'stage',
@@ -1270,6 +1198,7 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInternship: StudentInternshipI18n.fr,
                     StudentInterview: {
                         table: {
                             name: 'table',

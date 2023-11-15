@@ -66,7 +66,7 @@ describe("StudentInternship Component", () => {
         render(<StudentInternship/>);
 
         // Assert that the component and its content are correctly rendered
-        const titleElement = screen.getAllByText("formField.EtudiantStage.titre.text");
+        const titleElement = screen.getAllByText("StudentInternship.titre.text");
         titleElement.forEach((element) => {
             expect(element).toBeInTheDocument();
         })
