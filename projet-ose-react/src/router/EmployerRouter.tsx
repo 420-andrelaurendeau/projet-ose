@@ -13,10 +13,9 @@ import EmployerOfferDetails from "../components/common/Employer/offer/EmployerOf
 import ApplicationOffer from "../components/common/Employer/application/ApplicationOffer";
 import ApplicationDetails from "../components/common/Employer/application/ApplicationDetails";
 import SignContract from "../components/common/preparedoc/SignContract";
-import EmployerContractPage from "../components/common/Employer/employerContractPage";
-import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
-
+import EmployerContractPage from "../components/common/Employer/employerContractPage";
+import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 const EmployerRouter: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['employer']}>
@@ -37,7 +36,9 @@ const EmployerRouter: React.FC = () => {
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
                         <Route path="contract/sign" element={<SignContract/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
-                        <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}/>
+                        <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
+                            <Route path=":fileName" element={<ViewPDFModal/>}/>
+                        </Route>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>

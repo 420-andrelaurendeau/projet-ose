@@ -134,7 +134,15 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                         <FontAwesomeIcon icon={faEye}
                                                          className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
                                                          onClick={() => props.handleOfferClick(offer.contractId!)}/>
-                                    </div>: <></>
+                                    </div> : (offer.stateEmployeur == "DECLINED") ?
+                                    <div>
+                                        <p>{fields.sign.employer}</p>
+                                    </div> : ( offer.stateStudent == "DECLINED") ?
+                                    <div>
+                                        <p>{fields.sign.student}</p>
+                                    </div> :
+                                    <></>
+
                             }
                         </div>
                     ))
@@ -144,6 +152,3 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
         </div>
     );
 }
-
-/**
- */

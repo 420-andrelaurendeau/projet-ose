@@ -192,7 +192,20 @@ function StudentInternshipPage() {
                                     <p className="text-black dark:text-white">Stage</p>
                                 </div>
                             </NavLink>
+                            <NavLink
+                                to="contract"
+                                className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
+                                    + (location.pathname === `/${auth.userRole}/home/contract` || location.pathname === `/${auth.userRole}/home/stage/` ? " border-b-2" : "")
+                                }
+                                state={user}
+                            >
+                                <FontAwesomeIcon icon={faPersonDigging} className="dark:text-white" size="sm"/>
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">Contract</p>
+                                </div>
+                            </NavLink>
                         </div>
+
                     </div>
                     <div className="w-full">
                         <Outlet

@@ -32,7 +32,7 @@ export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
 
 export const allStudentInternshipOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/allOffers');
+        const response = await apiClient.get('interOfferJob/OffersEtudiant');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)

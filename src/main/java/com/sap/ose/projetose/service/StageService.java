@@ -198,6 +198,12 @@ public class StageService {
     }
 
     @Transactional
+    public Map<String, Long> getCountByStateStudent(long id){
+        List<Object[]> counts = stageRepository.getCountByStateByStudent(id);
+        return getCountByState(counts);
+    }
+
+    @Transactional
     public Map<String, Long> getCountByState(List<Object[]> counts) {
         HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
 
@@ -251,6 +257,19 @@ public class StageService {
             internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateEmployeur(stateEnum.name(), pageable, id));
         }
 
+        return internshipAgreementDtos;
+    }
+
+    @Transactional
+    public Page<InternshipAgreementDto> getSortedByPageOfStudent(int page, int size, Sort sort, String state, long id){
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<InternshipAgreementDto> internshipAgreementDtos;
+        if (state == null)
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStudentId(id, pageable));
+        else {
+            State stateEnum = State.valueOf(state);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateStudent(stateEnum.name(), pageable, id));
+        }
         return internshipAgreementDtos;
     }
 

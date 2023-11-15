@@ -59,7 +59,7 @@ public class ContractService {
         try {
 
             File file = fileService.findById(contractDto.getFileId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
+            byte[] encodedString = Base64.getDecoder().decode(contractDto.getContent());
             file.setContent(encodedString);
 
             Contract contract = findById(contractDto.getId());
@@ -79,7 +79,7 @@ public class ContractService {
         try {
 
             File file = fileService.findById(contractDto.getFileId());
-            byte[] encodedString = Base64.getEncoder().encode(contractDto.getFileName().getBytes());
+            byte[] encodedString = Base64.getDecoder().decode(contractDto.getContent());
             file.setContent(encodedString);
 
             Contract contract = findById(contractDto.getId());

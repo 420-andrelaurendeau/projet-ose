@@ -7,6 +7,7 @@ import {getOfferReviewById} from "../../../../api/InternshipManagerAPI";
 import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
 import {useToast} from "../../../../hooks/state/useToast";
+import ViewPDFModal from "../../Employer/offer/ViewPDFModal";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
@@ -30,6 +31,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const [formStateReview, setFormStateReview] = React.useState({
         comment: "", state: ""
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
 
 
@@ -42,6 +44,8 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     setFormStateReview(prevState => ({
                         ...prevState, comment: response.comment!,
                     }));
+                    console.log(internshipOffer)
+                    console.log(response)
                     return
                 } catch (error) {
                     toast.error("Une erreur est survenue lors du chargement de l'offre")
@@ -50,12 +54,17 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                 }
             }
 
+
             if (internshipOffer.state !== "PENDING" && !loadOfferReviewRef.current) {
                 setIsAlreadyReviewed(true);
                 setFormStateReview(prevState => ({
                     ...prevState, state: internshipOffer.state!,
                 }));
                 loadOfferReview()
+            } else {
+                setFormStateReview(prevState => ({
+                    ...prevState, state: "PENDING",
+                }));
             }
         }, []
     )
@@ -63,20 +72,35 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 
     return (
         <div className="">
-            <button
-                className="fixed z-10 top-20 left-2 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
-                onClick={() => navigate("/internshipmanager/home/offers")}
-            >
-                <Icon className="w-5 h-5 fill-current hover:font-bold"/>
-            </button>
+
+            <div className="flex w-full justify-between sm:w-3/4 sm:mx-auto items-center">
+                <div role="cell" className="md:w-1/5 w-1/3 2 whitespace-nowrap truncate mt-3 items-center">
+                                            <span
+                                                className={
+                                                    internshipOffer.state! == "PENDING" ?
+                                                        "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                        : internshipOffer.state! === "DECLINED" ?
+                                                            "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
+                                                            : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
+                                            >
+                                                {fields.table[internshipOffer.state!]}
+                                            </span>
+                </div>
+                <div className="">
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => navigate("/internshipmanager/home/offers")}
+                    >
+                        Back <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                    </button>
+                </div>
+            </div>
 
             <h1 className='font-bold text-center text-dark text-2xl dark:text-offwhite'>{internshipOffer!.title}</h1>
 
-
-
             <div className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto">
                 <div className='block items-center min-h-50'>
-
                     {/* Employeur field */}
                     <div className={"flex"}>
                         <p className={"p-1 text-lg dark:text-offwhite"}>
@@ -97,7 +121,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         {internshipOffer!.employeurEntreprise}
                     </p>
                 </div>
-                <div className="block sm:flex flex-col sm:justify-end sm:items-end h-full">
+                <div className="block sm:flex flex-col sm:justify-end sm:items-end ">
                     {/* Start date field */}
                     <div className="flex">
                         <p className="p-1 dark:text-offwhite">
@@ -131,7 +155,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             </div>
 
             {/* Description field */}
-            <div className="mb-5 justify-center items-center h-full sm:mx-auto sm:w-3/4">
+            <div className="mb-5 justify-center items-center sm:mx-auto sm:w-3/4">
                 <p className="mt-1 p-2 w-full dark:text-offwhite ">
                     {internshipOffer!.description}
                 </p>
@@ -139,16 +163,22 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             </div>
 
             {/* File field */}
-            <div className="flex mb-5 sm:mx-auto sm:w-3/4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill={theme === `light` ? `#306bac` : `#F57A00`}
-                     height="50" viewBox="0 -960 960 960" width="24">
-                    <path
-                        d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
-                </svg>
-                <p className="mt-1 p-2 w-full dark:text-offwhite">{internshipOffer!.file!.fileName}</p>
+            <div className="justify-center items-center sm:mx-auto sm:w-3/4">
+                <button className="flex px-4 mb-5 justify-start border hover:border-black border-transparent dark:border-white shadow-sm  font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => setIsModalOpen(true)}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                    className={theme.includes("dark")  ? `#FFFFFF` : `#000000`}
+                         height="50" viewBox="0 -960 960 960" width="24">
+                        <path
+                            d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
+                    </svg>
+                    <p className="mt-1 p-2 dark:text-white">{internshipOffer!.file!.fileName}</p>
+                </button>
             </div>
 
-            {!isAlreadyReviewed && (
+
+
+            {internshipOffer.state! == "PENDING" && (
                 <div className="sm:w-3/4 mx-auto">
                     <textarea
                         name='comment'
@@ -162,30 +192,19 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                 </div>
             )}
 
-            {isAlreadyReviewed && (
+            {internshipOffer.state! !== "PENDING" && (
                 <div  className="sm:w-3/4 sm:mx-auto">
-                    <textarea
-                        name='comment'
-                        className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
-                        id="commentary_placeholder"
-                        placeholder={formStateReview.comment}
-                        disabled={true}
-                    >
-
-                    </textarea>
-                    <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
-                                            <span
-                                                className={
-                                                    formStateReview.state! == "PENDING" ?
-                                                        "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                        : formStateReview.state! === "DECLINED" ?
-                                                            "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite "
-                                                            : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite "}
-                                            >
-                                                {fields.table[formStateReview.state!]}
-                                            </span>
-                    </div>
+                    <p className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0">
+                        {formStateReview.comment!}
+                    </p>
+                    {
+                        internshipOffer.file.content !== "" && isModalOpen &&
+                        <div className="">
+                            <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={internshipOffer.file}/>
+                        </div>
+                    }
                 </div>
+
             )}
         </div>
     )
