@@ -5,7 +5,8 @@ import com.sap.ose.projetose.exception.BadSortingFieldException;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
-import com.sap.ose.projetose.repository.ContractRepository;
+import com.sap.ose.projetose.repository.*;
+import com.sap.ose.projetose.service.*;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,6 @@ public class ContractService {
     private final EmployeurService employeurService;
 
     private final TemplateContractService templateContractService;
-
     private final FileService fileService;
     private final InternOfferService internOfferService;
     private final EtudiantService studentService;

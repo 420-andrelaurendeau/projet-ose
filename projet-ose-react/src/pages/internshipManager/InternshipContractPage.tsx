@@ -8,6 +8,7 @@ import {pdfjs} from "react-pdf";
 import {faMagnifyingGlass, faPenNib} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ViewPDFModal from "../../components/common/Employer/offer/ViewPDFModal";
+import {useAuth} from "../../authentication/AuthContext";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -31,7 +32,7 @@ const InternshipContractPage: React.FC<any> = () => {
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.internshipAgreement." + i18n.language.slice(0, 2) + ".agreement");
-
+    const {userRole} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const fetchedintershipAggreementRef = useRef(false);
     const toasts = useToast();
@@ -55,7 +56,6 @@ const InternshipContractPage: React.FC<any> = () => {
                 fetchedintershipAggreementRef.current = false;
             }
         }
-
         if (!fetchedintershipAggreementRef.current)
             fetchintershipAggreement();
 
@@ -72,7 +72,7 @@ const InternshipContractPage: React.FC<any> = () => {
         size: "0",
     }
     const handleNavigation = () => {
-        navigate('/internshipmanager/home/internshipagreement/${id}/contract', { state: {contractId: id} });
+        navigate(`/${userRole}/home/internshipagreement/${id}/contract`, { state: {contractId: id} });
     };
 
 
@@ -150,12 +150,22 @@ const InternshipContractPage: React.FC<any> = () => {
                         <FontAwesomeIcon icon={faMagnifyingGlass} className="ml-2" size="xl"/>
                     </button>
                     {
-                        !intershipAggreement.signatureInternShipManager && (
+                        userRole === "internshipmanager" && !intershipAggreement.signatureInternShipManager && (
                             <button
                                 className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => handleNavigation()}>
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
+                            </button>
+                        )
+                    }
+                    {
+                        userRole === "student" && !intershipAggreement.signatureStudent && (
+                            <button
+                                className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                onClick={() => handleNavigation()}>
+                                <p className="text-xl">{fields.signPDF}</p>
+                                <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
                             </button>
                         )
                     }

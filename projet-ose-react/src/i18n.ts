@@ -8,6 +8,7 @@ import contractPage from "./components/common/Employer/contract/i18n/contract";
 import header from "./pages/shared/i18n/homeI18N";
 import studentOffer from "./components/common/student/i18n/Offer";
 import internshipAgreement from "./components/common/internshipManager/internshipsAgreement/agreement";
+import studentOffer from "./components/common/student/i18n/Offer";
 
 
 i18n

@@ -16,6 +16,7 @@ import EmployerOfferDetails from "../components/common/Employer/offer/EmployerOf
 import StudentOfferDetails from "../components/common/student/offers/StudentOfferDetails";
 import StudentContractPage from "../components/common/student/studentContractPage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
+import SignContract from "../components/common/preparedoc/SignContract";
 
 const StudentRoutes: React.FC = () => {
     return (
@@ -40,6 +41,7 @@ const StudentRoutes: React.FC = () => {
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
+                        <Route path="internshipagreement/:id/contract" element={<SignContract/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>
