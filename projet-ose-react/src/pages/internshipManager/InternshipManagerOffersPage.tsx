@@ -121,7 +121,7 @@ const InternshipManagerOffersPage = () => {
         setCurrentPage(0);
     };
 
-    const renderOffer = <InternshipManagerOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField}
+    const renderOffer = <InternshipManagerOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField} setOffers={setOffers}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
                                                  sortDirection={sortDirection}/>;
 
