@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,8 +27,12 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
     List<InternOffer> findByEmployeurId(int id);
 
 
-    Page<InternOffer> findAllBySession(Pageable pageable, String session);
-    Page<InternOffer>  findAllByStateAndSession(State state, String session,Pageable pageable);
+    @Query("SELECT i FROM InternOffer i WHERE (:session IS NULL OR :session = '') OR i.session = :session")
+    Page<InternOffer> findAllBySession(Pageable pageable, @Param("session") String session);
+
+    @Query("SELECT i FROM InternOffer i WHERE i.state = :state AND (:session IS NULL OR :session = '' OR i.session = :session)")
+    Page<InternOffer> findAllByStateAndSession(@Param("state") State state, @Param("session") String session, Pageable pageable);
+
 
 
     @Query("SELECT i.state, COUNT(i) FROM InternOffer i GROUP BY i.state")

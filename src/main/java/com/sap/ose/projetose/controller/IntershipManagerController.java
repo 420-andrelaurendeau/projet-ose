@@ -30,7 +30,7 @@ public class IntershipManagerController {
             @RequestParam(required = false, defaultValue = "id") String sortField,
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
             @RequestParam(required = false) String state,
-            @RequestParam(required = false, defaultValue = "Autumn2023") String session
+            @RequestParam(required = false) String session
     ) {
 
 
