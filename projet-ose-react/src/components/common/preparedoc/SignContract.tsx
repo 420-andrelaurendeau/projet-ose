@@ -40,7 +40,6 @@ function SignContract(props:any) {
   const [newContent, setNewContent] = useState<any>(false);
 
   useEffect(() => {
-    console.log(stage)
     setWidth(getWidth());
     window.addEventListener("resize", () => {
       setWidth(getWidth());
@@ -51,14 +50,11 @@ function SignContract(props:any) {
     setIsLoaded(false)
     const getContract = async () => {
       await employeurGetContractById(stage.contractId).then(async r => {
-        console.log(r.content)
         setContract(r)
         const pdfBytes = base64ToArrayBuffer(r.content);
-        console.log(pdfBytes)
         if (pdfBytes) {
           const blob = new Blob([new Uint8Array(pdfBytes)]);
           const URL: any = await blobToURL(blob);
-          console.log(URL)
           setPdf(URL);
         } else setPdf(null)
         setIsLoaded(true)
@@ -72,7 +68,6 @@ function SignContract(props:any) {
     urlToBase64(pdf!)
         .then(async (base64String) => {
           if (base64String) {
-            console.log("Chaîne Base64 obtenue :", base64String);
             contract.content = base64String.toString();
             await employeurSaveContract(contract).then(r => {
                 console.log(r)
@@ -137,7 +132,6 @@ function SignContract(props:any) {
                 }}
                 onLoadSuccess1={(data: any) => {
                   setPageDetails(data);
-                  console.log(data)
                 }}
                 onCancel={() => {
                   setSignatureURL(null);

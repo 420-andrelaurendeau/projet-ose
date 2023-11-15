@@ -21,7 +21,7 @@ public class Etudiant extends Utilisateur{
     @JoinColumn(name = "programme_id")
     private Programme programme;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<File> cv;
 

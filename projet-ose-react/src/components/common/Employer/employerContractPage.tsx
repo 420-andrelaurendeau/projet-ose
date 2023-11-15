@@ -22,23 +22,16 @@ export default function EmployerContractPage() {
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
-    const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement} = useProps();
+    const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
     const [file, setFile] = useState<any>({
         content: "",
     });
-    const [contract, setContract] = useState<any>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isLoadedContract, setIsLoadedContract] = useState(false);
 
     useEffect(() => {
-        stageAgreement.map(async (stage: any) => {
-            if (stage.contractId === 0) return;
-            await employeurGetContractById(stage.contractId).then(r => {
-                console.log(r)
-                setContract([...contract, r])
-            })
-        })
-    }, []);
 
+    })
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortAgreementField && sortAgreementDirection === "desc") {
             setAgreementSortField("");
@@ -50,26 +43,6 @@ export default function EmployerContractPage() {
             setAgreementSortDirection("asc");
         }
     };
-
-    const handleOfferClick = (id: number) => {
-        console.log(id)
-        navigate(`/employer/home/internshipagreement/${id}`);
-    };
-
-
-
-    function getContract(stage: any):any {
-
-        contract.map((cont: any) => {
-                    if (cont.id === stage.contractId) {
-                        return cont
-                    }
-                }
-            )
-        return null
-    }
-
-
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
@@ -186,30 +159,19 @@ export default function EmployerContractPage() {
                                     <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         {
                                             stage.stateEmployeur == "ACCEPTED" && stage.stateStudent == "ACCEPTED" ?
-                                            (
-                                            !contract.isEmpty &&
+                                            stage.contract ?
                                                 <div className="flex space-x-5 items-center justify-between">
                                                     <FontAwesomeIcon icon={faEye}
                                                                      className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => {
-                                                                         contract.map((file: any) => {
-                                                                             console.log(contract)
-                                                                                 console.log(file)
-                                                                                 console.log(stage)
-                                                                                 if (file.id === stage.contractId) {
-                                                                                     setFile({
-                                                                                         content: file.content
-                                                                                     });
-                                                                                     console.log(file)
-                                                                                 }
-                                                                             }
-                                                                         )
+                                                                         setFile({
+                                                                             content: stage.contract.content
+                                                                         });
                                                                          setIsModalOpen(true);
                                                                      }}
                                                     />
                                                     {
-                                                        getContract(stage) &&
-                                                        !getContract(stage).signatureEmployer &&
+                                                        !stage.contract.signatureEmployer ?
                                                         <NavLink
                                                             to="/employer/home/contract/sign"
                                                             state={stage}
@@ -218,12 +180,16 @@ export default function EmployerContractPage() {
                                                             <p>Sign</p>
                                                             <FontAwesomeIcon icon={faPenNib}/>
                                                         </NavLink>
+                                                            :
+                                                            <div className="flex dark:text-white">
+                                                                Vous avez signé
+                                                            </div>
                                                     }
 
-                                                </div>
+                                                </div>:
+                                                null
+                                                : stage.stateEmployeur == "PENDING" ?
 
-                                            ) : stage.stateEmployeur == "PENDING" ?
-                                                (
                                                     <div className="flex ">
                                                         <div className="flex justify-between gap-4">
                                                             <button
@@ -259,23 +225,23 @@ export default function EmployerContractPage() {
                                                         </div>
 
                                                     </div>
-                                                ): stage.stateEmployeur == "DECLINED"?
-                                                    (
+                                                : stage.stateEmployeur == "DECLINED"?
+
                                                         <div className="flex dark:text-white">
                                                             Vous avez refuser
                                                         </div>
-                                                    )
+
                                                     :stage.stateStudent == "DECLINED"?
-                                                    (
+
                                                         <div className="flex dark:text-white">
                                                             L'étudiant a refuser
                                                         </div>
-                                                    ):
-                                                    (
+                                                    :
+
                                                         <div className="flex dark:text-white">
                                                             En attente de l'étudiant
                                                         </div>
-                                                    )
+
                                     }
                                     </td>
                                 </tr>

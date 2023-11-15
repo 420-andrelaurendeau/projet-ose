@@ -6,6 +6,7 @@ import application from "./components/common/Employer/application/i18n/applicati
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
 import contractPage from "./components/common/Employer/contract/i18n/contract";
 import header from "./pages/shared/i18n/homeI18N";
+import studentOffer from "./components/common/student/i18n/Offer";
 
 
 i18n
@@ -28,6 +29,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        studentOffer,
                         contractPage,
                         header,
                         InternshipsAgreementPage: {
@@ -331,6 +333,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'No offers available'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Internship for students'
@@ -360,6 +366,10 @@ i18n
                                 apply: {
                                     name: 'apply',
                                     text: 'Apply',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'View',
                                 }
                             },
                             empty: {
@@ -696,6 +706,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        studentOffer,
                         header,
                         contractPage,
                         InternshipsAgreementPage: {
@@ -1007,6 +1018,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'Aucune offre disponible'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Stages pour étudiants'
@@ -1036,6 +1051,10 @@ i18n
                                 apply: {
                                     name: 'Apply',
                                     text: 'Postuler',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'Voir',
                                 }
                             },
                             empty: {

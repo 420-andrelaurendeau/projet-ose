@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {InternshipOffer} from "../../../../model/IntershipOffer";
 import {Program} from "../../../../model/Program";
@@ -17,6 +17,7 @@ import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
 import {useProps} from "../../../../pages/employer/EmployeurHomePage";
+import {ToastContext} from "../../../../hooks/context/ToastContext";
 
 
 const initialFormState: InternshipOffer = {
@@ -53,6 +54,8 @@ const InternshipOfferForm: React.FC<any> = () => {
     const [formState, setFormState] = useState<InternshipOffer>(initialFormState);
     const {setIsModalOpen, setOffers, user} = useProps()
     const [programmes, setProgrammes] = useState<Program[]>([]);
+    const toast = useContext(ToastContext);
+
 
     useEffect(() => {
         const loadProgrammes = async () => {
@@ -112,6 +115,7 @@ const InternshipOfferForm: React.FC<any> = () => {
             setFormState(initialFormState);
             setOffers((prevOffers: InternshipOffer[]) => ([...prevOffers, savedInterOfferJob]));
             setIsModalOpen(false);
+            toast.success("Offre ajoutée avec succès");
         } catch (error) {
             console.error('Erreur lors de la sauvegarde:', error);
         }
@@ -225,7 +229,7 @@ const InternshipOfferForm: React.FC<any> = () => {
                                 <label className="block text-xs font-bold dark:text-offwhite"
                                        htmlFor="categories_placeholder">{t('formField.InternshipOfferForm.program.text')}</label>
                                 <select name="programmeId"
-                                        className="mt-1 p-2 w-full border border-gray text-gray rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
+                                        className="mt-1 p-2 w-full border border-gray dark:text-white text-black rounded-md placeholder:text-xs dark:bg-softdark dark:border-0" /**onBlur={validateCategory}**/
                                         onChange={(e) => handleFormChange(e)} defaultValue={"default"}
                                         id="categories_placeholder">
                                     <option value="default"

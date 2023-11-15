@@ -29,7 +29,7 @@ public class InternshipCandidates {
     @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;
 
-    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<File> files;
 
     private State state;
@@ -53,5 +53,17 @@ public class InternshipCandidates {
         this.internOffer = internshipCandidates.getInternOffer();
         this.files = internshipCandidates.getFiles();
         this.state = internshipCandidates.getState();
+    }
+
+    @Override
+    public String toString() {
+        return "InternshipCandidates{" +
+                "id=" + id +
+                ", etudiant=" + etudiant +
+                ", studentCv=" + studentCv +
+                ", internOffer=" + internOffer.getId() +
+                ", files=" + files +
+                ", state=" + state +
+                '}';
     }
 }

@@ -22,7 +22,18 @@ interface Props {
     user: any;
     appliedOffers: AppliedOffers[];
     setAppliedOffers: React.Dispatch<React.SetStateAction<AppliedOffers[]>>;
-    offers: never[];
+    offers: any[];
+    setOffers: React.Dispatch<React.SetStateAction<any[]>>;
+    setSortField: React.Dispatch<React.SetStateAction<string>>;
+    setSortDirection: React.Dispatch<React.SetStateAction<string>>;
+    sortField: string;
+    sortDirection: string;
+    totalPages: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    handleChangeNumberElement: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onPageChange: (newPage: number) => void;
+    numberElementByPage: number;
+    page: number;
 }
 
 function StudentInternshipPage() {
@@ -33,6 +44,11 @@ function StudentInternshipPage() {
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
     const auth = useAuth();
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [sortField, setSortField] = useState("id");
+    const [sortDirection, setSortDirection] = useState("asc");
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const isLoading = useRef(false);
 
@@ -47,9 +63,6 @@ function StudentInternshipPage() {
                     getStudentAppliedOffers(resUser.id).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
-                    offresEtudiant().then((res) => {
-                        setOffers(res);
-                    });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
                         setInterviewsNb(res);
                         console.log(interviewsNb);
@@ -63,11 +76,47 @@ function StudentInternshipPage() {
         if (!isLoading.current) fetchUser();
     }, []);
 
+    useEffect(() => {
+        const fetchOffers = async () => {
+            isLoading.current = true;
+            offresEtudiant(setOffers, setTotalPages, {
+                    page: currentPage,
+                    size: numberElementByPage,
+                    sortField,
+                    sortDirection
+                }
+            );
+            console.log(offers);
+            isLoading.current = false;
+        };
+        fetchOffers();
+    }, [currentPage, numberElementByPage, sortField, sortDirection]);
+
+    const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentPage(0);
+        setNumberElementByPage(Number(event.target.value));
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
     const context = {
         user: user,
         appliedOffers: listStudentAppliedOffers,
         setAppliedOffers: setListStudentAppliedOffers,
         offers: offers,
+        setOffers: setOffers,
+        setSortField: setSortField,
+        setSortDirection: setSortDirection,
+        sortField: sortField,
+        sortDirection: sortDirection,
+        totalPages: totalPages,
+        setCurrentPage: setCurrentPage,
+        handleChangeNumberElement: handleChangePage,
+        onPageChange: handlePageChange,
+        numberElementByPage: numberElementByPage,
+        page: currentPage,
     };
 
     return (
