@@ -9,7 +9,6 @@ import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.OseService;
 import com.sap.ose.projetose.service.*;
 import com.sap.ose.projetose.service.auth.AuthenticationService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,13 +21,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@RequiredArgsConstructor
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
-    private final AuthenticationService authenticationService;
-    private final InternOfferService internOfferService;
-    private final InternshipCandidatesService internshipCandidatesService;
-    private final ProgrammeRepository programmeRepository;
+
+    @Autowired
+    private EtudiantService etudiantService;
+    @Autowired
+    private EmployeurService employeurService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private InternOfferService internOfferService;
+    @Autowired
+    private StageService stageService;
+    @Autowired
+    private InternshipmanagerService internshipmanagerService;
+    @Autowired
+    private InternshipCandidatesService internshipCandidatesService;
+    @Autowired
+    private InterviewService interviewService;
+    @Autowired
+    ProgrammeRepository programmeRepository;
 
     public static void main(String[] args) {
 		SpringApplication.run(ProjetOseApplication.class, args);
