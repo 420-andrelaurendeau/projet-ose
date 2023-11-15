@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {InterOfferJob} from "../model/IntershipOffer";
+import {InternshipOffer} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
@@ -16,16 +16,18 @@ const apiClient = axios.create({
     },
 });
 
-export const offresEtudiant = async () => {
-    try {
-        const response = await apiClient.get('interOfferJob/OffersEtudiant')
-        console.log(response.data)
-        return response.data
-    } catch (err) {
-        console.log('Error while getting interOfferJob/OffersEtudiant' + err)
-        throw err
-    }
-
+export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
+    const loadOffers = async () => {
+        try {
+            const data = await getInterOfferStudent(params);
+            console.log(data);
+            setOffers(data.content);
+            setTotalPages(data.totalPages);
+        } catch (error) {
+            console.error('Erreur lors du chargement des offres:', error);
+        }
+    };
+    loadOffers().then(r => console.log(r))
 }
 
 export const allStudentInternshipOffers = async (): Promise<any[]> => {
@@ -38,7 +40,7 @@ export const allStudentInternshipOffers = async (): Promise<any[]> => {
     }
 }
 
-export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number) => {
+export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: number) => {
     const interOfferJobDto = {
         title: interOfferJob.title,
         location: interOfferJob.location,
@@ -48,7 +50,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number
         endDate: interOfferJob.endDate,
         programmeId: interOfferJob.programmeId!,
         file: interOfferJob.file,
-        employeurId: id
+        employeurId: id,
     }
 
     try {
@@ -61,7 +63,7 @@ export const saveInterOfferJob = async (interOfferJob: InterOfferJob, id: number
     }
 };
 
-export const getAllPendingInterOfferJob = async (): Promise<InterOfferJob[]> => {
+export const getAllPendingInterOfferJob = async (): Promise<InternshipOffer[]> => {
     try {
         const response = await axios.create({
             baseURL: API_BASE_URL,
@@ -132,14 +134,27 @@ export const getInterOfferJob = async (email: string, params:{}) => {
 
 }
 
+export const getInterOfferStudent = async (params:{}) => {
+    try {
+        const response = await api.get('interOfferJob/OffersEtudiant',{
+            params: params
+        });
+        return response.data;
+
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres', error);
+        throw error;
+    }
+}
+
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/student/' + studentId + '/offersApplied');
         return response.data.map((item: any) => ({
-            appliedOffer: item.appliedOffer,
-            appliedFiles: item.appliedFiles
-        }));
+                appliedOffer: item.appliedOffer,
+                appliedFiles: item.appliedFiles
+            }));
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;
@@ -154,7 +169,7 @@ export function UpdateOffers(email: string, setOffers: any, setTotalPages:any, p
             setOffers(data.content);
             setTotalPages(data.totalPages);
         } catch (error) {
-            console.error('Erreur lors du chargement des programmes:', error);
+            console.error('Erreur lors du chargement des offres:', error);
         }
     };
     loadOffers().then(r => console.log(r))

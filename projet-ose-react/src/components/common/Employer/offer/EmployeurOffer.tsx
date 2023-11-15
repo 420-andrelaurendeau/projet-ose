@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useProps} from "../../../../pages/employer/EmployeurHomePage";
 import {Outlet, useNavigate} from "react-router-dom";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
 import ListItemPageSelector from "../../shared/paginationList/ListItemPageSelector";
 import React from "react";
 import ListItemCountSelector from "../../shared/paginationList/ListItemCountSelector";
@@ -19,7 +18,6 @@ export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const {offers,page , totalPages, onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
-    console.log(offers);
     const navigate = useNavigate();
 
     const handleSortClick = (newSortField: any) => {
@@ -123,7 +121,7 @@ export default function EmployeurOffer() {
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            { offers.map((offer:InterOfferJob) => (
+                            { offers.map((offer:any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">

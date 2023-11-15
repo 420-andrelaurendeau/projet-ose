@@ -7,6 +7,8 @@ import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-re
 import imgDark from '../../../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link, useNavigate} from "react-router-dom";
 
+//TODO change i18n is not using fields and instead t
+
 function StudentInscriptionForm(props: any) {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
@@ -106,7 +108,7 @@ function StudentInscriptionForm(props: any) {
 
 
     return (
-        <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"}>
+        <div className={"flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8"}>
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img
                     className={props.darkMode ? "mx-auto h-16 w-auto" : "mx-auto h-16 w-auto"}

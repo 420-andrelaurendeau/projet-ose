@@ -3,21 +3,23 @@ import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-r
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import {useTranslation} from "react-i18next";
-import {InterOfferJob} from "../../../../model/IntershipOffer";
+import {InternshipOffer} from "../../../../model/IntershipOffer";
 import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
 import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
+import ViewPDFModal from "./ViewPDFModal";
 
 
 const EmployerOfferDetails: React.FC<any> = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     const toast = useContext(ToastContext);
-    const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     const getProgrammeName = (): string => {
@@ -55,9 +57,11 @@ const EmployerOfferDetails: React.FC<any> = () => {
                 setinternshipOffer(response);
                 console.log(response);
                 const pdfBytes = base64ToArrayBuffer(response.file.content!)
-                const blob = new Blob([new Uint8Array(pdfBytes)]);
-                const URL:any = await blobToURL(blob);
-                setPdf(URL);
+                if (pdfBytes) {
+                    const blob = new Blob([new Uint8Array(pdfBytes)]);
+                    const URL: any = await blobToURL(blob);
+                    setPdf(URL);
+                }else setPdf(null)
 
             } catch (error) {
                 toast.error(fields.errorFetchOffer);
@@ -157,9 +161,13 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                             </div>
                                         </div>
                                         <div className="ml-4 flex-shrink-0 space-x-5">
-                                            <NavLink to={internshipOffer?.file?.fileName!} className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
+                                            <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                                onClick={() => {
+                                                    setIsModalOpen(true)
+                                                }}
+                                            >
                                                 {fields.view.text}
-                                            </NavLink>
+                                            </button>
                                             <button
                                                 type="button"
                                                 className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
@@ -177,9 +185,10 @@ const EmployerOfferDetails: React.FC<any> = () => {
                     </dl>
                 </div>
             </div>
-            <Outlet
-                context={context}
-            />
+            {
+                internshipOffer && isModalOpen &&
+                <ViewPDFModal ismodal={true} file={internshipOffer.file} setIsModalOpen={setIsModalOpen} />
+            }
         </div>
     )
 }

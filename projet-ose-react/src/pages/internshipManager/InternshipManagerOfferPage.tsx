@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
-import {InterOfferJob} from "../../model/IntershipOffer";
+import {InternshipOffer} from "../../model/IntershipOffer";
 import InternshipManagerOfferDetails from "../../components/common/internshipManager/offer/InternshipManagerOfferDetails";
 import InternshipManagerOfferReviewForm from "../../components/common/internshipManager/offer/InternshipManagerOfferReviewForm";
 import {ToastContext} from "../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
@@ -22,7 +22,7 @@ const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({er
 
 const InternshipManagerOfferPage: React.FC<any> = () => {
     const {id} = useParams();
-    const [internshipOffer, setinternshipOffer] = useState<InterOfferJob>();
+    const [internshipOffer, setinternshipOffer] = useState<InternshipOffer>();
     const [isUpdate, setIsUpdate] = useState(false);
 
     const [formStateOffer, setFormState] = React.useState({
@@ -156,7 +156,7 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
     return (<>
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
-            <div className={"dark:bg-dark pt-24 px-4 h-screen"}>
+            <div className={"dark:bg-dark pt-4 px-4 h-screen"}>
                 <InternshipManagerOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}

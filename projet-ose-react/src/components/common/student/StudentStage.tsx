@@ -30,9 +30,9 @@ function StudentStage() {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
-            getStudentAppliedOffers(res.id).then((res) => {
-                setAppliedOffers(res);
-            })
+                getStudentAppliedOffers(res.id).then((res) => {
+                    setAppliedOffers(res);
+                })
             }
         ).finally(() => {
             allStudentInternshipOffers().then((res) => {
@@ -40,8 +40,6 @@ function StudentStage() {
             })
 
         })
-
-
     }, []);
 
 
@@ -68,7 +66,7 @@ function StudentStage() {
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-20">
                     <div className="flex items-center justify-center">
-                        <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
+                        <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16"/>
                     </div>
                     <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                         {t("formField.EtudiantStage.titre.text")} {/* Use t() function */}
@@ -76,7 +74,8 @@ function StudentStage() {
                     <div className={"flex flex-col"}>
                         {offers.map((offer: any) => {
                             return (
-                                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id} aria-label={"stage"}>
+                                <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md" key={offer.id}
+                                     aria-label={"stage"}>
                                     <div
                                         className="bg-white dark:bg-dark py-8 px-4 shadow border border-gray dark:border-darkgray sm:rounded-lg sm:px-10"
                                     >
@@ -132,10 +131,9 @@ function StudentStage() {
                     </div>
                 </div>
             </div>
-            <Outlet context={useProps()} />
+            <Outlet context={useProps()}/>
         </div>
     );
-
 }
 
 export default StudentStage;

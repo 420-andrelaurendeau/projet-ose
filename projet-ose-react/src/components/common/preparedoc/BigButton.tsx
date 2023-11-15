@@ -47,7 +47,6 @@ export function BigButton({
     isHovered && !noHover ? `bg-${hoverBg}` : `bg-${initialBg}`,
     isHovered && !noHover && !disabled ? `text-${hoverColor}` : disabled ? 'text-gray-400' : `text-${initialColor}`,
     'rounded-lg',
-    small ? 'p-2' : 'p-6',
     small ? 'text-sm' : null,
     `border-${fillColor}`,
     !disabled ? 'cursor-pointer' : null,
@@ -60,7 +59,7 @@ export function BigButton({
     <div
       id={id}
       ref={hoverRef as any}
-      className={containerClasses.filter((c) => c).join(' ')}
+      className={containerClasses.filter((c) => c).join(' ') + " mx-4" }
       onClick={() => {
         if (!disabled) {
           onClick();
