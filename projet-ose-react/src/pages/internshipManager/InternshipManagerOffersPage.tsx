@@ -7,10 +7,15 @@ import {useTranslation} from "react-i18next";
 import InternshipManagerOffersDashboardHeader from "../../components/common/internshipManager/offers/InternshipManagerOffersDashboardHeader";
 import toast from "../../components/common/shared/toast/Toast";
 import {useToast} from "../../hooks/state/useToast";
+import {getAllOffers, getAllSeasons, getOffersBySeason} from "../../api/InterOfferJobAPI";
 
 
 const InternshipManagerOffersPage = () => {
     const [offers, setOffers] = useState([]);
+
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('all');
+
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -49,7 +54,8 @@ const InternshipManagerOffersPage = () => {
                     size: numberElementByPage,
                     state: offerState,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session:selectedOption,
                 });
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
@@ -121,6 +127,32 @@ const InternshipManagerOffersPage = () => {
         setCurrentPage(0);
     };
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+        if (selected === 'all') {
+            getAllOffers().then((res)=> {
+                setOffers(res);
+            })
+        } else {
+            console.log(selected)
+            getOffersBySeason(selected).then((res)=> {
+                console.log(res)
+                setOffers(res);
+            })
+        }
+    };
+
+    useEffect(() => {
+        getAllSeasons().then((res)=>{
+            setSeasons(res)
+        })
+    }, []);
+
+
     const renderOffer = <InternshipManagerOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField} setOffers={setOffers}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
                                                  sortDirection={sortDirection}/>;
@@ -151,6 +183,9 @@ const InternshipManagerOffersPage = () => {
                         onPageChange={handlePageChange}
                         numberElement={numberElementByPage}
                         handleChangeNumberElement={handleChangePage}
+                        selectedOption={selectedOption}
+                        handleOptionChange={handleOptionChange}
+                        seasons={seasons}
                     />
                 </div>
             </main>

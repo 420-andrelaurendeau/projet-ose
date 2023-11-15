@@ -148,7 +148,7 @@ public class InternOfferService {
     }
 
     @Transactional
-    public Page<InternOfferDto> getSortedByPage(int page, int size, Sort sort, String state) {
+    public Page<InternOfferDto> getSortedByPage(int page, int size, Sort sort, String state, String session) {
         try {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
@@ -252,7 +252,7 @@ public class InternOfferService {
     }
 
     public String getInternOfferByDates(LocalDate date){
-        int month = date.getMonthValue(); // Retrieve the month as an integer (1-12)
+        int month = date.getMonthValue();
 
         if (month >= 3 && month <= 5) {
             return "Spring"+date.getYear();

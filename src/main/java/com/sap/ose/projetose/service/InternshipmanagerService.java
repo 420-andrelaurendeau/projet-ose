@@ -128,12 +128,12 @@ public class InternshipmanagerService {
         }
     }
 
-    public Page<InternOfferDto> getSortedOffersByPage(int page, int size, String state, String sortField, String sortDirection) {
+    public Page<InternOfferDto> getSortedOffersByPage(int page, int size, String state, String sortField, String sortDirection, String session) {
         try {
 
             Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                     Sort.by(sortField).descending();
-            Page<InternOfferDto> pageOffersDto = internOfferService.getSortedByPage(page, size, sort, state);
+            Page<InternOfferDto> pageOffersDto = internOfferService.getSortedByPage(page, size, sort, state,session);
             return pageOffersDto;
         } catch (BadSortingFieldException e) {
             throw e;

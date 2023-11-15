@@ -8,11 +8,12 @@ interface GetInternshipOffersParams {
     state?: string;
     sortField: string;
     sortDirection: string;
+    session: string;
 }
 
-export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection }: GetInternshipOffersParams) => {
+export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection, session }: GetInternshipOffersParams) => {
     try {
-        const params: any = { page, size, sortField, sortDirection };
+        const params: any = { page, size, sortField, sortDirection, session };
 
         if (state) {
             params.state = state;
@@ -24,6 +25,7 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
              //'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         });
+        console.log("sel: "+session)
         console.log('response', response.data);
         return response.data;
     } catch (error) {
@@ -104,12 +106,13 @@ interface GetInternshipOffersParams {
     state?: string;
     sortField: string;
     sortDirection: string;
+    session: string
 }
 
-export const getStages = async ({ page, size, state, sortField, sortDirection }: GetInternshipOffersParams) => {
+export const getStages = async ({ page, size, state, sortField, sortDirection,session }: GetInternshipOffersParams) => {
 
     try {
-        const params: any = { page, size, sortField, sortDirection };
+        const params: any = { page, size, sortField, sortDirection,session };
 
         if (state) {
             params.state = state;
@@ -118,6 +121,7 @@ export const getStages = async ({ page, size, state, sortField, sortDirection }:
         const response = await api.get('stage/stages', {
             params: params,
         });
+        console.log('sel: '+session)
         console.log('response', response.data);
 
         return response.data;
