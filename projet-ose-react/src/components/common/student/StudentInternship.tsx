@@ -1,27 +1,38 @@
 import {useTranslation} from "react-i18next";
-import {Outlet} from "react-router-dom";
-import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
+import {Outlet, useNavigate, useOutletContext} from "react-router-dom";
+import {faArrowDownAZ, faArrowUpZA, faBriefcase, faEye} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
+import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
+import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
+import {FileEntity} from "../../../model/FileEntity";
+import {useToast} from "../../../hooks/state/useToast";
+import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
+
+interface Props {
+    user: any;
+    appliedOffers: AppliedOffers[];
+    setAppliedOffers: (appliedOffers: AppliedOffers[]) => void;
+}
 
 function StudentInternship() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
     let anError = false;
-    const [appliedOffers, setAppliedOffers] = useState<any[]>([])
-    const [offers, setOffers] = useState<any[]>([])
+    const {offers,setOffers, setAppliedOffers, appliedOffers, page, setSortField, onPageChange, setCurrentPage, numberElementByPage, setSortDirection, sortDirection, sortField, totalPages, handleChangeNumberElement} = useProps();
     const [cv,setCv] = useState<FileEntity>()
-    const {offers} = useProps();
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
+    const navigate = useNavigate();
+
     const toast = useToast();
 
     useEffect(() => {
@@ -39,11 +50,10 @@ function StudentInternship() {
                 console.log("Error fetching user data:", error)
             })
             }
-        ).finally(() => {
-            offresEtudiant().then((res) => {
-                setOffers(res);
-            })
-        })
+        );
+
+
+
     }, []);
 
 
@@ -52,7 +62,7 @@ function StudentInternship() {
         console.log(student);
         console.log(cv);
         if (cv == null) {
-            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
+            toast.error(fields.toast.ErrorNoCv)
         }
         else {
             saveStudentInternshipOffer(offer, student, cv).then(
@@ -62,15 +72,38 @@ function StudentInternship() {
                         appliedFiles: res.files
                     };
                     setAppliedOffers([...appliedOffers, appliedOffer]);
-                    toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
+                    toast.success(fields.toast.SuccessOfferApplication + " " + offer.title)
                 }
             ).catch(
                 err => {
                     console.log(err);
-                    toast.error(t("formField.EtudiantStage.toast.ErrorOfferApplication"))
+                    toast.error(fields.toast.ErrorOfferApplication)
                 }
             )
         }
+    }
+
+    const handleSortClick = (newSortField: any) => {
+        if (newSortField === sortField && sortDirection === "desc") {
+            setSortField("");
+            setSortDirection("");
+        } else if (newSortField === sortField) {
+            setSortDirection((prevDirection: String) => (prevDirection === "asc" ? "desc" : "asc"));
+        } else {
+            setSortField(newSortField);
+            setSortDirection("asc");
+        }
+        console.log(sortField === "employeurEntreprise" ? "visible" : "hidden")
+    };
+
+    const handleOfferClick = (id: number) => {
+        navigate(`/student/home/offers/${id}`, {state: context});
+    };
+
+    const context:Props = {
+        user: user,
+        appliedOffers: appliedOffers,
+        setAppliedOffers: setAppliedOffers,
     }
 
     return (
@@ -84,6 +117,12 @@ function StudentInternship() {
                         <h1 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {fields.titre.text}
                         </h1>
+                        <div className="pb-4">
+                            <ListItemCountSelector
+                                numberElement={numberElementByPage}
+                                handleChangeNumberElement={handleChangeNumberElement}
+                            />
+                        </div>
                         {
                             offers.length === 0 ?
                                 <div className="flex flex-col items-center justify-center">
@@ -98,9 +137,16 @@ function StudentInternship() {
                                         <tr>
                                             <th
                                                 scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                                                onClick={() => handleSortClick("title")}
                                             >
                                                 {fields.titre.text}
+                                                <div
+                                                    className={sortField === "title" ? "visible" : "hidden"}>
+                                                    <FontAwesomeIcon
+                                                        icon={sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                                        color={"White"} className={"ml-2"}/>
+                                                </div>
                                             </th>
                                             <th
                                                 scope="col"
@@ -111,26 +157,29 @@ function StudentInternship() {
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                            >
-                                                {fields.stage.description.text}
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                                onClick={() => handleSortClick("salaryByHour")}
                                             >
                                                 {fields.stage.salary.text}
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                                onClick={() => handleSortClick("startDate")}
                                             >
                                                 {fields.stage.startDate.text}
                                             </th>
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                                onClick={() => handleSortClick("endDate")}
                                             >
                                                 {fields.stage.endDate.text}
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            >
+                                                Entreprise
                                             </th>
                                             <th scope="col" className="relative px-6 py-3">
                                                 <span className="sr-only">{fields.stage.apply.text}</span>
@@ -150,9 +199,6 @@ function StudentInternship() {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="text-sm dark:text-offwhite">{offer.location}</div>
                                                 </td>
-                                                <td className="px-6 py-4 break-all">
-                                                    <div className="text-sm dark:text-offwhite">{offer.description}</div>
-                                                </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="text-sm dark:text-offwhite">{offer.salaryByHour}</div>
                                                 </td>
@@ -162,25 +208,31 @@ function StudentInternship() {
                                                 <td className="px-6 py-4 whitespace-nowrap">
                                                     <div className="text-sm dark:text-offwhite">{offer.endDate}</div>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                                <td className="px-6 py-4 break-all">
+                                                    <div className="text-sm dark:text-offwhite">{offer.employeurEntreprise}</div>
+                                                </td>
+                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <button
-                                                        onClick={() => applyOffer(offer, user)}
-                                                        type="submit"
-                                                        disabled={
-                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
-                                                        }
-                                                        className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
+                                                                     className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                                     onClick={() => applyOffer(offer, user, cv)}
+                                                                     type="submit"
+                                                                     disabled={
+                                                                         appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                                     }
                                                     >
                                                         {fields.stage.apply.text}
                                                     </button>
                                                 </td>
+
                                             </tr>
                                         ))}
                                         </tbody>
                                     </table>
                                 </div>
                         }
-
+                        <div className="pt-4">
+                            <ListItemPageSelector page={page} totalPages={totalPages} onPageChange={onPageChange}/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -193,3 +245,18 @@ function StudentInternship() {
 }
 
 export default StudentInternship;
+
+/*
+<td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                                    <button
+                                                        onClick={() => applyOffer(offer, user)}
+                                                        type="submit"
+                                                        disabled={
+                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                        }
+                                                        className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
+                                                    >
+                                                        {fields.stage.apply.text}
+                                                    </button>
+                                                </td>
+ */
