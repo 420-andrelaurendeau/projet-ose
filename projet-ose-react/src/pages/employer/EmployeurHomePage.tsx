@@ -256,7 +256,7 @@ function EmployeurHomePage() {
                             >
                                 <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{fields.contract.text}</p>
+                                    <p className="text-black dark:text-white">{fields.internship.text}</p>
                                 </div>
                             </NavLink>
                         </div>

@@ -334,6 +334,47 @@ i18n
                             }
 
                         },
+                        EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'No offers available'
+                            },
+                            titre: {
+                                name: 'titre',
+                                text: 'Internship for students'
+                            },
+                            stage: {
+                                name: 'stage',
+                                description: {
+                                    name: 'description',
+                                    text: 'Description :',
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Location :',
+                                },
+                                salary: {
+                                    name: 'salary',
+                                    text: 'Salary per hour :'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Start date :',
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    text: 'End date :',
+                                },
+                                apply: {
+                                    name: 'apply',
+                                    text: 'Apply',
+                                }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'No internship available'
+                            }
+                        },
                         Header: {
                             stage: {
                                 name: 'stage',
@@ -396,6 +437,10 @@ i18n
                                     name: 'contract',
                                     text: "Contract"
                                 },
+                                internship: {
+                                    name: "internship",
+                                    text: "Internship"
+                                },
                                 pendingOffer: {
                                     name: 'pendingOffer',
                                     text: "Pending offer"
@@ -452,6 +497,10 @@ i18n
                             contract: {
                                 name: 'totalContract',
                                 text: 'Contract'
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             offerTable: {
                                 titre: {
@@ -526,6 +575,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contract"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',
@@ -953,6 +1006,47 @@ i18n
                             }
 
                         },
+                        EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'Aucune offre disponible'
+                            },
+                            titre: {
+                                name: 'titre',
+                                text: 'Stages pour étudiants'
+                            },
+                            stage: {
+                                name: 'stage',
+                                description: {
+                                    name: 'description',
+                                    text: 'Description de l\'offre d\'emploi :',
+                                },
+                                location: {
+                                    name: 'location',
+                                    text: 'Lieu :',
+                                },
+                                salary: {
+                                    name: 'salary',
+                                    text: 'salaire par heure :'
+                                },
+                                startDate: {
+                                    name: 'startDate',
+                                    text: 'Date de début :',
+                                },
+                                endDate: {
+                                    name: 'endDate',
+                                    text: 'Date de fin :',
+                                },
+                                apply: {
+                                    name: 'Apply',
+                                    text: 'Postuler',
+                                }
+                            },
+                            empty: {
+                                name: 'empty',
+                                text: 'Aucun stage disponible'
+                            }
+                        },
                         Header: {
                             stage: {
                                 name: 'stage',
@@ -1016,6 +1110,10 @@ i18n
                                     name: 'contract',
                                     text: "Contrat"
                                 },
+                                internship: {
+                                    name: "internship",
+                                    text: "Stage"
+                                },
                                 pendingOffer: {
                                     name: 'pendingOffer',
                                     text: "Offre en attente"
@@ -1073,6 +1171,10 @@ i18n
                                 name: 'totalContract',
                                 text: 'Contrat'
                             },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
+                            },
                             offerTable: {
                                 titre: {
                                     name: 'titre',
@@ -1128,6 +1230,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contrat"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',

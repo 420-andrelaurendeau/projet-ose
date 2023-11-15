@@ -202,7 +202,7 @@ const ApplicationOffer: React.FC<any> = () => {
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-full md:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+                <div className="w-full md:w-10/12 lg:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
                 <div className=" py-8 flex justify-between">
                     <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
                 </div>

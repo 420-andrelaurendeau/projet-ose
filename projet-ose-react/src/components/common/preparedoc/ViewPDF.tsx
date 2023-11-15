@@ -6,10 +6,12 @@ import {Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 import DraggableSignature from "./DraggableSignature";
 import DraggableText from "./DraggableText";
+import {useAuth} from "../../../authentication/AuthContext";
 
 
 function ViewPDF(props: any) {
     const documentRef = useRef<any>(null);
+    const {userRole} = useAuth();
 
     function getOnSetText(text:any)  {
         return async () => {
@@ -49,6 +51,7 @@ function ViewPDF(props: any) {
 
                 const URL: any = await blobToURL(blob);
                 props.setPdf(URL);
+                props.setNewContent(true)
                 props.setPosition(null);
                 props.setTextInputVisible(false);
                 props.setSelectedOption("none")
@@ -76,7 +79,7 @@ function ViewPDF(props: any) {
                     const parentRect = parent.getBoundingClientRect();
 
                     offsetX = (childRect.left - parentRect.left);
-                    offsetY = height - (childRect.top - parentRect.top) - pngDims.height;
+                    offsetY = height - (childRect.top - parentRect.top) - pngDims.height -35;
                 }
 
                 const newOffsetX = offsetX * originalWidth / width;
@@ -94,22 +97,33 @@ function ViewPDF(props: any) {
                 if (props.autoDate) {
                     firstPage.drawText(
                         `Signed ${dayjs().format(
-                            "M/d/YYYY HH:mm:ss "
+                            "M/d/YYYY HH:mm "
                         )}`,
                         {
                             x: newOffsetX,
                             y: newOffsetY - 10,
-                            size: 14 * scale,
+                            size: 10 * scale,
                             color: rgb(0, 0, 0),
                         }
                     );
                 }
+
+                firstPage.drawText(
+                    `Signed by ${userRole === "student" ? props.contract.etudiantDto.prenom + ' ' + props.contract.etudiantDto.nom :userRole === "employer" ? props.contract.employeur.prenom + ' ' + props.contract.employeur.nom : "Gestionnaire de stage"}`,
+                    {
+                        x: newOffsetX,
+                        y: newOffsetY - 25,
+                        size: 10 * scale,
+                        color: rgb(0, 0, 0),
+                    }
+                );
 
                 const pdfBytes = await pdfDoc.save();
                 const blob = new Blob([new Uint8Array(pdfBytes)]);
 
                 const URL: any = await blobToURL(blob);
                 props.setPdf(URL);
+                props.setNewContent(true)
                 props.setPosition(null);
                 props.setSignatureURL(null);
             }
