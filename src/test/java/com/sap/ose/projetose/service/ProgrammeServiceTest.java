@@ -69,7 +69,7 @@ class ProgrammeServiceTest {
 
     @Test
     public void findById_UnknownError() {
-        when(programmeRepository.findById(anyLong())).thenThrow(new RuntimeException("Test exception"));
+        when(programmeRepository.findById(anyLong())).thenThrow(new RuntimeException("SignContract exception"));
 
         ServiceException result = assertThrows(ServiceException.class, () -> programmeService.findById(anyLong()));
         assertEquals("Erreur lors de la récupération du programme", result.getMessage());

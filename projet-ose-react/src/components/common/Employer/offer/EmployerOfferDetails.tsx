@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {NavLink, Outlet, useNavigate, useOutletContext, useParams} from "react-router-dom";
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import {useTranslation} from "react-i18next";
 import {InternshipOffer} from "../../../../model/IntershipOffer";
 import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
+import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
+import ViewPDFModal from "./ViewPDFModal";
 
 
 const EmployerOfferDetails: React.FC<any> = () => {
@@ -16,6 +18,8 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
+    const [pdf, setPdf] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     const getProgrammeName = (): string => {
@@ -52,6 +56,12 @@ const EmployerOfferDetails: React.FC<any> = () => {
                 const response = await getOfferById(parseInt(id!));
                 setinternshipOffer(response);
                 console.log(response);
+                const pdfBytes = base64ToArrayBuffer(response.file.content!)
+                if (pdfBytes) {
+                    const blob = new Blob([new Uint8Array(pdfBytes)]);
+                    const URL: any = await blobToURL(blob);
+                    setPdf(URL);
+                }else setPdf(null)
 
             } catch (error) {
                 toast.error(fields.errorFetchOffer);
@@ -62,6 +72,11 @@ const EmployerOfferDetails: React.FC<any> = () => {
         if (!fetchedOfferRef.current) loadOffer();
 
     }, []);
+
+    const context = {
+        file: internshipOffer?.file,
+        size: getFileSize(),
+    }
 
     return (
         <div className="pb-12">
@@ -98,67 +113,92 @@ const EmployerOfferDetails: React.FC<any> = () => {
                     </div>
                 </div>
             </div>
-        <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
-            <div className="px-4 sm:px-0">
-                <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
-                    {fields.title.text}
-                </h3>
-                <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
-                    {fields.subtitle.text}
-                </p>
-            </div>
-            <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
-                <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.jobTitle.text}</dt>
-                        <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.title}</dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.location.text}</dt>
-                        <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.location}</dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.program.text}</dt>
-                        <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{getProgrammeName()}</dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.salary.text}</dt>
-                        <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">${internshipOffer?.salaryByHour}</dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">{fields.description.text}</dt>
-                        <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.description}</dd>
-                    </div>
-                    <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt className="text-sm font-medium leading-6 dark:text-white">
-                            {fields.attachments.text}
-                        </dt>
-                        <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
-                                <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                    <div className="flex w-0 flex-1 items-center">
-                                        <div className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                        <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                            <span className="truncate font-medium dark:text-white ">{internshipOffer?.file?.fileName}</span>
-                                            <span className="flex-shrink-0 text-neutral-500 dark:text-neutral-300">{
-                                                getFileSize()
-                                            }</span>
+            <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
+                <div className="px-4 sm:px-0">
+                    <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
+                        {fields.title.text}
+                    </h3>
+                    <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
+                        {fields.subtitle.text}
+                    </p>
+                </div>
+                <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
+                    <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.jobTitle.text}</dt>
+                            <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.title}</dd>
+                        </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.location.text}</dt>
+                            <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.location}</dd>
+                        </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.program.text}</dt>
+                            <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{getProgrammeName()}</dd>
+                        </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.salary.text}</dt>
+                            <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">${internshipOffer?.salaryByHour}</dd>
+                        </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.description.text}</dt>
+                            <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.description}</dd>
+                        </div>
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {fields.attachments.text}
+                            </dt>
+                            <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
+                                    <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                        <div className="flex w-0 flex-1 items-center">
+                                            <div className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                            <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                                                <span className="truncate font-medium dark:text-white ">{internshipOffer?.file?.fileName}</span>
+                                                <span className="flex-shrink-0 text-neutral-500 dark:text-neutral-300">{
+                                                    getFileSize()
+                                                }</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="ml-4 flex-shrink-0">
-                                        <a href="#" className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
-                                            {fields.download.text}
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </dd>
-                    </div>
-                </dl>
+                                        <div className="ml-4 flex-shrink-0 space-x-5">
+                                            <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                                onClick={() => {
+                                                    setIsModalOpen(true)
+                                                }}
+                                            >
+                                                {fields.view.text}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                                onClick={() => {
+                                                    downloadURI( pdf, internshipOffer?.file?.fileName!)
+                                                }}
+                                            >
+                                                {fields.download.text}
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
-        </div>
+            {
+                internshipOffer && isModalOpen &&
+                <ViewPDFModal ismodal={true} file={internshipOffer.file} setIsModalOpen={setIsModalOpen} />
+            }
         </div>
     )
 }
 
+interface Props {
+    file: any;
+    size: string;
+}
+
+export function useProps(){
+    return useOutletContext<Props>();
+}
 export default EmployerOfferDetails;

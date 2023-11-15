@@ -4,6 +4,8 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import CV from './components/common/student/i18n/CV';
 import application from "./components/common/Employer/application/i18n/application";
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
+import contractPage from "./components/common/Employer/contract/i18n/contract";
+import header from "./pages/shared/i18n/homeI18N";
 
 
 i18n
@@ -26,6 +28,32 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        contractPage,
+                        header,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Accepted",
+                                declinedInternshipsAgreement: "Declined",
+                                pendingInternshipsAgreement: "Pending",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
+                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
+                            },
+                            title: "Internships agreement",
+                            internshipsAgreement: {
+                                title: "Title",
+                                enterprise: "Enterprise",
+                                student: "Student",
+                                statut: "Status",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total offers",
@@ -355,11 +383,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Upload your CV',
-                            },
-                            interview : {
-                                name: 'Interview',
-                                text: 'Interview',
+                                text: 'Your CV',
                             },
                             sidebar: {
                                 stage: {
@@ -370,6 +394,10 @@ i18n
                                     name: 'offre applique',
                                     text: "Applied offer"
                                 }
+                            },
+                            interview : {
+                                name: 'Interview',
+                                text: 'Interview',
                             },
                             profilMenu: {
                                 signOut: {
@@ -656,6 +684,32 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        header,
+                        contractPage,
+                        InternshipsAgreementPage: {
+                            header:{
+                                totalInternshipsAgreement: "Total",
+                                acceptedInternshipsAgreement: "Acceptées",
+                                declinedInternshipsAgreement: "Refusées",
+                                pendingInternshipsAgreement: "Attente",
+                            },
+                            toast: {
+                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
+                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
+                            },
+                            title: "Ententes de stage",
+                            internshipsAgreement: {
+                                title: "Titre",
+                                enterprise: "Entreprise",
+                                student: "Étudiant",
+                                statut: "Statut",
+                                status: {
+                                    accepted: "Accepted",
+                                    declined: "Declined",
+                                    pending: "Pending",
+                                }
+                            },
+                        },
                         InternshipOfferList : {
                             header: {
                                 total: "Total des offres",
@@ -993,7 +1047,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Televerser votre CV',
+                                text: 'Votre CV',
                             },
                             interview : {
                                 name: 'Interview',

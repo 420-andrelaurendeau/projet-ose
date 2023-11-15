@@ -9,6 +9,7 @@ import {getUser} from "../../../../api/UtilisateurAPI";
 import {saveCvStudent, fetchAllStudentCvs, setDefaultCv, fetchDefaultCvByStudentId} from "../../../../api/StudentApi";
 import {useToast} from "../../../../hooks/state/useToast";
 import {ReviewFile} from "../../../../model/ReviewFile";
+import CVStudant from "../CVStudant";
 import {User} from "../../../../model/User";
 
 
@@ -21,14 +22,20 @@ function UploadCVForm(): ReactElement {
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
     const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
     const auth = useAuth();
-
+    const [cvs, setCvs] = useState<ReviewFile[]>([]);
+    const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
+    const [changeCV, setChangeCV] = useState<boolean>(true)
+    const [isLoaded, setIsLoaded] = useState<boolean>(false)
     const [errors, setErrors] = useState<{
         file?: string
     }>({});
 
     const {t} = useTranslation();
 
+
+
     useEffect(() => {
+        setIsLoaded(false)
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
             console.log(user)
@@ -40,12 +47,10 @@ function UploadCVForm(): ReactElement {
             });
             fetchDefaultCvByStudentId(res['id']).then((res) => {
                 console.log(res);
-                setCvDefault(res);
+            setFiles(res.cv ? [res.cv] : [])
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
             });
-            cvs.sort((a, b) => {
-                if (a.id === cvDefault.id) {
                     return -1;
                 }
                 else if (b.id === cvDefault.id) {
@@ -194,50 +199,55 @@ function UploadCVForm(): ReactElement {
     }
 
     return (
-        <div className={"flex flex-col items-center justify-center"}>
-            <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
-                <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
-                <h2></h2>
-                <br/>
-                <form className={"flex flex-col items-center justify-center"}>
-                    <div
-                        className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5 px-9">
-                        <input
-                            aria-label="file"
-                            name='file'
-                            type="file"
-                            className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
-                            onChange={(e) => {
-                                handleFileChange(e);
-                            }}
-                        />
-                        <div className="flex flex-col items-center justify-center py-10 text-center">
-                            <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
-                            <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText') + " "}
-                                <span
-                                    className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
-                            </p>
+
+        user ?
+        isLoaded &&
+            user.cv != null && !changeCV ?
+             <CVStudant user={user} file={files[0]} setChangeCV={setChangeCV}/>:
+            <div className={"flex flex-col items-center justify-center"}>
+                <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
+                    <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
+                    <h2></h2>
+                    <br/>
+                    <form className={"flex flex-col items-center justify-center"}>
+                        <div
+                            className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5 px-9">
+                            <input
+                                aria-label="file"
+                                name='file'
+                                type="file"
+                                className="absolute inset-0 z-50 m-0 p-0 w-full h-full outline-none opacity-0 cursor-pointer"
+                                onChange={(e) => {
+                                    handleFileChange(e);
+                                }}
+                            />
+                            <div className="flex flex-col items-center justify-center py-10 text-center">
+                                <p className="mb-2 dark:text-gray">{t('formField.InternshipOfferForm.file.text')}</p>
+                                <p className="text-xs dark:text-gray">{t('formField.InternshipOfferForm.file.smallText') + " "}
+                                    <span
+                                        className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
+                                </p>
+                            </div>
+
+                            {renderError(errors.file)}
                         </div>
 
-                        {renderError(errors.file)}
-                    </div>
-
-                    <br/>
-                    <div className={"flex flex-col items-center justify-center w-full"}>
-                        <div className={"flex flex-col items-center justify-around w-full "}>
-                            {files.map((file, i) => {
-                                return <div key={i}>
-                                    {file["fileName"]}
-                                </div>
-                            })}
+                        <br/>
+                        <div className={"flex flex-col items-center justify-center w-full"}>
+                            <div className={"flex flex-col items-center justify-around w-full "}>
+                                {files.map((file, i) => {
+                                    return <div key={i}>
+                                        {file["fileName"]}
+                                    </div>
+                                })}
+                            </div>
                         </div>
-                    </div>
-                    <br/>
-                    <div aria-label="upload_button"
-                         className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`}
-                         onClick={handleSubmit}>
-                        {t('cv.upload_button')} {renderUploadStatus()}
-                    </div>
+                        <br/>
+                        <div aria-label="upload_button"
+                             className={` text-white p-1 w-2/4 text-center ${files.length == 0 ? "cursor-default bg-gray" : "cursor-pointer bg-blue"}`}
+                             onClick={handleSubmit}>
+                            {t('cv.upload_button')} {renderUploadStatus()}
+                        </div>
                 </form>
             </div>
             {cvs.map((file) =>

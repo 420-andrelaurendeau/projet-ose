@@ -4,9 +4,7 @@ import com.sap.ose.projetose.dto.InternshipmanagerDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.Internshipmanager;
 import com.sap.ose.projetose.modeles.Programme;
-import com.sap.ose.projetose.repository.InternOfferRepository;
-import com.sap.ose.projetose.repository.InternshipmanagerRepository;
-import com.sap.ose.projetose.repository.ProgrammeRepository;
+import com.sap.ose.projetose.repository.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +43,14 @@ public class InternshipmanagerServiceTest {
     private ProgrammeService programmeService;
     @MockBean
     private ProgrammeRepository programmeRepository;
+    @MockBean
+    private FileEntityRepository fileEntityRepository;
+    @MockBean
+    private FileService fileService;
+    @MockBean
+    private EtudiantService etudiantService;
+    @MockBean
+    private EtudiantRepository etudiantRepository;
 
     @BeforeEach
     public void setUp() {

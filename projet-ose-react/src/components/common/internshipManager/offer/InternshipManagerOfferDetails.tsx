@@ -15,10 +15,10 @@ interface GSOfferDetailsProps {
 }
 
 const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
-                                                           handleFormChange,
-                                                           internshipOffer,
-                                                           renderError
-                                                       }) => {
+                                                                          handleFormChange,
+                                                                          internshipOffer,
+                                                                          renderError
+                                                                      }) => {
 
     const navigate = useNavigate();
     const {t} = useTranslation();
@@ -28,7 +28,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InternshipOfferList");
     const [formStateReview, setFormStateReview] = React.useState({
-       comment: "", state: ""
+        comment: "", state: ""
     });
     const toast = useToast();
 
@@ -64,7 +64,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     return (
         <div className="">
             <button
-                className="fixed z-10 top-20 left-4 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
+                className="fixed z-10 top-20 left-2 p-2 bg-blue dark:bg-orange rounded-full shadow-lg text-offwhite hover:font-bold"
                 onClick={() => navigate("/internshipmanager/home/offers")}
             >
                 <Icon className="w-5 h-5 fill-current hover:font-bold"/>
@@ -170,7 +170,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         id="commentary_placeholder"
                         placeholder={formStateReview.comment}
                         disabled={true}
-                        >
+                    >
 
                     </textarea>
                     <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
@@ -193,3 +193,5 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
 }
 
 export default InternshipManagerOfferDetails;
+
+

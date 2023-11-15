@@ -30,6 +30,7 @@ function StudentInternship() {
     useEffect(() => {
         if (!isloading.current)
         getUser(auth.userEmail!).then((res) => {
+            console.log(res);
                 setUser(res);
             getStudentAppliedOffers(res.id).then((res) => {
                 setAppliedOffers(res);

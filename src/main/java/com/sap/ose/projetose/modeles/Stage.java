@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,14 +26,19 @@ public class Stage {
     @JoinColumn(name = "Internshipoffer_id")
     private InternOffer offer;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
+
     private State stateStudent;
     private State stateEmployeur;
 
 
-    public Stage(Etudiant student, InternOffer offer, State stateStudent, State stateEmployeur) {
+    public Stage(Etudiant student, InternOffer offer, State stateStudent, State stateEmployeur, Contract contract) {
         this.student = student;
         this.offer = offer;
         this.stateStudent = stateStudent;
         this.stateEmployeur = stateEmployeur;
+        this.contract = contract;
     }
 }
