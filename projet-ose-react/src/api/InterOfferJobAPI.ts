@@ -210,9 +210,41 @@ export async function getOfferById(id: number) {
     }
 }
 
+export async function getOfferApprovedSeasons(){
+    try{
+        const response = await api.get('interOfferJob/getOfferApprovedSeasons');
+        console.log(response.data)
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
 export async function getAllSeasons(){
     try{
         const response = await api.get('interOfferJob/getAllPossibleSeasons');
+        console.log(response.data)
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getAllOffers(){
+    try{
+        const response = await api.get('interOfferJob/getAllOffers');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getOffersBySeason(session: string){
+    try{
+        const response = await api.get('interOfferJob/'+session+'/all');
         return response.data;
     }catch (error){
         console.error('Erreur lors de la recherche de saisons')

@@ -1,16 +1,22 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {InternshipOffer} from "../../../../model/IntershipOffer";
 import InternshipManagerOfferPage from "../../../../pages/internshipManager/InternshipManagerOfferPage";
 import useModal from "../../../../hooks/useModal";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {
+    allStudentInternshipOffers,
+    allStudentInternshipOffersBySeason,
+    getAllOffers, getAllSeasons, getOffersBySeason
+} from "../../../../api/InterOfferJobAPI";
 
 
 export default function InternshipManagerOffers(props: any) {
     const [offer, setOffer] = useState<InternshipOffer>();
-
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('all');
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 
@@ -33,9 +39,44 @@ export default function InternshipManagerOffers(props: any) {
         console.log(props.sortField === "employeurEntreprise" ? "visible" : "hidden")
     };
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+        if (selected === 'all') {
+            getAllOffers().then((res)=> {
+                props.setOffers(res);
+            })
+        } else {
+            console.log(selected)
+            getOffersBySeason(selected).then((res)=> {
+                console.log(res)
+                props.setOffers(res);
+            })
+        }
+    };
+
+    useEffect(() => {
+        getAllSeasons().then((res)=>{
+            setSeasons(res)
+        })
+    }, []);
 
     return (
         <div className="pt-4 pb-4">
+            <div>
+                <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                    <option value="all">Tout</option>
+                    {seasons.map((season: string, index: number) => (
+                        <option key={index} value={season}>
+                            {season}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <div className="">
                 <div className="bg-blue rounded dark:bg-orange">
                     <div className="flex p-3 items-center">

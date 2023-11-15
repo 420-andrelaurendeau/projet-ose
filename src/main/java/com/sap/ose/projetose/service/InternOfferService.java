@@ -268,8 +268,12 @@ public class InternOfferService {
 
     }
 
-    public List<String> getAllSeasons() {
-        return offerJobRepository.getAllSeasons();
+    public List<String> getAllOfferSeasons() {
+        return offerJobRepository.getAllOfferSeasons();
+    }
+
+    public List<String> getOfferApprovedSeasons(){
+        return offerJobRepository.getOfferApprovedSeasons();
     }
 
     @Transactional
@@ -316,5 +320,27 @@ public class InternOfferService {
         }
 
         return internOfferDtoList;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getAllOffers() {
+        List<InternOffer> internOffers = offerJobRepository.findAll();
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer i : internOffers){
+            internOfferDtos.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtos;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getOfferBySeason(String session) {
+        List<InternOffer> internOffers = offerJobRepository.findOfferBySeason(session);
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer i : internOffers){
+            internOfferDtos.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtos;
     }
 }

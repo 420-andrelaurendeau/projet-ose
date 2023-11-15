@@ -99,9 +99,28 @@ public class InternOfferController {
     }
 
     @GetMapping("/getAllPossibleSeasons")
-    public ResponseEntity<List<String>> getAllSeasons(){
-        List<String> seasons = offerJobService.getAllSeasons();
+    public ResponseEntity<List<String>> getAllOfferSeasons(){
+        List<String> seasons = offerJobService.getAllOfferSeasons();
         return new ResponseEntity<>(seasons, HttpStatus.OK);
     }
+
+    @GetMapping("/getOfferApprovedSeasons")
+    public ResponseEntity<List<String>> getOfferApprovedSeasons(){
+        List<String> seasons = offerJobService.getOfferApprovedSeasons();
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllOffers")
+    public ResponseEntity<List<InternOfferDto>> getAllOffers(){
+        List<InternOfferDto> internOfferDtos = offerJobService.getAllOffers();
+        return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{session}/all")
+    public ResponseEntity<List<InternOfferDto>> getAllOffers(@PathVariable String session){
+        List<InternOfferDto> seasons = offerJobService.getOfferBySeason(session);
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
 }
 

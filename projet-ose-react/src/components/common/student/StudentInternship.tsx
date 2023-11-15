@@ -11,7 +11,7 @@ import {
     allStudentInternshipOffersBySeason,
     getStudentAppliedOffers,
     getAllSeasons,
-    allStudentInternshipOffers,
+    allStudentInternshipOffers, getOfferApprovedSeasons,
 } from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
@@ -22,7 +22,7 @@ function StudentInternship() {
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('all'); // State to store the selected option
+    const [selectedOption, setSelectedOption] = useState('all');
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     const isloading = useRef(false);
@@ -35,7 +35,7 @@ function StudentInternship() {
                 setAppliedOffers(res);
             })
 
-            getAllSeasons().then((res)=>{
+            getOfferApprovedSeasons().then((res)=>{
               setSeasons(res);
             })
             }
