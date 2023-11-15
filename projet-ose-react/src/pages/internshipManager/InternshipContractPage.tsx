@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {NavLink, useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import {getContractById, signDocument} from "../../api/InternshipManagerAPI";
 import {ReactComponent as Icon} from '../../assets/icons/back_icon.svg';
@@ -23,10 +23,11 @@ interface InternshipAgreementPageProps {
 
 }
 
-const InternshipAgreementPage: React.FC<any> = () => {
+const InternshipContractPage: React.FC<any> = () => {
     const {id} = useParams();
     const [intershipAggreement, setintershipAggreement] = useState<any>();
 
+    const location = useLocation();
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.internshipAgreement." + i18n.language.slice(0, 2) + ".agreement");
@@ -50,12 +51,13 @@ const InternshipAgreementPage: React.FC<any> = () => {
                 );
             } catch (error) {
                 toasts.error("Une erreur est survenue lors du chargement de l'offre");
+            } finally {
+                fetchedintershipAggreementRef.current = false;
             }
         }
 
         if (!fetchedintershipAggreementRef.current)
             fetchintershipAggreement();
-
 
     }, []);
 
@@ -69,30 +71,9 @@ const InternshipAgreementPage: React.FC<any> = () => {
         },
         size: "0",
     }
-
-    async function signContract(pdf: any) {
-        let form = {
-            id: id,
-            idEmployer: intershipAggreement.employeur.id,
-            idStudent: intershipAggreement.etudiantDto.id,
-            idInternOffer: intershipAggreement.internOfferDto.id,
-            signatureInternShipManager: true,
-            signatureEmployer: false,
-            signatureStudent: false,
-            contract: pdf
-        }
-
-        try {
-            await signDocument(form).then(
-                () => {
-                    toasts.success("Le contrat a été signé avec succès");
-                    fetchedintershipAggreementRef.current = false;
-                }
-            );
-        } catch (error) {
-            toasts.error("Une erreur est survenue lors de la signature du contrat");
-        }
-    }
+    const handleNavigation = () => {
+        navigate('/internshipmanager/home/internshipagreement/${id}/contract', { state: {contractId: id} });
+    };
 
 
     return (<>
@@ -161,7 +142,7 @@ const InternshipAgreementPage: React.FC<any> = () => {
                     {intershipAggreement.internOfferDto.description}
                 </div>
 
-                <div className="block sm:flex w-1/2 sm:w-1/5 mx-auto pt-10 gap-x-4">
+                <div className="block sm:flex mx-auto w-fit pt-10 gap-x-4">
                     <button
                         className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                         onClick={() => setIsModalOpen(true)}>
@@ -169,14 +150,12 @@ const InternshipAgreementPage: React.FC<any> = () => {
                         <FontAwesomeIcon icon={faMagnifyingGlass} className="ml-2" size="xl"/>
                     </button>
                     {
-                        intershipAggreement.signatureInternShipManager == false && (
+                        !intershipAggreement.signatureInternShipManager && (
                             <button
-                                className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500">
-                                <NavLink to={""}
-                                         className="flex items-center font-medium dark:text-offwhite dark:hover:text-amber-800">
+                                className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                onClick={() => handleNavigation()}>
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
-                                </NavLink>
                             </button>
                         )
                     }
@@ -194,6 +173,6 @@ const InternshipAgreementPage: React.FC<any> = () => {
 }
 
 
-export default InternshipAgreementPage
+export default InternshipContractPage
 
 

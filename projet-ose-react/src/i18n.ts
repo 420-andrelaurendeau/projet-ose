@@ -53,6 +53,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refused by the student",
+                                    employer: "Refused by the employer",
                                 }
                             },
                         },
@@ -721,6 +725,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refuser par l'étudiant",
+                                    employer: "Refuser par l'employeur",
                                 }
                             },
                         },

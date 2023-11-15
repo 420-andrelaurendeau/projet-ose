@@ -13,7 +13,7 @@ import CVStudant from "../components/common/student/CVStudant";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
 import {pdfjs} from "react-pdf/dist/esm";
 import StudentContractPage from "../components/common/student/studentContractPage";
-import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
+import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 
 const StudentRoutes: React.FC = () => {
     return (
@@ -30,7 +30,7 @@ const StudentRoutes: React.FC = () => {
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="stage" element={<StudentStagePage />}/>
                         <Route path="contract" element={<StudentContractPage />}/>
-                        <Route path="internshipagreement/:id" element={<InternshipAgreementPage/>}>
+                        <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
                     </Route>

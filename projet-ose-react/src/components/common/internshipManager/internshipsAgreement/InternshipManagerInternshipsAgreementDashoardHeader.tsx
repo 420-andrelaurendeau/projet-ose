@@ -12,15 +12,13 @@ interface InternshipsAgreementDashoardHeaderProps {
 }
 
 const InternshipManagerInternshipsAgreementDashoardHeader: React.FC<InternshipsAgreementDashoardHeaderProps> = ({
-                                                                                            internshipsAgreementByState,
-                                                                                            fields,
-                                                                                            totalOffers,
-                                                                                            totalDeclined,
-                                                                                            totalApprouved,
-                                                                                            totalPending
-                                                                                        }) => {
-
-
+                                                                                                                    internshipsAgreementByState,
+                                                                                                                    fields,
+                                                                                                                    totalOffers,
+                                                                                                                    totalDeclined,
+                                                                                                                    totalApprouved,
+                                                                                                                    totalPending
+                                                                                                                }) => {
     return (
         <div className="lg:mx-auto xxl:w-2/3 mm:mx-auto px-2 pb-4">
             <div className="flex w-full justify-center gap-x-4">
@@ -31,7 +29,8 @@ const InternshipManagerInternshipsAgreementDashoardHeader: React.FC<InternshipsA
                             onClick={() => internshipsAgreementByState(undefined)}
                         >
                             <div className="flex space-x-2 items-center h-16 w-auto">
-                                <div className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                                <div
+                                    className="bg-blue dark:bg-orange rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
                                     <FontAwesomeIcon icon={faFileLines} color="white" size="xl"/>
                                 </div>
 
