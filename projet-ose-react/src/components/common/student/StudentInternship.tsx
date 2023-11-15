@@ -39,10 +39,8 @@ function StudentInternship() {
                 console.log("Error fetching user data:", error)
             })
             }
-        ).finally(() => {
-            offresEtudiant().then((res) => {
-                setOffers(res);
-            })
+        ).finally(async () => {
+            await offresEtudiant(setOffers, setAppliedOffers, {});
         })
     }, []);
 
