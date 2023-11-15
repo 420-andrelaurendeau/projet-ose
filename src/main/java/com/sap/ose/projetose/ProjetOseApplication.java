@@ -32,12 +32,11 @@ import java.util.List;
 public class ProjetOseApplication implements CommandLineRunner {
     private final AuthenticationService authenticationService;
     private final InternOfferService internOfferService;
-    private InternshipmanagerService internshipmanagerService;
-    private InternshipCandidatesService internshipCandidatesService;
-    private InterviewService interviewService;
+    private final InternshipCandidatesService internshipCandidatesService;
     private final ProgrammeRepository programmeRepository;
     private final TemplateContractService templateContractService;
-	
+    private final StageService stageService;
+
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }

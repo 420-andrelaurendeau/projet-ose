@@ -19,14 +19,14 @@ import java.util.Objects;
 public class EtudiantDto extends UtilisateurDto {
     private String matricule;
     private long programme_id;
-    private File cv;
+    private List<Long> cv;
     private List<Long> internships_id;
 
-    public EtudiantDto(String nom, String prenom, String phone, String email, String matricule, long programme, File cv, List<Long> internships_id) {
+    public EtudiantDto(String nom, String prenom, String phone, String email, String matricule, long programme, List<File> cv, List<Long> internships_id) {
         super(nom, prenom, phone, email);
         this.matricule = matricule;
         this.programme_id = programme;
-        this.cv = cv;
+        this.cv = cv.stream().map(File::getId).toList();
         this.internships_id = internships_id;
     }
 

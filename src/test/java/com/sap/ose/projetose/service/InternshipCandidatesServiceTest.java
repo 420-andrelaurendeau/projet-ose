@@ -31,6 +31,7 @@ import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.repository.*;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new File());
+        etudiant.setCv(List.of(new File()));
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -127,7 +128,7 @@ class InternshipCandidatesServiceTest {
         programme3.setNom("Nom");
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new File());
+        etudiant2.setCv(List.of(new File()));
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -140,7 +141,7 @@ class InternshipCandidatesServiceTest {
         etudiant2.setRole(Role.employer);
 
         Etudiant etudiant3 = new Etudiant();
-        etudiant3.setCv(new File());
+        etudiant3.setCv(List.of(new File()));
         etudiant3.setEmail("jane.doe@example.org");
         etudiant3.setId(1L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -176,7 +177,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -196,7 +197,7 @@ class InternshipCandidatesServiceTest {
         employeur2.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -278,7 +279,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setId(1L);
         internshipCandidates2.setInternOffer(internOffer3);
         internshipCandidates2.setState(State.ACCEPTED);
-        when(internshipCandidatesRepository.save(Mockito.<InternshipCandidates>any())).thenReturn(internshipCandidates2);
+        when(internshipCandidatesRepository.save(Mockito.any())).thenReturn(internshipCandidates2);
 
         Programme programme7 = new Programme();
         programme7.setDescription("The characteristics of someone or something");
@@ -286,7 +287,7 @@ class InternshipCandidatesServiceTest {
         programme7.setNom("Nom");
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new File());
+        etudiant4.setCv(List.of(new File()));
         etudiant4.setEmail("jane.doe@example.org");
         etudiant4.setId(1L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -316,7 +317,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         Etudiant etudiant5 = new Etudiant();
-        etudiant5.setCv(new File());
+        etudiant5.setCv(List.of(new File()));
         etudiant5.setEmail("jane.doe@example.org");
         etudiant5.setId(1L);
         etudiant5.setInternshipsCandidate(new ArrayList<>());
@@ -336,7 +337,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant5);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -404,7 +405,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates4.setState(State.ACCEPTED);
         InternshipCandidatesDto actualSaveCandidatesResult = internshipCandidatesService
                 .saveCandidates(internshipCandidates4);
-        verify(internshipCandidatesRepository).save(Mockito.<InternshipCandidates>any());
+        verify(internshipCandidatesRepository).save(Mockito.any());
         InternOfferDto internOfferJob = actualSaveCandidatesResult.getInternOfferJob();
         assertEquals("1970-01-01", internOfferJob.getEndDate());
         assertEquals("1970-01-01", internOfferJob.getStartDate());
@@ -439,7 +440,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(new File(), internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant6.getCv());
         assertSame(files, etudiant6.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file4.getContent());
     }
 
@@ -467,7 +468,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant.setCv(new File());
+        etudiant.setCv(List.of(new File()));
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -497,7 +498,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new File());
+        etudiant2.setCv(List.of(new File()));
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -517,7 +518,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -627,7 +628,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -642,7 +643,7 @@ class InternshipCandidatesServiceTest {
         programme.setNom("Nom");
 
         Etudiant etudiant = new Etudiant();
-        etudiant.setCv(new File());
+        etudiant.setCv(List.of(new File()));
         etudiant.setEmail("jane.doe@example.org");
         etudiant.setId(1L);
         etudiant.setInternshipsCandidate(new ArrayList<>());
@@ -672,7 +673,7 @@ class InternshipCandidatesServiceTest {
         employeur.setRole(Role.employer);
 
         Etudiant etudiant2 = new Etudiant();
-        etudiant2.setCv(new File());
+        etudiant2.setCv(List.of(new File()));
         etudiant2.setEmail("jane.doe@example.org");
         etudiant2.setId(1L);
         etudiant2.setInternshipsCandidate(new ArrayList<>());
@@ -692,7 +693,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -766,7 +767,7 @@ class InternshipCandidatesServiceTest {
 
         Etudiant etudiant3 = new Etudiant();
         ArrayList<File> cv = new ArrayList<>();
-        etudiant3.setCv(new File());
+        etudiant3.setCv(List.of(new File()));
         etudiant3.setEmail("john.smith@example.org");
         etudiant3.setId(2L);
         etudiant3.setInternshipsCandidate(new ArrayList<>());
@@ -796,7 +797,7 @@ class InternshipCandidatesServiceTest {
         employeur2.setRole(Role.student);
 
         Etudiant etudiant4 = new Etudiant();
-        etudiant4.setCv(new File());
+        etudiant4.setCv(List.of(new File()));
         etudiant4.setEmail("john.smith@example.org");
         etudiant4.setId(2L);
         etudiant4.setInternshipsCandidate(new ArrayList<>());
@@ -816,7 +817,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.PENDING);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(etudiant4);
         file2.setFileName("File Name");
         file2.setId(2L);
@@ -961,9 +962,9 @@ class InternshipCandidatesServiceTest {
         assertSame(files, etudiant5.getCv());
         assertSame(files, etudiant6.getInternships_id());
         assertSame(files, etudiant5.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file3.getContent());
-        byte[] expectedContent2 = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent2 = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent2, file4.getContent());
     }
 
@@ -1039,7 +1040,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -1184,7 +1185,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -1226,7 +1227,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -1271,7 +1272,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -1378,11 +1379,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -1400,11 +1401,11 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
         verify(internshipCandidatesRepository).findAllByInternOfferId(Mockito.<Long>any());
         InternshipCandidatesDto getResult = actualInternshipCandidatesByOfferId.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
@@ -1442,7 +1443,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 
@@ -1459,10 +1460,10 @@ class InternshipCandidatesServiceTest {
      */
     @Test
     void testGetInternshipCandidatesByIds2() {
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any())).thenReturn(new ArrayList<>());
+        when(internshipCandidatesRepository.findAllById(Mockito.any())).thenReturn(new ArrayList<>());
         List<InternshipCandidatesDto> actualInternshipCandidatesByIds = internshipCandidatesService
                 .getInternshipCandidatesByIds(",");
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
         assertTrue(actualInternshipCandidatesByIds.isEmpty());
     }
 
@@ -1528,7 +1529,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -1597,11 +1598,11 @@ class InternshipCandidatesServiceTest {
 
         ArrayList<InternshipCandidates> internshipCandidatesList = new ArrayList<>();
         internshipCandidatesList.add(internshipCandidates2);
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any()))
+        when(internshipCandidatesRepository.findAllById(Mockito.any()))
                 .thenReturn(internshipCandidatesList);
         List<InternshipCandidatesDto> actualInternshipCandidatesByIds = internshipCandidatesService
                 .getInternshipCandidatesByIds(",");
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
         InternshipCandidatesDto getResult = actualInternshipCandidatesByIds.get(0);
         EtudiantDtoWithId etudiant3 = getResult.getEtudiant();
         assertEquals(",", etudiant3.getMatricule());
@@ -1638,7 +1639,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -1703,7 +1704,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -1827,7 +1828,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.PENDING);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(etudiant4);
         file2.setFileName(",");
         file2.setId(2L);
@@ -1897,11 +1898,11 @@ class InternshipCandidatesServiceTest {
         ArrayList<InternshipCandidates> internshipCandidatesList = new ArrayList<>();
         internshipCandidatesList.add(internshipCandidates4);
         internshipCandidatesList.add(internshipCandidates2);
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any()))
+        when(internshipCandidatesRepository.findAllById(Mockito.any()))
                 .thenReturn(internshipCandidatesList);
         List<InternshipCandidatesDto> actualInternshipCandidatesByIds = internshipCandidatesService
                 .getInternshipCandidatesByIds(",");
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
         InternshipCandidatesDto getResult = actualInternshipCandidatesByIds.get(1);
         EtudiantDtoWithId etudiant5 = getResult.getEtudiant();
         assertEquals(",", etudiant5.getMatricule());
@@ -1972,9 +1973,9 @@ class InternshipCandidatesServiceTest {
         assertSame(files, etudiant5.getCv());
         assertSame(files, etudiant6.getInternships_id());
         assertSame(files, etudiant5.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file3.getContent());
-        byte[] expectedContent2 = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent2 = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent2, file4.getContent());
     }
 
@@ -1983,10 +1984,10 @@ class InternshipCandidatesServiceTest {
      */
     @Test
     void testGetInternshipCandidatesByIds5() {
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any())).thenReturn(new ArrayList<>());
+        when(internshipCandidatesRepository.findAllById(Mockito.any())).thenReturn(new ArrayList<>());
         List<InternshipCandidatesDto> actualInternshipCandidatesByIds = internshipCandidatesService
                 .getInternshipCandidatesByIds("42");
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
         assertTrue(actualInternshipCandidatesByIds.isEmpty());
     }
 
@@ -1995,10 +1996,10 @@ class InternshipCandidatesServiceTest {
      */
     @Test
     void testGetInternshipCandidatesByIds6() {
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any()))
+        when(internshipCandidatesRepository.findAllById(Mockito.any()))
                 .thenThrow(new RuntimeException(","));
         assertThrows(RuntimeException.class, () -> internshipCandidatesService.getInternshipCandidatesByIds(","));
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
     }
 
     /**
@@ -2062,7 +2063,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -2207,7 +2208,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -2249,7 +2250,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -2294,7 +2295,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -2401,11 +2402,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -2414,7 +2415,7 @@ class InternshipCandidatesServiceTest {
 
         ArrayList<InternshipCandidates> internshipCandidatesList = new ArrayList<>();
         internshipCandidatesList.add(internshipCandidates4);
-        when(internshipCandidatesRepository.findAllById(Mockito.<Iterable<Long>>any()))
+        when(internshipCandidatesRepository.findAllById(Mockito.any()))
                 .thenReturn(internshipCandidatesList);
         List<InternshipCandidatesDto> actualInternshipCandidatesByIds = internshipCandidatesService
                 .getInternshipCandidatesByIds(",");
@@ -2423,12 +2424,12 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
-        verify(internshipCandidatesRepository).findAllById(Mockito.<Iterable<Long>>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
+        verify(internshipCandidatesRepository).findAllById(Mockito.any());
         InternshipCandidatesDto getResult = actualInternshipCandidatesByIds.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
         assertEquals("1970-01-01", internOfferJob.getEndDate());
@@ -2465,7 +2466,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 
@@ -2530,7 +2531,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -2689,7 +2690,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(etudiant4);
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -2709,7 +2710,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(new Etudiant());
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -2791,11 +2792,11 @@ class InternshipCandidatesServiceTest {
         internshipCandidates4.setId(1L);
         internshipCandidates4.setInternOffer(internOffer5);
         internshipCandidates4.setState(State.ACCEPTED);
-        when(internshipCandidatesRepository.save(Mockito.<InternshipCandidates>any())).thenReturn(internshipCandidates4);
+        when(internshipCandidatesRepository.save(Mockito.any())).thenReturn(internshipCandidates4);
         when(internshipCandidatesRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         InternshipCandidatesDto actualAcceptCandidatesResult = internshipCandidatesService.acceptCandidates(1L);
         verify(internshipCandidatesRepository).findById(Mockito.<Long>any());
-        verify(internshipCandidatesRepository).save(Mockito.<InternshipCandidates>any());
+        verify(internshipCandidatesRepository).save(Mockito.any());
         InternOfferDto internOfferJob = actualAcceptCandidatesResult.getInternOfferJob();
         assertEquals("1970-01-01", internOfferJob.getEndDate());
         assertEquals("1970-01-01", internOfferJob.getStartDate());
@@ -2830,7 +2831,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant6.getCv());
         assertSame(files, etudiant6.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file4.getContent());
     }
 
@@ -2895,7 +2896,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -2962,12 +2963,12 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setInternOffer(internOffer2);
         internshipCandidates2.setState(State.ACCEPTED);
         Optional<InternshipCandidates> ofResult = Optional.of(internshipCandidates2);
-        when(internshipCandidatesRepository.save(Mockito.<InternshipCandidates>any()))
+        when(internshipCandidatesRepository.save(Mockito.any()))
                 .thenThrow(new RuntimeException("foo"));
         when(internshipCandidatesRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> internshipCandidatesService.acceptCandidates(1L));
         verify(internshipCandidatesRepository).findById(Mockito.<Long>any());
-        verify(internshipCandidatesRepository).save(Mockito.<InternshipCandidates>any());
+        verify(internshipCandidatesRepository).save(Mockito.any());
     }
 
     /**
@@ -3031,7 +3032,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -3190,7 +3191,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(etudiant4);
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -3210,7 +3211,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(new Etudiant());
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -3292,11 +3293,11 @@ class InternshipCandidatesServiceTest {
         internshipCandidates4.setId(1L);
         internshipCandidates4.setInternOffer(internOffer5);
         internshipCandidates4.setState(State.ACCEPTED);
-        when(internshipCandidatesRepository.save(Mockito.<InternshipCandidates>any())).thenReturn(internshipCandidates4);
+        when(internshipCandidatesRepository.save(Mockito.any())).thenReturn(internshipCandidates4);
         when(internshipCandidatesRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         InternshipCandidatesDto actualDeclineCandidatesResult = internshipCandidatesService.declineCandidates(1L);
         verify(internshipCandidatesRepository).findById(Mockito.<Long>any());
-        verify(internshipCandidatesRepository).save(Mockito.<InternshipCandidates>any());
+        verify(internshipCandidatesRepository).save(Mockito.any());
         InternOfferDto internOfferJob = actualDeclineCandidatesResult.getInternOfferJob();
         assertEquals("1970-01-01", internOfferJob.getEndDate());
         assertEquals("1970-01-01", internOfferJob.getStartDate());
@@ -3331,7 +3332,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant6.getCv());
         assertSame(files, etudiant6.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file4.getContent());
     }
 
@@ -3396,7 +3397,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -3463,12 +3464,12 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setInternOffer(internOffer2);
         internshipCandidates2.setState(State.ACCEPTED);
         Optional<InternshipCandidates> ofResult = Optional.of(internshipCandidates2);
-        when(internshipCandidatesRepository.save(Mockito.<InternshipCandidates>any()))
+        when(internshipCandidatesRepository.save(Mockito.any()))
                 .thenThrow(new RuntimeException("foo"));
         when(internshipCandidatesRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> internshipCandidatesService.declineCandidates(1L));
         verify(internshipCandidatesRepository).findById(Mockito.<Long>any());
-        verify(internshipCandidatesRepository).save(Mockito.<InternshipCandidates>any());
+        verify(internshipCandidatesRepository).save(Mockito.any());
     }
 
     /**
@@ -3544,7 +3545,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -3652,7 +3653,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -3737,7 +3738,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -3882,7 +3883,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -3924,7 +3925,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -3969,7 +3970,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -4076,11 +4077,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -4096,11 +4097,11 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
         verify(internshipCandidatesRepository).findAllDeclined();
         InternshipCandidatesDto getResult = actualDeclinedCandidates.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
@@ -4138,7 +4139,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 
@@ -4215,7 +4216,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -4323,7 +4324,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -4408,7 +4409,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -4553,7 +4554,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -4595,7 +4596,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -4640,7 +4641,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -4747,11 +4748,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -4767,11 +4768,11 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
         verify(internshipCandidatesRepository).findAllPending();
         InternshipCandidatesDto getResult = actualPendingCandidates.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
@@ -4809,7 +4810,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 
@@ -4886,7 +4887,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -4994,7 +4995,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -5079,7 +5080,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -5224,7 +5225,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -5266,7 +5267,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -5311,7 +5312,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -5418,11 +5419,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -5438,11 +5439,11 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
         verify(internshipCandidatesRepository).findAllAccepted();
         InternshipCandidatesDto getResult = actualAcceptedCandidates.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
@@ -5480,7 +5481,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 
@@ -5545,7 +5546,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -5690,7 +5691,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -5798,7 +5799,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant3.getCv());
         assertSame(files, etudiant3.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file2.getContent());
     }
 
@@ -5883,7 +5884,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates.setState(State.ACCEPTED);
 
         File file = new File();
-        file.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file.setEtudiant(etudiant2);
         file.setFileName("foo.txt");
         file.setId(1L);
@@ -6028,7 +6029,7 @@ class InternshipCandidatesServiceTest {
         employeur3.setRole(Role.employer);
 
         File file2 = new File();
-        file2.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file2.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file2.setEtudiant(new Etudiant());
         file2.setFileName("foo.txt");
         file2.setId(1L);
@@ -6070,7 +6071,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates2.setState(State.ACCEPTED);
 
         File file3 = new File();
-        file3.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file3.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file3.setEtudiant(etudiant4);
         file3.setFileName("foo.txt");
         file3.setId(1L);
@@ -6115,7 +6116,7 @@ class InternshipCandidatesServiceTest {
         internshipCandidates3.setState(State.ACCEPTED);
 
         File file4 = new File();
-        file4.setContent("AXAXAXAX".getBytes("UTF-8"));
+        file4.setContent("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
         file4.setEtudiant(etudiant6);
         file4.setFileName("foo.txt");
         file4.setId(1L);
@@ -6222,11 +6223,11 @@ class InternshipCandidatesServiceTest {
         when(internshipCandidates4.getState()).thenReturn(State.ACCEPTED);
         when(internshipCandidates4.getFiles()).thenReturn(new ArrayList<>());
         when(internshipCandidates4.getId()).thenReturn(1L);
-        doNothing().when(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        doNothing().when(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        doNothing().when(internshipCandidates4).setEtudiant(Mockito.any());
+        doNothing().when(internshipCandidates4).setFiles(Mockito.any());
         doNothing().when(internshipCandidates4).setId(anyLong());
-        doNothing().when(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        doNothing().when(internshipCandidates4).setState(Mockito.<State>any());
+        doNothing().when(internshipCandidates4).setInternOffer(Mockito.any());
+        doNothing().when(internshipCandidates4).setState(Mockito.any());
         internshipCandidates4.setEtudiant(etudiant);
         internshipCandidates4.setFiles(new ArrayList<>());
         internshipCandidates4.setId(1L);
@@ -6242,11 +6243,11 @@ class InternshipCandidatesServiceTest {
         verify(internshipCandidates4).getId();
         verify(internshipCandidates4, atLeast(1)).getInternOffer();
         verify(internshipCandidates4).getState();
-        verify(internshipCandidates4).setEtudiant(Mockito.<Etudiant>any());
-        verify(internshipCandidates4).setFiles(Mockito.<List<File>>any());
+        verify(internshipCandidates4).setEtudiant(Mockito.any());
+        verify(internshipCandidates4).setFiles(Mockito.any());
         verify(internshipCandidates4).setId(anyLong());
-        verify(internshipCandidates4).setInternOffer(Mockito.<InternOffer>any());
-        verify(internshipCandidates4).setState(Mockito.<State>any());
+        verify(internshipCandidates4).setInternOffer(Mockito.any());
+        verify(internshipCandidates4).setState(Mockito.any());
         verify(internshipCandidatesRepository).findAll();
         InternshipCandidatesDto getResult = actualCandidates.get(0);
         InternOfferDto internOfferJob = getResult.getInternOfferJob();
@@ -6284,7 +6285,7 @@ class InternshipCandidatesServiceTest {
         assertEquals(cv, internOfferJob.getInternshipCandidates());
         assertSame(files, etudiant7.getCv());
         assertSame(files, etudiant7.getInternships_id());
-        byte[] expectedContent = "AXAXAXAX".getBytes("UTF-8");
+        byte[] expectedContent = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedContent, file5.getContent());
     }
 }

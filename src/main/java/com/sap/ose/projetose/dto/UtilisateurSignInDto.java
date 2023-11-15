@@ -1,4 +1,5 @@
 package com.sap.ose.projetose.dto;
+import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.Utilisateur;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class UtilisateurSignInDto {
         private String matricule;
         private String entreprise;
         private Long programme_id;
-        private File cv;
+        private List<Long> cv;
 
         public UtilisateurSignInDto(long id, String nom, String prenom, String phone, String email, String matricule, String entreprise, Long programme) {
             this.id = id;
@@ -62,10 +63,11 @@ public class UtilisateurSignInDto {
             }
             if (utilisateur.getClass().getSimpleName().equals("Etudiant")) {
                 assert utilisateur instanceof com.sap.ose.projetose.modeles.Etudiant;
-                File etudiantCv = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getCv();
-                if (etudiantCv != null)
-                    etudiantCv.setEtudiant(null);
-                this.cv = etudiantCv;
+                List<File> etudiantCv = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getCv();
+                if (etudiantCv != null) {
+                    etudiantCv.forEach(cv -> cv.setEtudiant((Etudiant) utilisateur));
+                    this.cv = etudiantCv.stream().map(File::getId).toList();
+                }
             } else {
                 this.cv = null;
             }
