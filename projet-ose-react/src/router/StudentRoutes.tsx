@@ -12,8 +12,11 @@ import Layout from "../components/layout/Layout";
 import CVStudant from "../components/common/student/CVStudant";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
 import {pdfjs} from "react-pdf/dist/esm";
+import EmployerOfferDetails from "../components/common/Employer/offer/EmployerOfferDetails";
+import StudentOfferDetails from "../components/common/student/offers/StudentOfferDetails";
 import StudentContractPage from "../components/common/student/studentContractPage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
+import SignContract from "../components/common/preparedoc/SignContract";
 
 const StudentRoutes: React.FC = () => {
     return (
@@ -23,6 +26,9 @@ const StudentRoutes: React.FC = () => {
                     <Route index path="home" element={<StudentInternshipPage/>}/>
                     <Route path="home" element={<StudentInternshipPage/>}>
                         <Route path="offers" element={<StudentInternship/>}/>
+                        <Route path="offers/:id" element={<StudentOfferDetails/>}>
+                            <Route path=":fileName" element={<ViewPDFModal/>}/>
+                        </Route>
                         <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
                         <Route path="cv" element={<UploadCVForm/>}/>
                         <Route path="upload" element={<CVStudant/>}/>
@@ -33,6 +39,7 @@ const StudentRoutes: React.FC = () => {
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
+                        <Route path="internshipagreement/:id/contract" element={<SignContract/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>

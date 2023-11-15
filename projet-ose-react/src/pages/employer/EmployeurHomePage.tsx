@@ -1,16 +1,15 @@
 import React, {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {faFileLines, faPencil} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
 import {UpdateOffers} from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
-import Header from "../../components/common/shared/header/Header";
 import {getUser} from "../../api/UtilisateurAPI";
 import {useAuth} from "../../authentication/AuthContext";
 import {User} from "../../model/User";
-import {data} from "autoprefixer";
 import {useToast} from "../../hooks/state/useToast";
-import {getStageByEmployeurId, getStages} from "../../api/InternshipManagerAPI";
+import {getStageByEmployeurId} from "../../api/InternshipManagerAPI";
+import {employeurGetContractById} from "../../api/ContractAPI";
 
 
 interface Props {
@@ -45,6 +44,7 @@ interface Props {
     sortAgreementDirection: string,
     setAgreementSortDirection: React.Dispatch<React.SetStateAction<string>>,
     setOnChangeAgreement: React.Dispatch<React.SetStateAction<boolean>>
+    isLoaded: boolean
 
 }
 
@@ -75,6 +75,7 @@ function EmployeurHomePage() {
     const [agreementSortField, setAgreementSortField] = useState("id");
     const [agreementSortDirection, setAgreementSortDirection] = useState("asc");
     const [onChangeAgreement, setOnChangeAgreement] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const location = useLocation();
     const [user, setUser] = useState<User>({
@@ -93,6 +94,7 @@ function EmployeurHomePage() {
     const fetchedInternshipsAgreementRef = useRef(false);
 
     const fetchInternshipsAgreement = async (id: number) => {
+        setIsLoaded(false)
         try {
             fetchedInternshipsAgreementRef.current = true
             const response = await getStageByEmployeurId({
@@ -100,15 +102,25 @@ function EmployeurHomePage() {
                 size: numberElementAgreementByPage,
                 sortField: agreementSortField,
                 sortDirection : agreementSortDirection
-            }, id);
+            }, id).then(page => {
+                page.content.map(async (stage: any) => {
+                    if (stage.contractId != 0) {
+                        stage.contract = await employeurGetContractById(stage.contractId);
+                    }
+                })
+                return page;
+            })
+            console.log(response)
             setInternshipsAgreement(response.content);
             setTotalAgreementPages(response.totalPages);
+
         } catch (error) {
             console.log(error);
             toast.error(fields.toast.errorFetchInternshipsAgreement)
         } finally {
             setIsUpdate(false);
             fetchedInternshipsAgreementRef.current = false;
+            setIsLoaded(true)
         }
     };
 
@@ -116,7 +128,6 @@ function EmployeurHomePage() {
         const getUtilisateur = async () => {
             let data = null;
             if (userEmail != null) {
-                console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
                 fetchInternshipsAgreement(data.id).then(r => r)
@@ -128,7 +139,6 @@ function EmployeurHomePage() {
     }, [localStorage.getItem('token')])
 
     useEffect(() => {
-        console.log(user)
         if (userEmail)
             try {
                 UpdateOffers(userEmail, setOffers, setTotalPages, {
@@ -146,9 +156,9 @@ function EmployeurHomePage() {
     useEffect(() => {
         if (user) {
             fetchInternshipsAgreement(user.id).then(r => r)
-            setOnChangeAgreement(false)
+            setIsAgreementUpdate(false)
         }
-    }, [currentAgreementPage, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, onChangeAgreement]);
+    }, [currentAgreementPage, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, isUpdate]);
 
     useEffect(() => {
         let i = 0;
@@ -207,7 +217,8 @@ function EmployeurHomePage() {
         setAgreementSortField: setAgreementSortField,
         sortAgreementDirection: agreementSortDirection,
         setAgreementSortDirection: setAgreementSortDirection,
-        setOnChangeAgreement: setOnChangeAgreement
+        setOnChangeAgreement: setOnChangeAgreement,
+        isLoaded: isLoaded
     }
 
     return (

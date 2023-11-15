@@ -30,8 +30,7 @@ public class InternOffer {
     private String status;
     private State state;
 
-    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
     private List<InternshipCandidates> internshipCandidates;
 
     @ManyToOne()
