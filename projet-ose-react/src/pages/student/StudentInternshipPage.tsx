@@ -23,6 +23,17 @@ interface Props {
     appliedOffers: AppliedOffers[];
     setAppliedOffers: React.Dispatch<React.SetStateAction<AppliedOffers[]>>;
     offers: any[];
+    setOffers: React.Dispatch<React.SetStateAction<any[]>>;
+    setSortField: React.Dispatch<React.SetStateAction<string>>;
+    setSortDirection: React.Dispatch<React.SetStateAction<string>>;
+    sortField: string;
+    sortDirection: string;
+    totalPages: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    handleChangeNumberElement: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onPageChange: (newPage: number) => void;
+    numberElementByPage: number;
+    page: number;
 }
 
 function StudentInternshipPage() {
@@ -81,11 +92,31 @@ function StudentInternshipPage() {
         fetchOffers();
     }, [currentPage, numberElementByPage, sortField, sortDirection]);
 
+    const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentPage(0);
+        setNumberElementByPage(Number(event.target.value));
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
     const context = {
         user: user,
         appliedOffers: listStudentAppliedOffers,
         setAppliedOffers: setListStudentAppliedOffers,
         offers: offers,
+        setOffers: setOffers,
+        setSortField: setSortField,
+        setSortDirection: setSortDirection,
+        sortField: sortField,
+        sortDirection: sortDirection,
+        totalPages: totalPages,
+        setCurrentPage: setCurrentPage,
+        handleChangeNumberElement: handleChangePage,
+        onPageChange: handlePageChange,
+        numberElementByPage: numberElementByPage,
+        page: currentPage,
     };
 
     return (

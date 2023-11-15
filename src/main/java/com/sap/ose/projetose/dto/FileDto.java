@@ -3,6 +3,7 @@ package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.modeles.State;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class FileDto {
 
     private long id;
+    @Lob
     private byte[] content;
     private String fileName;
     private State isAccepted;

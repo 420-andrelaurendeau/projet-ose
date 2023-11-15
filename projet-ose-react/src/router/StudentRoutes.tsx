@@ -15,6 +15,8 @@ import {pdfjs} from "react-pdf/dist/esm";
 import StudentContractPage from "../components/common/student/studentContractPage";
 import InternshipAgreementPage from "../pages/internshipManager/InternshipAgreementPage";
 
+import EmployerOfferDetails from "../components/common/Employer/offer/EmployerOfferDetails";
+import StudentOfferDetails from "../components/common/student/offers/StudentOfferDetails";
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
@@ -23,6 +25,9 @@ const StudentRoutes: React.FC = () => {
                     <Route index path="home" element={<StudentInternshipPage/>}/>
                     <Route path="home" element={<StudentInternshipPage/>}>
                         <Route path="offers" element={<StudentInternship/>}/>
+                        <Route path="offers/:id" element={<StudentOfferDetails/>}>
+                            <Route path=":fileName" element={<ViewPDFModal/>}/>
+                        </Route>
                         <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
                         <Route path="cv" element={<UploadCVForm/>}/>
                         <Route path="upload" element={<CVStudant/>}/>

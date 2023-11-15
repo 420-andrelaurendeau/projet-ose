@@ -150,6 +150,7 @@ public class InternOfferService {
         }
     }
 
+    @Transactional
     public List<InternOfferDto> getAllInternOffers() {
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
         for (InternOffer offer : offerJobRepository.findAll()) {

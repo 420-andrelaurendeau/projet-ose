@@ -18,10 +18,10 @@ import java.util.List;
 public class EtudiantDto extends UtilisateurDto {
     private String matricule;
     private long programme_id;
-    private File cv;
+    private List<Long> cv;
     private List<Long> internships_id;
 
-    public EtudiantDto(String nom, String prenom, String phone, String email, String matricule, long programme, File cv, List<Long> internships_id) {
+    public EtudiantDto(String nom, String prenom, String phone, String email, String matricule, long programme, List<Long> cv, List<Long> internships_id) {
         super(nom, prenom, phone, email);
         this.matricule = matricule;
         this.programme_id = programme;
@@ -31,13 +31,10 @@ public class EtudiantDto extends UtilisateurDto {
 
 
     public EtudiantDto(Etudiant etudiant) {
-        super(etudiant.getId(), etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
+        super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
-        File etudiantCv = etudiant.getCv();
-        if (etudiantCv != null)
-            etudiantCv.setEtudiant(null);
-        this.cv = etudiantCv;
+        this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();
     }
 
     public Etudiant fromDto() {

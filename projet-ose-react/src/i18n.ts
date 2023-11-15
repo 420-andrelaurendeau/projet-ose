@@ -10,6 +10,7 @@ import {StudentInternshipI18n} from "./components/common/student/i18n/StudentInt
 import SidebarEtudiant from "./components/common/student/SidebarEtudiant";
 import {SideBarEtudiantI18n} from "./components/common/student/i18n/SideBarEtudiantI18n";
 import {StudentInternshipPagei18n} from "./pages/student/i18n/StudentInternshipPagei18n";
+import studentOffer from "./components/common/student/i18n/Offer";
 
 
 i18n
@@ -32,6 +33,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        studentOffer,
                         contractPage,
                         header,
                         InternshipsAgreementPage: {
@@ -368,11 +370,20 @@ i18n
                                 apply: {
                                     name: 'apply',
                                     text: 'Apply',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'View',
                                 }
                             },
                             empty: {
                                 name: 'empty',
                                 text: 'No internship available'
+                            },
+                            toast:{
+                                ErrorNoCv:"You must upload your CV and set it as default before applying for an internship",
+                                ErrorOfferApplication: "An error occurred while applying for the internship",
+                                SuccessOfferApplication: "The internship application has been submitted for",
                             }
                         },
                         Header: {
@@ -686,6 +697,12 @@ i18n
                             accept: 'Accept',
                             decline: 'Decline',
                             download: "Download",
+                        },
+                        toast: {
+                            acceptSuccess: "The CV has been accepted",
+                            acceptError: "An error occurred while accepting the CV",
+                            declineSuccess: "The CV has been declined",
+                            declineError: "An error occurred while declining the CV",
                         }
                     }
 
@@ -696,6 +713,7 @@ i18n
                     formField: {
                         application,
                         employerOffer,
+                        studentOffer,
                         header,
                         contractPage,
                         InternshipsAgreementPage: {
@@ -1040,11 +1058,20 @@ i18n
                                 apply: {
                                     name: 'Apply',
                                     text: 'Postuler',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'Voir',
                                 }
                             },
                             empty: {
                                 name: 'empty',
                                 text: 'Aucun stage disponible'
+                            },
+                            toast: {
+                                ErrorNoCv:"Vous devez télécharger votre CV et le définir comme par défaut avant de postuler à un stage",
+                                ErrorOfferApplication: "Une erreur est survenue lors de la postulation au stage",
+                                SuccessOfferApplication: "Votre postulation au stage a été soumise pour",
                             }
                         },
                         Header: {
@@ -1340,6 +1367,12 @@ i18n
                             accept: 'Accepter',
                             decline: 'Decliner',
                             download: "Télécharger",
+                        },
+                        toast: {
+                            acceptSuccess: "Le CV a été accepté",
+                            acceptError: "Une erreur est survenue lors de l'acceptation du CV",
+                            declineSuccess: "Le CV a été refusé",
+                            declineError: "Une erreur est survenue lors du refus du CV",
                         }
                     }
                 }

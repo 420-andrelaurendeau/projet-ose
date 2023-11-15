@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Arrays;
 
@@ -24,12 +25,12 @@ public class File {
 
     private State isAccepted;
 
-    @OneToOne
-    @JoinColumn(name = "etudiant_id")
+    @ManyToOne
     private Etudiant etudiant;
 
     @ManyToOne
     @JoinColumn(name = "internship_id")
+    @ToString.Exclude
     private InternshipCandidates internshipCandidates;
 
 
@@ -38,7 +39,13 @@ public class File {
         this.fileName = fileName;
         this.isAccepted = isAccepted;
     }
-
+    public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant, InternshipCandidates internshipCandidates) {
+        this.content = content;
+        this.fileName = fileName;
+        this.isAccepted = isAccepted;
+        this.etudiant = etudiant;
+        this.internshipCandidates = internshipCandidates;
+    }
     public File(byte[] content, String fileName, State isAccepted, Etudiant etudiant) {
         this.content = content;
         this.fileName = fileName;
@@ -60,6 +67,7 @@ public class File {
                 ", content=" + Arrays.toString(content) +
                 ", fileName='" + fileName + '\'' +
                 ", isAccepted=" + isAccepted +
+                ", etudiant=" + etudiant +
                 '}';
     }
 }

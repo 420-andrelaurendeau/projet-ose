@@ -5,7 +5,6 @@ import {FileEntity} from "../../../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
-import Header from "../../shared/header/Header";
 import {useTranslation} from "react-i18next";
 
 export default function StudentAppliedOffers() {
@@ -28,6 +27,26 @@ export default function StudentAppliedOffers() {
             setAppliedOffers(data!);
         })
     }, [])
+
+    const handleDownloadFile = (file: FileEntity) => {
+        // Create a Blob from the base64 content
+        const byteNumbers = atob(file.content)
+                                        .split('')
+                                        .map((value) => value.charCodeAt(0))
+
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        // Create a URL for the blob and trigger the download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = file.fileName;
+        a.click();
+
+        // Clean up the URL
+        window.URL.revokeObjectURL(url);
+    };
 
 
     return (
@@ -101,7 +120,7 @@ export default function StudentAppliedOffers() {
                                                 {appliedOffer.appliedFiles.map((file: FileEntity) => (
                                                     <div key={file.id} className="flex space-y-2">
                                                         <FontAwesomeIcon icon={faFilePdf}/>
-                                                        <a href="src/components/common" download={file.fileName}>{file.fileName}</a>
+                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName}</a>
                                                     </div>
                                                 ))}
                                             </div>
