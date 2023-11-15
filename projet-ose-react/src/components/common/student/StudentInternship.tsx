@@ -9,7 +9,6 @@ import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {offresEtudiant, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
-import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
