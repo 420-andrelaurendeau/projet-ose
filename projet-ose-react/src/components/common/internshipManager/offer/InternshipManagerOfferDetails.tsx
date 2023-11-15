@@ -97,11 +97,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                 </div>
             </div>
 
-
-
             <h1 className='font-bold text-center text-dark text-2xl dark:text-offwhite'>{internshipOffer!.title}</h1>
-
-
 
             <div className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto">
                 <div className='block items-center min-h-50'>

@@ -9,6 +9,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {employeurGetContractById, employeurSaveContract} from "../../../api/ContractAPI";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useAuth} from "../../../authentication/AuthContext";
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -28,6 +29,7 @@ function SignContract(props:any) {
   const [pageNum, setPageNum] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [width, setWidth] = useState<number>(0);
+  const { userRole} = useAuth();
   const [pageDetails, setPageDetails] = useState({
     height: 0,
     width:0,
@@ -74,7 +76,7 @@ function SignContract(props:any) {
           if (base64String) {
             console.log("Chaîne Base64 obtenue :", base64String);
             contract.content = base64String.toString();
-            await employeurSaveContract(contract).then(r => {
+            await employeurSaveContract(contract, userRole!).then(r => {
                 console.log(r)
             })
           } else {
@@ -84,7 +86,7 @@ function SignContract(props:any) {
         .catch((error) => {
           console.error("Une erreur s'est produite :", error);
         });
-    navigate("/employer/home/contract")
+    navigate(-1)
   }
 
   return (
