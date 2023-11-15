@@ -22,11 +22,14 @@ public class InternshipCandidates {
     @JoinColumn(name = "etudiant_id")
     private Etudiant etudiant;
 
+    @OneToOne
+    private File studentCv;
+
     @ManyToOne()
     @JoinColumn(name = "interOfferJob_id")
     private InternOffer internOffer;
 
-    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "internshipCandidates", cascade = CascadeType.PERSIST)
     private List<File> files;
 
     private State state;

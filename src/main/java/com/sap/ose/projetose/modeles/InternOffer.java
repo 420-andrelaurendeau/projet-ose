@@ -31,6 +31,7 @@ public class InternOffer {
     private State state;
 
     @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<InternshipCandidates> internshipCandidates;
 
     @ManyToOne()

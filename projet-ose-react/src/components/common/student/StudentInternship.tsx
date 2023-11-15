@@ -15,11 +15,14 @@ function StudentInternship() {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
     let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
+    const [offers, setOffers] = useState<any[]>([])
+    const [cv,setCv] = useState<FileEntity>()
     const {offers} = useProps();
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
+    const toast = useToast();
 
     useEffect(() => {
         if (!isloading.current)
@@ -29,36 +32,45 @@ function StudentInternship() {
             getStudentAppliedOffers(res.id).then((res) => {
                 setAppliedOffers(res);
             })
+            fetchDefaultCvByStudentId(res.id).then((res) => {
+                setCv(res)
+                console.log(res)
+            }).catch((error) => {
+                console.log("Error fetching user data:", error)
+            })
             }
-        );
-
-
-
+        ).finally(() => {
+            offresEtudiant().then((res) => {
+                setOffers(res);
+            })
+        })
     }, []);
 
 
-    const applyOffer = (offer: any, student: any) => {
+    const applyOffer = (offer: any, student: any, cv: any) => {
         console.log(offer);
         console.log(student);
-
-        saveStudentInternshipOffer(offer, student).then(
-            res => {
-                let appliedOffer: AppliedOffers = {
-                    appliedOffer: res.internOfferJob,
-                    appliedFiles: res.files
-                };
-                console.log(appliedOffer);
-
-                setAppliedOffers([...appliedOffers, appliedOffer]);
-
-                console.log(appliedOffers)
-            }
-        ).catch(
-            err => {
-                console.log(err);
-                anError = true;
-            }
-        )
+        console.log(cv);
+        if (cv == null) {
+            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
+        }
+        else {
+            saveStudentInternshipOffer(offer, student, cv).then(
+                res => {
+                    let appliedOffer: AppliedOffers = {
+                        appliedOffer: res.internOfferJob,
+                        appliedFiles: res.files
+                    };
+                    setAppliedOffers([...appliedOffers, appliedOffer]);
+                    toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
+                }
+            ).catch(
+                err => {
+                    console.log(err);
+                    toast.error(t("formField.EtudiantStage.toast.ErrorOfferApplication"))
+                }
+            )
+        }
     }
 
     return (

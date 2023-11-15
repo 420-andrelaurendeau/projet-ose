@@ -1,11 +1,7 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.State;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

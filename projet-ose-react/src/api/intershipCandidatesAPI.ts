@@ -11,11 +11,11 @@ const apiClient = axios.create({
     },
 });
 
-export const saveStudentInternshipOffer = async (interOfferJob:any, student :any) => {
+export const saveStudentInternshipOffer = async (interOfferJob:any, student :any, cv: any) => {
     let data = {
         etudiant: student,
         internOfferJob: interOfferJob,
-        files: null
+        files: [cv]
     }
     try {
         console.log("DATA")
