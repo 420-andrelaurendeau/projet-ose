@@ -31,8 +31,7 @@ import static org.mockito.Mockito.when;
 public class InternshipmanagerServiceTest {
 
     private final InternshipmanagerDto internshipmanagerDto = new InternshipmanagerDto();
-
-    @Autowired
+    @MockBean
     private InternshipmanagerService internshipmanagerService;
     @MockBean
     private InternshipmanagerRepository internshipmanagerRepository;
@@ -40,7 +39,6 @@ public class InternshipmanagerServiceTest {
     private InternOfferService internOfferService;
     @MockBean
     private InternOfferRepository internOfferRepository;
-
     @MockBean
     private ProgrammeService programmeService;
     @MockBean
@@ -94,7 +92,7 @@ public class InternshipmanagerServiceTest {
 
     @Test
     public void findById_UnknownError() {
-        when(internshipmanagerRepository.findById(anyLong())).thenThrow(new NullPointerException(""));
+        when(internshipmanagerRepository.findById(anyLong())).thenThrow(new ServiceException("Erreur inconnue lors de la récupération du gestionnaire de stage"));
 
         ServiceException result = assertThrows(ServiceException.class, () -> internshipmanagerService.findById(anyLong()));
         assertEquals("Erreur inconnue lors de la récupération du gestionnaire de stage", result.getMessage());

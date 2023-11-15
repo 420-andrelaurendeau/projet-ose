@@ -6,6 +6,7 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
+import com.sap.ose.projetose.repository.FileEntityRepository;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,16 +24,16 @@ public class InternshipCandidatesService {
     private final EtudiantService etudiantService;
     private final InterviewService interviewService;
 
-    private final FileService fileService;
+    private final FileEntityRepository fileEntityRepository;
 
     private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
 
-    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, InterviewService interviewService, FileService fileService) {
+    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, InterviewService interviewService, FileEntityRepository fileEntityRepository) {
         this.internshipCandidatesRepository = internshipCandidatesRepository;
         this.internOfferService = internOfferService;
         this.etudiantService = etudiantService;
         this.interviewService = interviewService;
-        this.fileService = fileService;
+        this.fileEntityRepository = fileEntityRepository;
     }
 
     @Transactional
@@ -46,6 +47,12 @@ public class InternshipCandidatesService {
             internshipCandidates.setEtudiant(etudiant);
             internshipCandidates.setInternOffer(internOffer);
             internshipCandidates.setFiles(files);
+
+            for (File file : files) {
+                file.setInternshipCandidates(internshipCandidates);
+            }
+
+            fileEntityRepository.saveAll(files);
 
             internshipCandidatesRepository.save(internshipCandidates);
             return new InternshipCandidatesDto(internshipCandidates);

@@ -2,10 +2,7 @@ package com.sap.ose.projetose.modeles;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +21,19 @@ public class Etudiant extends Utilisateur{
     @JoinColumn(name = "programme_id")
     private Programme programme;
 
-    @OneToOne(mappedBy = "etudiant", cascade = CascadeType.ALL)
-    private File cv;
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<File> cv;
+
+    @ManyToOne()
+    @ToString.Exclude
+    private File activeCv;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<InternshipCandidates> internshipsCandidate;
 
-    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,File cv, List<InternshipCandidates> internshipsCandidate) {
+    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
         super(id, nom, prenom, telephone, Role.student, email, password);
         this.matricule = matricule;
         this.programme = programme;
@@ -38,7 +41,7 @@ public class Etudiant extends Utilisateur{
         this.internshipsCandidate = internshipsCandidate;
     }
 
-    public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,File cv, List<InternshipCandidates> internshipsCandidate) {
+    public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
         super(nom, prenom, phone,Role.student, email);
         this.matricule = matricule;
         this.programme = programme;
@@ -68,14 +71,5 @@ public class Etudiant extends Utilisateur{
         this.programme = programme;
         this.cv = null;
         this.internshipsCandidate = new ArrayList<>();
-    }
-
-    @Override
-    public String toString() {
-        return "Etudiant{" +
-                "matricule='" + matricule + '\'' +
-                ", programme=" + programme +
-                ", cv=" + cv +
-                '}';
     }
 }
