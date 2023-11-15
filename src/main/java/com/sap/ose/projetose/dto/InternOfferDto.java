@@ -4,6 +4,7 @@ import com.sap.ose.projetose.modeles.Etats;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.InternshipCandidates;
 import com.sap.ose.projetose.modeles.State;
+import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class InternOfferDto {
     private String endDate;
     private List<Long> internshipCandidates;
     private long programmeId;
+    @Lob
     private FileDto file;
     private long employeurId;
     private String programmeNom;

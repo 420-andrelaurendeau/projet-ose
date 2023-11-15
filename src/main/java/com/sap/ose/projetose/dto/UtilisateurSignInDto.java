@@ -17,7 +17,6 @@ public class UtilisateurSignInDto {
         private String matricule;
         private String entreprise;
         private Long programme_id;
-        private File cv;
 
         public UtilisateurSignInDto(long id, String nom, String prenom, String phone, String email, String matricule, String entreprise, Long programme) {
             this.id = id;
@@ -59,15 +58,6 @@ public class UtilisateurSignInDto {
                 this.programme_id = ((com.sap.ose.projetose.modeles.Employeur) utilisateur).getProgramme().getId();
             } else {
                 this.programme_id = null;
-            }
-            if (utilisateur.getClass().getSimpleName().equals("Etudiant")) {
-                assert utilisateur instanceof com.sap.ose.projetose.modeles.Etudiant;
-                File etudiantCv = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getCv();
-                if (etudiantCv != null)
-                    etudiantCv.setEtudiant(null);
-                this.cv = etudiantCv;
-            } else {
-                this.cv = null;
             }
         }
     }

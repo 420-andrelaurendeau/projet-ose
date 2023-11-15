@@ -1,14 +1,18 @@
 package com.sap.ose.projetose.service;
 
-import com.sap.ose.projetose.dto.*;
-import com.sap.ose.projetose.exception.*;
+import com.sap.ose.projetose.dto.FileDtoAll;
+import com.sap.ose.projetose.dto.InternOfferDto;
+import com.sap.ose.projetose.dto.InternshipmanagerDto;
+import com.sap.ose.projetose.exception.DatabaseException;
+import com.sap.ose.projetose.exception.InternshipmanagerNotFoundException;
+import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.FileEntityRepository;
 import com.sap.ose.projetose.repository.InternshipmanagerRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,29 +21,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class InternshipmanagerService {
-
-    private final InternshipmanagerRepository internshipmanagerRepository;
-
     private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
 
+    private final InternshipmanagerRepository internshipmanagerRepository;
     private final FileEntityRepository fileEntityRepository;
-
     private final EtudiantRepository etudiantRepository;
 
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
-
-    @Autowired
-    public InternshipmanagerService(InternshipmanagerRepository internshipmanagerRepository, InternOfferService internOfferService, ProgrammeService programmeService, FileEntityRepository fileEntityRepository, EtudiantRepository etudiantRepository) {
-        this.internshipmanagerRepository = internshipmanagerRepository;
-        this.internOfferService = internOfferService;
-        this.programmeService = programmeService;
-        this.fileEntityRepository = fileEntityRepository;
-        this.etudiantRepository = etudiantRepository;
-    }
 
     @Transactional
     public InternshipmanagerDto getById(long id) {
@@ -77,7 +71,7 @@ public class InternshipmanagerService {
 
     @Transactional
     public Internshipmanager save(InternshipmanagerDto internshipmanagerDto) {
-        Internshipmanager internshipmanager = null;
+        Internshipmanager internshipmanager;
         try {
             Programme program = programmeService.findById(internshipmanagerDto.getProgrammeId());
 
@@ -133,12 +127,7 @@ public class InternshipmanagerService {
 
             Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                     Sort.by(sortField).descending();
-            Page<InternOfferDto> pageOffersDto = internOfferService.getSortedByPage(page, size, sort, state);
-            return pageOffersDto;
-        } catch (BadSortingFieldException e) {
-            throw e;
-        } catch (InvalidStateException e) {
-            throw e;
+            return internOfferService.getSortedByPage(page, size, sort, state);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
             throw e;
@@ -150,7 +139,14 @@ public class InternshipmanagerService {
     @Transactional
     public List<FileDtoAll> getPendingCv() {
         try {
-            List<FileDtoAll> pendingCv = fileEntityRepository.findAllStudentCvPending().isPresent() ? fileEntityRepository.findAllStudentCvPending().get().stream().map(file -> new FileDtoAll(file.getId(),file.getContent(),file.getFileName(),file.getIsAccepted(), new EtudiantDto(file.getEtudiant()))).toList() : null;
+            //noinspection UnnecessaryLocalVariable
+            List<FileDtoAll> pendingCv = fileEntityRepository.findAllStudentCvPending().isPresent()
+                    ? fileEntityRepository.findAllStudentCvPending()
+                                          .get()
+                                          .stream()
+                                          .map(FileDtoAll::new)
+                                          .toList()
+                    : null;
             return pendingCv;
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
@@ -164,12 +160,11 @@ public class InternshipmanagerService {
     public FileDtoAll acceptCv(Long id) {
         try {
             File file = fileEntityRepository.findById(id).orElse(null);
-            Etudiant etudiant = etudiantRepository.getById(file.getEtudiant().getId());
+            Etudiant etudiant = etudiantRepository.getReferenceById(file.getEtudiant().getId());
             file.setIsAccepted(State.ACCEPTED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
-            FileDtoAll fileDtoAll = new FileDtoAll(file);
-            return fileDtoAll;
+            return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
             throw e;
@@ -182,12 +177,14 @@ public class InternshipmanagerService {
     public FileDtoAll declineCv(Long id) {
         try {
             File file = fileEntityRepository.findById(id).orElse(null);
-            Etudiant etudiant = etudiantRepository.getById(file.getEtudiant().getId());
+            Etudiant etudiant = etudiantRepository.getReferenceById(Optional.of(file.getEtudiant())
+                    .map(Utilisateur::getId)
+                    .orElseThrow());
+
             file.setIsAccepted(State.DECLINED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
-            FileDtoAll fileDtoAll = new FileDtoAll(file);
-            return fileDtoAll;
+            return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
             throw e;

@@ -4,6 +4,7 @@ import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
+import com.sap.ose.projetose.exception.FileNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
@@ -21,17 +22,16 @@ import java.util.Optional;
 @Service
 public class EtudiantService {
     private final EtudiantRepository etudiantRepository;
-    private final FileService fileService;
+
     private final FileEntityRepository fileEntityRepository;
 
     private final ProgrammeService programmeService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository, FileService fileService, FileEntityRepository fileEntityRepository, ProgrammeService programmeService) {
+    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService, FileEntityRepository fileEntityRepository) {
         this.etudiantRepository = etudiantRepository;
-        this.fileService = fileService;
-        this.fileEntityRepository = fileEntityRepository;
         this.programmeService = programmeService;
+        this.fileEntityRepository = fileEntityRepository;
     }
 
     @Transactional
@@ -64,14 +64,14 @@ public class EtudiantService {
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
-            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
+            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv().stream().map(File::getId).toList(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
         }
         return dtos;
     }
 
     public EtudiantDto getEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
+        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv().stream().map(File::getId).toList(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
     Etudiant findEtudiantById(Long id) {
@@ -87,21 +87,11 @@ public class EtudiantService {
     @Transactional
     public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        Optional<File> oldCv = fileEntityRepository.findByEtudiant_Id(etudiant.getId());
-        if(oldCv.isPresent()){
-            etudiant.setCv(null);
-            saveEtudiant(etudiant);
-            File old = oldCv.get();
-            old.setIsAccepted(State.PENDING);
-            old.setContent(cv.getContent());
-            old.setFileName(cv.getFileName());
-            old.setEtudiant(etudiant);
-            fileService.saveFile(old);
-        }else {
-            cv.setEtudiant(etudiant);
-            fileService.saveFile(cv);
-        }
-
+        List<File> cvs = new ArrayList<>();
+        cvs.add(cv);
+        cv.setEtudiant(etudiant);
+        etudiant.setCv(cvs);
+        etudiant  = etudiantRepository.save(etudiant);
         return new EtudiantDto(etudiant);
     }
 
@@ -125,7 +115,11 @@ public class EtudiantService {
                         InternOfferDto offerDto = new InternOfferDto(offerApplied.getInternOffer());
                         offerDto.setInternshipCandidates(null);
 
-                        List<FileDto> fileDtos = offerApplied.getFiles().stream().map(FileDto::new).toList();
+                        List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(offerApplied.getId())
+                                .orElse(new ArrayList<>())
+                                .stream()
+                                .map(FileDto::new)
+                                .toList();
 
                         dto.setAppliedOffer(offerDto);
                         dto.setAppliedFiles(fileDtos);
@@ -145,5 +139,104 @@ public class EtudiantService {
         }
     }
 
+    @Transactional
+    public List<FileDtoAll> getAllCvfromStudentById(long id) {
+        try {
+            List<FileDtoAll> cvs = fileEntityRepository
+                    .findAllByEtudiant_IdIs(id)
+                    .isPresent()
+                        ? fileEntityRepository.findAllByEtudiant_IdIs(id)
+                                              .get()
+                                              .stream()
+                                              .map(file -> new FileDtoAll(file.getId(), file.getContent(),
+                                                                            file.getFileName(), file.getIsAccepted(),
+                                                                            new EtudiantDto(file.getEtudiant())))
+                                              .toList()
+                        : null;
+            if (cvs == null) {
+                throw new FileNotFoundException("Aucun CV trouvé pour l'étudiant avec l'id " + id);
+            }
+            return cvs;
+        }
+        catch (FileNotFoundException e) {
+            logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
+            throw e;
+        }
+        catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+        catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new ServiceException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+    }
+    @Transactional
+    public FileDtoAll setDefaultCv(long id, long cvId) {
+        try {
+            FileDtoAll fileDtoAll = null;
+            List<File> cvs = fileEntityRepository.findAllByEtudiant_IdIs(id).isPresent() ? fileEntityRepository.findAllByEtudiant_IdIs(id).get() : null;
+            if (cvs == null || cvs.isEmpty()) {
+                throw new FileNotFoundException("Aucun CV trouvé pour l'étudiant avec l'id " + id);
+            }
+            for (File cv : cvs) {
+                if (cv.getId() == cvId) {
+                    if (cv.getIsAccepted() != State.ACCEPTED) {
+                        throw new ServiceException("Le CV n'est pas encore accepté");
+                    }
+                    fileDtoAll = new FileDtoAll(cv.getId(),cv.getContent(),cv.getFileName(),cv.getIsAccepted(), new EtudiantDto(cv.getEtudiant()));
+                    cv = fileEntityRepository.save(cv);
 
+                    Etudiant cvEtudiant = cv.getEtudiant();
+                    cvEtudiant.setActiveCv(cv);
+                    etudiantRepository.save(cvEtudiant);
+                }
+            }
+            if (fileDtoAll == null) {
+                throw new FileNotFoundException("Aucun CV trouvé avec l'id " + id);
+            }
+            return fileDtoAll;
+        }
+        catch (ServiceException e) {
+            logger.error("Le CV n'est pas encore accepté", e);
+            throw e;
+        }
+        catch (FileNotFoundException e) {
+            logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
+            throw e;
+        }
+        catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+        catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new ServiceException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+    }
+    @Transactional
+    public FileDtoAll getDefaultCv(long id) {
+        try {
+            Etudiant student = etudiantRepository
+                    .findById(id)
+                    .orElseThrow(EtudiantNotFoundException::new);
+
+            File cv = student.getActiveCv();
+
+            return new FileDtoAll(Optional.ofNullable(cv)
+                                          .orElseThrow(FileNotFoundException::new));
+        }
+        catch (FileNotFoundException e) {
+            logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
+            throw e;
+        }
+        catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+        catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des CV de l'étudiant avec l'id " + id, e);
+            throw new ServiceException("Erreur lors de la récupération des CV de l'étudiant");
+        }
+    }
 }

@@ -6,4 +6,5 @@ export interface ReviewFile {
     content: string;
     isAccepted: string;
     etudiant?: User;
+    defaultFile?: boolean;
 }
