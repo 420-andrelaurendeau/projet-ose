@@ -18,10 +18,10 @@ import java.util.List;
 public class EtudiantInscriptionDto extends UtilisateurInscriptionDto {
     private String matricule;
     private long programme_id;
-    private List<Long> cv;
+    private File cv;
     private List<Long> internships_id;
 
-    public EtudiantInscriptionDto(String nom, String prenom, String phone, String email, String password, String matricule, long programme, List<Long> cv, List<Long> internships_id) {
+    public EtudiantInscriptionDto(String nom, String prenom, String phone, String email, String password, String matricule, long programme, File cv, List<Long> internships_id) {
         super(nom, prenom, phone, email, password);
         this.matricule = matricule;
         this.programme_id = programme;
@@ -33,7 +33,7 @@ public class EtudiantInscriptionDto extends UtilisateurInscriptionDto {
         super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getPassword());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
-        this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();
+        this.cv = etudiant.getCv() == null ? null : etudiant.getCv();
         this.internships_id = etudiant.getInternshipsCandidate() == null ? null : etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList();
     }
 

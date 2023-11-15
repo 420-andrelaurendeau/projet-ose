@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil, faSignature, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
@@ -14,6 +14,8 @@ import {useAuth} from "../../authentication/AuthContext";
 import {User} from "../../model/User";
 import {data} from "autoprefixer";
 import {useToast} from "../../hooks/state/useToast";
+import {getStageByEmployeurId, getStages} from "../../api/InternshipManagerAPI";
+
 
 interface Props {
     isModalOpen: boolean,
@@ -31,6 +33,23 @@ interface Props {
     onPageChange: (newPage: number) => void,
     numberElementByPage: number,
     page: number,
+    stageAgreement: any[],
+
+    pageAgreement: number,
+    totalPageAgreement: number,
+    handleChangeNumberElementAgreement:(event: React.ChangeEvent<HTMLSelectElement>) => void,
+    onPageChangeAgreement: (newPage: number) => void,
+    numberElementAgreementByPage: number,
+    agreementState: string,
+    setAgreementState: React.Dispatch<React.SetStateAction<string>>,
+    agreementIsUpdate: boolean
+    setAgreementIsUpdate: React.Dispatch<React.SetStateAction<boolean>>
+    sortAgreementField: string,
+    setAgreementSortField: React.Dispatch<React.SetStateAction<string>>,
+    sortAgreementDirection: string,
+    setAgreementSortDirection: React.Dispatch<React.SetStateAction<string>>,
+    setOnChangeAgreement: React.Dispatch<React.SetStateAction<boolean>>
+
     seasons: any[],
     selectedOption: string,
     handleOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
@@ -38,16 +57,32 @@ interface Props {
 
 function EmployeurHomePage() {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(0);
+
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
-    const [totalPages, setTotalPages] = useState(0);
+
     const [isModalOpen, setIsModalOpen] = useState(true)
     const [nbCandidature, setNbCandidature] = useState(0)
-    const { userEmail, userRole, logoutUser } = useAuth();
+    const {userEmail, userRole, logoutUser} = useAuth();
+
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [internshipsAgreement, setInternshipsAgreement] = useState([]);
+    const [offerState, setOfferState] = useState(undefined);
+    const [isUpdate, setIsUpdate] = useState(false);
+
+    const [numberElementAgreementByPage, setNumberElementAgreementByPage] = useState<number>(5)
+    const [totalAgreementPages, setTotalAgreementPages] = useState(0);
+    const [currentAgreementPage, setCurrentAgreementPage] = useState(0);
+    const [agreementState, setAgreementState] = useState(undefined);
+    const [isAgreementUpdate, setIsAgreementUpdate] = useState(false);
+    const [agreementSortField, setAgreementSortField] = useState("id");
+    const [agreementSortDirection, setAgreementSortDirection] = useState("asc");
+    const [onChangeAgreement, setOnChangeAgreement] = useState(false);
+
     const location = useLocation();
     const [seasons,setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
@@ -66,13 +101,37 @@ function EmployeurHomePage() {
     });
     const toast = useToast();
 
+    const fetchedInternshipsAgreementRef = useRef(false);
+
+    const fetchInternshipsAgreement = async (id: number) => {
+        try {
+            fetchedInternshipsAgreementRef.current = true
+            const response = await getStageByEmployeurId({
+                page: currentAgreementPage,
+                size: numberElementAgreementByPage,
+                sortField: agreementSortField,
+                sortDirection : agreementSortDirection,
+                session: selectedOption
+            }, id);
+            setInternshipsAgreement(response.content);
+            setTotalAgreementPages(response.totalPages);
+        } catch (error) {
+            console.log(error);
+            toast.error(fields.toast.errorFetchInternshipsAgreement)
+        } finally {
+            setIsUpdate(false);
+            fetchedInternshipsAgreementRef.current = false;
+        }
+    };
+
     useEffect(() => {
         const getUtilisateur = async () => {
-            let  data = null;
-            if (userEmail != null){
+            let data = null;
+            if (userEmail != null) {
                 console.log(userEmail)
                 data = await getUser(userEmail)
                 setUser(data)
+                fetchInternshipsAgreement(data.id).then(r => r)
             }
         }
         getUtilisateur().then(r => console.log(r))
@@ -82,7 +141,7 @@ function EmployeurHomePage() {
         console.log(user)
         if (userEmail)
             try {
-                UpdateOffers(userEmail,setOffers, setTotalPages,{
+                UpdateOffers(userEmail, setOffers, setTotalPages, {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
@@ -93,8 +152,15 @@ function EmployeurHomePage() {
                 console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             }
+    }, [currentPage, selectedOption, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
 
-    }, [currentPage, numberElementByPage, sortField, sortDirection,selectedOption]);
+    useEffect(() => {
+        if (user) {
+            fetchInternshipsAgreement(user.id).then(r => r)
+            setOnChangeAgreement(false)
+        }
+    }, [currentAgreementPage, selectedOption, agreementState, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, onChangeAgreement]);
+
 
     useEffect(() => {
         let i = 0;
@@ -117,6 +183,15 @@ function EmployeurHomePage() {
         setNumberElementByPage(Number(event.target.value));
     };
 
+    const handleAgreementChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentAgreementPage(0);
+        setNumberElementAgreementByPage(Number(event.target.value));
+    }
+
+    const handleAgreementPageChange = (newPage: number) => {
+        setCurrentAgreementPage(newPage);
+    }
+
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
@@ -126,11 +201,7 @@ function EmployeurHomePage() {
 
         setSelectedOption(selected);
         console.log(selected)
-
     };
-
-
-
 
     const context =  {
         isModalOpen: isModalOpen,
@@ -149,6 +220,22 @@ function EmployeurHomePage() {
         onPageChange: handlePageChange,
         numberElementByPage: numberElementByPage,
         page: currentPage,
+        stageAgreement: internshipsAgreement,
+
+        pageAgreement: currentAgreementPage,
+        totalPageAgreement: totalAgreementPages,
+        onPageChangeAgreement: handleAgreementPageChange,
+        handleChangeNumberElementAgreement: handleAgreementChangePage ,
+        numberElementAgreementByPage: numberElementAgreementByPage,
+        agreementState: agreementState,
+        setAgreementState: setAgreementState,
+        setAgreementIsUpdate:setIsAgreementUpdate,
+        agreementIsUpdate: isAgreementUpdate,
+        sortAgreementField: agreementSortField,
+        setAgreementSortField: setAgreementSortField,
+        sortAgreementDirection: agreementSortDirection,
+        setAgreementSortDirection: setAgreementSortDirection,
+        setOnChangeAgreement: setOnChangeAgreement,
         handleOptionChange: handleOptionChange,
         selectedOption: selectedOption
     }
@@ -218,4 +305,5 @@ function EmployeurHomePage() {
 export function useProps(){
     return useOutletContext<Props>();
 }
+
 export default EmployeurHomePage;

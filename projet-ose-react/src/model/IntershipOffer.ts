@@ -9,7 +9,7 @@ export interface InternshipOffer {
     startDate?: Date;
     endDate?: Date;
     internshipCandidates?: any[]; //TODO à remplacer par le bon type
-    file?: FileEntity;
+    file: FileEntity;
     state: string;
     offerReviewRequestId?: number;
     programmeId: number;

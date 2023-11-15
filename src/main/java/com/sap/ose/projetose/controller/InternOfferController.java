@@ -74,9 +74,11 @@ public class InternOfferController {
 
     @GetMapping("/OffersEtudiant")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
-    public List<InternOfferDto> getOffersEtudiant() {
-        List<InternOfferDto> offers = offerJobService.getInternOfferAccepted();
-        return offers;
+    public Page<InternOfferDto> getOffersEtudiant(@RequestParam(required = false, defaultValue = "0") int page,
+                                                  @RequestParam(required = false, defaultValue = "10") int size,
+                                                  @RequestParam(required = false, defaultValue = "id") String sortField,
+                                                  @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
+        return offerJobService.getInternOfferAccepted(page, size, sortField, sortDirection);
     }
 
     @GetMapping("/OffersEmp/{email}")

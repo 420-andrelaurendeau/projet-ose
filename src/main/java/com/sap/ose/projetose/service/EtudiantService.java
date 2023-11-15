@@ -5,11 +5,9 @@ import com.sap.ose.projetose.dto.*;
 import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.modeles.InternshipCandidates;
-import com.sap.ose.projetose.modeles.Programme;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
+import com.sap.ose.projetose.repository.FileEntityRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +21,16 @@ import java.util.Optional;
 @Service
 public class EtudiantService {
     private final EtudiantRepository etudiantRepository;
+    private final FileService fileService;
+    private final FileEntityRepository fileEntityRepository;
 
     private final ProgrammeService programmeService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService) {
+    public EtudiantService(EtudiantRepository etudiantRepository, FileService fileService, FileEntityRepository fileEntityRepository, ProgrammeService programmeService) {
         this.etudiantRepository = etudiantRepository;
+        this.fileService = fileService;
+        this.fileEntityRepository = fileEntityRepository;
         this.programmeService = programmeService;
     }
 
@@ -62,14 +64,14 @@ public class EtudiantService {
     public List<EtudiantDto> getEtudiants() {
         List<EtudiantDto> dtos = new ArrayList<>();
         for (Etudiant etudiant : etudiantRepository.findAll()) {
-            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv().stream().map(File::getId).toList(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
+            dtos.add(new EtudiantDto(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail(), etudiant.getMatricule(), etudiant.getProgramme().getId(), etudiant.getCv(), etudiant.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList()));
         }
         return dtos;
     }
 
     public EtudiantDto getEtudiantById(Long id) {
         Optional<Etudiant> etudiant = etudiantRepository.findById(id);
-        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv().stream().map(File::getId).toList(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
+        return etudiant.map(value -> new EtudiantDto(value.getNom(), value.getPrenom(), value.getPhone(), value.getEmail(), value.getMatricule(), value.getProgramme().getId(), value.getCv(), value.getInternshipsCandidate().stream().map(InternshipCandidates::getId).toList())).orElse(null);
     }
 
     Etudiant findEtudiantById(Long id) {
@@ -85,13 +87,22 @@ public class EtudiantService {
     @Transactional
     public EtudiantDto updateCVByMatricule(String matricule, File cv){
         Etudiant etudiant = findByMatricule(matricule);
-        List<File> cvs = new ArrayList<File>();
-        cvs.add(cv);
-        cv.setEtudiant(etudiant);
-        etudiant.setCv(cvs);
-        etudiantRepository.save(etudiant);
-        EtudiantDto etudiantDto = new EtudiantDto(etudiant);
-        return etudiantDto;
+        Optional<File> oldCv = fileEntityRepository.findByEtudiant_Id(etudiant.getId());
+        if(oldCv.isPresent()){
+            etudiant.setCv(null);
+            saveEtudiant(etudiant);
+            File old = oldCv.get();
+            old.setIsAccepted(State.PENDING);
+            old.setContent(cv.getContent());
+            old.setFileName(cv.getFileName());
+            old.setEtudiant(etudiant);
+            fileService.saveFile(old);
+        }else {
+            cv.setEtudiant(etudiant);
+            fileService.saveFile(cv);
+        }
+
+        return new EtudiantDto(etudiant);
     }
 
     Etudiant findByEmail(String courriel) {

@@ -4,6 +4,9 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import CV from './components/common/student/i18n/CV';
 import application from "./components/common/Employer/application/i18n/application";
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
+import contractPage from "./components/common/Employer/contract/i18n/contract";
+import header from "./pages/shared/i18n/homeI18N";
+import internshipAgreement from "./components/common/internshipManager/internshipsAgreement/agreement";
 
 
 i18n
@@ -24,8 +27,11 @@ i18n
             en: {
                 translation: {
                     formField: {
+                        internshipAgreement,
                         application,
                         employerOffer,
+                        contractPage,
+                        header,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",
@@ -47,6 +53,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refused by the student",
+                                    employer: "Refused by the employer",
                                 }
                             },
                         },
@@ -72,6 +82,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"An error occurred while fetching the offers",
                                 errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
@@ -327,6 +343,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'No offers available'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Internship for students'
@@ -374,7 +394,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Upload your CV',
+                                text: 'Your CV',
                             },
                             sidebar: {
                                 stage: {
@@ -424,6 +444,10 @@ i18n
                                 contract: {
                                     name: 'contract',
                                     text: "Contract"
+                                },
+                                internship: {
+                                    name: "internship",
+                                    text: "Internship"
                                 },
                                 pendingOffer: {
                                     name: 'pendingOffer',
@@ -481,6 +505,10 @@ i18n
                             contract: {
                                 name: 'totalContract',
                                 text: 'Contract'
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             offerTable: {
                                 titre: {
@@ -555,6 +583,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contract"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Internship"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',
@@ -667,8 +699,11 @@ i18n
             fr: {
                 translation: {
                     formField: {
+                        internshipAgreement,
                         application,
                         employerOffer,
+                        header,
+                        contractPage,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",
@@ -690,6 +725,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                sign: {
+                                    student: "Refuser par l'étudiant",
+                                    employer: "Refuser par l'employeur",
                                 }
                             },
                         },
@@ -715,6 +754,12 @@ i18n
                             toast:{
                                 errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
                                 errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
+                            },
+                            validation : {
+                                required : 'Le titre de l\'offre d\'emploi est requis',
+                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le titre contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
@@ -978,6 +1023,10 @@ i18n
 
                         },
                         EtudiantStage: {
+                            noOffers: {
+                                name: 'noOffers',
+                                text: 'Aucune offre disponible'
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Stages pour étudiants'
@@ -1025,7 +1074,7 @@ i18n
                             },
                             cv: {
                                 name: 'CV',
-                                text: 'Televerser votre CV',
+                                text: 'Votre CV',
                             },
                             interview : {
                                 name: 'Interview',
@@ -1076,6 +1125,10 @@ i18n
                                 contract: {
                                     name: 'contract',
                                     text: "Contrat"
+                                },
+                                internship: {
+                                    name: "internship",
+                                    text: "Stage"
                                 },
                                 pendingOffer: {
                                     name: 'pendingOffer',
@@ -1134,6 +1187,10 @@ i18n
                                 name: 'totalContract',
                                 text: 'Contrat'
                             },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
+                            },
                             offerTable: {
                                 titre: {
                                     name: 'titre',
@@ -1189,6 +1246,10 @@ i18n
                             contract : {
                                 name : 'contract',
                                 text : "Contrat"
+                            },
+                            internship: {
+                                name: "internship",
+                                text: "Stage"
                             },
                             pendingOffer : {
                                 name : 'pendingOffer',

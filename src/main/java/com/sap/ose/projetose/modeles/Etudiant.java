@@ -24,13 +24,13 @@ public class Etudiant extends Utilisateur{
     @JoinColumn(name = "programme_id")
     private Programme programme;
 
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
-    private List<File> cv;
+    @OneToOne(mappedBy = "etudiant", cascade = CascadeType.ALL)
+    private File cv;
 
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<InternshipCandidates> internshipsCandidate;
 
-    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
+    public Etudiant(long id,String nom, String prenom, String telephone, String email, String password, String matricule, Programme programme,File cv, List<InternshipCandidates> internshipsCandidate) {
         super(id, nom, prenom, telephone, Role.student, email, password);
         this.matricule = matricule;
         this.programme = programme;
@@ -38,7 +38,7 @@ public class Etudiant extends Utilisateur{
         this.internshipsCandidate = internshipsCandidate;
     }
 
-    public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,List<File> cv, List<InternshipCandidates> internshipsCandidate) {
+    public Etudiant(String nom, String prenom, String phone, String email, String matricule, Programme programme,File cv, List<InternshipCandidates> internshipsCandidate) {
         super(nom, prenom, phone,Role.student, email);
         this.matricule = matricule;
         this.programme = programme;

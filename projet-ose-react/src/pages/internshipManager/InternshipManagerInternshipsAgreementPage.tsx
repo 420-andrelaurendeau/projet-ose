@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {
     getIntershipOffers,
     getStageCountByState,
@@ -48,6 +48,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     const fetchedInternshipsAgreementCountRef = useRef(false);
     const location = useLocation();
     const toast = useToast();
+    const navigate = useNavigate();
 
     //TODO Temporaire
     const user = location.state;
@@ -142,17 +143,6 @@ const InternshipManagerInternshipsAgreementPage = () => {
         console.log(selected)
         setSelectedOption(selected);
 
-        if (selected === 'all') {
-            getAllOffers().then((res)=> {
-                //setOffers(res);
-            })
-        } else {
-            console.log(selected)
-            getOffersBySeason(selected).then((res)=> {
-                console.log(res)
-                //setOffers(res);
-            })
-        }
     };
 
     useEffect(() => {
@@ -161,6 +151,11 @@ const InternshipManagerInternshipsAgreementPage = () => {
         })
     }, []);
 
+    const handleOfferClick = (id: number) => {
+        console.log(id)
+        navigate(`/internshipmanager/home/internshipagreement/${id}`);
+    };
+
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
                                                  sortDirection={sortDirection}/>;
@@ -168,7 +163,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     return (
         <div className="px-4">
             <title>Offres</title>
-            <header className="pt-24 pb-4">
+            <header className="pt-4 pb-4">
                 <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">

@@ -13,23 +13,18 @@ interface GetInternshipOffersParams {
 
 export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection, session }: GetInternshipOffersParams) => {
     try {
-        if (session == "all")
-            session = "";
         const params: any = { page, size, sortField, sortDirection, session };
 
         if (state) {
             params.state = state;
         }
 
-        console.log(params)
-
         const response = await api.get('internshipManager/offers', {
             params: params,
             headers: {
-             //'Authorization': 'Bearer ' + localStorage.getItem('token')
+                //'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         });
-        console.log("sel: "+session)
         console.log('response', response.data);
         return response.data;
     } catch (error) {
@@ -42,7 +37,7 @@ export const getTotalOfferByState = async () => {
     try {
         const response = await api.get('internshipManager/count', {
             headers: {
-              //  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                //  'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         });
         console.log('response', response.data);
@@ -104,6 +99,29 @@ export const getStageCountByState = async () => {
     }
 }
 
+export const getStageCountByStateEmployeur = async (id:number) => {
+    try {
+        console.log(id)
+        const response = await api.get(`stage/countEmployeur/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+}
+
+export const getStageCountByStateStudent = async (id:number) => {
+    try {
+        console.log(id)
+        const response = await api.get(`stage/countStudent/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+}
+
+
 interface GetInternshipOffersParams {
     page: number;
     size: number;
@@ -125,7 +143,6 @@ export const getStages = async ({ page, size, state, sortField, sortDirection,se
         const response = await api.get('stage/stages', {
             params: params,
         });
-        console.log('sel: '+session)
         console.log('response', response.data);
 
         return response.data;
@@ -134,6 +151,40 @@ export const getStages = async ({ page, size, state, sortField, sortDirection,se
         throw error;
     }
 };
+
+export const getStageByEmployeurId = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams, id: number) => {
+    try {
+        const params: any = {page, size, sortField, sortDirection};
+        if (state) {
+            params.state = state;
+        }
+        const response = await api.get(`stage/employeurStage/${id}`, {
+            params: params
+        });
+        console.log('response', response.data)
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+}
+
+export const getStageByStudentId = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams, id: number) => {
+    try {
+        const params: any = {page, size, sortField, sortDirection};
+        if (state) {
+            params.state = state;
+        }
+        const response = await api.get(`stage/studentStage/${id}`, {
+            params: params
+        });
+        console.log('response', response.data)
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres de stage:', error);
+        throw error;
+    }
+}
 
 export const getContractById = async (id: string) => {
     try {

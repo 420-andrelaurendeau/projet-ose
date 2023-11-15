@@ -82,15 +82,31 @@ public class InternOfferService {
     }
 
     @Transactional
-    public List<InternOfferDto> getInternOfferAccepted() {
-        List<InternOffer> internOfferList = offerJobRepository.findAllApproved();
-        List<InternOfferDto> internOfferDtoList = new ArrayList<>();;
+    public Page<InternOfferDto> getInternOfferAccepted(int page, int size, String sortField, String sortDirection) {
 
-        for (InternOffer offre : internOfferList) {
-            InternOfferDto internOfferDto = new InternOfferDto(offre);
-            internOfferDtoList.add(internOfferDto);
+        Sort sort = null;
+        try {
+            sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                    Sort.by(sortField).descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<InternOfferDto> pageOffer;
+            pageOffer = offerJobRepository.findAllApproved(pageable).map(InternOfferDto::new);
+            return pageOffer;
+        } catch (PropertyReferenceException e) {
+            logger.error("Le champ de tri n'est pas valide : " + sort);
+            assert sort != null;
+            throw new BadSortingFieldException(sort.toString());
+        } catch (IllegalArgumentException e) {
+            logger.error("L'état de l'offre d'emploi est invalide : " + sort);
+            assert sort != null;
+            throw new InvalidStateException(sort.toString());
+        } catch (DataAccessException e) {
+            logger.error("Erreur d'accès à la base de données lors de la récupération des offres d'emploi.", e);
+            throw new DatabaseException();
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres d'emploi.", e);
+            throw new ServiceException("Erreur lors de la récupération des offres d'emploi.");
         }
-        return internOfferDtoList;
     }
 
     @Transactional

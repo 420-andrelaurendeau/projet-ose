@@ -1,11 +1,11 @@
 package com.sap.ose.projetose.dto;
 
-import com.sap.ose.projetose.repository.Contract;
-import jakarta.persistence.Lob;
+import com.sap.ose.projetose.modeles.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.Base64;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,10 @@ public class ContractDto {
     public boolean signatureInternShipManager;
     public boolean signatureEmployer;
     public boolean signatureStudent;
-    public String contract;
+    public long fileId;
+    public String content;
+    public String fileName;
+
 
     public ContractDto(Contract contract) {
         this.id = contract.getId();
@@ -29,6 +32,8 @@ public class ContractDto {
         this.signatureInternShipManager = contract.isSignatureInternShipManager();
         this.signatureEmployer = contract.isSignatureEmployer();
         this.signatureStudent = contract.isSignatureStudent();
-        this.contract = contract.getContract();
+        this.content = Base64.getEncoder().encodeToString(contract.getFile().getContent());
+        this.fileName = contract.getFile().getFileName();
+        this.fileId = contract.getFile().getId();
     }
 }

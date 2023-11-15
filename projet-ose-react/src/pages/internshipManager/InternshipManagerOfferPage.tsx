@@ -5,7 +5,8 @@ import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
 import {InternshipOffer} from "../../model/IntershipOffer";
 import InternshipManagerOfferDetails from "../../components/common/internshipManager/offer/InternshipManagerOfferDetails";
 import InternshipManagerOfferReviewForm from "../../components/common/internshipManager/offer/InternshipManagerOfferReviewForm";
-import {ToastContext} from "../../hooks/context/ToastContext"; // Adjust the import path to where your SVG is located
+import {ToastContext} from "../../hooks/context/ToastContext";
+import {useAuth} from "../../authentication/AuthContext"; // Adjust the import path to where your SVG is located
 
 const ErrorModal: React.FC<{ errorMessage: string; onClose: () => void }> = ({errorMessage, onClose}) => {
     return (
@@ -25,6 +26,7 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
     const [internshipOffer, setinternshipOffer] = useState<InternshipOffer>();
     const [isUpdate, setIsUpdate] = useState(false);
 
+    
     const [formStateOffer, setFormState] = React.useState({
         comment: "", state: "", internOfferId: 0, internshipmanagerId: 6,
     });
@@ -156,7 +158,7 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
     return (<>
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
-            <div className={"dark:bg-dark pt-24 px-4 h-screen"}>
+            <div className={"dark:bg-dark pt-4 px-4 min-h-screen overflow-auto"}>
                 <InternshipManagerOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}

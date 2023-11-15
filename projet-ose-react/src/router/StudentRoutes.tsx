@@ -8,20 +8,34 @@ import UploadCVForm from "../components/common/student/form/UploadCVForm";
 import StudentAppliedOffers from "../components/common/student/offers/StudentAppliedOffers";
 import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import StudentStagePage from "../pages/student/StudentStagePage";
+import Layout from "../components/layout/Layout";
+import CVStudant from "../components/common/student/CVStudant";
+import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
+import {pdfjs} from "react-pdf/dist/esm";
+import StudentContractPage from "../components/common/student/studentContractPage";
+import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
             <Routes>
-                <Route path="/home/" element={<StudentInternshipPage/>}>
-                    <Route path="offers" element={<StudentInternship/>}/>
-                    <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                    <Route path="cv" element={<UploadCVForm/>}/>
-                    <Route path="interview" element={<StudentInterviewPage/>}/>
+                <Route path="/" element={<Layout/>}>
+                    <Route index path="home" element={<StudentInternshipPage/>}/>
+                    <Route path="home" element={<StudentInternshipPage/>}>
+                        <Route path="offers" element={<StudentInternship/>}/>
+                        <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
+                        <Route path="cv" element={<UploadCVForm/>}/>
+                        <Route path="upload" element={<CVStudant/>}/>
+                        <Route path="interview" element={<StudentInterviewPage/>}/>
+                        <Route path="*" element={<ErrorPage/>}/>
+                        <Route path="stage" element={<StudentStagePage />}/>
+                        <Route path="contract" element={<StudentContractPage />}/>
+                        <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
+                            <Route path=":fileName" element={<ViewPDFModal/>}/>
+                        </Route>
+                    </Route>
                     <Route path="*" element={<ErrorPage/>}/>
-                    <Route path="stage" element={<StudentStagePage />}/>
                 </Route>
-                <Route path="*" element={<ErrorPage/>}/>
             </Routes>
         </ProtectedRoute>
     );

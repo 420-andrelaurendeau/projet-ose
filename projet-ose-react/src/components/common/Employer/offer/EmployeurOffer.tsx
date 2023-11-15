@@ -44,11 +44,6 @@ export default function EmployeurOffer() {
     }
 
 
-    useEffect(() => {
-        console.log(offers)
-    }, [offers]);
-
-
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
