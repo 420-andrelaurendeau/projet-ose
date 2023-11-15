@@ -13,6 +13,8 @@ interface GetInternshipOffersParams {
 
 export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection, session }: GetInternshipOffersParams) => {
     try {
+        if (session == "all")
+            session = "";
         const params: any = { page, size, sortField, sortDirection, session };
 
         if (state) {
