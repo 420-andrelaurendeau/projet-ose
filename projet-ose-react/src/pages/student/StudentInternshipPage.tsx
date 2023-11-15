@@ -23,6 +23,7 @@ interface Props {
     appliedOffers: AppliedOffers[];
     setAppliedOffers: React.Dispatch<React.SetStateAction<AppliedOffers[]>>;
     offers: any[];
+    setOffers: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 function StudentInternshipPage() {
@@ -38,6 +39,8 @@ function StudentInternshipPage() {
     const [sortDirection, setSortDirection] = useState("asc");
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
     const isLoading = useRef(false);
 
@@ -49,7 +52,7 @@ function StudentInternshipPage() {
                 .then((resUser) => {
                     setUser(resUser);
                     console.log(resUser);
-                    getStudentAppliedOffers(resUser.id).then((res) => {
+                    getStudentAppliedOffers(resUser.id, {selectedOption}).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
@@ -64,6 +67,7 @@ function StudentInternshipPage() {
         };
         if (!isLoading.current) fetchUser();
     }, []);
+
 
     useEffect(() => {
         const fetchOffers = async () => {
@@ -86,6 +90,7 @@ function StudentInternshipPage() {
         appliedOffers: listStudentAppliedOffers,
         setAppliedOffers: setListStudentAppliedOffers,
         offers: offers,
+        setOffers: setOffers
     };
 
     return (

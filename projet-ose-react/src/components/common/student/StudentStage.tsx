@@ -26,11 +26,14 @@ function StudentStage() {
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     const token = localStorage.getItem('token');
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
+
 
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
-                getStudentAppliedOffers(res.id).then((res) => {
+                getStudentAppliedOffers(res.id,{selectedOption}).then((res) => {
                     setAppliedOffers(res);
                 })
             }

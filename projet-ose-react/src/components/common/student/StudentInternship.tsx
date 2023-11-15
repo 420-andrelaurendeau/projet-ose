@@ -11,7 +11,7 @@ import {
     allStudentInternshipOffersBySeason,
     getStudentAppliedOffers,
     getAllSeasons,
-    allStudentInternshipOffers, getOfferApprovedSeasons,
+    allStudentInternshipOffers, getOfferApprovedSeasons, allStudentOffers,
 } from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 
@@ -21,8 +21,8 @@ function StudentInternship() {
     let anError = false;
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [seasons,setSeasons] = useState([])
-    const {offers} = useProps();
-    const [selectedOption, setSelectedOption] = useState('all');
+    const {offers, setOffers} = useProps();
+    const [selectedOption, setSelectedOption] = useState('');
 
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
@@ -33,7 +33,7 @@ function StudentInternship() {
         if (!isloading.current)
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
-            getStudentAppliedOffers(res.id).then((res) => {
+            getStudentAppliedOffers(res.id, {selectedOption}).then((res) => {
                 setAppliedOffers(res);
             })
 
@@ -42,7 +42,7 @@ function StudentInternship() {
             })
             }
         ).finally(() => {
-            allStudentInternshipOffers().then((res)=> {
+            allStudentOffers().then((res)=> {
                 setOffers(res);
             })
         })
@@ -59,17 +59,6 @@ function StudentInternship() {
         console.log(selected)
         setSelectedOption(selected);
 
-        if (selected === 'all') {
-            allStudentInternshipOffers().then((res)=> {
-                setOffers(res);
-            })
-        } else {
-            console.log(selected)
-            allStudentInternshipOffersBySeason(selected).then((res)=> {
-                console.log(res)
-                setOffers(res);
-            })
-        }
     };
 
     const applyOffer = (offer: any, student: any) => {

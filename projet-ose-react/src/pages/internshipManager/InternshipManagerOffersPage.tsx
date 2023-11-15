@@ -14,7 +14,7 @@ const InternshipManagerOffersPage = () => {
     const [offers, setOffers] = useState([]);
 
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('all');
+    const [selectedOption, setSelectedOption] = useState('');
 
 
     const [currentPage, setCurrentPage] = useState(0);

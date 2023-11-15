@@ -13,6 +13,7 @@ import InternshipManagerInternshipsAgreement
 import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
+import {selectOptions} from "@testing-library/user-event/dist/select-options";
 
 export default function StudentContractPage() {
 
@@ -35,6 +36,8 @@ export default function StudentContractPage() {
     const [totalDeclined, setTotalDeclined] = useState(0);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
     const navigate = useNavigate();
     const handleTotalOffersByState = async (id: number) => {
@@ -66,7 +69,8 @@ export default function StudentContractPage() {
                 size: numberElementByPage,
                 state: state,
                 sortField: sortField,
-                sortDirection: sortDirection
+                sortDirection: sortDirection,
+                session:selectedOption
             }, id);
             console.log("REPSONSE!!")
             console.log(response)
@@ -80,6 +84,15 @@ export default function StudentContractPage() {
             internshipAgreementRef.current = false;
         }
     };
+
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+    };
+
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
@@ -154,6 +167,9 @@ export default function StudentContractPage() {
                         onPageChange={handlePageChange}
                         numberElement={numberElementByPage}
                         handleChangeNumberElement={handleChangePage}
+                        selectedOption={selectedOption}
+                        handleOptionChange={handleOptionChange}
+                        seasons={seasons}
                     />
                 </div>
             </main>

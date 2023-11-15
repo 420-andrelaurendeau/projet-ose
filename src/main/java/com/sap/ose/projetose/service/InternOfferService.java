@@ -90,7 +90,7 @@ public class InternOfferService {
                     Sort.by(sortField).descending();
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
-            pageOffer = offerJobRepository.findAllApproved(pageable).map(InternOfferDto::new);
+            pageOffer = offerJobRepository.findAllApprovedPageable(pageable).map(InternOfferDto::new);
             return pageOffer;
         } catch (PropertyReferenceException e) {
             logger.error("Le champ de tri n'est pas valide : " + sort);
@@ -156,7 +156,7 @@ public class InternOfferService {
     @Transactional
     public List<InternOfferDto> getStudentInternOffers() {
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        for (InternOffer offer : offerJobRepository.findAllApproved()) {
+            for (InternOffer offer : offerJobRepository.findAllApproved()) {
             internOfferDtoList.add(new InternOfferDto(offer));
         }
         System.out.println(internOfferDtoList);

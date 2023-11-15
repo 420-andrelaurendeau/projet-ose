@@ -15,8 +15,10 @@ import java.util.List;
 @Repository
 public interface InternOfferRepository extends JpaRepository<InternOffer, Long> {
     @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
-    Page<InternOffer> findAllApproved(Pageable pageable);
+    Page<InternOffer> findAllApprovedPageable(Pageable pageable);
 
+    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
+    List<InternOffer> findAllApproved();
     @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.PENDING")
     List<InternOffer> findAllPending();
 

@@ -50,7 +50,16 @@ export const allStudentInternshipOffers = async (): Promise<any[]> => {
     }
 }
 
-//const response = await apiClient.get('interOfferJob/student/allOffers'); Mehdi
+export const allStudentOffers = async (): Promise<any[]> => {
+    try {
+        const response = await apiClient.get('interOfferJob/student/allOffers');
+        return response.data
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers' + err)
+        throw err
+    }
+}
+
 //const response = await apiClient.get('interOfferJob/OffersEtudiant'); Robin
 
 export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: number) => {
@@ -191,9 +200,11 @@ export const getInterOfferStudent = async (params:{}) => {
 }
 
 
-export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
+export const getStudentAppliedOffers = async (studentId: number,params:{}): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/student/' + studentId + '/offersApplied');
+        const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
+            params: params
+        });
         return response.data.map((item: any) => ({
                 appliedOffer: item.appliedOffer,
                 appliedFiles: item.appliedFiles
