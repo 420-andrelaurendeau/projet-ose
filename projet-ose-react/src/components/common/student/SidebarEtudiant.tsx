@@ -33,7 +33,7 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{t('formField.Header.sidebar.stage.text')}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">{t('SideBarEtudiant.stage.text')}</p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -46,8 +46,9 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileArrowDown} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{t('formField.Header.sidebar.offre_applique.text')}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">{t('SideBarEtudiant.offre_applique.text')}</p>
                                 </NavLink>
+
                             </li>
                         </ul>
                     </div>

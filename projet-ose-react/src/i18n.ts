@@ -7,6 +7,9 @@ import employerOffer from "./components/common/Employer/offer/i18n/offer";
 import contractPage from "./components/common/Employer/contract/i18n/contract";
 import header from "./pages/shared/i18n/homeI18N";
 import {StudentInternshipI18n} from "./components/common/student/i18n/StudentInternshipI18n";
+import SidebarEtudiant from "./components/common/student/SidebarEtudiant";
+import {SideBarEtudiantI18n} from "./components/common/student/i18n/SideBarEtudiantI18n";
+import {StudentInternshipPagei18n} from "./pages/student/i18n/StudentInternshipPagei18n";
 
 
 i18n
@@ -600,6 +603,8 @@ i18n
                     },
                     cv: CV.en,
                     StudentInternship: StudentInternshipI18n.en,
+                    StudentInternshipPage:StudentInternshipPagei18n.en,
+                    SideBarEtudiant: SideBarEtudiantI18n.en,
                     StudentInterview: {
                         table: {
                             name: 'table',
@@ -1198,7 +1203,9 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInternshipPage:StudentInternshipPagei18n.fr,
                     StudentInternship: StudentInternshipI18n.fr,
+                    SideBarEtudiant: SideBarEtudiantI18n.fr,
                     StudentInterview: {
                         table: {
                             name: 'table',

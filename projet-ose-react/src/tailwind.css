@@ -2642,18 +2642,9 @@ video {
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
   }
 
-  .sm\:rounded-lg {
-    border-radius: 0.5rem;
-  }
-
   .sm\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
-  }
-
-  .sm\:px-10 {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
   }
 
   .sm\:px-4 {
