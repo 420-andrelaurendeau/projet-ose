@@ -39,13 +39,6 @@ const StudentOfferDetails: React.FC<any> = () => {
         return prog;
     };
 
-    const applyOffer = (offer: any, student: any) => {
-        console.log(offer);
-        console.log(student);
-
-
-    }
-
     const getFileSize = (): string => {
         let sizeInBytes = 0
         if (internshipOffer?.file?.content){
@@ -97,16 +90,7 @@ const StudentOfferDetails: React.FC<any> = () => {
                 <div className="py-6">
                     <div className="flex items-center justify-between">
                         <h2 className="text-lg font-bold">
-                            <button
-                                onClick={() => applyOffer(internshipOffer, props.user)}
-                                type="submit"
-                                disabled={
-                                    props.appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === internshipOffer.id) != null
-                                }
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-red dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            >
-                                {fields.apply.text}
-                            </button>
+                            {internshipOffer?.title}
                         </h2>
                         <div className="flex gap-2">
                             <button

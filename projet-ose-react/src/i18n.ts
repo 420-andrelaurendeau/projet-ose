@@ -366,6 +366,10 @@ i18n
                                 apply: {
                                     name: 'apply',
                                     text: 'Apply',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'View',
                                 }
                             },
                             empty: {
@@ -1047,6 +1051,10 @@ i18n
                                 apply: {
                                     name: 'Apply',
                                     text: 'Postuler',
+                                },
+                                view: {
+                                    name: 'view',
+                                    text: 'Voir',
                                 }
                             },
                             empty: {

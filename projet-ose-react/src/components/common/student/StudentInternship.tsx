@@ -18,7 +18,6 @@ import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 interface Props {
     user: any;
     appliedOffers: AppliedOffers[];
-    setAppliedOffers: (appliedOffers: AppliedOffers[]) => void;
 }
 
 function StudentInternship() {
@@ -103,7 +102,6 @@ function StudentInternship() {
     const context:Props = {
         user: user,
         appliedOffers: appliedOffers,
-        setAppliedOffers: setAppliedOffers,
     }
 
     return (
@@ -211,14 +209,21 @@ function StudentInternship() {
                                                 <td className="px-6 py-4 break-all">
                                                     <div className="text-sm dark:text-offwhite">{offer.employeurEntreprise}</div>
                                                 </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">
+                                                    <div className="flex space-x-1 items-center">
+                                                        <p className="text-black dark:text-white">{fields.stage.view.text}</p>
+                                                        <FontAwesomeIcon icon={faEye}
+                                                                         className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                                         onClick={() => handleOfferClick(offer.id!)}
+                                                        />
+                                                    </div>
                                                     <button
-                                                                     className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                                     onClick={() => applyOffer(offer, user, cv)}
-                                                                     type="submit"
-                                                                     disabled={
-                                                                         appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
-                                                                     }
+                                                        onClick={() => applyOffer(offer, user, cv)}
+                                                        type="submit"
+                                                        disabled={
+                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                        }
+                                                        className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                     >
                                                         {fields.stage.apply.text}
                                                     </button>
