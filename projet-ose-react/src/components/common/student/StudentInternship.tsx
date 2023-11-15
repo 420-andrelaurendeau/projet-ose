@@ -4,10 +4,16 @@ import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
 import {offresEtudiant, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {
+    allStudentInternshipOffersBySeason,
+    getStudentAppliedOffers,
+    getAllSeasons,
+    allStudentInternshipOffers, getOfferApprovedSeasons, allStudentOffers,
+} from "../../../api/InterOfferJobAPI";
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
@@ -23,6 +29,8 @@ function StudentInternship() {
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
     const [offers, setOffers] = useState<any[]>([])
     const [cv,setCv] = useState<FileEntity>()
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
@@ -32,10 +40,12 @@ function StudentInternship() {
     useEffect(() => {
         if (!isloading.current)
         getUser(auth.userEmail!).then((res) => {
-            console.log(res);
                 setUser(res);
             getStudentAppliedOffers(res.id).then((res) => {
                 setAppliedOffers(res);
+            })
+            getOfferApprovedSeasons().then((res)=>{
+                setSeasons(res);
             })
             fetchDefaultCvByStudentId(res.id).then((res) => {
                 setCv(res)
@@ -49,6 +59,13 @@ function StudentInternship() {
         })
     }, []);
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+    };
 
     const applyOffer = (offer: any, student: any, cv: any) => {
         console.log(offer);
@@ -87,6 +104,17 @@ function StudentInternship() {
                         <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {t("formField.EtudiantStage.titre.text")}
                         </h1>
+                        <div>
+                            <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                            <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                                <option value="all">Tout</option>
+                                {seasons.map((season: string, index: number) => (
+                                    <option key={index} value={season}>
+                                        {season}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className="w-full divide-y divide-gray dark:divide-darkgray">
                                 <thead className="bg-blue dark:bg-orange ">

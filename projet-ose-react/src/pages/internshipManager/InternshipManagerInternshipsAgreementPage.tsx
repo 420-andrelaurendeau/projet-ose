@@ -16,10 +16,15 @@ import InternshipManagerInternshipsAgreementDashoardHeader
     from "../../components/common/internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import InternshipManagerInternshipsAgreement
     from "../../components/common/internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreement";
+import {getAllOffers, getAllSeasons, getOffersBySeason} from "../../api/InterOfferJobAPI";
 
 
 const InternshipManagerInternshipsAgreementPage = () => {
     const [internshipsAgreement, setInternshipsAgreement] = useState([]);
+
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('all');
+
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -59,7 +64,8 @@ const InternshipManagerInternshipsAgreementPage = () => {
                     size: numberElementByPage,
                     state: offerState,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session: selectedOption
                 });
                 setInternshipsAgreement(response.content);
                 setTotalPages(response.totalPages);
@@ -131,6 +137,20 @@ const InternshipManagerInternshipsAgreementPage = () => {
         setCurrentPage(0);
     };
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        console.log(selected)
+        setSelectedOption(selected);
+
+    };
+
+    useEffect(() => {
+        getAllSeasons().then((res)=>{
+            setSeasons(res)
+        })
+    }, []);
+
     const handleOfferClick = (id: number) => {
         console.log(id)
         navigate(`/internshipmanager/home/internshipagreement/${id}`);
@@ -138,7 +158,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
 
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
-                                                 sortDirection={sortDirection} handleOfferClick={handleOfferClick}/>;
+                                                 sortDirection={sortDirection}/>;
 
     return (
         <div className="px-4">
@@ -166,6 +186,9 @@ const InternshipManagerInternshipsAgreementPage = () => {
                         onPageChange={handlePageChange}
                         numberElement={numberElementByPage}
                         handleChangeNumberElement={handleChangePage}
+                        selectedOption={selectedOption}
+                        handleOptionChange={handleOptionChange}
+                        seasons={seasons}
                     />
                 </div>
             </main>

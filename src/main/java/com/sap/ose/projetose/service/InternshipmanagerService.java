@@ -122,12 +122,17 @@ public class InternshipmanagerService {
         }
     }
 
-    public Page<InternOfferDto> getSortedOffersByPage(int page, int size, String state, String sortField, String sortDirection) {
+    public Page<InternOfferDto> getSortedOffersByPage(int page, int size, String state, String sortField, String sortDirection, String session) {
         try {
 
             Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                     Sort.by(sortField).descending();
-            return internOfferService.getSortedByPage(page, size, sort, state);
+            Page<InternOfferDto> pageOffersDto = internOfferService.getSortedByPage(page, size, sort, state,session);
+            return pageOffersDto;
+        } catch (BadSortingFieldException e) {
+            throw e;
+        } catch (InvalidStateException e) {
+            throw e;
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des offres de stage", e);
             throw e;

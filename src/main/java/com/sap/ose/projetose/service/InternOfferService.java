@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.exception.*;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +59,7 @@ public class InternOfferService {
             InternOffer internOffer = new InternOffer(internOfferDto.fromDto());
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
+            internOffer.setSession(getInternOfferByDates(internOfferDto.fromDto().getStartDate()));
             internOffer.setState(State.PENDING);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
@@ -87,7 +90,7 @@ public class InternOfferService {
                     Sort.by(sortField).descending();
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
-            pageOffer = offerJobRepository.findAllApproved(pageable).map(InternOfferDto::new);
+            pageOffer = offerJobRepository.findAllApprovedPageable(pageable).map(InternOfferDto::new);
             return pageOffer;
         } catch (PropertyReferenceException e) {
             logger.error("Le champ de tri n'est pas valide : " + sort);
@@ -153,23 +156,23 @@ public class InternOfferService {
     @Transactional
     public List<InternOfferDto> getAllInternOffers() {
         List<InternOfferDto> internOfferDtoList = new ArrayList<>();
-        for (InternOffer offer : offerJobRepository.findAll()) {
+            for (InternOffer offer : offerJobRepository.findAllApproved()) {
             internOfferDtoList.add(new InternOfferDto(offer));
         }
         return internOfferDtoList;
     }
 
     @Transactional
-    public Page<InternOfferDto> getSortedByPage(int page, int size, Sort sort, String state) {
+    public Page<InternOfferDto> getSortedByPage(int page, int size, Sort sort, String state, String session) {
         try {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
 
             if (state == null)
-                pageOffer = offerJobRepository.findAll(pageable).map(InternOfferDto::new);
+                pageOffer = offerJobRepository.findAllBySession(pageable, session).map(InternOfferDto::new);
             else {
                 State stateEnum = State.valueOf(state);
-                pageOffer = offerJobRepository.findAllByState(stateEnum, pageable).map(InternOfferDto::new);
+                pageOffer = offerJobRepository.findAllByStateAndSession(stateEnum, session, pageable).map(InternOfferDto::new);
             }
 
             return pageOffer;
@@ -228,8 +231,9 @@ public class InternOfferService {
         return internOfferDtos;
     }
 
+
     @Transactional
-    public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection) {
+    public Page<InternOfferDto> getInternOfferByEmployeurEmail(String email, int page, int size, String sortField, String sortDirection,String session) {
 
         Sort sort = null;
         try {
@@ -238,7 +242,7 @@ public class InternOfferService {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternOfferDto> pageOffer;
             Long id = employeurRepository.findByEmail(email).get().getId();
-            pageOffer = offerJobRepository.findAllById(id, pageable).map(InternOfferDto::new);
+            pageOffer = offerJobRepository.findAllById(id,session, pageable).map(InternOfferDto::new);
             return pageOffer;
         } catch (PropertyReferenceException e) {
             logger.error("Le champ de tri n'est pas valide : " + sort);
@@ -262,4 +266,96 @@ public class InternOfferService {
         return new InternOfferDto(internOffer);
     }
 
+    public String getInternOfferByDates(LocalDate date){
+        int month = date.getMonthValue();
+
+        if (month >= 3 && month <= 5) {
+            return "Spring"+date.getYear();
+        } else if (month >= 6 && month <= 8) {
+            return "Summer"+date.getYear();
+        } else if (month >= 9 && month <= 11) {
+            return "Autumn"+date.getYear();
+        } else if (month == 12 || month <= 2) {
+           return "Winter"+date.getYear();
+        }else {
+            return "No specific offers for this month";
+        }
+
+    }
+
+    public List<String> getAllOfferSeasons() {
+        return offerJobRepository.getAllOfferSeasons();
+    }
+
+    public List<String> getOfferApprovedSeasons(){
+        return offerJobRepository.getOfferApprovedSeasons();
+    }
+
+    @Transactional
+    public List<InternOfferDto> getStudentOfferBySeason(String season) {
+        List<InternOffer> internOffers = offerJobRepository.getStudentOffersBySeason(season);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtoList;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getEmployeurOfferBySeason(String selectedOption, String email) {
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersSeasonById(selectedOption, id);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtoList;
+    }
+
+    @Transactional
+    public List<String> getEmployeurSeasonsOffers(String email){
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<String> seasons = offerJobRepository.findEmployeurOffersSeasons(id);
+
+        return seasons;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getOffersByEmployeurEmail(String email){
+        Long id = employeurRepository.findByEmail(email).get().getId();
+        List<InternOffer> internOffers = offerJobRepository.findInternOffersById(id);
+        List<InternOfferDto> internOfferDtoList = new ArrayList<>();
+
+        for (InternOffer i : internOffers){
+            internOfferDtoList.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtoList;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getAllOffers() {
+        List<InternOffer> internOffers = offerJobRepository.findAll();
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer i : internOffers){
+            internOfferDtos.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtos;
+    }
+
+    @Transactional
+    public List<InternOfferDto> getOfferBySeason(String session) {
+        List<InternOffer> internOffers = offerJobRepository.findOfferBySeason(session);
+        List<InternOfferDto> internOfferDtos = new ArrayList<>();
+        for(InternOffer i : internOffers){
+            internOfferDtos.add(new InternOfferDto(i));
+        }
+
+        return internOfferDtos;
+    }
 }
