@@ -86,7 +86,7 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.of(2024, 10,20),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 
@@ -104,7 +104,6 @@ public class ProjetOseApplication implements CommandLineRunner {
                 bos.write(buffer, 0, read);
             }
             fis.close();
-
 
 
             byte[] byteArray = bos.toByteArray();
