@@ -21,6 +21,7 @@ function UploadCVForm(): ReactElement {
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
     const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [viewedPdf, setViewedPdf] = useState({} as ReviewFile);
     const auth = useAuth();
 
     const [errors, setErrors] = useState<{
@@ -259,6 +260,7 @@ function UploadCVForm(): ReactElement {
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                     onClick={() => {
+                                        setViewedPdf(file)
                                         setIsModalOpen(true)
                                     }}
                             >
@@ -289,12 +291,13 @@ function UploadCVForm(): ReactElement {
                             </button>
                         </div>
                     </div>
-                    {
-                        file && isModalOpen &&
-                        <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
-                    }
+
                 </>
             )}
+            {
+                viewedPdf && isModalOpen &&
+                <ViewPDFModal ismodal={true} file={viewedPdf} setIsModalOpen={setIsModalOpen} />
+            }
         </div>
     )
 }
