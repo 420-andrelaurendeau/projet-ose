@@ -111,7 +111,6 @@ function StudentInternshipPage() {
     const handleOptionChange = async (event: any) => {
         const selected = event.target.value;
         setSelectedOption(selected);
-
     };
 
     const context = {

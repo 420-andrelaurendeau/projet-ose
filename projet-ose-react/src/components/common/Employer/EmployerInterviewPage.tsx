@@ -6,6 +6,7 @@ import {getUser} from "../../../api/UtilisateurAPI";
 import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/StudentApi";
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
+import {getAllSeasons} from "../../../api/InterOfferJobAPI";
 
 export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
@@ -16,21 +17,26 @@ export const EmployerInterviewPage = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
 
             getUser(auth.userEmail!)
-                .then((resUser) => {
+                .then(async (resUser) => {
                     setUser(resUser);
                     console.log(resUser);
+                    let res = await getAllSeasons()
+                    setSeasons(res)
+
                     fetchInterviewsEmployer(resUser.id, {
                         page: currentPage,
                         size: numberElementByPage,
                         sortField: "id",
                         sortDirection: "desc",
-
+                        session: selectedOption
                     }).then((res: any) => {
                         setInterviews(res.content);
                         setTotalPages(res.totalPages);
@@ -52,6 +58,11 @@ export const EmployerInterviewPage = () => {
     const handleChangeNbElement = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
+    };
+
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+        setSelectedOption(selected);
     };
 
     const getInterviewFromId = (id: number) => {
@@ -194,7 +205,12 @@ export const EmployerInterviewPage = () => {
                                        totalPages={totalPages}
                                        onPageChange={handlePageChange}
                                        numberElement={numberElementByPage}
-                                       handleChangeNumberElement={handleChangeNbElement}/>
+                                       handleChangeNumberElement={handleChangeNbElement}
+                                       selectedOption=""
+                                       handleOptionChange={() => {}}
+                                       seasons={["",""]}
+                        />
+
                     </div>
                 </div>
             </div>
