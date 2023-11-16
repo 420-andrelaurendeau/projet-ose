@@ -11,6 +11,8 @@ export default function StudentAppliedOffers() {
     const {t} = useTranslation();
     const [appliedOffers, setAppliedOffers] = useState<AppliedOffers[]>([])
     let user = useLocation().state;
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
 
     const fetchData = async () => {

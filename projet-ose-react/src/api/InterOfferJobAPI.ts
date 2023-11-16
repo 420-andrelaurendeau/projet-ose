@@ -3,6 +3,7 @@ import {InternshipOffer} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
+import {useAuth} from "../authentication/AuthContext";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
 
@@ -16,9 +17,10 @@ const apiClient = axios.create({
     },
 });
 
-export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
+export async function offresEtudiant(setOffers: any, setTotalPages: any, params: {}) {
     const loadOffers = async () => {
         try {
+            console.log(params)
             const data = await getInterOfferStudent(params);
             console.log(data);
             setOffers(data.content);
@@ -27,18 +29,40 @@ export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
             console.error('Erreur lors du chargement des offres:', error);
         }
     };
-    loadOffers().then(r => console.log(r))
+    await loadOffers()
 }
+
+export const allStudentInternshipOffersBySeason = async (selectedOption: string): Promise<any[]> => {
+    try {
+        const response = await apiClient.get('interOfferJob/student/season/'+selectedOption);
+        return response.data;
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers', err);
+        throw err;
+    }
+};
 
 export const allStudentInternshipOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/OffersEtudiant');
+        const response = await apiClient.get('interOfferJob/allOffers');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)
         throw err
     }
 }
+
+export const allStudentOffers = async (): Promise<any[]> => {
+    try {
+        const response = await apiClient.get('interOfferJob/student/allOffers');
+        return response.data
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers' + err)
+        throw err
+    }
+}
+
+//const response = await apiClient.get('interOfferJob/OffersEtudiant'); Robin
 
 export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: number) => {
     const interOfferJobDto = {
@@ -99,8 +123,7 @@ export const getAllPendingInterOfferJob = async (): Promise<InternshipOffer[]> =
 
 export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequest) => {
     try {
-        console.log(offerReviewRequest)
-        const response = await apiClient.post('offerReviewRequest/save', offerReviewRequest);
+        const response = await api.post('offerReviewRequest/save', offerReviewRequest);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
@@ -134,11 +157,42 @@ export const getInterOfferJob = async (email: string, params:{}) => {
 
 }
 
+export const allEmployeurInternshipOffersBySeason = async (selectedOption: string,email: string)=>{
+    try {
+        const response = await apiClient.get('interOfferJob/'+email+'/season/'+selectedOption);
+        return response.data;
+    } catch (err) {
+        console.log('Error while getting interOfferJob/allOffers', err);
+        throw err;
+    }
+}
+
+export async function getEmployeurSeason(email: string){
+    try{
+        const response = await api.get('interOfferJob/'+email+'/getSeason');
+        console.log('data:'+response.data)
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getEmployeurOffers(email: string){
+    try{
+        const response = await api.get('interOfferJob/'+email+'/getOffers');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
 export const getInterOfferStudent = async (params:{}) => {
     try {
         const response = await api.get('interOfferJob/OffersEtudiant',{
             params: params
         });
+        console.log(params)
         return response.data;
 
     } catch (error) {
@@ -150,7 +204,10 @@ export const getInterOfferStudent = async (params:{}) => {
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/student/' + studentId + '/offersApplied');
+        const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
+
+        });
+
         return response.data.map((item: any) => ({
                 appliedOffer: item.appliedOffer,
                 appliedFiles: item.appliedFiles
@@ -182,6 +239,48 @@ export async function getOfferById(id: number) {
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
+        throw error;
+    }
+}
+
+export async function getOfferApprovedSeasons(){
+    try{
+        const response = await api.get('interOfferJob/getOfferApprovedSeasons');
+        console.log(response.data)
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getAllSeasons(){
+    try{
+        const response = await api.get('interOfferJob/getAllPossibleSeasons');
+        console.log(response.data)
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getAllOffers(){
+    try{
+        const response = await api.get('interOfferJob/getAllOffers');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
+        throw error;
+    }
+}
+
+export async function getOffersBySeason(session: string){
+    try{
+        const response = await api.get('interOfferJob/'+session+'/all');
+        return response.data;
+    }catch (error){
+        console.error('Erreur lors de la recherche de saisons')
         throw error;
     }
 }

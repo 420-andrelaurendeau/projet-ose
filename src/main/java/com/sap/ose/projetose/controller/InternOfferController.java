@@ -42,10 +42,34 @@ public class InternOfferController {
         return offerJobService.getInternOfferPending();
     }
 
-    @GetMapping("/allOffers")
-    @PreAuthorize("hasAuthority('internshipmanager')")
-    public List<InternOfferDto> getAllOffers() {
-        return offerJobService.getAllInternOffers();
+    @GetMapping("/student/allOffers")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public List<InternOfferDto> getStudentOffers() {
+        return offerJobService.getAllOffers();
+    }
+
+    @GetMapping("/student/season/{selectedOption}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public List<InternOfferDto> getStudentOffersBySeason(@PathVariable String selectedOption) {
+        return offerJobService.getStudentOfferBySeason(selectedOption);
+    }
+
+    @GetMapping("/{email}/season/{selectedOption}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
+    public List<InternOfferDto> getEmployeurOffersBySeason(@PathVariable String selectedOption, @PathVariable String email ) {
+        return offerJobService.getEmployeurOfferBySeason(selectedOption,email);
+    }
+
+    @GetMapping("/{email}/getSeason")
+    public ResponseEntity<List<String>> getEmployeurSeasons(@PathVariable String email){
+        List<String> seasons = offerJobService.getEmployeurSeasonsOffers(email);
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}/getOffers")
+    public ResponseEntity<List<InternOfferDto>> getEmployeurOffers(@PathVariable String email){
+        List<InternOfferDto> offers = offerJobService.getOffersByEmployeurEmail(email);
+        return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
     @GetMapping("/OffersEtudiant")
@@ -53,8 +77,9 @@ public class InternOfferController {
     public Page<InternOfferDto> getOffersEtudiant(@RequestParam(required = false, defaultValue = "0") int page,
                                                   @RequestParam(required = false, defaultValue = "10") int size,
                                                   @RequestParam(required = false, defaultValue = "id") String sortField,
-                                                  @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
-        return offerJobService.getInternOfferAccepted(page, size, sortField, sortDirection);
+                                                  @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+                                                  @RequestParam(required = false) String session) {
+        return offerJobService.getInternOfferAccepted(page, size, sortField, sortDirection, session);
     }
 
     @GetMapping("/OffersEmp/{email}")
@@ -64,9 +89,44 @@ public class InternOfferController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "id") String sortField,
-            @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+            @RequestParam(required = false) String session
+    ) {
 
-        return offerJobService.getInternOfferByEmployeurEmail(email, page, size, sortField, sortDirection);
+        return offerJobService.getInternOfferByEmployeurEmail(email, page, size, sortField, sortDirection,session);
     }
+
+    @GetMapping("/offersEmployeur/{email}")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
+    public List<InternOfferDto> getInternOfferJob(
+            @PathVariable String email) {
+        return offerJobService.getOffersByEmployeurEmail(email);
+    }
+
+    @GetMapping("/getAllPossibleSeasons")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
+    public ResponseEntity<List<String>> getAllOfferSeasons(){
+        List<String> seasons = offerJobService.getAllOfferSeasons();
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
+    @GetMapping("/getOfferApprovedSeasons")
+    public ResponseEntity<List<String>> getOfferApprovedSeasons(){
+        List<String> seasons = offerJobService.getOfferApprovedSeasons();
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllOffers")
+    public ResponseEntity<List<InternOfferDto>> getAllOffers(){
+        List<InternOfferDto> internOfferDtos = offerJobService.getAllOffers();
+        return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{session}/all")
+    public ResponseEntity<List<InternOfferDto>> getAllOffers(@PathVariable String session){
+        List<InternOfferDto> seasons = offerJobService.getOfferBySeason(session);
+        return new ResponseEntity<>(seasons, HttpStatus.OK);
+    }
+
 }
 

@@ -246,15 +246,16 @@ public class StageService {
         ));
     }
     @Transactional
-    public Page<InternshipAgreementDto> getSortedByPageOfEmployeur(int page, int size, Sort sort, String state, long id) {
+    public Page<InternshipAgreementDto> getSortedByPageOfEmployeur(int page, int size, Sort sort, String state, long id, String session) {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<InternshipAgreementDto> internshipAgreementDtos;
-
-        if (state == null)
-            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByEmployeurId(id, pageable));
-        else {
+        if (state == null) {
+            System.out.println("se");
+            System.out.println(id);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllSessionByEmployer(id, session, pageable));
+        }else {
             State stateEnum = State.valueOf(state);
-            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateEmployeur(stateEnum.name(), pageable, id));
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllStateAndSessionByEmployer(stateEnum.name(),session, id, pageable));
         }
 
         return internshipAgreementDtos;
@@ -274,16 +275,18 @@ public class StageService {
     }
 
     @Transactional
-    public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state) {
+    public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state, String session) {
         try {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternshipAgreementDto> internshipAgreementDtos;
 
-            if (state == null)
-                internshipAgreementDtos = stageToDtoPage(stageRepository.findAll(pageable));
-            else {
+            if (state == null){
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllBySession(pageable, session));
+                System.out.println("s");
+            } else {
                 State stateEnum = State.valueOf(state);
-                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
+                System.out.println("ss");
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateAndSession(stateEnum.name(),pageable, session));
             }
 
             return internshipAgreementDtos;

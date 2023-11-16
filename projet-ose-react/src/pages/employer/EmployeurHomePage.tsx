@@ -2,7 +2,11 @@ import React, {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileContract, faFileLines, faPencil, faPersonDigging} from "@fortawesome/free-solid-svg-icons";
 import {NavLink, Outlet, useLocation, useOutletContext} from "react-router-dom";
-import {UpdateOffers} from "../../api/InterOfferJobAPI";
+import {
+    allEmployeurInternshipOffersBySeason,
+    allStudentInternshipOffers, getEmployeurSeason,
+    UpdateOffers
+} from "../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
 import {getUser} from "../../api/UtilisateurAPI";
 import {useAuth} from "../../authentication/AuthContext";
@@ -46,6 +50,9 @@ interface Props {
     setOnChangeAgreement: React.Dispatch<React.SetStateAction<boolean>>
     isLoaded: boolean
 
+    seasons: any[],
+    selectedOption: string,
+    handleOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
 function EmployeurHomePage() {
@@ -78,6 +85,10 @@ function EmployeurHomePage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const location = useLocation();
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
+
+
     const [user, setUser] = useState<User>({
         id: 0,
         nom: "",
@@ -101,7 +112,8 @@ function EmployeurHomePage() {
                 page: currentAgreementPage,
                 size: numberElementAgreementByPage,
                 sortField: agreementSortField,
-                sortDirection : agreementSortDirection
+                sortDirection : agreementSortDirection,
+                session: selectedOption
             }, id).then(page => {
                 page.content.map(async (stage: any) => {
                     if (stage.contractId != 0) {
@@ -133,9 +145,7 @@ function EmployeurHomePage() {
                 fetchInternshipsAgreement(data.id).then(r => r)
             }
         }
-        getUtilisateur().then((r) => {
-
-        })
+        getUtilisateur().then(r => console.log(r))
     }, [localStorage.getItem('token')])
 
     useEffect(() => {
@@ -145,20 +155,21 @@ function EmployeurHomePage() {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session: selectedOption,
                 })
             } catch (error) {
                 console.log(error);
                 toast.error(fields.toast.errorFetchOffers)
             }
-    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
+    }, [currentPage, selectedOption, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
 
     useEffect(() => {
         if (user) {
             fetchInternshipsAgreement(user.id).then(r => r)
             setIsAgreementUpdate(false)
         }
-    }, [currentAgreementPage, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, isUpdate]);
+    }, [currentAgreementPage, selectedOption, numberElementAgreementByPage, isAgreementUpdate, agreementSortDirection, agreementSortField, isUpdate, onChangeAgreement]);
 
     useEffect(() => {
         let i = 0;
@@ -167,6 +178,19 @@ function EmployeurHomePage() {
         })
         setNbCandidature(i);
     }, [offers]);
+
+    useEffect(() => {
+        console.log('email :'+userEmail)
+        getEmployeurSeason(userEmail!).then((res) => {
+            console.log('res: '+res)
+            setSeasons(res)
+        })
+    }, []);
+
+    useEffect(() => {
+        console.log("saisonHome:"+seasons)
+    }, [seasons]);
+
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
@@ -186,11 +210,19 @@ function EmployeurHomePage() {
         setCurrentPage(newPage);
     };
 
-    const context = {
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+
+        setSelectedOption(selected);
+        console.log(selected)
+    };
+
+    const context =  {
         isModalOpen: isModalOpen,
         setIsModalOpen: setIsModalOpen,
         offers: offers,
         setOffers: setOffers,
+        seasons:seasons,
         user: user,
         setSortField: setSortField,
         setSortDirection: setSortDirection,
@@ -218,7 +250,9 @@ function EmployeurHomePage() {
         sortAgreementDirection: agreementSortDirection,
         setAgreementSortDirection: setAgreementSortDirection,
         setOnChangeAgreement: setOnChangeAgreement,
-        isLoaded: isLoaded
+        isLoaded: isLoaded,
+        handleOptionChange: handleOptionChange,
+        selectedOption: selectedOption
     }
 
     return (
@@ -230,8 +264,7 @@ function EmployeurHomePage() {
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
-                    <div
-                        className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +

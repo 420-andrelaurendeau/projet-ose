@@ -17,6 +17,7 @@ export const authenticateUser = async (email: string, password: string, loginUse
         console.log(data)
 
         if (data.token) {
+            console.log(data.token + " TOKEENNNNNn«««««««««««««««««««««")
             loginUser(data.token);
             const decodedToken = JSON.parse(atob(data.token.split('.')[1]));
             return decodedToken.role[0].authority;

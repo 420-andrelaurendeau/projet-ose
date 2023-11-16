@@ -67,6 +67,8 @@ i18n
                             },
                         },
                         InternshipOfferList : {
+
+                            succesSaveOfferReview: "The offer review has been saved",
                             header: {
                                 total: "Total offers",
                                 accepted: "Offers accepted",
@@ -626,7 +628,6 @@ i18n
                         title: "Internship offer",
                         errorFetchOffer: "An error occurred while fetching the offer",
                         errorSaveOfferReview: "An error occurred while saving the offer review",
-                        succesSaveOfferReview: "The offer review has been saved",
                         validiation:{
                             required : 'The comment is required',
                             minLenght : 'The comment must contain at least 10 characters',
@@ -783,6 +784,7 @@ i18n
                             },
                         },
                         InternshipOfferList : {
+                            succesSaveOfferReview: "La revue de l'offre a été sauvegardée",
                             header: {
                                 total: "Total des offres",
                                 accepted: "Offres acceptées",

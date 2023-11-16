@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -38,14 +40,15 @@ public class SecurityConfiguration {
                     corsConfiguration.addAllowedMethod("*");
                     return corsConfiguration;
                 }))
-                .authorizeHttpRequests(request -> request.requestMatchers("/api/programme/programmes","/api/auth/**")
-                .permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/programme/programmes","/api/auth/**").permitAll()
                 .anyRequest()
                 .authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authentificationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(configurer -> configurer.accessDeniedHandler((request, response, accessDeniedException) -> {
+                    throw new RuntimeException("Vous n'avez pas accès");
+                }));
         return http.build();
     }
 }

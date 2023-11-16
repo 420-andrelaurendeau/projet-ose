@@ -14,6 +14,7 @@ import InternshipManagerInternshipsAgreement
 import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
+import {getAllSeasons} from "../../../api/InterOfferJobAPI";
 
 export default function EmployerContractsPage() {
 
@@ -36,40 +37,27 @@ export default function EmployerContractsPage() {
     const [totalDeclined, setTotalDeclined] = useState(0);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
     const navigate = useNavigate();
-    const handleTotalOffersByState = async (id: number) => {
-        const responseTotal = await getStageCountByStateStudent(id);
-        setTotalInternshipsAgreement(0);
-        setTotalApprouved(0);
-        setTotalPending(0);
-        setTotalDeclined(0);
 
-        if (responseTotal["PENDING"])
-            setTotalPending(responseTotal["PENDING"]);
-
-        if (responseTotal["ACCEPTED"])
-            setTotalApprouved(responseTotal["ACCEPTED"])
-
-        if (responseTotal["DECLINED"])
-            setTotalDeclined(responseTotal["DECLINED"])
-
-        if (responseTotal["TOTAL"])
-            setTotalInternshipsAgreement(responseTotal["TOTAL"]-(responseTotal["IRRELEVANT"] ? responseTotal["IRRELEVANT"] : 0));
-    }
     const fetchInternshipsAgreement = async (id: number) => {
         try {
-            handleTotalOffersByState(id);
             internshipAgreementRef.current = true
             console.log("DATA")
+            console.log(selectedOption)
             const response = await getStageByEmployeurId({
                 page: currentPage,
                 size: numberElementByPage,
                 sortField: sortField,
-                sortDirection: sortDirection
+                sortDirection: sortDirection,
+                session: selectedOption
             }, id);
             console.log("REPSONSE!!")
             console.log(response)
+            let seasons1 = await getAllSeasons()
+            setSeasons(seasons1)
             setInternshipsAgreement(response.content);
             setTotalPages(response.totalPages);
         } catch (error) {
@@ -80,6 +68,18 @@ export default function EmployerContractsPage() {
             internshipAgreementRef.current = false;
         }
     };
+
+    useEffect(() => {
+        const fetch = async () => {
+            fetchInternshipsAgreement(auth.userId!)
+        }
+        fetch()
+    }, [selectedOption]);
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+        setSelectedOption(selected);
+    };
+
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
@@ -143,6 +143,10 @@ export default function EmployerContractsPage() {
                         onPageChange={handlePageChange}
                         numberElement={numberElementByPage}
                         handleChangeNumberElement={handleChangePage}
+                        selectedOption={selectedOption}
+                        seasons={seasons}
+                        handleOptionChange={handleOptionChange}
+
                     />
                 </div>
             </main>
