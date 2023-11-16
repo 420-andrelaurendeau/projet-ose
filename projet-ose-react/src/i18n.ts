@@ -686,12 +686,28 @@ i18n
                     StudentInternshipPage:StudentInternshipPagei18n.en,
                     SideBarEtudiant: SideBarEtudiantI18n.en,
                     StudentInterview: {
+                        PENDING: {
+                            name: 'PENDING',
+                            text: 'Pending'
+                        },
+                        ACCEPTED: {
+                            name: 'APPROVED',
+                            text: 'Approved'
+                        },
+                        DECLINED: {
+                            name: 'DECLINED',
+                            text: 'Declined'
+                        },
                         table: {
                             name: 'table',
                             title: 'Title',
                             location: 'Location',
                             date: 'Date of the interview',
                             company: 'Company',
+                            status_text:{
+                                name: 'status_text',
+                                text: "Status"
+                            },
                             action: {
                                 name: 'action',
                                 text: 'Action',
@@ -1371,12 +1387,28 @@ i18n
                     StudentInternship: StudentInternshipI18n.fr,
                     SideBarEtudiant: SideBarEtudiantI18n.fr,
                     StudentInterview: {
+                        PENDING: {
+                            name: 'PENDING',
+                            text: 'En attente'
+                        },
+                        ACCEPTED: {
+                            name: 'APPROVED',
+                            text: 'Approuvé'
+                        },
+                        DECLINED: {
+                            name: 'DECLINED',
+                            text: 'Refusé'
+                        },
                         table: {
                             name: 'table',
                             title: 'Titre',
                             location: 'Lieu de travail',
                             date: 'Date de l\'entrevue',
                             company: 'Compagnie',
+                            status_text:{
+                                name: 'status_text',
+                                text: "Etat"
+                            },
                             action: {
                                 name: 'action',
                                 text: 'Actions',

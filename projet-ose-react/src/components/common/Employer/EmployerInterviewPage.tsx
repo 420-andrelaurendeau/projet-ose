@@ -31,7 +31,7 @@ export const EmployerInterviewPage = () => {
                         sortField: "id",
                         sortDirection: "desc",
 
-                    }).then((res:any) => {
+                    }).then((res: any) => {
                         setInterviews(res.content);
                         setTotalPages(res.totalPages);
                     });
@@ -140,10 +140,8 @@ export const EmployerInterviewPage = () => {
                     </th>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                    >
-
-                        {fields.table.action.text}
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                        {fields.table.status_text.text}
                     </th>
                 </tr>
                 </thead>
@@ -166,27 +164,17 @@ export const EmployerInterviewPage = () => {
                                         text-center text-sm font-medium">
                             {interview.internOffer.employeurEntreprise}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex justify-center space-x-2">
-                                <button
-                                    disabled={interview.state != "PENDING"}
-                                    onClick={() => handleOnAccept(interview.id)}
-                                    className="disabled:bg-gray text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    {fields.table.action.button.accept}
-                                </button>
-                                <button
-                                    disabled={interview.state != "PENDING"}
-                                    onClick={() => handleOnDecline(interview.id)}
-                                    className="disabled:bg-gray text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
-                                >
-                                    {fields.table.action.button.decline}
-                                </button>
-                                {interview.state === "ACCEPTED" &&
-                                    <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.accepted}</p>}
-                                {interview.state === "DECLINED" &&
-                                    <p className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
-                            </div>
+                        <td>
+                                                                    <span
+                                                                        className={
+                                                                            interview.state == "PENDING" ?
+                                                                                "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                                                : interview.state === "DECLINED" ?
+                                                                                    "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                                                                    : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
+                                                                    >
+                                            {fields[interview.state].text}
+                                        </span>
                         </td>
                     </tr>
                 ))}
@@ -195,7 +183,7 @@ export const EmployerInterviewPage = () => {
         </main>
     )
 
-    return (        <div className="dark:bg-black">
+    return (<div className="dark:bg-black">
         <div className="flex flex-col items-center">
             <div className=" lg:-mx-8 mt-28 w-11/12 ">
                 <div
