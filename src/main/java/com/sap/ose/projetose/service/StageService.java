@@ -274,16 +274,16 @@ public class StageService {
     }
 
     @Transactional
-    public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state) {
+    public Page<InternshipAgreementDto> getSortedByPage(int page, int size, Sort sort, String state, String session) {
         try {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternshipAgreementDto> internshipAgreementDtos;
 
             if (state == null)
-                internshipAgreementDtos = stageToDtoPage(stageRepository.findAll(pageable));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllBySession(pageable, session));
             else {
                 State stateEnum = State.valueOf(state);
-                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByState(stateEnum.name(), pageable));
+                internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateAndSession(stateEnum.name(),pageable, session));
             }
 
             return internshipAgreementDtos;
