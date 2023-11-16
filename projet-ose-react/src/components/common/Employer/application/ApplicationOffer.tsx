@@ -20,6 +20,7 @@ interface Props {
     hasStudentApplied: (internOfferCandidate: any, offerId: number) => boolean
     updateCandidature: () => void
     isReviewing: boolean
+    setUpdate: any
 }
 
 
@@ -39,6 +40,7 @@ const ApplicationOffer: React.FC<any> = () => {
     const navigate = useNavigate();
     const toast = useContext(ToastContext);
     const [isReviewing, setIsReviewing] = useState<boolean>(false);
+    const [update, setUpdate] = useState<boolean>(false);
     const [application, setApplication] = useState<any>({});
 
     const loadOffer = async () => {
@@ -99,12 +101,13 @@ const ApplicationOffer: React.FC<any> = () => {
     useEffect(() => {
         if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
             console.log("Offer loaded")
-            getCandidates(offer);
+            getCandidates(offer)
+            setUpdate(false)
         });
         if (!isReviewing){
             navigate("/employer/home/offers/"+id+"/application")
         }
-    }, [!updateCandidateRef.current]);
+    }, [!updateCandidateRef.current,update]);
 
 
 
@@ -177,6 +180,7 @@ const ApplicationOffer: React.FC<any> = () => {
         hasStudentApplied: hasStudentApplied,
         updateCandidature: UpdateCandidature,
         isReviewing: isReviewing,
+        setUpdate: setUpdate
     }
 
     return (

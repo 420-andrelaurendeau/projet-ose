@@ -15,7 +15,7 @@ export default function ApplicationDetails ():ReactElement{
 
     const navigate = useNavigate()
     const [date, setDate] = useState<string>("")
-    const {application,studentId,offerId, handleAccept, handleRefuse,hasStudentApplied, isReviewing, updateCandidature} = useUser()
+    const {application,studentId,offerId, setUpdate, handleAccept, handleRefuse,hasStudentApplied, isReviewing, updateCandidature} = useUser()
     const [description, setDescription] = useState<string>("")
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2) + ".applicant");
@@ -57,7 +57,10 @@ export default function ApplicationDetails ():ReactElement{
         let requestBody = {"studentId" : studentId, "internOfferId":offerId, "date":date, "description":description}
         api.post("interview/save", requestBody).then((res)=>{
             console.log(res)
+            application.state = "ACCEPTED"
+            application.date = res.data.date
             updateCandidature()
+            setUpdate(true)
             toast.success(fields.success.text)
             navigate("/employer/home/offers/"+offerId+"/application")
         }).catch(e => {
