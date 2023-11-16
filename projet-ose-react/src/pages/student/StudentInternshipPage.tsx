@@ -47,7 +47,7 @@ function StudentInternshipPage() {
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
-    const auth = useAuth();
+    const {userId, userEmail, userRole} = useAuth();
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
@@ -62,10 +62,11 @@ function StudentInternshipPage() {
         const fetchUser = async () => {
             isLoading.current = true;
 
-            getUser(auth.userEmail!)
+            getUser(userEmail!)
                 .then((resUser) => {
                     setUser(resUser);
-                    getStudentAppliedOffers(resUser.id, {selectedOption}).then((res) => {
+                    console.log(userId! + " fjdsffjdfsfdsfsd")
+                    getStudentAppliedOffers(userId!).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
@@ -148,7 +149,7 @@ function StudentInternshipPage() {
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
-                                         (location.pathname === `/${auth.userRole}/home/offers` || location.pathname === `/${auth.userRole}/home/offers/` ? " border-b-2" : "")
+                                         (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
                                      }
                                      state={user}
                             >
@@ -161,7 +162,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="appliedOffers"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/appliedOffers` || location.pathname === `/${auth.userRole}/home/appliedOffers/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/appliedOffers` || location.pathname === `/${userRole}/home/appliedOffers/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -174,7 +175,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="cv"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/cv` || location.pathname === `/${auth.userRole}/home/cv/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/cv` || location.pathname === `/${userRole}/home/cv/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -186,7 +187,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="interview"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/interview` || location.pathname === `/${auth.userRole}/home/interview/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/interview` || location.pathname === `/${userRole}/home/interview/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -198,7 +199,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="stage"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/stage` || location.pathname === `/${auth.userRole}/home/stage/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/stage` || location.pathname === `/${userRole}/home/stage/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -210,7 +211,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="contract"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/contract` || location.pathname === `/${auth.userRole}/home/stage/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/contract` || location.pathname === `/${userRole}/home/stage/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
