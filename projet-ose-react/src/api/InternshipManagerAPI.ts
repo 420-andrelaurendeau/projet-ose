@@ -153,9 +153,9 @@ export const getStages = async ({ page, size, state, sortField, sortDirection,se
     }
 };
 
-export const getStageByEmployeurId = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams, id: number) => {
+export const getStageByEmployeurId = async ({page, size, state, sortField, sortDirection,session}: GetInternshipOffersParams, id: number) => {
     try {
-        const params: any = {page, size, sortField, sortDirection};
+        const params: any = {page, size, sortField, sortDirection,session};
         if (state) {
             params.state = state;
         }
