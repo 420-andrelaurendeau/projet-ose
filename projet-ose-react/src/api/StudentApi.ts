@@ -20,7 +20,7 @@ export const fetchInterviews = async (userId: number,{page, size, sortField, sor
             params: params
         })
         console.log(res.data)
-        return res.data.content
+        return res.data
     }
     catch (err) {
         console.log('Error while fetching interviews' + err)

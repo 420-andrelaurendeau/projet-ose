@@ -77,8 +77,9 @@ export default function StudentInterviewPage() {
                         sortField: "id",
                         sortDirection: "desc",
 
-                    }).then((res) => {
-                        setInterviews(res);
+                    }).then((res:any) => {
+                        setInterviews(res.content);
+                        setTotalPages(res.totalPages);
                     });
 
                 })
@@ -88,7 +89,7 @@ export default function StudentInterviewPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, []);
+    }, [totalPages, currentPage, numberElementByPage]);
 
     useEffect(() => {
         interviews.map((interview) => {
@@ -194,7 +195,7 @@ export default function StudentInterviewPage() {
     )
 
     return (
-        <div className="text-white dark:bg-black">
+        <div className="dark:bg-black">
             <div className="flex flex-col items-center">
                 <div className=" lg:-mx-8 mt-28 w-11/12 ">
                     <div
