@@ -632,8 +632,8 @@ video {
   z-index: 101;
 }
 
-.z-\[102\] {
-  z-index: 102;
+.z-\[60\] {
+  z-index: 60;
 }
 
 .z-\[999\] {
@@ -1531,6 +1531,10 @@ video {
   --tw-bg-opacity: 0.5;
 }
 
+.bg-opacity-80 {
+  --tw-bg-opacity: 0.8;
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -2202,6 +2206,11 @@ video {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.focus\:bg-black:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
 .focus\:outline-none:focus {

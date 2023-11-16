@@ -158,7 +158,9 @@ const InternshipManagerInternshipsAgreementPage = () => {
 
     const renderOffer = <InternshipManagerInternshipsAgreement user={user} offers={internshipsAgreement} isUpdate={setIsUpdate} sortField={sortField}
                                                  setsortField={setSortField} setSortDirection={setSortDirection}
-                                                 sortDirection={sortDirection}/>;
+                                                 sortDirection={sortDirection}
+                                                                handleOfferClick={handleOfferClick}
+    />;
 
     return (
         <div className="px-4">
