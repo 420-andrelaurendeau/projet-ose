@@ -1,14 +1,16 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getStudentPendingCv, acceptStudentCv, declineStudentCv} from "../../../api/InternshipManagerAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import {ReviewFile} from "../../../model/ReviewFile";
 import {useTranslation} from "react-i18next";
 import {useToast} from "../../../hooks/state/useToast";
+import ViewPDFModal from "../../../components/common/Employer/offer/ViewPDFModal"
 function EvaluerCV() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","StudentCvEvaluation");
     const [files, setFiles] = useState([] as Array<ReviewFile>);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
 
 
@@ -80,9 +82,17 @@ function EvaluerCV() {
                                     <p className="dark:text-white">{fields.button.download}</p>
                                     <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white" />
                                 </button>
+                                <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                        onClick={() => {
+                                            setIsModalOpen(true)
+                                        }}
+                                >
+                                    View
+                                </button>
                             </div>
                             <div className="md:flex-grow my-4 lg:my-0 pb-2">
                                 <div className="flex flex-col md:flex-row md:justify-end h-full w-full flex-wrap">
+
                                     <button className="bg-green hover:bg-green-700 text-white font-bold py-2 rounded mb-3 md:mb-0 md:mr-1 md:px-2 md:aspect-square lg:h-full lg:mr-4"
                                             onClick={_ => ApproveFile(file)}>
                                         {fields.button.accept}
@@ -94,6 +104,10 @@ function EvaluerCV() {
                                 </div>
                             </div>
                         </div>
+                        {
+                            file && isModalOpen &&
+                            <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+                        }
                     </>
                 )}
             </div>
