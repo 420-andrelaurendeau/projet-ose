@@ -61,11 +61,6 @@ public class UtilisateurSignInDto {
                 case "Etudiant" -> {
                     assert utilisateur instanceof com.sap.ose.projetose.modeles.Etudiant;
                     this.programme_id = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getProgramme().getId();
-                    this.programme_id = null;
-                }
-                case "Internshipmanager" -> {
-                    assert utilisateur instanceof com.sap.ose.projetose.modeles.Internshipmanager;
-                    this.programme_id = ((com.sap.ose.projetose.modeles.Internshipmanager) utilisateur).getProgramme().getId();
                 }
                 default -> this.programme_id = null;
             }

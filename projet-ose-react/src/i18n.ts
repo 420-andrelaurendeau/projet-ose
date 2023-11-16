@@ -441,6 +441,10 @@ i18n
                                 changeLanguage: {
                                     name: 'changeLanguage',
                                     text: "Change language"
+                                },
+                                gsProfession: {
+                                    name: 'gsProfession',
+                                    text: "Internship manager"
                                 }
                             },
                             sidebarEmployeur: {
@@ -1138,6 +1142,10 @@ i18n
                                 changeLanguage: {
                                     name: 'changeLanguage',
                                     text: "Changer la langue"
+                                },
+                                gsProfession: {
+                                    name: 'gsProfession',
+                                    text: "Gestionnaire de stage"
                                 }
                             },
                             sidebarEmployeur: {
