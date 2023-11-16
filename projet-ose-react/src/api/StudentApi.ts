@@ -139,3 +139,13 @@ export const fetchDefaultCvByStudentId = async (studentId: number) => {
         throw err
     }
 }
+
+export const saveStudent = async (student: any) => {
+    try {
+        const res = await api.post(`auth/register/etudiant`, student)
+        return res.data
+    } catch (err) {
+        console.log('Error while saving student' + err)
+        throw err
+    }
+}

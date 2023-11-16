@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import {saveStudent} from "../../../../api/StudentApi";
 // @ts-ignore
 import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-removebg-preview.png';
 // @ts-ignore
@@ -51,17 +52,18 @@ function StudentInscriptionForm(props: any) {
             alert(fields.programme.validation.required);
             return;
         }
-        axios
-            .post("http://localhost:8080/api/etudiant/ajouter", {
-                nom: nom,
-                prenom: prenom,
-                email: email,
-                password: password,
-                phone: phone,
-                matricule: matricule,
-                programme_id: programme_id,
-                cv: cv,
-            })
+        saveStudent({
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            password: password,
+            phone: phone,
+            matricule: matricule,
+            programme_id: programme_id,
+            cv: cv,
+            activeCv: null,
+            internshipsCandidate: null
+        })
             .then((response) => {
                 console.log(response)
                 setReussite(true)
