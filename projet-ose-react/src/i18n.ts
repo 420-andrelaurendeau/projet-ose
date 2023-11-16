@@ -398,7 +398,8 @@ i18n
                                 ErrorNoCv:"You must upload your CV and set it as default before applying for an internship",
                                 ErrorOfferApplication: "An error occurred while applying for the internship",
                                 SuccessOfferApplication: "The internship application has been submitted for",
-                            }
+                            },
+                            cv : "CV is loading please wait...",
                         },
                         Header: {
                             stage: {
@@ -1122,7 +1123,8 @@ i18n
                                 ErrorNoCv:"Vous devez télécharger votre CV et le définir comme par défaut avant de postuler à un stage",
                                 ErrorOfferApplication: "Une erreur est survenue lors de la postulation au stage",
                                 SuccessOfferApplication: "Votre postulation au stage a été soumise pour",
-                            }
+                            },
+                            cv : "Votre CV est en cours de chargement veuillez patienter...",
                         },
                         Header: {
                             stage: {

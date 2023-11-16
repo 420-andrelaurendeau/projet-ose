@@ -40,11 +40,13 @@ function StudentInternship() {
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
+    const [loadingCV, setLoadingCV] = useState<boolean>(false);
     const toast = useToast();
     const navigate = useNavigate();
 
     useEffect(() => {
         const fecth = async () => {
+            setLoadingCV(true);
             isloading.current = true;
             try {
                 const userRes = await getUser(auth.userEmail!);
@@ -56,6 +58,7 @@ function StudentInternship() {
 
                 const cvRes = await fetchDefaultCvByStudentId(userRes.id);
                 setCv(cvRes);
+                setLoadingCV(false);
             } catch (error) {
                 console.log("Error fetching user data:", error);
             } finally {
@@ -131,6 +134,12 @@ function StudentInternship() {
                         <h1 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {fields.titre.text}
                         </h1>
+                        {
+                            loadingCV ?
+                                <span className="flex justify-center dark:text-white">{t("formField.EtudiantStage.cv")}</span>
+                                :
+                                <span></span>
+                        }
                         <div className="pb-4">
                             <ListItemCountSelector
                                 numberElement={numberElementByPage}
@@ -248,7 +257,7 @@ function StudentInternship() {
                                                         onClick={() => applyOffer(offer, user, cv)}
                                                         type="submit"
                                                         disabled={
-                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null
+                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || loadingCV
                                                         }
                                                         className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                     >
