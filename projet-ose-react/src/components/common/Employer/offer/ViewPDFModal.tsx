@@ -41,11 +41,11 @@ const ViewPDFModal = (props:any) => {
     return (
         // modal
         <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0 bg-black dark:bg-gray bg-opacity-50 dark:bg-opacity-80 cursor-pointer": "rounded bg-white dark:bg-dark"} w-full h-full p-12`}>
+            <div className={`${props.ismodal ? "fixed z-50 top-0 left-0 bg-black dark:bg-gray bg-opacity-50 dark:bg-opacity-80": "rounded bg-white dark:bg-dark"} w-full h-full p-12`}>
                 <div className="overflow-y-auto h-full">
                     {
                         props.ismodal &&
-                        <div className="fixed top-10 left-10 z-[] p-3">
+                        <div className="fixed top-10 left-10 p-3 z-[60]">
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-red hover:bg-black focus:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
