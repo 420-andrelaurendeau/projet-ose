@@ -7,7 +7,9 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.modeles.Employeur;
 import com.sap.ose.projetose.modeles.Etudiant;
 import com.sap.ose.projetose.modeles.File;
@@ -23,11 +25,13 @@ import com.sap.ose.projetose.repository.FileEntityRepository;
 import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.EtudiantService;
 import com.sap.ose.projetose.service.ProgrammeService;
+
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -59,8 +63,287 @@ class EtudiantControllerDiffblueTest {
   private ProgrammeRepository programmeRepository;
 
   /**
-  * Method under test: {@link EtudiantController#addCv(String, File)}
-  */
+   * Method under test: {@link EtudiantController#saveEtudiant(Etudiant)}
+   */
+  @Test
+  void testSaveEtudiant() throws UnsupportedEncodingException {
+    //   Diffblue Cover was unable to write a Spring test,
+    //   so wrote a non-Spring test instead.
+    //   Reason: R013 No inputs found that don't throw a trivial exception.
+    //   Diffblue Cover tried to run the arrange/act section, but the method under
+    //   test threw
+    //   com.fasterxml.jackson.databind.JsonMappingException: Cannot invoke "com.sap.ose.projetose.modeles.Role.name()" because "<local2>.role" is null (through reference chain: com.sap.ose.projetose.modeles.Etudiant["activeCv"]->com.sap.ose.projetose.modeles.File["etudiant"]->com.sap.ose.projetose.modeles.Etudiant["activeCv"]->com.sap.ose.projetose.modeles.File["internshipCandidates"]->com.sap.ose.projetose.modeles.InternshipCandidates["etudiant"]->com.sap.ose.projetose.modeles.Etudiant["authorities"])
+    //       at com.fasterxml.jackson.databind.JsonMappingException.wrapWithPath(JsonMappingException.java:402)
+    //       at com.fasterxml.jackson.databind.JsonMappingException.wrapWithPath(JsonMappingException.java:361)
+    //       at com.fasterxml.jackson.databind.ser.std.StdSerializer.wrapAndThrow(StdSerializer.java:323)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:780)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:479)
+    //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:318)
+    //       at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4719)
+    //       at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:3964)
+    //   java.lang.NullPointerException: Cannot invoke "com.sap.ose.projetose.modeles.Role.name()" because "<local2>.role" is null
+    //       at com.sap.ose.projetose.modeles.Utilisateur.getAuthorities(Utilisateur.java:55)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:688)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
+    //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:772)
+    //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)
+    //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:479)
+    //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:318)
+    //       at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4719)
+    //       at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:3964)
+    //   See https://diff.blue/R013 to resolve this issue.
+
+    Etudiant etudiant = new Etudiant();
+    etudiant.setActiveCv(new File());
+    etudiant.setCv(new ArrayList<>());
+    etudiant.setEmail("jane.doe@example.org");
+    etudiant.setId(1L);
+    etudiant.setInternshipsCandidate(new ArrayList<>());
+    etudiant.setMatricule("Matricule");
+    etudiant.setNom("Nom");
+    etudiant.setPassword("iloveyou");
+    etudiant.setPhone("6625550144");
+    etudiant.setPrenom("Prenom");
+    etudiant.setProgramme(new Programme());
+    etudiant.setRole(Role.employer);
+
+    InternshipCandidates internshipCandidates = new InternshipCandidates();
+    internshipCandidates.setEtudiant(new Etudiant());
+    internshipCandidates.setFiles(new ArrayList<>());
+    internshipCandidates.setId(1L);
+    internshipCandidates.setInternOffer(new InternOffer());
+    internshipCandidates.setState(State.ACCEPTED);
+    internshipCandidates.setStudentCv(new File());
+
+    File activeCv = new File();
+    activeCv.setContent("AXAXAXAX".getBytes("UTF-8"));
+    activeCv.setEtudiant(etudiant);
+    activeCv.setFileName("foo.txt");
+    activeCv.setId(1L);
+    activeCv.setInternshipCandidates(internshipCandidates);
+    activeCv.setIsAccepted(State.ACCEPTED);
+
+    Programme programme = new Programme();
+    programme.setDescription("The characteristics of someone or something");
+    programme.setId(1L);
+    programme.setNom("Nom");
+
+    Etudiant etudiant2 = new Etudiant();
+    etudiant2.setActiveCv(activeCv);
+    etudiant2.setCv(new ArrayList<>());
+    etudiant2.setEmail("jane.doe@example.org");
+    etudiant2.setId(1L);
+    etudiant2.setInternshipsCandidate(new ArrayList<>());
+    etudiant2.setMatricule("Matricule");
+    etudiant2.setNom("Nom");
+    etudiant2.setPassword("iloveyou");
+    etudiant2.setPhone("6625550144");
+    etudiant2.setPrenom("Prenom");
+    etudiant2.setProgramme(programme);
+    etudiant2.setRole(Role.employer);
+
+    File activeCv2 = new File();
+    activeCv2.setContent("AXAXAXAX".getBytes("UTF-8"));
+    activeCv2.setEtudiant(new Etudiant());
+    activeCv2.setFileName("foo.txt");
+    activeCv2.setId(1L);
+    activeCv2.setInternshipCandidates(new InternshipCandidates());
+    activeCv2.setIsAccepted(State.ACCEPTED);
+
+    Programme programme2 = new Programme();
+    programme2.setDescription("The characteristics of someone or something");
+    programme2.setId(1L);
+    programme2.setNom("Nom");
+
+    Etudiant etudiant3 = new Etudiant();
+    etudiant3.setActiveCv(activeCv2);
+    etudiant3.setCv(new ArrayList<>());
+    etudiant3.setEmail("jane.doe@example.org");
+    etudiant3.setId(1L);
+    etudiant3.setInternshipsCandidate(new ArrayList<>());
+    etudiant3.setMatricule("Matricule");
+    etudiant3.setNom("Nom");
+    etudiant3.setPassword("iloveyou");
+    etudiant3.setPhone("6625550144");
+    etudiant3.setPrenom("Prenom");
+    etudiant3.setProgramme(programme2);
+    etudiant3.setRole(Role.employer);
+
+    Employeur employeur = new Employeur();
+    employeur.setEmail("jane.doe@example.org");
+    employeur.setEntreprise("Entreprise");
+    employeur.setId(1L);
+    employeur.setInternOffers(new ArrayList<>());
+    employeur.setNom("Nom");
+    employeur.setPassword("iloveyou");
+    employeur.setPhone("6625550144");
+    employeur.setPrenom("Prenom");
+    employeur.setProgramme(new Programme());
+    employeur.setRole(Role.employer);
+
+    File file = new File();
+    file.setContent("AXAXAXAX".getBytes("UTF-8"));
+    file.setEtudiant(new Etudiant());
+    file.setFileName("foo.txt");
+    file.setId(1L);
+    file.setInternshipCandidates(new InternshipCandidates());
+    file.setIsAccepted(State.ACCEPTED);
+
+    OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
+    offerReviewRequest.setComment("Comment");
+    offerReviewRequest.setId(1L);
+    offerReviewRequest.setInternOffer(new InternOffer());
+    offerReviewRequest.setInternshipmanager(new Internshipmanager());
+
+    Programme programme3 = new Programme();
+    programme3.setDescription("The characteristics of someone or something");
+    programme3.setId(1L);
+    programme3.setNom("Nom");
+
+    InternOffer internOffer = new InternOffer();
+    internOffer.setDescription("The characteristics of someone or something");
+    internOffer.setEmployeur(employeur);
+    internOffer.setEndDate(LocalDate.of(1970, 1, 1));
+    internOffer.setFile(file);
+    internOffer.setId(1L);
+    internOffer.setInternshipCandidates(new ArrayList<>());
+    internOffer.setLocation("Location");
+    internOffer.setOfferReviewRequest(offerReviewRequest);
+    internOffer.setProgramme(programme3);
+    internOffer.setSalaryByHour(10.0d);
+    internOffer.setSession("Session");
+    internOffer.setStartDate(LocalDate.of(1970, 1, 1));
+    internOffer.setState(State.ACCEPTED);
+    internOffer.setStatus("Status");
+    internOffer.setTitle("Dr");
+
+    Etudiant etudiant4 = new Etudiant();
+    etudiant4.setActiveCv(new File());
+    etudiant4.setCv(new ArrayList<>());
+    etudiant4.setEmail("jane.doe@example.org");
+    etudiant4.setId(1L);
+    etudiant4.setInternshipsCandidate(new ArrayList<>());
+    etudiant4.setMatricule("Matricule");
+    etudiant4.setNom("Nom");
+    etudiant4.setPassword("iloveyou");
+    etudiant4.setPhone("6625550144");
+    etudiant4.setPrenom("Prenom");
+    etudiant4.setProgramme(new Programme());
+    etudiant4.setRole(Role.employer);
+
+    InternshipCandidates internshipCandidates2 = new InternshipCandidates();
+    internshipCandidates2.setEtudiant(new Etudiant());
+    internshipCandidates2.setFiles(new ArrayList<>());
+    internshipCandidates2.setId(1L);
+    internshipCandidates2.setInternOffer(new InternOffer());
+    internshipCandidates2.setState(State.ACCEPTED);
+    internshipCandidates2.setStudentCv(new File());
+
+    File studentCv = new File();
+    studentCv.setContent("AXAXAXAX".getBytes("UTF-8"));
+    studentCv.setEtudiant(etudiant4);
+    studentCv.setFileName("foo.txt");
+    studentCv.setId(1L);
+    studentCv.setInternshipCandidates(internshipCandidates2);
+    studentCv.setIsAccepted(State.ACCEPTED);
+
+    InternshipCandidates internshipCandidates3 = new InternshipCandidates();
+    internshipCandidates3.setEtudiant(etudiant3);
+    internshipCandidates3.setFiles(new ArrayList<>());
+    internshipCandidates3.setId(1L);
+    internshipCandidates3.setInternOffer(internOffer);
+    internshipCandidates3.setState(State.ACCEPTED);
+    internshipCandidates3.setStudentCv(studentCv);
+
+    File activeCv3 = new File();
+    activeCv3.setContent("AXAXAXAX".getBytes("UTF-8"));
+    activeCv3.setEtudiant(etudiant2);
+    activeCv3.setFileName("foo.txt");
+    activeCv3.setId(1L);
+    activeCv3.setInternshipCandidates(internshipCandidates3);
+    activeCv3.setIsAccepted(State.ACCEPTED);
+
+    Programme programme4 = new Programme();
+    programme4.setDescription("The characteristics of someone or something");
+    programme4.setId(1L);
+    programme4.setNom("Nom");
+
+    Etudiant etudiant5 = new Etudiant();
+    etudiant5.setActiveCv(activeCv3);
+    etudiant5.setCv(new ArrayList<>());
+    etudiant5.setEmail("jane.doe@example.org");
+    etudiant5.setId(1L);
+    etudiant5.setInternshipsCandidate(new ArrayList<>());
+    etudiant5.setMatricule("Matricule");
+    etudiant5.setNom("Nom");
+    etudiant5.setPassword("iloveyou");
+    etudiant5.setPhone("6625550144");
+    etudiant5.setPrenom("Prenom");
+    etudiant5.setProgramme(programme4);
+    etudiant5.setRole(Role.employer);
+    EtudiantRepository etudiantRepository = mock(EtudiantRepository.class);
+    when(etudiantRepository.save(Mockito.<Etudiant>any())).thenReturn(etudiant5);
+
+    Programme programme5 = new Programme();
+    programme5.setDescription("The characteristics of someone or something");
+    programme5.setId(1L);
+    programme5.setNom("Nom");
+    Optional<Programme> ofResult = Optional.of(programme5);
+    ProgrammeRepository programmeRepository = mock(ProgrammeRepository.class);
+    when(programmeRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+    EtudiantController etudiantController = new EtudiantController(new EtudiantService(etudiantRepository,
+            new ProgrammeService(programmeRepository), mock(FileEntityRepository.class)));
+
+    Programme programme6 = new Programme();
+    programme6.setDescription("The characteristics of someone or something");
+    programme6.setId(1L);
+    programme6.setNom("Nom");
+    Etudiant etudiant6 = mock(Etudiant.class);
+    doNothing().when(etudiant6).setProgramme(Mockito.<Programme>any());
+    when(etudiant6.getProgramme()).thenReturn(programme6);
+    ResponseEntity<Etudiant> actualSaveEtudiantResult = etudiantController.saveEtudiant(etudiant6);
+    verify(etudiant6).getProgramme();
+    verify(etudiant6).setProgramme(Mockito.<Programme>any());
+    verify(programmeRepository).findById(Mockito.<Long>any());
+    verify(etudiantRepository).save(Mockito.<Etudiant>any());
+    assertEquals(200, actualSaveEtudiantResult.getStatusCodeValue());
+    assertTrue(actualSaveEtudiantResult.hasBody());
+    assertTrue(actualSaveEtudiantResult.getHeaders().isEmpty());
+  }
+
+  /**
+   * Method under test: {@link EtudiantController#addCv(String, File)}
+   */
   @Test
   void testAddCv() throws UnsupportedEncodingException {
     //   Diffblue Cover was unable to write a Spring test,
@@ -315,7 +598,7 @@ class EtudiantControllerDiffblueTest {
     when(etudiantRepository.save(Mockito.<Etudiant>any())).thenReturn(etudiant6);
     when(etudiantRepository.findByMatricule(Mockito.<String>any())).thenReturn(ofResult);
     EtudiantController etudiantController = new EtudiantController(new EtudiantService(etudiantRepository,
-        new ProgrammeService(mock(ProgrammeRepository.class)), mock(FileEntityRepository.class)));
+            new ProgrammeService(mock(ProgrammeRepository.class)), mock(FileEntityRepository.class)));
     File cv = mock(File.class);
     doNothing().when(cv).setEtudiant(Mockito.<Etudiant>any());
     ResponseEntity<EtudiantDto> actualAddCvResult = etudiantController.addCv("Matricule", cv);
@@ -338,8 +621,38 @@ class EtudiantControllerDiffblueTest {
   }
 
   /**
-  * Method under test: {@link EtudiantController#getDefaultCv(long)}
-  */
+   * Method under test: {@link EtudiantController#setDefaultCv(long, long)}
+   */
+  @Test
+  void testSetDefaultCv() {
+    //   Diffblue Cover was unable to write a Spring test,
+    //   so wrote a non-Spring test instead.
+    //   Reason: R013 No inputs found that don't throw a trivial exception.
+    //   Diffblue Cover tried to run the arrange/act section, but the method under
+    //   test threw
+    //   jakarta.servlet.ServletException: Request processing failed: com.sap.ose.projetose.exception.ServiceException: Erreur lors de la récupération des CV de l'étudiant
+    //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+    //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+    //   com.sap.ose.projetose.exception.ServiceException: Erreur lors de la récupération des CV de l'étudiant
+    //       at com.sap.ose.projetose.service.EtudiantService.setDefaultCv(EtudiantService.java:213)
+    //       at com.sap.ose.projetose.controller.EtudiantController.setDefaultCv(EtudiantController.java:80)
+    //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+    //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+    //   See https://diff.blue/R013 to resolve this issue.
+
+    EtudiantService etudiantService = mock(EtudiantService.class);
+    when(etudiantService.setDefaultCv(anyLong(), anyLong())).thenReturn(new FileDtoAll());
+    ResponseEntity<FileDtoAll> actualSetDefaultCvResult = (new EtudiantController(etudiantService)).setDefaultCv(1L,
+            1L);
+    verify(etudiantService).setDefaultCv(anyLong(), anyLong());
+    assertEquals(200, actualSetDefaultCvResult.getStatusCodeValue());
+    assertTrue(actualSetDefaultCvResult.hasBody());
+    assertTrue(actualSetDefaultCvResult.getHeaders().isEmpty());
+  }
+
+  /**
+   * Method under test: {@link EtudiantController#getDefaultCv(long)}
+   */
   @Test
   void testGetDefaultCv() throws Exception {
     File activeCv = new File();
@@ -446,20 +759,20 @@ class EtudiantControllerDiffblueTest {
     when(etudiantRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}/defaultCv", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content()
-            .string(
-                "{\"id\":1,\"content\":\"QVhBWEFYQVg=\",\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom"
-                    + "\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule\":\"Matricule"
-                    + "\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content()
+                    .string(
+                            "{\"id\":1,\"content\":\"QVhBWEFYQVg=\",\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom"
+                                    + "\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule\":\"Matricule"
+                                    + "\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiant(Long)}
-  */
+   * Method under test: {@link EtudiantController#getEtudiant(Long)}
+   */
   @Test
   void testGetEtudiant() throws Exception {
     File activeCv = new File();
@@ -566,34 +879,34 @@ class EtudiantControllerDiffblueTest {
     when(etudiantRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content()
-            .string(
-                "{\"id\":0,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule"
-                    + "\":\"Matricule\",\"programme_id\":1,\"cv\":[],\"internships_id\":[]}"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content()
+                    .string(
+                            "{\"id\":0,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule"
+                                    + "\":\"Matricule\",\"programme_id\":1,\"cv\":[],\"internships_id\":[]}"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiants()}
-  */
+   * Method under test: {@link EtudiantController#getEtudiants()}
+   */
   @Test
   void testGetEtudiants() throws Exception {
     when(etudiantRepository.findAll()).thenReturn(new ArrayList<>());
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/etudiants");
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiants()}
-  */
+   * Method under test: {@link EtudiantController#getEtudiants()}
+   */
   @Test
   void testGetEtudiants2() throws Exception {
     File activeCv = new File();
@@ -702,48 +1015,48 @@ class EtudiantControllerDiffblueTest {
     when(etudiantRepository.findAll()).thenReturn(etudiantList);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/etudiants");
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content()
-            .string(
-                "[{\"id\":0,\"nom\":\"getEtudiants\",\"prenom\":\"getEtudiants\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example"
-                    + ".org\",\"matricule\":\"getEtudiants\",\"programme_id\":1,\"cv\":[],\"internships_id\":[]}]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content()
+                    .string(
+                            "[{\"id\":0,\"nom\":\"getEtudiants\",\"prenom\":\"getEtudiants\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example"
+                                    + ".org\",\"matricule\":\"getEtudiants\",\"programme_id\":1,\"cv\":[],\"internships_id\":[]}]"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiants()}
-  */
+   * Method under test: {@link EtudiantController#getEtudiants()}
+   */
   @Test
   void testGetEtudiants3() throws Exception {
     when(etudiantRepository.findAll()).thenReturn(new ArrayList<>());
     SecurityMockMvcRequestBuilders.FormLoginRequestBuilder requestBuilder = SecurityMockMvcRequestBuilders.formLogin();
     ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder);
+            .build()
+            .perform(requestBuilder);
     actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
-  */
+   * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
+   */
   @Test
   void testGetEtudiantsWithCv() throws Exception {
     Optional<List<File>> ofResult = Optional.of(new ArrayList<>());
     when(fileEntityRepository.findAllByEtudiant_IdIs(anyLong())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}/cvs", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
-  */
+   * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
+   */
   @Test
   void testGetEtudiantsWithCv2() throws Exception {
     Etudiant etudiant = new Etudiant();
@@ -922,20 +1235,20 @@ class EtudiantControllerDiffblueTest {
     when(fileEntityRepository.findAllByEtudiant_IdIs(anyLong())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}/cvs", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content()
-            .string(
-                "[{\"id\":1,\"content\":\"QQFBAUEBQQE=\",\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom"
-                    + "\":\"getEtudiantsWithCv\",\"prenom\":\"getEtudiantsWithCv\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example"
-                    + ".org\",\"matricule\":\"getEtudiantsWithCv\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content()
+                    .string(
+                            "[{\"id\":1,\"content\":\"QQFBAUEBQQE=\",\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom"
+                                    + "\":\"getEtudiantsWithCv\",\"prenom\":\"getEtudiantsWithCv\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example"
+                                    + ".org\",\"matricule\":\"getEtudiantsWithCv\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}]"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
-  */
+   * Method under test: {@link EtudiantController#getEtudiantsWithCv(long)}
+   */
   @Test
   void testGetEtudiantsWithCv3() throws Exception {
     Etudiant etudiant = new Etudiant();
@@ -1285,23 +1598,23 @@ class EtudiantControllerDiffblueTest {
     when(fileEntityRepository.findAllByEtudiant_IdIs(anyLong())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}/cvs", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content()
-            .string(
-                "[{\"id\":2,\"content\":\"QQFBAUEBQQE=\",\"fileName\":\"getEtudiantsWithCv\",\"isAccepted\":\"PENDING\",\"etudiant\":"
-                    + "{\"id\":2,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"8605550118\",\"email\":\"john.smith@example.org\",\"matricule"
-                    + "\":\"Matricule\",\"programme_id\":2,\"cv\":[],\"internships_id\":null}},{\"id\":1,\"content\":\"QQFBAUEBQQE=\","
-                    + "\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom\":\"getEtudiantsWithCv\",\"prenom\":"
-                    + "\"getEtudiantsWithCv\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule\":\"getEtudiantsWithCv"
-                    + "\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content()
+                    .string(
+                            "[{\"id\":2,\"content\":\"QQFBAUEBQQE=\",\"fileName\":\"getEtudiantsWithCv\",\"isAccepted\":\"PENDING\",\"etudiant\":"
+                                    + "{\"id\":2,\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"phone\":\"8605550118\",\"email\":\"john.smith@example.org\",\"matricule"
+                                    + "\":\"Matricule\",\"programme_id\":2,\"cv\":[],\"internships_id\":null}},{\"id\":1,\"content\":\"QQFBAUEBQQE=\","
+                                    + "\"fileName\":\"foo.txt\",\"isAccepted\":\"ACCEPTED\",\"etudiant\":{\"id\":1,\"nom\":\"getEtudiantsWithCv\",\"prenom\":"
+                                    + "\"getEtudiantsWithCv\",\"phone\":\"6625550144\",\"email\":\"jane.doe@example.org\",\"matricule\":\"getEtudiantsWithCv"
+                                    + "\",\"programme_id\":1,\"cv\":[],\"internships_id\":null}}]"));
   }
 
   /**
-  * Method under test: {@link EtudiantController#getOffersApplied(long)}
-  */
+   * Method under test: {@link EtudiantController#getOffersApplied(long)}
+   */
   @Test
   void testGetOffersApplied() throws Exception {
     File activeCv = new File();
@@ -1408,10 +1721,10 @@ class EtudiantControllerDiffblueTest {
     when(etudiantRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
     MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/student/{id}/offersApplied", 1L);
     MockMvcBuilders.standaloneSetup(etudiantController)
-        .build()
-        .perform(requestBuilder)
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-        .andExpect(MockMvcResultMatchers.content().string("[]"));
+            .build()
+            .perform(requestBuilder)
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+            .andExpect(MockMvcResultMatchers.content().string("[]"));
   }
 }
