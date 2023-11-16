@@ -249,10 +249,11 @@ public class StageService {
     public Page<InternshipAgreementDto> getSortedByPageOfEmployeur(int page, int size, Sort sort, String state, long id, String session) {
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<InternshipAgreementDto> internshipAgreementDtos;
-
-        if (state == null)
-            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllSessionByEmployer(id,session,pageable));
-        else {
+        if (state == null) {
+            System.out.println("se");
+            System.out.println(id);
+            internshipAgreementDtos = stageToDtoPage(stageRepository.findAllSessionByEmployer(id, session, pageable));
+        }else {
             State stateEnum = State.valueOf(state);
             internshipAgreementDtos = stageToDtoPage(stageRepository.findAllStateAndSessionByEmployer(stateEnum.name(),session, id, pageable));
         }
@@ -279,10 +280,12 @@ public class StageService {
             Pageable pageable = PageRequest.of(page, size, sort);
             Page<InternshipAgreementDto> internshipAgreementDtos;
 
-            if (state == null)
+            if (state == null){
                 internshipAgreementDtos = stageToDtoPage(stageRepository.findAllBySession(pageable, session));
-            else {
+                System.out.println("s");
+            } else {
                 State stateEnum = State.valueOf(state);
+                System.out.println("ss");
                 internshipAgreementDtos = stageToDtoPage(stageRepository.findAllByStateAndSession(stateEnum.name(),pageable, session));
             }
 

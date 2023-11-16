@@ -113,7 +113,7 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0)) AND ((:session IS NULL OR :session = '') OR (s.offer.session = :session))")
     Page<Stage> findAllByStateAndSession(@Param("state") String state ,Pageable pageable,@Param("session") String session);
 
-    @Query("SELECT s FROM Stage s WHERE (s.employeur.id = :id) AND (:session IS NULL OR :session = '') OR (s.offer.session = :session)")
+    @Query("SELECT s FROM Stage s WHERE (s.employeur.id = :id) AND (:session IS NULL OR :session = '' OR s.offer.session = :session)")
     Page<Stage> findAllSessionByEmployer(@Param("id") long id,@Param("session") String session,Pageable pageable );
 
     @Query("SELECT s FROM Stage s WHERE (s.employeur.id = :id) AND ( (:state = 'DECLINED') AND (s.stateStudent = 2 OR s.stateEmployeur = 2)) OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 1) AND (s.stateStudent != 2 AND s.stateEmployeur != 2))) " +

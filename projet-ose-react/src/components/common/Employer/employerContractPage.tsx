@@ -30,7 +30,6 @@ export default function EmployerContractPage() {
     const [isLoadedContract, setIsLoadedContract] = useState(false);
 
     useEffect(() => {
-        console.log("saison:"+seasons)
         console.log(stageAgreement)
     }, [seasons]);
 
@@ -45,6 +44,8 @@ export default function EmployerContractPage() {
             setAgreementSortDirection("asc");
         }
     };
+
+    console.log('agreement: '+stageAgreement)
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
