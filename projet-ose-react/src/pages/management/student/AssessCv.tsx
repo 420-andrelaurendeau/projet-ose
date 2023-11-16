@@ -10,6 +10,7 @@ function EvaluerCV() {
     const {t} = useTranslation();
     const [files, setFiles] = useState([] as Array<ReviewFile>);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [viewedPdf, setViewedPdf] = useState({} as ReviewFile);
     const toast = useToast();
 
 
@@ -83,6 +84,7 @@ function EvaluerCV() {
                                 </button>
                                 <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                         onClick={() => {
+                                            setViewedPdf(file)
                                             setIsModalOpen(true)
                                         }}
                                 >
@@ -105,7 +107,7 @@ function EvaluerCV() {
                         </div>
                         {
                             file && isModalOpen &&
-                            <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+                            <ViewPDFModal ismodal={true} file={viewedPdf} setIsModalOpen={setIsModalOpen} />
                         }
                     </>
                 )}
