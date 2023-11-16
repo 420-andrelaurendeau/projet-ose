@@ -198,7 +198,7 @@ function UploadCVForm(): ReactElement {
     return (
         <div className={"flex flex-col items-center justify-center"}>
             <div className={"w-2/4 mt-20 flex flex-col items-center justify-center"}>
-                <h1 className={"text-4xl"}>{t('formField.Header.cv.text')}</h1>
+                <h1 className={"text-4xl dark:text-white"}>{t('formField.Header.cv.text')}</h1>
                 <h2></h2>
                 <br/>
                 <form className={"flex flex-col items-center justify-center"}>
