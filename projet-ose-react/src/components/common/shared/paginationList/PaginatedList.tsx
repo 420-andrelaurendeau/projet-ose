@@ -36,7 +36,7 @@ function PaginatedList<T>({
             <div>
                 <label htmlFor="options" className="text-bold">Filtre par saison: </label>
                 <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                    <option value="all">Tout</option>
+                    <option value="">Tout</option>
                     {seasons.map((season: string, index: number) => (
                         <option key={index} value={season}>
                             {season}

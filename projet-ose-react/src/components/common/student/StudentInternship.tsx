@@ -7,13 +7,8 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {offresEtudiant, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
-import {
-    allStudentInternshipOffersBySeason,
-    getStudentAppliedOffers,
-    getAllSeasons,
-    allStudentInternshipOffers, getOfferApprovedSeasons, allStudentOffers,
-} from "../../../api/InterOfferJobAPI";
+import {offresEtudiant, getStudentAppliedOffers, getOfferApprovedSeasons} from "../../../api/InterOfferJobAPI";
+
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
@@ -41,11 +36,8 @@ function StudentInternship() {
         if (!isloading.current)
         getUser(auth.userEmail!).then((res) => {
                 setUser(res);
-            getStudentAppliedOffers(res.id).then((res) => {
+            getStudentAppliedOffers(res.id, {}).then((res) => {
                 setAppliedOffers(res);
-            })
-            getOfferApprovedSeasons().then((res)=>{
-                setSeasons(res);
             })
             fetchDefaultCvByStudentId(res.id).then((res) => {
                 setCv(res)

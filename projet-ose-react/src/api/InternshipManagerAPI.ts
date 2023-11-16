@@ -18,7 +18,7 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
         if (state) {
             params.state = state;
         }
-
+        console.log(session + "SESSIOn")
         const response = await api.get('internshipManager/offers', {
             params: params,
             headers: {

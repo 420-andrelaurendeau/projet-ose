@@ -86,7 +86,8 @@ function StudentInternshipPage() {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session: selectedOption
                 }
             );
             console.log(offers);

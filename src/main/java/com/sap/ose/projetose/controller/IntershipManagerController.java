@@ -33,7 +33,7 @@ public class IntershipManagerController {
             @RequestParam(required = false) String session
     ) {
 
-
+        System.out.println("SESSION " + session);
         Page<InternOfferDto> internOfferDtos = internshipmanagerService.getSortedOffersByPage(page, size, state, sortField, sortDirection,session);
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
