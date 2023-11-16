@@ -43,6 +43,9 @@ export default function EmployeurOffer() {
         navigate(`/employer/home/offers/${id}/application`);
     }
 
+    useEffect(() => {
+        console.log("saison:"+seasons)
+    }, [seasons]);
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
