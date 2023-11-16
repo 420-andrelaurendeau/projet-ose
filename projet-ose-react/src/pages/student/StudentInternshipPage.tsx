@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useOutletContext } from "react-router-dom";
 import { AppliedOffers } from "../../model/AppliedOffers";
-import { getStudentAppliedOffers, offresEtudiant } from "../../api/InterOfferJobAPI";
+import {getAllSeasons, getStudentAppliedOffers, offresEtudiant} from "../../api/InterOfferJobAPI";
 import axios from "axios";
 import Header from "../../components/common/shared/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +34,10 @@ interface Props {
     onPageChange: (newPage: number) => void;
     numberElementByPage: number;
     page: number;
+    seasons: any[];
+    selectedOption: string;
+    handleChangeOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+
 }
 
 function StudentInternshipPage() {
@@ -61,13 +65,11 @@ function StudentInternshipPage() {
             getUser(auth.userEmail!)
                 .then((resUser) => {
                     setUser(resUser);
-                    console.log(resUser);
                     getStudentAppliedOffers(resUser.id, {selectedOption}).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
                         setInterviewsNb(res);
-                        console.log(interviewsNb);
                     });
                 })
                 .catch((err) => {
@@ -76,7 +78,7 @@ function StudentInternshipPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, []);
+    }, [selectedOption]);
 
 
     useEffect(() => {
@@ -90,11 +92,12 @@ function StudentInternshipPage() {
                     session: selectedOption
                 }
             );
-            console.log(offers);
+            let season = await  getAllSeasons();
+            setSeasons(season);
             isLoading.current = false;
         };
         fetchOffers();
-    }, [currentPage, numberElementByPage, sortField, sortDirection]);
+    }, [currentPage, selectedOption,numberElementByPage, sortField, sortDirection]);
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
@@ -103,6 +106,12 @@ function StudentInternshipPage() {
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
+    };
+
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+        setSelectedOption(selected);
+
     };
 
     const context = {
@@ -121,6 +130,9 @@ function StudentInternshipPage() {
         onPageChange: handlePageChange,
         numberElementByPage: numberElementByPage,
         page: currentPage,
+        seasons: seasons,
+        selectedOption: selectedOption,
+        handleChangeOption: handleOptionChange,
     };
 
     return (

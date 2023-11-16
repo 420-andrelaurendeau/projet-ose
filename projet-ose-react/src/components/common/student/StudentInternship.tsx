@@ -7,7 +7,12 @@ import {AppliedOffers} from "../../../model/AppliedOffers";
 import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {offresEtudiant, getStudentAppliedOffers, getOfferApprovedSeasons} from "../../../api/InterOfferJobAPI";
+import {
+    offresEtudiant,
+    getStudentAppliedOffers,
+    getOfferApprovedSeasons,
+    getAllSeasons
+} from "../../../api/InterOfferJobAPI";
 
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
 import {FileEntity} from "../../../model/FileEntity";
@@ -22,10 +27,11 @@ interface Props {
 function StudentInternship() {
     const {t} = useTranslation();
     const [appliedOffers, setAppliedOffers] = useState<any[]>([])
-    const [offers, setOffers] = useState<any[]>([])
-    const [cv,setCv] = useState<FileEntity>()
-    const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const {offers,handleChangeOption, selectedOption, seasons} = useProps()
+    //const [offers, setOffers] = useState<any[]>([])
+    const [cv, setCv] = useState<FileEntity>()
+    //const [seasons, setSeasons] = useState([])
+    //const [selectedOption, setSelectedOption] = useState('');
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
@@ -33,48 +39,48 @@ function StudentInternship() {
     const toast = useToast();
 
     useEffect(() => {
-        if (!isloading.current)
-        getUser(auth.userEmail!).then((res) => {
-                setUser(res);
-            getStudentAppliedOffers(res.id, {}).then((res) => {
-                setAppliedOffers(res);
-            })
-            fetchDefaultCvByStudentId(res.id).then((res) => {
-                setCv(res)
-                console.log(res)
-            }).catch((error) => {
-                console.log("Error fetching user data:", error)
-            })
+        const fecth = async () => {
+            isloading.current = true;
+            try {
+                const userRes = await getUser(auth.userEmail!);
+                setUser(userRes);
+
+                const offersRes = await getStudentAppliedOffers(auth.userId!, {});
+                // Met à jour l'état et attend que React l'applique
+                setAppliedOffers(offersRes);
+
+                const cvRes = await fetchDefaultCvByStudentId(userRes.id);
+                setCv(cvRes);
+            } catch (error) {
+                console.log("Error fetching user data:", error);
+            } finally {
             }
-        ).finally(async () => {
-            await offresEtudiant(setOffers, setAppliedOffers, {});
-        })
+        }
+
+        if (!isloading.current) {
+            fecth().then(r => console.log(appliedOffers));
+            isloading.current = false;
+        }
     }, []);
 
-    const handleOptionChange = async (event: any) => {
-        const selected = event.target.value;
 
-        console.log(selected)
-        setSelectedOption(selected);
-
-    };
 
     const applyOffer = (offer: any, student: any, cv: any) => {
-        console.log(offer);
-        console.log(student);
-        console.log(cv);
         if (cv == null) {
             toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
-        }
-        else {
+        } else {
             saveStudentInternshipOffer(offer, student, cv).then(
-                res => {
+                async res => {
+                    console.log(appliedOffers)
                     let appliedOffer: AppliedOffers = {
                         appliedOffer: res.internOfferJob,
                         appliedFiles: res.files
                     };
-                    setAppliedOffers([...appliedOffers, appliedOffer]);
+                    await getStudentAppliedOffers(auth.userId!, {}).then((res) => {
+                        setAppliedOffers(res)
+                    })
                     toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
+
                 }
             ).catch(
                 err => {
@@ -87,19 +93,20 @@ function StudentInternship() {
 
     return (
         <div className="flex flex-col mt-14">
-            <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
+            <div
+                className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8 ">
                     <div className="overflow-x-hidden xxxs:rounded-lg">
                         <div className="flex items-center justify-center">
-                            <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
+                            <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16"/>
                         </div>
                         <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {t("formField.EtudiantStage.titre.text")}
                         </h1>
                         <div>
                             <label htmlFor="options" className="text-bold">Filtre par saison: </label>
-                            <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                                <option value="all">Tout</option>
+                            <select id="options" value={selectedOption} onChange={handleChangeOption}>
+                                <option value="">Tout</option>
                                 {seasons.map((season: string, index: number) => (
                                     <option key={index} value={season}>
                                         {season}
@@ -107,7 +114,8 @@ function StudentInternship() {
                                 ))}
                             </select>
                         </div>
-                        <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                        <div
+                            className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className="w-full divide-y divide-gray dark:divide-darkgray">
                                 <thead className="bg-blue dark:bg-orange ">
                                 <tr>
@@ -167,7 +175,8 @@ function StudentInternship() {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="ml-4">
-                                                    <div className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
+                                                    <div
+                                                        className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -199,7 +208,7 @@ function StudentInternship() {
                                             </button>
                                         </td>
                                     </tr>
-                                    ))}
+                                ))}
                                 </tbody>
                             </table>
                         </div>

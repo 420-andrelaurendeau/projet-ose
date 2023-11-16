@@ -16,9 +16,10 @@ const apiClient = axios.create({
     },
 });
 
-export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
+export async function offresEtudiant(setOffers: any, setTotalPages: any, params: {}) {
     const loadOffers = async () => {
         try {
+            console.log(params)
             const data = await getInterOfferStudent(params);
             console.log(data);
             setOffers(data.content);
@@ -27,7 +28,7 @@ export function offresEtudiant (setOffers: any, setTotalPages:any, params:{}) {
             console.error('Erreur lors du chargement des offres:', error);
         }
     };
-    loadOffers().then(r => console.log(r))
+    await loadOffers()
 }
 
 export const allStudentInternshipOffersBySeason = async (selectedOption: string): Promise<any[]> => {
@@ -191,6 +192,7 @@ export const getInterOfferStudent = async (params:{}) => {
         const response = await api.get('interOfferJob/OffersEtudiant',{
             params: params
         });
+        console.log(params)
         return response.data;
 
     } catch (error) {
@@ -205,6 +207,7 @@ export const getStudentAppliedOffers = async (studentId: number,params:{}): Prom
         const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
             params: params
         });
+
         return response.data.map((item: any) => ({
                 appliedOffer: item.appliedOffer,
                 appliedFiles: item.appliedFiles
