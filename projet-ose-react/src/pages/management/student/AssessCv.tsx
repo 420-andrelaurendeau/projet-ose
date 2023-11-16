@@ -1,34 +1,35 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getStudentPendingCv, acceptStudentCv, declineStudentCv} from "../../../api/InternshipManagerAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import {ReviewFile} from "../../../model/ReviewFile";
 import {useTranslation} from "react-i18next";
 import {useToast} from "../../../hooks/state/useToast";
+import ViewPDFModal from "../../../components/common/Employer/offer/ViewPDFModal"
 function EvaluerCV() {
-    const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","StudentCvEvaluation");
+    const {t} = useTranslation();
     const [files, setFiles] = useState([] as Array<ReviewFile>);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
 
 
     async function ApproveFile(file: ReviewFile) {
         acceptStudentCv(file.id).then(r => {
             console.log(r);
-            toast.success(fields.toast.acceptSuccess)
+            toast.success(t("StudentCvEvaluation.toast.acceptSuccess"))
         }).catch((error) => {
             console.log(error);
-            toast.error(fields.toast.acceptError)
+            toast.error(t("StudentCvEvaluation.toast.acceptError"))
         }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
     async function DeclineFile(file: ReviewFile) {
         declineStudentCv(file.id).then(r => {
             console.log(r);
-            toast.success(fields.toast.declineSuccess)
+            toast.success(t("StudentCvEvaluation.toast.declineSuccess"))
         }).catch((error) => {
             console.log(error);
-            toast.error(fields.toast.declineError)
+            toast.error(t("StudentCvEvaluation.toast.declineError"))
         }).then(getStudentPendingCv).then(r => setFiles(r));
     }
 
@@ -62,7 +63,7 @@ function EvaluerCV() {
     return (
         <>
             <div className="lg:p-16 p-4">
-                <h1 className="text-center font-extrabold text-2xl dark:text-gray">{fields.title}</h1>
+                <h1 className="text-center font-extrabold text-2xl dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
                 {files.map((file) =>
                     <>
                         <div key={file.id} className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
@@ -77,23 +78,35 @@ function EvaluerCV() {
                                     className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center align-middle h-full w-full"
                                     onClick={() => handleDownloadFile(file)}
                                 >
-                                    <p className="dark:text-white">{fields.button.download}</p>
+                                    <p className="dark:text-white">{t("StudentCvEvaluation.button.download")}</p>
                                     <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white" />
+                                </button>
+                                <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                        onClick={() => {
+                                            setIsModalOpen(true)
+                                        }}
+                                >
+                                    {t("StudentCvEvaluation.view")}
                                 </button>
                             </div>
                             <div className="md:flex-grow my-4 lg:my-0 pb-2">
                                 <div className="flex flex-col md:flex-row md:justify-end h-full w-full flex-wrap">
+
                                     <button className="bg-green hover:bg-green-700 text-white font-bold py-2 rounded mb-3 md:mb-0 md:mr-1 md:px-2 md:aspect-square lg:h-full lg:mr-4"
                                             onClick={_ => ApproveFile(file)}>
-                                        {fields.button.accept}
+                                        {t('StudentCvEvaluation.button.accept')}
                                     </button>
                                     <button className="bg-red hover:bg-red-700 text-white font-bold py-2 rounded md:px-2 md:aspect-square lg:h-full"
                                             onClick={_ => DeclineFile(file)}>
-                                        {fields.button.decline}
+                                        {t("StudentCvEvaluation.button.decline")}
                                     </button>
                                 </div>
                             </div>
                         </div>
+                        {
+                            file && isModalOpen &&
+                            <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+                        }
                     </>
                 )}
             </div>

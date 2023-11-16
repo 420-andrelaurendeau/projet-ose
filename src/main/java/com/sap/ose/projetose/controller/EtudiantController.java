@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
+import com.sap.ose.projetose.dto.EtudiantInscriptionDto;
 import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;

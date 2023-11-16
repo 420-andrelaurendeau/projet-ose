@@ -10,7 +10,7 @@ import {saveCvStudent, fetchAllStudentCvs, setDefaultCv, fetchDefaultCvByStudent
 import {useToast} from "../../../../hooks/state/useToast";
 import {ReviewFile} from "../../../../model/ReviewFile";
 import {User} from "../../../../model/User";
-
+import ViewPDFModal from "../../Employer/offer/ViewPDFModal";
 
 function UploadCVForm(): ReactElement {
 
@@ -20,6 +20,7 @@ function UploadCVForm(): ReactElement {
     const [uploadState, setUploadState] = useState({status: "None"})
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
     const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const auth = useAuth();
 
     const [errors, setErrors] = useState<{
@@ -255,6 +256,15 @@ function UploadCVForm(): ReactElement {
                                                             ? "text-green"
                                                             : "text-red")}>({t("formField.InternshipOfferList.table." + file.isAccepted)})</p>
                         </div>
+                        <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
+                            <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                    onClick={() => {
+                                        setIsModalOpen(true)
+                                    }}
+                            >
+                                {t('cv.view')}
+                            </button>
+                        </div>
                         <div className="flex-item overflow-ellipsis pb-2">
 
                             <button
@@ -279,8 +289,11 @@ function UploadCVForm(): ReactElement {
                             </button>
                         </div>
                     </div>
+                    {
+                        file && isModalOpen &&
+                        <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+                    }
                 </>
-
             )}
         </div>
     )
