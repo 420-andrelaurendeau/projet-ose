@@ -220,10 +220,12 @@ function UploadCVForm(): ReactElement {
                                     className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
                             </p>
                         </div>
-
-                        {renderError(errors.file)}
                     </div>
-
+                    {errors.file === undefined || null
+                        ? <></>
+                        : <div className="flex flex-col items-center justify-center w-full">
+                            {renderError(errors.file)}
+                    </div>}
                     <br/>
                     <div className={"flex flex-col items-center justify-center w-full"}>
                         <div className={"flex flex-col items-center justify-around w-full "}>
