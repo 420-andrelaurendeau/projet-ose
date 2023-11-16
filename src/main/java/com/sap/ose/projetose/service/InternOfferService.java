@@ -270,13 +270,13 @@ public class InternOfferService {
         int month = date.getMonthValue();
 
         if (month >= 3 && month <= 5) {
-            return "Spring"+date.getYear();
+            return "Printemps"+date.getYear();
         } else if (month >= 6 && month <= 8) {
-            return "Summer"+date.getYear();
+            return "Été"+date.getYear();
         } else if (month >= 9 && month <= 11) {
-            return "Autumn"+date.getYear();
+            return "Automne"+date.getYear();
         } else if (month == 12 || month <= 2) {
-           return "Winter"+date.getYear();
+           return "Hiver"+date.getYear();
         }else {
             return "No specific offers for this month";
         }
