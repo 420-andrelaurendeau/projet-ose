@@ -270,6 +270,18 @@ function EmployeurHomePage() {
                                     <p className="text-black dark:text-white">{fields.internship.text}</p>
                                 </div>
                             </NavLink>
+                            <NavLink
+                                to="interview"
+                                className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
+                                    + (location.pathname === `/${userRole}/home/interview` || location.pathname === `/${userRole}/home/interview/` ? " border-b-2" : "")
+                                }
+                                state={user}
+                            >
+                                <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">{fields.interview.text}</p>
+                                </div>
+                            </NavLink>
                         </div>
                     </div>
                     <div className="w-full">

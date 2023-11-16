@@ -1,18 +1,13 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {
-    fetchInterviews,
-    acceptInterview,
-    declineInterview,
-    saveStageStudent
-} from "../../api/StudentApi";
-import {getUser} from "../../api/UtilisateurAPI";
-import {useAuth} from "../../authentication/AuthContext";
-import {Interview} from "../../model/Interview";
 import i18n from "i18next";
-import PaginatedList from "../../components/common/shared/paginationList/PaginatedList";
+import React, {useEffect, useRef, useState} from "react";
+import {Interview} from "../../../model/Interview";
+import {useAuth} from "../../../authentication/AuthContext";
+import {getUser} from "../../../api/UtilisateurAPI";
+import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/StudentApi";
+import PaginatedList from "../shared/paginationList/PaginatedList";
+import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 
-
-export default function StudentInterviewPage() {
+export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
@@ -22,48 +17,6 @@ export default function StudentInterviewPage() {
     const [totalPages, setTotalPages] = useState(0);
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
 
-
-    const handleOnAccept = (interviewId: number) => {
-        acceptInterview(interviewId, user.id).then((res) => {
-            console.log(res);
-            if (res === true) {
-                {/*Change the interview status to accepted*/
-                }
-                setInterviews(interviews.map((interview) => {
-                    console.log(interview)
-                    if (interview.id === interviewId) {
-                        interview.state = "ACCEPTED";
-                        saveStageStudent({
-                            id: 0,
-                            student_id: user.id,
-                            offer: interview.internOffer,
-                            stateStudent: "PENDING",
-                            stateEmployeur: "PENDING"
-                        })
-                    }
-                    return interview;
-                }));
-                console.log(interviews);
-            }
-        });
-    }
-
-    const handleOnDecline = (interviewId: number) => {
-        declineInterview(interviewId, user.id).then((res) => {
-            console.log(res);
-            if (res === true) {
-                {/*Change the interview status to accepted*/
-                }
-                setInterviews(interviews.map((interview) => {
-                    if (interview.id === interviewId) {
-                        interview.state = "DECLINED";
-                    }
-                    return interview;
-                }));
-            }
-        });
-    }
-
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
@@ -72,7 +25,7 @@ export default function StudentInterviewPage() {
                 .then((resUser) => {
                     setUser(resUser);
                     console.log(resUser);
-                    fetchInterviews(resUser.id, {
+                    fetchInterviewsEmployer(resUser.id, {
                         page: currentPage,
                         size: numberElementByPage,
                         sortField: "id",
@@ -92,12 +45,6 @@ export default function StudentInterviewPage() {
         if (!isLoading.current) fetchUser();
     }, [totalPages, currentPage, numberElementByPage]);
 
-    useEffect(() => {
-        interviews.map((interview) => {
-            console.log(interview);
-        });
-    }, [interviews]);
-
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
@@ -106,6 +53,59 @@ export default function StudentInterviewPage() {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
     };
+
+    const getInterviewFromId = (id: number) => {
+        for (let i = 0; i < interviews.length; i++) {
+            if (interviews[i].id === id) {
+                return interviews[i];
+            }
+        }
+        return null;
+    }
+
+    const handleOnAccept = (interviewId: number) => {
+        //todo change for employer
+        console.log(getInterviewFromId(interviewId)!.student?.id)
+        acceptInterview(interviewId, getInterviewFromId(interviewId)!.student?.id).then((res) => {
+            console.log(res);
+            if (res === true) {
+                {/*Change the interview status to accepted*/
+                }
+                setInterviews(interviews.map((interview) => {
+                    console.log(interview)
+                    if (interview.id === interviewId) {
+                        interview.state = "ACCEPTED";
+                        saveStageStudent({
+                            id: 0,
+                            student_id: getInterviewFromId(interviewId)!.student?.id,
+                            offer: interview.internOffer,
+                            stateStudent: "PENDING",
+                            stateEmployeur: "PENDING"
+                        })
+                    }
+                    return interview;
+                }));
+                console.log(interviews);
+            }
+        });
+    }
+
+    const handleOnDecline = (interviewId: number) => {
+        //todo change for employer
+        declineInterview(interviewId, getInterviewFromId(interviewId)!.student?.id).then((res) => {
+            console.log(res);
+            if (res === true) {
+                {/*Change the interview status to accepted*/
+                }
+                setInterviews(interviews.map((interview) => {
+                    if (interview.id === interviewId) {
+                        interview.state = "DECLINED";
+                    }
+                    return interview;
+                }));
+            }
+        });
+    }
 
     const renderInterviews = (
         <main className={"pb-4"}>
@@ -195,23 +195,21 @@ export default function StudentInterviewPage() {
         </main>
     )
 
-    return (
-        <div className="dark:bg-black">
-            <div className="flex flex-col items-center">
-                <div className=" lg:-mx-8 mt-28 w-11/12 ">
-                    <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                        <div className=" w-full">
-                            <PaginatedList renderItem={renderInterviews}
-                                           page={currentPage}
-                                           totalPages={totalPages}
-                                           onPageChange={handlePageChange}
-                                           numberElement={numberElementByPage}
-                                           handleChangeNumberElement={handleChangeNbElement}/>
-                        </div>
+    return (        <div className="dark:bg-black">
+        <div className="flex flex-col items-center">
+            <div className=" lg:-mx-8 mt-28 w-11/12 ">
+                <div
+                    className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
+                    <div className=" w-full">
+                        <PaginatedList renderItem={renderInterviews}
+                                       page={currentPage}
+                                       totalPages={totalPages}
+                                       onPageChange={handlePageChange}
+                                       numberElement={numberElementByPage}
+                                       handleChangeNumberElement={handleChangeNbElement}/>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    </div>)
 }

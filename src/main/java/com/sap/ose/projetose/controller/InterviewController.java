@@ -62,6 +62,18 @@ public class InterviewController {
     }
 
     @Transactional
+    @GetMapping("/getByEmployerId/{employerId}")
+    public ResponseEntity<Page<InterviewDTO>> getInterviewsByEmployerId(@PathVariable long employerId,
+                                                                       @RequestParam(required = false, defaultValue = "0") int page,
+                                                                       @RequestParam(required = false, defaultValue = "10") int size,
+                                                                       @RequestParam(required = false, defaultValue = "id") String sortField,
+                                                                       @RequestParam(required = false, defaultValue = "desc") String sortDirection
+    ) {
+        logger.info("Interview get request received");
+        return Optional.of(interviewService.getInterviewsByEmployerId(employerId, page, size,sortField, sortDirection)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @Transactional
     @GetMapping("/getCountByStudentId/{studentId}")
     public ResponseEntity<Long> getInterviewsCountByStudentId(@PathVariable long studentId) {
         logger.info("Interview get request received");

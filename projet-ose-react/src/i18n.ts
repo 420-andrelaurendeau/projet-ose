@@ -505,6 +505,10 @@ i18n
                                 name: 'titre',
                                 text: 'Dashboard'
                             },
+                            interview:{
+                                name: 'interview',
+                                text: 'Interview'
+                            },
                             candidature: {
                                 name: 'totalCondidature',
                                 text: 'Application'
@@ -1204,6 +1208,10 @@ i18n
                             titre: {
                                 name: 'titre',
                                 text: 'Tableau de bord'
+                            },
+                            interview:{
+                                name: 'interview',
+                                text: 'Entrevue'
                             },
                             candidature: {
                                 name: 'totalCondidature',

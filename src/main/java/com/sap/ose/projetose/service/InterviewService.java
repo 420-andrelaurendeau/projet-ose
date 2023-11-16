@@ -138,6 +138,22 @@ public class InterviewService {
                 ));
     }
 
+    public Page<InterviewDTO> getInterviewsByEmployerId(long employerId, int page, int size, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Interview> page1 = interviewRepository.findAllByEmployerId(employerId, pageable);
+        return page1.map(
+                interview -> new InterviewDTO(
+                        interview.getId(),
+                        new EtudiantDto(interview.getStudent()),
+                        new InternOfferDto(interview.getInternshipOffer()),
+                        interview.getDate(),
+                        interview.getDescription(),
+                        interview.getState()
+                ));
+    }
+
     public Optional<Long> getInterviewsCountByStudentId(long studentId) {
         int page = 1;
         int size = 10;
@@ -167,6 +183,8 @@ public class InterviewService {
         }
         return Optional.of(false);
     }
+
+
 
 
 //    @Transactional
