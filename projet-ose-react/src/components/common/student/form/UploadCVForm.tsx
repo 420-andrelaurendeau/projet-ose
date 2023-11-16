@@ -262,7 +262,7 @@ function UploadCVForm(): ReactElement {
                                         setIsModalOpen(true)
                                     }}
                             >
-                                View
+                                {t('cv.view')}
                             </button>
                         </div>
                         <div className="flex-item overflow-ellipsis pb-2">

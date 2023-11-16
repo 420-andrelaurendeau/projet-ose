@@ -708,7 +708,8 @@ i18n
                             acceptError: "An error occurred while accepting the CV",
                             declineSuccess: "The CV has been declined",
                             declineError: "An error occurred while declining the CV",
-                        }
+                        },
+                        view: "View CV",
                     }
 
                 },
@@ -1386,7 +1387,9 @@ i18n
                             acceptError: "Une erreur est survenue lors de l'acceptation du CV",
                             declineSuccess: "Le CV a été refusé",
                             declineError: "Une erreur est survenue lors du refus du CV",
-                        }
+                        },
+
+                        view: "Voir CV",
                     }
                 }
             }
