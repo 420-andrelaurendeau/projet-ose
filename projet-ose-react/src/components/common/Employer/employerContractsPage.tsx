@@ -4,6 +4,7 @@ import {getUser} from "../../../api/UtilisateurAPI";
 import {useToast} from "../../../hooks/state/useToast";
 import {useTranslation} from "react-i18next";
 import {
+    getStageByEmployeurId,
     getStageByStudentId,
     getStageCountByStateStudent
 } from "../../../api/InternshipManagerAPI";
@@ -14,7 +15,7 @@ import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
 
-export default function StudentContractPage() {
+export default function EmployerContractsPage() {
 
     const [user, setUser] = useState<any>(null)
     const [isUpdate, setIsUpdate] = useState(false);
@@ -61,10 +62,9 @@ export default function StudentContractPage() {
             handleTotalOffersByState(id);
             internshipAgreementRef.current = true
             console.log("DATA")
-            const response = await getStageByStudentId({
+            const response = await getStageByEmployeurId({
                 page: currentPage,
                 size: numberElementByPage,
-                state: state,
                 sortField: sortField,
                 sortDirection: sortDirection
             }, id);
@@ -113,7 +113,7 @@ export default function StudentContractPage() {
 
     const handleOfferClick = (id: number) => {
         console.log(id)
-        navigate(`/student/home/internshipagreement/${id}`);
+        navigate(`/employer/home/internshipagreement/${id}`);
     }
     const handleChangeStateSort = (state: any) => {
         setState(state);
@@ -131,7 +131,7 @@ export default function StudentContractPage() {
     return (
         <div className="px-4">
             <title>Offres</title>
-            <header className="pb-4">
+            <header className=" pb-4">
                 <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">

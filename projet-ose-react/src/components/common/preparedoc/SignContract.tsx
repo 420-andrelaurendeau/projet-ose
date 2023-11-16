@@ -41,34 +41,30 @@ function SignContract(props: any) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [newContent, setNewContent] = useState<any>(false);
 
-    useEffect(() => {
-        console.log(stage)
-        setWidth(getWidth());
-        window.addEventListener("resize", () => {
-            setWidth(getWidth());
-        });
-    }, [isLoaded]);
+  useEffect(() => {
+    setWidth(getWidth());
+    window.addEventListener("resize", () => {
+      setWidth(getWidth());
+    });
+  }, [isLoaded]);
 
-    useEffect(() => {
-        setIsLoaded(false)
-        const getContract = async () => {
-            await employeurGetContractById(stage.contractId).then(async r => {
-                console.log(r.content)
-                setContract(r)
-                const pdfBytes = base64ToArrayBuffer(r.content);
-                console.log(pdfBytes)
-                if (pdfBytes) {
-                    const blob = new Blob([new Uint8Array(pdfBytes)]);
-                    const URL: any = await blobToURL(blob);
-                    console.log(URL)
-                    setPdf(URL);
-                } else setPdf(null)
-                setIsLoaded(true)
-            })
-        }
-        getContract();
-        setWidth(getWidth());
-    }, []);
+  useEffect( () => {
+    setIsLoaded(false)
+    const getContract = async () => {
+      await employeurGetContractById(stage.contractId).then(async r => {
+        setContract(r)
+        const pdfBytes = base64ToArrayBuffer(r.content);
+        if (pdfBytes) {
+          const blob = new Blob([new Uint8Array(pdfBytes)]);
+          const URL: any = await blobToURL(blob);
+          setPdf(URL);
+        } else setPdf(null)
+        setIsLoaded(true)
+      })
+    }
+    getContract();
+    setWidth(getWidth());
+  }, []);
 
     const submitContract = () => {
         urlToBase64(pdf!)
@@ -92,81 +88,80 @@ function SignContract(props: any) {
         );
     }
 
-    return (
-        isLoaded ?
-            <div>
-                <div id="container" className="m-auto">
-                    {signatureDialogVisible ? (
-                        <AddSigDialog
-                            autoDate={autoDate}
-                            setAutoDate={setAutoDate}
-                            onClose={() => setSignatureDialogVisible(false)}
-                            onConfirm={(url: any) => {
-                                setSignatureURL(url);
-                                setSignatureDialogVisible(false);
-                            }}
-                        />
-                    ) : null}
-                    {pdf ? (
-                        <div className="relative">
-                            <PDFOptions
-                                optionsClassname={optionsClassname} selectedOption={selectedOption}
-                                newContent={newContent}
-                                onClick={() => setSelectedOption('none')}
-                                onClick1={() => {
-                                    setTextInputVisible(true)
-                                    setSelectedOption('write')
-                                }}
-                                onClick2={() => {
-                                    setSignatureDialogVisible(true)
-                                    setSelectedOption('sign')
-                                }}
-                                onClick3={() => {
-                                    setSelectedOption('print')
-                                }}
-                                onClick4={() => {
-                                    downloadURI(pdf, 'contract.pdf')
-                                }}
-                                submitContract={submitContract}
-                            />
-                            <ViewPDF
-                                file={pdf} pageDetails={pageDetails} setPdf={setPdf} pdf={pdf}
-                                setSignatureURL={setSignatureURL} setPosition={setPosition}
-                                autoDate={autoDate} setTextInputVisible={setTextInputVisible}
-                                pageNum={pageNum} width={width} signatureURL={signatureURL}
-                                onEnd={setPosition} textInputVisible={textInputVisible}
-                                setNewContent={setNewContent} contract={contract}
-                                setSelectedOption={setSelectedOption}
-                                onLoadSuccess={(data: any) => {
-                                    setTotalPages(data.numPages);
-                                }}
-                                onLoadSuccess1={(data: any) => {
-                                    setPageDetails(data);
-                                    console.log(data)
-                                }}
-                                onCancel={() => {
-                                    setSignatureURL(null);
-                                    setSelectedOption('none')
-                                }}
-                                onCancel1={() => {
-                                    setTextInputVisible(false)
-                                    setSelectedOption('none')
-                                }}
-                            />
-                            <div className="fixed bottom-0 left-0 right-0">
-                                <PagingControl
-                                    pageNum={pageNum}
-                                    setPageNum={setPageNum}
-                                    totalPages={totalPages}
-                                />
-                            </div>
-                        </div>
-                    ) : null}
-                </div>
-            </div> :
-            <div className="flex justify-center items-center">
-                <FontAwesomeIcon icon={faSpinner} spin size="5x" className="text-blue dark:text-orange"/>
+  return (
+      isLoaded ?
+    <div>
+      <div id="container" className="m-auto">
+        {signatureDialogVisible ? (
+          <AddSigDialog
+            autoDate={autoDate}
+            setAutoDate={setAutoDate}
+            onClose={() => setSignatureDialogVisible(false)}
+            onConfirm={(url:any) => {
+              setSignatureURL(url);
+              setSignatureDialogVisible(false);
+            }}
+          />
+        ) : null}
+        {pdf ? (
+          <div className="relative">
+            <PDFOptions
+                optionsClassname={optionsClassname} selectedOption={selectedOption}
+                newContent={newContent}
+                onClick={() => setSelectedOption('none')}
+                onClick1={() => {
+                  setTextInputVisible(true)
+                  setSelectedOption('write')
+                }}
+                onClick2={() => {
+                  setSignatureDialogVisible(true)
+                  setSelectedOption('sign')
+                }}
+                onClick3={() => {
+                  setSelectedOption('print')
+                }}
+                onClick4={() => {
+                  downloadURI(pdf, 'contract.pdf')
+                }}
+                submitContract={submitContract}
+            />
+            <ViewPDF
+                file={pdf} pageDetails={pageDetails} setPdf={setPdf} pdf={pdf}
+                setSignatureURL={setSignatureURL} setPosition={setPosition}
+                autoDate={autoDate} setTextInputVisible={setTextInputVisible}
+                pageNum={pageNum} width={width} signatureURL={signatureURL}
+                onEnd={setPosition} textInputVisible={textInputVisible}
+                setNewContent={setNewContent} contract={contract}
+                setSelectedOption={setSelectedOption}
+                onLoadSuccess={(data: any) => {
+                  setTotalPages(data.numPages);
+                }}
+                onLoadSuccess1={(data: any) => {
+                  setPageDetails(data);
+                }}
+                onCancel={() => {
+                  setSignatureURL(null);
+                  setSelectedOption('none')
+                }}
+                onCancel1={() => {
+                  setTextInputVisible(false)
+                  setSelectedOption('none')
+                }}
+              />
+            <div className="fixed bottom-0 left-0 right-0">
+              <PagingControl
+                  pageNum={pageNum}
+                  setPageNum={setPageNum}
+                  totalPages={totalPages}
+              />
             </div>
+          </div>
+        ) : null}
+      </div>
+    </div>:
+          <div className="flex justify-center items-center">
+            <FontAwesomeIcon icon={faSpinner}  spin size="5x" className="text-blue dark:text-orange" />
+          </div>
 
     );
 }

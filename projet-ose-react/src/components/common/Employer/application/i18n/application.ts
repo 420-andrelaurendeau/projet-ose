@@ -93,7 +93,10 @@ let application = {
                 name: "success",
                 text: "Interview scheduled successfully",
             },
-
+            view: {
+                name: "view",
+                text: "View",
+            },
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -242,6 +245,10 @@ let application = {
                 name: "success",
                 text: "Entretien planifié avec succès",
             },
+            view: {
+                name: "view",
+                text: "Voir",
+            },
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -297,6 +304,7 @@ let application = {
                 text: 'Technologie de la comptabilité et de la gestion',
             },
         },
+
     }
 }
 

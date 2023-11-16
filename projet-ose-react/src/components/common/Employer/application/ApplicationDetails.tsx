@@ -7,6 +7,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLock, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import api from "../../../../api/ConfigAPI";
+import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
+import {Buffer} from "buffer";
+import ViewPDFModal from "../offer/ViewPDFModal";
 
 export default function ApplicationDetails ():ReactElement{
 
@@ -17,11 +20,37 @@ export default function ApplicationDetails ():ReactElement{
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2) + ".applicant");
     const toast = useContext(ToastContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [file, setFile] = useState(null);
+
 
     useEffect(()=>{
         setDate("")
         updateCandidature()
     },[])
+
+    const getFileSize = (file:any): string => {
+        let sizeInBytes = 0
+        if (file.content){
+            sizeInBytes = Buffer.from(file.content).length;
+            if (sizeInBytes < 1000) {
+                return sizeInBytes + " B";
+            }else if (sizeInBytes < 1000000) {
+                return sizeInBytes / 1000 + " KB";
+            }else if (sizeInBytes < 1000000000) {
+                return Math.round(sizeInBytes / 10000) / 100 + " MB";
+            }
+        }
+        return sizeInBytes + " B";
+    }
+
+    const getPDF = async (file:any) => {
+        const pdfBytes = base64ToArrayBuffer(file.content)
+        if (pdfBytes) {
+            const blob = new Blob([new Uint8Array(pdfBytes)]);
+            return await blobToURL(blob);
+        }else return null
+    }
 
     function handleSubmit(){
         clearInputs()
@@ -92,22 +121,44 @@ export default function ApplicationDetails ():ReactElement{
                             </dt>
                             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                 <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
-                                    <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                                        <div className="flex w-0 flex-1 items-center">
-                                            <div className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-                                            <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium dark:text-white "></span>
-                                                <span className="flex-shrink-0 text-neutral-500 dark:text-neutral-300">{
-
-                                                }</span>
-                                            </div>
-                                        </div>
-                                        <div className="ml-4 flex-shrink-0">
-                                            <a href="#" className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800">
-                                                {fields.download.text}
-                                            </a>
-                                        </div>
-                                    </li>
+                                    {
+                                        application?.files.map((file:any) => (
+                                            <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                                <div className="flex w-0 flex-1 items-center">
+                                                    <div className="h-5 w-5 flex-shrink-0 text-gray-400"
+                                                         aria-hidden="true"/>
+                                                    <div className="ml-4 flex min-w-0 flex-1 gap-2">
+                                                        <span
+                                                            className="truncate font-medium dark:text-white ">{file.fileName}</span>
+                                                        <span
+                                                            className="flex-shrink-0 text-neutral-500 dark:text-neutral-300">{
+                                                            getFileSize(file)
+                                                        }</span>
+                                                    </div>
+                                                </div>
+                                                <div className="ml-4 flex-shrink-0 space-x-5">
+                                                    <button
+                                                        className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                                        onClick={() => {
+                                                            setIsModalOpen(true)
+                                                            setFile(file)
+                                                        }}
+                                                    >
+                                                        {fields.view.text}
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                                        onClick={() => {
+                                                            downloadURI(getPDF(file), file.fileName!)
+                                                        }}
+                                                    >
+                                                        {fields.download.text}
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))
+                                    }
                                 </ul>
                             </dd>
                         </div>
@@ -194,6 +245,10 @@ export default function ApplicationDetails ():ReactElement{
                     </dl>
                 </div>
             </div>
+            {
+                isModalOpen &&
+                <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
+            }
         </div>
     )
 }

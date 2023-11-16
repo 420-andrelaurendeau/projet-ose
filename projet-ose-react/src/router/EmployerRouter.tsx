@@ -14,8 +14,10 @@ import ApplicationOffer from "../components/common/Employer/application/Applicat
 import ApplicationDetails from "../components/common/Employer/application/ApplicationDetails";
 import SignContract from "../components/common/preparedoc/SignContract";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
-import EmployerContractPage from "../components/common/Employer/employerContractPage";
+import EmployerStagePage from "../components/common/Employer/employerStagePage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
+import EmployerContractsPage from "../components/common/Employer/employerContractsPage";
+
 import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import {EmployerInterviewPage} from "../components/common/Employer/EmployerInterviewPage";
 const EmployerRouter: React.FC = () => {
@@ -26,7 +28,7 @@ const EmployerRouter: React.FC = () => {
                     <Route index path="home" element={<EmployeurHomePage/>}/>
                     <Route path="home" element={<EmployeurHomePage/>}>
                         <Route index path="offers" element={<EmployeurOffer/>}/>
-                        <Route path={"contract"} element={<EmployerContractPage/>}>
+                        <Route path={"stage"} element={<EmployerStagePage/>}>
                             <Route path=":id" element={<ViewPDFModal/>}/>
                         </Route>
                         <Route path="offers/:id" element={<EmployerOfferDetails/>}>
@@ -37,11 +39,12 @@ const EmployerRouter: React.FC = () => {
                         </Route>
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
                         <Route path="interview" element={<EmployerInterviewPage/>}/>
-                        <Route path="contract/sign" element={<SignContract/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
+                        <Route path="internshipagreement" element={<EmployerContractsPage/>}/>
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
+                        <Route path="internshipagreement/:id/contract" element={<SignContract/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>

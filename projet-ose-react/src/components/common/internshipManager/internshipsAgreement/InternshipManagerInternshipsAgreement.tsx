@@ -1,8 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
+import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
 import React, {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {saveEmployerOpinion} from "../../../../api/StageAPI";
 
 export default function InternshipManagerInternshipsAgreement(props: any) {
 
@@ -29,27 +30,26 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
     };
     
     return (
-        <div className="pt-4 pb-4">
-            <div className="">
-                <div className="bg-blue rounded dark:bg-orange">
-                    <div className="flex p-2 items-center">
-
-                        <div
-                            role="columnheader"
-                            className="xxxs:text-xs sm:text-sm sm:w-1/5 w-1/2 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
+        <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+            <table className="w-full divide-y divide-gray dark:divide-darkgray">
+                <thead className="bg-blue dark:bg-orange ">
+                    <tr>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
                             onClick={() => handleSortClick("offer.title")}
                         >
                             {fields.title}
                             <div
-                                className={props.sortField === "offer.title" ? "visible" : "hidden"}>
+                                className={props.sortField === "title" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
                             </div>
-                        </div>
-                        <div
-                            role="columnheader"
-                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5  px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-gray uppercase tracking-wider"
                             onClick={() => handleSortClick("employeur.entreprise")}
                         >
                             {fields.enterprise}
@@ -59,10 +59,10 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
                             </div>
-                        </div>
-                        <div
-                            role="columnheader"
-                            className="hidden sm:visible xxxs:text-xs sm:text-sm w-1/3 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-pointer overflow-hidden truncate sm:flex"
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider max-md:hidden "
                             onClick={() => handleSortClick("student.nom")}
                         >
                             {fields.student}
@@ -72,11 +72,12 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
                             </div>
-                        </div>
-
-                        <div
-                            role="columnheader"
-                            className={"xxxs:text-xs sm:text-sm sm:w-1/4 w-1/2 md:w-1/5 px-2 font-bold text-offwhite uppercase tracking-wider cursor-default overflow-hidden truncate flex"}>
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            onClick={() => handleSortClick("state")}
+                        >
                             {fields.statut}
                             <div
                                 className={props.sortField === "stateEmployeur" ? "visible" : "hidden"}>
@@ -84,71 +85,69 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     icon={props.sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
                                     color={"White"} className={"ml-2"}/>
                             </div>
-                        </div>
-                        <div role="columnheader" className=" w-1/12">
-
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-white dark:bg-dark rounded border-b-2 border-x-2 border-gray rounded">
+                        </th>
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                            <span >Option</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                     {props.offers.map((offer: any) => (
-                        <div role="row" className="flex p-3"
-                             key={offer.id}>
+                        <tr key={offer.id}>
+                            <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
+                                <div className="flex items-center">
+                                    <div className="ml-4 overflow-hidden">
+                                        <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{offer.internOfferDto.title}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
+                                <div className="text-sm dark:text-offwhite">{offer.employeur.entreprise}</div>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap dark:text-white max-md:hidden">
+                                {offer.etudiantDto.nom + " " + offer.etudiantDto.prenom}
+                            </td>
 
-                            <div role="cell"
-                                 className="md:w-1/5 w-2/3 px-2 py-2 whitespace-nowrap truncate">
-                                <div
-                                    className="font-medium text-gray-900 dark:text-offwhite">{offer.internOfferDto.title}</div>
-                            </div>
-                            <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
-                                <div
-                                    className="font-medium text-gray-900 dark:text-offwhite">{offer.employeur.entreprise}</div>
-                            </div>
-                            <div role="cell" className="hidden md:block w-1/5 px-2 py-2 whitespace-nowrap truncate ">
-                                <div
-                                    className="text-gray-500 dark:text-offwhite">{offer.etudiantDto.nom + " " + offer.etudiantDto.prenom}</div>
-                            </div>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                <span
+                                    className={
+                                        (offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
+                                            "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite " :
+                                            offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
+                                                "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite ")}
+                                >
+                                    {offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
+                                        fields.status.declined
+                                        : offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
+                                            fields.status.pending
+                                            : fields.status.accepted
+                                    }
+                                </span>
+                            </td>
+                            <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                {
+                                    offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
+                                        <div role="cell"
+                                            className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
+                                            <FontAwesomeIcon icon={faEye}
+                                                             className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
+                                                             onClick={() => props.handleOfferClick(offer.contractId!)}/>
+                                        </div> : (offer.stateEmployeur == "DECLINED") ?
+                                            <div>
+                                                <p>{fields.sign.employer}</p>
+                                            </div> : ( offer.stateStudent == "DECLINED") ?
+                                                <div>
+                                                    <p>{fields.sign.student}</p>
+                                                </div> :
+                                                <></>
 
-                            <div role="cell" className="md:w-1/5 w-1/3 px-2 py-2 whitespace-nowrap truncate">
-                                            <span
-                                                className={
-                                                    (offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
-                                                        "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite " :
-                                                        offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
-                                                            "px-2  xxxs:text-xs sm:text-sm inline-flex leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                            : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite ")}
-                                            >
-                                                {offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
-                                                    fields.status.declined
-                                                    : offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
-                                                        fields.status.pending
-                                                        : fields.status.accepted
-                                                }
-                                            </span>
-                            </div>
-
-                            {
-                                offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
-                                    <div role="cell"
-                                         className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
-                                        <FontAwesomeIcon icon={faEye}
-                                                         className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
-                                                         onClick={() => props.handleOfferClick(offer.contractId!)}/>
-                                    </div> : (offer.stateEmployeur == "DECLINED") ?
-                                    <div>
-                                        <p>{fields.sign.employer}</p>
-                                    </div> : ( offer.stateStudent == "DECLINED") ?
-                                    <div>
-                                        <p>{fields.sign.student}</p>
-                                    </div> :
-                                    <></>
-
-                            }
-                        </div>
-                    ))
-                    }
-                </div>
-            </div>
+                                }
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

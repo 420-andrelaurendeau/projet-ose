@@ -2708,6 +2708,10 @@ video {
     padding-right: 1.5rem;
   }
 
+  .sm\:pt-5 {
+    padding-top: 1.25rem;
+  }
+
   .sm\:pt-4 {
     padding-top: 1rem;
   }
