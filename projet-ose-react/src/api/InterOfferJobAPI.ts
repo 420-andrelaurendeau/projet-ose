@@ -202,10 +202,10 @@ export const getInterOfferStudent = async (params:{}) => {
 }
 
 
-export const getStudentAppliedOffers = async (studentId: number,params:{}): Promise<AppliedOffers[]> => {
+export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
         const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
-            params: params
+
         });
 
         return response.data.map((item: any) => ({

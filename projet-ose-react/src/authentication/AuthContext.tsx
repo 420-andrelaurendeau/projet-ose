@@ -1,4 +1,4 @@
-import React, {createContext, ReactNode, useContext, useEffect, useState} from 'react';
+import React, {createContext, ReactNode, useContext, useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 interface AuthContextProps {
@@ -39,6 +39,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
+    const fechtToken = useRef(false);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -62,11 +64,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
     const loginUser = (token: string) => {
         localStorage.setItem('token', token);
-        const decodedToken = JSON.parse(atob(token.split('.')[1]));
-        setUserEmail(decodedToken.sub);
-        setUserRole(decodedToken.role[0].authority);
-        setIsAuthenticated(true);
-        console.log(userRole);
+         const decodedToken = JSON.parse(atob(token.split('.')[1]));
+         console.log(decodedToken.id);
+         setUserID(decodedToken.id);
+         setUserEmail(decodedToken.sub);
+         setUserRole(decodedToken.role[0].authority);
+         setIsAuthenticated(true);
+         console.log(userRole);
+
     };
 
     const logoutUser = () => {

@@ -17,7 +17,7 @@ export default function StudentAppliedOffers() {
 
     const fetchData = async () => {
         try {
-            return await getStudentAppliedOffers(user.id, {selectedOption})
+            return await getStudentAppliedOffers(user.id)
         } catch (error) {
             console.log("Erreur lors de la récupération des offres:", error);
             return []

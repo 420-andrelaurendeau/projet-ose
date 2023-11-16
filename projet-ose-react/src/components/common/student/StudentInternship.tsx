@@ -45,7 +45,7 @@ function StudentInternship() {
                 const userRes = await getUser(auth.userEmail!);
                 setUser(userRes);
 
-                const offersRes = await getStudentAppliedOffers(auth.userId!, {});
+                const offersRes = await getStudentAppliedOffers(auth.userId!);
                 // Met à jour l'état et attend que React l'applique
                 setAppliedOffers(offersRes);
 
@@ -76,7 +76,8 @@ function StudentInternship() {
                         appliedOffer: res.internOfferJob,
                         appliedFiles: res.files
                     };
-                    await getStudentAppliedOffers(auth.userId!, {}).then((res) => {
+
+                    await getStudentAppliedOffers(auth.userId!).then((res) => {
                         setAppliedOffers(res)
                     })
                     toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
