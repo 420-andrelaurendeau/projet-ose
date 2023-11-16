@@ -193,9 +193,9 @@ function StudentInternshipPage() {
                                 </div>
                             </NavLink>
                             <NavLink
-                                to="contract"
+                                to="internshipagreement"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/contract` || location.pathname === `/${auth.userRole}/home/stage/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${auth.userRole}/home/internshipagreement` || location.pathname === `/${auth.userRole}/home/internshipagreement/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >

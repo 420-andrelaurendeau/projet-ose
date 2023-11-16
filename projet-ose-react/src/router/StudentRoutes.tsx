@@ -37,7 +37,7 @@ const StudentRoutes: React.FC = () => {
                         <Route path="interview" element={<StudentInterviewPage/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="stage" element={<StudentStagePage />}/>
-                        <Route path="contract" element={<StudentContractPage />}/>
+                        <Route path="internshipagreement" element={<StudentContractPage />}/>
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
