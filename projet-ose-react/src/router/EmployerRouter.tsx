@@ -16,6 +16,8 @@ import SignContract from "../components/common/preparedoc/SignContract";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
 import EmployerContractPage from "../components/common/Employer/employerContractPage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
+import StudentInterviewPage from "../pages/student/StudentInterviewPage";
+import {EmployerInterviewPage} from "../components/common/Employer/EmployerInterviewPage";
 const EmployerRouter: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['employer']}>
@@ -34,6 +36,7 @@ const EmployerRouter: React.FC = () => {
                             <Route path=":idApplication/review" element={<ApplicationDetails/>}/>
                         </Route>
                         <Route path="newOffer" element={<InternshipOfferForm/>}/>
+                        <Route path="interview" element={<EmployerInterviewPage/>}/>
                         <Route path="contract/sign" element={<SignContract/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>

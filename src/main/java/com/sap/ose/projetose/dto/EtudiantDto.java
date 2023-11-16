@@ -31,7 +31,7 @@ public class EtudiantDto extends UtilisateurDto {
 
 
     public EtudiantDto(Etudiant etudiant) {
-        super(etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
+        super(etudiant.getId(), etudiant.getNom(), etudiant.getPrenom(), etudiant.getPhone(), etudiant.getEmail());
         this.matricule = etudiant.getMatricule();
         this.programme_id = etudiant.getProgramme().getId();
         this.cv = etudiant.getCv() == null ? null : etudiant.getCv().stream().map(File::getId).toList();

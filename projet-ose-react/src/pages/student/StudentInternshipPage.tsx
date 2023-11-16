@@ -41,8 +41,8 @@ interface Props {
 }
 
 function StudentInternshipPage() {
-    const { i18n } = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField");
+    const { i18n ,t} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInternshipPage");
     const [user, setUser] = useState<any>(null);
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
@@ -139,13 +139,13 @@ function StudentInternshipPage() {
         <div className="min-h-screen h-full">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-8">
-                    <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.homeEmployeur.titre.text}  </h1>
+                    <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t("StudentInternshipPage.titre.text")}  </h1>
                 </div>
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
                     <div
-                        className="w-full border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block overflow-x-auto">
+                        className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
@@ -155,7 +155,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{fields.Header.sidebar.stage.text}</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.stages.text")}</p>
                                 </div>
                             </NavLink>
 
@@ -168,7 +168,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{fields.Header.sidebar.offre_applique.text}</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.offre_applique.text")}</p>
                                 </div>
                             </NavLink>
 
@@ -181,7 +181,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faPencil} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{fields.Header.cv.text}</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.cv.text")}</p>
                                 </div>
                             </NavLink>
                             <NavLink
@@ -193,7 +193,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faMicrophone} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{fields.Header.interview.text}</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.interview.text")}</p>
                                 </div>
                             </NavLink>
                             <NavLink
@@ -205,7 +205,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faPersonDigging} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">Stage</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.stage.text")}</p>
                                 </div>
                             </NavLink>
                             <NavLink
@@ -217,7 +217,7 @@ function StudentInternshipPage() {
                             >
                                 <FontAwesomeIcon icon={faPersonDigging} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">Contract</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.contract.text")}</p>
                                 </div>
                             </NavLink>
                         </div>

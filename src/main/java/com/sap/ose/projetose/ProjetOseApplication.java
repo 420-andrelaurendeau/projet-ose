@@ -19,8 +19,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,10 +33,16 @@ public class ProjetOseApplication implements CommandLineRunner {
     private EtudiantService etudiantService;
     @Autowired
     private EmployeurService employeurService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
     private InternOfferService internOfferService;
+
+    @Autowired
+    private InterviewService interviewService;
 
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;

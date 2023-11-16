@@ -6,6 +6,10 @@ import application from "./components/common/Employer/application/i18n/applicati
 import employerOffer from "./components/common/Employer/offer/i18n/offer";
 import contractPage from "./components/common/Employer/contract/i18n/contract";
 import header from "./pages/shared/i18n/homeI18N";
+import {StudentInternshipI18n} from "./components/common/student/i18n/StudentInternshipI18n";
+import SidebarEtudiant from "./components/common/student/SidebarEtudiant";
+import {SideBarEtudiantI18n} from "./components/common/student/i18n/SideBarEtudiantI18n";
+import {StudentInternshipPagei18n} from "./pages/student/i18n/StudentInternshipPagei18n";
 import internshipAgreement from "./components/common/internshipManager/internshipsAgreement/agreement";
 import studentOffer from "./components/common/student/i18n/Offer";
 
@@ -503,6 +507,10 @@ i18n
                                 name: 'titre',
                                 text: 'Dashboard'
                             },
+                            interview:{
+                                name: 'interview',
+                                text: 'Interview'
+                            },
                             candidature: {
                                 name: 'totalCondidature',
                                 text: 'Application'
@@ -675,13 +683,32 @@ i18n
                         }
                     },
                     cv: CV.en,
+                    StudentInternship: StudentInternshipI18n.en,
+                    StudentInternshipPage:StudentInternshipPagei18n.en,
+                    SideBarEtudiant: SideBarEtudiantI18n.en,
                     StudentInterview: {
+                        PENDING: {
+                            name: 'PENDING',
+                            text: 'Pending'
+                        },
+                        ACCEPTED: {
+                            name: 'APPROVED',
+                            text: 'Approved'
+                        },
+                        DECLINED: {
+                            name: 'DECLINED',
+                            text: 'Declined'
+                        },
                         table: {
                             name: 'table',
                             title: 'Title',
                             location: 'Location',
                             date: 'Date of the interview',
                             company: 'Company',
+                            status_text:{
+                                name: 'status_text',
+                                text: "Status"
+                            },
                             action: {
                                 name: 'action',
                                 text: 'Action',
@@ -709,7 +736,8 @@ i18n
                             acceptError: "An error occurred while accepting the CV",
                             declineSuccess: "The CV has been declined",
                             declineError: "An error occurred while declining the CV",
-                        }
+                        },
+                        view: "View CV",
                     }
 
                 },
@@ -1200,6 +1228,10 @@ i18n
                                 name: 'titre',
                                 text: 'Tableau de bord'
                             },
+                            interview:{
+                                name: 'interview',
+                                text: 'Entrevue'
+                            },
                             candidature: {
                                 name: 'totalCondidature',
                                 text: 'Candidature'
@@ -1354,13 +1386,32 @@ i18n
                         }
                     },
                     cv: CV.fr,
+                    StudentInternshipPage:StudentInternshipPagei18n.fr,
+                    StudentInternship: StudentInternshipI18n.fr,
+                    SideBarEtudiant: SideBarEtudiantI18n.fr,
                     StudentInterview: {
+                        PENDING: {
+                            name: 'PENDING',
+                            text: 'En attente'
+                        },
+                        ACCEPTED: {
+                            name: 'APPROVED',
+                            text: 'Approuvé'
+                        },
+                        DECLINED: {
+                            name: 'DECLINED',
+                            text: 'Refusé'
+                        },
                         table: {
                             name: 'table',
                             title: 'Titre',
                             location: 'Lieu de travail',
                             date: 'Date de l\'entrevue',
                             company: 'Compagnie',
+                            status_text:{
+                                name: 'status_text',
+                                text: "Etat"
+                            },
                             action: {
                                 name: 'action',
                                 text: 'Actions',
@@ -1388,7 +1439,9 @@ i18n
                             acceptError: "Une erreur est survenue lors de l'acceptation du CV",
                             declineSuccess: "Le CV a été refusé",
                             declineError: "Une erreur est survenue lors du refus du CV",
-                        }
+                        },
+
+                        view: "Voir CV",
                     }
                 }
             }

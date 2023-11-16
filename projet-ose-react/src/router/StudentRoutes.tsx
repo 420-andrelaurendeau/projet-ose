@@ -17,7 +17,6 @@ import StudentOfferDetails from "../components/common/student/offers/StudentOffe
 import StudentContractPage from "../components/common/student/studentContractPage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 import SignContract from "../components/common/preparedoc/SignContract";
-
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
