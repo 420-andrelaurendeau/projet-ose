@@ -53,11 +53,21 @@ public class UtilisateurSignInDto {
                 this.entreprise = null;
             }
             String type = utilisateur.getClass().getSimpleName();
-            if (type.equals("Employeur")) {
-                assert utilisateur instanceof com.sap.ose.projetose.modeles.Employeur;
-                this.programme_id = ((com.sap.ose.projetose.modeles.Employeur) utilisateur).getProgramme().getId();
-            } else {
-                this.programme_id = null;
+            switch (type) {
+                case "Employeur" -> {
+                    assert utilisateur instanceof com.sap.ose.projetose.modeles.Employeur;
+                    this.programme_id = ((com.sap.ose.projetose.modeles.Employeur) utilisateur).getProgramme().getId();
+                }
+                case "Etudiant" -> {
+                    assert utilisateur instanceof com.sap.ose.projetose.modeles.Etudiant;
+                    this.programme_id = ((com.sap.ose.projetose.modeles.Etudiant) utilisateur).getProgramme().getId();
+                    this.programme_id = null;
+                }
+                case "Internshipmanager" -> {
+                    assert utilisateur instanceof com.sap.ose.projetose.modeles.Internshipmanager;
+                    this.programme_id = ((com.sap.ose.projetose.modeles.Internshipmanager) utilisateur).getProgramme().getId();
+                }
+                default -> this.programme_id = null;
             }
         }
     }

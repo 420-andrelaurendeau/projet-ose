@@ -136,17 +136,6 @@ export default function StudentContractPage() {
             </header>
             <main className="pb-4">
                 <div className="p-0">
-
-                    <InternshipManagerInternshipsAgreementDashoardHeader
-                        internshipsAgreementByState={handleChangeStateSort}
-                        fields={fields}
-                        totalOffers={totalInternshipsAgreement}
-                        totalApprouved={totalApprouved}
-                        totalPending={totalPending}
-                        totalDeclined={totalDeclined}
-                    />
-
-
                     <PaginatedList
                         renderItem={renderOffer}
                         page={currentPage}
