@@ -1,15 +1,12 @@
 package com.sap.ose.projetose.modeles;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Entity
 @Data
@@ -29,6 +26,7 @@ public class InternOffer {
     private LocalDate endDate;
     private String status;
     private State state;
+    private String session;
 
     @OneToMany(mappedBy = "internOffer", cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
     private List<InternshipCandidates> internshipCandidates;

@@ -1,19 +1,27 @@
 import {useTranslation} from "react-i18next";
-import {Outlet, useNavigate, useOutletContext} from "react-router-dom";
-import {faArrowDownAZ, faArrowUpZA, faBriefcase, faEye} from "@fortawesome/free-solid-svg-icons";
+import {Outlet, useNavigate} from "react-router-dom";
+import {faBriefcase} from "@fortawesome/free-solid-svg-icons";
+import {faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {AppliedOffers} from "../../../model/AppliedOffers";
 import React, {useEffect, useRef, useState} from "react";
 import {useAuth} from "../../../authentication/AuthContext";
 import {getUser} from "../../../api/UtilisateurAPI";
-import {allStudentInternshipOffers, getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {
+    offresEtudiant,
+    getStudentAppliedOffers,
+    getOfferApprovedSeasons,
+    getAllSeasons
+} from "../../../api/InterOfferJobAPI";
+
 import {saveStudentInternshipOffer} from "../../../api/intershipCandidatesAPI";
-import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
-import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
-import {useProps} from "../../../pages/student/StudentInternshipPage";
 import {FileEntity} from "../../../model/FileEntity";
 import {useToast} from "../../../hooks/state/useToast";
 import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
+import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
+import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
+import i18n from "i18next";
 
 interface Props {
     user: any;
@@ -21,62 +29,69 @@ interface Props {
 }
 
 function StudentInternship() {
-    const {i18n} = useTranslation();
+    const {t} = useTranslation();
+    const {offers,setOffers, setAppliedOffers, appliedOffers, page, setSortField, onPageChange, setCurrentPage, numberElementByPage, setSortDirection, sortDirection, sortField, totalPages, handleChangeNumberElement, seasons, selectedOption, handleChangeOption} = useProps();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
-    let anError = false;
-    const {offers,setOffers, setAppliedOffers, appliedOffers, page, setSortField, onPageChange, setCurrentPage, numberElementByPage, setSortDirection, sortDirection, sortField, totalPages, handleChangeNumberElement} = useProps();
-    const [cv,setCv] = useState<FileEntity>()
+    //const [offers, setOffers] = useState<any[]>([])
+    const [cv, setCv] = useState<FileEntity>()
+    //const [seasons, setSeasons] = useState([])
+    //const [selectedOption, setSelectedOption] = useState('');
     const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
+    const toast = useToast();
     const navigate = useNavigate();
 
-    const toast = useToast();
-
     useEffect(() => {
-        if (!isloading.current)
-        getUser(auth.userEmail!).then((res) => {
-            console.log(res);
-                setUser(res);
-            getStudentAppliedOffers(res.id).then((res) => {
-                setAppliedOffers(res);
-            })
-            fetchDefaultCvByStudentId(res.id).then((res) => {
-                setCv(res)
-                console.log(res)
-            }).catch((error) => {
-                console.log("Error fetching user data:", error)
-            })
+        const fecth = async () => {
+            isloading.current = true;
+            try {
+                const userRes = await getUser(auth.userEmail!);
+                setUser(userRes);
+
+                const offersRes = await getStudentAppliedOffers(auth.userId!);
+                // Met à jour l'état et attend que React l'applique
+                setAppliedOffers(offersRes);
+
+                const cvRes = await fetchDefaultCvByStudentId(userRes.id);
+                setCv(cvRes);
+            } catch (error) {
+                console.log("Error fetching user data:", error);
+            } finally {
             }
-        );
+        }
 
-
-
+        if (!isloading.current) {
+            fecth().then(r => console.log(appliedOffers));
+            isloading.current = false;
+        }
     }, []);
 
 
+
     const applyOffer = (offer: any, student: any, cv: any) => {
-        console.log(offer);
-        console.log(student);
-        console.log(cv);
         if (cv == null) {
-            toast.error(fields.toast.ErrorNoCv)
-        }
-        else {
+            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
+        } else {
             saveStudentInternshipOffer(offer, student, cv).then(
-                res => {
+                async res => {
+                    console.log(appliedOffers)
                     let appliedOffer: AppliedOffers = {
                         appliedOffer: res.internOfferJob,
                         appliedFiles: res.files
                     };
-                    setAppliedOffers([...appliedOffers, appliedOffer]);
-                    toast.success(fields.toast.SuccessOfferApplication + " " + offer.title)
+
+                    await getStudentAppliedOffers(auth.userId!).then((res) => {
+                        setAppliedOffers(res)
+                    })
+                    toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
+
                 }
             ).catch(
                 err => {
                     console.log(err);
-                    toast.error(fields.toast.ErrorOfferApplication)
+                    toast.error(t("formField.EtudiantStage.toast.ErrorOfferApplication"))
                 }
             )
         }
@@ -99,6 +114,7 @@ function StudentInternship() {
         navigate(`/student/home/offers/${id}`, {state: context});
     };
 
+
     const context:Props = {
         user: user,
         appliedOffers: appliedOffers,
@@ -120,6 +136,17 @@ function StudentInternship() {
                                 numberElement={numberElementByPage}
                                 handleChangeNumberElement={handleChangeNumberElement}
                             />
+                        </div>
+                        <div>
+                            <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                            <select id="options" value={selectedOption} onChange={handleChangeOption}>
+                                <option value="">Tout</option>
+                                {seasons.map((season: string, index: number) => (
+                                    <option key={index} value={season}>
+                                        {season}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         {
                             offers.length === 0 ?
@@ -250,3 +277,18 @@ function StudentInternship() {
 }
 
 export default StudentInternship;
+
+
+/**
+ <div>
+ <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+ <select id="options" value={selectedOption} onChange={handleChangeOption}>
+ <option value="">Tout</option>
+ {seasons.map((season: string, index: number) => (
+ <option key={index} value={season}>
+ {season}
+ </option>
+ ))}
+ </select>
+ </div>
+ */

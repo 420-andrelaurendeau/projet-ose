@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, Outlet, useLocation, useOutletContext } from "react-router-dom";
 import { AppliedOffers } from "../../model/AppliedOffers";
-import { getStudentAppliedOffers, offresEtudiant } from "../../api/InterOfferJobAPI";
+import {getAllSeasons, getStudentAppliedOffers, offresEtudiant} from "../../api/InterOfferJobAPI";
 import axios from "axios";
 import Header from "../../components/common/shared/header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +34,10 @@ interface Props {
     onPageChange: (newPage: number) => void;
     numberElementByPage: number;
     page: number;
+    seasons: any[];
+    selectedOption: string;
+    handleChangeOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+
 }
 
 function StudentInternshipPage() {
@@ -43,12 +47,14 @@ function StudentInternshipPage() {
     const [listStudentAppliedOffers, setListStudentAppliedOffers] = React.useState<AppliedOffers[]>([]);
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
-    const auth = useAuth();
+    const {userId, userEmail, userRole} = useAuth();
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState('');
 
     const isLoading = useRef(false);
 
@@ -56,16 +62,15 @@ function StudentInternshipPage() {
         const fetchUser = async () => {
             isLoading.current = true;
 
-            getUser(auth.userEmail!)
+            getUser(userEmail!)
                 .then((resUser) => {
                     setUser(resUser);
-                    console.log(resUser);
-                    getStudentAppliedOffers(resUser.id).then((res) => {
+                    console.log(userId! + " fjdsffjdfsfdsfsd")
+                    getStudentAppliedOffers(userId!).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
                     fetchInterviewsCountForStudent(resUser.id).then((res) => {
                         setInterviewsNb(res);
-                        console.log(interviewsNb);
                     });
                 })
                 .catch((err) => {
@@ -74,7 +79,8 @@ function StudentInternshipPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, []);
+    }, [selectedOption]);
+
 
     useEffect(() => {
         const fetchOffers = async () => {
@@ -83,14 +89,16 @@ function StudentInternshipPage() {
                     page: currentPage,
                     size: numberElementByPage,
                     sortField,
-                    sortDirection
+                    sortDirection,
+                    session: selectedOption
                 }
             );
-            console.log(offers);
+            let season = await  getAllSeasons();
+            setSeasons(season);
             isLoading.current = false;
         };
         fetchOffers();
-    }, [currentPage, numberElementByPage, sortField, sortDirection]);
+    }, [currentPage, selectedOption,numberElementByPage, sortField, sortDirection]);
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
@@ -99,6 +107,11 @@ function StudentInternshipPage() {
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
+    };
+
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+        setSelectedOption(selected);
     };
 
     const context = {
@@ -117,6 +130,9 @@ function StudentInternshipPage() {
         onPageChange: handlePageChange,
         numberElementByPage: numberElementByPage,
         page: currentPage,
+        seasons: seasons,
+        selectedOption: selectedOption,
+        handleChangeOption: handleOptionChange,
     };
 
     return (
@@ -133,7 +149,7 @@ function StudentInternshipPage() {
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
-                                         (location.pathname === `/${auth.userRole}/home/offers` || location.pathname === `/${auth.userRole}/home/offers/` ? " border-b-2" : "")
+                                         (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
                                      }
                                      state={user}
                             >
@@ -146,7 +162,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="appliedOffers"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/appliedOffers` || location.pathname === `/${auth.userRole}/home/appliedOffers/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/appliedOffers` || location.pathname === `/${userRole}/home/appliedOffers/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -159,7 +175,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="cv"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/cv` || location.pathname === `/${auth.userRole}/home/cv/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/cv` || location.pathname === `/${userRole}/home/cv/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -171,7 +187,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="interview"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/interview` || location.pathname === `/${auth.userRole}/home/interview/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/interview` || location.pathname === `/${userRole}/home/interview/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -183,7 +199,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="stage"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/stage` || location.pathname === `/${auth.userRole}/home/stage/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/stage` || location.pathname === `/${userRole}/home/stage/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -195,7 +211,7 @@ function StudentInternshipPage() {
                             <NavLink
                                 to="internshipagreement"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${auth.userRole}/home/internshipagreement` || location.pathname === `/${auth.userRole}/home/internshipagreement/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/internshipagreement` || location.pathname === `/${userRole}/home/internshipagreement/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >

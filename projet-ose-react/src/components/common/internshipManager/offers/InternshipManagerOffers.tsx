@@ -1,16 +1,20 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowDown19, faArrowDown91, faArrowDownAZ, faArrowUpZA, faEye} from "@fortawesome/free-solid-svg-icons";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {InternshipOffer} from "../../../../model/IntershipOffer";
 import InternshipManagerOfferPage from "../../../../pages/internshipManager/InternshipManagerOfferPage";
 import useModal from "../../../../hooks/useModal";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {
+    allStudentInternshipOffers,
+    allStudentInternshipOffersBySeason,
+    getAllOffers, getAllSeasons, getOffersBySeason
+} from "../../../../api/InterOfferJobAPI";
 
 
 export default function InternshipManagerOffers(props: any) {
     const [offer, setOffer] = useState<InternshipOffer>();
-
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipOfferList");
 

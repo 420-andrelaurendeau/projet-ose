@@ -22,7 +22,7 @@ export default function EmployerStagePage() {
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
-    const {stageAgreement, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
+    const {stageAgreement,seasons,selectedOption,handleOptionChange, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
     const [file, setFile] = useState<any>({
         content: "",
     });
@@ -30,8 +30,9 @@ export default function EmployerStagePage() {
     const [isLoadedContract, setIsLoadedContract] = useState(false);
 
     useEffect(() => {
+        console.log(stageAgreement)
+    }, [seasons]);
 
-    })
     const handleSortClick = (newSortField: any) => {
         if (newSortField === sortAgreementField && sortAgreementDirection === "desc") {
             setAgreementSortField("");
@@ -44,6 +45,8 @@ export default function EmployerStagePage() {
         }
     };
 
+    console.log('agreement: '+stageAgreement)
+
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
@@ -53,6 +56,17 @@ export default function EmployerStagePage() {
                             numberElement={numberElementAgreementByPage}
                             handleChangeNumberElement={handleChangeNumberElementAgreement}
                         />
+                    </div>
+                    <div>
+                        <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                        <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                            <option value="">Tout</option>
+                            {seasons.map((season: string, index: number) => (
+                                <option key={index} value={season}>
+                                    {season}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">

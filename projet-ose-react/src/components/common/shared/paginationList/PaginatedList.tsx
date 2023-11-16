@@ -9,6 +9,10 @@ interface PaginatedListProps<T> {
     onPageChange: (newPage: number) => void;
     numberElement: number;
     handleChangeNumberElement: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    selectedOption: string;
+    handleOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    seasons: string[];
+
 }
 
 function PaginatedList<T>({
@@ -18,6 +22,9 @@ function PaginatedList<T>({
                               onPageChange,
                               numberElement,
                               handleChangeNumberElement,
+                              selectedOption,
+                              handleOptionChange,
+                              seasons
                           }: PaginatedListProps<T>) {
 
     return (
@@ -26,6 +33,17 @@ function PaginatedList<T>({
                 numberElement={numberElement}
                 handleChangeNumberElement={handleChangeNumberElement}
             />
+            <div>
+                <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                <select id="options" value={selectedOption} onChange={handleOptionChange}>
+                    <option value="">Tout</option>
+                    {seasons.map((season: string, index: number) => (
+                        <option key={index} value={season}>
+                            {season}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
             {renderItem}
 

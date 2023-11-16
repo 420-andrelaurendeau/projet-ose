@@ -207,7 +207,11 @@ export default function StudentInterviewPage() {
                                            totalPages={totalPages}
                                            onPageChange={handlePageChange}
                                            numberElement={numberElementByPage}
-                                           handleChangeNumberElement={handleChangeNbElement}/>
+                                           handleChangeNumberElement={handleChangeNbElement}
+                                           selectedOption=""
+                                           handleOptionChange={() => {}}
+                                           seasons={["",""]}
+                            />
                         </div>
                     </div>
                 </div>

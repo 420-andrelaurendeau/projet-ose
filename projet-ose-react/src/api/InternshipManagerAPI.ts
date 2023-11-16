@@ -8,16 +8,17 @@ interface GetInternshipOffersParams {
     state?: string;
     sortField: string;
     sortDirection: string;
+    session: string;
 }
 
-export const getIntershipOffers = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams) => {
+export const getIntershipOffers = async ({ page, size, state, sortField, sortDirection, session }: GetInternshipOffersParams) => {
     try {
-        const params: any = {page, size, sortField, sortDirection};
+        const params: any = { page, size, sortField, sortDirection, session };
 
         if (state) {
             params.state = state;
         }
-
+        console.log(session + "SESSIOn")
         const response = await api.get('internshipManager/offers', {
             params: params,
             headers: {
@@ -31,8 +32,6 @@ export const getIntershipOffers = async ({page, size, state, sortField, sortDire
         throw error;
     }
 };
-
-
 
 export const getTotalOfferByState = async () => {
     try {
@@ -129,12 +128,13 @@ interface GetInternshipOffersParams {
     state?: string;
     sortField: string;
     sortDirection: string;
+    session: string
 }
 
-export const getStages = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams) => {
+export const getStages = async ({ page, size, state, sortField, sortDirection,session }: GetInternshipOffersParams) => {
 
     try {
-        const params: any = {page, size, sortField, sortDirection};
+        const params: any = { page, size, sortField, sortDirection, session };
 
         if (state) {
             params.state = state;
@@ -152,13 +152,14 @@ export const getStages = async ({page, size, state, sortField, sortDirection}: G
     }
 };
 
-export const getStageByEmployeurId = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams, id: number) => {
+export const getStageByEmployeurId = async ({page, size, state, sortField, sortDirection,session}: GetInternshipOffersParams, id: number) => {
     try {
-        const params: any = {page, size, sortField, sortDirection};
+        const params: any = {page, size, sortField, sortDirection,session};
         if (state) {
             params.state = state;
         }
-        const response = await api.get(`stage/employeurStage/${id}`, {
+
+        const response = await api.get(`stage/employeurStage/`+id, {
             params: params
         });
         console.log('response', response.data)
