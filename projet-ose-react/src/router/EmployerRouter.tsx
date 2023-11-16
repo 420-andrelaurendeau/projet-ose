@@ -41,6 +41,7 @@ const EmployerRouter: React.FC = () => {
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
+                        <Route path="internshipagreement/:id/contract" element={<SignContract/>}/>
                     </Route>
                     <Route path="*" element={<ErrorPage/>}/>
                 </Route>
