@@ -104,6 +104,7 @@ public class InternOfferController {
     }
 
     @GetMapping("/getAllPossibleSeasons")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer') OR hasAuthority('student')")
     public ResponseEntity<List<String>> getAllOfferSeasons(){
         List<String> seasons = offerJobService.getAllOfferSeasons();
         return new ResponseEntity<>(seasons, HttpStatus.OK);
