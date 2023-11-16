@@ -119,7 +119,11 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                                 {props.user.email}
                                             </p>
                                             <p data-testid="programme-text">
-                                                {getProgrammeName()}
+                                                {
+                                                    getProgrammeName() === "" ?
+                                                        fields.Header.profilMenu.gsProfession.text:
+                                                        getProgrammeName()
+                                                }
                                             </p>
                                         </div>
                                     </div>

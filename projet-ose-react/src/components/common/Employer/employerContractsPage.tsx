@@ -4,6 +4,7 @@ import {getUser} from "../../../api/UtilisateurAPI";
 import {useToast} from "../../../hooks/state/useToast";
 import {useTranslation} from "react-i18next";
 import {
+    getStageByEmployeurId,
     getStageByStudentId,
     getStageCountByStateStudent
 } from "../../../api/InternshipManagerAPI";
@@ -13,9 +14,8 @@ import InternshipManagerInternshipsAgreement
 import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
-import {selectOptions} from "@testing-library/user-event/dist/select-options";
 
-export default function StudentContractPage() {
+export default function EmployerContractsPage() {
 
     const [user, setUser] = useState<any>(null)
     const [isUpdate, setIsUpdate] = useState(false);
@@ -36,8 +36,6 @@ export default function StudentContractPage() {
     const [totalDeclined, setTotalDeclined] = useState(0);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
-    const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
 
     const navigate = useNavigate();
     const handleTotalOffersByState = async (id: number) => {
@@ -64,13 +62,11 @@ export default function StudentContractPage() {
             handleTotalOffersByState(id);
             internshipAgreementRef.current = true
             console.log("DATA")
-            const response = await getStageByStudentId({
+            const response = await getStageByEmployeurId({
                 page: currentPage,
                 size: numberElementByPage,
-                state: state,
                 sortField: sortField,
-                sortDirection: sortDirection,
-                session:selectedOption
+                sortDirection: sortDirection
             }, id);
             console.log("REPSONSE!!")
             console.log(response)
@@ -84,15 +80,6 @@ export default function StudentContractPage() {
             internshipAgreementRef.current = false;
         }
     };
-
-    const handleOptionChange = async (event: any) => {
-        const selected = event.target.value;
-
-        console.log(selected)
-        setSelectedOption(selected);
-
-    };
-
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
@@ -126,7 +113,7 @@ export default function StudentContractPage() {
 
     const handleOfferClick = (id: number) => {
         console.log(id)
-        navigate(`/student/home/internshipagreement/${id}`);
+        navigate(`/employer/home/internshipagreement/${id}`);
     }
     const handleChangeStateSort = (state: any) => {
         setState(state);
@@ -144,7 +131,7 @@ export default function StudentContractPage() {
     return (
         <div className="px-4">
             <title>Offres</title>
-            <header className="pb-4">
+            <header className=" pb-4">
                 <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">
@@ -156,9 +143,6 @@ export default function StudentContractPage() {
                         onPageChange={handlePageChange}
                         numberElement={numberElementByPage}
                         handleChangeNumberElement={handleChangePage}
-                        selectedOption={selectedOption}
-                        handleOptionChange={handleOptionChange}
-                        seasons={seasons}
                     />
                 </div>
             </main>

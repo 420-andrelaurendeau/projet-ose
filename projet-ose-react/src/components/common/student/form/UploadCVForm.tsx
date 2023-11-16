@@ -21,6 +21,7 @@ function UploadCVForm(): ReactElement {
     const [cvs, setCvs] = useState<ReviewFile[]>([]);
     const [cvDefault, setCvDefault] = useState<ReviewFile>({} as ReviewFile);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [viewedPdf, setViewedPdf] = useState({} as ReviewFile);
     const auth = useAuth();
 
     const [errors, setErrors] = useState<{
@@ -219,10 +220,12 @@ function UploadCVForm(): ReactElement {
                                     className="text-blue-600 cursor-pointer dark:text-gray">{t('formField.InternshipOfferForm.file.span')}</span>
                             </p>
                         </div>
-
-                        {renderError(errors.file)}
                     </div>
-
+                    {errors.file === undefined || null
+                        ? <></>
+                        : <div className="flex flex-col items-center justify-center w-full">
+                            {renderError(errors.file)}
+                    </div>}
                     <br/>
                     <div className={"flex flex-col items-center justify-center w-full"}>
                         <div className={"flex flex-col items-center justify-around w-full "}>
@@ -259,6 +262,7 @@ function UploadCVForm(): ReactElement {
                         <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                     onClick={() => {
+                                        setViewedPdf(file)
                                         setIsModalOpen(true)
                                     }}
                             >
@@ -289,12 +293,13 @@ function UploadCVForm(): ReactElement {
                             </button>
                         </div>
                     </div>
-                    {
-                        file && isModalOpen &&
-                        <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
-                    }
+
                 </>
             )}
+            {
+                viewedPdf && isModalOpen &&
+                <ViewPDFModal ismodal={true} file={viewedPdf} setIsModalOpen={setIsModalOpen} />
+            }
         </div>
     )
 }

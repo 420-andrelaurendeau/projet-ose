@@ -17,7 +17,7 @@ import ViewPDFModal from "./offer/ViewPDFModal";
 import {saveEmployerOpinion} from "../../../api/StageAPI";
 
 
-export default function EmployerContractPage() {
+export default function EmployerStagePage() {
 
     const navigate = useNavigate();
     const {i18n} = useTranslation();
@@ -172,35 +172,9 @@ export default function EmployerContractPage() {
                                     <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         {
                                             stage.stateEmployeur == "ACCEPTED" && stage.stateStudent == "ACCEPTED" ?
-                                            stage.contract ?
-                                                <div className="flex space-x-5 items-center justify-between">
-                                                    <FontAwesomeIcon icon={faEye}
-                                                                     className="text-blue  hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                                     onClick={() => {
-                                                                         setFile({
-                                                                             content: stage.contract.content
-                                                                         });
-                                                                         setIsModalOpen(true);
-                                                                     }}
-                                                    />
-                                                    {
-                                                        !stage.contract.signatureEmployer ?
-                                                        <NavLink
-                                                            to="/employer/home/contract/sign"
-                                                            state={stage}
-                                                            className="flex items-center text-green space-x-1"
-                                                        >
-                                                            <p>Sign</p>
-                                                            <FontAwesomeIcon icon={faPenNib}/>
-                                                        </NavLink>
-                                                            :
-                                                            <div className="flex dark:text-white">
-                                                                Vous avez signé
-                                                            </div>
-                                                    }
-
-                                                </div>:
-                                                null
+                                                <div className="flex dark:text-white">
+                                                    Stage accepté
+                                                </div>
                                                 : stage.stateEmployeur == "PENDING" ?
 
                                                     <div className="flex ">
@@ -267,10 +241,6 @@ export default function EmployerContractPage() {
                     </div>
                 </div>
             </div>
-            {
-                file.content !== "" && isModalOpen &&
-                <ViewPDFModal ismodal={true} file={file} setIsModalOpen={setIsModalOpen} />
-            }
 
         </div>
     );

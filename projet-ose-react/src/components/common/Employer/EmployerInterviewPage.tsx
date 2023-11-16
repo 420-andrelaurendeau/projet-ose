@@ -119,84 +119,87 @@ export const EmployerInterviewPage = () => {
     }
 
     const renderInterviews = (
-        <main className={"pb-4"}>
-            <table className=" w-full divide-y divide-gray dark:divide-darkgray">
-                <thead className="bg-blue dark:bg-orange ">
-                <tr>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                    >
-                        {fields.table.title}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                    >
-                        {fields.table.location}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                    >
+        <main className={"py-4"}>
+            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                <table className=" w-full divide-y divide-gray dark:divide-darkgray">
+                    <thead className="bg-blue dark:bg-orange ">
+                    <tr>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        >
+                            {fields.table.title}
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        >
+                            {fields.table.location}
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        >
 
-                        {fields.table.date}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                    >
+                            {fields.table.date}
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        >
 
-                        {fields.table.company}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
-                        {fields.table.status_text.text}
-                    </th>
-                </tr>
-                </thead>
-                <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
-                {interviews.map((interview) => (
-                    <tr key={interview.id}>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.title}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.location}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.employeurEntreprise}
-                        </td>
-                        <td>
-                                                                    <span
-                                                                        className={
-                                                                            interview.state == "PENDING" ?
-                                                                                "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                                                : interview.state === "DECLINED" ?
-                                                                                    "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
-                                                                                    : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
-                                                                    >
-                                            {fields[interview.state].text}
-                                        </span>
-                        </td>
+                            {fields.table.company}
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                            {fields.table.status_text.text}
+                        </th>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                    {interviews.map((interview) => (
+                        <tr key={interview.id}>
+                            <td className="px-6 py-4 whitespace-nowrap
+                                            text-center text-sm font-medium">
+                                {interview.internOffer.title}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap
+                                            text-center text-sm font-medium">
+                                {interview.internOffer.location}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap
+                                            text-center text-sm font-medium">
+                                {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap
+                                            text-center text-sm font-medium">
+                                {interview.internOffer.employeurEntreprise}
+                            </td>
+                            <td>
+                                                                        <span
+                                                                            className={
+                                                                                interview.state == "PENDING" ?
+                                                                                    "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
+                                                                                    : interview.state === "DECLINED" ?
+                                                                                        "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
+                                                                        >
+                                                {fields[interview.state].text}
+                                            </span>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </main>
+
     )
 
     return (<div className="dark:bg-black">
         <div className="flex flex-col items-center">
-            <div className=" lg:-mx-8 mt-28 w-11/12 ">
+            <div className=" lg:-mx-8 w-11/12 ">
                 <div
                     className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
                     <div className=" w-full">

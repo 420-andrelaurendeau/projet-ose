@@ -17,6 +17,7 @@ import StudentOfferDetails from "../components/common/student/offers/StudentOffe
 import StudentContractPage from "../components/common/student/studentContractPage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 import SignContract from "../components/common/preparedoc/SignContract";
+
 const StudentRoutes: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['student']}>
@@ -29,12 +30,14 @@ const StudentRoutes: React.FC = () => {
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
                         <Route path="appliedOffers" element={<StudentAppliedOffers/>}/>
-                        <Route path="cv" element={<UploadCVForm/>}/>
+                        <Route path="cv" element={<UploadCVForm/>}>
+
+                        </Route>
                         <Route path="upload" element={<CVStudant/>}/>
                         <Route path="interview" element={<StudentInterviewPage/>}/>
                         <Route path="*" element={<ErrorPage/>}/>
                         <Route path="stage" element={<StudentStagePage />}/>
-                        <Route path="contract" element={<StudentContractPage />}/>
+                        <Route path="internshipagreement" element={<StudentContractPage />}/>
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>
