@@ -222,12 +222,13 @@ public class EtudiantService {
 
             File cv = student.getActiveCv();
 
-            return new FileDtoAll(Optional.ofNullable(cv)
-                                          .orElseThrow(FileNotFoundException::new));
-        }
-        catch (FileNotFoundException e) {
-            logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id, e);
-            throw e;
+            if (cv == null) {
+                logger.error("Aucun CV trouvé pour l'étudiant avec l'id " + id);
+                return null;
+            }
+            else {
+                return new FileDtoAll(cv);
+            }
         }
         catch (DataAccessException e) {
             logger.error("Erreur lors de la récupération des CV de l'étudiant avec l'id " + id, e);
