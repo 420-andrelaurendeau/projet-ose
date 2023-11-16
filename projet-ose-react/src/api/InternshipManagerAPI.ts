@@ -158,7 +158,7 @@ export const getStageByEmployeurId = async ({page, size, state, sortField, sortD
         if (state) {
             params.state = state;
         }
-        const response = await api.get(`stage/employeurStage/${id}`, {
+        const response = await api.get(`stage/employeurStage/`+id, {
             params: params
         });
         console.log('response', response.data)
