@@ -77,8 +77,9 @@ public class InternOfferController {
     public Page<InternOfferDto> getOffersEtudiant(@RequestParam(required = false, defaultValue = "0") int page,
                                                   @RequestParam(required = false, defaultValue = "10") int size,
                                                   @RequestParam(required = false, defaultValue = "id") String sortField,
-                                                  @RequestParam(required = false, defaultValue = "desc") String sortDirection) {
-        return offerJobService.getInternOfferAccepted(page, size, sortField, sortDirection);
+                                                  @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+                                                  @RequestParam(required = false) String session) {
+        return offerJobService.getInternOfferAccepted(page, size, sortField, sortDirection, session);
     }
 
     @GetMapping("/OffersEmp/{email}")

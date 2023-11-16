@@ -14,8 +14,8 @@ import java.util.List;
 
 @Repository
 public interface InternOfferRepository extends JpaRepository<InternOffer, Long> {
-    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
-    Page<InternOffer> findAllApprovedPageable(Pageable pageable);
+    @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED AND ((:session IS NULL OR :session = '') OR i.session = :session)")
+    Page<InternOffer> findAllApprovedPageable(Pageable pageable,@Param("session") String session);
 
     @Query("select i from InternOffer i where i.state = com.sap.ose.projetose.modeles.State.ACCEPTED")
     List<InternOffer> findAllApproved();

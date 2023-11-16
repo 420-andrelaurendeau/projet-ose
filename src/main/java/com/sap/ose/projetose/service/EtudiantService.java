@@ -123,7 +123,6 @@ public class EtudiantService {
 
                         dto.setAppliedOffer(offerDto);
                         dto.setAppliedFiles(fileDtos);
-
                         return dto;
                     }).toList();
 
