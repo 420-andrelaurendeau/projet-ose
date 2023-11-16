@@ -112,12 +112,13 @@ public class StageController {
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "id") String sortField,
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
-            @RequestParam(required = false) String state) {
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) String session) {
 
-        System.out.println(state);
+        System.out.println(session);
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
-        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPage(page, size, sort, state);
+        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPage(page, size, sort, state, session);
 
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);

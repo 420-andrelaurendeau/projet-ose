@@ -23,7 +23,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     const [internshipsAgreement, setInternshipsAgreement] = useState([]);
 
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('all');
+    const [selectedOption, setSelectedOption] = useState('');
 
 
     const [currentPage, setCurrentPage] = useState(0);
@@ -79,7 +79,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
         };
         if (!fetchedInternshipsAgreementRef.current) fetchInternshipsAgreement();
 
-    }, [currentPage, offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
+    }, [currentPage, selectedOption,offerState, numberElementByPage, isUpdate, sortField, sortDirection]);
 
     useEffect(() => {
         const fetchInternshipsAgreementCount = async () => {
