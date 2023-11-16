@@ -3,6 +3,7 @@ import {InternshipOffer} from "../model/IntershipOffer";
 import {OfferReviewRequest} from "../model/OfferReviewRequest";
 import {AppliedOffers} from "../model/AppliedOffers";
 import api from "./ConfigAPI";
+import {useAuth} from "../authentication/AuthContext";
 
 const API_BASE_URL = 'http://localhost:8080/api/';
 
@@ -122,8 +123,7 @@ export const getAllPendingInterOfferJob = async (): Promise<InternshipOffer[]> =
 
 export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequest) => {
     try {
-        console.log(offerReviewRequest)
-        const response = await apiClient.post('offerReviewRequest/save', offerReviewRequest);
+        const response = await api.post('offerReviewRequest/save', offerReviewRequest);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
