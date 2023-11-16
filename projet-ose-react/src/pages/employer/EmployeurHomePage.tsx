@@ -187,6 +187,11 @@ function EmployeurHomePage() {
         })
     }, []);
 
+    useEffect(() => {
+        console.log("saisonHome:"+seasons)
+    }, [seasons]);
+
+
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentPage(0);
         setNumberElementByPage(Number(event.target.value));
