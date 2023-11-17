@@ -479,7 +479,9 @@ i18n
                                     name: 'newOffre',
                                     text: "New offer"
                                 }
-                            }
+                            },
+                            InscriptionEmployer : "Employer registration",
+                            InscriptionStudent : "Student registration",
                         },
                         Home: {
                             name: 'home',
@@ -1205,7 +1207,9 @@ i18n
                                     name: 'newOffre',
                                     text: "Nouvelle offre"
                                 }
-                            }
+                            },
+                            InscriptionEmployer : "Enregistrement employeur",
+                            InscriptionStudent : "Enregistrement étudiant",
                         },
                         Home: {
                             name: 'home',

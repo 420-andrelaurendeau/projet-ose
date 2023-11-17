@@ -3,10 +3,13 @@ import {render} from "@testing-library/react";
 import EtudiantInscription from "../components/common/student/form/StudentInscriptionForm";
 import StudentInscriptionForm from "../components/common/student/form/StudentInscriptionForm";
 import InscriptionEmployeur from "../components/common/Employer/inscriptionEmployeur";
+import {useTranslation} from "react-i18next";
+
 
 
 function Registration() {
     const [isButtonClicked, setIsButtonClicked] = useState(false);
+    const {t} = useTranslation();
 
     const handleButtonClick = (value:boolean) => {
         setIsButtonClicked(value);
@@ -23,7 +26,7 @@ function Registration() {
                             onClick={() => handleButtonClick(true)}
                             disabled={isButtonClicked}
                     >
-                        Inscription Employeur
+                        {t('formField.Header.InscriptionEmployer')}
                     </button>
                     <button className={
                         isButtonClicked ? 'm-4 p-2' : 'border-b-4 m-4 p-2 cursor-not-allowed'
@@ -31,7 +34,7 @@ function Registration() {
                             onClick={() => handleButtonClick(false)}
                             disabled={!isButtonClicked}
                     >
-                        Inscription Etudiant
+                        {t('formField.Header.InscriptionStudent')}
                     </button>
                 </div>
                 <div className="flex justify-center items-start">
