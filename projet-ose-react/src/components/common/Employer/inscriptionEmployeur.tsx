@@ -112,17 +112,20 @@ function InscriptionEmployeur(props: any) {
 
     return (
         <div>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 dark:text-white text-black">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
-                        className="mx-auto h-16 w-auto"
-                        src={props.darkMode ? imgDark : img}
+                        className="mx-auto h-16 w-auto dark:hidden"
+                        src={img}
+                        alt="Your Company"
+                    />
+                    <img
+                        className="mx-auto h-16 w-auto hidden dark:flex"
+                        src={imgDark}
                         alt="Your Company"
                     />
                     <h2 className=
-                            {props.darkMode ?
-                                "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white"
-                                : "mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-black"}>
+                            {"mt-10 text-center text-2xl font-bold leading-9 tracking-tight"}>
                         {fields.titre.text}
                     </h2>
                 </div>
@@ -131,9 +134,7 @@ function InscriptionEmployeur(props: any) {
                         <div className="flex justify-between ">
                             <div>
                                 <label htmlFor="prenom" className=
-                                    {props.darkMode ?
-                                        "block text-sm font-medium leading-6 text-white"
-                                        : "block text-sm font-medium leading-6 text-black"}>
+                                    {"block text-sm font-medium leading-6"}>
                                     {fields.prenom.text}
                                 </label>
                                 <div className="mt-2">
@@ -145,10 +146,7 @@ function InscriptionEmployeur(props: any) {
                                         placeholder={fields.prenom.placeholder}
                                         required
                                         className=
-                                            {props.darkMode ?
-                                                "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                                : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            }
+                                            {"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
                                         value={formData.prenom}
                                         onChange={handleChange}
                                     />
@@ -157,9 +155,7 @@ function InscriptionEmployeur(props: any) {
 
                             <div>
                                 <label htmlFor="nom" className=
-                                    {props.darkMode ?
-                                        "block text-sm font-medium leading-6 text-white"
-                                        : "block text-sm font-medium leading-6 text-black"}>
+                                    {"block text-sm font-medium leading-6"}>
                                     {fields.nom.text}
                                 </label>
                                 <div className="mt-2">
@@ -171,10 +167,7 @@ function InscriptionEmployeur(props: any) {
                                         placeholder={fields.nom.placeholder}
                                         required
                                         className=
-                                            {props.darkMode ?
-                                                "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                                : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            }
+                                            {"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
                                         value={formData.nom}
                                         onChange={handleChange}
                                     />
@@ -184,9 +177,7 @@ function InscriptionEmployeur(props: any) {
 
                         <div>
                             <label htmlFor="entreprise" className=
-                                {props.darkMode ?
-                                    "block text-sm font-medium leading-6 text-white"
-                                    : "block text-sm font-medium leading-6 text-black"}>
+                                {"block text-sm font-medium leading-6"}>
                                 {fields.entreprise.text}
                             </label>
                             <div className="mt-2">
@@ -197,11 +188,7 @@ function InscriptionEmployeur(props: any) {
                                     autoComplete="text"
                                     placeholder={fields.entreprise.placeholder}
                                     required
-                                    className=
-                                        {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                        }
+                                    className={"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
                                     value={formData.entreprise}
                                     onChange={handleChange}
                                 />
@@ -210,9 +197,7 @@ function InscriptionEmployeur(props: any) {
 
                         <div>
                             <label htmlFor="email" className=
-                                {props.darkMode ?
-                                    "block text-sm font-medium leading-6 text-white"
-                                    : "block text-sm font-medium leading-6 text-black"}>
+                                {"block text-sm font-medium leading-6"}>
                                 {fields.email.text}
                             </label>
                             <div className="mt-2">
@@ -223,11 +208,7 @@ function InscriptionEmployeur(props: any) {
                                     autoComplete="email"
                                     placeholder={fields.email.placeholder}
                                     required
-                                    className=
-                                        {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                        }
+                                    className={"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
                                     value={formData.email}
                                     onChange={handleChange}
                                 />
@@ -236,9 +217,7 @@ function InscriptionEmployeur(props: any) {
 
                         <div>
                             <label htmlFor="phone" className=
-                                {props.darkMode ?
-                                    "block text-sm font-medium leading-6 text-white"
-                                    : "block text-sm font-medium leading-6 text-black"}>
+                                {"block text-sm font-medium leading-6"}>
                                 {fields.telephone.text}
                             </label>
                             <div className="mt-2">
@@ -249,11 +228,7 @@ function InscriptionEmployeur(props: any) {
                                     autoComplete="email"
                                     placeholder={fields.telephone.placeholder}
                                     required
-                                    className=
-                                        {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                        }
+                                    className={"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
                                     value={formData.phone}
                                     onChange={handleChange}
                                 />
@@ -262,20 +237,14 @@ function InscriptionEmployeur(props: any) {
                         <div>
                             <div className="flex justify-between ">
                                 <label htmlFor="password" className=
-                                    {props.darkMode ?
-                                        "block text-sm font-medium leading-6 text-white"
-                                        : "block text-sm font-medium leading-6 text-black"}>
+                                    {"block text-sm font-medium leading-6"}>
                                     {fields.password.text}
                                 </label>
                                 <div className="justify-center">
                                     <button
                                         type="button"
                                         onClick={tooglePasswordVisibility}
-                                        className={
-                                            props.darkMode
-                                                ? "basis-1/4 mx-auto border rounded p-1 text-white bg-orange"
-                                                : "basis-1/4 mx-auto border rounded p-1 text-white bg-blue"
-                                        }
+                                        className={"basis-1/4 mx-auto border rounded p-1 text-white dark:bg-orange dark:hover:bg-orange-500 bg-blue hover:bg-blue-500"}
                                     >
                                         {showPassword ? fields.passWordNotShown.text : fields.passWordShown.text}
                                     </button>
@@ -289,10 +258,7 @@ function InscriptionEmployeur(props: any) {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder={fields.password.placeholder}
-                                    className=
-                                        {props.darkMode ?
-                                            "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                            : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
+                                    className={"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"
                                         }
                                     value={formData.password}
                                     onChange={handleChange}
@@ -304,9 +270,7 @@ function InscriptionEmployeur(props: any) {
                             <label
                                 htmlFor="programme"
                                 className={
-                                    props.darkMode ?
-                                        "block text-sm font-medium leading-6 text-white"
-                                        : "block text-sm font-medium leading-6 text-black"
+                                    "block text-sm font-medium leading-6"
                                 }
                             >
                                 {fields.programme.text}
@@ -317,9 +281,7 @@ function InscriptionEmployeur(props: any) {
                                 defaultValue={"DEFAULT"}
                                 required={true}
                                 className={
-                                    props.darkMode ?
-                                        "block w-full bg-softdark rounded-md py-2 text-orange shadow-sm sm:text-sm sm:leading-6 pl-2"
-                                        : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
+                                   "block w-full bg-white rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"
                                 }
                             >
                                 <option value={"DEFAULT"} disabled>{fields.programme.text}</option>
@@ -333,10 +295,7 @@ function InscriptionEmployeur(props: any) {
                         <button
                             type="submit"
                             className=
-                                {props.darkMode ?
-                                    "flex w-full justify-center rounded-md bg-orange px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-                                    : "flex w-full justify-center rounded-md bg-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
-                                }>
+                                {"text-white flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 dark:bg-orange dark:hover:bg-orange-500 bg-blue hover:bg-blue"}>
                             {fields.soumettre.text}
                         </button>
                     </form>

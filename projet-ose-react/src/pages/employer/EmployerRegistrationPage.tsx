@@ -2,17 +2,11 @@ import React from "react";
 import InscriptionEmployeur from "../../components/common/Employer/inscriptionEmployeur";
 
 function EmployeurInscriptionPage() {
-    const [darkMode, setDarkMode] = React.useState(false);
 
-    function toggleDarkMode() {
-        setDarkMode((prevDarkMode) => !prevDarkMode);
-    }
 
     return (
-        <div className={darkMode ? "h-screen bg-dark" : "h-screen bg-white"}>
+        <div className={"h-screen bg-white dark:bg-softdark w-full"}>
             <InscriptionEmployeur
-                darkMode={darkMode}
-                toggleDarkMode={toggleDarkMode}
             />
         </div>
     );

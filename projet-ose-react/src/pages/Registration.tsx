@@ -15,8 +15,8 @@ function Registration() {
 
     return(
         <>
-            <div>
-                <div className="flex justify-center items-start ">
+            <div className="dark:bg-softdark">
+                <div className="flex justify-center items-start dark:text-white">
                     <button className={
                         !isButtonClicked ?'m-4 p-2' : 'border-b-4 m-4 p-2 cursor-not-allowed'
                     }
