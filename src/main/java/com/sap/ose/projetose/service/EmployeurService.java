@@ -77,12 +77,12 @@ public class EmployeurService {
     }
 
     @Transactional
-    public Optional<EmployeurDto> saveEmployeur(EmployerDtoInscription employeurDto){
+    public Optional<EmployerDtoInscription> saveEmployeur(EmployerDtoInscription employeurDto){
         try {
             Employeur employeur = employeurDto.fromDto();
             Programme programme = programmeService.findById(employeurDto.getProgramme_id());
             employeur.setProgramme(programme);
-            return Optional.of(new EmployeurDto(employeurRepository.save(employeur)));
+            return Optional.of(new EmployerDtoInscription(employeurRepository.save(employeur)));
         } catch (DataAccessException e) {
             logger.info(e.getMessage());
             throw new DataAccessException("Error lors de la sauvegarde de l'employeur") {};

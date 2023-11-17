@@ -7,10 +7,12 @@ import img from '../../../../assets/images/logo_AL_COULEURS_FOND_BLANC-scaled-re
 // @ts-ignore
 import imgDark from '../../../../assets/images/Cegep-Andre-Laurendeau.png';
 import {Link, useNavigate} from "react-router-dom";
+import {useToast} from "../../../../hooks/state/useToast";
 
 //TODO change i18n is not using fields and instead t
 
 function StudentInscriptionForm(props: any) {
+    const toast = useToast();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.InscriptionFormEtudiant");
     const navigate = useNavigate();
@@ -66,14 +68,12 @@ function StudentInscriptionForm(props: any) {
         })
             .then((response) => {
                 console.log(response)
-                setReussite(true)
-                setError(false)
+                toast.success("Inscription réussie");
+                navigate("/")
             })
             .catch((error) => {
                 console.log(error)
-                alert("Erreur lors de l'inscription")
-                setReussite(false)
-                setError(true)
+                toast.error("Erreur lors de l'inscription");
             })
         event.target.reset();
         setFormData({
@@ -281,9 +281,6 @@ function StudentInscriptionForm(props: any) {
                                 }>
                             {fields.submitButton.text}
                         </button>
-                        {reussite && <p className="text-green-500 scale-150 text-center">{fields.reussite.name}</p>}
-                        {reussite && <Link to={"/signIn"}><p className="text-green-500 scale-100 text-center">{fields.reussite.link}</p></Link>}
-                        {error && <p className="text-red-500 scale-150 text-center">{fields.error.name}</p>}
                     </div>
                 </form>
             </div>

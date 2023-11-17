@@ -6,6 +6,7 @@ import imgDark from "../../../assets/images/Cegep-Andre-Laurendeau.png";
 import {Program} from "../../../model/Program";
 import {useNavigate} from "react-router-dom";
 import {useToast} from "../../../hooks/state/useToast";
+import {saveEmployer} from "../../../api/EmployerAPI";
 
 function InscriptionEmployeur(props: any) {
     const {i18n} = useTranslation();
@@ -69,7 +70,7 @@ function InscriptionEmployeur(props: any) {
 
     const handleRedirect = async () => {
         toast.success("Inscription réussie");
-        navigate("/signIn");
+        navigate("/");
     };
 
     const handleSubmit = (event: any) => {
@@ -77,18 +78,12 @@ function InscriptionEmployeur(props: any) {
 
         const programme = formData.programme_id;
 
-        if (programme == null) {
-            alert(fields.programme.validation.required);
+        if (programme == 0) {
+            toast.error("Veuillez choisir un programme");
             return;
         }
 
-        axios
-            .post("http://localhost:8080/api/employeur/ajouter", JSON.stringify(formData), {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-
-            })
+        saveEmployer(JSON.stringify(formData))
             .then((response) => {
                 console.log(JSON.stringify(formData));
                 console.log(formData);
@@ -317,11 +312,9 @@ function InscriptionEmployeur(props: any) {
                                 {fields.programme.text}
                             </label>
                             <select
-                                value={formData.programme_id}
                                 onChange={handleChange}
                                 name={"programme_id"}
                                 defaultValue={"DEFAULT"}
-                                id="programme"
                                 required={true}
                                 className={
                                     props.darkMode ?
@@ -329,7 +322,7 @@ function InscriptionEmployeur(props: any) {
                                         : "block w-full bg-white rounded-md py-2 text-blue shadow-sm sm:text-sm sm:leading-6 pl-2"
                                 }
                             >
-                                <option value={"DEFAULT"} disabled>{fields.programme.placeholder}</option>
+                                <option value={"DEFAULT"} disabled>{fields.programme.text}</option>
                                 {programmes.map((programme) => (
                                     <option key={programme['id']}
                                             value={Number(programme['id'])}>{programme['nom']}</option>
