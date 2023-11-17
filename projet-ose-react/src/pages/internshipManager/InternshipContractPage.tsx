@@ -83,7 +83,7 @@ const InternshipContractPage: React.FC<any> = () => {
                     <button
                         type="button"
                         className="inline-flex items-center px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => navigate(`/${userRole}/home/internshipagreement`)}
+                        onClick={() => navigate(`/${userRole}/home/internshipsagreement`)}
                     >
                         Retour <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                     </button>

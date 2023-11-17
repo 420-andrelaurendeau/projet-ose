@@ -228,7 +228,7 @@ function UploadCVForm(): ReactElement {
                     </div>}
                     <br/>
                     <div className={"flex flex-col items-center justify-center w-full"}>
-                        <div className={"flex flex-col items-center justify-around w-full "}>
+                        <div className={"flex flex-col items-center justify-around w-full dark:text-white"}>
                             {files.map((file, i) => {
                                 return <div key={i}>
                                     {file["fileName"]}
