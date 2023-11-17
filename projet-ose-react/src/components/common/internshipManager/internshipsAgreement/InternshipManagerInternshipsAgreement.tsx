@@ -92,6 +92,13 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                     </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                    {props.offers.length === 0 && (
+                        <tr>
+                            <td colSpan={5} className="text-center bg-red text-white">
+                                {fields.empty}
+                            </td>
+                        </tr>
+                    )}
                     {props.offers.map((offer: any) => (
                         <tr key={offer.id}>
                             <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">

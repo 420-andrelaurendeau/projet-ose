@@ -63,7 +63,8 @@ i18n
                                 sign: {
                                     student: "Refused by the student",
                                     employer: "Refused by the employer",
-                                }
+                                },
+                                empty : "No internships agreement available"
                             },
                         },
                         InternshipOfferList : {
@@ -353,7 +354,8 @@ i18n
                         EtudiantStage: {
                             noOffers: {
                                 name: 'noOffers',
-                                text: 'No offers available'
+                                text: 'No offers available',
+                                noAppliedOffers: "No applied offers"
                             },
                             titre: {
                                 name: 'titre',
@@ -728,6 +730,7 @@ i18n
                                     declined: "Declined",
                                 }
                             },
+                            empty: "No interview available"
                         }
                     },
                     StudentCvEvaluation: {
@@ -783,7 +786,8 @@ i18n
                                 sign: {
                                     student: "Refuser par l'étudiant",
                                     employer: "Refuser par l'employeur",
-                                }
+                                },
+                                empty : "Aucune entente de stage disponible"
                             },
                         },
                         InternshipOfferList : {
@@ -1080,7 +1084,8 @@ i18n
                         EtudiantStage: {
                             noOffers: {
                                 name: 'noOffers',
-                                text: 'Aucune offre disponible'
+                                text: 'Aucune offre disponible',
+                                noAppliedOffers: "Aucune offre appliquée"
                             },
                             titre: {
                                 name: 'titre',
@@ -1438,6 +1443,7 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
+                            empty: "Aucune entrevue disponible"
                         }
                     },
                     StudentCvEvaluation: {

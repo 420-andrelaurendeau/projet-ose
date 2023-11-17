@@ -148,6 +148,13 @@ export default function StudentInterviewPage() {
                 </tr>
                 </thead>
                 <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                {interviews.length === 0 && (
+                    <tr>
+                        <td colSpan={5} className="text-center bg-red text-white">
+                            {fields.table.empty}
+                        </td>
+                    </tr>
+                )}
                 {interviews.map((interview) => (
                     <tr key={interview.id}>
                         <td className="px-6 py-4 whitespace-nowrap
@@ -200,7 +207,7 @@ export default function StudentInterviewPage() {
             <div className="flex flex-col items-center">
                 <div className=" lg:-mx-8 mt-28 w-11/12 ">
                     <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
+                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full dark:text-white ">
                         <div className=" w-full">
                             <PaginatedList renderItem={renderInterviews}
                                            page={currentPage}

@@ -147,7 +147,7 @@ function StudentInternship() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                            <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
                             <select id="options" value={selectedOption} onChange={handleChangeOption}>
                                 <option value="">Tout</option>
                                 {seasons.map((season: string, index: number) => (
@@ -157,120 +157,118 @@ function StudentInternship() {
                                 ))}
                             </select>
                         </div>
-                        {
-                            offers.length === 0 ?
-                                <div className="flex flex-col items-center justify-center">
-                                    <p className="text-center text-lg font-bold leading-9 tracking-tight text-black dark:text-white">
-                                        {fields.noOffers.text}
-                                    </p>
-                                </div>
-                                :
-                                <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
-                                    <table className="w-full divide-y divide-gray dark:divide-darkgray">
-                                        <thead className="bg-blue dark:bg-orange ">
+                            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                                <table className="w-full divide-y divide-gray dark:divide-darkgray">
+                                    <thead className="bg-blue dark:bg-orange ">
+                                    <tr>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                                            onClick={() => handleSortClick("title")}
+                                        >
+                                            {fields.titre.text}
+                                            <div
+                                                className={sortField === "title" ? "visible" : "hidden"}>
+                                                <FontAwesomeIcon
+                                                    icon={sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
+                                                    color={"White"} className={"ml-2"}/>
+                                            </div>
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        >
+                                            {fields.stage.location.text}
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            onClick={() => handleSortClick("salaryByHour")}
+                                        >
+                                            {fields.stage.salary.text}
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            onClick={() => handleSortClick("startDate")}
+                                        >
+                                            {fields.stage.startDate.text}
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            onClick={() => handleSortClick("endDate")}
+                                        >
+                                            {fields.stage.endDate.text}
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        >
+                                            Entreprise
+                                        </th>
+                                        <th scope="col" className="relative px-6 py-3">
+                                            <span className="sr-only">{fields.stage.apply.text}</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                                    {offers.length === 0 ?
                                         <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
-                                                onClick={() => handleSortClick("title")}
-                                            >
-                                                {fields.titre.text}
-                                                <div
-                                                    className={sortField === "title" ? "visible" : "hidden"}>
-                                                    <FontAwesomeIcon
-                                                        icon={sortDirection === "asc" ? faArrowDownAZ : faArrowUpZA}
-                                                        color={"White"} className={"ml-2"}/>
-                                                </div>
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                            >
-                                                {fields.stage.location.text}
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                                onClick={() => handleSortClick("salaryByHour")}
-                                            >
-                                                {fields.stage.salary.text}
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                                onClick={() => handleSortClick("startDate")}
-                                            >
-                                                {fields.stage.startDate.text}
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                                onClick={() => handleSortClick("endDate")}
-                                            >
-                                                {fields.stage.endDate.text}
-                                            </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                                            >
-                                                Entreprise
-                                            </th>
-                                            <th scope="col" className="relative px-6 py-3">
-                                                <span className="sr-only">{fields.stage.apply.text}</span>
-                                            </th>
+                                            <td colSpan={7} className="text-center dark:text-white bg-red">{t("formField.EtudiantStage.noOffers.text")}</td>
                                         </tr>
-                                        </thead>
-                                        <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                                        {offers.map((offer: any) => (
-                                            <tr key={offer.id}>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="flex items-center">
-                                                        <div className="ml-4">
-                                                            <div className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
-                                                        </div>
+                                        :
+                                        <></>
+                                    }
+                                    {offers.map((offer: any) => (
+                                        <tr key={offer.id}>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="flex items-center">
+                                                    <div className="ml-4">
+                                                        <div className="text-sm font-medium dark:text-offwhite">{offer.title}</div>
                                                     </div>
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm dark:text-offwhite">{offer.location}</div>
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm dark:text-offwhite">{offer.salaryByHour}</div>
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm dark:text-offwhite">{offer.startDate}</div>
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap">
-                                                    <div className="text-sm dark:text-offwhite">{offer.endDate}</div>
-                                                </td>
-                                                <td className="px-6 py-4 break-all">
-                                                    <div className="text-sm dark:text-offwhite">{offer.employeurEntreprise}</div>
-                                                </td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">
-                                                    <div className="flex space-x-1 items-center">
-                                                        <p className="text-black dark:text-white">{fields.stage.view.text}</p>
-                                                        <FontAwesomeIcon icon={faEye}
-                                                                         className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                                         onClick={() => handleOfferClick(offer.id!)}
-                                                        />
-                                                    </div>
-                                                    <button
-                                                        onClick={() => applyOffer(offer, user, cv)}
-                                                        type="submit"
-                                                        disabled={
-                                                            appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || loadingCV
-                                                        }
-                                                        className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
-                                                    >
-                                                        {fields.stage.apply.text}
-                                                    </button>
-                                                </td>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="text-sm dark:text-offwhite">{offer.location}</div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="text-sm dark:text-offwhite">{offer.salaryByHour}</div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="text-sm dark:text-offwhite">{offer.startDate}</div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <div className="text-sm dark:text-offwhite">{offer.endDate}</div>
+                                            </td>
+                                            <td className="px-6 py-4 break-all">
+                                                <div className="text-sm dark:text-offwhite">{offer.employeurEntreprise}</div>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">
+                                                <div className="flex space-x-1 items-center">
+                                                    <p className="text-black dark:text-white">{fields.stage.view.text}</p>
+                                                    <FontAwesomeIcon icon={faEye}
+                                                                     className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                                                     onClick={() => handleOfferClick(offer.id!)}
+                                                    />
+                                                </div>
+                                                <button
+                                                    onClick={() => applyOffer(offer, user, cv)}
+                                                    type="submit"
+                                                    disabled={
+                                                        appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || loadingCV
+                                                    }
+                                                    className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
+                                                >
+                                                    {fields.stage.apply.text}
+                                                </button>
+                                            </td>
 
-                                            </tr>
-                                        ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                        }
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         <div className="pt-4">
                             <ListItemPageSelector page={page} totalPages={totalPages} onPageChange={onPageChange}/>
                         </div>

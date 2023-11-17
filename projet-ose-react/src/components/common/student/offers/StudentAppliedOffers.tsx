@@ -95,6 +95,13 @@ export default function StudentAppliedOffers() {
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                                {appliedOffers.length === 0 && (
+                                    <tr>
+                                        <td colSpan={5} className="text-center bg-red text-white">
+                                            {t('formField.EtudiantStage.noOffers.noAppliedOffers')}
+                                        </td>
+                                    </tr>
+                                )}
                                 {appliedOffers.map((appliedOffer: AppliedOffers) => (
                                     <tr key={appliedOffer.appliedOffer.id}>
                                         <td className="px-6 py-4 whitespace-nowrap">
