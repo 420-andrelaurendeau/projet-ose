@@ -138,6 +138,37 @@ describe('InternshipManagerAPI', () => {
         });
 
     });
+
+
+    describe('getOfferReviewById', () => {
+        const mockReview = {
+            id: 1,
+            content: "Excellent stage",
+            rating: 5
+        };
+
+        it('should fetch offer review successfully', async () => {
+            (api.get as jest.Mock).mockResolvedValue({ data: mockReview });
+
+            const reviewId = 1;
+            const review = await getOfferReviewById(reviewId);
+
+            expect(api.get).toHaveBeenCalledWith(`internshipManager/offer/${reviewId}/review`);
+            expect(review).toEqual(mockReview);
+        });
+
+        it('should throw an error when request fails', async () => {
+            const errorMessage = 'Network error';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            const reviewId = 1;
+
+            await expect(getOfferReviewById(reviewId)).rejects.toThrow(errorMessage);
+        });
+    });
+
+
+
 });
 
 
