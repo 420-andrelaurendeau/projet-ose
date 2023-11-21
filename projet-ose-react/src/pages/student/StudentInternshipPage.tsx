@@ -66,7 +66,6 @@ function StudentInternshipPage() {
             getUser(userEmail!)
                 .then((resUser) => {
                     setUser(resUser);
-                    console.log(userId! + " fjdsffjdfsfdsfsd")
                     getStudentAppliedOffers(userId!).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
@@ -80,8 +79,6 @@ function StudentInternshipPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-        console.log("CONTEXT")
-        console.log(JSON.stringify(context))
     }, [selectedOption]);
 
 

@@ -112,11 +112,18 @@ function StudentInternship() {
     }
 
     const handleSortClick = (newSortField: any) => {
+        console.log(newSortField)
         if (newSortField === sortField && sortDirection === "desc") {
             setSortField("");
             setSortDirection("");
         } else if (newSortField === sortField) {
-            setSortDirection((prevDirection: String) => (prevDirection === "asc" ? "desc" : "asc"));
+            if (sortDirection === "asc") {
+                setSortDirection("desc");
+            }
+            else{
+                setSortDirection("asc")
+            }
+            // setSortDirection((prevDirection: String) => (prevDirection === "asc" ? "desc" : "asc"));
         } else {
             setSortField(newSortField);
             setSortDirection("asc");
@@ -133,12 +140,12 @@ function StudentInternship() {
         appliedOffers: appliedOffers,
     }
 
-    const shouldButtonBeDisabled = (id:number) => {
+    const shouldButtonBeDisabled = (id: number) => {
         let returnValue = appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
         return appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
 
     }
-
+//TODO ADD PICTURES AND CHANGE CURSOR FOR SORTING BUTTONS
     return (
         <div className="flex flex-col mt-14">
             <div
