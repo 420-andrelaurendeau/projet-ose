@@ -371,6 +371,7 @@ describe("StudentInternship Component", () => {
 
         const offerElements = await screen.findAllByLabelText("internship-row");
         expect(offerElements).toHaveLength(mockOffers.length);
+
     });
 
     it('should give error when CV loads with error and we can close toast', async () => {
@@ -651,16 +652,23 @@ describe("StudentInternship Component", () => {
         expect(sort_by_start_date).toBeInTheDocument();
         expect(sort_by_end_date).toBeInTheDocument();
         await act(async () => {
-            fireEvent.click(sort_by_title);
+            return fireEvent.click(sort_by_title);
         });
 
         expect(mockProps.sortField).toBe("title");
         expect(mockProps.sortDirection).toBe("asc");
 
         await act(async () => {
-            fireEvent.click(sort_by_title);
+            return fireEvent.click(sort_by_title);
         });
         expect(mockProps.sortField).toBe("title");
         expect(mockProps.sortDirection).toBe("desc");
+
+        await act(async () => {
+            return fireEvent.click(sort_by_end_date);
+        });
+        expect(mockProps.sortField).toBe("endDate");
+        expect(mockProps.sortDirection).toBe("asc");
+
     })
 });

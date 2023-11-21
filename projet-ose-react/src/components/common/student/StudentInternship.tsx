@@ -112,18 +112,13 @@ function StudentInternship() {
     }
 
     const handleSortClick = (newSortField: any) => {
-        console.log(newSortField)
+
+        console.log(`sortField: ${sortField}, sortDirection: ${sortDirection}`)
         if (newSortField === sortField && sortDirection === "desc") {
             setSortField("");
             setSortDirection("");
-        } else if (newSortField === sortField) {
-            if (sortDirection === "asc") {
-                setSortDirection("desc");
-            }
-            else{
-                setSortDirection("asc")
-            }
-            // setSortDirection((prevDirection: String) => (prevDirection === "asc" ? "desc" : "asc"));
+        } else if (newSortField === sortField && sortDirection === "asc") {
+            setSortDirection("desc");
         } else {
             setSortField(newSortField);
             setSortDirection("asc");
@@ -143,7 +138,6 @@ function StudentInternship() {
     const shouldButtonBeDisabled = (id: number) => {
         let returnValue = appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
         return appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
-
     }
 //TODO ADD PICTURES AND CHANGE CURSOR FOR SORTING BUTTONS
     return (
