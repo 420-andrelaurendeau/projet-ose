@@ -10,7 +10,7 @@ import {
     getStageCountByStateEmployeur,
     getStages,
     getStudentPendingCv,
-    getTotalOfferByState
+    getTotalOfferByState, signDocument
 } from "../../api/InternshipManagerAPI";
 import api from '../../api/ConfigAPI';
 
@@ -392,6 +392,27 @@ describe('InternshipManagerAPI', () => {
             await expect(getContractById(contractId)).rejects.toThrow(errorMessage);
         });
 
+    });
+
+    describe('signDocument', () => {
+        const mockForm = { id: '123', signature: 'signature' };
+
+        it('should successfully sign a document', async () => {
+            const mockResponse = { data: 'response data' };
+            (api.post as jest.Mock).mockResolvedValue(mockResponse);
+
+            const result = await signDocument(mockForm);
+
+            expect(api.post).toHaveBeenCalledWith(`contract/save`, mockForm);
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('should throw an error if signing fails', async () => {
+            const mockError = new Error('Network error');
+            (api.post as jest.Mock).mockRejectedValue(mockError);
+
+            await expect(signDocument(mockForm)).rejects.toThrow('Network error');
+        });
     });
 
 });
