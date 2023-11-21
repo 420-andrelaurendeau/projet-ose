@@ -30,8 +30,24 @@ interface Props {
 
 function StudentInternship() {
     const {t} = useTranslation();
-    const {offers,setOffers, setAppliedOffers, appliedOffers, page, setSortField, onPageChange, setCurrentPage, numberElementByPage, setSortDirection, sortDirection, sortField, totalPages, handleChangeNumberElement, seasons, selectedOption, handleChangeOption} = useProps();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
+    const {offers,
+        setOffers,
+        setAppliedOffers,
+        appliedOffers,
+        page,
+        setSortField,
+        onPageChange,
+        setCurrentPage,
+        numberElementByPage,
+        setSortDirection,
+        sortDirection,
+        sortField,
+        totalPages,
+        handleChangeNumberElement,
+        seasons,
+        selectedOption,
+        handleChangeOption} = useProps();
+    // const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
     //const [offers, setOffers] = useState<any[]>([])
     const [cv, setCv] = useState<FileEntity>()
     //const [seasons, setSeasons] = useState([])
@@ -131,8 +147,8 @@ function StudentInternship() {
                         <div className="flex items-center justify-center">
                             <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
                         </div>
-                        <h1 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                            {fields.titre.text}
+                        <h1 aria-label={"component-title"} className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                            {t("formField.EtudiantStage.titre.text")}
                         </h1>
                         {
                             loadingCV ?
@@ -166,7 +182,7 @@ function StudentInternship() {
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
                                             onClick={() => handleSortClick("title")}
                                         >
-                                            {fields.titre.text}
+                                            {t("formField.EtudiantStage.titre.text")}
                                             <div
                                                 className={sortField === "title" ? "visible" : "hidden"}>
                                                 <FontAwesomeIcon
@@ -178,29 +194,30 @@ function StudentInternship() {
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                         >
-                                            {fields.stage.location.text}
+                                            {t("formField.EtudiantStage.stage.location.text")}
                                         </th>
                                         <th
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                             onClick={() => handleSortClick("salaryByHour")}
                                         >
-                                            {fields.stage.salary.text}
+                                            {t("formField.EtudiantStage.stage.salary.text")}
                                         </th>
                                         <th
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                             onClick={() => handleSortClick("startDate")}
                                         >
-                                            {fields.stage.startDate.text}
+                                            {t("formField.EtudiantStage.stage.startDate.text")}
                                         </th>
                                         <th
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                                             onClick={() => handleSortClick("endDate")}
                                         >
-                                            {fields.stage.endDate.text}
+                                            {t("formField.EtudiantStage.stage.endDate.text")}
                                         </th>
+                                        {/*TODO add i18n below*/}
                                         <th
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
@@ -208,7 +225,7 @@ function StudentInternship() {
                                             Entreprise
                                         </th>
                                         <th scope="col" className="relative px-6 py-3">
-                                            <span className="sr-only">{fields.stage.apply.text}</span>
+                                            <span className="sr-only">{t("formField.EtudiantStage.stage.apply.text")}</span>
                                         </th>
                                     </tr>
                                     </thead>
@@ -221,7 +238,7 @@ function StudentInternship() {
                                         <></>
                                     }
                                     {offers.map((offer: any) => (
-                                        <tr key={offer.id}>
+                                        <tr key={offer.id} aria-label={"internship-row"}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className="ml-4">
@@ -246,13 +263,14 @@ function StudentInternship() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">
                                                 <div className="flex space-x-1 items-center">
-                                                    <p className="text-black dark:text-white">{fields.stage.view.text}</p>
+                                                    <p className="text-black dark:text-white">{t("formField.EtudiantStage.stage.view.text")}</p>
                                                     <FontAwesomeIcon icon={faEye}
                                                                      className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => handleOfferClick(offer.id!)}
                                                     />
                                                 </div>
                                                 <button
+                                                    aria-label={"apply-button"}
                                                     onClick={() => applyOffer(offer, user, cv)}
                                                     type="submit"
                                                     disabled={
@@ -260,7 +278,7 @@ function StudentInternship() {
                                                     }
                                                     className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                 >
-                                                    {fields.stage.apply.text}
+                                                    {t("formField.EtudiantStage.stage.apply.text")}
                                                 </button>
                                             </td>
 

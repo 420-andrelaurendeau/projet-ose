@@ -58,6 +58,7 @@ function StudentInternshipPage() {
 
     const isLoading = useRef(false);
 
+    //TODO cchanger que ca utilise le user passer en props
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
@@ -79,6 +80,8 @@ function StudentInternshipPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
+        console.log("CONTEXT")
+        console.log(JSON.stringify(context))
     }, [selectedOption]);
 
 
@@ -98,6 +101,7 @@ function StudentInternshipPage() {
             isLoading.current = false;
         };
         fetchOffers();
+
     }, [currentPage, selectedOption,numberElementByPage, sortField, sortDirection]);
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
