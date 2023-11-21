@@ -2,7 +2,7 @@
 import {
     acceptStudentCv, declineStudentCv,
     getIntershipOffers,
-    getOfferReviewById, getStageCountByState, getStageCountByStateEmployeur,
+    getOfferReviewById, getStageCountByState, getStageCountByStateEmployeur, getStages,
     getStudentPendingCv,
     getTotalOfferByState
 } from "../../api/InternshipManagerAPI";
@@ -282,6 +282,35 @@ describe('InternshipManagerAPI', () => {
             await expect(getStageCountByStateEmployeur(mockEmployeurId)).rejects.toThrow('API error');
         });
     });
+
+    describe('getStages', () => {
+
+        const params = {
+            page: 1,
+            size: 10,
+            state: 'active',
+            sortField: 'date',
+            sortDirection: 'desc',
+            session: 'sessionToken'
+        };
+
+        it('fetches stages successfully', async () => {
+            const mockData = { data: [{ id: 1, name: 'Stage 1' }] };
+            (api.get as jest.Mock).mockResolvedValue({ data: mockData });
+
+            const result = await getStages(params);
+
+            expect(api.get).toHaveBeenCalledWith('stage/stages', { params: params });
+            expect(result).toEqual(mockData);
+        });
+
+        it('handles errors when fetching stages', async () => {
+            (api.get as jest.Mock).mockRejectedValue(new Error('Error fetching stages'));
+
+            await expect(getStages(params)).rejects.toThrow('Error fetching stages');
+        });
+    });
+
 });
 
 
