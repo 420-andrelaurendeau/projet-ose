@@ -1,7 +1,7 @@
 // Mocker le module où l'instance 'api' est définie
 import {
     acceptStudentCv,
-    declineStudentCv,
+    declineStudentCv, getContractById,
     getIntershipOffers,
     getOfferReviewById,
     getStageByEmployeurId,
@@ -372,6 +372,27 @@ describe('InternshipManagerAPI', () => {
         });
     });
 
+    describe('getContractById', () => {
+        const mockContractData = { id: '123', details: 'Contract details' };
+
+        it('fetches contract data successfully', async () => {
+            (api.get as jest.Mock).mockResolvedValue({ data: mockContractData });
+            const contractId = '123';
+            const result = await getContractById(contractId);
+
+            expect(api.get).toHaveBeenCalledWith(`contract/${contractId}`);
+            expect(result).toEqual(mockContractData);
+        });
+
+        it('throws an error when fetching contract data fails', async () => {
+            const errorMessage = 'Network error';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+            const contractId = '123';
+
+            await expect(getContractById(contractId)).rejects.toThrow(errorMessage);
+        });
+
+    });
 
 });
 
