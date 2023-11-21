@@ -2,7 +2,7 @@
 import {
     acceptStudentCv, declineStudentCv,
     getIntershipOffers,
-    getOfferReviewById, getStageCountByState, getStageCountByStateEmployeur, getStages,
+    getOfferReviewById, getStageByEmployeurId, getStageCountByState, getStageCountByStateEmployeur, getStages,
     getStudentPendingCv,
     getTotalOfferByState
 } from "../../api/InternshipManagerAPI";
@@ -42,6 +42,15 @@ describe('InternshipManagerAPI', () => {
         (api.get as jest.Mock).mockReset();
         mockedLocalStorage.getItem.mockReset();
     });
+
+    const params = {
+        page: 1,
+        size: 10,
+        state: 'active',
+        sortField: 'date',
+        sortDirection: 'desc',
+        session: 'sessionToken'
+    };
 
     describe('getInternshipOffers', () => {
 
@@ -285,15 +294,6 @@ describe('InternshipManagerAPI', () => {
 
     describe('getStages', () => {
 
-        const params = {
-            page: 1,
-            size: 10,
-            state: 'active',
-            sortField: 'date',
-            sortDirection: 'desc',
-            session: 'sessionToken'
-        };
-
         it('fetches stages successfully', async () => {
             const mockData = { data: [{ id: 1, name: 'Stage 1' }] };
             (api.get as jest.Mock).mockResolvedValue({ data: mockData });
@@ -308,6 +308,29 @@ describe('InternshipManagerAPI', () => {
             (api.get as jest.Mock).mockRejectedValue(new Error('Error fetching stages'));
 
             await expect(getStages(params)).rejects.toThrow('Error fetching stages');
+        });
+    });
+
+    describe('getStageByEmployeurId', () => {
+
+        it('fetches stages for an employer successfully', async () => {
+            const mockData = { data: [{ id: 1, name: 'Stage for Employer' }] };
+            (api.get as jest.Mock).mockResolvedValue({ data: mockData });
+
+            const employerId = 123;
+
+            const result = await getStageByEmployeurId(params, employerId);
+
+            expect(api.get).toHaveBeenCalledWith(`stage/employeurStage/${employerId}`, { params: params });
+            expect(result).toEqual(mockData);
+        });
+
+        it('handles errors when fetching stages for an employer', async () => {
+            (api.get as jest.Mock).mockRejectedValue(new Error('Error fetching stages'));
+
+            const employerId = 123;
+
+            await expect(getStageByEmployeurId(params, employerId)).rejects.toThrow('Error fetching stages');
         });
     });
 
