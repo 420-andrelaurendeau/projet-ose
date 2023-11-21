@@ -18,12 +18,7 @@ export const saveStudentInternshipOffer = async (interOfferJob:any, student :any
         files: [cv]
     }
     try {
-        console.log("DATA")
-        console.log(data);
-
         const response = await apiClient.post('intershipCandidates/saveCandidats', data);
-        console.log("RESPONSE")
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.log('error while saving student internship offer' + error)

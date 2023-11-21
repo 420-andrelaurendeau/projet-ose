@@ -72,6 +72,7 @@ function StudentInternship() {
         isloading.current = true;
         try {
             const cvRes = await fetchDefaultCvByStudentId(user.id);
+            console.log(typeof cvRes);
             setCv(cvRes);
             setLoadingCV(false);
         } catch (error) {
@@ -90,8 +91,7 @@ function StudentInternship() {
 
 
     const applyOffer = (offer: any, student: any, cv: any) => {
-
-        if (cv == null) {
+        if (cv == "") {
             toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } else {
             saveStudentInternshipOffer(offer, student, cv).then(
@@ -104,7 +104,6 @@ function StudentInternship() {
                 }
             ).catch(
                 err => {
-                    console.log(err);
                     toast.error(t("formField.EtudiantStage.toast.ErrorOfferApplication"))
                 }
             )
