@@ -2,7 +2,7 @@
 import {
     acceptStudentCv, declineStudentCv,
     getIntershipOffers,
-    getOfferReviewById,
+    getOfferReviewById, getStageCountByState,
     getStudentPendingCv,
     getTotalOfferByState
 } from "../../api/InternshipManagerAPI";
@@ -239,6 +239,26 @@ describe('InternshipManagerAPI', () => {
             (api.post as jest.Mock).mockRejectedValue(new Error('API call failed'));
 
             await expect(declineStudentCv(id)).rejects.toThrow('API call failed');
+        });
+    });
+
+    describe('getStageCountByState', () => {
+
+        it('fetches stage count successfully', async () => {
+            const mockData = { count: 10 };
+
+            (api.get as jest.Mock).mockResolvedValue({ data: mockData });
+
+            const result = await getStageCountByState();
+
+            expect(api.get).toHaveBeenCalledWith('stage/count');
+            expect(result).toEqual(mockData);
+        });
+
+        it('handles error on fetching stage count', async () => {
+            (api.get as jest.Mock).mockRejectedValue(new Error('Network error'));
+
+            await expect(getStageCountByState()).rejects.toThrow('Network error');
         });
     });
 });
