@@ -1,21 +1,20 @@
 // Mocker le module où l'instance 'api' est définie
-import { getIntershipOffers } from "../../api/InternshipManagerAPI";
+import {getIntershipOffers, getOfferReviewById, getTotalOfferByState} from "../../api/InternshipManagerAPI";
+import api from '../../api/ConfigAPI';
 
 jest.mock('../../api/ConfigAPI', () => {
     return {
         __esModule: true,
         default: {
-            get: jest.fn().mockImplementation(() => Promise.resolve({ data: {} })), // Mock implémenté ici
+            get: jest.fn().mockImplementation(() => Promise.resolve({data: {}})), // Mock implémenté ici
             post: jest.fn(),
             interceptors: {
-                request: { use: jest.fn(), eject: jest.fn() },
-                response: { use: jest.fn(), eject: jest.fn() }
+                request: {use: jest.fn(), eject: jest.fn()},
+                response: {use: jest.fn(), eject: jest.fn()}
             }
         }
     };
 });
-
-import api from '../../api/ConfigAPI';
 
 const mockedLocalStorage = {
     getItem: jest.fn(),
@@ -31,83 +30,114 @@ Object.defineProperty(window, 'localStorage', {
     writable: true
 });
 
-describe('getInternshipOffers', () => {
 
+describe('InternshipManagerAPI', () => {
     afterEach(() => {
         (api.get as jest.Mock).mockReset();
         mockedLocalStorage.getItem.mockReset();
     });
 
-    it('fetches internship offers successfully', async () => {
-        const mockData = { data: 'some data' };
-        (api.get as jest.Mock).mockResolvedValue({ data: mockData });
-        mockedLocalStorage.getItem.mockReturnValue('fakeToken');
+    describe('getInternshipOffers', () => {
 
-        const params = {
-            page: 1,
-            size: 10,
-            state: 'active',
-            sortField: 'date',
-            sortDirection: 'desc',
-            session: 'autunm2023'
-        };
+        it('fetches internship offers successfully', async () => {
+            const mockData = {data: 'some data'};
+            (api.get as jest.Mock).mockResolvedValue({data: mockData});
+            mockedLocalStorage.getItem.mockReturnValue('fakeToken');
 
-        const result = await getIntershipOffers(params);
+            const params = {
+                page: 1,
+                size: 10,
+                state: 'active',
+                sortField: 'date',
+                sortDirection: 'desc',
+                session: 'autunm2023'
+            };
 
-        expect(api.get).toHaveBeenCalledWith('internshipManager/offers', expect.anything());
-        expect(result).toEqual(mockData);
+            const result = await getIntershipOffers(params);
+
+            expect(api.get).toHaveBeenCalledWith('internshipManager/offers', expect.anything());
+            expect(result).toEqual(mockData);
+        });
+
+        it('sends the correct parameters to the API', async () => {
+            // Simuler une réponse (peu importe les données dans ce cas)
+            (api.get as jest.Mock).mockResolvedValue({data: {}});
+
+            // Paramètres pour appeler getInternshipOffers
+            const params = {
+                page: 1,
+                size: 10,
+                state: 'active',
+                sortField: 'date',
+                sortDirection: 'desc',
+                session: 'sessionToken'
+            };
+
+            // Appeler la fonction
+            await getIntershipOffers(params);
+
+            // Vérifier si les bons paramètres sont passés à l'API
+            expect(api.get).toHaveBeenCalledWith(
+                'internshipManager/offers',
+                expect.objectContaining({
+                    params: {
+                        page: 1,
+                        size: 10,
+                        state: 'active',
+                        sortField: 'date',
+                        sortDirection: 'desc',
+                        session: 'sessionToken'
+                    }
+                })
+            );
+        });
+
+        it('throws an error when the API call fails', async () => {
+            // Simuler une erreur
+            const errorMessage = 'Network error';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            // Paramètres pour appeler getInternshipOffers
+            const params = {
+                page: 1,
+                size: 10,
+                state: 'active',
+                sortField: 'date',
+                sortDirection: 'desc',
+                session: 'sessionToken'
+            };
+
+            // S'attendre à ce que la fonction lance une erreur
+            await expect(getIntershipOffers(params)).rejects.toThrow(errorMessage);
+        });
+
     });
 
-    it('sends the correct parameters to the API', async () => {
-        // Simuler une réponse (peu importe les données dans ce cas)
-        (api.get as jest.Mock).mockResolvedValue({ data: {} });
+    describe('getTotalOfferByState', () => {
 
-        // Paramètres pour appeler getInternshipOffers
-        const params = {
-            page: 1,
-            size: 10,
-            state: 'active',
-            sortField: 'date',
-            sortDirection: 'desc',
-            session: 'sessionToken'
-        };
+        it('fetches total offer count by state successfully', async () => {
 
-        // Appeler la fonction
-        await getIntershipOffers(params);
+            const mockData = {total: 5};
 
-        // Vérifier si les bons paramètres sont passés à l'API
-        expect(api.get).toHaveBeenCalledWith(
-            'internshipManager/offers',
-            expect.objectContaining({
-                params: {
-                    page: 1,
-                    size: 10,
-                    state: 'active',
-                    sortField: 'date',
-                    sortDirection: 'desc',
-                    session: 'sessionToken'
-                }
-            })
-        );
+
+            (api.get as jest.Mock).mockResolvedValue({data: mockData});
+
+
+            const result = await getTotalOfferByState();
+
+            expect(api.get).toHaveBeenCalledWith('internshipManager/count', expect.anything());
+
+            expect(result).toEqual(mockData);
+        });
+
+        it('handles an error when fetching total offer count by state', async () => {
+
+            (api.get as jest.Mock).mockRejectedValue(new Error('Network error'));
+
+            await expect(getTotalOfferByState()).rejects.toThrow('Network error');
+        });
+
     });
-
-    it('throws an error when the API call fails', async () => {
-        // Simuler une erreur
-        const errorMessage = 'Network error';
-        (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
-
-        // Paramètres pour appeler getInternshipOffers
-        const params = {
-            page: 1,
-            size: 10,
-            state: 'active',
-            sortField: 'date',
-            sortDirection: 'desc',
-            session: 'sessionToken'
-        };
-
-        // S'attendre à ce que la fonction lance une erreur
-        await expect(getIntershipOffers(params)).rejects.toThrow(errorMessage);
-    });
-
 });
+
+
