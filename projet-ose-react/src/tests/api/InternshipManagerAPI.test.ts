@@ -1,5 +1,6 @@
 // Mocker le module où l'instance 'api' est définie
 import {
+    acceptStudentCv,
     getIntershipOffers,
     getOfferReviewById,
     getStudentPendingCv,
@@ -198,6 +199,26 @@ describe('InternshipManagerAPI', () => {
         });
     });
 
+    describe('acceptStudentCv', () => {
+        const id = 123;
+        const mockData = { success: true };
+
+        it('should successfully accept a student CV', async () => {
+            (api.post as jest.Mock).mockResolvedValue({ data: mockData });
+
+            const result = await acceptStudentCv(id);
+
+            expect(api.post).toHaveBeenCalledWith(`internshipManager/studentCv/${id}/accept`);
+            expect(result).toEqual(mockData);
+        });
+
+        it('should throw an error when the API call fails', async () => {
+            const errorMessage = "Erreur lors de l'acceptation du CV";
+            (api.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(acceptStudentCv(id)).rejects.toThrow(errorMessage);
+        });
+    });
 });
 
 
