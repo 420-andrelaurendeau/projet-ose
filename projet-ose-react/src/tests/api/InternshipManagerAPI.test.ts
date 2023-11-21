@@ -1,8 +1,14 @@
 // Mocker le module où l'instance 'api' est définie
 import {
-    acceptStudentCv, declineStudentCv,
+    acceptStudentCv,
+    declineStudentCv,
     getIntershipOffers,
-    getOfferReviewById, getStageByEmployeurId, getStageCountByState, getStageCountByStateEmployeur, getStages,
+    getOfferReviewById,
+    getStageByEmployeurId,
+    getStageByStudentId,
+    getStageCountByState,
+    getStageCountByStateEmployeur,
+    getStages,
     getStudentPendingCv,
     getTotalOfferByState
 } from "../../api/InternshipManagerAPI";
@@ -333,6 +339,39 @@ describe('InternshipManagerAPI', () => {
             await expect(getStageByEmployeurId(params, employerId)).rejects.toThrow('Error fetching stages');
         });
     });
+
+    describe('getStageByStudentId', () => {
+
+        it('fetches stages for a student successfully', async () => {
+            const mockData = { data: [{ id: 1, name: 'Stage for Student' }] };
+            (api.get as jest.Mock).mockResolvedValue({ data: mockData });
+
+            // @ts-ignore
+            const param: GetInternshipOffersParams = {
+                page: 1,
+                size: 10,
+                state: 'active',
+                sortField: 'date',
+                sortDirection: 'desc',
+            };
+
+            const studentId = 456;
+
+            const result = await getStageByStudentId(param, studentId);
+
+            expect(api.get).toHaveBeenCalledWith(`stage/studentStage/${studentId}`, { params: param });
+            expect(result).toEqual(mockData);
+        });
+
+        it('handles errors when fetching stages for a student', async () => {
+            (api.get as jest.Mock).mockRejectedValue(new Error('Error fetching stages'));
+
+            const studentId = 456;
+
+            await expect(getStageByStudentId(params, studentId)).rejects.toThrow('Error fetching stages');
+        });
+    });
+
 
 });
 
