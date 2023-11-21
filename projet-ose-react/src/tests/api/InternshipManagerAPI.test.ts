@@ -1,6 +1,6 @@
 // Mocker le module où l'instance 'api' est définie
 import {
-    acceptStudentCv,
+    acceptStudentCv, declineStudentCv,
     getIntershipOffers,
     getOfferReviewById,
     getStudentPendingCv,
@@ -154,7 +154,7 @@ describe('InternshipManagerAPI', () => {
         };
 
         it('should fetch offer review successfully', async () => {
-            (api.get as jest.Mock).mockResolvedValue({ data: mockReview });
+            (api.get as jest.Mock).mockResolvedValue({data: mockReview});
 
             const reviewId = 1;
             const review = await getOfferReviewById(reviewId);
@@ -177,8 +177,8 @@ describe('InternshipManagerAPI', () => {
 
         it('fetches pending CVs successfully', async () => {
 
-            const mockData = [{ cvId: 1, studentName: 'John Doe' }, { cvId: 2, studentName: 'Jane Doe' }];
-            (api.get as jest.Mock).mockResolvedValue({ data: mockData });
+            const mockData = [{cvId: 1, studentName: 'John Doe'}, {cvId: 2, studentName: 'Jane Doe'}];
+            (api.get as jest.Mock).mockResolvedValue({data: mockData});
 
 
             const result = await getStudentPendingCv();
@@ -201,10 +201,10 @@ describe('InternshipManagerAPI', () => {
 
     describe('acceptStudentCv', () => {
         const id = 123;
-        const mockData = { success: true };
+        const mockData = {success: true};
 
         it('should successfully accept a student CV', async () => {
-            (api.post as jest.Mock).mockResolvedValue({ data: mockData });
+            (api.post as jest.Mock).mockResolvedValue({data: mockData});
 
             const result = await acceptStudentCv(id);
 
@@ -217,6 +217,28 @@ describe('InternshipManagerAPI', () => {
             (api.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
             await expect(acceptStudentCv(id)).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('declineStudentCv', () => {
+        const id = 123;
+
+        it('should successfully decline a student CV', async () => {
+
+            (api.post as jest.Mock).mockResolvedValue({data: 'Success'});
+
+            const result = await declineStudentCv(id);
+
+            expect(api.post).toHaveBeenCalledWith(`internshipManager/studentCv/${id}/decline`);
+
+            expect(result).toBe('Success');
+        });
+
+        it('should throw an error when API call fails', async () => {
+
+            (api.post as jest.Mock).mockRejectedValue(new Error('API call failed'));
+
+            await expect(declineStudentCv(id)).rejects.toThrow('API call failed');
         });
     });
 });
