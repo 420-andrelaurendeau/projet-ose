@@ -76,6 +76,7 @@ function StudentInternship() {
             setLoadingCV(false);
         } catch (error) {
             console.log("Error fetching user data:", error);
+            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } finally {
         }
     }
@@ -95,11 +96,6 @@ function StudentInternship() {
         } else {
             saveStudentInternshipOffer(offer, student, cv).then(
                 async res => {
-                    let appliedOffer: AppliedOffers = {
-                        appliedOffer: res.internOfferJob,
-                        appliedFiles: res.files
-                    };
-
                     await getStudentAppliedOffers(user.id).then((res) => {
                         setAppliedOffers(res)
                     })

@@ -258,13 +258,13 @@ const mockProps = {
     onPageChange: jest.fn(),
     setSortDirection: jest.fn(),
     setSortField: jest.fn(),
-    setAppliedOffers: ()=>{
-        mockProps.appliedOffers=mockAppliedOffersResponse
+    setAppliedOffers: () => {
+        mockProps.appliedOffers = mockAppliedOffersResponse
     },
     handleChangeNumberElement: jest.fn(),
 }
 
-const mockAppliedOffersResponse:appliedOffer[] = [
+const mockAppliedOffersResponse: appliedOffer[] = [
     {
         appliedOffer:
             {
@@ -332,33 +332,28 @@ const mockSaveStudentInterships =
 
 
 describe("StudentInternship Component", () => {
-
     beforeEach(() => {
         (fetchDefaultCvByStudentId as jest.Mock).mockResolvedValue({id: 1, content: "aGVsbG8=", fileName: "Test"});
         (useProps as jest.Mock).mockReturnValue(mockProps);
         (saveStudentInternshipOffer as jest.Mock).mockResolvedValue(mockInternshipOffers)
     });
-    afterEach(()=>{
-        mockProps.appliedOffers=mockAppliedOffers
+    afterEach(() => {
+        mockProps.appliedOffers = mockAppliedOffers
     })
-
     it("renders the StudentInternship component", async () => {
-        render(
-            await act(async () => {
-                return (<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
-                    <Routes>
-                        <Route
-                            path="/etudiant/home/offers"
-                            element={
-                                <ToastContextProvider>
-                                    <StudentInternship/>
-                                </ToastContextProvider>
-                            }
-                        >
-                        </Route>
-                    </Routes>
-                </MemoryRouter>)
-            })
+        render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
+                <Routes>
+                    <Route
+                        path="/etudiant/home/offers"
+                        element={
+                            <ToastContextProvider>
+                                <StudentInternship/>
+                            </ToastContextProvider>
+                        }
+                    >
+                    </Route>
+                </Routes>
+            </MemoryRouter>
         );
 
         // Assert that the component and its content are correctly rendered
@@ -369,6 +364,35 @@ describe("StudentInternship Component", () => {
 
         const offerElements = await screen.findAllByLabelText("internship-row");
         expect(offerElements).toHaveLength(mockOffers.length);
+    });
+
+    it('should give error when CV loads with error and we can close toast', async () => {
+        let error = {status:500};
+        (fetchDefaultCvByStudentId as jest.Mock).mockRejectedValue(error);
+        render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
+                <Routes>
+                    <Route
+                        path="/etudiant/home/offers"
+                        element={
+                            <ToastContextProvider>
+                                <StudentInternship/>
+                            </ToastContextProvider>
+                        }
+                    >
+                    </Route>
+                </Routes>
+            </MemoryRouter>
+        );
+        const toast_message = await screen.findByLabelText("toast-message");
+        expect(toast_message).toBeInTheDocument();
+        const toast_container = await screen.findByLabelText("toast-container");
+        expect(toast_container.className).toContain("bg-red");
+        const close_button = await screen.findByLabelText("toast-dismiss-button");
+        await act( async ()=>{
+            fireEvent.click(close_button);
+        })
+        expect(toast_container.className).toContain("animate-slideOutRight");
+
     });
 
     it("handles applying for an internship offer", async () => {
@@ -461,7 +485,53 @@ describe("StudentInternship Component", () => {
         expect(offers_buttons[1]).toBeEnabled();
         expect(offers_buttons[2]).toBeEnabled();
     });
-    it("Testing that you can click on the sort buttons",async()=>{
+    it('Test bad CV on apply', async () => {
+        (getStudentAppliedOffers as jest.Mock).mockResolvedValue(mockAppliedOffersResponse);
+        (fetchDefaultCvByStudentId as jest.Mock).mockResolvedValue(null);
+        render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
+            <Routes>
+                <Route
+                    path="/etudiant/home/offers"
+                    element={
+                        <ToastContextProvider>
+                            <StudentInternship/>
+                        </ToastContextProvider>
+                    }
+                >
+                </Route>
+            </Routes>
+        </MemoryRouter>);
+        const applyButtons = await screen.findAllByLabelText("apply-button");
+
+        const sort_by_title = await screen.findByLabelText("sort-by-title-button");
+
+
+        await act(async () => {
+            fireEvent.click(sort_by_title);
+
+        });
+        await act(async () => {
+            fireEvent.click(sort_by_title);
+
+        });
+        await act(async () => {
+            fireEvent.click(sort_by_title);
+
+        });
+
+        await act(async () => {
+            expect(applyButtons[1]).toBeEnabled();
+            fireEvent.click(applyButtons[1]);
+        });
+        const offers = screen.getAllByLabelText("apply-button");
+        expect(offers[1]).toBeEnabled();
+
+        const toast_message = await screen.findByLabelText("toast-message");
+        expect(toast_message).toBeInTheDocument();
+        const toast_container = await screen.findByLabelText("toast-container");
+        expect(toast_container.className).toContain("bg-red");
+    });
+    it("Testing that you can click on the sort buttons", async () => {
         render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
             <Routes>
                 <Route
@@ -503,5 +573,9 @@ describe("StudentInternship Component", () => {
 
         });
 
+        expect(mockProps.setSortField).toHaveBeenCalledTimes(4);
+        expect(mockProps.setSortDirection).toHaveBeenCalledTimes(4);
     })
+
+
 });
