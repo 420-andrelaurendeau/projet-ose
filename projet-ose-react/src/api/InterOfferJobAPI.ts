@@ -204,7 +204,7 @@ export const getInterOfferStudent = async (params:{}) => {
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
+        const response = await api.get('/student/' + studentId + '/offersApplied', {
 
         });
 
