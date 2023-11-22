@@ -1,11 +1,13 @@
 import api from '../../api/ConfigAPI';
 import {
+    allEmployeurInternshipOffersBySeason,
     allStudentInternshipOffers,
-    allStudentInternshipOffersBySeason, allStudentOffers,
-    getInterOfferStudent,
-    offresEtudiant, saveInterOfferJob
+    allStudentInternshipOffersBySeason, allStudentOffers, getAllPendingInterOfferJob, getInterOfferJob,
+    getInterOfferStudent, getOfferReviewRequestById,
+    offresEtudiant, saveInterOfferJob, saveOfferReviewRequest
 } from "../../api/InterOfferJobAPI";
 import {InternshipOffer} from "../../model/IntershipOffer";
+import axios from "axios";
 
 
 jest.mock('../../api/ConfigAPI', () => {
@@ -208,7 +210,102 @@ describe('InternOfferJobAPI', () => {
         });
     });
 
+    describe('saveOfferReviewRequest', () => {
+        const mockOfferReviewRequest = {
+            id: 1,
+            comment: "Good offer",
+            state: "state",
+            internOfferId: 1,
+            internshipmanagerId: 1,
+        };
 
+        it('successfully saves an OfferReviewRequest', async () => {
+            const mockResponse = { data: 'response data' };
+            (api.post as jest.Mock).mockResolvedValue(mockResponse);
 
+            const result = await saveOfferReviewRequest(mockOfferReviewRequest);
+
+            expect(api.post).toHaveBeenCalledWith('offerReviewRequest/save', mockOfferReviewRequest);
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('handles API errors during saving OfferReviewRequest', async () => {
+            const errorMessage = 'Error saving offer review request';
+            (api.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(saveOfferReviewRequest(mockOfferReviewRequest)).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('getOfferReviewRequestById', () => {
+        const mockId = 123;
+
+        it('successfully fetches an OfferReviewRequest by ID', async () => {
+            const mockResponse = {
+                data: { id: mockId, comment: 'Review Comment' }
+            };
+            (api.get as jest.Mock).mockResolvedValue(mockResponse);
+
+            const result = await getOfferReviewRequestById(mockId);
+
+            expect(api.get).toHaveBeenCalledWith(`offerReviewRequest/get/${mockId}`);
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('handles API errors during fetching OfferReviewRequest by ID', async () => {
+            const errorMessage = 'Error fetching offer review request';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(getOfferReviewRequestById(mockId)).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('getInterOfferJob', () => {
+        const mockEmail = "test@example.com"; // Exemple d'email
+        const mockParams = { page: 1, size: 10 }; // Exemple de paramètres
+
+        it('successfully fetches InterOfferJobs based on email and params', async () => {
+            const mockResponse = {
+                data: [{ id: 1, title: 'Offer 1' }, { id: 2, title: 'Offer 2' }] // Données de réponse simulées
+            };
+            (api.get as jest.Mock).mockResolvedValue(mockResponse);
+
+            const result = await getInterOfferJob(mockEmail, mockParams);
+
+            expect(api.get).toHaveBeenCalledWith(`interOfferJob/OffersEmp/${mockEmail}`, { params: mockParams });
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('handles API errors during fetching InterOfferJobs', async () => {
+            const errorMessage = 'Error fetching offers';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(getInterOfferJob(mockEmail, mockParams)).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('allEmployeurInternshipOffersBySeason', () => {
+        const selectedOption = 'Summer2023'; // Exemple de saison sélectionnée
+        const email = 'employer@example.com'; // Exemple d'email d'employeur
+
+        it('successfully fetches internship offers by season for an employer', async () => {
+            const mockResponse = {
+                data: ['offer1', 'offer2', 'offer3'] // Données de réponse simulées
+            };
+            (api.get as jest.Mock).mockResolvedValue(mockResponse);
+
+            const result = await allEmployeurInternshipOffersBySeason(selectedOption, email);
+
+            expect(api.get).toHaveBeenCalledWith(`interOfferJob/${email}/season/${selectedOption}`);
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('handles API errors during fetching offers by season for an employer', async () => {
+            const errorMessage = 'Error fetching offers for employer by season';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(allEmployeurInternshipOffersBySeason(selectedOption, email)).rejects.toThrow(errorMessage);
+        });
+    });
 });
 
