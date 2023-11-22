@@ -1,7 +1,7 @@
 import api from '../../api/ConfigAPI';
 import {
     allStudentInternshipOffers,
-    allStudentInternshipOffersBySeason,
+    allStudentInternshipOffersBySeason, allStudentOffers,
     getInterOfferStudent,
     offresEtudiant
 } from "../../api/InterOfferJobAPI";
@@ -126,6 +126,29 @@ describe('InternOfferJobAPI', () => {
             (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
             await expect(allStudentInternshipOffers()).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('allStudentOffers', () => {
+
+        it('successfully fetches all offers for students', async () => {
+            const mockData = {
+                data: ['offer1', 'offer2', 'offer3']
+            };
+
+            (api.get as jest.Mock).mockResolvedValue(mockData);
+
+            const result = await allStudentOffers();
+
+            expect(api.get).toHaveBeenCalledWith('interOfferJob/student/allOffers');
+            expect(result).toEqual(mockData.data);
+        });
+
+        it('handles API errors without returning offers', async () => {
+            const errorMessage = 'Error fetching student offers';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(allStudentOffers()).rejects.toThrow(errorMessage);
         });
     });
 

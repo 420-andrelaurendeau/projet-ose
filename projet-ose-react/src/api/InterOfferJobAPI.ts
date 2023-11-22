@@ -54,7 +54,7 @@ export const allStudentInternshipOffers = async (): Promise<any[]> => {
 
 export const allStudentOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/student/allOffers');
+        const response = await api.get('interOfferJob/student/allOffers');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)
