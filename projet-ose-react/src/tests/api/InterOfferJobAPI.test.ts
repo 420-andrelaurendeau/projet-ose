@@ -1,6 +1,10 @@
 import api from '../../api/ConfigAPI';
-import {getInterOfferStudent, offresEtudiant} from "../../api/InterOfferJobAPI";
-
+import {
+    allStudentInternshipOffers,
+    allStudentInternshipOffersBySeason,
+    getInterOfferStudent,
+    offresEtudiant
+} from "../../api/InterOfferJobAPI";
 
 
 jest.mock('../../api/ConfigAPI', () => {
@@ -76,6 +80,53 @@ describe('InternOfferJobAPI', () => {
             expect(setTotalPagesMock).not.toHaveBeenCalled();
         });
 
+    });
+
+    describe('allStudentInternshipOffersBySeason', () => {
+        const selectedOption = 'Summer2023';
+
+        it('successfully fetches internship offers by season', async () => {
+            const mockData = {
+                data: ['offer1', 'offer2', 'offer3']
+            };
+
+            (api.get as jest.Mock).mockResolvedValue(mockData);
+
+            const result = await allStudentInternshipOffersBySeason(selectedOption);
+
+            expect(api.get).toHaveBeenCalledWith('interOfferJob/student/season/' + selectedOption);
+            expect(result).toEqual(mockData.data);
+        });
+
+        it('handles API errors without returning offers', async () => {
+            const errorMessage = 'Error fetching offers by season';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(allStudentInternshipOffersBySeason(selectedOption)).rejects.toThrow(errorMessage);
+        });
+    });
+
+    describe('allStudentInternshipOffers', () => {
+
+        it('successfully fetches all internship offers for students', async () => {
+            const mockData = {
+                data: ['offer1', 'offer2', 'offer3']
+            };
+
+            (api.get as jest.Mock).mockResolvedValue(mockData);
+
+            const result = await allStudentInternshipOffers();
+
+            expect(api.get).toHaveBeenCalledWith('interOfferJob/allOffers');
+            expect(result).toEqual(mockData.data);
+        });
+
+        it('handles API errors without returning offers', async () => {
+            const errorMessage = 'Error fetching all offers';
+            (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(allStudentInternshipOffers()).rejects.toThrow(errorMessage);
+        });
     });
 
 });
