@@ -1,4 +1,5 @@
 import axios from "axios";
+import api from "./ConfigAPI";
 const API_BASE_URL = 'http://localhost:8080/api/';
 
 const apiClient = axios.create({
@@ -18,7 +19,7 @@ export const saveStudentInternshipOffer = async (interOfferJob:any, student :any
         files: [cv]
     }
     try {
-        const response = await apiClient.post('intershipCandidates/saveCandidats', data);
+        const response = await api.post('intershipCandidates/saveCandidats', data);
         return response.data;
     } catch (error) {
         console.log('error while saving student internship offer' + error)
@@ -29,7 +30,7 @@ export const saveStudentInternshipOffer = async (interOfferJob:any, student :any
 export const getInterOfferCandidates = async (id:any) => {
     try {
         console.log(id);
-        const response = await apiClient.get('intershipCandidates/getInternshipCandidatesByIds/' + id);
+        const response = await api.get('intershipCandidates/getInternshipCandidatesByIds/' + id);
         return response.data;
 
 
