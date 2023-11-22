@@ -32,7 +32,7 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 
-describe('InterviewApi', () => {
+describe('ContractApi', () => {
     afterEach(() => {
         (api.get as jest.Mock).mockReset();
         mockedLocalStorage.getItem.mockReset();
