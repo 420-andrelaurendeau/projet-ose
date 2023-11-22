@@ -3,8 +3,9 @@ import {
     allStudentInternshipOffers,
     allStudentInternshipOffersBySeason, allStudentOffers,
     getInterOfferStudent,
-    offresEtudiant
+    offresEtudiant, saveInterOfferJob
 } from "../../api/InterOfferJobAPI";
+import {InternshipOffer} from "../../model/IntershipOffer";
 
 
 jest.mock('../../api/ConfigAPI', () => {
@@ -151,6 +152,63 @@ describe('InternOfferJobAPI', () => {
             await expect(allStudentOffers()).rejects.toThrow(errorMessage);
         });
     });
+
+    describe('saveInterOfferJob', () => {
+        const mockInterOfferJob : InternshipOffer = {
+            title: "title",
+            location: "location",
+            description: "description",
+            salaryByHour: 10,
+            startDate: Date.prototype,
+            endDate: Date.prototype,
+            programmeId: 1,
+            file: {
+                id: 1,
+                fileName: "name",
+                content: "type",
+                isAccepted: "data",
+                uploaderId: 1,
+            },
+            employeurId: 1,
+            state: "state",
+        }
+        const mockId = 1;
+
+        const mockInterOffer = {
+            title: mockInterOfferJob.title,
+            location: mockInterOfferJob.location,
+            description: mockInterOfferJob.description,
+            salaryByHour: mockInterOfferJob.salaryByHour,
+            startDate: mockInterOfferJob.startDate,
+            endDate: mockInterOfferJob.endDate,
+            programmeId: mockInterOfferJob.programmeId!,
+            file: mockInterOfferJob.file,
+            employeurId: mockId,
+        }
+
+        it('successfully saves an InterOfferJob', async () => {
+            const mockResponse = { data: 'response data' };
+
+            (api.post as jest.Mock).mockResolvedValue(mockResponse);
+
+            const result = await saveInterOfferJob(mockInterOfferJob, mockId);
+
+            expect(api.post).toHaveBeenCalledWith('interOfferJob/save', {
+                ...mockInterOffer,
+                //employeurId: mockId,
+            });
+            expect(result).toEqual(mockResponse.data);
+        });
+
+        it('handles API errors during saving InterOfferJob', async () => {
+            const errorMessage = 'Error saving offer';
+            (api.post as jest.Mock).mockRejectedValue(new Error(errorMessage));
+
+            await expect(saveInterOfferJob(mockInterOfferJob, mockId)).rejects.toThrow(errorMessage);
+        });
+    });
+
+
 
 });
 

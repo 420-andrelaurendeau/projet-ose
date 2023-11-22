@@ -79,7 +79,7 @@ export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: numb
 
     try {
 
-        const response = await apiClient.post('interOfferJob/save', interOfferJobDto);
+        const response = await api.post('interOfferJob/save', interOfferJobDto);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la sauvegarde de l\'InterOfferJob:', error);
