@@ -1,6 +1,5 @@
 import api from '../../api/ConfigAPI';
-import {fetchInterviewsEmployer} from "../../api/InterviewApi";
-
+import {getProgrammes} from "../../api/ProgrammeAPI";
 
 jest.mock('../../api/ConfigAPI', () => {
     return {
@@ -31,31 +30,29 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 
-describe('InterviewApi', () => {
+describe('ProgrammeAPI', () => {
     afterEach(() => {
         (api.get as jest.Mock).mockReset();
         mockedLocalStorage.getItem.mockReset();
     });
 
-    describe('fetchInterviewsEmployer', () => {
-        const userId = 123;
-        const queryParams = { page: 1, size: 10, sortField: 'date', sortDirection: 'asc' };
+    describe('getProgrammes', () => {
 
-        it('successfully fetches interviews for an employer', async () => {
-            const mockResponse = { data: [{ interviewId: 1, details: 'Interview Details' }] };
+        it('successfully fetches programmes', async () => {
+            const mockResponse = { data: [{ programmeId: 1, name: 'Programme 1' }] }; // Données de réponse simulées
             (api.get as jest.Mock).mockResolvedValue(mockResponse);
 
-            const result = await fetchInterviewsEmployer(userId, queryParams);
+            const result = await getProgrammes();
 
-            expect(api.get).toHaveBeenCalledWith(`interview/getByEmployerId/${userId}`, { params: queryParams });
+            expect(api.get).toHaveBeenCalledWith('/programmes');
             expect(result).toEqual(mockResponse.data);
         });
 
-        it('handles errors during fetching interviews for an employer', async () => {
-            const errorMessage = 'Error fetching interviews';
+        it('handles errors during fetching programmes', async () => {
+            const errorMessage = 'Error fetching programmes';
             (api.get as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-            await expect(fetchInterviewsEmployer(userId, queryParams)).rejects.toThrow(errorMessage);
+            await expect(getProgrammes()).rejects.toThrow(errorMessage);
         });
     });
 });
