@@ -8,7 +8,7 @@ jest.mock('../../api/InterOfferJobAPI', () => ({
     getStudentAppliedOffers: jest.fn(),
 }));
 
-function fail(reason:string = "fail was called in a test.") {
+function fail(reason: string = "fail was called in a test.") {
     throw new Error(reason);
 }
 

@@ -19,3 +19,17 @@ export const getProgrammes = async () => {
         throw error;
     }
 };
+
+export const fetchProgrammes = async () => {
+    let data = []
+    try {
+        return await axios.get("http://localhost:8080/api/programme/programmes")
+            .then((response) => {
+                data = response.data
+                return data;
+            });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des progrommes:', error);
+        throw error
+    }
+}
