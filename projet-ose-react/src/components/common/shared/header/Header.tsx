@@ -45,6 +45,10 @@ const Header = (userd: any) => {
         setIsOpenProfil(true)
     }
 
+    function getMessageHeaders() {
+        return []
+    }
+
     const isloading = useRef(false);
 
     useEffect(() => {
@@ -90,7 +94,9 @@ const Header = (userd: any) => {
                             <div>
                                 <button className="relative">
                                     <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
-                                    <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
+                                    {getMessageHeaders().length > 0
+                                        ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
+                                        : <></>}
                                 </button>
                                 <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">
                                     <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
