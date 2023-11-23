@@ -7,14 +7,14 @@ import {useNavigate} from "react-router-dom";
 function PDFOptions(props: any) {
     const navigate = useNavigate();
     const {userRole } = useAuth();
-    return <div className="sticky flex items-center justify-between top-20 left-0 right-0 z-[100] w-full">
+    return <div className="flex items-center justify-between w-full pb-3">
 
         <button
             type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-            onClick={() => navigate("/employer/home/contract")}
+            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+            onClick={() => navigate(`/${userRole}/home/contract`)}
         >
-               Retours
+               Retour
         </button>
 
         <div

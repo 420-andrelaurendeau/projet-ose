@@ -163,7 +163,7 @@ function StudentInternship() {
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                             onClick={() => handleSortClick("title")}
                                         >
                                             {fields.titre.text}
@@ -176,34 +176,34 @@ function StudentInternship() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                         >
                                             {fields.stage.location.text}
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                             onClick={() => handleSortClick("salaryByHour")}
                                         >
                                             {fields.stage.salary.text}
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                             onClick={() => handleSortClick("startDate")}
                                         >
                                             {fields.stage.startDate.text}
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                             onClick={() => handleSortClick("endDate")}
                                         >
                                             {fields.stage.endDate.text}
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                         >
                                             Entreprise
                                         </th>

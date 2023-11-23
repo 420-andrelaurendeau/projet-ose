@@ -33,7 +33,7 @@ const listItemPageSelector: React.FC<listItemPageSelectorProps> = ({page, totalP
 
 
     return (
-        <div className="font-light flex space-x-1">
+        <div className="font-light flex space-x-1 pt-4">
 
             <button
                 className={`${page === 0 ? 'cursor-not-allowed font opacity-50' : 'cursor-pointer hover:text-offwhite hover:bg-blue'} dark:hover:bg-orange border-gray rounded w-7 h-7 flex items-center justify-center`}

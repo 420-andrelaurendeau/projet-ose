@@ -60,6 +60,10 @@ i18n
                                     declined: "Declined",
                                     pending: "Pending",
                                 },
+                                view:{
+                                    name: 'view',
+                                    text: "View"
+                                },
                                 sign: {
                                     student: "Refused by the student",
                                     employer: "Refused by the employer",
@@ -524,6 +528,10 @@ i18n
                                 name: 'totalCondidature',
                                 text: 'Application'
                             },
+                            view: {
+                                name: 'view',
+                                text: 'View'
+                            },
                             offre: {
                                 name: 'totalOffre',
                                 text: 'Offer'
@@ -782,6 +790,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                view:{
+                                    name: 'view',
+                                    text: "Voir"
                                 },
                                 sign: {
                                     student: "Refuser par l'étudiant",
@@ -1258,6 +1270,10 @@ i18n
                             offre: {
                                 name: 'totalOffre',
                                 text: 'Offre'
+                            },
+                            view: {
+                                name: 'view',
+                                text: 'Voir'
                             },
                             newOffre: {
                                 name: 'newOffre',

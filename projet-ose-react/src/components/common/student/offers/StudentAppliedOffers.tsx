@@ -63,31 +63,31 @@ export default function StudentAppliedOffers() {
                                 <tr>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.titre.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.location.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.startDate.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.InternshipOfferList.table.enterprise')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.InternshipOfferForm.file.name')}
 

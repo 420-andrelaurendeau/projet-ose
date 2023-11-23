@@ -51,22 +51,24 @@ export default function EmployerStagePage() {
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <div className="xs:-mx-1 lg:-mx-2">
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
-                    <div className="pb-4">
-                        <ListItemCountSelector
-                            numberElement={numberElementAgreementByPage}
-                            handleChangeNumberElement={handleChangeNumberElementAgreement}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="options" className="text-bold">Filtre par saison: </label>
-                        <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                            <option value="">Tout</option>
-                            {seasons.map((season: string, index: number) => (
-                                <option key={index} value={season}>
-                                    {season}
-                                </option>
-                            ))}
-                        </select>
+                    <div className="flex justify-between">
+                        <div>
+                            <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                            <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
+                                <option value="">Tout</option>
+                                {seasons.map((season: string, index: number) => (
+                                    <option key={index} value={season}>
+                                        {season}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="pb-4">
+                            <ListItemCountSelector
+                                numberElement={numberElementAgreementByPage}
+                                handleChangeNumberElement={handleChangeNumberElementAgreement}
+                            />
+                        </div>
                     </div>
                     <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
@@ -74,7 +76,7 @@ export default function EmployerStagePage() {
                             <tr>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
                                     {fields.AgreementTable.title.text}
@@ -87,7 +89,7 @@ export default function EmployerStagePage() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-gray uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-white uppercase tracking-wider"
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
@@ -102,7 +104,7 @@ export default function EmployerStagePage() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider max-md:hidden "
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden "
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
@@ -117,7 +119,7 @@ export default function EmployerStagePage() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
@@ -130,7 +132,7 @@ export default function EmployerStagePage() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     <span >Option</span>
                                 </th>
                             </tr>
@@ -237,7 +239,7 @@ export default function EmployerStagePage() {
                             </tbody>
                         </table>
                     </div>
-                    <div className="pt-4">
+                    <div>
                         <ListItemPageSelector page={pageAgreement} totalPages={totalPageAgreement} onPageChange={onPageChangeAgreement}/>
                     </div>
                 </div>

@@ -36,7 +36,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                     <tr>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                             onClick={() => handleSortClick("offer.title")}
                         >
                             {fields.title}
@@ -49,7 +49,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-gray uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-white uppercase tracking-wider"
                             onClick={() => handleSortClick("employeur.entreprise")}
                         >
                             {fields.enterprise}
@@ -62,7 +62,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider max-md:hidden "
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden "
                             onClick={() => handleSortClick("student.nom")}
                         >
                             {fields.student}
@@ -75,7 +75,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                             onClick={() => handleSortClick("state")}
                         >
                             {fields.statut}
@@ -86,7 +86,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     color={"White"} className={"ml-2"}/>
                             </div>
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                             <span >Option</span>
                         </th>
                     </tr>
@@ -136,15 +136,16 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                 {
                                     offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
                                         <div role="cell"
-                                            className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
+                                            className="flex space-x-2 items-center md:w-10 w-6 px-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
+                                            <p>{fields.view.text}</p>
                                             <FontAwesomeIcon icon={faEye}
                                                              className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
                                                              onClick={() => props.handleOfferClick(offer.contractId!)}/>
                                         </div> : (offer.stateEmployeur == "DECLINED") ?
-                                            <div>
+                                            <div className="px-2 text-start font-medium ">
                                                 <p>{fields.sign.employer}</p>
                                             </div> : ( offer.stateStudent == "DECLINED") ?
-                                                <div>
+                                                <div className="px-2  text-start  font-medium ">
                                                     <p>{fields.sign.student}</p>
                                                 </div> :
                                                 <></>
