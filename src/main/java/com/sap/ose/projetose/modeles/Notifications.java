@@ -20,6 +20,6 @@ import java.util.Map;
         private Utilisateur receveurs;
         @OneToOne
         private Programme programme;
-        private String message;
-        private boolean read;
+        private Notificationsi18n message;
+        private boolean isRead;
     }

@@ -1,21 +1,22 @@
 package com.sap.ose.projetose.dto;
 
 import com.sap.ose.projetose.modeles.Notifications;
+import com.sap.ose.projetose.modeles.Notificationsi18n;
 
 import java.util.List;
 
 public class NotificationDto {
     private long id;
     private long users_id;
-    private String message;
+    private Notificationsi18n message;
 
-    private boolean read;
+    private boolean isRead;
 
     public NotificationDto(Notifications notifications){
         id = notifications.getId();
         users_id = notifications.getReceveurs().getId();
         message = notifications.getMessage();
-        read = notifications.isRead();
+        isRead = notifications.isRead();
     }
 
 }
