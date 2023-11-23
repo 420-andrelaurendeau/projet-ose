@@ -1,5 +1,7 @@
 export interface Message {
     id: number,
     title: string,
-    message: string | undefined
+    messageKey: string | undefined,
+    parameters: String[],
+    isRead: boolean
 }
