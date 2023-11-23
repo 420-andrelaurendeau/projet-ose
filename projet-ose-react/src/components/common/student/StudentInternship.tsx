@@ -125,7 +125,7 @@ function StudentInternship() {
     };
 
     const handleOfferClick = (id: number) => {
-        navigate(`/student/home/offers/${id}`, {state: context});
+        navigate(`/student/home/offers/${id}`);
     };
 
 

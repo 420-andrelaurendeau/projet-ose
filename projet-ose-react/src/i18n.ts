@@ -35,7 +35,7 @@ i18n
                         internshipAgreement,
                         application,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.en,
                         contractPage,
                         header,
                         InternshipsAgreementPage: {
@@ -758,7 +758,7 @@ i18n
                         internshipAgreement,
                         application,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.fr,
                         header,
                         contractPage,
                         InternshipsAgreementPage: {
