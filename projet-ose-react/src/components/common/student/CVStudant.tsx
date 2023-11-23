@@ -2,6 +2,8 @@ import React from "react";
 import {Buffer} from "buffer";
 import ViewPDFModal from "../Employer/offer/ViewPDFModal";
 
+
+//TODO DELETE? doesnt seem to be used
 const CVStudant = (props:any) => {
     console.log(props.file)
     const getFileSize = (): string => {

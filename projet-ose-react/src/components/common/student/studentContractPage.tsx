@@ -17,6 +17,8 @@ import {selectOptions} from "@testing-library/user-event/dist/select-options";
 
 export default function StudentContractPage() {
 
+    //TODO Create test for shared components
+
     const [user, setUser] = useState<any>(null)
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
