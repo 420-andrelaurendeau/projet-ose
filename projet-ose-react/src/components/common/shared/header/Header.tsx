@@ -6,7 +6,7 @@ import {
     faBars,
     faCircleUser,
     faXmark,
-    faFileLines, faFile
+    faFileLines, faFile, faInbox
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
@@ -87,10 +87,15 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             </div>
-
-                            <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
-                                <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
-                            </button>
+                            <div>
+                                <button className="relative">
+                                    <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
+                                    <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
+                                </button>
+                                <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">
+                                    <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
+                                </button>
+                            </div>
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
                                         language={language} sidebarIsOpen={isOpen}
                                         onLogout={logoutUser}
