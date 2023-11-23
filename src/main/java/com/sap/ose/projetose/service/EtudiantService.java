@@ -79,6 +79,10 @@ public class EtudiantService {
         return etudiant.orElse(null);
     }
 
+    List<Etudiant> findAllEtudiant(){
+        return etudiantRepository.findAll();
+    }
+
     public Etudiant findByMatricule(String matricule){
         Optional<Etudiant> etudiant = etudiantRepository.findByMatricule(matricule);
         return etudiant.orElse(null);

@@ -14,7 +14,7 @@ public class UtilisateurService {
 
     private final EmployeurRepository employeurRepository;
     private final EtudiantRepository etudiantRepository;
-    private final InternshipmanagerRepository internshipmanagerRepository;
+    private final InternshipmanagerRepository    internshipmanagerRepository;
 
     public UtilisateurService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository, InternshipmanagerRepository internshipmanagerRepository) {
         this.employeurRepository = employeurRepository;
@@ -34,7 +34,32 @@ public class UtilisateurService {
             return etudiant;
         }
 
-        return internshipmanagerRepository.findByEmail(email).orElse(null);
+        Internshipmanager internshipmanager = internshipmanagerRepository.findByEmail(email).orElse(null);
+        if (internshipmanager != null){
+            return internshipmanager;
+        }
+
+        return null;
+    }
+
+    @Transactional
+    public Utilisateur getUserById(long id) {
+        Employeur employeur = employeurRepository.findById(id).orElse(null);
+        if (employeur != null) {
+            return employeur;
+        }
+
+        Etudiant etudiant = etudiantRepository.findById(id).orElse(null);
+        if (etudiant != null) {
+            return etudiant;
+        }
+
+        Internshipmanager internshipmanager = internshipmanagerRepository.findById(id).orElse(null);
+        if (internshipmanager != null){
+            return internshipmanager;
+        }
+
+        return null;
     }
 
     public Role getUserByEmailRole(String email){

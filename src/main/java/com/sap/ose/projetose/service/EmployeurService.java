@@ -51,6 +51,9 @@ public class EmployeurService {
         }
     }
 
+    List<Employeur> findAllEmployeur(){
+        return employeurRepository.findAll();
+    }
 
     @Transactional
     public Employeur saveEmployeur(String nom, String prenom, String phone, String email, String password, String nomEntreprise, long programme_id ){
