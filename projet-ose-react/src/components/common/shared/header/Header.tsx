@@ -6,7 +6,7 @@ import {
     faBars,
     faCircleUser,
     faXmark,
-    faFileLines, faFile
+    faFileLines, faFile, faInbox
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
@@ -17,12 +17,14 @@ import ProfilMenu from "./ProfilMenu";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";
+import MessageBox from "../messaging/MessageBox";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.Header");
     const [language, setLanguage] = useState(i18n.language.slice(0, 2));
-    const [isOpen, setIsOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+    const [isMessageBoxOpen, setIsMessageBoxOpen] = useState(false);
     let [isOpenProfil, setIsOpenProfil] = useState(false)
     const { userEmail , userRole, logoutUser } = useAuth();
     const navigate = useNavigate();
@@ -45,6 +47,10 @@ const Header = (userd: any) => {
         setIsOpenProfil(true)
     }
 
+    function getMessageHeaders() {
+        return []
+    }
+
     const isloading = useRef(false);
 
     useEffect(() => {
@@ -63,7 +69,7 @@ const Header = (userd: any) => {
     return (
         <>
             {
-                isOpen ?
+                isUserMenuOpen ?
                     <div className="fixed w-screen h-screen backdrop-blur-sm md:hidden"/>
                     : null
             }
@@ -87,24 +93,36 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             </div>
-
-                            <button className="hidden md:block" onClick={openModal} data-testid="profil-button">
-                                <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
-                            </button>
+                            <div>
+                                <button className="relative" onClick={() => setIsMessageBoxOpen(!isMessageBoxOpen)}>
+                                    <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
+                                    {getMessageHeaders().length > 0
+                                        ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
+                                        : <></>}
+                                </button>
+                                <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">
+                                    <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
+                                </button>
+                            </div>
+                            {
+                                isMessageBoxOpen
+                                    ? <MessageBox></MessageBox>
+                                    : <></>
+                            }
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
-                                        language={language} sidebarIsOpen={isOpen}
+                                        language={language} sidebarIsOpen={isUserMenuOpen}
                                         onLogout={logoutUser}
                             />
                             <div className="-mr-2 flex md:hidden">
                                 <button
-                                    onClick={() => setIsOpen(!isOpen)}
+                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                                     type="button"
                                     className="inline-flex items-center justify-center p-2 rounded-md text-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-white dark:focus:ring-offset-dark dark:focus:ring-dark"
                                     aria-controls="mobile-menu"
                                     aria-expanded="false"
                                 >
                                     <span className="sr-only">Open main menu</span>
-                                    {!isOpen ?
+                                    {!isUserMenuOpen ?
                                         <FontAwesomeIcon icon={faBars} color="black"
                                                          className="block h-6 w-6 text-blue dark:text-orange"/>
                                         : <FontAwesomeIcon icon={faXmark} color="black"
@@ -115,7 +133,7 @@ const Header = (userd: any) => {
                         </div>
                     </div>
                     <Transition
-                        show={isOpen}
+                        show={isUserMenuOpen}
                         enter="transition ease-out duration-100 transform"
                         enterFrom="opacity-0 scale-95"
                         enterTo="opacity-100 scale-100"
@@ -128,11 +146,11 @@ const Header = (userd: any) => {
                                 user.matricule ?
                                     <SidebarEtudiant
                                         user={user}
-                                        setIsOpen={setIsOpen}
+                                        setIsOpen={setIsUserMenuOpen}
                                     /> :
                                     <SidebarEmployeurHome
                                         user={user}
-                                        setIsOpen={setIsOpen}
+                                        setIsOpen={setIsUserMenuOpen}
                                         onOpenProfil={openModal}
                                     />
                             }
