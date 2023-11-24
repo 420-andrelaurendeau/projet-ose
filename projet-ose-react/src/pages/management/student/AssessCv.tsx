@@ -63,8 +63,8 @@ function EvaluerCV() {
 
     return (
         <>
-            <div className=" p-4">
-                <h1 className="text-start sm:text-3xl font-bold dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
+            <div className="max-md:pt-24">
+                <h1 className="text-start text-3xl font-bold dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
                 {files.map((file) =>
                     <>
                         <div key={file.id} className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">

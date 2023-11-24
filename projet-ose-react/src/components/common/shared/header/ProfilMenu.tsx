@@ -168,14 +168,14 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                                                          className="mt-1.5 mr-1 text-black dark:text-gray"/>
                                     </button>
                                     <button
-                                        className="md:pl-14 flex justify-center mt-2.5 w-full bg-red hover:bg-rose-800"
+                                        className="md:pl-14 flex justify-center mt-2.5 w-full text-white bg-red hover:bg-rose-800 rounded"
                                         onClick={props.onLogout}
                                     >
-                                        <div className="flex w-full ">
-                                            <FontAwesomeIcon icon={faPlug}/>
-                                            <p className="text-black dark:text-gray w-10/12 text-start" data-testid="active-text">
+                                        <div className="flex w-full justify-between items-center px-4">
+                                            <p className="text-white  text-start" data-testid="active-text">
                                                 {fields.Header.profilMenu.signOut.text}
                                             </p>
+                                            <FontAwesomeIcon icon={faPlug}/>
                                         </div>
                                     </button>
                                 </div>
