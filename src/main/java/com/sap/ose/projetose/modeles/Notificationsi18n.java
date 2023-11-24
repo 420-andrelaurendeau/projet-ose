@@ -5,5 +5,27 @@ public enum Notificationsi18n {
     contractText,
     stageText,
     cvAccepter,
-    cvRefuser
+    cvRefuser;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case offresText -> {
+                return "";
+            }
+            case contractText -> {
+                return "";
+            }
+            case stageText -> {
+                return "";
+            }
+            case cvAccepter -> {
+                return "";
+            }
+            case cvRefuser -> {
+                return "";
+            }
+        }
+        throw new IndexOutOfBoundsException("Could not find: " + super.toString());
+    }
 }

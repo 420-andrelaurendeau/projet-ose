@@ -83,18 +83,21 @@ const Header = (userd: any) => {
                                         <img
                                             className="mx-auto h-12 w-auto visible dark:hidden"
                                             src={img}
-                                            alt="Your Company"
+                                            alt="CÉGEP André-Laurendeau"
                                         />
                                         <img
                                             className="mx-auto h-12 w-auto hidden dark:flex"
                                             src={imgDark}
-                                            alt="Your Company"
+                                            alt="CÉGEP André-Laurendeau"
                                         />
                                     </div>
                                 </NavLink>
                             </div>
                             <div>
-                                <button className="relative" onClick={() => setIsMessageBoxOpen(!isMessageBoxOpen)}>
+                                <button className="relative" onClick={() => {
+                                    setIsMessageBoxOpen(!isMessageBoxOpen)
+                                    setIsUserMenuOpen(false)
+                                }}>
                                     <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
                                     {getMessageHeaders().length > 0
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
@@ -104,18 +107,16 @@ const Header = (userd: any) => {
                                     <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                                 </button>
                             </div>
-                            {
-                                isMessageBoxOpen
-                                    ? <MessageBox></MessageBox>
-                                    : <></>
-                            }
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
                                         language={language} sidebarIsOpen={isUserMenuOpen}
                                         onLogout={logoutUser}
                             />
                             <div className="-mr-2 flex md:hidden">
                                 <button
-                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                    onClick={() => {
+                                        setIsUserMenuOpen(!isUserMenuOpen)
+                                        setIsMessageBoxOpen(false)
+                                    }}
                                     type="button"
                                     className="inline-flex items-center justify-center p-2 rounded-md text-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-white dark:focus:ring-offset-dark dark:focus:ring-dark"
                                     aria-controls="mobile-menu"
@@ -158,8 +159,12 @@ const Header = (userd: any) => {
                     </Transition>
 
                 </nav>
+                {
+                    isMessageBoxOpen
+                        ? <MessageBox></MessageBox>
+                        : <></>
+                }
             </div>
-
         </>
     );
 }

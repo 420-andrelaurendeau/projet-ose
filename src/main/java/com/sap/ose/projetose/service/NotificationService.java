@@ -5,7 +5,6 @@ import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.NotificationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -13,10 +12,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class NotificationsService {
+public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final EtudiantService etudiantService;
     private final EmployeurService employeurService;
+
     private final UtilisateurService utilisateurService;
 
     @Transactional
