@@ -10,7 +10,7 @@ public enum Notificationsi18n {
     @Override
     public String toString() {
         switch (this) {
-            case offresText -> {
+            case newOfferAvaible -> {
                 return "";
             }
             case contractText -> {
