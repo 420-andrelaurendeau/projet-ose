@@ -5,14 +5,12 @@ import com.sap.ose.projetose.dto.OfferReviewRequestDto;
 import com.sap.ose.projetose.exception.*;
 import com.sap.ose.projetose.modeles.InternOffer;
 import com.sap.ose.projetose.modeles.Internshipmanager;
+import com.sap.ose.projetose.modeles.Notificationsi18n;
 import com.sap.ose.projetose.modeles.OfferReviewRequest;
-import com.sap.ose.projetose.repository.InternOfferRepository;
-import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import com.sap.ose.projetose.repository.OfferReviewRequestRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +22,7 @@ public class OfferReviewRequestService {
     private final OfferReviewRequestRepository offerReviewRequestRepository;
     private final InternOfferService internOfferService;
     private final InternshipmanagerService internshipmanagerService;
+    private final NotificationsService notificationsService;
     private final Logger logger = LoggerFactory.getLogger(OfferReviewRequestService.class);
 
 
@@ -46,6 +45,8 @@ public class OfferReviewRequestService {
             internOffer.setOfferReviewRequest(offerReviewRequest);
 
             offerReviewRequestRepository.save(offerReviewRequest);
+
+            notificationsService.saveNotificationForAllStudent(Notificationsi18n.newOfferAvaible);
 
             return new InternOfferDto(internOffer);
         } catch (OfferAlreadyReviewException e) {

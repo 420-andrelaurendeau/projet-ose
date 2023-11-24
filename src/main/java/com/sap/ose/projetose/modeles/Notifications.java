@@ -9,17 +9,17 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.Map;
 
-    @Entity
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public class Notifications {
-        @Id
-        private Long id;
-        @OneToOne
-        private Utilisateur receveurs;
-        @OneToOne
-        private Programme programme;
-        private Notificationsi18n message;
-        private boolean isRead;
-    }
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Notifications {
+    @Id
+    private Long id;
+    @OneToOne
+    private Utilisateur receveurs;
+    @OneToOne
+    private Programme programme;
+    private Notificationsi18n message;
+    private boolean isRead;
+}

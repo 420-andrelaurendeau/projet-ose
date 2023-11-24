@@ -736,6 +736,10 @@ video {
   margin-right: 2rem;
 }
 
+.ms-8 {
+  margin-inline-start: 2rem;
+}
+
 .mt-1 {
   margin-top: 0.25rem;
 }

@@ -4,25 +4,20 @@ import com.sap.ose.projetose.dto.NotificationDto;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.NotificationRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationsService {
     private final NotificationRepository notificationRepository;
     private final EtudiantService etudiantService;
     private final EmployeurService employeurService;
-
     private final UtilisateurService utilisateurService;
-
-    public NotificationsService(NotificationRepository notificationRepository, EtudiantService etudiantService, EmployeurService employeurService, InternshipmanagerService internshipmanagerService, UtilisateurService utilisateurService) {
-        this.notificationRepository = notificationRepository;
-        this.etudiantService = etudiantService;
-        this.employeurService = employeurService;
-        this.utilisateurService = utilisateurService;
-    }
 
     @Transactional
     public NotificationDto saveNotification(Notifications notifications){

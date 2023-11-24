@@ -6,6 +6,7 @@ import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.InternshipmanagerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

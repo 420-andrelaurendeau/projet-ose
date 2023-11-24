@@ -14,7 +14,7 @@ public class UtilisateurService {
 
     private final EmployeurRepository employeurRepository;
     private final EtudiantRepository etudiantRepository;
-    private final InternshipmanagerRepository    internshipmanagerRepository;
+    private final InternshipmanagerRepository internshipmanagerRepository;
 
     public UtilisateurService(EmployeurRepository employeurRepository, EtudiantRepository etudiantRepository, InternshipmanagerRepository internshipmanagerRepository) {
         this.employeurRepository = employeurRepository;

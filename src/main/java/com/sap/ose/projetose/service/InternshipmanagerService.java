@@ -26,7 +26,6 @@ import java.util.Optional;
 public class InternshipmanagerService {
     private final InternOfferService internOfferService;
     private final ProgrammeService programmeService;
-
     private final InternshipmanagerRepository internshipmanagerRepository;
     private final FileEntityRepository fileEntityRepository;
     private final EtudiantRepository etudiantRepository;

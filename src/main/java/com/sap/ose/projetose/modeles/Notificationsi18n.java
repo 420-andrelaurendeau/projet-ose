@@ -1,7 +1,7 @@
 package com.sap.ose.projetose.modeles;
 
 public enum Notificationsi18n {
-    offresText,
+    newOfferAvaible,
     contractText,
     stageText,
     cvAccepter,
