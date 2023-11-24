@@ -83,12 +83,12 @@ const Header = (userd: any) => {
                                         <img
                                             className="mx-auto h-12 w-auto visible dark:hidden"
                                             src={img}
-                                            alt="Your Company"
+                                            alt="CÉGEP André-Laurendeau"
                                         />
                                         <img
                                             className="mx-auto h-12 w-auto hidden dark:flex"
                                             src={imgDark}
-                                            alt="Your Company"
+                                            alt="CÉGEP André-Laurendeau"
                                         />
                                     </div>
                                 </NavLink>
