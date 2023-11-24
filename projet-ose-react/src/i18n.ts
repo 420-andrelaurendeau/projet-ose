@@ -748,6 +748,16 @@ i18n
                             declineError: "An error occurred while declining the CV",
                         },
                         view: "View CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filter per season',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Return',
+                        },
                     }
 
                 },
@@ -1462,6 +1472,16 @@ i18n
                         },
 
                         view: "Voir CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filtre par saison',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Retour',
+                        },
                     }
                 }
             }

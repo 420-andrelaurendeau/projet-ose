@@ -21,7 +21,7 @@ const InternshipManagerRouter: React.FC = () => {
                         <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
                         <Route path="offers/:id" element={<InternshipManagerOfferPage/>}/>
                         <Route path="studentCvReview" element={<EvaluerCV/>}/>
-                        <Route path="internshipsagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
+                        <Route path="internshipagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
                         <Route path="internshipagreement/:id" element={<InternshipContractPage/>}>
                             <Route path=":fileName" element={<ViewPDFModal/>}/>
                         </Route>

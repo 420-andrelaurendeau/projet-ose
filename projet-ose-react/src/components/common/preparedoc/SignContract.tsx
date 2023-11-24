@@ -124,6 +124,7 @@ function SignContract(props: any) {
                   downloadURI(pdf, 'contract.pdf')
                 }}
                 submitContract={submitContract}
+                contractId={stage.contractId}
             />
             <ViewPDF
                 file={pdf} pageDetails={pageDetails} setPdf={setPdf} pdf={pdf}

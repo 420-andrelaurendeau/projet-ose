@@ -52,7 +52,7 @@ function HomePage() {
                             </NavLink>
 
                             <NavLink
-                                to={ userRole !== "internshipmanager" ? "contract" : "internshipsagreement"}
+                                to={ userRole !== "internshipmanager" ? "contract" : "internshipagreement"}
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
                                     + (location.pathname === `/${userRole}/home/contract` || location.pathname === `/${userRole}/home/contract/` ? " border-b-2" : "")
                                 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItemCountSelector from "./ListItemCountSelector";
 import ListItemPageSelector from "./ListItemPageSelector";
+import {useTranslation} from "react-i18next";
 
 interface PaginatedListProps<T> {
     renderItem: JSX.Element;
@@ -27,6 +28,8 @@ function PaginatedList<T>({
                               seasons
                           }: PaginatedListProps<T>) {
 
+    const {t} = useTranslation();
+
     return (
         <div>
             <ListItemCountSelector
@@ -34,7 +37,7 @@ function PaginatedList<T>({
                 handleChangeNumberElement={handleChangeNumberElement}
             />
             <div>
-                <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                <label htmlFor="options" className="text-bold dark:text-white">{t("Shared.FilterBySeason.text")}</label>
                 <select id="options" value={selectedOption} onChange={handleOptionChange}>
                     <option value="">Tout</option>
                     {seasons.map((season: string, index: number) => (

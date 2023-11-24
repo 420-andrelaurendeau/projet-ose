@@ -197,7 +197,7 @@ export const EmployerInterviewPage = () => {
 
     )
 
-    return (<div className="dark:bg-black">
+    return (<div className="dark:bg-softdark">
         <div className="flex flex-col items-center">
             <div className=" lg:-mx-8 w-11/12 ">
                 <div

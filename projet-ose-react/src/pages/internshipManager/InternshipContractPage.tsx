@@ -31,6 +31,7 @@ const InternshipContractPage: React.FC<any> = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.internshipAgreement." + i18n.language.slice(0, 2) + ".agreement");
     const {userRole} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,13 +80,13 @@ const InternshipContractPage: React.FC<any> = () => {
     return (<>
         {intershipAggreement && (
             <div className="h-max sm:pt-5 xxxs:pt-20 pb-6">
-                <div className="flex w-full justify-end sm:w-3/4 sm:mx-auto items-center pb-6">
+                <div className="flex pb-6 justify-end">
                     <button
                         type="button"
-                        className="inline-flex items-center px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => navigate(`/${userRole}/home/internshipsagreement`)}
+                        className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => navigate(`/${userRole}/home/internshipagreement`)}
                     >
-                        Retour <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                        {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                     </button>
                 </div>
 

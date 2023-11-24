@@ -19,6 +19,7 @@ import {
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const {offers,setOffers,handleOptionChange, selectedOption, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function EmployeurOffer() {
                         />
                     </div>
                     <div>
-                        <label htmlFor="options" className="text-bold">Filtre par saison: </label>
+                        <label htmlFor="options" className="text-bold dark:text-white">{t("Shared.FilterBySeason.text")}</label>
                         <select id="options" value={selectedOption} onChange={handleOptionChange}>
                             <option value="">Tout</option>
                             {seasons.map((season: string, index: number) => (

@@ -20,6 +20,7 @@ const StudentOfferDetails: React.FC<any> = () => {
     const toast = useContext(ToastContext);
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.studentOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
@@ -89,16 +90,16 @@ const StudentOfferDetails: React.FC<any> = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8 max-md:pt-24">
                 <div className="py-6">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-bold">
+                        <h2 className="text-lg font-bold dark:text-white">
                             {internshipOffer?.title}
                         </h2>
                         <div className="flex gap-2">
                             <button
                                 type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/student/home/offers")}
                             >
-                                {fields.back.text}
+                                {t("Shared.ReturnButton.text")}
                             </button>
                         </div>
                     </div>
