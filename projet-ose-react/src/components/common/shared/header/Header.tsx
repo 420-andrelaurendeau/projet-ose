@@ -94,7 +94,10 @@ const Header = (userd: any) => {
                                 </NavLink>
                             </div>
                             <div>
-                                <button className="relative" onClick={() => setIsMessageBoxOpen(!isMessageBoxOpen)}>
+                                <button className="relative" onClick={() => {
+                                    setIsMessageBoxOpen(!isMessageBoxOpen)
+                                    setIsUserMenuOpen(false)
+                                }}>
                                     <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
                                     {getMessageHeaders().length > 0
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
@@ -110,7 +113,10 @@ const Header = (userd: any) => {
                             />
                             <div className="-mr-2 flex md:hidden">
                                 <button
-                                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                                    onClick={() => {
+                                        setIsUserMenuOpen(!isUserMenuOpen)
+                                        setIsMessageBoxOpen(false)
+                                    }}
                                     type="button"
                                     className="inline-flex items-center justify-center p-2 rounded-md text-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-white dark:focus:ring-offset-dark dark:focus:ring-dark"
                                     aria-controls="mobile-menu"
