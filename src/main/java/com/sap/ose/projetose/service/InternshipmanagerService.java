@@ -30,6 +30,7 @@ public class InternshipmanagerService {
     private final InternshipmanagerRepository internshipmanagerRepository;
     private final FileEntityRepository fileEntityRepository;
     private final EtudiantRepository etudiantRepository;
+    private final NotificationsService notificationsService;
 
     Logger logger = LoggerFactory.getLogger(InternshipmanagerService.class);
 
@@ -167,6 +168,7 @@ public class InternshipmanagerService {
             file.setIsAccepted(State.ACCEPTED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
+            notificationsService.saveNotificationByUser(id,Notificationsi18n.cvAccepter);
             return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
@@ -187,6 +189,7 @@ public class InternshipmanagerService {
             file.setIsAccepted(State.DECLINED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
+            notificationsService.saveNotificationByUser(id,Notificationsi18n.cvRefuser);
             return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);

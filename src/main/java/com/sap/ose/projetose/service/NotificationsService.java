@@ -1,10 +1,7 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.NotificationDto;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.Etudiant;
-import com.sap.ose.projetose.modeles.Internshipmanager;
-import com.sap.ose.projetose.modeles.Notifications;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.NotificationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -18,14 +15,27 @@ public class NotificationsService {
     private final EtudiantService etudiantService;
     private final EmployeurService employeurService;
 
-    public NotificationsService(NotificationRepository notificationRepository, EtudiantService etudiantService, EmployeurService employeurService, InternshipmanagerService internshipmanagerService) {
+    private final UtilisateurService utilisateurService;
+
+    public NotificationsService(NotificationRepository notificationRepository, EtudiantService etudiantService, EmployeurService employeurService, InternshipmanagerService internshipmanagerService, UtilisateurService utilisateurService) {
         this.notificationRepository = notificationRepository;
         this.etudiantService = etudiantService;
         this.employeurService = employeurService;
+        this.utilisateurService = utilisateurService;
     }
 
     @Transactional
     public NotificationDto saveNotification(Notifications notifications){
+        notificationRepository.save(notifications);
+        return new NotificationDto(notifications);
+    }
+
+    @Transactional
+    public NotificationDto saveNotificationByUser(long user_id,Notificationsi18n notificationsi18n){
+        Notifications notifications = new Notifications();
+        notifications.setMessage(notificationsi18n);
+        notifications.setRead(false);
+        notifications.setReceveurs(utilisateurService.getUserById(user_id));
         notificationRepository.save(notifications);
         return new NotificationDto(notifications);
     }
@@ -36,7 +46,7 @@ public class NotificationsService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllStudent(String message){
+    public List<NotificationDto> saveNotificationForAllStudent(Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for(Etudiant etudiant : etudiantService.findAllEtudiant()){
             Notifications notifications = new Notifications();
@@ -54,7 +64,7 @@ public class NotificationsService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllEmployeur(String message){
+    public List<NotificationDto> saveNotificationForAllEmployeur(Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for(Employeur employeur : employeurService.findAllEmployeur()){
             Notifications notifications = new Notifications();
@@ -72,7 +82,7 @@ public class NotificationsService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllEmployeurAndStudent(String message){
+    public List<NotificationDto> saveNotificationForAllEmployeurAndStudent(Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         notificationDtoList.addAll(saveNotificationForAllStudent(message));
         notificationDtoList.addAll(saveNotificationForAllEmployeur(message));
