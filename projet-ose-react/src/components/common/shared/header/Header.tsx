@@ -104,11 +104,6 @@ const Header = (userd: any) => {
                                     <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                                 </button>
                             </div>
-                            {
-                                isMessageBoxOpen
-                                    ? <MessageBox></MessageBox>
-                                    : <></>
-                            }
                             <ProfilMenu show={isOpenProfil} onClose={closeModal} user={user}
                                         language={language} sidebarIsOpen={isUserMenuOpen}
                                         onLogout={logoutUser}
@@ -158,8 +153,12 @@ const Header = (userd: any) => {
                     </Transition>
 
                 </nav>
+                {
+                    isMessageBoxOpen
+                        ? <MessageBox></MessageBox>
+                        : <></>
+                }
             </div>
-
         </>
     );
 }

@@ -79,10 +79,10 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
         <Dialog as="div" className={isSmallSize && !props.sidebarIsOpen ? "hidden" : "relative"} onClose={props.onClose}>
             <Transition.Child
                 as={Fragment}
-                enter="ease-out duration-300"
+                enter="ease-out duration-50"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
-                leave="ease-in duration-200"
+                leave="ease-in duration-50"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
@@ -102,7 +102,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                     >
                         <Dialog.Panel
                             className=" w-80 mt-14 max-md:ml-52 end-0 items-center rounded-2xl px-6 bg-lightgray dark:bg-darkergray py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" data-testid="background">
-                            <div className="flex  space-x-2">
+                            <div className="flex space-x-2">
                                 <FontAwesomeIcon icon={faCircleUser}
                                                  className="text-blue hidden md:flex dark:text-orange h-12"
                                                  size="xl"/>
