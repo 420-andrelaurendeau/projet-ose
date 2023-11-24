@@ -5,9 +5,9 @@ import {NavLink, useLocation, useParams} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../authentication/AuthContext";
 
-export default function SidebarEtudiant(props: any) {
+export default function SideBarInternshipManager(props: any) {
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEtudiant");
+    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarInternshipManager");
     const option = window.location.pathname.split("/").pop();
     const { userRole, logoutUser } = useAuth();
 
@@ -43,55 +43,16 @@ export default function SidebarEtudiant(props: any) {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "appliedOffers" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                <div className={option === "studentCvReview" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
-                                    to={"/" + userRole +"/home/appliedOffers"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "appliedOffers" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faPencil} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.appliedOffer.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
-                                <div className={option === "cv" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/cv"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "cv" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    to={"/" + userRole +"/home/studentCvReview"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "studentCvReview" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.cv.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
-                                <div className={option === "interview" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/interview"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "interview" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.interview.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
-                                <div className={option === "stage" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/stage"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "stage" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.stage.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.reviewCV.text}</p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -103,8 +64,8 @@ export default function SidebarEtudiant(props: any) {
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
-                                    <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.contract.text}</p>
+                                    <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.internshipagreement.text}</p>
                                 </NavLink>
                             </li>
                         </ul>

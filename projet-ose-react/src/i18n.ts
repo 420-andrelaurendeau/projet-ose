@@ -49,7 +49,7 @@ i18n
                                 errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
                                 errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
                             },
-                            title: "Internships agreement",
+                            title: "Contracts of internship",
                             internshipsAgreement: {
                                 title: "Title",
                                 enterprise: "Enterprise",
@@ -420,19 +420,31 @@ i18n
                                 name: 'CV',
                                 text: 'Your CV',
                             },
-                            sidebar: {
-                                stage: {
-                                    name: 'stage',
+                            sidebarEtudiant: {
+                                offre: {
+                                    name: 'offre',
                                     text: "Offer"
                                 },
-                                offre_applique: {
-                                    name: 'offre applique',
+                                appliedOffer: {
+                                    name: 'appliedOffer',
                                     text: "Applied offer"
-                                }
-                            },
-                            interview : {
-                                name: 'Interview',
-                                text: 'Interview',
+                                },
+                                cv: {
+                                    name: 'cv',
+                                    text: "Your CV"
+                                },
+                                stage: {
+                                    name: 'stage',
+                                    text: "Internship"
+                                },
+                                contract: {
+                                    name: "contract",
+                                    text: "Contract"
+                                },
+                                interview : {
+                                    name: 'interview',
+                                    text: 'Interview',
+                                },
                             },
                             profilMenu: {
                                 signOut: {
@@ -460,26 +472,36 @@ i18n
                                     text: "Internship manager"
                                 }
                             },
+                            sidebarInternshipManager: {
+                                internshipagreement: {
+                                    name: 'internshipagreement',
+                                    text: "Internship agreement"
+                                },
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offer"
+                                },
+                                reviewCV: {
+                                    name: 'reviewCV',
+                                    text: "Review CV"
+                                },
+                            },
                             sidebarEmployeur: {
                                 offre: {
                                     name: 'offre',
                                     text: "Offer"
                                 },
-                                candidature: {
-                                    name: 'candidature',
-                                    text: "Application"
+                                interview: {
+                                    name: 'interview',
+                                    text: "Interview"
                                 },
-                                contract: {
-                                    name: 'contract',
-                                    text: "Contract"
-                                },
-                                internship: {
-                                    name: "internship",
+                                stage: {
+                                    name: 'stage',
                                     text: "Internship"
                                 },
-                                pendingOffer: {
-                                    name: 'pendingOffer',
-                                    text: "Pending offer"
+                                internshipagreement: {
+                                    name: "internshipagreement",
+                                    text: "Internship agreement"
                                 },
                                 newOffre: {
                                     name: 'newOffre',
@@ -519,6 +541,10 @@ i18n
                             titre: {
                                 name: 'titre',
                                 text: 'Dashboard'
+                            },
+                            title: {
+                                name: 'title',
+                                text: 'Your internship offers'
                             },
                             interview:{
                                 name: 'interview',
@@ -704,6 +730,10 @@ i18n
                     StudentInternshipPage:StudentInternshipPagei18n.en,
                     SideBarEtudiant: SideBarEtudiantI18n.en,
                     StudentInterview: {
+                        title: {
+                            name: 'title',
+                            text: 'Your interviews',
+                        },
                         PENDING: {
                             name: 'PENDING',
                             text: 'Pending'
@@ -780,7 +810,7 @@ i18n
                                 errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
                                 errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
                             },
-                            title: "Ententes de stage",
+                            title: "Contrats de stage",
                             internshipsAgreement: {
                                 title: "Titre",
                                 enterprise: "Entreprise",
@@ -1162,16 +1192,31 @@ i18n
                                 name: 'Interview',
                                 text: 'Entrevue',
                             },
-                            sidebar: {
+                            sidebarEtudiant: {
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offres"
+                                },
+                                appliedOffer: {
+                                    name: 'appliedOffer',
+                                    text: "Offres appliquées"
+                                },
+                                cv: {
+                                    name: 'cv',
+                                    text: "Votre CV"
+                                },
                                 stage: {
                                     name: 'stage',
-                                    text: "Offre"
+                                    text: "Stage"
                                 },
-                                offre_applique: {
-                                    name: 'offre applique',
-                                    text: "Offre appliqué"
+                                contract: {
+                                    name: "contract",
+                                    text: "Contrat"
                                 },
-
+                                interview : {
+                                    name: 'Interview',
+                                    text: 'Entrevue',
+                                },
                             },
                             profilMenu: {
                                 signOut: {
@@ -1199,26 +1244,36 @@ i18n
                                     text: "Gestionnaire de stage"
                                 }
                             },
+                            sidebarInternshipManager: {
+                                internshipagreement: {
+                                    name: 'internshipagreement',
+                                    text: "Entente de stage"
+                                },
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offre"
+                                },
+                                reviewCV: {
+                                    name: 'reviewCV',
+                                    text: "Revue de CV"
+                                },
+                            },
                             sidebarEmployeur: {
                                 offre: {
                                     name: 'offre',
                                     text: "Offre"
                                 },
-                                candidature: {
-                                    name: 'candidature',
-                                    text: "Candidature"
+                                interview: {
+                                    name: 'interview',
+                                    text: "Entrevue"
                                 },
-                                contract: {
-                                    name: 'contract',
-                                    text: "Contrat"
-                                },
-                                internship: {
-                                    name: "internship",
+                                stage: {
+                                    name: 'stage',
                                     text: "Stage"
                                 },
-                                pendingOffer: {
-                                    name: 'pendingOffer',
-                                    text: "Offre en attente"
+                                internshipagreement: {
+                                    name: "internshipagreement",
+                                    text: "Entente de stage"
                                 },
                                 newOffre: {
                                     name: 'newOffre',
@@ -1258,6 +1313,10 @@ i18n
                             titre: {
                                 name: 'titre',
                                 text: 'Tableau de bord'
+                            },
+                            title: {
+                                name: 'title',
+                                text: 'Vos offres de stage'
                             },
                             interview:{
                                 name: 'interview',
@@ -1425,6 +1484,10 @@ i18n
                     StudentInternship: StudentInternshipI18n.fr,
                     SideBarEtudiant: SideBarEtudiantI18n.fr,
                     StudentInterview: {
+                        title: {
+                            name: 'title',
+                            text: 'Vos entrevues',
+                        },
                         PENDING: {
                             name: 'PENDING',
                             text: 'En attente'

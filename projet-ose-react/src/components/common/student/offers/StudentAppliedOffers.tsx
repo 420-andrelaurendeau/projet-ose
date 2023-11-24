@@ -53,11 +53,10 @@ export default function StudentAppliedOffers() {
 
     return (
         <div>
-            <div className="flex flex-col items-center">
-                <div className=" lg:-mx-8 mt-28 w-11/12 ">
-                    <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                        <div className=" w-full">
+            <div className="flex flex-col justify-center pt-24">
+                <div className="">
+                    <div className="max-md:pt-2 min-w-full">
+                        <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                                 <thead className="bg-blue dark:bg-orange ">
                                 <tr>

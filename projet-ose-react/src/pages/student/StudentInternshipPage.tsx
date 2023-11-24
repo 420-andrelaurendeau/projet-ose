@@ -144,8 +144,7 @@ function StudentInternshipPage() {
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
-                    <div
-                        className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +

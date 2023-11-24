@@ -119,7 +119,7 @@ export const EmployerInterviewPage = () => {
     }
 
     const renderInterviews = (
-        <main className={"py-4"}>
+        <main>
             <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                 <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                     <thead className="bg-blue dark:bg-orange ">
@@ -198,24 +198,22 @@ export const EmployerInterviewPage = () => {
     )
 
     return (<div className="dark:bg-black">
-        <div className="flex flex-col items-center">
-            <div className=" lg:-mx-8 w-11/12 ">
-                <div
-                    className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                    <div className=" w-full">
-                        <PaginatedList renderItem={renderInterviews}
-                                       page={currentPage}
-                                       totalPages={totalPages}
-                                       onPageChange={handlePageChange}
-                                       numberElement={numberElementByPage}
-                                       handleChangeNumberElement={handleChangeNbElement}
-                                       selectedOption=""
-                                       handleOptionChange={() => {}}
-                                       seasons={["",""]}
-                        />
+        <div className="flex flex-col items-start max-md:pt-24">
+            <header className=" pb-4">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+            </header>
+            <div className="w-full">
 
-                    </div>
-                </div>
+                <PaginatedList renderItem={renderInterviews}
+                               page={currentPage}
+                               totalPages={totalPages}
+                               onPageChange={handlePageChange}
+                               numberElement={numberElementByPage}
+                               handleChangeNumberElement={handleChangeNbElement}
+                               selectedOption=""
+                               handleOptionChange={() => {}}
+                               seasons={["",""]}
+                />
             </div>
         </div>
     </div>)

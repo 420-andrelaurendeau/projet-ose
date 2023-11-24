@@ -142,10 +142,10 @@ export default function StudentContractPage() {
 
 
     return (
-        <div className="px-4">
+        <div className="max-md:pt-16">
             <title>Offres</title>
             <header className="pb-4">
-                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
+                <h1 className=" mt-7 sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">
                 <div className="p-0">

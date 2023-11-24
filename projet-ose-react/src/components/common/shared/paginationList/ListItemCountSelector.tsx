@@ -11,15 +11,15 @@ const ListItemCountSelector: React.FC<ListItemCountSelectorProps> = ({numberElem
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.ListItemCounterSelector");
 
     return (
-            <div className="flex justify-end pr-4">
-                    <p className="dark:text-white">{fields.numberItem}</p>
-                    <select className="border rounded dark:text-offwhite dark:bg-dark dark:border-gray ml-4"
-                            value={numberElement} onChange={handleChangeNumberElement}>
-                        <option value={2}>2</option>
-                        <option value={5}>5</option>
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                    </select>
+            <div className="block items-end">
+                <label htmlFor="optionsItem" className="text-bold dark:text-white">{fields.numberItem} </label>
+                <select className=" border rounded dark:text-offwhite dark:bg-dark dark:border-gray" id="optionsItem"
+                        value={numberElement} onChange={handleChangeNumberElement}>
+                    <option value={2}>2</option>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                </select>
             </div>
     );
 }

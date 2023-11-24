@@ -23,8 +23,8 @@ function HomePage() {
                 </div>
             </header>
             <main>
-                <div className="max-w-9xl mx-auto xxxs:px-6 lg:px-2">
-                    <div className=" max-w-7xl mx-auto border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block ">
+                <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 hidden mb-10 md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
@@ -41,7 +41,7 @@ function HomePage() {
                             <NavLink
                                 to="studentCvReview"
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${userRole}/home/newOffer` || location.pathname === `/${userRole}/home/newOffer/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/studentCvReview` || location.pathname === `/${userRole}/home/studentCvReview/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >
@@ -52,9 +52,9 @@ function HomePage() {
                             </NavLink>
 
                             <NavLink
-                                to={ userRole !== "internshipmanager" ? "contract" : "internshipsagreement"}
+                                to={ userRole !== "internshipmanager" ? "contract" : "internshipagreement"}
                                 className={"flex space-x-2 items-center border-blue dark:border-orange h-14 px-5 justify-center"
-                                    + (location.pathname === `/${userRole}/home/contract` || location.pathname === `/${userRole}/home/contract/` ? " border-b-2" : "")
+                                    + (location.pathname === `/${userRole}/home/internshipagreement` || location.pathname === `/${userRole}/home/internshipagreement/` ? " border-b-2" : "")
                                 }
                                 state={user}
                             >

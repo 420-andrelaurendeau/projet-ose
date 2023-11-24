@@ -175,13 +175,16 @@ const InternshipOfferForm: React.FC<any> = () => {
 
 
     return (
-        <div className="flex justify-center items-center min-h-screen max-md:pt-24">
-            <div className="w-5/6">
+        <div className="min-h-screen max-md:pt-24">
+            <header className="">
+                <div className="max-w-7xl mx-auto pb-4">
+                    <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t('formField.InternshipOfferForm.titleForm')}</h1>
+                </div>
+            </header>
+            <div className="w-full">
                 <div className="bg-white rounded-lg p-6 w-full  dark:bg-dark border border-gray dark:border-darkgray">
 
                     <form className="space-y-4 mx-auto w-full " onSubmit={handleSubmit}>
-
-                        <h1 className='font-bold text-center text-dark text-xl dark:text-offwhite pb-6'>{t('formField.InternshipOfferForm.titleForm')}</h1>
 
                         <div
                             className='block sm:flex items-center space-x-0 sm:space-x-4 space-y-4 sm:space-y-0 min-h-50'>
@@ -321,17 +324,6 @@ const InternshipOfferForm: React.FC<any> = () => {
                                 Submit
 
                             </button>
-                            <NavLink
-                                to="/employeur/home/offre"
-                                className="max-md:hidden w-full flex-1 bg-red text-center text-white font-bold p-2 rounded-md dark:bg-red"
-                                state={user}
-                                type="button"
-                                onClick= {() =>
-                                    setIsModalOpen(false)
-                                }>
-                                Close
-                            </NavLink>
-
                         </div>
                     </form>
                 </div>

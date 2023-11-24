@@ -124,40 +124,33 @@ function StudentInternship() {
     }
 
     return (
-        <div className="flex flex-col mt-14">
-            <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
-                <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8 ">
-                    <div className="overflow-x-hidden xxxs:rounded-lg space-y-6">
-                        <div className="flex items-center justify-center">
-                            <FontAwesomeIcon icon={faBriefcase} className="text-blue dark:text-orange h-16" />
-                        </div>
-                        <h1 className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
+        <div className="flex flex-col ">
+            <div >
+                <div className="max-md:mt-16">
+                    <div className="overflow-x-hidden xxxs:rounded-lg">
+                        <h1 className="mt-7 text-start text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {fields.titre.text}
                         </h1>
-                        {
-                            loadingCV ?
-                                <span className="flex justify-center dark:text-white">{t("formField.EtudiantStage.cv")}</span>
-                                :
-                                <span></span>
-                        }
-                        <div className="pb-4">
-                            <ListItemCountSelector
-                                numberElement={numberElementByPage}
-                                handleChangeNumberElement={handleChangeNumberElement}
-                            />
+                        <div className="flex justify-between py-4">
+                            <div>
+                                <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                                <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleChangeOption}>
+                                    <option value="">Tout</option>
+                                    {seasons.map((season: string, index: number) => (
+                                        <option key={index} value={season}>
+                                            {season}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <ListItemCountSelector
+                                    numberElement={numberElementByPage}
+                                    handleChangeNumberElement={handleChangeNumberElement}
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
-                            <select id="options" value={selectedOption} onChange={handleChangeOption}>
-                                <option value="">Tout</option>
-                                {seasons.map((season: string, index: number) => (
-                                    <option key={index} value={season}>
-                                        {season}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg ">
                                 <table className="w-full divide-y divide-gray dark:divide-darkgray">
                                     <thead className="bg-blue dark:bg-orange ">
                                     <tr>
@@ -215,7 +208,7 @@ function StudentInternship() {
                                     <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                     {offers.length === 0 ?
                                         <tr>
-                                            <td colSpan={7} className="text-center dark:text-white bg-red">{t("formField.EtudiantStage.noOffers.text")}</td>
+                                            <td colSpan={7} className="text-center text-white bg-red">{t("formField.EtudiantStage.noOffers.text")}</td>
                                         </tr>
                                         :
                                         <></>
@@ -269,7 +262,7 @@ function StudentInternship() {
                                     </tbody>
                                 </table>
                             </div>
-                        <div className="pt-4">
+                        <div className="">
                             <ListItemPageSelector page={page} totalPages={totalPages} onPageChange={onPageChange}/>
                         </div>
                     </div>

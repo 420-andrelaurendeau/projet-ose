@@ -108,106 +108,113 @@ export default function StudentInterviewPage() {
     };
 
     const renderInterviews = (
-        <main className={"pb-4"}>
-            <table className=" w-full divide-y divide-gray dark:divide-darkgray">
-                <thead className="bg-blue dark:bg-orange ">
-                <tr>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                    >
-                        {fields.table.title}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                    >
-                        {fields.table.location}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                    >
-
-                        {fields.table.date}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                    >
-
-                        {fields.table.company}
-                    </th>
-                    <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
-                    >
-
-                        {fields.table.action.text}
-                    </th>
-                </tr>
-                </thead>
-                <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
-                {interviews.length === 0 && (
-                    <tr>
-                        <td colSpan={5} className="text-center bg-red text-white">
-                            {fields.table.empty}
-                        </td>
-                    </tr>
-                )}
-                {interviews.map((interview) => (
-                    <tr key={interview.id}>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.title}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.location}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
-                            {interview.internOffer.employeurEntreprise}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex justify-center space-x-2">
-                                <button
-                                    disabled={interview.state != "PENDING"}
-                                    onClick={() => handleOnAccept(interview.id)}
-                                    className="disabled:bg-gray text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
+        <div className="flex flex-col justify-center">
+            <div className="w-full">
+                <div className="max-md:pt-2 min-w-full">
+                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                        <table className=" w-full divide-y divide-gray dark:divide-darkgray">
+                            <thead className="bg-blue dark:bg-orange ">
+                            <tr>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                 >
-                                    {fields.table.action.button.accept}
-                                </button>
-                                <button
-                                    disabled={interview.state != "PENDING"}
-                                    onClick={() => handleOnDecline(interview.id)}
-                                    className="disabled:bg-gray text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
+                                    {fields.table.title}
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                 >
-                                    {fields.table.action.button.decline}
-                                </button>
-                                {interview.state === "ACCEPTED" &&
-                                    <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.accepted}</p>}
-                                {interview.state === "DECLINED" &&
-                                    <p className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
-                            </div>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </main>
+                                    {fields.table.location}
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                >
+
+                                    {fields.table.date}
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                >
+
+                                    {fields.table.company}
+                                </th>
+                                <th
+                                    scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                >
+
+                                    {fields.table.action.text}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                            {interviews.length === 0 && (
+                                <tr>
+                                    <td colSpan={5} className="text-center bg-red text-white">
+                                        {fields.table.empty}
+                                    </td>
+                                </tr>
+                            )}
+                            {interviews.map((interview) => (
+                                <tr key={interview.id}>
+                                    <td className="px-6 py-4 whitespace-nowrap
+                                                    text-center text-sm font-medium">
+                                        {interview.internOffer.title}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap
+                                                    text-center text-sm font-medium">
+                                        {interview.internOffer.location}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap
+                                                    text-center text-sm font-medium">
+                                        {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap
+                                                    text-center text-sm font-medium">
+                                        {interview.internOffer.employeurEntreprise}
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="flex justify-center space-x-2">
+                                            <button
+                                                disabled={interview.state != "PENDING"}
+                                                onClick={() => handleOnAccept(interview.id)}
+                                                className="disabled:bg-gray text-white bg-green hover:bg-green-700 px-3 py-2 rounded-md text-sm font-medium"
+                                            >
+                                                {fields.table.action.button.accept}
+                                            </button>
+                                            <button
+                                                disabled={interview.state != "PENDING"}
+                                                onClick={() => handleOnDecline(interview.id)}
+                                                className="disabled:bg-gray text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-medium"
+                                            >
+                                                {fields.table.action.button.decline}
+                                            </button>
+                                            {interview.state === "ACCEPTED" &&
+                                                <p className="text-white bg-blue hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.accepted}</p>}
+                                            {interview.state === "DECLINED" &&
+                                                <p className="text-white bg-red hover:bg-red-700 px-3 py-2 rounded-md text-sm font-bold">{fields.table.action.status.declined}</p>}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 
     return (
         <div className="dark:bg-softdark">
-            <div className="flex flex-col items-center">
-                <div className=" lg:-mx-8 mt-28 w-11/12 ">
-                    <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full dark:text-white ">
+            <div className="flex flex-col items-center max-md:pt-12">
+                <div className=" lg:-mx-8 w-full max-md:pt-4">
+                    <div className="flex flex-col items-start mt-7 mb-4 justify-center">
+                        <h1 className="text-3xl font-bold dark:text-white">{fields.title.text}</h1>
+                    </div>
                         <div className=" w-full">
                             <PaginatedList renderItem={renderInterviews}
                                            page={currentPage}
@@ -220,7 +227,6 @@ export default function StudentInterviewPage() {
                                            seasons={["",""]}
                             />
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

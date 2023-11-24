@@ -48,9 +48,13 @@ export default function EmployerStagePage() {
     console.log('agreement: '+stageAgreement)
 
     return (
-        <div className="flex flex-col justify-center max-md:pt-24 pb-14">
-            <div className="xs:-mx-1 lg:-mx-2">
-                <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
+        <div className="max-md:pt-24 pb-14">
+            <div>
+                <header className=" pb-4">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                </header>
+                <main>
+                <div className="max-md:pt-2 w-full">
                     <div className="flex justify-between">
                         <div>
                             <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
@@ -243,6 +247,7 @@ export default function EmployerStagePage() {
                         <ListItemPageSelector page={pageAgreement} totalPages={totalPageAgreement} onPageChange={onPageChangeAgreement}/>
                     </div>
                 </div>
+                </main>
             </div>
 
         </div>

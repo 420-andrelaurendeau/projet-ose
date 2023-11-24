@@ -78,7 +78,7 @@ const InternshipContractPage: React.FC<any> = () => {
 
     return (<>
         {intershipAggreement && (
-            <div className="h-max sm:pt-5 xxxs:pt-20 pb-6">
+            <div className="h-max   pb-6 max-md:pt-24">
                 <div className="flex w-full justify-start sm:mx-auto items-center pb-6">
                     <button
                         type="button"

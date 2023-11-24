@@ -17,6 +17,7 @@ import ProfilMenu from "./ProfilMenu";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";
+import SideBarInternshipManager from "../../internshipManager/SideBarInternshipManager";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
@@ -125,12 +126,18 @@ const Header = (userd: any) => {
                     >
                         <div className="md:hidden">
                             {
-                                user.matricule ?
+                                userRole === "student" ?
                                     <SidebarEtudiant
                                         user={user}
                                         setIsOpen={setIsOpen}
                                     /> :
+                                    userRole === "employer" ?
                                     <SidebarEmployeurHome
+                                        user={user}
+                                        setIsOpen={setIsOpen}
+                                        onOpenProfil={openModal}
+                                    />:
+                                    <SideBarInternshipManager
                                         user={user}
                                         setIsOpen={setIsOpen}
                                         onOpenProfil={openModal}
