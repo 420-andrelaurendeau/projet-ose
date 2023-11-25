@@ -114,33 +114,33 @@ export default function StudentInterviewPage() {
                 <tr>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider dark:text-white"
                     >
                         {fields.table.title}
                     </th>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider dark:text-white"
                     >
                         {fields.table.location}
                     </th>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider dark:text-white"
                     >
 
                         {fields.table.date}
                     </th>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider dark:text-white"
                     >
 
                         {fields.table.company}
                     </th>
                     <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider dark:text-white"
                     >
 
                         {fields.table.action.text}
@@ -158,19 +158,19 @@ export default function StudentInterviewPage() {
                 {interviews.map((interview) => (
                     <tr key={interview.id}>
                         <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
+                                        text-center text-sm font-medium dark:text-white">
                             {interview.internOffer.title}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
+                                        text-center text-sm font-medium dark:text-white">
                             {interview.internOffer.location}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
+                                        text-center text-sm font-medium dark:text-white">
                             {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap
-                                        text-center text-sm font-medium">
+                                        text-center text-sm font-medium dark:text-white">
                             {interview.internOffer.employeurEntreprise}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -207,7 +207,7 @@ export default function StudentInterviewPage() {
             <div className="flex flex-col items-center">
                 <div className=" lg:-mx-8 mt-28 w-11/12 ">
                     <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full dark:text-white ">
+                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full dark:text-dark ">
                         <div className=" w-full">
                             <PaginatedList renderItem={renderInterviews}
                                            page={currentPage}
