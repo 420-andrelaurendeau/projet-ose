@@ -125,7 +125,7 @@ function StudentInternship() {
 
     return (
         <div className="flex flex-col mt-14">
-            <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "max-md:hidden" : ""}>
+            <div className={window.location.pathname != "/etudiant/home/offre" && window.location.pathname != "/etudiant/home/offre/" ? "" : ""}>
                 <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8 ">
                     <div className="overflow-x-hidden xxxs:rounded-lg space-y-6">
                         <div className="flex items-center justify-center">
@@ -157,7 +157,7 @@ function StudentInternship() {
                                 ))}
                             </select>
                         </div>
-                            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                            <div className="overflow-x-auto hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                                 <table className="w-full divide-y divide-gray dark:divide-darkgray">
                                     <thead className="bg-blue dark:bg-orange ">
                                     <tr>
