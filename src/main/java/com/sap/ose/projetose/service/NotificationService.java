@@ -14,9 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationService {
     private final NotificationRepository notificationRepository;
-    private final EtudiantService etudiantService;
-    private final EmployeurService employeurService;
-
     private final UtilisateurService utilisateurService;
 
     @Transactional
@@ -43,7 +40,7 @@ public class NotificationService {
     @Transactional
     public List<NotificationDto> saveNotificationForAllStudent(Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Etudiant etudiant : etudiantService.findAllEtudiant()){
+        for(Etudiant etudiant : utilisateurService.findAllEtudiant()){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(etudiant);
@@ -60,7 +57,7 @@ public class NotificationService {
     @Transactional
     public List<NotificationDto> saveNotificationForAllEmployeur(Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Employeur employeur : employeurService.findAllEmployeur()){
+        for(Employeur employeur : utilisateurService.findAllEmployeur()){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(employeur);
@@ -79,6 +76,23 @@ public class NotificationService {
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         notificationDtoList.addAll(saveNotificationForAllStudent(message));
         notificationDtoList.addAll(saveNotificationForAllEmployeur(message));
+        return notificationDtoList;
+    }
+
+    @Transactional
+    public List<NotificationDto> saveNotificationForAllManagers(Notificationsi18n notificationsi18n) {
+        List<NotificationDto> notificationDtoList = new ArrayList<>();
+        for(Internshipmanager internshipmanager : utilisateurService.findAllManagers()){
+            Notifications notifications = new Notifications();
+
+            notifications.setReceveurs(internshipmanager);
+            notifications.setRead(false);
+            notifications.setProgramme(internshipmanager.getProgramme());
+            notifications.setMessage(notificationsi18n);
+            notificationRepository.save(notifications);
+
+            notificationDtoList.add(new NotificationDto(notifications));
+        }
         return notificationDtoList;
     }
 }
