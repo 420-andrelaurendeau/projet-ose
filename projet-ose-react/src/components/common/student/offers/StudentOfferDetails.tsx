@@ -10,6 +10,7 @@ import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/util
 import ViewPDFModal from "../../Employer/offer/ViewPDFModal";
 import {AppliedOffers} from "../../../../model/AppliedOffers";
 import {saveStudentInternshipOffer} from "../../../../api/intershipCandidatesAPI";
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 
 const StudentOfferDetails: React.FC<any> = () => {
@@ -99,7 +100,7 @@ const StudentOfferDetails: React.FC<any> = () => {
                                 className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/student/home/offers")}
                             >
-                                {t("Shared.ReturnButton.text")}
+                                {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
                         </div>
                     </div>

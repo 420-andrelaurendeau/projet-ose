@@ -8,7 +8,7 @@ import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
 import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
 import ViewPDFModal from "./ViewPDFModal";
-
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 const EmployerOfferDetails: React.FC<any> = () => {
     const navigate = useNavigate();
@@ -102,7 +102,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                 className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/employer/home/offers")}
                             >
-                                {t("Shared.ReturnButton.text")}
+                                {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
                             <button
                                 type="button"
