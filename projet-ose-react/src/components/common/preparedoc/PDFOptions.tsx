@@ -1,6 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowPointer, faDownload, faFileSignature, faPenNib, faPrint} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../authentication/AuthContext";
+import {ReactComponent as Icon} from '../../../assets/icons/back_icon.svg';
 import React, {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -57,7 +58,7 @@ function PDFOptions(props: any) {
                 className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                 onClick={() => navigate(`/${userRole}/home/internshipagreement/` + props.contractId)}
             >
-                {t("Shared.ReturnButton.text")}
+                {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
             </button>
             <button
                 type="button"

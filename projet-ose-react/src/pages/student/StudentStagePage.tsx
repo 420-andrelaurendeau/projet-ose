@@ -106,13 +106,13 @@ function StudentStagePage(){
                                  {stages && stages.length > 0 ? (
                                      stages.map((stage) => (
                                          <tr key={stage.id}>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-white">
                                                  {stage.offer.title}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.location}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.employeurEntreprise}
                                              </td>
                                              <td className="px-6 py-4 whitespace-nowrap">

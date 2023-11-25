@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {useTranslation} from "react-i18next";
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 
 
@@ -55,7 +56,7 @@ const ViewPDFModal = (props:any) => {
                                     props.setIsModalOpen(false);
                                 }}
                             >
-                                {t("Shared.ReturnButton.text")}
+                                {t("Shared.ReturnButton.text")}  <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
                         </div>
                     }
