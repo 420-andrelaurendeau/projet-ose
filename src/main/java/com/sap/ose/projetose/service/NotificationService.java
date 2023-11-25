@@ -51,7 +51,6 @@ public class NotificationService {
             notifications.setProgramme(etudiant.getProgramme());
             notifications.setMessage(message);
             notificationRepository.save(notifications);
-            notificationRepository.save(notifications);
 
             notificationDtoList.add(new NotificationDto(notifications));
         }
@@ -68,7 +67,6 @@ public class NotificationService {
             notifications.setRead(false);
             notifications.setProgramme(employeur.getProgramme());
             notifications.setMessage(message);
-            notificationRepository.save(notifications);
             notificationRepository.save(notifications);
 
             notificationDtoList.add(new NotificationDto(notifications));

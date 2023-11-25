@@ -22,7 +22,7 @@ public class OfferReviewRequestService {
     private final OfferReviewRequestRepository offerReviewRequestRepository;
     private final InternOfferService internOfferService;
     private final InternshipmanagerService internshipmanagerService;
-    private final NotificationsService notificationsService;
+    private final NotificationService notificationService;
     private final Logger logger = LoggerFactory.getLogger(OfferReviewRequestService.class);
 
 
@@ -46,7 +46,7 @@ public class OfferReviewRequestService {
 
             offerReviewRequestRepository.save(offerReviewRequest);
 
-            notificationsService.saveNotificationForAllStudent(Notificationsi18n.newOfferAvaible);
+            notificationService.saveNotificationForAllStudent(Notificationsi18n.newOfferAvaible);
 
             return new InternOfferDto(internOffer);
         } catch (OfferAlreadyReviewException e) {

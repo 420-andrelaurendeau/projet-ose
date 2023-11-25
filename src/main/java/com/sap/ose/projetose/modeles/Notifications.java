@@ -15,10 +15,12 @@ import java.util.Map;
 @NoArgsConstructor
 public class Notifications {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
     @OneToOne
     private Utilisateur receveurs;
-    @OneToOne
+    @ManyToOne
     private Programme programme;
     private Notificationsi18n message;
     private boolean isRead;

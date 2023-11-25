@@ -33,28 +33,24 @@ public class ProjetOseApplication implements CommandLineRunner {
     private EtudiantService etudiantService;
     @Autowired
     private EmployeurService employeurService;
-
     @Autowired
     private UtilisateurService utilisateurService;
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
     private InternOfferService internOfferService;
-
     @Autowired
     private InterviewService interviewService;
-
     @Autowired
     private InternshipCandidatesService internshipCandidatesService;
-
     @Autowired
     private StageService stageService;
-
     @Autowired
     ProgrammeRepository programmeRepository;
-
     @Autowired
     TemplateContractService templateContractService;
+    @Autowired
+    NotificationService notificationService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
