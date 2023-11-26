@@ -10,6 +10,7 @@ import {useToast} from "../../../../hooks/state/useToast";
 import ViewPDFModal from "../../Employer/offer/ViewPDFModal";
 import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {ReviewFile} from "../../../../model/ReviewFile";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
@@ -167,7 +168,11 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             {/* File field */}
             <div className="justify-center items-center sm:mx-auto sm:w-3/4">
                 <button className="flex px-4 mb-5 justify-start border hover:border-black border-transparent dark:border-white shadow-sm  font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => setIsModalOpen(true)}>
+                        onClick={() => {
+                            setIsModalOpen(true)
+                            console.log(internshipOffer.file)
+                        }
+                        }>
                     <FontAwesomeIcon icon={faFilePdf} className="pt-3 flex text-blue dark:text-orange" size="lg"/>
                     <p className="mt-1 p-2 dark:text-white">{internshipOffer!.file!.fileName}</p>
                 </button>
@@ -194,15 +199,15 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     <p className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0">
                         {formStateReview.comment!}
                     </p>
-                    {
-                        internshipOffer.file.content !== "" && isModalOpen &&
-                        <div className="">
-                            <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={internshipOffer.file}/>
-                        </div>
-                    }
                 </div>
 
             )}
+            {
+                internshipOffer.file.content != "" && isModalOpen &&
+                <div className="">
+                    <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={internshipOffer.file}/>
+                </div>
+            }
         </div>
     )
 
