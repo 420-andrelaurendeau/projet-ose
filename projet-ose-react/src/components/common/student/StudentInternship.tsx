@@ -152,13 +152,7 @@ function StudentInternship() {
                             className="mt-7 text-center text-2xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {t("formField.EtudiantStage.titre.text")}
                         </h1>
-                        {
-                            loadingCV ?
-                                <span
-                                    className="flex justify-center dark:text-white">{t("formField.EtudiantStage.cv")}</span>
-                                :
-                                <span></span>
-                        }
+
                         <div className="pb-4">
                             <ListItemCountSelector
                                 numberElement={numberElementByPage}

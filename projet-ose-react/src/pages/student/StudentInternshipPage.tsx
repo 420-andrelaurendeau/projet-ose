@@ -40,6 +40,27 @@ interface Props {
 
 }
 
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
+
 function StudentInternshipPage() {
     const { i18n ,t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInternshipPage");
@@ -48,13 +69,13 @@ function StudentInternshipPage() {
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
     const {userId, userEmail, userRole} = useAuth();
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
     const isLoading = useRef(false);
 
