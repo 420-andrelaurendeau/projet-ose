@@ -215,7 +215,7 @@ function StudentInternship() {
                                     <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                                     {offers.length === 0 ?
                                         <tr>
-                                            <td colSpan={7} className="text-center dark:text-white bg-red">{t("formField.EtudiantStage.noOffers.text")}</td>
+                                            <td colSpan={7} className="text-center text-white bg-red">{t("formField.EtudiantStage.noOffers.text")}</td>
                                         </tr>
                                         :
                                         <></>
