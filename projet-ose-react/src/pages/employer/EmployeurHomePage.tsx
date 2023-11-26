@@ -51,8 +51,32 @@ interface Props {
     isLoaded: boolean
 
     seasons: any[],
+    setSeasons: React.Dispatch<React.SetStateAction<string[]>>,
     selectedOption: string,
+    setSelectedOption: React.Dispatch<React.SetStateAction<string>>,
     handleOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void,
+}
+
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
 }
 
 function EmployeurHomePage() {
@@ -60,7 +84,7 @@ function EmployeurHomePage() {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.homeEmployeur");
     const [offers, setOffers] = useState([]);
 
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
 
@@ -74,7 +98,7 @@ function EmployeurHomePage() {
     const [offerState, setOfferState] = useState(undefined);
     const [isUpdate, setIsUpdate] = useState(false);
 
-    const [numberElementAgreementByPage, setNumberElementAgreementByPage] = useState<number>(5)
+    const [numberElementAgreementByPage, setNumberElementAgreementByPage] = useState<number>(100)
     const [totalAgreementPages, setTotalAgreementPages] = useState(0);
     const [currentAgreementPage, setCurrentAgreementPage] = useState(0);
     const [agreementState, setAgreementState] = useState(undefined);
@@ -86,7 +110,7 @@ function EmployeurHomePage() {
 
     const location = useLocation();
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
 
     const [user, setUser] = useState<User>({
@@ -222,7 +246,6 @@ function EmployeurHomePage() {
         setIsModalOpen: setIsModalOpen,
         offers: offers,
         setOffers: setOffers,
-        seasons:seasons,
         user: user,
         setSortField: setSortField,
         setSortDirection: setSortDirection,
@@ -251,8 +274,11 @@ function EmployeurHomePage() {
         setAgreementSortDirection: setAgreementSortDirection,
         setOnChangeAgreement: setOnChangeAgreement,
         isLoaded: isLoaded,
+        seasons: seasons,
+        setSeasons: setSeasons,
         handleOptionChange: handleOptionChange,
-        selectedOption: selectedOption
+        selectedOption: selectedOption,
+        setSelectedOption: setSelectedOption
     }
 
     return (

@@ -12,7 +12,7 @@ const apiClient = axios.create({
 
 export const getProgrammes = async () => {
     try {
-        const response = await api.get('/programmes');
+        const response = await api.get('programme/programmes');
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des progrommes:', error);

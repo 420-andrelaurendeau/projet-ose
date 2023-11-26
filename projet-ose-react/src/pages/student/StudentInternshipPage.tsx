@@ -35,7 +35,9 @@ interface Props {
     numberElementByPage: number;
     page: number;
     seasons: any[];
+    setSeasons: React.Dispatch<React.SetStateAction<string[]>>,
     selectedOption: string;
+    setSelectedOption: React.Dispatch<React.SetStateAction<string>>,
     handleChangeOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 
 }
@@ -76,6 +78,8 @@ function StudentInternshipPage() {
     const [currentPage, setCurrentPage] = useState(0);
     const [seasons,setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState(getActualSeason());
+
+
 
     const isLoading = useRef(false);
 

@@ -68,10 +68,11 @@ public class InterviewController {
                                                                        @RequestParam(required = false, defaultValue = "0") int page,
                                                                        @RequestParam(required = false, defaultValue = "10") int size,
                                                                        @RequestParam(required = false, defaultValue = "id") String sortField,
-                                                                       @RequestParam(required = false, defaultValue = "desc") String sortDirection
+                                                                       @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+                                                                        @RequestParam() String season
     ) {
         logger.info("Interview get request received");
-        return Optional.of(interviewService.getInterviewsByEmployerId(employerId, page, size,sortField, sortDirection)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(interviewService.getInterviewsByEmployerId(employerId, page, size,sortField, sortDirection, season)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @Transactional

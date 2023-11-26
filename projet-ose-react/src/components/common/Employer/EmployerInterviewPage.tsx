@@ -7,7 +7,29 @@ import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
 
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
 export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
     const [user, setUser] = useState<any>(null);
@@ -16,9 +38,11 @@ export const EmployerInterviewPage = () => {
     const auth = useAuth();
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
-    const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100);
+    //const [seasons,setSeasons] = useState([])
+    //const [selectedOption, setSelectedOption] = useState(getActualSeason());
+
+    const { seasons, selectedOption, setSelectedOption, setSeasons } = useProps();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -36,7 +60,7 @@ export const EmployerInterviewPage = () => {
                         size: numberElementByPage,
                         sortField: "id",
                         sortDirection: "desc",
-                        session: selectedOption
+                        season: selectedOption
                     }).then((res: any) => {
                         setInterviews(res.content);
                         setTotalPages(res.totalPages);
@@ -49,7 +73,7 @@ export const EmployerInterviewPage = () => {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, [totalPages, currentPage, numberElementByPage]);
+    }, [totalPages, currentPage, numberElementByPage, selectedOption]);
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -209,9 +233,9 @@ export const EmployerInterviewPage = () => {
                                        onPageChange={handlePageChange}
                                        numberElement={numberElementByPage}
                                        handleChangeNumberElement={handleChangeNbElement}
-                                       selectedOption=""
-                                       handleOptionChange={() => {}}
-                                       seasons={["",""]}
+                                       selectedOption={selectedOption}
+                                       handleOptionChange={handleOptionChange}
+                                       seasons={seasons}
                         />
 
                     </div>

@@ -138,11 +138,11 @@ public class InterviewService {
                 ));
     }
 
-    public Page<InterviewDTO> getInterviewsByEmployerId(long employerId, int page, int size, String sortField, String sortDirection) {
+    public Page<InterviewDTO> getInterviewsByEmployerId(long employerId, int page, int size, String sortField, String sortDirection, String season) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Interview> page1 = interviewRepository.findAllByEmployerId(employerId, pageable);
+        Page<Interview> page1 = interviewRepository.findAllByEmployerId(employerId, pageable, season);
         return page1.map(
                 interview -> new InterviewDTO(
                         interview.getId(),

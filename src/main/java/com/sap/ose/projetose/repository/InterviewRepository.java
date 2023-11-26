@@ -23,6 +23,6 @@ public interface InterviewRepository extends JpaRepository<Interview, Long> {
     @Query("SELECT i FROM Interview i WHERE i.student.id = ?1 AND i.internshipOffer.id = ?2")
     Interview findByStudentIdAndInternOfferId(long studentId, long internOfferId);
 
-    @Query("SELECT i FROM Interview i WHERE i.internshipOffer.employeur.id = :employerId")
-    Page<Interview> findAllByEmployerId(long employerId, Pageable pageable);
+    @Query("SELECT i FROM Interview i WHERE i.internshipOffer.employeur.id = :employerId AND (:session IS NULL OR :session = '' OR i.internshipOffer.session = :session)")
+    Page<Interview> findAllByEmployerId(long employerId, Pageable pageable, @Param("session") String session);
 }
