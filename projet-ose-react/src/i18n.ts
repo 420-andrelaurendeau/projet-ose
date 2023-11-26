@@ -689,6 +689,9 @@ i18n
                                 required : 'The password is required',
                                 minLenght : 'The password must contain at least 5 characters',
                             }
+                        },
+                        error : {
+                            text : "The email address or password is incorrect",
                         }
                     },
                     cv: CV.en,
@@ -1412,6 +1415,9 @@ i18n
                                 required: 'Le mot de passe est requis',
                                 minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                             }
+                        },
+                        error : {
+                            text : "Votre adresse e-mail ou votre mot de passe est incorrect",
                         }
                     },
                     cv: CV.fr,
