@@ -72,7 +72,7 @@ const Header = (userd: any) => {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center">
-                                <NavLink to={"/"}>
+                                <NavLink to={`/${userRole}/home/`}>
                                     <div className="flex-shrink-0">
                                         <img
                                             className="mx-auto h-12 w-auto visible dark:hidden"

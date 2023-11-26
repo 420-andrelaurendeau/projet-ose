@@ -16,14 +16,14 @@ function HomePage() {
 
 
     return (
-        <div className="">
+        <div className="h-screen dark:bg-softdark">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-2">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.title} </h1>
                 </div>
             </header>
             <main>
-                <div className="max-w-9xl mx-auto xxxs:px-6 lg:px-2">
+                <div className="max-w-9xl mx-auto xxxs:px-6 lg:px-2 ">
                     <div className=" max-w-7xl mx-auto border-b border-gray dark:border-darkgray mt-6 mb-10 hidden md:block ">
                         <div className="flex-row flex md:justify-start">
                             <NavLink to="offers"
@@ -65,7 +65,7 @@ function HomePage() {
                             </NavLink>
                         </div>
                     </div>
-                    <div className="w-full">
+                    <div className="w-full h-full">
                         <Outlet
                         />
                     </div>
