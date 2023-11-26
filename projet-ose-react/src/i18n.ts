@@ -750,6 +750,7 @@ i18n
                             declineSuccess: "The CV has been declined",
                             declineError: "An error occurred while declining the CV",
                         },
+                        noCv: "No CV to evaluate",
                         view: "View CV",
                     },
                     Shared: {
@@ -1476,6 +1477,7 @@ i18n
                             declineSuccess: "Le CV a été refusé",
                             declineError: "Une erreur est survenue lors du refus du CV",
                         },
+                        noCv: "Aucun CV à évaluer",
 
                         view: "Voir CV",
                     },

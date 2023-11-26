@@ -65,6 +65,7 @@ function EvaluerCV() {
         <>
             <div className="lg:p-16 p-4">
                 <h1 className="text-center font-extrabold text-2xl dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
+                {files.length === 0 && <p className="w-full h-min bg-red text-center text-white">{t("StudentCvEvaluation.noCv")}</p>}
                 {files.map((file) =>
                     <>
                         <div key={file.id} className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
