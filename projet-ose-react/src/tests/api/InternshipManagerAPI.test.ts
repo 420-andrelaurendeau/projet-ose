@@ -144,7 +144,7 @@ describe('InternshipManagerAPI', () => {
             (api.get as jest.Mock).mockResolvedValue({data: mockData});
 
 
-            const result = await getTotalOfferByState();
+            const result = await getTotalOfferByState("");
 
             expect(api.get).toHaveBeenCalledWith('internshipManager/count', expect.anything());
 
@@ -155,7 +155,7 @@ describe('InternshipManagerAPI', () => {
 
             (api.get as jest.Mock).mockRejectedValue(new Error('Network error'));
 
-            await expect(getTotalOfferByState()).rejects.toThrow('Network error');
+            await expect(getTotalOfferByState("")).rejects.toThrow('Network error');
         });
 
     });

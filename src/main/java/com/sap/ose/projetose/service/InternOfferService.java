@@ -189,10 +189,10 @@ public class InternOfferService {
         }
     }
 
-    public Map<String, Long> getCountByState() {
+    public Map<String, Long> getCountByState(String session) {
         HashMap<String, Long> countMap = new HashMap<>(Map.of("PENDING", 0L, "ACCEPTED", 0L, "DECLINED", 0L, "TOTAL", 0L));
         try {
-            List<Object[]> counts = offerJobRepository.getCountByState();
+            List<Object[]> counts = offerJobRepository.getCountByState(session);
             long totalOffers = 0;
             for (Object[] count : counts) {
                 Long stateCount = (Long) count[1];

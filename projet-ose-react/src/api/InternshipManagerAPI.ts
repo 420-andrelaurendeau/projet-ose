@@ -33,11 +33,14 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
     }
 };
 
-export const getTotalOfferByState = async () => {
+export const getTotalOfferByState = async (session: string) => {
     try {
         const response = await api.get('internshipManager/count', {
             headers: {
                 //  'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            params: {
+                session: session
             }
         });
         console.log('response', response.data);

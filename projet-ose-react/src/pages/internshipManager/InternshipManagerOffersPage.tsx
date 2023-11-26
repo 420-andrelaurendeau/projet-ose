@@ -106,7 +106,7 @@ const InternshipManagerOffersPage = () => {
         };
         if (!fetchedOffersCountRef.current) fetchOffersCount();
 
-    }, [isUpdate]);
+    }, [isUpdate, selectedOption]);
 
     useEffect(() => {
         document.title = fields.title;
@@ -118,7 +118,7 @@ const InternshipManagerOffersPage = () => {
     };
 
     const handleTotalOffersByState = async () => {
-        const responseTotal = await getTotalOfferByState();
+        const responseTotal = await getTotalOfferByState(selectedOption);
         setTotalOffers(0);
         setTotalApprouved(0);
         setTotalPending(0);
