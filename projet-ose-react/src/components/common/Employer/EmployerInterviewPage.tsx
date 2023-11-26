@@ -7,9 +7,11 @@ import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {useTranslation} from "react-i18next";
 
 export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation();
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
     const isLoading = useRef(false);
@@ -158,6 +160,14 @@ export const EmployerInterviewPage = () => {
                     </tr>
                     </thead>
                     <tbody className="bg-white text-black divide-y divide-gray dark:bg-dark dark:divide-darkgray">
+                    {interviews.length === 0 && (
+                        <tr>
+                            <td className="text-center bg-red text-white"
+                                colSpan={5}>
+                                {t("StudentInterview.table.empty")}
+                            </td>
+                        </tr>
+                    )}
                     {interviews.map((interview) => (
                         <tr key={interview.id}>
                             <td className="px-6 py-4 whitespace-nowrap

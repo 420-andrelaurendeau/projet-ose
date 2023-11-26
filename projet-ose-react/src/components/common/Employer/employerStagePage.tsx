@@ -137,6 +137,14 @@ export default function EmployerStagePage() {
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                            {stageAgreement.length === 0 && (
+                                <tr>
+                                    <td className="text-center bg-red text-white"
+                                        colSpan={5}>
+                                        {fields.empty}
+                                    </td>
+                                </tr>
+                            )}
                             { stageAgreement.map((stage:any) => (
                                 <tr key={stage.id}>
                                     <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
