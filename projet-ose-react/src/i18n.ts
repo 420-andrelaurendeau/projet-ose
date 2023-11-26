@@ -36,7 +36,7 @@ i18n
                         application,
                         employerOffer,
                         studentOffer:studentOffer.en,
-                        contractPage,
+                        contractPage:contractPage.en,
                         header,
                         InternshipsAgreementPage: {
                             header:{
@@ -760,7 +760,7 @@ i18n
                         employerOffer,
                         studentOffer:studentOffer.fr,
                         header,
-                        contractPage,
+                        contractPage:contractPage.fr,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",

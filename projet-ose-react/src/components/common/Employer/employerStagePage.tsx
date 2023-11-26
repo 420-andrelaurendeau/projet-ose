@@ -20,8 +20,8 @@ import {saveEmployerOpinion} from "../../../api/StageAPI";
 export default function EmployerStagePage() {
 
     const navigate = useNavigate();
-    const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
+    const {i18n,t} = useTranslation();
+    //formField.contractPage
     const {
         stageAgreement,
         seasons,
@@ -98,7 +98,7 @@ export default function EmployerStagePage() {
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
-                                    {fields.AgreementTable.title.text}
+                                    {t("formField.contractPage.AgreementTable.title.text")}
                                     <div
                                         className={sortAgreementField === "title" ? "visible" : "hidden"}>
                                         <FontAwesomeIcon
@@ -112,7 +112,7 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.enterprise.text}
+                                        {t("formField.contractPage.AgreementTable.enterprise.text")}
                                         <div
                                             className={sortAgreementField === "startDate" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -127,7 +127,8 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.student.text}
+
+                                        {t("formField.contractPage.AgreementTable.student.text")}
                                         <div
                                             className={sortAgreementField === "salaryByHour" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -142,7 +143,7 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.status.text}
+                                        {t("formField.contractPage.AgreementTable.status.text")}
                                         <div
                                             className={sortAgreementField === "state" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -174,7 +175,6 @@ export default function EmployerStagePage() {
                                         {stage.etudiantDto.nom + " " + stage.etudiantDto.prenom}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
-
                                         <span
                                             className={
                                                 stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
@@ -183,13 +183,11 @@ export default function EmployerStagePage() {
                                                         "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
-                                            {fields.AgreementTable[
-                                                stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
-                                                    "DECLINED"
-                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
-                                                        "PENDING"
-                                                        : "ACCEPTED"
-                                                ].text}
+                                            {t(`formField.contractPage.AgreementTable.${stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
+                                                "DECLINED"
+                                                : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
+                                                    "PENDING"
+                                                    : "ACCEPTED"}.text`)}
                                         </span>
                                     </td>
                                     <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -199,10 +197,11 @@ export default function EmployerStagePage() {
                                                     Stage accepté
                                                 </div>
                                                 : stage.stateEmployeur == "PENDING" ?
-
+                                                //TODO ajouter transaltion
                                                     <div className="flex ">
                                                         <div className="flex justify-between gap-4">
                                                             <button
+                                                                aria-label={"accept-button"}
                                                                 type="button"
                                                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-green hover:bg-emerald-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                                                 onClick={() => saveEmployerOpinion(stage.id, "ACCEPTED").then(r => {
@@ -218,6 +217,7 @@ export default function EmployerStagePage() {
                                                                 accept
                                                             </button>
                                                             <button
+                                                                aria-label={"refuse-button"}
                                                                 type="button"
                                                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                                                 onClick={() => saveEmployerOpinion(stage.id, "DECLINED").then(r => {

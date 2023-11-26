@@ -6,6 +6,8 @@ import SidebarEmployeurHome from "../../components/common/Employer/SidebarEmploy
 import {useAuth} from "../../authentication/AuthContext";
 import EmployerStagePage from "../../components/common/Employer/employerStagePage";
 import {useProps} from "../../pages/employer/EmployeurHomePage";
+import {saveEmployerOpinion} from "../../api/StageAPI";
+import exp from "constants";
 
 jest.mock("../../authentication/AuthContext", () => {
     return {
@@ -37,6 +39,11 @@ jest.mock('react-i18next', () => ({
 jest.mock("../../pages/employer/EmployeurHomePage", () => ({
     useProps: jest.fn()
 }))
+jest.mock("../../api/StageAPI", () => {
+    return {
+        saveEmployerOpinion: jest.fn()
+    }
+})
 
 const mockUser = {
     id: 10,
@@ -49,7 +56,7 @@ const mockUser = {
     programme_id: 1
 }
 
-const mockStageAgreement:any[] = [
+const mockStageAgreement: any[] = [
     {
         "id": 1,
         "employeur": {
@@ -127,7 +134,7 @@ const mockStageAgreement:any[] = [
         },
         "internOfferDto": {
             "id": 3,
-            "title": "Stage Réseaux",
+            "title": "Stage Réseaux 1",
             "location": "Quebec",
             "description": "En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",
             "salaryByHour": 20.0,
@@ -178,7 +185,7 @@ const mockStageAgreement:any[] = [
         },
         "internOfferDto": {
             "id": 3,
-            "title": "Stage Réseaux",
+            "title": "Stage Réseaux 2",
             "location": "Quebec",
             "description": "En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",
             "salaryByHour": 20.0,
@@ -210,37 +217,79 @@ const mockStageAgreement:any[] = [
 const mockProps = {
     user: mockUser,
     stageAgreement: mockStageAgreement,
-    "sortField": "",
-    "sortDirection": "",
-    "totalPages": 1,
-    "numberElementByPage": 5,
+    "sortAgreementField": "",
+    "sortAgreementDirection": "",
+    "totalPageAgreement": 1,
+    "numberElementAgreementByPage": 5,
     "pageAgreement": 0,
     "seasons": [
         "Automne2024",
         "Automne2023"
     ],
     selectedOption: "",
-    handleChangeOption: jest.fn(),
+    setOnChangeAgreement: jest.fn(),
+    handleOptionChange: jest.fn(),
     handleChangeDirection: jest.fn(),
-    onPageChange: jest.fn(),
-    setSortDirection: (input: string) => {
-        mockProps.sortDirection = input;
+    onPageChangeAgreement: jest.fn(),
+    setAgreementSortDirection: (input: string) => {
+        mockProps.sortAgreementDirection = input;
     },
-    setSortField: (input: string) => {
-        mockProps.sortField = input;
+    setAgreementSortField: (input: string) => {
+        mockProps.sortAgreementField = input;
     },
-    handleChangeNumberElement: jest.fn(),
+    handleChangeNumberElementAgreement: jest.fn(),
 }
 
 describe("Employeur Stage Page", () => {
-    beforeEach(()=>{
+    beforeEach(() => {
         (useProps as jest.Mock).mockReturnValue(mockProps);
+        (saveEmployerOpinion as jest.Mock).mockResolvedValue({data:"success"})
     })
-    test("Renders without errors", () => {
+    test("Renders without errors", async () => {
         render(
             <MemoryRouter initialEntries={['/employer/home/stage']}>
                 <EmployerStagePage/>
             </MemoryRouter>
         )
+        const agreement1 = await screen.findByText(mockStageAgreement[0].internOfferDto.title)
+        const agreement2 = await screen.findByText(mockStageAgreement[1].internOfferDto.title)
+        const agreement3 = await screen.findByText(mockStageAgreement[2].internOfferDto.title)
+        expect(agreement1).toBeInTheDocument()
+        expect(agreement2).toBeInTheDocument()
+        expect(agreement3).toBeInTheDocument()
     })
+    test("Should be able to accept stage", async () => {
+        render(
+            <MemoryRouter initialEntries={['/employer/home/stage']}>
+                <EmployerStagePage/>
+            </MemoryRouter>
+        )
+        const acceptButton = await screen.findByLabelText("accept-button")
+        expect(acceptButton).toBeInTheDocument()
+
+        act(() => {
+                fireEvent.click(acceptButton)
+            }
+        )
+
+        expect(saveEmployerOpinion).toHaveBeenCalledWith(mockStageAgreement[0].internOfferDto.id, "ACCEPTED")
+    })
+
+    test("Should be able to refuse stage", async () => {
+        render(
+            <MemoryRouter initialEntries={['/employer/home/stage']}>
+                <EmployerStagePage/>
+            </MemoryRouter>
+        )
+        const refuseButton = await screen.findByLabelText("refuse-button")
+        expect(refuseButton).toBeInTheDocument()
+
+        act(() => {
+                fireEvent.click(refuseButton)
+            }
+        )
+
+        expect(saveEmployerOpinion).toHaveBeenCalledWith(mockStageAgreement[0].internOfferDto.id, "DECLINED")
+    })
+
 })
