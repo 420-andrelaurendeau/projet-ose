@@ -239,6 +239,7 @@ let mockAppliedOffers: appliedOffer[] = [
             }
     },
 ];
+
 const mockProps = {
     user: mockUser,
     appliedOffers: mockAppliedOffers,

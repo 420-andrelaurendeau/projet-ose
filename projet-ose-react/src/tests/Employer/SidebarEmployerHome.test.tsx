@@ -4,9 +4,13 @@ import '@testing-library/jest-dom';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import SidebarEmployeurHome from "../../components/common/Employer/SidebarEmployeurHome";
 import {useAuth} from "../../authentication/AuthContext";
-import exp from "constants";
-import {use} from "i18next";
+import {useProps} from "../../pages/employer/EmployeurHomePage";
 
+jest.mock("../../pages/employer/EmployeurHomePage", () => {
+    return {
+        useProps:jest.fn()
+    }
+})
 jest.mock("../../authentication/AuthContext", () => {
     return {
         useAuth: jest.fn()
@@ -36,7 +40,7 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe('SidebarEmployeurHome Component', () => {
-    beforeEach(()=>{
+    beforeEach(() => {
         const userRole: string = "employer";
         (useAuth as jest.Mock).mockImplementation(() => {
             return {

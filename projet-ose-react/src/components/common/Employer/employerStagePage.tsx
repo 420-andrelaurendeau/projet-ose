@@ -16,13 +16,30 @@ import {employeurGetContractById} from "../../../api/ContractAPI";
 import ViewPDFModal from "./offer/ViewPDFModal";
 import {saveEmployerOpinion} from "../../../api/StageAPI";
 
-
+//TODO BUG WITH SORTING
 export default function EmployerStagePage() {
 
     const navigate = useNavigate();
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
-    const {stageAgreement,seasons,selectedOption,handleOptionChange, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
+    const {
+        stageAgreement,
+        seasons,
+        selectedOption,
+        handleOptionChange,
+        pageAgreement,
+        totalPageAgreement,
+        onPageChangeAgreement,
+        numberElementAgreementByPage,
+        handleChangeNumberElementAgreement,
+        sortAgreementDirection,
+        sortAgreementField,
+        setAgreementSortField,
+        setAgreementSortDirection,
+        setOnChangeAgreement,
+        setAgreementIsUpdate,
+        isLoaded
+    } = useProps();
     const [file, setFile] = useState<any>({
         content: "",
     });
@@ -30,7 +47,10 @@ export default function EmployerStagePage() {
     const [isLoadedContract, setIsLoadedContract] = useState(false);
 
     useEffect(() => {
+        console.log("STAGE AGREEMENT")
         console.log(stageAgreement)
+        console.log("SEASON")
+        console.log(seasons)
     }, [seasons]);
 
     const handleSortClick = (newSortField: any) => {
@@ -45,7 +65,7 @@ export default function EmployerStagePage() {
         }
     };
 
-    console.log('agreement: '+stageAgreement)
+    console.log('agreement: ' + stageAgreement)
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
@@ -68,7 +88,8 @@ export default function EmployerStagePage() {
                             ))}
                         </select>
                     </div>
-                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                    <div
+                        className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
                             <thead className="bg-blue dark:bg-orange ">
                             <tr>
@@ -130,13 +151,14 @@ export default function EmployerStagePage() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
-                                    <span >Option</span>
+                                <th scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                                    <span>Option</span>
                                 </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            { stageAgreement.map((stage:any) => (
+                            {stageAgreement.map((stage: any) => (
                                 <tr key={stage.id}>
                                     <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
@@ -157,7 +179,7 @@ export default function EmployerStagePage() {
                                             className={
                                                 stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
                                                     "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
-                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING")?
+                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
                                                         "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
@@ -213,24 +235,24 @@ export default function EmployerStagePage() {
                                                         </div>
 
                                                     </div>
-                                                : stage.stateEmployeur == "DECLINED"?
+                                                    : stage.stateEmployeur == "DECLINED" ?
 
                                                         <div className="flex dark:text-white">
                                                             Vous avez refuser
                                                         </div>
 
-                                                    :stage.stateStudent == "DECLINED"?
+                                                        : stage.stateStudent == "DECLINED" ?
 
-                                                        <div className="flex dark:text-white">
-                                                            L'étudiant a refuser
-                                                        </div>
-                                                    :
+                                                            <div className="flex dark:text-white">
+                                                                L'étudiant a refuser
+                                                            </div>
+                                                            :
 
-                                                        <div className="flex dark:text-white">
-                                                            En attente de l'étudiant
-                                                        </div>
+                                                            <div className="flex dark:text-white">
+                                                                En attente de l'étudiant
+                                                            </div>
 
-                                    }
+                                        }
                                     </td>
                                 </tr>
                             ))}
@@ -238,7 +260,8 @@ export default function EmployerStagePage() {
                         </table>
                     </div>
                     <div className="pt-4">
-                        <ListItemPageSelector page={pageAgreement} totalPages={totalPageAgreement} onPageChange={onPageChangeAgreement}/>
+                        <ListItemPageSelector page={pageAgreement} totalPages={totalPageAgreement}
+                                              onPageChange={onPageChangeAgreement}/>
                     </div>
                 </div>
             </div>
@@ -252,7 +275,7 @@ interface Props {
     size: string;
 }
 
-export function usePropsContract(){
+export function usePropsContract() {
     return useOutletContext<Props>();
 }
 
