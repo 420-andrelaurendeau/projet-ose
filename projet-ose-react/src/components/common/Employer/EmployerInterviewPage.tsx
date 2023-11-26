@@ -7,9 +7,11 @@ import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {useTranslation} from "react-i18next";
 
 export const EmployerInterviewPage = () => {
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation();
+    //StudentInterview
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
     const isLoading = useRef(false);
@@ -128,32 +130,32 @@ export const EmployerInterviewPage = () => {
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                         >
-                            {fields.table.title}
+                            {t("StudentInterview.table.title")}
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                         >
-                            {fields.table.location}
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
-                        >
-
-                            {fields.table.date}
+                            {t("StudentInterview.table.location")}
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
                         >
 
-                            {fields.table.company}
+                            {t("StudentInterview.table.date")}
+                        </th>
+                        <th
+                            scope="col"
+                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                        >
+
+                            {t("StudentInterview.table.company")}
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
-                            {fields.table.status_text.text}
+                            {t("StudentInterview.table.status_text.text")}
                         </th>
                     </tr>
                     </thead>
@@ -185,7 +187,7 @@ export const EmployerInterviewPage = () => {
                                                                                         "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
                                                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                                                         >
-                                                {fields[interview.state].text}
+                                                {t(`StudentInterview.${interview.state}.text`)}
                                             </span>
                             </td>
                         </tr>
