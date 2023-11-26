@@ -59,7 +59,7 @@ export default function ApplicationDetails ():ReactElement{
             console.log(res)
             application.state = "ACCEPTED"
             application.date = res.data.date
-            updateCandidature()
+            //updateCandidature()
             setUpdate(true)
             toast.success(fields.success.text)
             navigate("/employer/home/offers/"+offerId+"/application")
@@ -179,7 +179,7 @@ export default function ApplicationDetails ():ReactElement{
                                             onClick={() => {
                                                 handleAccept(application.id);
                                                 application.state = "ACCEPTED";
-                                                updateCandidature();
+                                                //updateCandidature();
                                             }}
                                         >
                                             {fields.accept.text}
