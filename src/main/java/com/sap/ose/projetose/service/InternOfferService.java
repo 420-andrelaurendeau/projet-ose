@@ -23,10 +23,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class InternOfferService {
@@ -267,19 +264,19 @@ public class InternOfferService {
     }
 
     public String getInternOfferByDates(LocalDate date){
+        Calendar calendar = Calendar.getInstance();
         int month = date.getMonthValue();
 
-        if (month >= 3 && month <= 5) {
-            return "Printemps"+date.getYear();
-        } else if (month >= 6 && month <= 8) {
-            return "Été"+date.getYear();
-        } else if (month >= 9 && month <= 11) {
-            return "Automne"+date.getYear();
-        } else if (month == 12 || month <= 2) {
-           return "Hiver"+date.getYear();
-        }else {
-            return "No specific offers for this month";
+        String session;
+        if (month >= Calendar.JUNE && month <= Calendar.SEPTEMBER) {
+            session = "Été"+ date.getYear();
+        } else if (month >= Calendar.JANUARY || month <= Calendar.MAY) {
+            session = "Hiver" + date.getYear();
+        } else {
+            session = "No stage session during this day";
         }
+
+        return session;
 
     }
 

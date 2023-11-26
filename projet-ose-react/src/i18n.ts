@@ -75,6 +75,7 @@ i18n
                                 accepted: "Offers accepted",
                                 declined: "Offers declined",
                                 pending: "Offers pending",
+                                back: "Back"
                             },
                             table: {
                                 title: "Title",
@@ -797,6 +798,7 @@ i18n
                                 accepted: "Offres acceptées",
                                 declined: "Offres refusées",
                                 pending: "Offres en attente",
+                                back: "Retour"
                             },
                             table: {
                                 title: "Titre",
