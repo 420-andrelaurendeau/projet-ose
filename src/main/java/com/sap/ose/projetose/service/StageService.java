@@ -186,8 +186,8 @@ public class StageService {
     }
 
     @Transactional
-    public Map<String, Long> getCountByStateGS(){
-        List<Object[]> counts = stageRepository.getCountByState();
+    public Map<String, Long> getCountByStateGS(String season){
+        List<Object[]> counts = stageRepository.getCountByState(season);
         return getCountByState(counts);
     }
 

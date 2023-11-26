@@ -92,9 +92,13 @@ export const declineStudentCv = async (id: number) => {
 }
 
 
-export const getStageCountByState = async () => {
+export const getStageCountByState = async (season: string) => {
     try {
-        const response = await api.get('stage/count');
+        const response = await api.get('stage/count', {
+            params: {
+                season: season
+            }
+        });
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres de stage:', error);

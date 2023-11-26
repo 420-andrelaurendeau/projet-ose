@@ -47,9 +47,11 @@ public class StageController {
 
     @PreAuthorize("hasAuthority('internshipmanager')")
     @GetMapping("/count")
-    public ResponseEntity<Map<String, Long>> getStageCount() {
+    public ResponseEntity<Map<String, Long>> getStageCount(
+            @RequestParam() String season
+    ) {
         logger.info("Stage count request received");
-        return Optional.of(stageService.getCountByStateGS()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(stageService.getCountByStateGS(season)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 

@@ -264,7 +264,7 @@ describe('InternshipManagerAPI', () => {
 
             (api.get as jest.Mock).mockResolvedValue({ data: mockData });
 
-            const result = await getStageCountByState();
+            const result = await getStageCountByState("");
 
             expect(api.get).toHaveBeenCalledWith('stage/count');
             expect(result).toEqual(mockData);
@@ -273,7 +273,7 @@ describe('InternshipManagerAPI', () => {
         it('handles error on fetching stage count', async () => {
             (api.get as jest.Mock).mockRejectedValue(new Error('Network error'));
 
-            await expect(getStageCountByState()).rejects.toThrow('Network error');
+            await expect(getStageCountByState("")).rejects.toThrow('Network error');
         });
     });
 
