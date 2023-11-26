@@ -12,8 +12,8 @@ export const saveCvStudent = async (matricule: number, cv: any) => {
     }
 }
 
-export const fetchInterviews = async (userId: number,{page, size, sortField, sortDirection}:any ): Promise<Interview[]> => {
-    const params: any = {page, size, sortField, sortDirection};
+export const fetchInterviews = async (userId: number,{page, size, sortField, sortDirection, season}:any ): Promise<Interview[]> => {
+    const params: any = {page, size, sortField, sortDirection, season};
 
     try {
         const res = await api.get(`interview/getByStudentId/`+ userId, {
