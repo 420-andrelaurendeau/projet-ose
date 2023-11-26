@@ -1,8 +1,8 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import AssessCv from './AssessCv';
-import { acceptStudentCv, declineStudentCv, getStudentPendingCv } from '../../../api/InternshipManagerAPI';
-import { ReviewFile } from '../../../model/ReviewFile';
-import { useToast } from '../../../hooks/state/useToast';
+import AssessCv from '../pages/management/student/AssessCv';
+import { acceptStudentCv, declineStudentCv, getStudentPendingCv } from '../api/InternshipManagerAPI';
+import { ReviewFile } from '../model/ReviewFile';
+import { useToast } from '../hooks/state/useToast';
 
 jest.mock('../../../api/InternshipManagerAPI');
 jest.mock('../../../hooks/state/useToast');
