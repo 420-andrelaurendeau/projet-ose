@@ -72,12 +72,10 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     function getCandidates(offer:any) {
-        console.log(offer)
         if (!fetchedCandidateRef.current) {
             loadCandidates(offer.internshipCandidates!).then(
                 (candidatures) => {
-                    console.log("Candidates loaded")
-                    console.log(candidatures)
+                    console.log("Loaded candidates")
                     candidatures.map((candidature: any) => {
                         let interviewList: any[] = []
                         let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
@@ -101,7 +99,6 @@ const ApplicationOffer: React.FC<any> = () => {
 
     useEffect(() => {
         if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
-            console.log("Offer loaded")
             getCandidates(offer)
             setUpdate(false)
         });

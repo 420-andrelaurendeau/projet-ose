@@ -26,7 +26,7 @@ export default function ApplicationDetails ():ReactElement{
 
     useEffect(()=>{
         setDate("")
-        updateCandidature()
+        //updateCandidature() //TODO: Demander a marc si c'est necessaire
     },[])
 
     const getFileSize = (file:any): string => {
