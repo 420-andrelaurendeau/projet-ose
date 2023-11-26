@@ -14,7 +14,29 @@ import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {selectOptions} from "@testing-library/user-event/dist/select-options";
+import {getAllSeasons} from "../../../api/InterOfferJobAPI";
 
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
 export default function StudentContractPage() {
 
     //TODO Create test for shared components
@@ -23,7 +45,7 @@ export default function StudentContractPage() {
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
     const [internshipAgreements, setInternshipsAgreement] = useState([]);
     const [state, setState] = useState(undefined);
     const [sortField, setSortField] = useState("id");
@@ -39,7 +61,7 @@ export default function StudentContractPage() {
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
     const navigate = useNavigate();
     const handleTotalOffersByState = async (id: number) => {
@@ -114,6 +136,14 @@ export default function StudentContractPage() {
         }).catch((error) => {
             toast.error(`Error fetching user data: ${error}`)
         })
+
+
+        const fetchSeasons = async () => {
+            let response = await getAllSeasons()
+            setSeasons(response);
+        };
+
+        fetchSeasons()
     }, []);
 
 
@@ -124,7 +154,7 @@ export default function StudentContractPage() {
             })
 
         }
-    }, [currentPage, state, numberElementByPage, isUpdate, sortField, sortDirection])
+    }, [currentPage, state, numberElementByPage, isUpdate, sortField, sortDirection, selectedOption])
 
     const handleOfferClick = (id: number) => {
         console.log(id)
