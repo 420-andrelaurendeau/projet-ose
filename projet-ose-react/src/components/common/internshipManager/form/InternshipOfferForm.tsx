@@ -262,7 +262,7 @@ const InternshipOfferForm: React.FC<any> = () => {
                                 <label className="block text-xs font-bold dark:text-offwhite"
                                        htmlFor="start_date_placeholder">{t('formField.InternshipOfferForm.startDate.text')}</label>
                                 <input name='startDate'
-                                       className="mt-1 p-2 w-full border border-gray text-black rounded-md dark:bg-softdark dark:border-0"
+                                       className="mt-1 p-2 w-full border border-gray text-black rounded-md dark:bg-softdark dark:border-0 dark:text-white"
                                        type="date" id="start_date_placeholder"
                                        onBlur={() => handleValidation("startDate")} onChange={handleFormChange}/>
                                 {renderError(errors.startDate)}
@@ -273,7 +273,7 @@ const InternshipOfferForm: React.FC<any> = () => {
                                 <label className="block text-xs font-bold dark:text-offwhite"
                                        htmlFor="end_date_placeholder">{t('formField.InternshipOfferForm.endDate.text')}</label>
                                 <input name='endDate'
-                                       className="mt-1 p-2 w-full border border-gray text-black rounded-md dark:bg-softdark dark:border-0"
+                                       className="mt-1 p-2 w-full border border-gray text-black rounded-md dark:bg-softdark dark:border-0 dark:text-white"
                                        type="date" id="end_date_placeholder"
                                        onBlur={() => handleValidation("endDate")} onChange={handleFormChange}/>
                                 {renderError(errors.endDate)}
