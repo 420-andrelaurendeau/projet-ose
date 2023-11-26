@@ -531,7 +531,7 @@ describe("StudentInternship Component", () => {
             expect(applyButtons[1]).toBeEnabled();
             fireEvent.click(applyButtons[1]);
         });
-        const offers = screen.getAllByLabelText("apply-button");
+        const offers = await screen.findAllByLabelText("apply-button");
         expect(offers[1]).toBeEnabled();
 
         const toast_message = await screen.findByLabelText("toast-message");
