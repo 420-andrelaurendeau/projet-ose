@@ -157,23 +157,23 @@ export const EmployerInterviewPage = () => {
                         </th>
                     </tr>
                     </thead>
-                    <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                    <tbody className="bg-white text-black divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                     {interviews.map((interview) => (
                         <tr key={interview.id}>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-center text-sm font-medium dark:text-white">
                                 {interview.internOffer.title}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-center text-sm font-medium dark:text-white">
                                 {interview.internOffer.location}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-center text-sm font-medium dark:text-white">
                                 {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-center text-sm font-medium dark:text-white">
                                 {interview.internOffer.employeurEntreprise}
                             </td>
                             <td>
