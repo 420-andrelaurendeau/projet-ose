@@ -53,24 +53,21 @@ const Header = (userd: any) => {
     const isloading = useRef(false);
 
     useEffect(() => {
-        const getUtilisateur = async () => {
+        const getUtilisateur = () => {
             isloading.current = true;
             if (userEmail)
-                setUser(await getUser(userEmail))
-            isloading.current = false;
+                getUser(userEmail).then(user => {
+                    fetchUserNotifications(user.id).then(messages => {
+                        setMessages(messages);
+                        console.log(messages);
+                    });
+                    setUser(user);
+                    isloading.current = false;
+                })
         }
 
         if (!isloading.current)
-            getUtilisateur().then(
-                r => {
-                    console.log(r)
-
-                    fetchUserNotifications(user.id).then(messages => {
-                        setMessages(messages);
-                        console.log(messages)
-                    })
-                }
-            )
+            getUtilisateur()
 
     }, [])
 

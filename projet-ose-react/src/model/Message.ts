@@ -1,5 +1,5 @@
 export interface Message {
     id: number,
-    messageKey: string | undefined,
+    message: string | undefined,
     isRead: boolean
 }
