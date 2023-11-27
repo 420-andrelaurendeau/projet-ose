@@ -32,9 +32,8 @@ const ApplicationOffer: React.FC<any> = () => {
     const [date, setDate] = useState<Date>(new Date());
     const [studentId, setStudentId] = useState<number>(0);
     const [internshipOffer, setinternshipOffer] = useState<any>();
-    const {i18n} = useTranslation();
-    //
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application");
+    const {t, i18n} = useTranslation();
+    //formField.application
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
     const updateCandidateRef = useRef(false);
@@ -54,26 +53,26 @@ const ApplicationOffer: React.FC<any> = () => {
             return response;
 
         } catch (error) {
-            toast.error(fields.errorFetchOffer.text);
+            toast.error(t("formField.application.errorFetchOffer.text"));
         } finally {
             fetchedOfferRef.current = false;
         }
     };
 
-    const loadCandidates = async (ids:number[]) => {
+    const loadCandidates = async (ids: number[]) => {
         try {
             fetchedCandidateRef.current = true
             const response = await getInterOfferCandidates(ids.join(","));
             setInterOfferCandidates(response);
             return response;
-        }catch (error){
-            toast.error(fields.errorFetchCandidate.text);
+        } catch (error) {
+            toast.error(t("formField.application.errorFetchCandidate.text"))
         } finally {
             fetchedCandidateRef.current = false;
         }
     }
 
-    function getCandidates(offer:any) {
+    function getCandidates(offer: any) {
         console.log(offer)
         if (!fetchedCandidateRef.current) {
             loadCandidates(offer.internshipCandidates!).then(
@@ -93,8 +92,8 @@ const ApplicationOffer: React.FC<any> = () => {
                         })
                         candidature.interviewList = interviewList
                     })
-                } ).catch(e => {
-                    toast.error(fields.errorFetchCandidate.text);
+                }).catch(e => {
+                    toast.error(t("formField.application.errorFetchCandidate.text"));
                     console.log(e)
                 }
             )
@@ -104,16 +103,15 @@ const ApplicationOffer: React.FC<any> = () => {
     useEffect(() => {
         console.log("OFFERS - PROPS")
         console.log(offers)
-        if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
+        if (!fetchedOfferRef.current) loadOffer().then((offer: any) => {
             console.log("Offer loaded")
             getCandidates(offer)
             setUpdate(false)
         });
-        if (!isReviewing){
-            navigate("/employer/home/offers/"+id+"/application")
+        if (!isReviewing) {
+            navigate("/employer/home/offers/" + id + "/application")
         }
-    }, [!updateCandidateRef.current,update]);
-
+    }, [!updateCandidateRef.current, update]);
 
 
     function handleAccept(id: string) {
@@ -168,7 +166,7 @@ const ApplicationOffer: React.FC<any> = () => {
         return returnBool
     }
 
-    const handleReview = (app: any,studentId:number) => {
+    const handleReview = (app: any, studentId: number) => {
         setIsReviewing(true)
         setApplication(app)
         setStudentId(studentId)
@@ -188,6 +186,18 @@ const ApplicationOffer: React.FC<any> = () => {
         setUpdate: setUpdate
     }
 
+    function dateToString(date: any) {
+        let returnDate = new Date(date);
+        returnDate.setDate(returnDate.getDate() + 1)
+        return returnDate.toLocaleDateString(i18n.language, {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+
+        })
+    }
+
     return (
         <div className="justify-center pb-16">
             <div className="py-6 max-md:pt-24 ">
@@ -205,117 +215,120 @@ const ApplicationOffer: React.FC<any> = () => {
                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             onClick={() => navigate("/employer/home/offers")}
                         >
-                            {fields.back.text}
+                            {t("formField.application.back.text")}
                         </button>
                     </div>
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-full md:w-10/12 lg:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
-                <div className=" py-8 flex justify-between">
-                    <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
-                </div>
-                <div className=" border-t border-neutral-200 dark:border-darkergray">
-                    <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
-                        {interOfferCandidates.map((candidate) => {
-                            return (
-                                <div key={candidate.id} className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className=" font-medium space-y-8 leading-6 dark:text-white">
-                                        <div className="space-y-3">
-                                            <div>
-                                                <p className="font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.wordName.text}
-                                                </p>
-                                            </div>
-                                            <div className="flex space-x-4 h-10 items-center">
-                                                <FontAwesomeIcon icon={faCircleUser} size="xl" className="text-blue dark:text-orange h-full"/>
+                <div
+                    className="w-full md:w-10/12 lg:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+                    <div className=" py-8 flex justify-between">
+                        <h1 className="text-3xl font-bold text-black dark:text-white">
+                            {t("formField.application.title.text")}
+                        </h1>
+                    </div>
+                    <div className=" border-t border-neutral-200 dark:border-darkergray">
+                        <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
+                            {interOfferCandidates.map((candidate) => {
+                                return (
+                                    <div key={candidate.id}
+                                         className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                        <dt className=" font-medium space-y-8 leading-6 dark:text-white">
+                                            <div className="space-y-3">
                                                 <div>
-                                                    <div className="text-sm font-medium text-black dark:text-white">
-                                                        {candidate.etudiant.prenom + " " + candidate.etudiant.nom}
-                                                    </div>
-                                                    <div className="text-sm text-neutral-500 dark:text-neutral-300">
-                                                        {candidate.etudiant.programme_id}
-                                                    </div>
+                                                    <p className="font-medium text-neutral-500 dark:text-neutral-300">
+                                                        {t("formField.application.wordName.text")}
+                                                    </p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-3">
-                                            <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                {fields.contactInfo.text}
-                                            </p>
-                                            <div className=" font-medium text-black dark:text-white">
-                                                <p>{candidate.etudiant.phone}</p>
-                                                <p>{candidate.etudiant.email}</p>
-                                            </div>
-                                        </div>
-
-                                    </dt>
-                                    <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white">
-                                        <div className="space-y-8 ">
-                                            <div className="space-y-3">
-                                                <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.interview.text}
-                                                </p>
-                                                <div className="flex font-medium h-10 items-center text-black dark:text-white">
-                                                    {
-                                                        candidate.date ?
-                                                            <p>{new Date(candidate.date).toLocaleDateString(i18n.language,{
-                                                                weekday: 'long',
-                                                                month: 'long',
-                                                                day: 'numeric',
-                                                                year: 'numeric',
-
-                                                            })}</p>:
-                                                            <p>{fields.noInterview.text}</p>
-                                                    }
+                                                <div className="flex space-x-4 h-10 items-center">
+                                                    <FontAwesomeIcon icon={faCircleUser} size="xl"
+                                                                     className="text-blue dark:text-orange h-full"/>
+                                                    <div>
+                                                        <div className="text-sm font-medium text-black dark:text-white">
+                                                            {candidate.etudiant.prenom + " " + candidate.etudiant.nom}
+                                                        </div>
+                                                        <div className="text-sm text-neutral-500 dark:text-neutral-300">
+                                                            {candidate.etudiant.programme_id}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.status.text}
+                                                    {t("formField.application.contactInfo.text")}
                                                 </p>
-                                                <div className="font-medium text-black dark:text-white">
-                                                    <span className={"px-6 py-1 leading-5 font-semibold rounded-full w-3/4 text-white dark:text-offwhite" + (candidate.state == "PENDING" ? " bg-orange" : candidate.state === "DECLINED" ? " bg-red" : " bg-green")}>
+                                                <div className=" font-medium text-black dark:text-white">
+                                                    <p>{candidate.etudiant.phone}</p>
+                                                    <p>{candidate.etudiant.email}</p>
+                                                </div>
+                                            </div>
 
-                                                        {fields[candidate.state].text}
+                                        </dt>
+                                        <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white">
+                                            <div className="space-y-8 ">
+                                                <div className="space-y-3">
+                                                    <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                        {t("formField.application.interview.text")}
+                                                    </p>
+                                                    <div
+                                                        className="flex font-medium h-10 items-center text-black dark:text-white">
+                                                        {
+                                                            candidate.date ?
+                                                                <p>{dateToString(candidate.date)}</p> :
+                                                                <p>{t("formField.application.noInterview.text")}</p>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                        {t("formField.application.status.text")}
+                                                    </p>
+                                                    <div className="font-medium text-black dark:text-white">
+                                                    <span
+                                                        className={"px-6 py-1 leading-5 font-semibold rounded-full w-3/4 text-white dark:text-offwhite" + (candidate.state == "PENDING" ? " bg-orange" : candidate.state === "DECLINED" ? " bg-red" : " bg-green")}>
+
+                                                        {t(`formField.application.${candidate.state}.text`)}
                                                     </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="space-y-8">
-                                            <div className="space-y-3">
-                                                <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.actions.text}
-                                                </p>
-                                                <div className="flex space-x-4 font-medium h-10 items-center text-black dark:text-white">
-                                                    <button
-                                                        type="button"
-                                                        className="inline-flex items-center px-4 py-2 border border-transparent disabled:bg-blue dark:FDSdisabled:text-white disabled:dark:bg-orange shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-blue dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                                                        onClick={() => handleReview(candidate, candidate.etudiant.id)}
-                                                        disabled={idApplication == candidate.id}
-                                                    >
-                                                        <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" size="lg"/>
-                                                        {fields.review.text}
-                                                    </button>
+                                            <div className="space-y-8">
+                                                <div className="space-y-3">
+                                                    <p className=" font-medium text-neutral-500 dark:text-neutral-300">
+                                                        {t("formField.application.actions.text")}
+                                                    </p>
+                                                    <div
+                                                        className="flex space-x-4 font-medium h-10 items-center text-black dark:text-white">
+                                                        <button
+                                                            type="button"
+                                                            className="inline-flex items-center px-4 py-2 border border-transparent disabled:bg-blue dark:FDSdisabled:text-white disabled:dark:bg-orange shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-blue dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                                            onClick={() => handleReview(candidate, candidate.etudiant.id)}
+                                                            disabled={idApplication == candidate.id}
+                                                        >
+                                                            <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2"
+                                                                             size="lg"/>
+                                                            {t("formField.application.review.text")}
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </dd>
-                                </div>
-                            )
-                        })}
-                    </dl>
+                                        </dd>
+                                    </div>
+                                )
+                            })}
+                        </dl>
+                    </div>
                 </div>
-            </div>
             </div>
             <div className="w-full my-6 px-12 border border-gray dark:border-darkgray"/>
             {
                 isReviewing ?
-                <Outlet
-                    context={props}
-                />:
+                    <Outlet
+                        context={props}
+                    /> :
                     <div className=" flex justify-center items-center h-96 dark:text-white">
-                        {fields.isnotReviewed.text}
+                        {t("formField.application.isnotReviewed.text")}
                     </div>
             }
         </div>
