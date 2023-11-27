@@ -2,6 +2,9 @@ import React from "react";
 import {Route, Routes} from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import Layout from "../components/layout/Layout";
+import StudentInternshipPage from "../pages/student/StudentInternshipPage";
+import InternshipManagerOffersPage from "../pages/internshipManager/InternshipManagerOffersPage";
+import InternshipManagerOfferPage from "../pages/internshipManager/InternshipManagerOfferPage";
 import EmployeurHomePage from "../pages/employer/EmployeurHomePage";
 import EmployeurOffer from "../components/common/Employer/offer/EmployeurOffer";
 import ErrorPage from "../pages/ErrorPage";
@@ -15,9 +18,8 @@ import EmployerStagePage from "../components/common/Employer/employerStagePage";
 import InternshipContractPage from "../pages/internshipManager/InternshipContractPage";
 import EmployerContractsPage from "../components/common/Employer/employerContractsPage";
 
+import StudentInterviewPage from "../pages/student/StudentInterviewPage";
 import {EmployerInterviewPage} from "../components/common/Employer/EmployerInterviewPage";
-import Notifications from "../components/common/shared/notification/Notifications";
-
 const EmployerRouter: React.FC = () => {
     return (
         <ProtectedRoute requiredRoles={['employer']}>
@@ -26,7 +28,6 @@ const EmployerRouter: React.FC = () => {
                     <Route index path="home" element={<EmployeurHomePage/>}/>
                     <Route path="home" element={<EmployeurHomePage/>}>
                         <Route index path="offers" element={<EmployeurOffer/>}/>
-                        <Route path="notifications" element={<Notifications/>}/>
                         <Route path={"stage"} element={<EmployerStagePage/>}>
                             <Route path=":id" element={<ViewPDFModal/>}/>
                         </Route>

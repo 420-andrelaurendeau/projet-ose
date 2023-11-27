@@ -11,7 +11,6 @@ import InternshipContractPage from "../pages/internshipManager/InternshipContrac
 import HomePage from "../pages/shared/HomePage";
 import ViewPDFModal from "../components/common/Employer/offer/ViewPDFModal";
 import SignContract from "../components/common/preparedoc/SignContract";
-import Notifications from "../components/common/shared/notification/Notifications";
 
 const InternshipManagerRouter: React.FC = () => {
     return (
@@ -20,7 +19,6 @@ const InternshipManagerRouter: React.FC = () => {
                 <Route path="/" element={<Layout/>}>
                     <Route path="home" element={<HomePage/>}>
                         <Route index path="offers" element={<InternshipManagerOffersPage/>}/>
-                        <Route path="notifications" element={<Notifications/>}/>
                         <Route path="offers/:id" element={<InternshipManagerOfferPage/>}/>
                         <Route path="studentCvReview" element={<EvaluerCV/>}/>
                         <Route path="internshipsagreement" element={<InternshipManagerInternshipsAgreementPage/>}/>
