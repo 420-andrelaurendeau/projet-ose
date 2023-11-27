@@ -1,12 +1,13 @@
 import ApplicationOffer from "../../components/common/Employer/application/ApplicationOffer";
 import {getOfferById} from "../../api/InterOfferJobAPI";
 import {getInterOfferCandidates} from "../../api/intershipCandidatesAPI";
-import {render} from "@testing-library/react";
+import {findByText, render, screen} from "@testing-library/react";
 import {MemoryRouter, Route, Routes} from "react-router-dom";
 import {ToastContextProvider} from "../../hooks/context/ToastContext";
 import {useProps} from "../../pages/employer/EmployeurHomePage";
 import React from "react";
 import {user} from "../Student/StudentInternship.test";
+import exp from "constants";
 
 const mockCandidates: any[] = [
     {
@@ -104,12 +105,18 @@ const mockUser: user = {
 }
 
 const mockProps = {
-    offers:[mockOffer],
-    user:mockUser
+    offers: [mockOffer],
+    user: mockUser
 }
 
+const mockedUsedNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual('react-router-dom') as any,
+    useNavigate: () => mockedUsedNavigate,
+}))
+
 jest.mock("../../pages/employer/EmployeurHomePage", () => ({
-    useProps:jest.fn()
+    useProps: jest.fn()
 }))
 jest.mock("../../api/intershipCandidatesAPI", () => ({
     getInterOfferCandidates: jest.fn()
@@ -147,20 +154,16 @@ describe("Applicaiton offer test", () => {
         (getOfferById as jest.Mock).mockResolvedValue(mockOffer);
         (useProps as jest.Mock).mockResolvedValue(mockProps);
     })
-    test("should render without erros", () => {
+    test("should render without errors", async () => {
         render(
-            <MemoryRouter initialEntries={['/etudiant/home/offers/1/application']} initialIndex={0}>
-                <Routes>
-                    <Route
-                        path='/etudiant/home/offers/1/application'
-                        element={
-                            <ToastContextProvider>
-                                <ApplicationOffer/>
-                            </ToastContextProvider>
-                        }>
-                    </Route>
-                </Routes>
-            </MemoryRouter>
+            <ToastContextProvider>
+                <ApplicationOffer/>
+            </ToastContextProvider>
         )
+
+        const etudiantEmail = await screen.findByText(mockCandidates[0].etudiant.email)
+        const etudiantPhone = await screen.findByText(mockCandidates[0].etudiant.phone)
+        expect(etudiantEmail).toBeInTheDocument()
+        expect(etudiantPhone).toBeInTheDocument()
     })
 })
