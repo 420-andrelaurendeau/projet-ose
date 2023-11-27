@@ -22,8 +22,7 @@ public class NotificationController {
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     @PreAuthorize("hasAuthority('internshipmanager') OR (hasAuthority('student')) OR (hasAuthority('employer'))")
-    public List<NotificationDto> getNotifications(@PathVariable Long user_id) {
-        return notificationService.getNotificationByUserId(user_id);
+    public List<NotificationDto> getNotifications(@PathVariable Long id) {
+        return notificationService.getNotificationByUserId(id);
     }
-
 }
