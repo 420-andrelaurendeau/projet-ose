@@ -106,13 +106,13 @@ const Header = (userd: any) => {
                                     setIsUserMenuOpen(false)
                                 }}>
                                     <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
-                                    {getMessageHeaders().length > 0
+                                    {messages.length > 0
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
                                         : <></>}
                                 </button>
                                 {
                                     isMessageBoxOpen
-                                        ? <MessageBox messages={getMessageHeaders()}></MessageBox>
+                                        ? <MessageBox messages={messages}></MessageBox>
                                         : <></>
                                 }
                                 <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">

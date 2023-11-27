@@ -1,10 +1,9 @@
 import api from './ConfigAPI'
-import {Interview} from "../model/Interview";
-import {Stage} from "../model/Stage";
+import {Message} from "../model/Message";
 
-export const fetchUserNotifications = async (userId: number ): Promise<Interview[]> => {
+export const fetchUserNotifications = async (userId: number ): Promise<Message[]> => {
     try {
-        const res = await api.get(`api/notifications/`+ userId)
+        const res = await api.get(`notifications/`+ userId)
         console.log(res.data)
         return res.data
     }

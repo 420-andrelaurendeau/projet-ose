@@ -34,3 +34,5 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
             </div>
         : <></>;
 }
+
+export default MessageBox;
