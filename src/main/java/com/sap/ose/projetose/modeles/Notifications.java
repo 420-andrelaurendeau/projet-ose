@@ -17,7 +17,7 @@ public class Notifications {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
-    private Long id;
+    private long id;
     @ManyToOne
     private Utilisateur receveurs;
     @ManyToOne

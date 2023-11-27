@@ -3,10 +3,12 @@ package com.sap.ose.projetose.config;
 import com.sap.ose.projetose.modeles.Role;
 import com.sap.ose.projetose.service.UtilisateurService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "327930e28226b4e2b7a99e2fdafc455464d04c37993100eb6a7e8c9fe319214a";
+    private UtilisateurService utilisateurService;
 
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
@@ -41,6 +44,7 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public boolean isTokenValid(String token , UserDetails userDetails){
         final String username = extractUsername(token);
