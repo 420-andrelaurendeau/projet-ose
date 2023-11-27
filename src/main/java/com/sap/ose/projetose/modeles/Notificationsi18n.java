@@ -1,32 +1,23 @@
 package com.sap.ose.projetose.modeles;
 
 public enum Notificationsi18n {
-    newOfferAvaible,
-    contractText,
-    stageText,
-    cvAccepter,
-    cvRefuser,
-    studentApplyOnOffer, revueCv, youAreAcceptedForStage;
+    newOfferAvailable("FormFields.notifications.newOfferAvailable"),
+    contractText("FormFields.notifications.contractText"),
+    stageText("FormFields.notifications.stageText"),
+    cvAccepter("FormFields.notifications.cvAccepter"),
+    cvRefuser("FormFields.notifications.cvRefuser"),
+    studentApplyOnOffer("FormFields.notifications.studentApplyOnOffer"),
+    revueCv("FormFields.notifications.revueCv"),
+    youAreAcceptedForStage("FormFields.notifications.youAreAcceptedForStage");
+
+    private final String translationKey;
+
+    Notificationsi18n(String translationKey) {
+        this.translationKey = translationKey;
+    }
 
     @Override
     public String toString() {
-        switch (this) {
-            case newOfferAvaible -> {
-                return "";
-            }
-            case contractText -> {
-                return "";
-            }
-            case stageText -> {
-                return "";
-            }
-            case cvAccepter -> {
-                return "";
-            }
-            case cvRefuser -> {
-                return "";
-            }
-        }
-        throw new IndexOutOfBoundsException("Could not find: " + super.toString());
+        return translationKey;
     }
 }

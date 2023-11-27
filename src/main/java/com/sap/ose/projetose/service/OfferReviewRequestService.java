@@ -46,7 +46,7 @@ public class OfferReviewRequestService {
 
             offerReviewRequestRepository.save(offerReviewRequest);
 
-            notificationService.saveNotificationForAllStudent(Notificationsi18n.newOfferAvaible);
+            notificationService.saveNotificationForAllStudent(Notificationsi18n.newOfferAvailable);
 
             return new InternOfferDto(internOffer);
         } catch (OfferAlreadyReviewException e) {
