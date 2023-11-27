@@ -53,7 +53,7 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-interface user {
+export interface user {
     id: number,
     nom: string,
     prenom: string,
@@ -92,7 +92,7 @@ interface appliedOffer {
     }
 }
 
-interface offer {
+export interface offer {
     id: number,
     title: string,
     location: string,

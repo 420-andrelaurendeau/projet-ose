@@ -4,9 +4,11 @@ import {MemoryRouter, useNavigate} from "react-router-dom";
 import {getAllSeasons} from "../../api/InterOfferJobAPI";
 import {useAuth} from "../../authentication/AuthContext";
 import {getUser} from "../../api/UtilisateurAPI";
-import {render, screen} from "@testing-library/react";
+import {findAllByLabelText, fireEvent, render, screen} from "@testing-library/react";
 import React from "react";
 import agreement from "../../components/common/internshipManager/internshipsAgreement/agreement";
+import {act} from "react-dom/test-utils";
+import exp from "constants";
 
 jest.mock('react-i18next', () => ({
     useTranslation: () => {

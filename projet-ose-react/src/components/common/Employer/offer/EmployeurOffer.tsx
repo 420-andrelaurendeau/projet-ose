@@ -12,15 +12,26 @@ import {
     faArrowUpZA, faCircleUser,
     faEye,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-    allEmployeurInternshipOffersBySeason,
-    getEmployeurOffers, getEmployeurSeason
-} from "../../../../api/InterOfferJobAPI";
 
 export default function EmployeurOffer() {
-    const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,setOffers,handleOptionChange, selectedOption, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {t} = useTranslation();
+    //formField.homeEmployeur
+    const {
+        offers, setOffers,
+        handleOptionChange,
+        selectedOption,
+        seasons,
+        user,
+        page,
+        totalPages,
+        onPageChange,
+        setSortField,
+        setSortDirection,
+        sortField,
+        sortDirection,
+        numberElementByPage,
+        handleChangeNumberElement
+    } = useProps();
     const navigate = useNavigate();
 
     const handleSortClick = (newSortField: any) => {
@@ -44,7 +55,7 @@ export default function EmployeurOffer() {
     }
 
     useEffect(() => {
-        console.log("saison:"+seasons)
+        console.log("saison:" + seasons)
     }, [seasons]);
 
     return (
@@ -68,7 +79,8 @@ export default function EmployeurOffer() {
                             ))}
                         </select>
                     </div>
-                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                    <div
+                        className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
                             <thead className="bg-blue dark:bg-orange ">
                             <tr>
@@ -77,7 +89,7 @@ export default function EmployeurOffer() {
                                     className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
-                                    {fields.offerTable.titre.text}
+                                    {t("formField.homeEmployeur.offerTable.titre.text")}
                                     <div
                                         className={sortField === "title" ? "visible" : "hidden"}>
                                         <FontAwesomeIcon
@@ -91,7 +103,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.startDate.text}
+                                        {t("formField.homeEmployeur.offerTable.startDate.text")}
                                         <div
                                             className={sortField === "startDate" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -106,7 +118,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.salary.text}
+                                        {t("formField.homeEmployeur.offerTable.salary.text")}
                                         <div
                                             className={sortField === "salaryByHour" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -121,7 +133,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.status.text}
+                                        {t("formField.homeEmployeur.offerTable.status.text")}
                                         <div
                                             className={sortField === "state" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -130,8 +142,9 @@ export default function EmployeurOffer() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
-                                    {fields.candidature.text}
+                                <th scope="col"
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                                    {t("formField.homeEmployeur.candidature.text")}
                                 </th>
                                 <th scope="col" className="relative px-6 py-3">
                                     <span className="sr-only">Option</span>
@@ -139,7 +152,7 @@ export default function EmployeurOffer() {
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            { offers.map((offer:any) => (
+                            {offers.map((offer: any) => (
                                 <tr key={offer.id}>
                                     <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
@@ -164,7 +177,7 @@ export default function EmployeurOffer() {
                                                         "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
-                                            {fields.offerTable[offer.state].text}
+                                            {t(`formField.homeEmployeur.offerTable.${offer.state}.text`)}
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -190,7 +203,8 @@ export default function EmployeurOffer() {
                                                             )
                                                         }
                                                     })) : (
-                                                    <div className="flex items-center bg-blue dark:bg-orange justify-center text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark text-xs">
+                                                    <div
+                                                        className="flex items-center bg-blue dark:bg-orange justify-center text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark text-xs">
                                                         0
                                                     </div>
                                                 )
@@ -199,8 +213,9 @@ export default function EmployeurOffer() {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <FontAwesomeIcon icon={faEye}
+                                                         aria-label={"nav-button"}
                                                          className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                            onClick={() => handleOfferClick(offer.id!)}
+                                                         onClick={() => handleOfferClick(offer.id!)}
                                         />
                                     </td>
                                 </tr>

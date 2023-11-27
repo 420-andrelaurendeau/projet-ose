@@ -136,8 +136,10 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                 {
                                     offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
                                         <div role="cell"
+
                                             className="md:w-10 w-6 px-2 py-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
                                             <FontAwesomeIcon icon={faEye}
+                                                             aria-label={"nav-to-details"}
                                                              className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
                                                              onClick={() => props.handleOfferClick(offer.contractId!)}/>
                                         </div> : (offer.stateEmployeur == "DECLINED") ?
