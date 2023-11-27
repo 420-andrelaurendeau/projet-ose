@@ -18,7 +18,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                                 + (header.isRead
                                     ? " bg-neutral-200"
                                     : "")}>
-                                {t(header.messageKey)}
+                                {t(header.message)}
                             </p>
                             <hr/>
                         </>
