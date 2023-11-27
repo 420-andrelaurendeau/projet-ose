@@ -192,7 +192,7 @@ public class InternshipmanagerService {
             file.setIsAccepted(State.DECLINED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
-            notificationService.saveNotificationByUser(id,Notificationsi18n.cvRefuser);
+            notificationService.saveNotificationByUser(etudiant.getId(),Notificationsi18n.cvRefuser);
             return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);
