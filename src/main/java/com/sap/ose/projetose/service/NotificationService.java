@@ -36,7 +36,7 @@ public class NotificationService {
     public List<NotificationDto> getNotificationByUserId(long id){
         List<NotificationDto> list = new ArrayList<>();
 
-        for(Notifications notifications : notificationRepository.findByReceveurs_id(id)){
+        for(Notifications notifications : notificationRepository.findByReceveurs_idOrderByIdDesc(id)){
             list.add(new NotificationDto(notifications));
         }
         System.out.println(list);
