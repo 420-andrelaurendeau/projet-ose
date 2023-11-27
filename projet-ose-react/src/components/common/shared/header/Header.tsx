@@ -17,7 +17,7 @@ import ProfilMenu from "./ProfilMenu";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";
-import MessageBox from "../notification/MessageBox";
+import MessageBox from "../messaging/MessageBox";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
