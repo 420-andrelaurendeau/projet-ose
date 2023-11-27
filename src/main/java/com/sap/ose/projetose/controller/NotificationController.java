@@ -19,11 +19,11 @@ public class NotificationController {
     private final NotificationService notificationService;
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{user_id}")
     @CrossOrigin(origins = "http://localhost:3000")
     @PreAuthorize("hasAuthority('internshipmanager') OR (hasAuthority('student')) OR (hasAuthority('employer'))")
-    public List<NotificationDto> getNotifications(@PathVariable long id) {
-        return notificationService.getNotificationByUserId(id);
+    public List<NotificationDto> getNotifications(@PathVariable long user_id) {
+        return notificationService.getNotificationByUserId(user_id);
     }
     @PutMapping("/{id}/read")
     public NotificationDto updateNotifcationRead(@PathVariable long id) {

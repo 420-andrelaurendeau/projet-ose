@@ -1,5 +1,6 @@
 package com.sap.ose.projetose.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,11 +42,16 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
 
+        if(jwtService.isTokenExpiredBeforeParsing(jwt)){
+            jwtService.refreshAccessTokenIfExpired(jwt);
+        }
+
         System.out.println("JWT: "+jwt);
         userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+
             if (jwtService.isTokenValid(jwt,userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

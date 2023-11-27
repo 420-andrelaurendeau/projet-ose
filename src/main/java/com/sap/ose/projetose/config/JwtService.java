@@ -3,10 +3,12 @@ package com.sap.ose.projetose.config;
 import com.sap.ose.projetose.modeles.Role;
 import com.sap.ose.projetose.service.UtilisateurService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "327930e28226b4e2b7a99e2fdafc455464d04c37993100eb6a7e8c9fe319214a";
+    private UtilisateurService utilisateurService;
 
     public String extractUsername(String token) {
         return extractClaim(token,Claims::getSubject);
@@ -40,6 +43,51 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String refreshAccessTokenIfExpired(String token) {
+        System.out.println("Refreshing...");
+        String refreshedToken = refreshAccessToken(token);
+        if (refreshedToken != null) {
+            System.out.println("Token refreshed successfully.");
+            return refreshedToken;
+        } else {
+            System.out.println("Failed to refresh token.");
+            return null;
+        }
+    }
+
+    private String refreshAccessToken(String expiredToken) {
+        try {
+            System.out.println("claims");
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(expiredToken)
+                    .getBody();
+
+            String subject = claims.getSubject();
+            System.out.println(subject);
+            UserDetails userDetails = utilisateurService.getUserByEmail(subject);
+
+            return generateToken(new HashMap<>(), userDetails);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    public boolean isTokenExpiredBeforeParsing(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .setAllowedClockSkewSeconds(0)
+                    .build()
+                    .parseClaimsJws(token);
+            return false;
+        } catch (ExpiredJwtException e) {
+            return true;
+        }
     }
 
     public boolean isTokenValid(String token , UserDetails userDetails){

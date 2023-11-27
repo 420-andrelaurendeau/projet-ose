@@ -7,14 +7,14 @@ import java.util.List;
 
 public class NotificationDto {
     private long id;
-    private long users_id;
+    private long user_id;
     private Notificationsi18n message;
 
     private boolean isRead;
 
     public NotificationDto(Notifications notifications){
         id = notifications.getId();
-        users_id = notifications.getReceveurs().getId();
+        user_id = notifications.getReceveurs().getId();
         message = notifications.getMessage();
         isRead = notifications.isRead();
     }

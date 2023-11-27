@@ -133,6 +133,10 @@ public class ProjetOseApplication implements CommandLineRunner {
         stageService.saveTEST(stage3);
         stageService.saveTEST(stage4);
 
+
+        notificationService.saveNotificationForAllStudent(Notificationsi18n.contractText);
+        notificationService.saveNotificationForAllStudent(Notificationsi18n.contractText);
+
         System.out.println("DONE");
     }
 }

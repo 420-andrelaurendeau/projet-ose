@@ -1,9 +1,9 @@
 import api from './ConfigAPI'
 import {Message} from "../model/Message";
 
-export const fetchUserNotifications = async (userId: number ): Promise<Message[]> => {
+export const fetchUserNotifications = async (user_id: number ): Promise<Message[]> => {
     try {
-        const res = await api.get(`notifications/`+ userId)
+        const res = await api.get(`notifications/`+ user_id)
         console.log(res.data)
         return res.data
     }
