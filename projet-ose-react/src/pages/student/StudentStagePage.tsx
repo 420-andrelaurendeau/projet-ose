@@ -5,10 +5,12 @@ import {useAuth} from "../../authentication/AuthContext";
 import {getUser} from "../../api/UtilisateurAPI";
 import {acceptStage, declineStage, fetchStagePending} from "../../api/StudentApi";
 import {Stage} from "../../model/Stage";
+import {useTranslation} from "react-i18next";
 
 
 function StudentStagePage(){
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation()
     const [stages, setStages] = React.useState<Stage[]>([])
     const [user, setUser] = useState<any>(null);
     const isLoading = useRef(false);
@@ -141,7 +143,7 @@ function StudentStagePage(){
                                      <tr>
                                          <td colSpan={5}>
                                              <div className="w-full text-center bg-red text-white">
-                                                 Aucune entreprise ne vous a encore accepte ...
+                                                 {t("StudentInterview.table.noStage")}
                                              </div>
                                          </td>
                                      </tr>

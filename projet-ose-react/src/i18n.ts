@@ -733,7 +733,8 @@ i18n
                                     declined: "Declined",
                                 }
                             },
-                            empty: "No interview available"
+                            empty: "No interview available",
+                            noStage: "No internship available",
                         }
                     },
                     StudentCvEvaluation: {
@@ -1460,7 +1461,8 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
-                            empty: "Aucune entrevue disponible"
+                            empty: "Aucune entrevue disponible",
+                            noStage: "Aucun stage disponible",
                         }
                     },
                     StudentCvEvaluation: {
