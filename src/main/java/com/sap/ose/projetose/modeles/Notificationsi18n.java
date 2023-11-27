@@ -1,7 +1,9 @@
 package com.sap.ose.projetose.modeles;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public enum Notificationsi18n {
     newOfferAvailable("FormFields.notifications.newOfferAvailable"),
     contractText("FormFields.notifications.contractText"),
@@ -18,15 +20,6 @@ public enum Notificationsi18n {
 	offerAsBeenAccpeted("FormFields.notifications.offerAsBeenAccpeted"),
 	offerAsBeenDeclined("FormFields.notifications.offerAsBeenDeclined");
 
-    private final String translationKey;
-
-    Notificationsi18n(String translationKey) {
-        this.translationKey = translationKey;
-    }
-
     @JsonValue
-    @Override
-    public String toString() {
-        return translationKey;
-    }
+    private final String translationKey;
 }
