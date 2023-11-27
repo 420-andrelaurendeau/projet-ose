@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SidebarEmployeurHome from "../../Employer/SidebarEmployeurHome";
 import {useTranslation} from "react-i18next";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import SidebarEtudiant from "../../student/SidebarEtudiant";
 import ProfilMenu from "./ProfilMenu";
@@ -19,6 +19,7 @@ import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";
 import {Message} from "../../../../model/Message";
 import MessageBox from "../messaging/MessageBox";
+import {fetchUserNotifications} from "../../../../api/NotificationAPI";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
@@ -29,6 +30,7 @@ const Header = (userd: any) => {
     let [isOpenProfil, setIsOpenProfil] = useState(false)
     const { userEmail , userRole, logoutUser } = useAuth();
     const navigate = useNavigate();
+    const [messages, setMessages] = useState([] as Message[]);
     const [user, setUser] = useState<User>({
         id: 0,
         nom: "",
@@ -48,16 +50,6 @@ const Header = (userd: any) => {
         setIsOpenProfil(true)
     }
 
-    function getMessageHeaders(): Message[] {
-        return [
-            {
-            id: 0,
-            messageKey: "",
-            isRead: false
-        }
-        ]
-    }
-
     const isloading = useRef(false);
 
     useEffect(() => {
@@ -69,9 +61,17 @@ const Header = (userd: any) => {
         }
 
         if (!isloading.current)
-            getUtilisateur().then(r => console.log(r))
-    }, [])
+            getUtilisateur().then(
+                r => {
+                    console.log(r)
 
+                    fetchUserNotifications(user.id).then(messages => {
+                        setMessages(messages);
+                    })
+                }
+            )
+
+    }, [])
 
     return (
         <>
