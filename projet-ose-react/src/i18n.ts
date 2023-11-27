@@ -1404,9 +1404,6 @@ i18n
                             }
                         }
                     },
-                    NotificationPage: {
-                        TabTitle: "Vos Messages"
-                    },
                     cv: CV.fr,
                     StudentInternshipPage:StudentInternshipPagei18n.fr,
                     StudentInternship: StudentInternshipI18n.fr,

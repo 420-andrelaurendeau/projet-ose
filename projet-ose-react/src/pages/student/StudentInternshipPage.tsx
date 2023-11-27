@@ -10,7 +10,7 @@ import {
     faPencil,
     faSignature,
     faUsers,
-    faMicrophone, faPersonDigging, faInbox,
+    faMicrophone, faPersonDigging,
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../authentication/AuthContext";
@@ -153,9 +153,9 @@ function StudentInternshipPage() {
                                      }
                                      state={user}
                             >
-                                <FontAwesomeIcon icon={faInbox} className="dark:text-white" size="sm"/>
+                                <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm"/>
                                 <div className="pl-2">
-                                    <p className="text-black dark:text-white">{t("NotificationPage.TabTitle")}</p>
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.stages.text")}</p>
                                 </div>
                             </NavLink>
                             <NavLink to="offers"
