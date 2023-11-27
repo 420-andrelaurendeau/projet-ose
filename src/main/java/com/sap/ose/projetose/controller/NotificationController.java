@@ -25,4 +25,10 @@ public class NotificationController {
     public List<NotificationDto> getNotifications(@PathVariable Long id) {
         return notificationService.getNotificationByUserId(id);
     }
+    @PutMapping("/{id}/read")
+    public NotificationDto updateNotifcationRead(@PathVariable Long notif_id) {
+        return notificationService.updateNotificationRead(notif_id);
+    }
+
+
 }
