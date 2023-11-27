@@ -19,8 +19,6 @@ import java.util.*;
 
 @Service
 public class StageService {
-
-
     private final StageRepository stageRepository;
 
     private final InternOfferService internOfferService;

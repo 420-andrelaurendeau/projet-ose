@@ -26,8 +26,8 @@ public class InternshipCandidatesController {
     @PostMapping("/saveCandidats")
     @PreAuthorize("hasAuthority('internshipmanager') || hasAuthority('student')")
     public ResponseEntity<InternshipCandidatesDto> saveIntershipCandidate(@RequestBody InternshipCandidatesDto internshipCandidatesDto) {
-        InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
         System.out.println(internshipCandidatesDto);
+        InternshipCandidatesDto savedInternship = internshipCandidatesService.saveCandidates(internshipCandidatesDto);
         return new ResponseEntity<>(savedInternship,HttpStatus.CREATED);
     }
 
