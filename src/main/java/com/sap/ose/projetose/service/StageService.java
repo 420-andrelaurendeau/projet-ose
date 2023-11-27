@@ -64,6 +64,11 @@ public class StageService {
         stage.setStateEmployeur(State.PENDING);
         stage.setOffer(internOffer);
 
+        notificationService.saveNotificationByUser(employeur.getId(), Notificationsi18n.newStageAsBeenCreated);
+        notificationService.saveNotificationByUser(etudiant.getId(), Notificationsi18n.newStageAsBeenCreated);
+        notificationService.saveNotificationForAllManagers(Notificationsi18n.newStageAsBeenCreated);
+
+
         stageRepository.save(stage);
 
         StageDto stageReturn = new StageDto(stage.getId(), stage.getStudent().getId(), new InternOfferDto(stage.getOffer()), stage.getStateStudent(), stage.getStateEmployeur(), stage.getContract() != null ? stage.getContract().id : 0);

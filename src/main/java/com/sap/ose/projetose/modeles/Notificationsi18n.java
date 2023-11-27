@@ -14,7 +14,8 @@ public enum Notificationsi18n {
     newContractAsBeenCreated("FormFields.notifications.newContractAsBeenCreated"),
     contractAsBeenSignedByThreeParties("FormFields.notifications.contractAsBeenSignedByThreeParties"),
 	offerAsBeenAccpeted("FormFields.notifications.offerAsBeenAccpeted"),
-	offerAsBeenDeclined("FormFields.notifications.offerAsBeenDeclined");
+	offerAsBeenDeclined("FormFields.notifications.offerAsBeenDeclined"),
+    newStageAsBeenCreated("FormFields.notifications.newStageAsBeenCreated");
 
     private final String translationKey;
 
