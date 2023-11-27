@@ -24,13 +24,6 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                         </>
                     )
                 }
-                {
-                    props.messages.length > 5
-                    ?   <div className="px-4 py-2 text-center">
-                            <button className="text-white p-1 w-2/4 text-center bg-blue rounded-sm"><a>Voir autre messages</a></button>
-                        </div>
-                    : <></>
-                }
             </div>
         : <></>;
 }
