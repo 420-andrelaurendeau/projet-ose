@@ -11,15 +11,19 @@ export default function StudentAppliedOffers() {
     const {t} = useTranslation();
     const [appliedOffers, setAppliedOffers] = useState<AppliedOffers[]>([])
     let user = useLocation().state;
-    const [seasons,setSeasons] = useState([])
+    const [seasons, setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState('');
 
 
     const fetchData = async () => {
-        try {
-            return await getStudentAppliedOffers(user.id)
-        } catch (error) {
-            console.log("Erreur lors de la récupération des offres:", error);
+        if (user) {
+            try {
+                return await getStudentAppliedOffers(user.id)
+            } catch (error) {
+                console.log("Erreur lors de la récupération des offres:", error);
+                return []
+            }
+        }else{
             return []
         }
     };
@@ -33,11 +37,11 @@ export default function StudentAppliedOffers() {
     const handleDownloadFile = (file: FileEntity) => {
         // Create a Blob from the base64 content
         const byteNumbers = atob(file.content)
-                                        .split('')
-                                        .map((value) => value.charCodeAt(0))
+            .split('')
+            .map((value) => value.charCodeAt(0))
 
         const byteArray = new Uint8Array(byteNumbers);
-        const blob = new Blob([byteArray], { type: 'application/pdf' });
+        const blob = new Blob([byteArray], {type: 'application/pdf'});
 
         // Create a URL for the blob and trigger the download
         const url = window.URL.createObjectURL(blob);
@@ -129,7 +133,8 @@ export default function StudentAppliedOffers() {
                                                 {appliedOffer.appliedFiles.map((file: FileEntity) => (
                                                     <div key={file.id} className="flex space-y-2">
                                                         <FontAwesomeIcon icon={faFilePdf}/>
-                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName}</a>
+                                                        <a onClick={() => handleDownloadFile(file)}
+                                                           href={''}>{file.fileName}</a>
                                                     </div>
                                                 ))}
                                             </div>
