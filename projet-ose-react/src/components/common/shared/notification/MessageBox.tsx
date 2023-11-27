@@ -5,13 +5,44 @@ const MessagePage = () => {
     const {t} = useTranslation();
 
     function getMessageHeaders() {
-        return [] as Message[];
+        return [
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: false,
+            },
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: true,
+            },
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: true,
+            },
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: true,
+            },
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: true,
+            },
+            {
+                id: 0,
+                messageKey: "Hello World",
+                isRead: true,
+            },
+        ] as Message[];
     }
 
     let messages = getMessageHeaders();
 
     return messages.length > 0
-        ? <div className="z-50 min-w-[320px] max-w-[400px] min-h-[240px] rounded-b-md absolute right-0 bg-neutral-50 border-l-1 border-b-1">
+        ? <div className="z-50 min-w-[320px] max-w-[400px] min-h-[240px] rounded-b-md absolute right-[calc(100%-1.5rem)] top-full bg-neutral-50 border-l-1 border-b-1">
                 {
                     getMessageHeaders().slice(0,5).map(header =>
                         <>

@@ -18,6 +18,7 @@ import {useAuth} from "../../../../authentication/AuthContext";
 import {User} from "../../../../model/User";
 import {getUser} from "../../../../api/UtilisateurAPI";
 import MessageBox from "../notification/MessageBox";
+import {Message} from "../../../../model/Message";
 
 const Header = (userd: any) => {
     const {i18n} = useTranslation();
@@ -47,7 +48,7 @@ const Header = (userd: any) => {
         setIsOpenProfil(true)
     }
 
-    function getMessageHeaders() {
+    function getMessageHeaders(): Message[] {
         return []
     }
 
@@ -93,7 +94,7 @@ const Header = (userd: any) => {
                                     </div>
                                 </NavLink>
                             </div>
-                            <div>
+                            <div className="my-auto relative">
                                 <button className="relative" onClick={() => {
                                     setIsMessageBoxOpen(!isMessageBoxOpen)
                                     setIsUserMenuOpen(false)
@@ -103,6 +104,11 @@ const Header = (userd: any) => {
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
                                         : <></>}
                                 </button>
+                                {
+                                    isMessageBoxOpen
+                                        ? <MessageBox></MessageBox>
+                                        : <></>
+                                }
                                 <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">
                                     <FontAwesomeIcon icon={faCircleUser} className="text-blue dark:text-orange" size="xl"/>
                                 </button>
@@ -159,11 +165,6 @@ const Header = (userd: any) => {
                     </Transition>
 
                 </nav>
-                {
-                    isMessageBoxOpen
-                        ? <MessageBox></MessageBox>
-                        : <></>
-                }
             </div>
         </>
     );
