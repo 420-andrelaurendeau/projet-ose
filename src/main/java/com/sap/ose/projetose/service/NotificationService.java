@@ -95,4 +95,18 @@ public class NotificationService {
         }
         return notificationDtoList;
     }
+
+    public NotificationDto updateNotificationRead(Long id) {
+        Notifications notification = notificationRepository.findById(id).orElse(null);
+
+        try {
+            assert notification != null;
+            notification.setRead(true);
+            notificationRepository.save(notification);
+            return new NotificationDto(notification);
+        } catch (Exception e){
+            System.out.println("Error mise a jour notification: " + e.getMessage());
+            return null;
+        }
+    }
 }

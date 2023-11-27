@@ -26,4 +26,10 @@ public class NotificationController {
         return notificationService.getNotificationByUserId(user_id);
     }
 
+    @PutMapping("/{id}/lu")
+    public NotificationDto updateNotifcationRead(@PathVariable Long notif_id) {
+        return notificationService.updateNotificationRead(notif_id);
+    }
+
+
 }
