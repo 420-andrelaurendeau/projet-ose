@@ -38,11 +38,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     const [userEmail, setUserEmail] = useState<string | null>("");
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
-
-    const fechtToken = useRef(false);
-
+    useRef(false);
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             setUserRole(decodedToken.role[0].authority);
@@ -55,7 +53,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         }else {
             setIsAuthenticated(false);
             setUserRole(null);
-            navigate(`/login`);
+            navigate(`/login`, {
+                replace: false
+            });
         }
         setLoading(false);
     }, [localStorage.getItem('token')]);
@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
 
 
     const loginUser = (token: string) => {
-        localStorage.setItem('token', token);
+        sessionStorage.setItem('token', token);
          const decodedToken = JSON.parse(atob(token.split('.')[1]));
          console.log(decodedToken.id);
          setUserID(decodedToken.id);
@@ -75,7 +75,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     };
 
     const logoutUser = () => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         setUserRole(null);
         setIsAuthenticated(false);
     };
