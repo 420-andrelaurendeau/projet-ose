@@ -6,7 +6,6 @@ import com.sap.ose.projetose.exception.DatabaseException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.*;
-import com.sap.ose.projetose.service.*;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +19,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
+import java.util.Optional;
 
 
 @Service
@@ -33,18 +33,20 @@ public class ContractService {
     private final FileService fileService;
     private final InternOfferService internOfferService;
     private final EtudiantService studentService;
+    private final NotificationService notificationService;
 
     Logger logger = LoggerFactory.getLogger(ContractService.class);
 
 
     @Autowired
-    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, TemplateContractService templateContractService, FileService fileService, InternOfferService internOfferService, EtudiantService studentService) {
+    public ContractService(ContractRepository contractRepository, EmployeurService employeurService, TemplateContractService templateContractService, FileService fileService, InternOfferService internOfferService, EtudiantService studentService, NotificationService notificationService) {
         this.contractRepository = contractRepository;
         this.employeurService = employeurService;
         this.templateContractService = templateContractService;
         this.fileService = fileService;
         this.internOfferService = internOfferService;
         this.studentService = studentService;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -68,6 +70,11 @@ public class ContractService {
 
             contractRepository.save(contract);
 
+            signatureTroisPartie(contract.getId());
+
+            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByGS);
+
             return new ContractDto(contract);
         } catch (Exception e) {
             throw new IllegalStateException("Impossible de sauvegarder le contrat");
@@ -88,6 +95,11 @@ public class ContractService {
 
             contractRepository.save(contract);
 
+            signatureTroisPartie(contract.getId());
+
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByGS);
+
             return new ContractDto(contract);
         } catch (Exception e) {
             throw new IllegalStateException("Impossible de sauvegarder le contrat");
@@ -106,6 +118,11 @@ public class ContractService {
             contract.setSignatureEmployer(true);
             contract.setFile(fileService.findById(contractDto.getFileId()));
             contractRepository.save(contract);
+
+            signatureTroisPartie(contract.getId());
+
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByGS);
 
             return new ContractDto(contract);
         } catch (Exception e) {
@@ -146,6 +163,15 @@ public class ContractService {
         } catch (Exception e) {
             logger.error("Erreur lors de la récupération des contrats", e);
             throw new ServiceException("");
+        }
+    }
+
+    private void signatureTroisPartie(long id){
+        Optional<Contract> contract = contractRepository.findById(id);
+        if (contract.isPresent()){
+            if( contract.get().isSignatureStudent() && contract.get().isSignatureEmployer() && contract.get().isSignatureInternShipManager()){
+                notificationService.saveNotificationForAllManagers(Notificationsi18n.contractAsBeenSignedByThreeParties);
+            }
         }
     }
 

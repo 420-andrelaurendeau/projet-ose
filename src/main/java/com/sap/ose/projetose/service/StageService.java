@@ -166,6 +166,8 @@ public class StageService {
             long idContract = contractService.createContract(stage);
             Contract contract = contractService.findById(idContract);
             stage.setContract(contract);
+
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.newContractAsBeenCreated);
             return stage;
         } catch (Exception e) {
             logger.error("Erreur lors de la création du contrat.", e);
