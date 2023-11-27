@@ -12,7 +12,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     return props.messages.length > 0
         ? <div className="z-50 min-w-[320px] max-w-[400px] min-h-[240px] rounded-b-md absolute right-[calc(100%-1.5rem)] bg-neutral-50 border-l-1 border-b-1">
                 {
-                    props.messages.slice(0,5).map(header =>
+                    props.messages.map(header =>
                         <>
                             <p className={"px-4 py-2 text-ellipsis whitespace-nowrap overflow-hidden"
                                 + (header.isRead
