@@ -42,10 +42,6 @@ public class JwtAuthentificationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
 
-        if(jwtService.isTokenExpiredBeforeParsing(jwt)){
-            jwtService.refreshAccessTokenIfExpired(jwt);
-        }
-
         System.out.println("JWT: "+jwt);
         userEmail = jwtService.extractUsername(jwt);
 

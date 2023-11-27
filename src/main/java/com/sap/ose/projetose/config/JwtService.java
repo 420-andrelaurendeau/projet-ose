@@ -45,50 +45,6 @@ public class JwtService {
                 .compact();
     }
 
-    public String refreshAccessTokenIfExpired(String token) {
-        System.out.println("Refreshing...");
-        String refreshedToken = refreshAccessToken(token);
-        if (refreshedToken != null) {
-            System.out.println("Token refreshed successfully.");
-            return refreshedToken;
-        } else {
-            System.out.println("Failed to refresh token.");
-            return null;
-        }
-    }
-
-    private String refreshAccessToken(String expiredToken) {
-        try {
-            System.out.println("claims");
-            Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(getSignInKey())
-                    .build()
-                    .parseClaimsJws(expiredToken)
-                    .getBody();
-
-            String subject = claims.getSubject();
-            System.out.println(subject);
-            UserDetails userDetails = utilisateurService.getUserByEmail(subject);
-
-            return generateToken(new HashMap<>(), userDetails);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-
-    public boolean isTokenExpiredBeforeParsing(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(getSignInKey())
-                    .setAllowedClockSkewSeconds(0)
-                    .build()
-                    .parseClaimsJws(token);
-            return false;
-        } catch (ExpiredJwtException e) {
-            return true;
-        }
-    }
 
     public boolean isTokenValid(String token , UserDetails userDetails){
         final String username = extractUsername(token);
