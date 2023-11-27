@@ -15,15 +15,16 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const {id} = useParams();
     const toast = useContext(ToastContext);
     const [internshipOffer, setinternshipOffer] = useState<any>();
-    const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
+    //formField.employerOffer
+    const {t, i18n} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer")
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
     const getProgrammeName = (): string => {
-        let prog:string = "";
+        let prog: string = "";
         if (!fields.programs) return prog;
         Object.keys(fields.programs).forEach((key) => {
             if (fields.programs[key].id === internshipOffer?.programmeId) {
@@ -35,13 +36,13 @@ const EmployerOfferDetails: React.FC<any> = () => {
 
     const getFileSize = (): string => {
         let sizeInBytes = 0
-        if (internshipOffer?.file?.content){
+        if (internshipOffer?.file?.content) {
             sizeInBytes = Buffer.from(internshipOffer?.file?.content).length;
             if (sizeInBytes < 1000) {
                 return sizeInBytes + " B";
-            }else if (sizeInBytes < 1000000) {
+            } else if (sizeInBytes < 1000000) {
                 return sizeInBytes / 1000 + " KB";
-            }else if (sizeInBytes < 1000000000) {
+            } else if (sizeInBytes < 1000000000) {
                 return Math.round(sizeInBytes / 10000) / 100 + " MB";
             }
         }
@@ -55,16 +56,17 @@ const EmployerOfferDetails: React.FC<any> = () => {
                 fetchedOfferRef.current = true
                 const response = await getOfferById(parseInt(id!));
                 setinternshipOffer(response);
+                console.log("RESPOSNE!")
                 console.log(response);
                 const pdfBytes = base64ToArrayBuffer(response.file.content!)
                 if (pdfBytes) {
                     const blob = new Blob([new Uint8Array(pdfBytes)]);
                     const URL: any = await blobToURL(blob);
                     setPdf(URL);
-                }else setPdf(null)
+                } else setPdf(null)
 
             } catch (error) {
-                toast.error(fields.errorFetchOffer);
+                toast.error(t("formField.employerOffer.errorFetchOffer"));
             } finally {
                 fetchedOfferRef.current = false;
             }
@@ -92,7 +94,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                             "px-6 py-2 inline-flex text-lg leading-5  justify-center rounded-full bg-red text-white dark:text-offwhite"
                                             : "px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-green text-white dark:text-offwhite"}
                             >
-                                            {internshipOffer ? fields[internshipOffer.state].text : ""}
+                                            {internshipOffer ? t(`formField.employerOffer.${internshipOffer.state}.text`) : ""}
                                         </span>
                         </h2>
                         <div className="flex gap-2">
@@ -101,13 +103,13 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/employer/home/offers")}
                             >
-                                {fields.back.text}
+                                {t(`formField.employerOffer.back.text`)}
                             </button>
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-red dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             >
-                                {fields.edit.text}
+                                {t(`formField.employerOffer.edit.text`)}
                             </button>
                         </div>
                     </div>
@@ -116,66 +118,79 @@ const EmployerOfferDetails: React.FC<any> = () => {
             <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
-                        {fields.title.text}
+                        {t(`formField.employerOffer.title.text`)}
                     </h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
-                        {fields.subtitle.text}
+                        {t(`formField.employerOffer.subtitle.text`)}
                     </p>
                 </div>
                 <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.jobTitle.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.jobTitle.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.title}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.location.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.location.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.location}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.program.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.program.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{getProgrammeName()}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.salary.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.salary.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">${internshipOffer?.salaryByHour}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.description.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.description.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.description}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.attachments.text}
+                                {t(`formField.employerOffer.attachments.text`)}
                             </dt>
                             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
+                                <ul role="list"
+                                    className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
                                     <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                         <div className="flex w-0 flex-1 items-center">
-                                            <div className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                                            <div className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
                                             <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                                                <span className="truncate font-medium dark:text-white ">{internshipOffer?.file?.fileName}</span>
+                                                <span
+                                                    className="truncate font-medium dark:text-white ">{internshipOffer?.file?.fileName}</span>
                                                 <span className="flex-shrink-0 text-neutral-500 dark:text-neutral-300">{
                                                     getFileSize()
                                                 }</span>
                                             </div>
                                         </div>
                                         <div className="ml-4 flex-shrink-0 space-x-5">
-                                            <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
+                                            <button
+                                                className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                                 onClick={() => {
                                                     setIsModalOpen(true)
                                                 }}
                                             >
-                                                {fields.view.text}
+                                                {t(`formField.employerOffer.view.text`)}
                                             </button>
                                             <button
                                                 type="button"
                                                 className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                                 onClick={() => {
-                                                    downloadURI( pdf, internshipOffer?.file?.fileName!)
+                                                    downloadURI(pdf, internshipOffer?.file?.fileName!)
                                                 }}
                                             >
-                                                {fields.download.text}
+                                                {t(`formField.employerOffer.download.text`)}
                                             </button>
                                         </div>
                                     </li>
@@ -187,7 +202,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
             </div>
             {
                 internshipOffer && isModalOpen &&
-                <ViewPDFModal ismodal={true} file={internshipOffer.file} setIsModalOpen={setIsModalOpen} />
+                <ViewPDFModal ismodal={true} file={internshipOffer.file} setIsModalOpen={setIsModalOpen}/>
             }
         </div>
     )
@@ -198,7 +213,8 @@ interface Props {
     size: string;
 }
 
-export function useProps(){
+export function useProps() {
     return useOutletContext<Props>();
 }
+
 export default EmployerOfferDetails;

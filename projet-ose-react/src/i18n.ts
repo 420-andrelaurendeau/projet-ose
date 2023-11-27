@@ -34,7 +34,7 @@ i18n
                     formField: {
                         internshipAgreement,
                         application,
-                        employerOffer,
+                        employerOffer:employerOffer.en,
                         studentOffer:studentOffer.en,
                         contractPage:contractPage.en,
                         header,
@@ -757,7 +757,7 @@ i18n
                     formField: {
                         internshipAgreement,
                         application,
-                        employerOffer,
+                        employerOffer:employerOffer.fr,
                         studentOffer:studentOffer.fr,
                         header,
                         contractPage:contractPage.fr,
