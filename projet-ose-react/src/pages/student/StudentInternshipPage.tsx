@@ -147,6 +147,17 @@ function StudentInternshipPage() {
                     <div
                         className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
                         <div className="flex-row flex md:justify-start">
+                            <NavLink to="notifications"
+                                     className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
+                                         (location.pathname === `/${userRole}/home/notifications` || location.pathname === `/${userRole}/home/notifications/` ? " border-b-2" : "")
+                                     }
+                                     state={user}
+                            >
+                                <FontAwesomeIcon icon={faFileLines} className="dark:text-white" size="sm"/>
+                                <div className="pl-2">
+                                    <p className="text-black dark:text-white">{t("StudentInternshipPage.stages.text")}</p>
+                                </div>
+                            </NavLink>
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
                                          (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
