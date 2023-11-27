@@ -79,7 +79,7 @@ const InternshipContractPage: React.FC<any> = () => {
     return (<>
         {intershipAggreement && (
             <div className="h-max   pb-6 max-md:pt-24">
-                <div className="flex w-full justify-start sm:mx-auto items-center pb-6">
+                <div className="flex w-full justify-start sm:mx-auto items-center md:pt-7 pb-6">
                     <button
                         type="button"
                         className="inline-flex items-center px-4 py-2 border border-transparent hover:border-black shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"

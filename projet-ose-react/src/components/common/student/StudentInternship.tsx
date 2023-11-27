@@ -169,13 +169,13 @@ function StudentInternship() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-lg:hidden"
                                         >
                                             {fields.stage.location.text}
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-lg:hidden"
                                             onClick={() => handleSortClick("salaryByHour")}
                                         >
                                             {fields.stage.salary.text}
@@ -189,7 +189,7 @@ function StudentInternship() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden"
                                             onClick={() => handleSortClick("endDate")}
                                         >
                                             {fields.stage.endDate.text}
@@ -222,16 +222,16 @@ function StudentInternship() {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap max-lg:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.location}</div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap max-lg:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.salaryByHour}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm dark:text-offwhite">{offer.startDate}</div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.endDate}</div>
                                             </td>
                                             <td className="px-6 py-4 break-all">
