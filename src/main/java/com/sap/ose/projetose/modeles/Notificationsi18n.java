@@ -1,5 +1,7 @@
 package com.sap.ose.projetose.modeles;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Notificationsi18n {
     newOfferAvailable("FormFields.notifications.newOfferAvailable"),
     contractText("FormFields.notifications.contractText"),
@@ -22,6 +24,7 @@ public enum Notificationsi18n {
         this.translationKey = translationKey;
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return translationKey;
