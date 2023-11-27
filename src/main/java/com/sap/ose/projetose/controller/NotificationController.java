@@ -22,12 +22,12 @@ public class NotificationController {
     @GetMapping("/{id}")
     @CrossOrigin(origins = "http://localhost:3000")
     @PreAuthorize("hasAuthority('internshipmanager') OR (hasAuthority('student')) OR (hasAuthority('employer'))")
-    public List<NotificationDto> getNotifications(@PathVariable Long id) {
+    public List<NotificationDto> getNotifications(@PathVariable long id) {
         return notificationService.getNotificationByUserId(id);
     }
     @PutMapping("/{id}/read")
-    public NotificationDto updateNotifcationRead(@PathVariable Long notif_id) {
-        return notificationService.updateNotificationRead(notif_id);
+    public NotificationDto updateNotifcationRead(@PathVariable long id) {
+        return notificationService.updateNotificationRead(id);
     }
 
 
