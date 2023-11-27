@@ -5,7 +5,8 @@ public enum Notificationsi18n {
     contractText,
     stageText,
     cvAccepter,
-    cvRefuser;
+    cvRefuser,
+    studentApplyOnOffer, revueCv, youAreAcceptedForStage;
 
     @Override
     public String toString() {

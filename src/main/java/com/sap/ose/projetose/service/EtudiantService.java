@@ -26,12 +26,14 @@ public class EtudiantService {
     private final FileEntityRepository fileEntityRepository;
 
     private final ProgrammeService programmeService;
+    private final NotificationService notificationService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService, FileEntityRepository fileEntityRepository) {
+    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService, FileEntityRepository fileEntityRepository, NotificationService notificationService) {
         this.etudiantRepository = etudiantRepository;
         this.programmeService = programmeService;
         this.fileEntityRepository = fileEntityRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -96,6 +98,7 @@ public class EtudiantService {
         cv.setEtudiant(etudiant);
         etudiant.setCv(cvs);
         etudiant  = etudiantRepository.save(etudiant);
+        notificationService.saveNotificationForAllManagers(Notificationsi18n.revueCv);
         return new EtudiantDto(etudiant);
     }
 

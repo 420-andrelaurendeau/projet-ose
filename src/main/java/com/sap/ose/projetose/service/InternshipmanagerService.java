@@ -51,6 +51,10 @@ public class InternshipmanagerService {
         }
     }
 
+    List<Internshipmanager> findAllManagers(){
+        return internshipmanagerRepository.findAll();
+    }
+
     public Internshipmanager findById(long id) {
         try {
             return internshipmanagerRepository.findById(id).orElseThrow(InternshipmanagerNotFoundException::new);
@@ -167,7 +171,7 @@ public class InternshipmanagerService {
             file.setIsAccepted(State.ACCEPTED);
             file.setEtudiant(etudiant);
             fileEntityRepository.save(file);
-            notificationService.saveNotificationByUser(id,Notificationsi18n.cvAccepter);
+            notificationService.saveNotificationByUser(etudiant.getId(),Notificationsi18n.cvAccepter);
             return new FileDtoAll(file);
         } catch (DatabaseException e) {
             logger.error("Erreur d'accès a la base de  données lors de la récupération des CV", e);

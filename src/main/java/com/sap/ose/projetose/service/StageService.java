@@ -16,12 +16,9 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class StageService {
-
-
     private final StageRepository stageRepository;
 
     private final InternOfferService internOfferService;
@@ -29,14 +26,17 @@ public class StageService {
     private final EtudiantService etudiantService;
 
     private final ContractService contractService;
+
+    private final NotificationService notificationService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     @Autowired
-    public StageService(StageRepository stageRepository, InternOfferService internOfferService, EtudiantService etudiantService, ContractService contractService) {
+    public StageService(StageRepository stageRepository, InternOfferService internOfferService, EtudiantService etudiantService, ContractService contractService, NotificationService notificationService) {
         this.stageRepository = stageRepository;
         this.internOfferService = internOfferService;
         this.etudiantService = etudiantService;
         this.contractService = contractService;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -132,7 +132,7 @@ public class StageService {
 
             if(isContractAccepted(stageId))
                 savedStage = setContract(savedStage);
-
+            notificationService.saveNotificationByUser(savedStage.getStudent().getId(),Notificationsi18n.youAreAcceptedForStage);
             return new StageDto(savedStage);
         } catch (Exception e) {
             throw e;

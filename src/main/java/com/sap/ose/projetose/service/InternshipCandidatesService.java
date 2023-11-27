@@ -7,7 +7,6 @@ import com.sap.ose.projetose.exception.EtudiantNotFoundException;
 import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.FileEntityRepository;
-import com.sap.ose.projetose.repository.InternOfferRepository;
 import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,17 +23,18 @@ public class InternshipCandidatesService {
     private final InternOfferService internOfferService;
     private final EtudiantService etudiantService;
     private final InterviewService interviewService;
-
     private final FileEntityRepository fileEntityRepository;
 
+    private final NotificationService notificationService;
     private final Logger logger = LoggerFactory.getLogger(InternshipCandidatesService.class);
 
-    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, InterviewService interviewService, FileEntityRepository fileEntityRepository) {
+    public InternshipCandidatesService(InternshipCandidatesRepository internshipCandidatesRepository, InternOfferService internOfferService, EtudiantService etudiantService, InterviewService interviewService, FileEntityRepository fileEntityRepository, NotificationService notificationService) {
         this.internshipCandidatesRepository = internshipCandidatesRepository;
         this.internOfferService = internOfferService;
         this.etudiantService = etudiantService;
         this.interviewService = interviewService;
         this.fileEntityRepository = fileEntityRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
@@ -56,6 +56,8 @@ public class InternshipCandidatesService {
             fileEntityRepository.saveAll(files);
 
             internshipCandidatesRepository.save(internshipCandidates);
+
+            notificationService.saveNotificationByUser(internOffer.getEmployeur().getId(), Notificationsi18n.studentApplyOnOffer);
             return new InternshipCandidatesDto(internshipCandidates);
 
         }catch (DataAccessException e){

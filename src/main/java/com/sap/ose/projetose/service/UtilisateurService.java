@@ -7,6 +7,7 @@ import com.sap.ose.projetose.repository.InternshipmanagerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,5 +80,17 @@ public class UtilisateurService {
         }
 
         return null;
+    }
+
+    List<Etudiant> findAllEtudiant() {
+        return etudiantRepository.findAll();
+    }
+
+    List<Employeur> findAllEmployeur() {
+        return employeurRepository.findAll();
+    }
+
+    List<Internshipmanager> findAllManagers() {
+        return internshipmanagerRepository.findAll();
     }
 }
