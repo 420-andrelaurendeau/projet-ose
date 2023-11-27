@@ -34,8 +34,10 @@ public class NotificationService {
 
     @Transactional
     public List<NotificationDto> getNotificationByUserId(long id){
-        System.out.println(notificationRepository.getNotificationByUserId(id));
-        return notificationRepository.getNotificationByUserId(id).stream().map(NotificationDto::new).toList();
+        System.out.println(notificationRepository.findByReceveurs_Id(id));
+        List<NotificationDto> list = notificationRepository.findByReceveurs_Id(id).stream().map(NotificationDto::new).toList();
+        System.out.println(list);
+        return list;
     }
 
     @Transactional

@@ -67,6 +67,7 @@ const Header = (userd: any) => {
 
                     fetchUserNotifications(user.id).then(messages => {
                         setMessages(messages);
+                        console.log(messages)
                     })
                 }
             )
