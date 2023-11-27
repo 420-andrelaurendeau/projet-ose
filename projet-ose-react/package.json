@@ -58,6 +58,7 @@
     "start": "npm run build:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
     "test": "react-scripts test",
+    "test-coverage": "npm test -- --coverage",
     "build:css": "postcss src/index.css -o src/tailwind.css"
   },
   "eslintConfig": {

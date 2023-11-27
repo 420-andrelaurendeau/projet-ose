@@ -37,7 +37,7 @@ export default function EmployerContractsPage() {
     const [totalDeclined, setTotalDeclined] = useState(0);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
-    const [seasons,setSeasons] = useState([])
+    const [seasons, setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState('');
 
     const navigate = useNavigate();
