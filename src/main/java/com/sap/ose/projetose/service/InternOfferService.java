@@ -1,13 +1,9 @@
 package com.sap.ose.projetose.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.sap.ose.projetose.controller.ReactOseController;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.exception.*;
-import com.sap.ose.projetose.modeles.Employeur;
-import com.sap.ose.projetose.modeles.InternOffer;
-import com.sap.ose.projetose.modeles.Programme;
-import com.sap.ose.projetose.modeles.State;
+import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
@@ -23,10 +19,7 @@ import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class InternOfferService {
@@ -35,14 +28,16 @@ public class InternOfferService {
     private final EmployeurRepository employeurRepository;
     private final ProgrammeService programmeService;
     private final EmployeurService employeurService;
+    private final NotificationService notificationService;
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     @Autowired
-    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService, EmployeurService employeurService) {
+    public InternOfferService(InternOfferRepository offerJobRepository, EmployeurRepository employeurRepository, ProgrammeService programmeService, EmployeurService employeurService, NotificationService notificationService) {
         this.offerJobRepository = offerJobRepository;
         this.employeurRepository = employeurRepository;
         this.programmeService = programmeService;
         this.employeurService = employeurService;
+        this.notificationService = notificationService;
     }
 
 
@@ -64,6 +59,7 @@ public class InternOfferService {
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.newOfferSavedByEmployeur);
             return new InternOfferDto(savedOfferDto);
         } catch (OfferAlreadyReviewException e) {
             logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internOfferDto.getId(), e);
@@ -219,7 +215,17 @@ public class InternOfferService {
     }
 
     boolean isApprovedOrDeclineById(long id) {
-        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
+        Optional<InternOffer> internOffer = offerJobRepository.findById(id);
+        if(internOffer.isPresent()){
+            if(internOffer.get().getState() == State.ACCEPTED){
+                notificationService.saveNotificationByUser(internOffer.get().getEmployeur().getId(),Notificationsi18n.offerAsBeenAccpeted);
+            } else if (internOffer.get().getState() == State.DECLINED) {
+                notificationService.saveNotificationByUser(internOffer.get().getEmployeur().getId(),Notificationsi18n.offerAsBeenDeclined);
+
+            }
+            return true;
+        }
+        return false;
     }
 
     @Transactional

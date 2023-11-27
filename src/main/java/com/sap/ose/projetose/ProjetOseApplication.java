@@ -27,7 +27,7 @@ import java.util.List;
 
 
 @SpringBootApplication
-public class ProjetOseApplication implements CommandLineRunner {
+public class    ProjetOseApplication implements CommandLineRunner {
 
     @Autowired
     private EtudiantService etudiantService;
@@ -132,10 +132,6 @@ public class ProjetOseApplication implements CommandLineRunner {
         stageService.saveTEST(stage2);
         stageService.saveTEST(stage3);
         stageService.saveTEST(stage4);
-
-
-        notificationService.saveNotificationForAllStudent(Notificationsi18n.contractText);
-        notificationService.saveNotificationForAllStudent(Notificationsi18n.contractText);
 
         System.out.println("DONE");
     }
