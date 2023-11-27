@@ -33,7 +33,7 @@ i18n
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application,
+                        application:application.en,
                         employerOffer:employerOffer.en,
                         studentOffer:studentOffer.en,
                         contractPage:contractPage.en,
@@ -756,7 +756,7 @@ i18n
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application,
+                        application:application.fr,
                         employerOffer:employerOffer.fr,
                         studentOffer:studentOffer.fr,
                         header,

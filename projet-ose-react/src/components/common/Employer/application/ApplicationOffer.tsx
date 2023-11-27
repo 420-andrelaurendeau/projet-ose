@@ -33,7 +33,8 @@ const ApplicationOffer: React.FC<any> = () => {
     const [studentId, setStudentId] = useState<number>(0);
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2));
+    //
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application");
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
     const updateCandidateRef = useRef(false);
@@ -47,6 +48,8 @@ const ApplicationOffer: React.FC<any> = () => {
         try {
             fetchedOfferRef.current = true
             const response = await getOfferById(parseInt(id!));
+            console.log("OFFER")
+            console.log(response)
             setinternshipOffer(response);
             return response;
 
@@ -99,6 +102,8 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     useEffect(() => {
+        console.log("OFFERS - PROPS")
+        console.log(offers)
         if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
             console.log("Offer loaded")
             getCandidates(offer)

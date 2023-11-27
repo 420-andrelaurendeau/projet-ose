@@ -18,7 +18,7 @@ export default function ApplicationDetails ():ReactElement{
     const {application,studentId,offerId, setUpdate, handleAccept, handleRefuse,hasStudentApplied, isReviewing, updateCandidature} = useUser()
     const [description, setDescription] = useState<string>("")
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2) + ".applicant");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application.applicant");
     const toast = useContext(ToastContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [file, setFile] = useState(null);
@@ -126,7 +126,8 @@ export default function ApplicationDetails ():ReactElement{
                                 <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
                                     {
                                         application?.files.map((file:any) => (
-                                            <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                                            <li key={file.id}
+                                                className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                                                 <div className="flex w-0 flex-1 items-center">
                                                     <div className="h-5 w-5 flex-shrink-0 text-gray-400"
                                                          aria-hidden="true"/>
