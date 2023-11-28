@@ -80,7 +80,7 @@ export default function EmployerStagePage() {
                             <tr>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
+                                    className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
                                     {fields.AgreementTable.title.text}
@@ -123,7 +123,7 @@ export default function EmployerStagePage() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
@@ -136,7 +136,7 @@ export default function EmployerStagePage() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     <span >Option</span>
                                 </th>
                             </tr>
@@ -144,7 +144,7 @@ export default function EmployerStagePage() {
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                             { stageAgreement.map((stage:any) => (
                                 <tr key={stage.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
                                             <div className="ml-4 overflow-hidden">
                                                 <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{stage.internOfferDto.title}</p>
@@ -157,15 +157,15 @@ export default function EmployerStagePage() {
                                     <td className="px-6 py-4 whitespace-nowrap dark:text-white max-md:hidden">
                                         {stage.etudiantDto.nom + " " + stage.etudiantDto.prenom}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite max-sm:hidden">
 
                                         <span
                                             className={
                                                 stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
-                                                    "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
+                                                    "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full bg-red text-white dark:text-offwhite"
                                                     : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING")?
-                                                        "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
+                                                        "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full bg-orange text-white dark:text-offwhite"
+                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-fulljustify-center bg-green text-white dark:text-offwhite"}
                                         >
                                             {fields.AgreementTable[
                                                 stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
@@ -176,7 +176,7 @@ export default function EmployerStagePage() {
                                                 ].text}
                                         </span>
                                     </td>
-                                    <td className=" px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         {
                                             stage.stateEmployeur == "ACCEPTED" && stage.stateStudent == "ACCEPTED" ?
                                                 <div className="flex dark:text-white">
@@ -185,7 +185,7 @@ export default function EmployerStagePage() {
                                                 : stage.stateEmployeur == "PENDING" ?
 
                                                     <div className="flex ">
-                                                        <div className="flex justify-between gap-4">
+                                                        <div className="flex justify-between xxxs:gap-2 sm:gap-4">
                                                             <button
                                                                 type="button"
                                                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-green hover:bg-emerald-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"

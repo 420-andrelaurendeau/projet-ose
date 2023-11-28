@@ -101,7 +101,7 @@ function ProfilMenu(props: { show: boolean, onClose: () => void, user: any,langu
                         leaveTo="opacity-0 scale-95"
                     >
                         <Dialog.Panel
-                            className=" w-80 mt-14 max-md:ml-52 end-0 items-center rounded-2xl px-6 bg-lightgray dark:bg-darkergray py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" data-testid="background">
+                            className=" w-80 mt-14 max-sm:ml-0 max-md:ml-56 end-0 items-center rounded-2xl px-6 bg-lightgray dark:bg-darkergray py-6 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" data-testid="background">
                             <div className="flex  space-x-2">
                                 <FontAwesomeIcon icon={faCircleUser}
                                                  className="text-blue hidden md:flex dark:text-orange h-12"

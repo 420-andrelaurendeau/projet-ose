@@ -130,6 +130,7 @@ const Header = (userd: any) => {
                                     <SidebarEtudiant
                                         user={user}
                                         setIsOpen={setIsOpen}
+                                        onOpenProfil={openModal}
                                     /> :
                                     userRole === "employer" ?
                                     <SidebarEmployeurHome

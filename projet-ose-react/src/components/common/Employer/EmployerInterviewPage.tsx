@@ -126,67 +126,71 @@ export const EmployerInterviewPage = () => {
                     <tr>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
                             {fields.table.title}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden"
                         >
                             {fields.table.location}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
 
                             {fields.table.date}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                         >
 
                             {fields.table.company}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                             {fields.table.status_text.text}
                         </th>
                     </tr>
                     </thead>
                     <tbody className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                     {interviews.map((interview) => (
-                        <tr key={interview.id}>
-                            <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
-                                {interview.internOffer.title}
+                        <tr key={interview.id} >
+                            <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
+                                            min-w-full max-md:max-w-[10rem] max-w-[15rem]">
+                                <div className="flex items-center">
+                                    <div className="ml-4 overflow-hidden">
+                                        <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{interview.internOffer.title}</p>
+                                    </div>
+                                </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-left text-sm font-medium max-md:hidden">
                                 {interview.internOffer.location}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                            <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
+                                            text-left text-sm font-medium">
                                 {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-left text-sm font-medium max-sm:hidden">
                                 {interview.internOffer.employeurEntreprise}
                             </td>
-                            <td>
-                                                                        <span
-                                                                            className={
-                                                                                interview.state == "PENDING" ?
-                                                                                    "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                                                    : interview.state === "DECLINED" ?
-                                                                                        "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
-                                                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
-                                                                        >
-                                                {fields[interview.state].text}
-                                            </span>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                <span
+                                    className={
+                                        interview.state == "PENDING" ?
+                                            "px-1 inline-flex text-xs leading-5 justify-center font-semibold rounded-full bg-orange text-white dark:text-offwhite"
+                                            : interview.state === "DECLINED" ?
+                                                "px-1 inline-flex text-xs leading-5 font-semibold justify-center rounded-full  bg-red text-white dark:text-offwhite"
+                                                : "px-1 inline-flex text-xs leading-5 font-semibold rounded-full justify-center bg-green text-white dark:text-offwhite"}
+                                >
+                                    {fields[interview.state].text}
+                                </span>
                             </td>
                         </tr>
                     ))}

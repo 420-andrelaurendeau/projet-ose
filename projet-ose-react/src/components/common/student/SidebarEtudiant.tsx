@@ -13,9 +13,9 @@ export default function SidebarEtudiant(props: any) {
 
     console.log(option);
     return (
-        <div className="fixed shadow h-full min-h-screen overflow-y-hidden hover:overflow-auto ">
-            <div className="flex flex-col w-60 h-full  p-3 bg-white dark:bg-dark">
-                <div className="space-y-3">
+        <div className="fixed shadow h-screen  bg-white dark:bg-dark">
+            <div className="flex flex-col w-60 h-full overflow-auto p-3 ">
+                <div className="space-y-3 pb-12">
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-3 text-sm">
                             <li className=" space-y-3 ">
