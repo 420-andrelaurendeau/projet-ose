@@ -1,11 +1,9 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.NotificationDto;
-import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +17,12 @@ public class NotificationController {
     private final NotificationService notificationService;
 
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('internshipmanager') OR (hasAuthority('student')) OR (hasAuthority('employer'))")
-    public List<NotificationDto> getNotifications(@PathVariable long user_id) {
-        return notificationService.getNotificationByUserId(user_id);
+    public List<NotificationDto> getNotifications(@PathVariable long userId) {
+        return notificationService.getNotificationByUserId(userId);
     }
-    @PutMapping("/{id}/read")
+    @PutMapping("/read/{id}")
     public NotificationDto updateNotifcationRead(@PathVariable long id) {
         return notificationService.updateNotificationRead(id);
     }
