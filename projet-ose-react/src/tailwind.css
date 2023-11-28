@@ -901,6 +901,10 @@ video {
   height: 100vh;
 }
 
+.max-h-\[240px\] {
+  max-height: 240px;
+}
+
 .min-h-\[240px\] {
   min-height: 240px;
 }

@@ -7,6 +7,7 @@ import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EmployeurRepository;
 import com.sap.ose.projetose.repository.InternOfferRepository;
 import jakarta.transaction.Transactional;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +56,11 @@ public class InternOfferService {
             internOffer.setProgramme(programme);
             internOffer.setEmployeur(employeur);
             internOffer.setSession(getInternOfferByDates(internOfferDto.fromDto().getStartDate()));
-            internOffer.setState(State.PENDING);
 
             InternOffer savedOfferDto = offerJobRepository.save(internOffer);
 
             notificationService.saveNotificationForAllManagers(Notificationsi18n.newOfferSavedByEmployeur);
+
             return new InternOfferDto(savedOfferDto);
         } catch (OfferAlreadyReviewException e) {
             logger.error("L'offre a déjà été approuvée et ne peut pas être modifiée pour l'Id : " + internOfferDto.getId(), e);
@@ -76,7 +77,6 @@ public class InternOfferService {
             throw new ServiceException("Erreur lors de la sauvegarde de l'offre d'emploi.");
         }
     }
-
     @Transactional
     public Page<InternOfferDto> getInternOfferAccepted(int page, int size, String sortField, String sortDirection, String session) {
 
@@ -215,17 +215,7 @@ public class InternOfferService {
     }
 
     boolean isApprovedOrDeclineById(long id) {
-        Optional<InternOffer> internOffer = offerJobRepository.findById(id);
-        if(internOffer.isPresent()){
-            if(internOffer.get().getState() == State.ACCEPTED){
-                notificationService.saveNotificationByUser(internOffer.get().getEmployeur().getId(),Notificationsi18n.offerAsBeenAccpeted);
-            } else if (internOffer.get().getState() == State.DECLINED) {
-                notificationService.saveNotificationByUser(internOffer.get().getEmployeur().getId(),Notificationsi18n.offerAsBeenDeclined);
-
-            }
-            return true;
-        }
-        return false;
+        return offerJobRepository.findById(id).filter(offer -> offer.getState() == State.ACCEPTED || offer.getState() == State.DECLINED).isPresent();
     }
 
     @Transactional

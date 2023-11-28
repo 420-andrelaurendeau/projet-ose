@@ -63,5 +63,8 @@ public interface InternOfferRepository extends JpaRepository<InternOffer, Long> 
 
     @Query("SELECT i FROM InternOffer i WHERE i.session = ?1")
     List<InternOffer> findOfferBySeason(String session);
+
+    @Query("SELECT i FROM InternOffer i WHERE i.id = ?1")
+    InternOffer getInternOfferById(long id);
 }
 

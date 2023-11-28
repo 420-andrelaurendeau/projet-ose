@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {getOfferById, saveOfferReviewRequest} from "../../api/InterOfferJobAPI";
+import {getOfferById, saveOfferReviewRequest, updateOfferReviewApi} from "../../api/InterOfferJobAPI";
 import {InternshipOffer} from "../../model/IntershipOffer";
 import InternshipManagerOfferDetails from "../../components/common/internshipManager/offer/InternshipManagerOfferDetails";
 import InternshipManagerOfferReviewForm from "../../components/common/internshipManager/offer/InternshipManagerOfferReviewForm";
@@ -94,6 +94,17 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
         }
     }
 
+    async function updateOfferReview(updatedFormState : any) {
+        try {
+            await updateOfferReviewApi(updatedFormState);
+            setIsUpdate(true);
+            setFormState(updatedFormState);
+        } catch (error: any) {
+            toast.error(fields.errorSaveOfferReview);
+        }
+    }
+
+
     function handleFormChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         const {name, value} = e.target;
         setFormState(prevState => ({
@@ -107,7 +118,8 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
             state: "ACCEPTED"
         };
 
-        await saveOfferReview(updatedFormState);
+        await updateOfferReview(updatedFormState)
+
         toast.success(fields.succesSaveOfferReview, 1);
     }
 

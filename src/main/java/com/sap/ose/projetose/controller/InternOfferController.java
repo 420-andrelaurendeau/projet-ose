@@ -4,6 +4,7 @@ package com.sap.ose.projetose.controller;
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.ProgrammeDto;
 import com.sap.ose.projetose.modeles.InternOffer;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.service.InternOfferService;
 import jakarta.transaction.Transactional;
 import jakarta.persistence.criteria.CriteriaBuilder;

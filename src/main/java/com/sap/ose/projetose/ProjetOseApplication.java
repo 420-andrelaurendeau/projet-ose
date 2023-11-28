@@ -81,16 +81,16 @@ public class    ProjetOseApplication implements CommandLineRunner {
 
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
 
-        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","En tant que stagiaire en informatique chez Cisco, vous aurez l'opportunité de travailler au sein de notre équipe de professionnels de l'informatique, d'apprendre de nouvelles compétences",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","En tant que stagiaire en informatique chez Cisco, vous aurez l'opportunité de travailler au sein de notre équipe de professionnels de l'informatique, d'apprendre de nouvelles compétences",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
-        InternOffer internOffer1 = new InternOffer(2L,"Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer1 = new InternOffer(2L,"Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
 
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.of(2024, 10,20),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.ACCEPTED,offerReviewRequest);
+        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.of(2024, 10,20),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 

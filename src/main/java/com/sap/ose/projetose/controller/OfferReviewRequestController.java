@@ -2,6 +2,7 @@ package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.InternOfferDto;
 import com.sap.ose.projetose.dto.OfferReviewRequestDto;
+import com.sap.ose.projetose.modeles.State;
 import com.sap.ose.projetose.service.OfferReviewRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,14 @@ public class OfferReviewRequestController {
     @PreAuthorize("hasAuthority('internshipmanager')")
     public ResponseEntity<InternOfferDto> saveOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
         InternOfferDto internOfferDto = offerReviewRequestService.saveOfferReviewRequest(offerReviewRequestDto);
+        return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/update")
+    @PreAuthorize("hasAuthority('internshipmanager')")
+    public ResponseEntity<InternOfferDto> updateOfferReviewRequest(@RequestBody OfferReviewRequestDto offerReviewRequestDto){
+        System.out.println("Update OfferReview");
+        InternOfferDto internOfferDto = offerReviewRequestService.updateStateOfferReviewRequest(offerReviewRequestDto);
         return new ResponseEntity<>(internOfferDto, HttpStatus.CREATED);
     }
 

@@ -131,6 +131,16 @@ export const saveOfferReviewRequest = async (offerReviewRequest: OfferReviewRequ
     }
 };
 
+export const updateOfferReviewApi = async (updatedFormState :any) => {
+    try {
+        console.log("Update")
+        const response = await api.post('offerReviewRequest/update', updatedFormState);
+        return response.data;
+    } catch (error) {
+        console.error('Erreur lors de l\'update de la revue de l\'offre:', error);
+        throw error;
+    }
+};
 export const getOfferReviewRequestById = async (id: number) => {
     try {
 
