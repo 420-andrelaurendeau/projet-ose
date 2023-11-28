@@ -1,10 +1,12 @@
 package com.sap.ose.projetose.service;
 
 import com.sap.ose.projetose.dto.NotificationDto;
+import com.sap.ose.projetose.exception.NotificationNotFoundException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.NotificationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -107,10 +109,13 @@ public class NotificationService {
         Notifications notification = notificationRepository.findById(id).orElse(null);
 
         try {
-            assert notification != null;
-            notification.setRead(true);
-            notificationRepository.save(notification);
-            return new NotificationDto(notification);
+            if (notification != null) {
+                notification.setRead(true);
+                notificationRepository.save(notification);
+                return new NotificationDto(notification);
+            }
+
+            throw new NotificationNotFoundException();
         } catch (Exception e){
             System.out.println("Error mise a jour notification: " + e.getMessage());
             return null;
