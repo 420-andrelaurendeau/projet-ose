@@ -17,14 +17,15 @@ export default function ApplicationDetails ():ReactElement{
     const [date, setDate] = useState<string>("")
     const {application,studentId,offerId, setUpdate, handleAccept, handleRefuse,hasStudentApplied, isReviewing, updateCandidature} = useUser()
     const [description, setDescription] = useState<string>("")
-    const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application.applicant");
+    const {t} = useTranslation();
+    //formField.application.applicant
     const toast = useContext(ToastContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [file, setFile] = useState(null);
 
 
     useEffect(()=>{
+        console.log(application)
         setDate("")
         updateCandidature()
     },[])
@@ -61,7 +62,7 @@ export default function ApplicationDetails ():ReactElement{
             application.date = res.data.date
             updateCandidature()
             setUpdate(true)
-            toast.success(fields.success.text)
+            toast.success(t("formField.application.applicant.success.text"))
             navigate("/employer/home/offers/"+offerId+"/application")
         }).catch(e => {
             toast.error("Error", "An error has occurred", "error")
@@ -78,17 +79,17 @@ export default function ApplicationDetails ():ReactElement{
             <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
-                        {fields.title.text}
+                        {t("formField.application.applicant.title.text")}
                     </h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
-                        {fields.subtitle.text}
+                        {t("formField.application.applicant.subtitle.text")}
                     </p>
                 </div>
                 <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.fullName.text}
+                                {t("formField.application.applicant.fullName.text")}
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                 {application?.etudiant?.prenom + " " + application?.etudiant?.nom}
@@ -96,7 +97,7 @@ export default function ApplicationDetails ():ReactElement{
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.applicationFor.text}
+                                {t("formField.application.applicant.applicationFor.text")}
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                 {application?.internOfferJob?.title}
@@ -104,7 +105,7 @@ export default function ApplicationDetails ():ReactElement{
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.email.text}
+                                {t("formField.application.applicant.email.text")}
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                 {application?.etudiant?.email}
@@ -112,7 +113,7 @@ export default function ApplicationDetails ():ReactElement{
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.phone.text}
+                                {t("formField.application.applicant.phone.text")}
                             </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                 {application?.etudiant?.phone}
@@ -120,7 +121,7 @@ export default function ApplicationDetails ():ReactElement{
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.attachments.text}
+                                {t("formField.application.applicant.attachments.text")}
                             </dt>
                             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                 <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
@@ -148,7 +149,7 @@ export default function ApplicationDetails ():ReactElement{
                                                             setFile(file)
                                                         }}
                                                     >
-                                                        {fields.view.text}
+                                                        {t("formField.application.applicant.view.text")}
                                                     </button>
                                                     <button
                                                         type="button"
@@ -157,7 +158,7 @@ export default function ApplicationDetails ():ReactElement{
                                                             downloadURI(getPDF(file), file.fileName!)
                                                         }}
                                                     >
-                                                        {fields.download.text}
+                                                        {t("formField.application.applicant.download.text")}
                                                     </button>
                                                 </div>
                                             </li>
@@ -170,11 +171,12 @@ export default function ApplicationDetails ():ReactElement{
                             application.state === "PENDING" &&
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt className="text-sm font-medium leading-6 dark:text-white">
-                                    {fields.actions.text}
+                                    {t("formField.application.applicant.actions.text")}
                                 </dt>
                                 <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                     <div className="flex gap-2">
                                         <button
+                                            aria-label={"accept-button"}
                                             type="button"
                                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                             onClick={() => {
@@ -183,9 +185,10 @@ export default function ApplicationDetails ():ReactElement{
                                                 updateCandidature();
                                             }}
                                         >
-                                            {fields.accept.text}
+                                            {t("formField.application.applicant.accept.text")}
                                         </button>
                                         <button
+                                            aria-label={"refuse-button"}
                                             type="button"
                                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                             onClick={() => {
@@ -193,7 +196,7 @@ export default function ApplicationDetails ():ReactElement{
                                                 application.state = "DECLINED";
                                             }}
                                         >
-                                            {fields.reject.text}
+                                            {t("formField.application.applicant.reject.text")}
                                         </button>
                                     </div>
                                 </dd>
@@ -203,7 +206,7 @@ export default function ApplicationDetails ():ReactElement{
                              !hasStudentApplied(application, offerId) &&
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                 <dt className="text-sm font-medium leading-6 dark:text-white">
-                                    {fields.schedule.text}
+                                    {t("formField.application.applicant.schedule.text")}
                                 </dt>
                                 <dd className="mt-1 text-sm leading-6 text-neutral-500  dark:text-neutral-300 sm:col-span-2 sm:mt-0">
                                     <div
@@ -214,11 +217,13 @@ export default function ApplicationDetails ():ReactElement{
                                                     <div className="space-y-3">
                                                         <label className="dark:text-white"
                                                                htmlFor={"description"}>
-                                                            {fields.description.text}
+                                                            {t("formField.application.applicant.description.text")}
                                                         </label>
-                                                        <textarea required value={description}
+                                                        <textarea
+                                                            aria-label={"interview-desc"}
+                                                            required value={description}
                                                                   onChange={e => setDescription(e.target.value)}
-                                                                  name={fields.description.text}
+                                                                  name={t("formField.application.applicant.description.text")}
                                                                   className={"mt-1 p-2 w-full border border-black rounded-md placeholder:text-xs dark:bg-softdark text-blue dark:text-orange dark:border-0"}/>
                                                     </div>
                                                     <div className="space-y-3">
@@ -229,10 +234,11 @@ export default function ApplicationDetails ():ReactElement{
                                                                className="mt-1 p-2 w-full border border-black text-blue dark:text-orange rounded-md dark:bg-softdark dark:border-0 "/>
                                                     </div>
                                                     <button
+                                                        aria-label={"submit-button"}
                                                         className="w-full mt-14 flex-1 text-white font-bold p-2 rounded-md bg-blue dark:bg-orange"
                                                         onClick={handleSubmit}
                                                     >
-                                                        {fields.submit.text}
+                                                        {t("formField.application.applicant.submit.text")}
                                                     </button>
                                                 </div> :
                                                 <div className="flex justify-center">
