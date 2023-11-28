@@ -513,7 +513,7 @@ i18n
                         },
                         Home: {
                             name: 'home',
-                            text: 'Welcome to the home page : ',
+                            text: 'Welcome to OSE, ',
                             text2: "the application for internships at cégep André-Laurendeau",
                         },
                         programs: {
@@ -1302,8 +1302,8 @@ i18n
                         },
                         Home: {
                             name: 'home',
-                            text: 'Bienvenue sur la page d\'accueil : ',
-                            text2: "de l'application pour les stages du cégep André-Laurendeau"
+                            text: 'Bienvenue sur OSE, ',
+                            text2: "l'application pour les stages du cégep André-Laurendeau"
                         },
                         programs: {
                             techniqueInformatique: {
