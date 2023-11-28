@@ -87,7 +87,7 @@ function EmployeurHomePage() {
     const location = useLocation();
     const [seasons,setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState(''); // State to store the selected option
-
+    const {t} = useTranslation();
 
     const [user, setUser] = useState<User>({
         id: 0,
@@ -331,6 +331,12 @@ function EmployeurHomePage() {
                             </NavLink>
                         </div>
                     </div>
+                    {window.location.pathname === `/${userRole}/home/` &&
+                        <div className="w-full">
+                            <h1 className="text-white text-center text-3xl xxxs:pt-16 md:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
+                            <p className="text-white text-center text-2xl">{t("formField.Home.text2")}</p>
+                        </div>
+                    }
                     <div className="w-full">
                         <Outlet
                             context={context}

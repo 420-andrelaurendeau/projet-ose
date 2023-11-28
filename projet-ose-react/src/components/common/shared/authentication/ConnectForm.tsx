@@ -34,7 +34,7 @@ const ConnectForm = (props: any): ReactElement => {
             }
             else {
                 console.log(userRole)
-                navigate(`/${role}/home/offers`)
+                navigate(`/${role}/home/`)
             }
         } catch (error) {
             console.log(error);

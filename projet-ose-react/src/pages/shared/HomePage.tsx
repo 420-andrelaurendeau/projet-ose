@@ -1,19 +1,39 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {NavLink, Outlet, useLocation} from "react-router-dom";
 import Layout from "../../components/layout/Layout";
 import {useAuth} from "../../authentication/AuthContext";
 import {useTranslation} from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileLines, faPencil} from "@fortawesome/free-solid-svg-icons";
+import {getUser} from "../../api/UtilisateurAPI";
+import {getStudentAppliedOffers} from "../../api/InterOfferJobAPI";
+import {fetchInterviewsCountForStudent} from "../../api/StudentApi";
 
 function HomePage() {
     const location = useLocation();
-    const user = location.state;
     const { userEmail, userRole, logoutUser } = useAuth();
 
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation",'formField.header.' + i18n.language.slice(0, 2) + ".internshipmanager");
 
+    const [user, setUser] = useState<any>(null);
+    const isLoading = useRef(false);
+    useEffect(() => {
+        const fetchUser = async () => {
+            isLoading.current = true;
+
+            getUser(userEmail!)
+                .then( (resUser) => {
+                    setUser(resUser);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => (isLoading.current = false));
+        };
+        if (!isLoading.current) fetchUser();
+    }, []);
 
     return (
         <div className="min-h-screen h-full dark:bg-softdark">
@@ -65,6 +85,12 @@ function HomePage() {
                             </NavLink>
                         </div>
                     </div>
+                    {window.location.pathname === `/${userRole}/home/` &&
+                        <div className="w-full">
+                            <h1 className="text-white text-center text-3xl xxxs:pt-16 md:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
+                            <p className="text-white text-center text-2xl">{t("formField.Home.text2")}</p>
+                        </div>
+                    }
                     <div className="w-full h-full">
                         <Outlet
                         />
