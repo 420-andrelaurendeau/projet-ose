@@ -88,21 +88,21 @@ const StudentOfferDetails: React.FC<any> = () => {
 
     return (
         <div className="pb-12">
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8 max-md:pt-24">
+            <div className="mx-auto max-md:pt-24">
                 <div className="py-6">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-bold dark:text-white">
-                            {internshipOffer?.title}
-                        </h2>
-                        <div className="flex gap-2">
+                        <div className="flex ">
                             <button
                                 type="button"
-                                className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                className="inline-flex px-4 py-2 border border-transparent hover:border-black dark:border-white shadow-sm text-sm font-medium rounded-md text-white bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                 onClick={() => navigate("/student/home/offers")}
                             >
                                 {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
                         </div>
+                        <h2 className="text-lg font-bold dark:text-white">
+                            {internshipOffer?.title}
+                        </h2>
                     </div>
                 </div>
             </div>

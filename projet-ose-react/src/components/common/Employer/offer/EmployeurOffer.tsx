@@ -51,7 +51,7 @@ export default function EmployeurOffer() {
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <header className=" pb-4">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
             </header>
             <div className="">
                 <div className="max-md:pt-2 min-w-full">

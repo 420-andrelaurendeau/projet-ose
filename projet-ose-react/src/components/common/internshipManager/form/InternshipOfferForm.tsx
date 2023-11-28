@@ -178,7 +178,7 @@ const InternshipOfferForm: React.FC<any> = () => {
         <div className="min-h-screen max-md:pt-24">
             <header className="">
                 <div className="max-w-7xl mx-auto pb-4">
-                    <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t('formField.InternshipOfferForm.titleForm')}</h1>
+                    <h1 className="xxxs:text-2xl sm:text-3xl dark:text-white font-bold text-gray-900"> {t('formField.InternshipOfferForm.titleForm')}</h1>
                 </div>
             </header>
             <div className="w-full">

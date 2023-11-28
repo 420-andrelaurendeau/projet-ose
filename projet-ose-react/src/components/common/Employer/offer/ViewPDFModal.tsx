@@ -48,7 +48,7 @@ const ViewPDFModal = (props:any) => {
                 <div className="overflow-y-auto h-full">
                     {
                         props.ismodal &&
-                        <div className="fixed justify-end top-10 right-14 p-3 z-[60]">
+                        <div className="fixed justify-start top-12 left-12 p-3 z-[60]">
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-red hover:bg-black focus:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"

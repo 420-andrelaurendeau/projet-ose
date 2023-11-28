@@ -365,6 +365,10 @@ i18n
                                 name: 'titre',
                                 text: 'Internship for students'
                             },
+                            options: {
+                                name: 'options',
+                                text: 'Options',
+                            },
                             stage: {
                                 name: 'stage',
                                 description: {
@@ -1149,6 +1153,10 @@ i18n
                             titre: {
                                 name: 'titre',
                                 text: 'Stages pour étudiants'
+                            },
+                            options: {
+                                name: 'options',
+                                text: 'Options',
                             },
                             stage: {
                                 name: 'stage',

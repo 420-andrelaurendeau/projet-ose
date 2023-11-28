@@ -128,7 +128,7 @@ function StudentInternship() {
             <div >
                 <div className="max-md:mt-16">
                     <div className="overflow-x-hidden xxxs:rounded-lg">
-                        <h1 className="mt-7 text-start text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                        <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {fields.titre.text}
                         </h1>
                         <div className="flex justify-between py-4">
@@ -182,7 +182,7 @@ function StudentInternship() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                                             onClick={() => handleSortClick("startDate")}
                                         >
                                             {fields.stage.startDate.text}
@@ -196,12 +196,12 @@ function StudentInternship() {
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-xs:hidden"
                                         >
                                             Entreprise
                                         </th>
-                                        <th scope="col" className="relative px-6 py-3">
-                                            <span className="sr-only">{fields.stage.apply.text}</span>
+                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                            <span className="">{fields.options.text}</span>
                                         </th>
                                     </tr>
                                     </thead>
@@ -228,13 +228,13 @@ function StudentInternship() {
                                             <td className="px-6 py-4 whitespace-nowrap max-lg:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.salaryByHour}</div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap max-sm:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.startDate}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap max-md:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.endDate}</div>
                                             </td>
-                                            <td className="px-6 py-4 break-all">
+                                            <td className="px-6 py-4 break-all max-xs:hidden">
                                                 <div className="text-sm dark:text-offwhite">{offer.employeurEntreprise}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">

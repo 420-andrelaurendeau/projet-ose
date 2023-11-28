@@ -64,7 +64,7 @@ function EvaluerCV() {
     return (
         <>
             <div className="max-md:pt-24">
-                <h1 className="text-start text-3xl font-bold dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
+                <h1 className="text-start xxxs:text-2xl sm:text-3xl font-bold dark:text-gray">{t("StudentCvEvaluation.title")}</h1>
                 {files.length === 0 && <p className="w-full h-min bg-red text-center text-white">{t("StudentCvEvaluation.noCv")}</p>}
                 {files.map((file) =>
                     <>

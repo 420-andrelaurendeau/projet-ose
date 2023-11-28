@@ -213,7 +213,7 @@ export default function StudentInterviewPage() {
             <div className="flex flex-col items-center max-md:pt-12">
                 <div className=" lg:-mx-8 w-full max-md:pt-4">
                     <div className="flex flex-col items-start mt-7 mb-4 justify-center">
-                        <h1 className="text-3xl font-bold dark:text-white">{fields.title.text}</h1>
+                        <h1 className="xxxs:text-2xl sm:text-3xl font-bold dark:text-white">{fields.title.text}</h1>
                     </div>
                         <div className=" w-full">
                             <PaginatedList renderItem={renderInterviews}

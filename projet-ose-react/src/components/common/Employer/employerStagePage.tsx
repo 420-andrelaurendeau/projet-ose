@@ -52,7 +52,7 @@ export default function EmployerStagePage() {
         <div className="max-md:pt-24 pb-14">
             <div>
                 <header className=" pb-4">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                    <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
                 </header>
                 <main>
                 <div className="max-md:pt-2 w-full">
