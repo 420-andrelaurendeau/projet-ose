@@ -98,8 +98,8 @@ public class ProjetOseApplication implements CommandLineRunner {
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
-        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+//        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
+//        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
         java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/Internshipe_Contract_Contract.pdf");
         try {
@@ -127,15 +127,15 @@ public class ProjetOseApplication implements CommandLineRunner {
 
 
 
-        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
-        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
-        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
-        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
-
-        stageService.saveTEST(stage);
-        stageService.saveTEST(stage2);
-        stageService.saveTEST(stage3);
-        stageService.saveTEST(stage4);
+//        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
+//        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
+//        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
+//        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
+//
+//        stageService.saveTEST(stage);
+//        stageService.saveTEST(stage2);
+//        stageService.saveTEST(stage3);
+//        stageService.saveTEST(stage4);
 
         System.out.println("DONE");
     }

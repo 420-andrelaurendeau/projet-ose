@@ -13,7 +13,7 @@ function Layout(props: any) {
     }
 
     return (
-        <div className="bg-darkwhite dark:bg-softdark min-h-screen ">
+        <div className="bg-darkwhite dark:bg-softdark">
 
             <div className="">
                 <Header/>

@@ -7,6 +7,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../../authentication/AuthContext";
+import {useTranslation} from "react-i18next";
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 
 
@@ -19,6 +21,7 @@ const ViewPDFModal = (props:any) => {
     const [pageNum, setPageNum] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const {userRole} = useAuth();
+    const {t} = useTranslation();
     useEffect(() => {
         setWidth(getWidth());
         window.addEventListener("resize", () => {
@@ -45,7 +48,7 @@ const ViewPDFModal = (props:any) => {
                 <div className="overflow-y-auto h-full">
                     {
                         props.ismodal &&
-                        <div className="fixed top-10 left-10 p-3 z-[60]">
+                        <div className="fixed justify-end top-10 right-14 p-3 z-[60]">
                             <button
                                 type="button"
                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-red hover:bg-black focus:bg-black text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
@@ -53,7 +56,7 @@ const ViewPDFModal = (props:any) => {
                                     props.setIsModalOpen(false);
                                 }}
                             >
-                                Close
+                                {t("Shared.ReturnButton.text")}  <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
                         </div>
                     }

@@ -74,7 +74,7 @@ function StudentInternship() {
 
 
     const applyOffer = (offer: any, student: any, cv: any) => {
-        if (cv == null) {
+        if (cv == null || cv == "" ) {
             toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } else {
             saveStudentInternshipOffer(offer, student, cv).then(

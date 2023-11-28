@@ -68,12 +68,12 @@ const Header = (userd: any) => {
                     <div className="fixed w-screen h-screen backdrop-blur-sm md:hidden"/>
                     : null
             }
-            <div className="fixed z-40 w-full">
+            <div className="fixed z-40 w-full top-0">
                 <nav className="bg-white dark:bg-dark shadow ">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center">
-                                <NavLink to={"/"}>
+                                <NavLink to={`/${userRole}/home/`}>
                                     <div className="flex-shrink-0">
                                         <img
                                             className="mx-auto h-12 w-auto visible dark:hidden"

@@ -21,6 +21,7 @@ export default function EmployerStagePage() {
 
     const navigate = useNavigate();
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
     const {stageAgreement,seasons,selectedOption,handleOptionChange, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
     const [file, setFile] = useState<any>({
@@ -142,6 +143,14 @@ export default function EmployerStagePage() {
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
+                            {stageAgreement.length === 0 && (
+                                <tr>
+                                    <td className="text-center bg-red text-white"
+                                        colSpan={5}>
+                                        {fields.empty}
+                                    </td>
+                                </tr>
+                            )}
                             { stageAgreement.map((stage:any) => (
                                 <tr key={stage.id}>
                                     <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">

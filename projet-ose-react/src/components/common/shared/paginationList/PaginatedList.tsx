@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItemCountSelector from "./ListItemCountSelector";
 import ListItemPageSelector from "./ListItemPageSelector";
+import {useTranslation} from "react-i18next";
 
 interface PaginatedListProps<T> {
     renderItem: JSX.Element;
@@ -26,6 +27,8 @@ function PaginatedList<T>({
                               handleOptionChange,
                               seasons
                           }: PaginatedListProps<T>) {
+
+    const {t} = useTranslation();
 
     return (
         <div>

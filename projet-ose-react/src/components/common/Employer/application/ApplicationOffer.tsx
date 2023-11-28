@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import api from "../../../../api/ConfigAPI";
-
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 interface Props {
     user: any
     studentId: number
@@ -33,6 +33,7 @@ const ApplicationOffer: React.FC<any> = () => {
     const [studentId, setStudentId] = useState<number>(0);
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
@@ -71,12 +72,10 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     function getCandidates(offer:any) {
-        console.log(offer)
         if (!fetchedCandidateRef.current) {
             loadCandidates(offer.internshipCandidates!).then(
                 (candidatures) => {
-                    console.log("Candidates loaded")
-                    console.log(candidatures)
+                    console.log("Loaded candidates")
                     candidatures.map((candidature: any) => {
                         let interviewList: any[] = []
                         let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
@@ -100,7 +99,6 @@ const ApplicationOffer: React.FC<any> = () => {
 
     useEffect(() => {
         if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
-            console.log("Offer loaded")
             getCandidates(offer)
             setUpdate(false)
         });
@@ -166,7 +164,6 @@ const ApplicationOffer: React.FC<any> = () => {
     const handleReview = (app: any,studentId:number) => {
         setIsReviewing(true)
         setApplication(app)
-        console.log(app)
         setStudentId(studentId)
         const props = {
             user: user,
@@ -189,7 +186,7 @@ const ApplicationOffer: React.FC<any> = () => {
                             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             onClick={() => navigate("/employer/home/offers")}
                         >
-                            {fields.back.text}
+                            {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                         </button>
                     </div>
                     <h2 className="text-lg font-bold">

@@ -723,6 +723,9 @@ i18n
                                 required : 'The password is required',
                                 minLenght : 'The password must contain at least 5 characters',
                             }
+                        },
+                        error : {
+                            text : "The email address or password is incorrect",
                         }
                     },
                     cv: CV.en,
@@ -768,7 +771,8 @@ i18n
                                     declined: "Declined",
                                 }
                             },
-                            empty: "No interview available"
+                            empty: "No interview available",
+                            noStage: "No internship available",
                         }
                     },
                     StudentCvEvaluation: {
@@ -785,7 +789,18 @@ i18n
                             declineSuccess: "The CV has been declined",
                             declineError: "An error occurred while declining the CV",
                         },
+                        noCv: "No CV to evaluate",
                         view: "View CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filter per season',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Return',
+                        },
                     }
 
                 },
@@ -1477,6 +1492,9 @@ i18n
                                 required: 'Le mot de passe est requis',
                                 minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                             }
+                        },
+                        error : {
+                            text : "Votre adresse e-mail ou votre mot de passe est incorrect",
                         }
                     },
                     cv: CV.fr,
@@ -1522,7 +1540,8 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
-                            empty: "Aucune entrevue disponible"
+                            empty: "Aucune entrevue disponible",
+                            noStage: "Aucun stage disponible",
                         }
                     },
                     StudentCvEvaluation: {
@@ -1539,8 +1558,19 @@ i18n
                             declineSuccess: "Le CV a été refusé",
                             declineError: "Une erreur est survenue lors du refus du CV",
                         },
+                        noCv: "Aucun CV à évaluer",
 
                         view: "Voir CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filtre par saison',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Retour',
+                        },
                     }
                 }
             }

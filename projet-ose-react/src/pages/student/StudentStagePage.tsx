@@ -5,10 +5,12 @@ import {useAuth} from "../../authentication/AuthContext";
 import {getUser} from "../../api/UtilisateurAPI";
 import {acceptStage, declineStage, fetchStagePending} from "../../api/StudentApi";
 import {Stage} from "../../model/Stage";
+import {useTranslation} from "react-i18next";
 
 
 function StudentStagePage(){
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation()
     const [stages, setStages] = React.useState<Stage[]>([])
     const [user, setUser] = useState<any>(null);
     const isLoading = useRef(false);
@@ -105,13 +107,13 @@ function StudentStagePage(){
                                  {stages && stages.length > 0 ? (
                                      stages.map((stage) => (
                                          <tr key={stage.id}>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-white">
                                                  {stage.offer.title}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.location}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.employeurEntreprise}
                                              </td>
                                              <td className="px-6 py-4 whitespace-nowrap">
@@ -140,7 +142,7 @@ function StudentStagePage(){
                                      <tr>
                                          <td colSpan={5}>
                                              <div className="w-full text-center bg-red text-white">
-                                                 Aucune entreprise ne vous a encore accepte ...
+                                                 {t("StudentInterview.table.noStage")}
                                              </div>
                                          </td>
                                      </tr>
