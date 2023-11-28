@@ -94,35 +94,37 @@ const InternshipContractPage: React.FC<any> = () => {
                 <div className="bg-white dark:bg-dark py-6 rounded border border-gray dark:border-darkgray">
                     <h1 className="text-center dark:text-white text-3xl font-bold">{intershipAggreement.internOfferDto.title}</h1>
                     <div
-                        className="block sm:flex mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto dark:text-offwhite">
+                        className="xxxs:block xs:flex mt-5 xs:justify-between xs:items-start  xs:w-3/4 xs:mx-auto dark:text-offwhite">
 
-                        <div className='block items-center min-h-50'>
+                        <div className=' items-center min-h-50'>
 
 
-                            <div className="flex pb-4">
+                            <div className="flex pb-4 xs:justify-start xxxs:justify-center">
                                 <h2 className="font-bold text-2xl">{fields.student}</h2>
                             </div>
 
-                            <div className="ml-8 p-1">
 
-                                <p className="p-1"> {intershipAggreement.etudiantDto.nom + " " + intershipAggreement.etudiantDto.prenom}</p>
+                                <div className="xs:ml-8 p-1 max-xs:text-center">
+
+                                    <p className="p-1"> {intershipAggreement.etudiantDto.nom + " " + intershipAggreement.etudiantDto.prenom}</p>
 
 
-                                <p className="p-1">{intershipAggreement.etudiantDto.email}</p>
+                                    <p className="p-1">{intershipAggreement.etudiantDto.email}</p>
 
-                                <p className={"p-1 mt-3 px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 text-white dark:text-offwhite "
-                                    + (intershipAggreement.signatureStudent ? "bg-green" : "bg-orange")}>
-                                    {intershipAggreement.signatureStudent ? fields.sign : fields.notsign}
-                                </p>
-                            </div>
+                                    <p className={"p-1 mt-3 px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold justify-center rounded-full w-3/4 text-white dark:text-offwhite "
+                                        + (intershipAggreement.signatureStudent ? "bg-green" : "bg-orange")}>
+                                        {intershipAggreement.signatureStudent ? fields.sign : fields.notsign}
+                                    </p>
+                                </div>
+
 
                         </div>
-                        <div className="block sm:flex flex-col sm:justify-end sm:items-end h-full sm:text-end">
-                            <div className="flex pb-4">
+                        <div className="flex flex-col xs:justify-end xs:items-end h-full xs:text-end">
+                            <div className="flex pb-4 xs:justify-end xxxs:justify-center">
                                 <h2 className="font-bold text-2xl">{fields.employer}</h2>
                             </div>
 
-                            <div className="sm:mr-8 ml-8 p-1">
+                            <div className="xs:mr-8 max-sm:ml-0 ml-8 p-1 max-xs:text-center">
 
                                 {/* Company field */}
                                 <p className="p-1"> {intershipAggreement.employeur.nom + " " + intershipAggreement.employeur.prenom}</p>
@@ -139,12 +141,14 @@ const InternshipContractPage: React.FC<any> = () => {
                     </div>
 
                     <div
-                        className="block pt-4 mt-5 sm:justify-between sm:items-start sm:w-3/4 sm:mx-auto dark:text-offwhite">
-                        <h2 className="pb-4 font-bold text-2xl">Description</h2>
-                        {intershipAggreement.internOfferDto.description}
+                        className="block pt-4 mt-5  xs:items-start xs:w-3/4 xs:mx-auto dark:text-offwhite">
+                        <h2 className="pb-4 font-bold text-2xl flex max-xs:justify-center">Description</h2>
+                        <p className="max-xs:px-4">
+                            {intershipAggreement.internOfferDto.description}
+                        </p>
                     </div>
 
-                    <div className="block sm:flex mx-auto w-fit pt-10 gap-x-4">
+                    <div className=" flex mx-auto w-fit pt-10 gap-x-4">
                         <button
                             className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-neutral-500 dark:bg-dark dark:text-white dark:hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             onClick={() => setIsModalOpen(true)}>

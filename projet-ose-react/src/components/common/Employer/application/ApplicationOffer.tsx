@@ -200,14 +200,14 @@ const ApplicationOffer: React.FC<any> = () => {
             </div>
             <div className="flex justify-center">
                 <div className="w-full px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
-                <div className=" py-8 flex justify-between">
+                <div className=" py-8 flex max-sm:justify-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
                 </div>
-                <div className=" border-t border-neutral-200 dark:border-darkergray">
+                <div className="flex max-md:justify-center border-t border-neutral-200 dark:border-darkergray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
                         {interOfferCandidates.map((candidate) => {
                             return (
-                                <div key={candidate.id} className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                <div key={candidate.id} className="sm:flex justify-between px-4 py-6 md:grid md:grid-cols-3 md:gap-4 sm:px-0">
                                     <dt className=" font-medium space-y-8 leading-6 dark:text-white">
                                         <div className="space-y-3">
                                             <div>
@@ -238,7 +238,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                         </div>
 
                                     </dt>
-                                    <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white">
+                                    <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white max-sm:pt-3">
                                         <div className="space-y-8 ">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
@@ -270,6 +270,9 @@ const ApplicationOffer: React.FC<any> = () => {
                                                 </div>
                                             </div>
                                         </div>
+
+                                    </dd>
+                                    <dd className="max-sm:pt-3">
                                         <div className="space-y-8">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
@@ -289,6 +292,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                             </div>
                                         </div>
                                     </dd>
+
                                 </div>
                             )
                         })}

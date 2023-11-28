@@ -16,7 +16,7 @@ function HomePage() {
 
 
     return (
-        <div className="h-screen dark:bg-softdark">
+        <div className="min-h-screen h-full dark:bg-softdark">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-2">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {fields.title} </h1>

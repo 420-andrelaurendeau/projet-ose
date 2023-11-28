@@ -76,7 +76,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     return (
         <div className="">
 
-            <div className="flex w-full justify-between sm:w-3/4 sm:mx-auto items-center">
+            <div className="flex w-full justify-between sm:w-3/4 sm:mx-auto items-center pb-4">
                 <div className="">
                     <button
                         type="button"
