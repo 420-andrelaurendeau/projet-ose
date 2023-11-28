@@ -514,6 +514,7 @@ i18n
                         Home: {
                             name: 'home',
                             text: 'Welcome to the home page : ',
+                            text2: "the application for internships at cégep André-Laurendeau",
                         },
                         programs: {
                             techniqueInformatique: {
@@ -802,6 +803,7 @@ i18n
                             text: 'Return',
                         },
                     }
+
 
                 },
             },
@@ -1301,6 +1303,7 @@ i18n
                         Home: {
                             name: 'home',
                             text: 'Bienvenue sur la page d\'accueil : ',
+                            text2: "de l'application pour les stages du cégep André-Laurendeau"
                         },
                         programs: {
                             techniqueInformatique: {

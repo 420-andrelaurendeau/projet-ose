@@ -63,9 +63,8 @@ function StudentInternshipPage() {
             isLoading.current = true;
 
             getUser(userEmail!)
-                .then((resUser) => {
+                .then( (resUser) => {
                     setUser(resUser);
-                    console.log(userId! + " fjdsffjdfsfdsfsd")
                     getStudentAppliedOffers(userId!).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
@@ -134,9 +133,8 @@ function StudentInternshipPage() {
         selectedOption: selectedOption,
         handleChangeOption: handleOptionChange,
     };
-
     return (
-        <div className="min-h-screen h-full">
+        <div className="min-h-screen h-full ">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-8">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t("StudentInternshipPage.titre.text")}  </h1>
@@ -144,8 +142,8 @@ function StudentInternshipPage() {
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
-                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
-                        <div className="flex-row flex md:justify-start">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto ">
+                        <div className="flex-row flex md:justify-start ">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
                                          (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
@@ -222,6 +220,13 @@ function StudentInternshipPage() {
                         </div>
 
                     </div>
+
+                    {window.location.pathname === `/${userRole}/home/` &&
+                        <div className="w-full">
+                            <h1 className="text-white text-center text-3xl xxxs:pt-16 lg:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
+                            <p className="text-white text-center text-2xl">{t("formField.Home.text2")}</p>
+                        </div>
+                    }
                     <div className="w-full">
                         <Outlet
                             context={context}
