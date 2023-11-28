@@ -157,7 +157,7 @@ export const EmployerInterviewPage = () => {
                         </th>
                     </tr>
                     </thead>
-                    <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                    <tbody className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                     {interviews.map((interview) => (
                         <tr key={interview.id}>
                             <td className="px-6 py-4 whitespace-nowrap
@@ -197,7 +197,7 @@ export const EmployerInterviewPage = () => {
 
     )
 
-    return (<div className="dark:bg-black">
+    return (<div className="">
         <div className="flex flex-col items-start max-md:pt-24">
             <header className=" pb-4">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>

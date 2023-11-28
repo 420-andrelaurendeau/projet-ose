@@ -166,21 +166,17 @@ const ApplicationOffer: React.FC<any> = () => {
     const handleReview = (app: any,studentId:number) => {
         setIsReviewing(true)
         setApplication(app)
+        console.log(app)
         setStudentId(studentId)
-        navigate(`/employer/home/offers/${id!}/application/${app.id}/review`)
-    }
-
-    const props = {
-        user: user,
-        studentId: studentId,
-        offerId: internshipOffer?.id,
-        application: application,
-        handleAccept: handleAccept,
-        handleRefuse: handleRefuse,
-        hasStudentApplied: hasStudentApplied,
-        updateCandidature: UpdateCandidature,
-        isReviewing: isReviewing,
-        setUpdate: setUpdate
+        const props = {
+            user: user,
+            studentId: studentId,
+            offerId: internshipOffer?.id,
+            application: app,
+            appId : app.id,
+            isReviewing: isReviewing,
+        }
+        navigate(`/employer/home/offers/${id!}/application/${app.id}/review`,{state: props})
     }
 
     return (
@@ -206,7 +202,7 @@ const ApplicationOffer: React.FC<any> = () => {
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-full md:w-10/12 lg:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+                <div className="w-full px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
                 <div className=" py-8 flex justify-between">
                     <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
                 </div>
@@ -303,16 +299,6 @@ const ApplicationOffer: React.FC<any> = () => {
                 </div>
             </div>
             </div>
-            <div className="w-full my-6 px-12 border border-gray dark:border-darkgray"/>
-            {
-                isReviewing ?
-                <Outlet
-                    context={props}
-                />:
-                    <div className=" flex justify-center items-center h-96 dark:text-white">
-                        {fields.isnotReviewed.text}
-                    </div>
-            }
         </div>
     );
 }

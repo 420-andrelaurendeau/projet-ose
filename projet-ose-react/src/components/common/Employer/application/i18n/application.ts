@@ -96,6 +96,10 @@ let application = {
                 name: "view",
                 text: "View",
             },
+            back: {
+                name: "back",
+                text: "Back",
+            },
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -247,6 +251,10 @@ let application = {
             view: {
                 name: "view",
                 text: "Voir",
+            },
+            back: {
+                name: "back",
+                text: "Retour",
             },
         },
         errorFetchOffer: {

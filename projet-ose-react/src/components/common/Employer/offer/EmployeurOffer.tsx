@@ -79,7 +79,7 @@ export default function EmployeurOffer() {
                             <tr>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
+                                    className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
                                     {fields.offerTable.titre.text}
@@ -122,7 +122,7 @@ export default function EmployeurOffer() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white max-sm:hidden uppercase tracking-wider"
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
@@ -135,10 +135,10 @@ export default function EmployeurOffer() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     {fields.candidature.text}
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     <span className="">Option</span>
                                 </th>
                             </tr>
@@ -146,7 +146,7 @@ export default function EmployeurOffer() {
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                             { offers.map((offer:any) => (
                                 <tr key={offer.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
                                             <div className="ml-4 overflow-hidden">
                                                 <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{offer.title}</p>
@@ -159,7 +159,7 @@ export default function EmployeurOffer() {
                                     <td className="px-6 py-4 whitespace-nowrap dark:text-white max-md:hidden">
                                         {offer.salaryByHour} $
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm max-sm:hidden dark:text-offwhite">
 
                                         <span
                                             className={
@@ -172,8 +172,8 @@ export default function EmployeurOffer() {
                                             {fields.offerTable[offer.state].text}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div className="flex items-center justify-start ">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <div className="flex items-center xxs:justify-center xs:justify-start ">
                                             {
                                                 offer.internshipCandidates!.length > 0 ? (
                                                     Array.from(Array(offer.internshipCandidates!.length), (e, i) => {
@@ -202,7 +202,7 @@ export default function EmployeurOffer() {
                                             }
                                         </div>
                                     </td>
-                                    <td className="flex space-x-2 px-6 py-4 whitespace-nowrap text-right text-sm font-medium items-center dark:text-white">
+                                    <td className="flex space-x-2 xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium items-center dark:text-white">
                                         <p>{fields.view.text}</p>
                                         <FontAwesomeIcon icon={faEye}
                                                          className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"

@@ -2491,6 +2491,13 @@ video {
   background-color: rgb(114 113 114 / var(--tw-bg-opacity));
 }
 
+@media not all and (min-width: 1024px) {
+
+  .max-lg\:hidden {
+    display: none;
+  }
+}
+
 @media not all and (min-width: 768px) {
 
   .max-md\:ml-52 {
@@ -2795,6 +2802,10 @@ video {
 
   .md\:pl-14 {
     padding-left: 3.5rem;
+  }
+
+  .md\:pt-7 {
+    padding-top: 1.75rem;
   }
 }
 
