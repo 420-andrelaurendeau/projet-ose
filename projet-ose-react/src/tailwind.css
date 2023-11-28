@@ -2096,6 +2096,10 @@ video {
   line-height: 1rem;
 }
 
+.last\:border-b-0:last-child {
+  border-bottom-width: 0px;
+}
+
 .hover\:cursor-pointer:hover {
   cursor: pointer;
 }
