@@ -9,10 +9,12 @@ import useDarkSide from "../../../../hooks/useDarkSide";
 import {useAuth} from "../../../../authentication/AuthContext";
 import {authenticateUser} from "../../../../api/AuthenticationAPI";
 import {Link, useNavigate} from "react-router-dom";
+import {useToast} from "../../../../hooks/state/useToast";
 
 
 const ConnectForm = (props: any): ReactElement => {
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","LoginPage");
     const { loginUser, userRole } = useAuth();
     const navigate = useNavigate();
@@ -20,14 +22,20 @@ const ConnectForm = (props: any): ReactElement => {
         email: "",
         password: ""
     });
-
+    const token = localStorage.getItem("token");
+    const toast = useToast();
 
     const connect = async (e: any) => {
         e.preventDefault();
         try {
             const role = await authenticateUser(connectUser.email, connectUser.password, loginUser, navigate);
-            console.log(userRole)
-                navigate(`/${role}/home/offers`)
+            if (role == null) {
+                toast.error(t("LoginPage.error.text"))
+            }
+            else {
+                console.log(userRole)
+                navigate(`/${role}/home/`)
+            }
         } catch (error) {
             console.log(error);
         }

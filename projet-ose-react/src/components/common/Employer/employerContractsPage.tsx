@@ -15,6 +15,7 @@ import InternshipManagerInternshipsAgreementDashoardHeader
     from "../internshipManager/internshipsAgreement/InternshipManagerInternshipsAgreementDashoardHeader";
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {useProps} from "../../../pages/employer/EmployeurHomePage";
 
 export default function EmployerContractsPage() {
 
@@ -22,7 +23,7 @@ export default function EmployerContractsPage() {
     const [isUpdate, setIsUpdate] = useState(false);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
     const [internshipAgreements, setInternshipsAgreement] = useState([]);
     const [state, setState] = useState(undefined);
     const [sortField, setSortField] = useState("id");
@@ -37,8 +38,10 @@ export default function EmployerContractsPage() {
     const [totalDeclined, setTotalDeclined] = useState(0);
     const {i18n} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage");
-    const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    //const [seasons,setSeasons] = useState([])
+    //const [selectedOption, setSelectedOption] = useState('');
+
+    const { selectedOption, setSelectedOption, seasons, setSeasons } = useProps();
 
     const navigate = useNavigate();
 
@@ -129,10 +132,10 @@ export default function EmployerContractsPage() {
 
 
     return (
-        <div className="px-4">
+        <div className="max-md:pt-24">
             <title>Offres</title>
             <header className=" pb-4">
-                <h1 className="  sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title}</h1>
             </header>
             <main className="pb-4">
                 <div className="p-0">

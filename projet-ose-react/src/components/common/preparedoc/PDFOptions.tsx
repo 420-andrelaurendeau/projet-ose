@@ -1,20 +1,25 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowPointer, faDownload, faFileSignature, faPenNib, faPrint} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../authentication/AuthContext";
-import React from "react";
-import {useNavigate} from "react-router-dom";
+import {ReactComponent as Icon} from '../../../assets/icons/back_icon.svg';
+import React, {useEffect} from "react";
+import {useLocation} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {useNavigate, useParams} from "react-router-dom";
 
 function PDFOptions(props: any) {
     const navigate = useNavigate();
+    const {id} = useParams()
     const {userRole } = useAuth();
-    return <div className="sticky flex items-center justify-between top-20 left-0 right-0 z-[100] w-full">
+    const {t} = useTranslation();
+    return <div className="flex items-center justify-between w-full pb-3">
 
         <button
             type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-            onClick={() => navigate("/employer/home/contract")}
+            className="inline-flex items-center px-4 py-2 border border-transparent hover:border-black shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+            onClick={() => navigate(`/${userRole}/home/internshipagreement/` + props.contractId)}
         >
-               Retours
+            {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
         </button>
 
         <div
@@ -55,12 +60,12 @@ function PDFOptions(props: any) {
             </div>
         </div>
         <button
-            type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-900 disabled:bg-gray hover:disabled:border-gray focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-            disabled={props.newContent===false}
-            onClick={props.submitContract}
-        >
-            Enregistrer
+                type="button"
+                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green hover:bg-emerald-900 disabled:bg-gray hover:disabled:border-gray focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                disabled={props.newContent===false}
+                onClick={props.submitContract}
+            >
+                Enregistrer
         </button>
     </div>;
 }

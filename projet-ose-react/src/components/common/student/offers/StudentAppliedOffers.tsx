@@ -4,7 +4,7 @@ import {AppliedOffers} from "../../../../model/AppliedOffers";
 import {FileEntity} from "../../../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faFilePdf} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 
 export default function StudentAppliedOffers() {
@@ -53,41 +53,43 @@ export default function StudentAppliedOffers() {
 
     return (
         <div>
-            <div className="flex flex-col items-center">
-                <div className=" lg:-mx-8 mt-28 w-11/12 ">
-                    <div
-                        className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                        <div className=" w-full">
+            <div className="flex flex-col justify-center pt-24">
+                <div className="overflow-x-hidden xxxs:rounded-lg">
+                    <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                        {t("formField.Header.sidebarEtudiant.appliedOffer.text")}
+                    </h1>
+                    <div className="max-md:pt-2 min-w-full">
+                        <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                                 <thead className="bg-blue dark:bg-orange ">
                                 <tr>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.titre.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.location.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.homeEmployeur.offerTable.startDate.text')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.InternshipOfferList.table.enterprise')}
                                     </th>
                                     <th
                                         scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                                     >
                                         {t('formField.InternshipOfferForm.file.name')}
 
@@ -128,8 +130,7 @@ export default function StudentAppliedOffers() {
                                             <div className="text-sm dark:text-offwhite">
                                                 {appliedOffer.appliedFiles.map((file: FileEntity) => (
                                                     <div key={file.id} className="flex space-y-2">
-                                                        <FontAwesomeIcon icon={faFilePdf}/>
-                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName}</a>
+                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName} <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white"/></a>
                                                     </div>
                                                 ))}
                                             </div>

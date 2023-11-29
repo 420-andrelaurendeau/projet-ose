@@ -121,11 +121,11 @@ public class InterviewService {
         return interviewRepository.findAll().stream().map(interview -> new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState())).toList();
     }
 
-    public Page<InterviewDTO> getInterviewsByStudentId(long studentId, int page, int size, String sortField, String sortDirection) {
+    public Page<InterviewDTO> getInterviewsByStudentId(long studentId, int page, int size, String sortField, String sortDirection, String season) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Interview> page1 = interviewRepository.findAllByStudentId(studentId, pageable);
+        Page<Interview> page1 = interviewRepository.findAllByStudentId(studentId, pageable, season);
 
         return page1.map(
                 interview -> new InterviewDTO(
@@ -138,11 +138,11 @@ public class InterviewService {
                 ));
     }
 
-    public Page<InterviewDTO> getInterviewsByEmployerId(long employerId, int page, int size, String sortField, String sortDirection) {
+    public Page<InterviewDTO> getInterviewsByEmployerId(long employerId, int page, int size, String sortField, String sortDirection, String season) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Interview> page1 = interviewRepository.findAllByEmployerId(employerId, pageable);
+        Page<Interview> page1 = interviewRepository.findAllByEmployerId(employerId, pageable, season);
         return page1.map(
                 interview -> new InterviewDTO(
                         interview.getId(),
@@ -184,7 +184,17 @@ public class InterviewService {
         return Optional.of(false);
     }
 
-
+    public Optional<InterviewDTO> updateInterview(InterviewRequestInDto interviewRequestInDto) {
+        Interview interview = interviewRepository.findById(interviewRequestInDto.getId()).orElse(null);
+        if (interview != null) {
+            interview.setDate(interviewRequestInDto.getDate());
+            interview.setDescription(interviewRequestInDto.getDescription());
+            interview.setState(State.PENDING);
+            interviewRepository.save(interview);
+            return Optional.of(new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState()));
+        }
+        return Optional.empty();
+    }
 
 
 //    @Transactional

@@ -8,7 +8,7 @@ import {PaperClipIcon} from "@heroicons/react/20/solid";
 import {Buffer} from "buffer";
 import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/utils/Utils";
 import ViewPDFModal from "./ViewPDFModal";
-
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 const EmployerOfferDetails: React.FC<any> = () => {
     const navigate = useNavigate();
@@ -16,6 +16,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const toast = useContext(ToastContext);
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
@@ -83,6 +84,21 @@ const EmployerOfferDetails: React.FC<any> = () => {
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8 max-md:pt-24">
                 <div className="py-6">
                     <div className="flex items-center justify-between">
+                        <div className="flex gap-2">
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                onClick={() => navigate("/employer/home/offers")}
+                            >
+                                {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                            </button>
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-orange dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                            >
+                                {fields.edit.text}
+                            </button>
+                        </div>
                         <h2 className="text-lg font-bold">
                             <span
                                 className={
@@ -95,21 +111,6 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                             {internshipOffer ? fields[internshipOffer.state].text : ""}
                                         </span>
                         </h2>
-                        <div className="flex gap-2">
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                                onClick={() => navigate("/employer/home/offers")}
-                            >
-                                {fields.back.text}
-                            </button>
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-red dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-red focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            >
-                                {fields.edit.text}
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

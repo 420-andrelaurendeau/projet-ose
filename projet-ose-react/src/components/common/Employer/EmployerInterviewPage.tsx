@@ -7,18 +7,46 @@ import {acceptInterview, declineInterview, saveStageStudent} from "../../../api/
 import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
+import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
+import {useProps} from "../../../pages/student/StudentInternshipPage";
 
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
 export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation();
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
     const isLoading = useRef(false);
     const auth = useAuth();
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
-    const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const navigate = useNavigate();
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100);
+    //const [seasons,setSeasons] = useState([])
+    //const [selectedOption, setSelectedOption] = useState(getActualSeason());
+
+    const { seasons, selectedOption, setSelectedOption, setSeasons } = useProps();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -36,7 +64,7 @@ export const EmployerInterviewPage = () => {
                         size: numberElementByPage,
                         sortField: "id",
                         sortDirection: "desc",
-                        session: selectedOption
+                        season: selectedOption
                     }).then((res: any) => {
                         setInterviews(res.content);
                         setTotalPages(res.totalPages);
@@ -49,7 +77,7 @@ export const EmployerInterviewPage = () => {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, [totalPages, currentPage, numberElementByPage]);
+    }, [totalPages, currentPage, numberElementByPage, selectedOption]);
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -118,75 +146,95 @@ export const EmployerInterviewPage = () => {
         });
     }
 
+    const handleReschdule = (id: number) => {
+        navigate(`reschedule/${id}`, {state: {interview: getInterviewFromId(id)}})
+    }
+
     const renderInterviews = (
-        <main className={"py-4"}>
+        <main>
             <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                 <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                     <thead className="bg-blue dark:bg-orange ">
                     <tr>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
                             {fields.table.title}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden"
                         >
                             {fields.table.location}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
 
                             {fields.table.date}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                            className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                         >
 
                             {fields.table.company}
                         </th>
                         <th
                             scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                             {fields.table.status_text.text}
+                        </th>
+                        <th
+                            scope="col"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            Actions
                         </th>
                     </tr>
                     </thead>
-                    <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                    <tbody className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                     {interviews.map((interview) => (
-                        <tr key={interview.id}>
-                            <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
-                                {interview.internOffer.title}
+                        <tr key={interview.id} >
+                            <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
+                                            min-w-full max-md:max-w-[10rem] max-w-[15rem]">
+                                <div className="flex items-center">
+                                    <div className="ml-4 overflow-hidden">
+                                        <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{interview.internOffer.title}</p>
+                                    </div>
+                                </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-left text-sm font-medium max-md:hidden">
                                 {interview.internOffer.location}
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
-                                {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
+                            <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
+                                            text-left text-sm font-medium">
+                                {new Date(Date.parse(interview.date)).toISOString().split('T')[0]} {new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[0]}:{new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[1]}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
-                                            text-center text-sm font-medium">
+                                            text-left text-sm font-medium max-sm:hidden">
                                 {interview.internOffer.employeurEntreprise}
                             </td>
-                            <td>
-                                                                        <span
-                                                                            className={
-                                                                                interview.state == "PENDING" ?
-                                                                                    "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full w-3/4 bg-orange text-white dark:text-offwhite"
-                                                                                    : interview.state === "DECLINED" ?
-                                                                                        "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
-                                                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
-                                                                        >
-                                                {fields[interview.state].text}
-                                            </span>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                <span
+                                    className={
+                                        interview.state == "PENDING" ?
+                                            "px-1 inline-flex text-xs leading-5 justify-center font-semibold rounded-full bg-orange text-white dark:text-offwhite"
+                                            : interview.state === "DECLINED" ?
+                                                "px-1 inline-flex text-xs leading-5 font-semibold justify-center rounded-full  bg-red text-white dark:text-offwhite"
+                                                : "px-1 inline-flex text-xs leading-5 font-semibold rounded-full justify-center bg-green text-white dark:text-offwhite"}
+                                >
+                                    {fields[interview.state].text}
+                                </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                {interview.state === "DECLINED" && (
+                                    <button onClick={() => handleReschdule(interview.id)}>
+                                        {fields.reschedule}
+                                    </button>
+                                )}
                             </td>
                         </tr>
                     ))}
@@ -197,25 +245,24 @@ export const EmployerInterviewPage = () => {
 
     )
 
-    return (<div className="dark:bg-black">
-        <div className="flex flex-col items-center">
-            <div className=" lg:-mx-8 w-11/12 ">
-                <div
-                    className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                    <div className=" w-full">
-                        <PaginatedList renderItem={renderInterviews}
-                                       page={currentPage}
-                                       totalPages={totalPages}
-                                       onPageChange={handlePageChange}
-                                       numberElement={numberElementByPage}
-                                       handleChangeNumberElement={handleChangeNbElement}
-                                       selectedOption=""
-                                       handleOptionChange={() => {}}
-                                       seasons={["",""]}
-                        />
+    return (<div className="">
+        <div className="flex flex-col items-start max-md:pt-24">
+            <header className=" pb-4">
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+            </header>
+            <div className="w-full">
 
-                    </div>
-                </div>
+                <PaginatedList renderItem={renderInterviews}
+                               page={currentPage}
+                               totalPages={totalPages}
+                               onPageChange={handlePageChange}
+                               numberElement={numberElementByPage}
+                               handleChangeNumberElement={handleChangeNbElement}
+                               selectedOption={selectedOption}
+                               handleOptionChange={handleOptionChange}
+                               seasons={seasons}
+                />
+
             </div>
         </div>
     </div>)

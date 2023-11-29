@@ -27,20 +27,35 @@ import java.util.Date;
 import java.util.List;
 
 
-@RequiredArgsConstructor
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
-    private final EtudiantService etudiantService;
-    private final EmployeurService employeurService;
-    private final UtilisateurService utilisateurService;
-    private final AuthenticationService authenticationService;
-    private final InternOfferService internOfferService;
-    private final InterviewService interviewService;
-    private final InternshipCandidatesService internshipCandidatesService;
-    private final StageService stageService;
-    private final ProgrammeRepository programmeRepository;
-    private final TemplateContractService templateContractService;
-    private final NotificationService notificationService;
+
+    @Autowired
+    private EtudiantService etudiantService;
+    @Autowired
+    private EmployeurService employeurService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private InternOfferService internOfferService;
+
+    @Autowired
+    private InterviewService interviewService;
+
+    @Autowired
+    private InternshipCandidatesService internshipCandidatesService;
+
+    @Autowired
+    private StageService stageService;
+
+    @Autowired
+    ProgrammeRepository programmeRepository;
+
+    @Autowired
+    TemplateContractService templateContractService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
@@ -71,23 +86,23 @@ public class ProjetOseApplication implements CommandLineRunner {
 
         OfferReviewRequest offerReviewRequest = new OfferReviewRequest();
 
-        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","En tant que stagiaire en informatique chez Cisco, vous aurez l'opportunité de travailler au sein de notre équipe de professionnels de l'informatique, d'apprendre de nouvelles compétences",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
+        InternOffer internOffer = new InternOffer(1L,"Stage Informatique","Laval","En tant que stagiaire en informatique chez Cisco, vous aurez l'opportunité de travailler au sein de notre équipe de professionnels de l'informatique, d'apprendre de nouvelles compétences",20,LocalDate.of(2024,02,20),LocalDate.of(2024,02,20),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto = new InternOfferDto(internOffer);
         internOfferService.saveInterOfferJob(internOfferDto);
 
-        InternOffer internOffer1 = new InternOffer(2L,"Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.now(),LocalDate.now(),internshipCandidates,programme1,file,employeur2, State.PENDING,offerReviewRequest);
+        InternOffer internOffer1 = new InternOffer(2L,"Stage Securité","Montreal","En tant que stagiaire en sécurité informatique chez Norton, vous aurez l'opportunité de plonger dans le monde dynamique de la sécurité des systèmes d'information.",20,LocalDate.of(2024,07,20),LocalDate.of(2024,07,20),internshipCandidates,programme1,file,employeur2, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto1 = new InternOfferDto(internOffer1);
 
         internOfferService.saveInterOfferJob(internOfferDto1);
 
-        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.of(2024, 10,20),LocalDate.now(),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
+        InternOffer internOffer2 = new InternOffer(3L,"Stage Réseaux","Quebec","En tant que stagiaire en réseau chez Cisco, vous aurez l'opportunité de plonger dans le monde passionnant des réseaux informatiques et d'acquérir une expérience pratique précieuse.",20,LocalDate.of(2024, 03,20),LocalDate.of(2024,04,20),internshipCandidates,programme1,file,employeur, State.PENDING,offerReviewRequest);
         InternOfferDto internOfferDto2 = new InternOfferDto(internOffer2);
         internOfferService.saveInterOfferJob(internOfferDto2);
 
-        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
-        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
+//        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
+//        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
-        java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/Internshipe_Contract_Contract.pdf");
+        java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/contratTemplate.pdf");
         try {
 
             FileInputStream fis = new FileInputStream(filePDF);
@@ -113,15 +128,15 @@ public class ProjetOseApplication implements CommandLineRunner {
 
 
 
-        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
-        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
-        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
-        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
-
-        stageService.saveTEST(stage);
-        stageService.saveTEST(stage2);
-        stageService.saveTEST(stage3);
-        stageService.saveTEST(stage4);
+//        StageDto stage = new StageDto(0L,1L, internOfferDto, State.ACCEPTED, State.PENDING, 0L);
+//        StageDto stage2 = new StageDto(0L,2L, internOfferDto1, State.ACCEPTED, State.ACCEPTED, 0L);
+//        StageDto stage3 = new StageDto(0L,2L, internOfferDto2,State.DECLINED, State.ACCEPTED, 0L);
+//        StageDto stage4 = new StageDto(0L,2L, internOfferDto2,State.PENDING, State.DECLINED,  0L);
+//
+//        stageService.saveTEST(stage);
+//        stageService.saveTEST(stage2);
+//        stageService.saveTEST(stage3);
+//        stageService.saveTEST(stage4);
 
         System.out.println("DONE");
     }

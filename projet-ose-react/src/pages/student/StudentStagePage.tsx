@@ -5,10 +5,12 @@ import {useAuth} from "../../authentication/AuthContext";
 import {getUser} from "../../api/UtilisateurAPI";
 import {acceptStage, declineStage, fetchStagePending} from "../../api/StudentApi";
 import {Stage} from "../../model/Stage";
+import {useTranslation} from "react-i18next";
 
 
 function StudentStagePage(){
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
+    const {t} = useTranslation()
     const [stages, setStages] = React.useState<Stage[]>([])
     const [user, setUser] = useState<any>(null);
     const isLoading = useRef(false);
@@ -66,12 +68,11 @@ function StudentStagePage(){
 
     return(
      <>
-         <div className="text-white dark:bg-softdark">
-             <div className="flex flex-col items-center">
-                 <div className=" lg:-mx-8 mt-28 w-11/12 ">
-                     <div
-                         className=" md:z-50 md:top-0 md:left-0 justify-center md:w-full md:h-full md:flex md:p-3 max-md:w-full ">
-                         <div className=" w-full">
+         <div className="text-white dark:bg-softdark pt-24">
+             <div className="flex flex-col justify-center max-md:pt-24 pb-14">
+                 <div className="xs:-mx-1 lg:-mx-2">
+                     <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
+                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                              <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                                  <thead className="bg-blue dark:bg-orange ">
                                  <tr>
@@ -102,17 +103,17 @@ function StudentStagePage(){
                                      </th>
                                  </tr>
                                  </thead>
-                                 <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                                 <tbody className="bg-white text-black divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                                  {stages && stages.length > 0 ? (
                                      stages.map((stage) => (
                                          <tr key={stage.id}>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium dark:text-white">
                                                  {stage.offer.title}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.location}
                                              </td>
-                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium  dark:text-white">
                                                  {stage.offer.employeurEntreprise}
                                              </td>
                                              <td className="px-6 py-4 whitespace-nowrap">
@@ -141,7 +142,7 @@ function StudentStagePage(){
                                      <tr>
                                          <td colSpan={5}>
                                              <div className="w-full text-center bg-red text-white">
-                                                 Aucune entreprise ne vous a encore accepte ...
+                                                 {t("StudentInterview.table.noStage")}
                                              </div>
                                          </td>
                                      </tr>

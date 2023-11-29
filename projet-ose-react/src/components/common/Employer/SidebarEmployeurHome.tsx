@@ -13,9 +13,9 @@ export default function SidebarEmployeurHome(props: any) {
 
     console.log(option);
     return (
-        <div className="fixed shadow h-full min-h-screen overflow-y-hidden hover:overflow-auto ">
-            <div className="flex flex-col w-60 h-full  p-3 bg-white dark:bg-dark">
-                <div className="space-y-3">
+        <div className="fixed shadow h-screen bg-white dark:bg-dark">
+            <div className="flex flex-col w-60 overflow-auto p-3">
+                <div className="space-y-3 pb-12">
                     <div className="flex-1">
                         <ul className="pt-2 pb-4 space-y-3 text-sm">
                             <li className=" space-y-3 ">
@@ -43,45 +43,6 @@ export default function SidebarEmployeurHome(props: any) {
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
-                                <div className={option === "application" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/application"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "application" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.candidature.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
-                                <div className={option === "contract" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/contract"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "contract" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.contract.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
-                                <div className={option === "pendingOffer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
-                                </div>
-                                <NavLink
-                                    to={"/" + userRole +"/home/pendingOffer"}
-                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "pendingOffer" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
-                                    state={props.user}
-                                    onClick={() => props.setIsOpen(false)}
-                                >
-                                    <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.pendingOffer.text}</p>
-                                </NavLink>
-                            </li>
-                            <li className="rounded-sm flex space-x-2">
                                 <div className={option === "newOffer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
@@ -94,6 +55,46 @@ export default function SidebarEmployeurHome(props: any) {
                                     <p className="text-black group-hover:text-white dark:text-white">{fields.newOffre.text}</p>
                                 </NavLink>
                             </li>
+                            <li className="rounded-sm flex space-x-2">
+                                <div className={option === "interview" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                </div>
+                                <NavLink
+                                    to={"/" + userRole +"/home/interview"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "interview" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
+                                >
+                                    <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.interview.text}</p>
+                                </NavLink>
+                            </li>
+                            <li className="rounded-sm flex space-x-2">
+                                <div className={option === "stage" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                </div>
+                                <NavLink
+                                    to={"/" + userRole +"/home/stage"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "stage" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
+                                >
+                                    <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.stage.text}</p>
+                                </NavLink>
+                            </li>
+                            <li className="rounded-sm flex space-x-2">
+                                <div className={option === "internshipagreement" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
+                                </div>
+                                <NavLink
+                                    to={"/" + userRole +"/home/internshipagreement"}
+                                    className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "internshipagreement" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
+                                    state={props.user}
+                                    onClick={() => props.setIsOpen(false)}
+                                >
+                                    <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
+                                    <p className="text-black group-hover:text-white dark:text-white">{fields.internshipagreement.text}</p>
+                                </NavLink>
+                            </li>
+
                         </ul>
                     </div>
                 </div>

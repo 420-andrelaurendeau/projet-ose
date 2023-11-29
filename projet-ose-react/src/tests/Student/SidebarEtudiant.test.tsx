@@ -1,8 +1,8 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import SidebarEtudiant from './SidebarEtudiant';
+import SidebarEtudiant from '../../components/common/student/SidebarEtudiant';
 import {MemoryRouter, Route, Routes, useLocation} from "react-router-dom";
-import {getStudentAppliedOffers} from "../../../api/InterOfferJobAPI";
+import {getStudentAppliedOffers} from "../../api/InterOfferJobAPI";
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -31,7 +31,7 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-
+//TODO slighthly more coverage
 describe('SidebarEtudiant Component', () => {
     beforeEach(() => {
         (useLocation as jest.Mock).mockImplementation(() => {
@@ -55,11 +55,11 @@ describe('SidebarEtudiant Component', () => {
         expect(userNameElement).toBeInTheDocument();
 
         // Check if the "Stage" option is active
-        const stageOption = screen.getByText('formField.Header.sidebar.stage.text');
+        const stageOption = screen.getByLabelText('internship-option');
         expect(stageOption).toBeInTheDocument()
 
         // Check if the "Offres Appliquées" option is not active
-        const appliedOption = screen.getByText('formField.Header.sidebar.offre_applique.text');
+        const appliedOption = screen.getByLabelText('applied-internship-option');
         expect(appliedOption).toBeInTheDocument()
 
         // Add more checks for other elements as needed

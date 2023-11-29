@@ -40,9 +40,9 @@ public class IntershipManagerController {
     }
 
     @GetMapping("/count")
-    public ResponseEntity<Map<String, Long>> getCountInternOfferByState() {
+    public ResponseEntity<Map<String, Long>> getCountInternOfferByState(@RequestParam(required = false) String session) {
 
-        Map<String, Long> countInternOfferByState = offerJobService.getCountByState();
+        Map<String, Long> countInternOfferByState = offerJobService.getCountByState(session);
 
         return new ResponseEntity<>(countInternOfferByState, HttpStatus.OK);
     }

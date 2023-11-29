@@ -19,6 +19,7 @@ import {
 
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
+    const {t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
     const {offers,setOffers,handleOptionChange, selectedOption, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
     const navigate = useNavigate();
@@ -49,24 +50,29 @@ export default function EmployeurOffer() {
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
-            <div className="xs:-mx-1 lg:-mx-2">
-                <div className="max-md:pt-2 min-w-full xs:px-6 lg:px-8">
-                    <div className="pb-4">
-                        <ListItemCountSelector
-                            numberElement={numberElementByPage}
-                            handleChangeNumberElement={handleChangeNumberElement}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="options" className="text-bold">Filtre par saison: </label>
-                        <select id="options" value={selectedOption} onChange={handleOptionChange}>
-                            <option value="">Tout</option>
-                            {seasons.map((season: string, index: number) => (
-                                <option key={index} value={season}>
-                                    {season}
-                                </option>
-                            ))}
-                        </select>
+            <header className=" pb-4">
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+            </header>
+            <div className="">
+                <div className="max-md:pt-2 min-w-full">
+                    <div className="flex justify-between">
+                        <div>
+                            <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                            <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
+                                <option value="">Tout</option>
+                                {seasons.map((season: string, index: number) => (
+                                    <option key={index} value={season}>
+                                        {season}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="pb-4">
+                            <ListItemCountSelector
+                                numberElement={numberElementByPage}
+                                handleChangeNumberElement={handleChangeNumberElement}
+                            />
+                        </div>
                     </div>
                     <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
@@ -74,7 +80,7 @@ export default function EmployeurOffer() {
                             <tr>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider flex "
+                                    className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
                                     {fields.offerTable.titre.text}
@@ -87,7 +93,7 @@ export default function EmployeurOffer() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-gray uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-white uppercase tracking-wider"
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
@@ -102,7 +108,7 @@ export default function EmployeurOffer() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider max-md:hidden "
+                                    className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden "
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
@@ -117,7 +123,7 @@ export default function EmployeurOffer() {
                                 </th>
                                 <th
                                     scope="col"
-                                    className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider"
+                                    className="px-6 py-3 text-left text-xs font-medium text-white max-sm:hidden uppercase tracking-wider"
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
@@ -130,18 +136,18 @@ export default function EmployeurOffer() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray uppercase tracking-wider">
+                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     {fields.candidature.text}
                                 </th>
-                                <th scope="col" className="relative px-6 py-3">
-                                    <span className="sr-only">Option</span>
+                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    <span className="">Option</span>
                                 </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
                             { offers.map((offer:any) => (
                                 <tr key={offer.id}>
-                                    <td className="px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
                                             <div className="ml-4 overflow-hidden">
                                                 <p className="text-ellipsis overflow-hidden text-sm font-medium dark:text-offwhite">{offer.title}</p>
@@ -154,7 +160,7 @@ export default function EmployeurOffer() {
                                     <td className="px-6 py-4 whitespace-nowrap dark:text-white max-md:hidden">
                                         {offer.salaryByHour} $
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm max-sm:hidden dark:text-offwhite">
 
                                         <span
                                             className={
@@ -167,8 +173,8 @@ export default function EmployeurOffer() {
                                             {fields.offerTable[offer.state].text}
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div className="flex items-center justify-start ">
+                                    <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <div className="flex items-center xxs:justify-center xs:justify-start ">
                                             {
                                                 offer.internshipCandidates!.length > 0 ? (
                                                     Array.from(Array(offer.internshipCandidates!.length), (e, i) => {
@@ -197,7 +203,8 @@ export default function EmployeurOffer() {
                                             }
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <td className="flex space-x-2 xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium items-center dark:text-white">
+                                        <p>{fields.view.text}</p>
                                         <FontAwesomeIcon icon={faEye}
                                                          className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                             onClick={() => handleOfferClick(offer.id!)}
@@ -208,7 +215,7 @@ export default function EmployeurOffer() {
                             </tbody>
                         </table>
                     </div>
-                    <div className="pt-4">
+                    <div>
                         <ListItemPageSelector page={page} totalPages={totalPages} onPageChange={onPageChange}/>
                     </div>
                 </div>
