@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Notificationsi18n {
     newOfferAvailable("FormFields.notifications.newOfferAvailable"),
-    contractText("FormFields.notifications.contractText"),
-    stageText("FormFields.notifications.stageText"),
     cvAccepter("FormFields.notifications.cvAccepter"),
     cvRefuser("FormFields.notifications.cvRefuser"),
     studentApplyOnOffer("FormFields.notifications.studentApplyOnOffer"),
