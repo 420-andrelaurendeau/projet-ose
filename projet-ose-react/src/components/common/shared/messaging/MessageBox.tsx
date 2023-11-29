@@ -1,6 +1,10 @@
 import {Message} from "../../../../model/Message";
 import {useTranslation} from "react-i18next";
 import React, {useState} from "react";
+import NotificationLinkMap from "../../../../model/NotificationLinkMap";
+import {useNavigate} from "react-router-dom";
+import {readNotification} from "../../../../api/NotificationAPI";
+
 
 type MessageBoxProps = {
     messages: Message[]
@@ -8,9 +12,13 @@ type MessageBoxProps = {
 
 const MessageBox: React.FC<MessageBoxProps> = (props) => {
     const {t} = useTranslation();
+    let navigate = useNavigate()
 
     function handleClick() {
+    function handleClick(message: Message) {
+        let link = NotificationLinkMap.array[message.message];
 
+        navigate(link);
     }
 
     return props.messages.length > 0
@@ -22,7 +30,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                                 + (header.isRead
                                     ? " bg-neutral-200"
                                     : "")}
-                                onClick={handleClick}>
+                                onClick={event => handleClick(header)}>
                                 {t(header.message)}
                             </a>
                             <hr/>
