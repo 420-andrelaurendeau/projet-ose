@@ -5,26 +5,21 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Notificationsi18n {
-    newOfferAvailable("FormFields.notifications.newOfferAvailable"),
-    contractText("FormFields.notifications.contractText"),
-    stageText("FormFields.notifications.stageText"),
-    cvAccepter("FormFields.notifications.cvAccepter"),
-    cvRefuser("FormFields.notifications.cvRefuser"),
-    studentApplyOnOffer("FormFields.notifications.studentApplyOnOffer"),
-    revueCv("FormFields.notifications.revueCv"),
-    youAreAcceptedForStage("FormFields.notifications.youAreAcceptedForStage"),
-    newOfferSavedByEmployeur("FormFields.notifications.newOfferSavedByEmployeur"),
-    contractSignedByGSForEmployer("FormFields.notifications.contractSignedByGSForEmployer"),
-    contractSignedByGSForStudent("FormFields.notifications.contractSignedByGSForStudent"),
-    contractSignedByStudentForEmployer("FormFields.notifications.contractSignedByStudentForEmployer"),
-    contractSignedByStudentForGS("FormFields.notifications.contractSignedByStudentForGS"),
-    contractSignedByEmployerForStudent("FormFields.notifications.contractSignedByEmployerForStudent"),
-    contractSignedByEmployerForGS("FormFields.notifications.contractSignedByEmployerForGS"),
-    newContractAsBeenCreated("FormFields.notifications.newContractAsBeenCreated"),
-    contractAsBeenSignedByThreeParties("FormFields.notifications.contractAsBeenSignedByThreeParties"),
-	offerAsBeenAccpeted("FormFields.notifications.offerAsBeenAccpeted"),
-	offerAsBeenDeclined("FormFields.notifications.offerAsBeenDeclined"),
-    newStageAsBeenCreated("FormFields.notifications.newStageAsBeenCreated");
+    newOfferAvailable("formField.notifications.newOfferAvailable"),
+    contractText("formField.notifications.contractText"),
+    stageText("formField.notifications.stageText"),
+    cvAccepter("formField.notifications.cvAccepter"),
+    cvRefuser("formField.notifications.cvRefuser"),
+    studentApplyOnOffer("formField.notifications.studentApplyOnOffer"),
+    revueCv("formField.notifications.revueCv"),
+    youAreAcceptedForStage("formField.notifications.youAreAcceptedForStage"),
+    newOfferSavedByEmployeur("formField.notifications.newOfferSavedByEmployeur"),
+    contractSignedByGS("formField.notifications.contractSignedByGS"),
+    newContractAsBeenCreated("formField.notifications.newContractAsBeenCreated"),
+    contractAsBeenSignedByThreeParties("formField.notifications.contractAsBeenSignedByThreeParties"),
+	offerAsBeenAccpeted("formField.notifications.offerAsBeenAccpeted"),
+	offerAsBeenDeclined("formField.notifications.offerAsBeenDeclined"),
+    newStageAsBeenCreated("formField.notifications.newStageAsBeenCreated");
 
     @JsonValue
     private final String translationKey;
