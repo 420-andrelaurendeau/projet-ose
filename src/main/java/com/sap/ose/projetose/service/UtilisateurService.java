@@ -93,4 +93,12 @@ public class UtilisateurService {
     List<Internshipmanager> findAllManagers() {
         return internshipmanagerRepository.findAll();
     }
+
+    List<Etudiant> findAllEtudiantByProgram(long programId) {
+        return etudiantRepository.findAllEtudiantByProgram(programId);
+    }
+
+    List<Employeur> findAllEmployeurByProgram(long programId) {
+        return employeurRepository.findAllEmployeurByProgram(programId);
+    }
 }

@@ -8,6 +8,9 @@ import {getOfferReviewRequestById} from "../../../../api/InterOfferJobAPI";
 import {comment} from "postcss";
 import {useToast} from "../../../../hooks/state/useToast";
 import ViewPDFModal from "../../Employer/offer/ViewPDFModal";
+import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {ReviewFile} from "../../../../model/ReviewFile";
 
 interface GSOfferDetailsProps {
     handleFormChange: any;
@@ -33,7 +36,6 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
-
 
     useEffect(() => {
             const loadOfferReview = async () => {
@@ -69,11 +71,29 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
         }, []
     )
 
+    const handleChange = (comment: string) => {
+        setFormStateReview(
+            {
+                ...formStateReview,
+                comment: comment
+            }
+        )
+    }
+
 
     return (
         <div className="">
 
-            <div className="flex w-full justify-between sm:w-3/4 sm:mx-auto items-center">
+            <div className="flex w-full justify-between sm:w-3/4 sm:mx-auto items-center pb-4">
+                <div className="">
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md bg-red hover:bg-rose-950 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => navigate("/internshipmanager/home/offers")}
+                    >
+                        {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                    </button>
+                </div>
                 <div role="cell" className="md:w-1/5 w-1/3 2 whitespace-nowrap truncate mt-3 items-center">
                                             <span
                                                 className={
@@ -85,15 +105,6 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                                             >
                                                 {fields.table[internshipOffer.state!]}
                                             </span>
-                </div>
-                <div className="">
-                    <button
-                        type="button"
-                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => navigate("/internshipmanager/home/offers")}
-                    >
-                        Back <Icon className="w-5 h-5 fill-current hover:font-bold"/>
-                    </button>
                 </div>
             </div>
 
@@ -165,13 +176,12 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
             {/* File field */}
             <div className="justify-center items-center sm:mx-auto sm:w-3/4">
                 <button className="flex px-4 mb-5 justify-start border hover:border-black border-transparent dark:border-white shadow-sm  font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => setIsModalOpen(true)}>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                    className={theme.includes("dark")  ? `#FFFFFF` : `#000000`}
-                         height="50" viewBox="0 -960 960 960" width="24">
-                        <path
-                            d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520h200L520-800v200Z"/>
-                    </svg>
+                        onClick={() => {
+                            setIsModalOpen(true)
+                            console.log(internshipOffer.file)
+                        }
+                        }>
+                    <FontAwesomeIcon icon={faFilePdf} className="pt-3 flex text-blue dark:text-orange" size="lg"/>
                     <p className="mt-1 p-2 dark:text-white">{internshipOffer!.file!.fileName}</p>
                 </button>
             </div>
@@ -184,7 +194,11 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         name='comment'
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
                         id="commentary_placeholder"
-                        onChange={(e) => handleFormChange(e)}
+                        onChange={(e) => {
+                                handleFormChange(e)
+                                handleChange(e.target.value)
+                            }
+                        }
                         placeholder={t("formField.InternshipOfferModal.placeholder")}>
 
                     </textarea>
@@ -197,15 +211,15 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                     <p className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0">
                         {formStateReview.comment!}
                     </p>
-                    {
-                        internshipOffer.file.content !== "" && isModalOpen &&
-                        <div className="">
-                            <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={internshipOffer.file}/>
-                        </div>
-                    }
                 </div>
 
             )}
+            {
+                internshipOffer.file.content != "" && isModalOpen &&
+                <div className="">
+                    <ViewPDFModal ismodal={true} setIsModalOpen={setIsModalOpen} file={internshipOffer.file}/>
+                </div>
+            }
         </div>
     )
 

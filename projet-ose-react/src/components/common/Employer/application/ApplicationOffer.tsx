@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import {getOfferById} from "../../../../api/InterOfferJobAPI";
 import {ToastContext} from "../../../../hooks/context/ToastContext";
 import api from "../../../../api/ConfigAPI";
-
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 interface Props {
     user: any
     studentId: number
@@ -33,7 +33,8 @@ const ApplicationOffer: React.FC<any> = () => {
     const [studentId, setStudentId] = useState<number>(0);
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2));
+    const {t} = useTranslation();
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application");
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
     const updateCandidateRef = useRef(false);
@@ -71,12 +72,10 @@ const ApplicationOffer: React.FC<any> = () => {
     }
 
     function getCandidates(offer:any) {
-        console.log(offer)
         if (!fetchedCandidateRef.current) {
             loadCandidates(offer.internshipCandidates!).then(
                 (candidatures) => {
-                    console.log("Candidates loaded")
-                    console.log(candidatures)
+                    console.log("Loaded candidates")
                     candidatures.map((candidature: any) => {
                         let interviewList: any[] = []
                         let requestBody = {"studentId": candidature.etudiant.id, "internOfferId": offer.id}
@@ -100,7 +99,6 @@ const ApplicationOffer: React.FC<any> = () => {
 
     useEffect(() => {
         if (!fetchedOfferRef.current) loadOffer().then((offer:any) => {
-            console.log("Offer loaded")
             getCandidates(offer)
             setUpdate(false)
         });
@@ -167,26 +165,30 @@ const ApplicationOffer: React.FC<any> = () => {
         setIsReviewing(true)
         setApplication(app)
         setStudentId(studentId)
-        navigate(`/employer/home/offers/${id!}/application/${app.id}/review`)
-    }
-
-    const props = {
-        user: user,
-        studentId: studentId,
-        offerId: internshipOffer?.id,
-        application: application,
-        handleAccept: handleAccept,
-        handleRefuse: handleRefuse,
-        hasStudentApplied: hasStudentApplied,
-        updateCandidature: UpdateCandidature,
-        isReviewing: isReviewing,
-        setUpdate: setUpdate
+        const props = {
+            user: user,
+            studentId: studentId,
+            offerId: internshipOffer?.id,
+            application: app,
+            appId : app.id,
+            isReviewing: isReviewing,
+        }
+        navigate(`/employer/home/offers/${id!}/application/${app.id}/review`,{state: props})
     }
 
     return (
         <div className="justify-center pb-16">
             <div className="py-6 max-md:pt-24 ">
                 <div className="flex items-center justify-between space-x-2">
+                    <div className="flex gap-2">
+                        <button
+                            type="button"
+                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                            onClick={() => navigate("/employer/home/offers")}
+                        >
+                            {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                        </button>
+                    </div>
                     <h2 className="text-lg font-bold">
                             <span
                                 className="px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-blue dark:bg-orange text-white dark:text-offwhite"
@@ -194,27 +196,18 @@ const ApplicationOffer: React.FC<any> = () => {
                                 {internshipOffer?.title}
                             </span>
                     </h2>
-                    <div className="flex gap-2">
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            onClick={() => navigate("/employer/home/offers")}
-                        >
-                            {fields.back.text}
-                        </button>
-                    </div>
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="w-full md:w-10/12 lg:w-5/6 px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
-                <div className=" py-8 flex justify-between">
+                <div className="w-full px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
+                <div className=" py-8 flex max-sm:justify-center">
                     <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
                 </div>
-                <div className=" border-t border-neutral-200 dark:border-darkergray">
+                <div className="flex max-md:justify-center border-t border-neutral-200 dark:border-darkergray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
                         {interOfferCandidates.map((candidate) => {
                             return (
-                                <div key={candidate.id} className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+                                <div key={candidate.id} className="sm:flex justify-between px-4 py-6 md:grid md:grid-cols-3 md:gap-4 sm:px-0">
                                     <dt className=" font-medium space-y-8 leading-6 dark:text-white">
                                         <div className="space-y-3">
                                             <div>
@@ -245,7 +238,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                         </div>
 
                                     </dt>
-                                    <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white">
+                                    <dd className="flex justify-between font-medium space-y-8 leading-6 dark:text-white max-sm:pt-3">
                                         <div className="space-y-8 ">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
@@ -277,6 +270,9 @@ const ApplicationOffer: React.FC<any> = () => {
                                                 </div>
                                             </div>
                                         </div>
+
+                                    </dd>
+                                    <dd className="max-sm:pt-3">
                                         <div className="space-y-8">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
@@ -296,6 +292,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                             </div>
                                         </div>
                                     </dd>
+
                                 </div>
                             )
                         })}
@@ -303,16 +300,6 @@ const ApplicationOffer: React.FC<any> = () => {
                 </div>
             </div>
             </div>
-            <div className="w-full my-6 px-12 border border-gray dark:border-darkgray"/>
-            {
-                isReviewing ?
-                <Outlet
-                    context={props}
-                />:
-                    <div className=" flex justify-center items-center h-96 dark:text-white">
-                        {fields.isnotReviewed.text}
-                    </div>
-            }
         </div>
     );
 }

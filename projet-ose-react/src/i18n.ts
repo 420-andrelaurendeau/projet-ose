@@ -33,9 +33,9 @@ i18n
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application,
+                        application: application.en,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.en,
                         contractPage,
                         header,
                         notifications: {
@@ -67,7 +67,7 @@ i18n
                                 errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
                                 errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
                             },
-                            title: "Internships agreement",
+                            title: "Contracts of internship",
                             internshipsAgreement: {
                                 title: "Title",
                                 enterprise: "Enterprise",
@@ -77,6 +77,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                view:{
+                                    name: 'view',
+                                    text: "View"
                                 },
                                 sign: {
                                     student: "Refused by the student",
@@ -93,6 +97,7 @@ i18n
                                 accepted: "Offers accepted",
                                 declined: "Offers declined",
                                 pending: "Offers pending",
+                                back: "Back"
                             },
                             table: {
                                 title: "Title",
@@ -379,6 +384,10 @@ i18n
                                 name: 'titre',
                                 text: 'Internship for students'
                             },
+                            options: {
+                                name: 'options',
+                                text: 'Options',
+                            },
                             stage: {
                                 name: 'stage',
                                 description: {
@@ -434,19 +443,31 @@ i18n
                                 name: 'CV',
                                 text: 'Your CV',
                             },
-                            sidebar: {
-                                stage: {
-                                    name: 'stage',
+                            sidebarEtudiant: {
+                                offre: {
+                                    name: 'offre',
                                     text: "Offer"
                                 },
-                                offre_applique: {
-                                    name: 'offre applique',
+                                appliedOffer: {
+                                    name: 'appliedOffer',
                                     text: "Applied offer"
-                                }
-                            },
-                            interview : {
-                                name: 'Interview',
-                                text: 'Interview',
+                                },
+                                cv: {
+                                    name: 'cv',
+                                    text: "Your CV"
+                                },
+                                stage: {
+                                    name: 'stage',
+                                    text: "Internship"
+                                },
+                                contract: {
+                                    name: "contract",
+                                    text: "Contract"
+                                },
+                                interview : {
+                                    name: 'interview',
+                                    text: 'Interview',
+                                },
                             },
                             profilMenu: {
                                 signOut: {
@@ -474,26 +495,36 @@ i18n
                                     text: "Internship manager"
                                 }
                             },
+                            sidebarInternshipManager: {
+                                internshipagreement: {
+                                    name: 'internshipagreement',
+                                    text: "Internship agreement"
+                                },
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offer"
+                                },
+                                reviewCV: {
+                                    name: 'reviewCV',
+                                    text: "Review CV"
+                                },
+                            },
                             sidebarEmployeur: {
                                 offre: {
                                     name: 'offre',
                                     text: "Offer"
                                 },
-                                candidature: {
-                                    name: 'candidature',
-                                    text: "Application"
+                                interview: {
+                                    name: 'interview',
+                                    text: "Interview"
                                 },
-                                contract: {
-                                    name: 'contract',
-                                    text: "Contract"
-                                },
-                                internship: {
-                                    name: "internship",
+                                stage: {
+                                    name: 'stage',
                                     text: "Internship"
                                 },
-                                pendingOffer: {
-                                    name: 'pendingOffer',
-                                    text: "Pending offer"
+                                internshipagreement: {
+                                    name: "internshipagreement",
+                                    text: "Internship agreement"
                                 },
                                 newOffre: {
                                     name: 'newOffre',
@@ -505,7 +536,8 @@ i18n
                         },
                         Home: {
                             name: 'home',
-                            text: 'Welcome to the home page : ',
+                            text: 'Welcome to OSE, ',
+                            text2: "the application for internships at cégep André-Laurendeau",
                         },
                         programs: {
                             techniqueInformatique: {
@@ -534,6 +566,10 @@ i18n
                                 name: 'titre',
                                 text: 'Dashboard'
                             },
+                            title: {
+                                name: 'title',
+                                text: 'Your internship offers'
+                            },
                             interview:{
                                 name: 'interview',
                                 text: 'Interview'
@@ -541,6 +577,10 @@ i18n
                             candidature: {
                                 name: 'totalCondidature',
                                 text: 'Application'
+                            },
+                            view: {
+                                name: 'view',
+                                text: 'View'
                             },
                             offre: {
                                 name: 'totalOffre',
@@ -680,7 +720,7 @@ i18n
                         },
                         ContactUs: {
                             name: 'ContactUs',
-                            text: 'Contact us',
+                            text: 'Register',
                             Question : {
                                 name: 'Question',
                                 text: 'Not registered already ?',
@@ -707,6 +747,9 @@ i18n
                                 required : 'The password is required',
                                 minLenght : 'The password must contain at least 5 characters',
                             }
+                        },
+                        error : {
+                            text : "The email address or password is incorrect",
                         }
                     },
                     cv: CV.en,
@@ -714,6 +757,10 @@ i18n
                     StudentInternshipPage:StudentInternshipPagei18n.en,
                     SideBarEtudiant: SideBarEtudiantI18n.en,
                     StudentInterview: {
+                        title: {
+                            name: 'title',
+                            text: 'Your interviews',
+                        },
                         PENDING: {
                             name: 'PENDING',
                             text: 'Pending'
@@ -748,8 +795,10 @@ i18n
                                     declined: "Declined",
                                 }
                             },
-                            empty: "No interview available"
-                        }
+                            empty: "No interview available",
+                            noStage: "No internship available",
+                        },
+                        reschedule : "Reschedule",
                     },
                     StudentCvEvaluation: {
                         name: 'StudentCvEvaluation',
@@ -757,7 +806,7 @@ i18n
                         button: {
                             accept: 'Accept',
                             decline: 'Decline',
-                            download: "Download",
+                            download: "Download the CV",
                         },
                         toast: {
                             acceptSuccess: "The CV has been accepted",
@@ -765,8 +814,20 @@ i18n
                             declineSuccess: "The CV has been declined",
                             declineError: "An error occurred while declining the CV",
                         },
+                        noCv: "No CV to evaluate",
                         view: "View CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filter per season',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Return',
+                        },
                     }
+
 
                 },
             },
@@ -774,9 +835,9 @@ i18n
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application,
+                        application : application.fr,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.fr,
                         header,
                         contractPage,
                         notifications: {
@@ -808,7 +869,7 @@ i18n
                                 errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
                                 errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
                             },
-                            title: "Ententes de stage",
+                            title: "Contrats de stage",
                             internshipsAgreement: {
                                 title: "Titre",
                                 enterprise: "Entreprise",
@@ -818,6 +879,10 @@ i18n
                                     accepted: "Accepted",
                                     declined: "Declined",
                                     pending: "Pending",
+                                },
+                                view:{
+                                    name: 'view',
+                                    text: "Voir"
                                 },
                                 sign: {
                                     student: "Refuser par l'étudiant",
@@ -833,6 +898,7 @@ i18n
                                 accepted: "Offres acceptées",
                                 declined: "Offres refusées",
                                 pending: "Offres en attente",
+                                back: "Retour"
                             },
                             table: {
                                 title: "Titre",
@@ -1127,6 +1193,10 @@ i18n
                                 name: 'titre',
                                 text: 'Stages pour étudiants'
                             },
+                            options: {
+                                name: 'options',
+                                text: 'Options',
+                            },
                             stage: {
                                 name: 'stage',
                                 description: {
@@ -1186,16 +1256,31 @@ i18n
                                 name: 'Interview',
                                 text: 'Entrevue',
                             },
-                            sidebar: {
+                            sidebarEtudiant: {
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offres"
+                                },
+                                appliedOffer: {
+                                    name: 'appliedOffer',
+                                    text: "Offres appliquées"
+                                },
+                                cv: {
+                                    name: 'cv',
+                                    text: "Votre CV"
+                                },
                                 stage: {
                                     name: 'stage',
-                                    text: "Offre"
+                                    text: "Stage"
                                 },
-                                offre_applique: {
-                                    name: 'offre applique',
-                                    text: "Offre appliqué"
+                                contract: {
+                                    name: "contract",
+                                    text: "Contrat"
                                 },
-
+                                interview : {
+                                    name: 'Interview',
+                                    text: 'Entrevue',
+                                },
                             },
                             profilMenu: {
                                 signOut: {
@@ -1223,26 +1308,36 @@ i18n
                                     text: "Gestionnaire de stage"
                                 }
                             },
+                            sidebarInternshipManager: {
+                                internshipagreement: {
+                                    name: 'internshipagreement',
+                                    text: "Entente de stage"
+                                },
+                                offre: {
+                                    name: 'offre',
+                                    text: "Offre"
+                                },
+                                reviewCV: {
+                                    name: 'reviewCV',
+                                    text: "Revue de CV"
+                                },
+                            },
                             sidebarEmployeur: {
                                 offre: {
                                     name: 'offre',
                                     text: "Offre"
                                 },
-                                candidature: {
-                                    name: 'candidature',
-                                    text: "Candidature"
+                                interview: {
+                                    name: 'interview',
+                                    text: "Entrevue"
                                 },
-                                contract: {
-                                    name: 'contract',
-                                    text: "Contrat"
-                                },
-                                internship: {
-                                    name: "internship",
+                                stage: {
+                                    name: 'stage',
                                     text: "Stage"
                                 },
-                                pendingOffer: {
-                                    name: 'pendingOffer',
-                                    text: "Offre en attente"
+                                internshipagreement: {
+                                    name: "internshipagreement",
+                                    text: "Entente de stage"
                                 },
                                 newOffre: {
                                     name: 'newOffre',
@@ -1254,7 +1349,8 @@ i18n
                         },
                         Home: {
                             name: 'home',
-                            text: 'Bienvenue sur la page d\'accueil : ',
+                            text: 'Bienvenue sur OSE, ',
+                            text2: "l'application pour les stages du cégep André-Laurendeau"
                         },
                         programs: {
                             techniqueInformatique: {
@@ -1283,6 +1379,10 @@ i18n
                                 name: 'titre',
                                 text: 'Tableau de bord'
                             },
+                            title: {
+                                name: 'title',
+                                text: 'Vos offres de stage'
+                            },
                             interview:{
                                 name: 'interview',
                                 text: 'Entrevue'
@@ -1294,6 +1394,10 @@ i18n
                             offre: {
                                 name: 'totalOffre',
                                 text: 'Offre'
+                            },
+                            view: {
+                                name: 'view',
+                                text: 'Voir'
                             },
                             newOffre: {
                                 name: 'newOffre',
@@ -1411,7 +1515,7 @@ i18n
                         },
                         ContactUs: {
                             name: 'ContactUs',
-                            text: 'Nous contacter',
+                            text: 'Inscription',
                             Question : {
                                 name: 'Question',
                                 text: 'Pas encore enregistré ?',
@@ -1438,6 +1542,9 @@ i18n
                                 required: 'Le mot de passe est requis',
                                 minLenght: 'Le mot de passe doit contenir au moins 5 caractères',
                             }
+                        },
+                        error : {
+                            text : "Votre adresse e-mail ou votre mot de passe est incorrect",
                         }
                     },
                     cv: CV.fr,
@@ -1445,6 +1552,10 @@ i18n
                     StudentInternship: StudentInternshipI18n.fr,
                     SideBarEtudiant: SideBarEtudiantI18n.fr,
                     StudentInterview: {
+                        title: {
+                            name: 'title',
+                            text: 'Vos entrevues',
+                        },
                         PENDING: {
                             name: 'PENDING',
                             text: 'En attente'
@@ -1479,8 +1590,10 @@ i18n
                                     declined: "Decliné",
                                 }
                             },
-                            empty: "Aucune entrevue disponible"
-                        }
+                            empty: "Aucune entrevue disponible",
+                            noStage: "Aucun stage disponible",
+                        },
+                        reschedule : "Replanifier",
                     },
                     StudentCvEvaluation: {
                         name: 'StudentCvEvaluation',
@@ -1488,7 +1601,7 @@ i18n
                         button: {
                             accept: 'Accepter',
                             decline: 'Decliner',
-                            download: "Télécharger",
+                            download: "Télécharger le CV",
                         },
                         toast: {
                             acceptSuccess: "Le CV a été accepté",
@@ -1496,8 +1609,19 @@ i18n
                             declineSuccess: "Le CV a été refusé",
                             declineError: "Une erreur est survenue lors du refus du CV",
                         },
+                        noCv: "Aucun CV à évaluer",
 
                         view: "Voir CV",
+                    },
+                    Shared: {
+                        FilterBySeason : {
+                            name: 'FilterBySeason',
+                            text: 'Filtre par saison',
+                        },
+                        ReturnButton : {
+                            name: 'ReturnButton',
+                            text: 'Retour',
+                        },
                     }
                 }
             }

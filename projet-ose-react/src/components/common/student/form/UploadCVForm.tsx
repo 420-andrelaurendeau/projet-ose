@@ -33,15 +33,12 @@ function UploadCVForm(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
-            console.log(user)
             fetchAllStudentCvs(res['id']).then((res) => {
                 setCvs(res)
-                console.log(cvs)
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
             });
             fetchDefaultCvByStudentId(res['id']).then((res) => {
-                console.log(res);
                 setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
@@ -164,7 +161,6 @@ function UploadCVForm(): ReactElement {
     async function setDefaultFile(file: ReviewFile) {
         console.log("fichier a mettre par defaut",file);
         setDefaultCv(user.id, file.id).then(res => {
-            console.log("Retour de la reponse",res);
             toast.success(t('CV par défaut défini avec succès'));
         }).catch(err => {
             console.log(err);
@@ -176,7 +172,6 @@ function UploadCVForm(): ReactElement {
                 console.log("Error fetching user data:", error);
             });
             fetchDefaultCvByStudentId(user.id).then((res) => {
-                console.log(res);
                 setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error);
@@ -203,7 +198,7 @@ function UploadCVForm(): ReactElement {
                 <br/>
                 <form className={"flex flex-col items-center justify-center"}>
                     <div
-                        className="border-dashed bg-offwhite border-2 h-32 relative dark:border-gray dark:bg-softdark pb-5 px-9">
+                        className="border-dashed bg-offwhite border-2  relative dark:border-gray dark:bg-softdark  px-9">
                         <input
                             aria-label="file"
                             name='file'
@@ -247,11 +242,11 @@ function UploadCVForm(): ReactElement {
             {cvs.map((file) =>
                 <>
                     <div
-                        className="w-full my-2 px-4 py-1 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
-                        <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
-                            <p className="basis-full dark:text-white">{file.fileName}</p>
+                        className="w-full my-2 px-4 py-1 bg-slate-50 hover:bg-slate-100 rounded flex flex-col md:flex-row flex-wrap dark:bg-dark">
+                        <div className="flex-item flex items-center  lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
+                            <p className="basis-full dark:text-white ">{file.fileName}</p>
                         </div>
-                        <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
+                        <div className="flex-item flex items-center lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
                             <p className={"basis-full "
                                                 + (file.isAccepted == "PENDING"
                                                         ? "text-zinc-500"
@@ -259,7 +254,7 @@ function UploadCVForm(): ReactElement {
                                                             ? "text-green"
                                                             : "text-red")}>({t("formField.InternshipOfferList.table." + file.isAccepted)})</p>
                         </div>
-                        <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
+                        <div className="flex-item flex items-center md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button className="font-medium text-blue hover:text-cyan-900 dark:text-orange dark:hover:text-amber-800"
                                     onClick={() => {
                                         setViewedPdf(file)
@@ -269,11 +264,11 @@ function UploadCVForm(): ReactElement {
                                 {t('cv.view')}
                             </button>
                         </div>
-                        <div className="flex-item overflow-ellipsis pb-2">
+                        <div className="flex-item flex items-center md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
 
                             <button
                                 //TODO: Ajouter un state pour le montrer comme GS
-                                className={"rounded py-2 sm:px-4 lg:px-10 text-center align-middle h-full w-full "
+                                className={"rounded py-2 sm:px-10 text-center align-middle h-full w-full  "
                                                 + (file.id == cvDefault.id || file.isAccepted != "ACCEPTED"
                                                         ? "bg-gray"
                                                         : "bg-blue dark:bg-orange hover:bg-blue-700 dark:hover:bg-orange-700")}
@@ -283,10 +278,10 @@ function UploadCVForm(): ReactElement {
                                 <FontAwesomeIcon icon={faStar} className={"scale-150 " + (file.id == cvDefault.id ? "text-yellow-500" : "text-white")}/>
                             </button>
                         </div>
-                        <div className="flex-item md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
+                        <div className="flex-item flex items-center md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                             <button
 
-                                className="text-white rounded bg-blue dark:bg-orange py-2 sm:px-4 lg:px-10 hover:bg-blue-700 dark:hover:bg-orange-700 text-center align-middle h-full w-full"
+                                className="text-white rounded bg-blue dark:bg-orange py-2 sm:px-10 hover:bg-blue-700 dark:hover:bg-orange-700 text-center align-middle h-full w-full"
                                 onClick={() => handleDownloadFile(file)}
                             >
                                 <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white"/>

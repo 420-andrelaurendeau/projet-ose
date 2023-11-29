@@ -35,9 +35,32 @@ interface Props {
     numberElementByPage: number;
     page: number;
     seasons: any[];
+    setSeasons: React.Dispatch<React.SetStateAction<string[]>>,
     selectedOption: string;
+    setSelectedOption: React.Dispatch<React.SetStateAction<string>>,
     handleChangeOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 
+}
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
 }
 
 function StudentInternshipPage() {
@@ -48,24 +71,26 @@ function StudentInternshipPage() {
     const [offers, setOffers] = useState([]);
     const [interviewsNb, setInterviewsNb] = React.useState<number>(0);
     const {userId, userEmail, userRole} = useAuth();
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
     const [sortField, setSortField] = useState("id");
     const [sortDirection, setSortDirection] = useState("asc");
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(0);
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
+
+
 
     const isLoading = useRef(false);
 
+    //TODO cchanger que ca utilise le user passer en props
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
 
             getUser(userEmail!)
-                .then((resUser) => {
+                .then( (resUser) => {
                     setUser(resUser);
-                    console.log(userId! + " fjdsffjdfsfdsfsd")
                     getStudentAppliedOffers(userId!).then((res) => {
                         setListStudentAppliedOffers(res);
                     });
@@ -98,6 +123,7 @@ function StudentInternshipPage() {
             isLoading.current = false;
         };
         fetchOffers();
+
     }, [currentPage, selectedOption,numberElementByPage, sortField, sortDirection]);
 
     const handleChangePage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -134,9 +160,8 @@ function StudentInternshipPage() {
         selectedOption: selectedOption,
         handleChangeOption: handleOptionChange,
     };
-
     return (
-        <div className="min-h-screen h-full">
+        <div className="min-h-screen h-full ">
             <header className="max-md:hidden pt-24 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-8">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t("StudentInternshipPage.titre.text")}  </h1>
@@ -144,9 +169,8 @@ function StudentInternshipPage() {
             </header>
             <main>
                 <div className="max-w-7xl mx-auto xxxs:px-6 lg:px-8">
-                    <div
-                        className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto">
-                        <div className="flex-row flex md:justify-start">
+                    <div className="w-full border-b border-gray dark:border-darkgray mt-6 hidden md:block overflow-x-auto ">
+                        <div className="flex-row flex md:justify-start ">
                             <NavLink to="offers"
                                      className={"flex space-x-2 justify-center border-blue dark:border-orange px-5 items-center h-14" +
                                          (location.pathname === `/${userRole}/home/offers` || location.pathname === `/${userRole}/home/offers/` ? " border-b-2" : "")
@@ -223,6 +247,13 @@ function StudentInternshipPage() {
                         </div>
 
                     </div>
+
+                    {window.location.pathname === `/${userRole}/home/` &&
+                        <div className="w-full">
+                            <h1 className="text-black dark:text-white text-center text-3xl xxxs:pt-16 md:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
+                            <p className="text-black dark:text-white text-center text-2xl">{t("formField.Home.text2")}</p>
+                        </div>
+                    }
                     <div className="w-full">
                         <Outlet
                             context={context}

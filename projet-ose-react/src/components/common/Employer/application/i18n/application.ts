@@ -92,10 +92,19 @@ let application = {
                 name: "success",
                 text: "Interview scheduled successfully",
             },
+            failed : {
+                name: "failed",
+                text: "Failed to schedule interview",
+            },
             view: {
                 name: "view",
                 text: "View",
             },
+            back: {
+                name: "back",
+                text: "Back",
+            },
+            hours : "Hours",
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -244,10 +253,19 @@ let application = {
                 name: "success",
                 text: "Entretien planifié avec succès",
             },
+            failed : {
+                name: "failed",
+                text: "Échec de la planification de l'entretien",
+            },
             view: {
                 name: "view",
                 text: "Voir",
             },
+            back: {
+                name: "back",
+                text: "Retour",
+            },
+            hours : "Heures",
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -303,7 +321,6 @@ let application = {
                 text: 'Technologie de la comptabilité et de la gestion',
             },
         },
-
     }
 }
 

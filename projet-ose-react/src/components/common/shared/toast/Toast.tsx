@@ -82,15 +82,16 @@ const Toast: FC<ToastProps> = ({message, type, id}) => {
     }, []);
 
     return (
-        <div
+        <div aria-label={"toast-container"}
             className={`fixed top-10 right-4 z-50 p-4 rounded border-l-4 ${backgroundColor} ${borderColor} ${textColor} shadow-lg w-72 ${isExiting ? 'animate-slideOutRight' : 'animate-slideInDown'}`}>
             <div className="flex justify-between items-start">
                 <div className={`rounded p-1 ${textColor} hover:bg-opacity-30 hover:${backgroundColor}`}>
                     {icon}
                 </div>
 
-                <p className="text-md sm:text-lg  font-bold">{message}</p>
+                <p aria-label={"toast-message"} className="text-md sm:text-lg  font-bold">{message}</p>
                 <button
+                    aria-label={"toast-dismiss-button"}
                     className={`rounded p-1 ${textColor} hover:bg-opacity-30 hover:${backgroundColor}`}
                     onClick={handleDismiss}
                 >

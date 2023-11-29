@@ -38,6 +38,7 @@ const contractPage = {
                 text: 'Declined'
             },
         },
+        empty : "No internship agreement found"
     },
     fr: {
         toast: {
@@ -78,6 +79,7 @@ const contractPage = {
                 text: 'Refusé'
             },
         },
+        empty : "Aucune entente de stage trouvée"
     }
 }
 

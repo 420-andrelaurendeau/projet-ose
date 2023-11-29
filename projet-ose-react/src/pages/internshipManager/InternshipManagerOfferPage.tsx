@@ -170,7 +170,7 @@ const InternshipManagerOfferPage: React.FC<any> = () => {
     return (<>
         {errorMessage && <ErrorModal errorMessage={errorMessage} onClose={() => setErrorMessage(null)}/>}
         {internshipOffer && (
-            <div className={"dark:bg-dark pt-4 px-4 min-h-screen overflow-auto"}>
+            <div className={"max-md:pt-24 "}>
                 <InternshipManagerOfferDetails
                     handleFormChange={handleFormChange}
                     internshipOffer={internshipOffer}

@@ -34,7 +34,7 @@ export async function offresEtudiant(setOffers: any, setTotalPages: any, params:
 
 export const allStudentInternshipOffersBySeason = async (selectedOption: string): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/student/season/'+selectedOption);
+        const response = await api.get('interOfferJob/student/season/'+selectedOption);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);
@@ -44,7 +44,7 @@ export const allStudentInternshipOffersBySeason = async (selectedOption: string)
 
 export const allStudentInternshipOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/allOffers');
+        const response = await api.get('interOfferJob/allOffers');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)
@@ -54,7 +54,7 @@ export const allStudentInternshipOffers = async (): Promise<any[]> => {
 
 export const allStudentOffers = async (): Promise<any[]> => {
     try {
-        const response = await apiClient.get('interOfferJob/student/allOffers');
+        const response = await api.get('interOfferJob/student/allOffers');
         return response.data
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers' + err)
@@ -79,7 +79,7 @@ export const saveInterOfferJob = async (interOfferJob: InternshipOffer, id: numb
 
     try {
 
-        const response = await apiClient.post('interOfferJob/save', interOfferJobDto);
+        const response = await api.post('interOfferJob/save', interOfferJobDto);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la sauvegarde de l\'InterOfferJob:', error);
@@ -144,7 +144,7 @@ export const updateOfferReviewApi = async (updatedFormState :any) => {
 export const getOfferReviewRequestById = async (id: number) => {
     try {
 
-        const response = await apiClient.get(`offerReviewRequest/get/${id}`);
+        const response = await api.get(`offerReviewRequest/get/${id}`);
         return response.data;
     } catch (error) {
         console.error('Erreur lors de l\'envoi de la revue de l\'offre:', error);
@@ -155,7 +155,7 @@ export const getOfferReviewRequestById = async (id: number) => {
 
 export const getInterOfferJob = async (email: string, params:{}) => {
     try {
-        const response = await apiClient.get('interOfferJob/OffersEmp/' + email,{
+        const response = await api.get('interOfferJob/OffersEmp/' + email,{
             params: params
         });
         return response.data;
@@ -169,7 +169,7 @@ export const getInterOfferJob = async (email: string, params:{}) => {
 
 export const allEmployeurInternshipOffersBySeason = async (selectedOption: string,email: string)=>{
     try {
-        const response = await apiClient.get('interOfferJob/'+email+'/season/'+selectedOption);
+        const response = await api.get('interOfferJob/'+email+'/season/'+selectedOption);
         return response.data;
     } catch (err) {
         console.log('Error while getting interOfferJob/allOffers', err);
@@ -214,7 +214,7 @@ export const getInterOfferStudent = async (params:{}) => {
 
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
-        const response = await apiClient.get('/student/' + studentId + '/offersApplied', {
+        const response = await api.get('/student/' + studentId + '/offersApplied', {
 
         });
 

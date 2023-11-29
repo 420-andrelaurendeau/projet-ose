@@ -91,7 +91,7 @@ function SignContract(props: any) {
   return (
       isLoaded ?
     <div>
-      <div id="container" className="m-auto">
+      <div id="container" className="m-auto max-md:pt-24">
         {signatureDialogVisible ? (
           <AddSigDialog
             autoDate={autoDate}
@@ -124,6 +124,7 @@ function SignContract(props: any) {
                   downloadURI(pdf, 'contract.pdf')
                 }}
                 submitContract={submitContract}
+                contractId={stage.contractId}
             />
             <ViewPDF
                 file={pdf} pageDetails={pageDetails} setPdf={setPdf} pdf={pdf}
@@ -159,7 +160,7 @@ function SignContract(props: any) {
         ) : null}
       </div>
     </div>:
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center max-md:pt-24">
             <FontAwesomeIcon icon={faSpinner}  spin size="5x" className="text-blue dark:text-orange" />
           </div>
 
