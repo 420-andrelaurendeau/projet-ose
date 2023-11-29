@@ -12,3 +12,8 @@ export const fetchUserNotifications = async (user_id: number ): Promise<Message[
         throw err
     }
 }
+
+// noinspection JSIgnoredPromiseFromCall
+export const readNotification = (id: number) => {
+    api.put("notifications/read/" + id);
+}
