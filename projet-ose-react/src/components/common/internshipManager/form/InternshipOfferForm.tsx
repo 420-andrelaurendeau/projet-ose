@@ -164,6 +164,7 @@ const InternshipOfferForm: React.FC<any> = () => {
                 fieldError = validateEndDate(formState.endDate!, formState.startDate!, t);
                 break;
             case "file":
+                console.log(formState.file!)
                 fieldError = validateFile(formState.file!, t);
                 break;
         }
@@ -295,6 +296,7 @@ const InternshipOfferForm: React.FC<any> = () => {
                                     ref={ref}
                                     onChange={(e) => {
                                         handleFileChange(e);
+                                        handleValidation("file")
                                     }}
                                     onLoad={() => handleValidation("file")}
                                 >
