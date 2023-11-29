@@ -46,9 +46,9 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllStudent(Notificationsi18n message){
+    public List<NotificationDto> saveNotificationForAllStudent(long program_id,Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Etudiant etudiant : utilisateurService.findAllEtudiant()){
+        for(Etudiant etudiant : utilisateurService.findAllEtudiantByProgram(program_id)){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(etudiant);
@@ -63,9 +63,9 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllEmployeur(Notificationsi18n message){
+    public List<NotificationDto> saveNotificationForAllEmployeur(long program_id,Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Employeur employeur : utilisateurService.findAllEmployeur()){
+        for(Employeur employeur : utilisateurService.findAllEmployeurByProgram(program_id)){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(employeur);
@@ -80,10 +80,10 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllEmployeurAndStudent(Notificationsi18n message){
+    public List<NotificationDto> saveNotificationForAllEmployeurAndStudent(long program_id ,Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        notificationDtoList.addAll(saveNotificationForAllStudent(message));
-        notificationDtoList.addAll(saveNotificationForAllEmployeur(message));
+        notificationDtoList.addAll(saveNotificationForAllStudent(program_id,message));
+        notificationDtoList.addAll(saveNotificationForAllEmployeur(program_id,message));
         return notificationDtoList;
     }
 
