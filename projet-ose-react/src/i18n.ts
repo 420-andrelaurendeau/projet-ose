@@ -702,7 +702,7 @@ i18n
                         },
                         ContactUs: {
                             name: 'ContactUs',
-                            text: 'Contact us',
+                            text: 'Register',
                             Question : {
                                 name: 'Question',
                                 text: 'Not registered already ?',
@@ -1479,7 +1479,7 @@ i18n
                         },
                         ContactUs: {
                             name: 'ContactUs',
-                            text: 'Nous contacter',
+                            text: 'Inscription',
                             Question : {
                                 name: 'Question',
                                 text: 'Pas encore enregistré ?',
