@@ -788,7 +788,7 @@ i18n
                         button: {
                             accept: 'Accept',
                             decline: 'Decline',
-                            download: "Download",
+                            download: "Download the CV",
                         },
                         toast: {
                             acceptSuccess: "The CV has been accepted",
@@ -1565,7 +1565,7 @@ i18n
                         button: {
                             accept: 'Accepter',
                             decline: 'Decliner',
-                            download: "Télécharger",
+                            download: "Télécharger le CV",
                         },
                         toast: {
                             acceptSuccess: "Le CV a été accepté",

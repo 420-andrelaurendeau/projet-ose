@@ -4,7 +4,7 @@ import {AppliedOffers} from "../../../../model/AppliedOffers";
 import {FileEntity} from "../../../../model/FileEntity";
 import {NavLink, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilePdf} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faFilePdf} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 
 export default function StudentAppliedOffers() {
@@ -54,7 +54,10 @@ export default function StudentAppliedOffers() {
     return (
         <div>
             <div className="flex flex-col justify-center pt-24">
-                <div className="">
+                <div className="overflow-x-hidden xxxs:rounded-lg">
+                    <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                        {t("formField.Header.sidebarEtudiant.appliedOffer.text")}
+                    </h1>
                     <div className="max-md:pt-2 min-w-full">
                         <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                             <table className=" w-full divide-y divide-gray dark:divide-darkgray">
@@ -127,8 +130,7 @@ export default function StudentAppliedOffers() {
                                             <div className="text-sm dark:text-offwhite">
                                                 {appliedOffer.appliedFiles.map((file: FileEntity) => (
                                                     <div key={file.id} className="flex space-y-2">
-                                                        <FontAwesomeIcon icon={faFilePdf}/>
-                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName}</a>
+                                                        <a onClick={() => handleDownloadFile(file)} href={''}>{file.fileName} <FontAwesomeIcon icon={faDownload} className="scale-150 dark:text-white"/></a>
                                                     </div>
                                                 ))}
                                             </div>
