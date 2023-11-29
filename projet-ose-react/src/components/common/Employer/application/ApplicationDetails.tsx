@@ -11,6 +11,7 @@ import {base64ToArrayBuffer, blobToURL, downloadURI} from "../../preparedoc/util
 import {Buffer} from "buffer";
 import ViewPDFModal from "../offer/ViewPDFModal";
 import {getInterOfferCandidates} from "../../../../api/intershipCandidatesAPI";
+import {ReactComponent as Icon} from '../../../../assets/icons/back_icon.svg';
 
 export default function ApplicationDetails ():ReactElement{
 
@@ -124,7 +125,7 @@ export default function ApplicationDetails ():ReactElement{
                         className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                         onClick={() => navigate(`/employer/home/offers/${id}/application`)}
                     >
-                        {fields.back.text}
+                        {fields.back.text} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                     </button>
                 </div>
             </div>
