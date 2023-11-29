@@ -30,7 +30,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                                 + (header.read
                                     ? " bg-neutral-200 dark:bg-stone-700"
                                     : "")}
-                                onClick={event => handleClick(header)}>
+                                onClick={_ => handleClick(header)}>
                                 {t(header.message)}
                             </a>
                     )
