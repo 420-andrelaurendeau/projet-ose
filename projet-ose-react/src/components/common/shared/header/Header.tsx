@@ -104,7 +104,7 @@ const Header = (userd: any) => {
                                     setIsUserMenuOpen(false)
                                 }}>
                                     <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
-                                    {messages.length > 0
+                                    {messages.filter((value) => !value.read).length > 0
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
                                         : <></>}
                                 </button>
