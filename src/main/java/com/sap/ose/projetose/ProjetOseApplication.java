@@ -101,7 +101,7 @@ public class ProjetOseApplication implements CommandLineRunner {
 //        InternshipCandidates internshipCandidates1 = new InternshipCandidates(etudiant2, internOffer, List.of(file));
 //        internshipCandidatesService.saveCandidates(new InternshipCandidatesDto(internshipCandidates1));
 
-        java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/Internshipe_Contract_Contract.pdf");
+        java.io.File filePDF = new java.io.File("src/main/java/com/sap/ose/projetose/contratTemplate.pdf");
         try {
 
             FileInputStream fis = new FileInputStream(filePDF);
