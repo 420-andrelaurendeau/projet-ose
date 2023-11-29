@@ -16,7 +16,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
 
     function handleClick(message: Message) {
         let link = NotificationLinkMap.array[message.message];
-
+        message.isRead = true;
         readNotification(message.id);
         navigate(link);
     }
