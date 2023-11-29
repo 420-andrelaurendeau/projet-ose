@@ -38,6 +38,24 @@ i18n
                         studentOffer:studentOffer.en,
                         contractPage,
                         header,
+                        notifications: {
+                            noNotification: "You have no notifications.",
+                            newOfferAvailable: "You have new internship offer.",
+                            contractText: "",
+                            stageText: "",
+                            cvAccepter: "A CV has been accepted.",
+                            cvRefuser: "A CV has been refused.",
+                            studentApplyOnOffer: "",
+                            revueCv: "A CV is available for review.",
+                            youAreAcceptedForStage: "You have been accepted for an internship.",
+                            newOfferSavedByEmployeur: "An Offer is available for review.",
+                            contractSignedByGS: "Internship Manager has signed a Contract.",
+                            newContractAsBeenCreated: "A new contract is available.",
+                            contractAsBeenSignedByThreeParties: "A contract has been sgined by everyone.",
+                            offerAsBeenAccpeted: "",
+                            offerAsBeenDeclined: "",
+                            newStageAsBeenCreated: ""
+                        },
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",
@@ -826,6 +844,24 @@ i18n
                         studentOffer:studentOffer.fr,
                         header,
                         contractPage,
+                        notifications: {
+                            noNotification: "Vous n'avez pas des notifications",
+                            newOfferAvailable: "Vous avez des offres.",
+                            contractText: "",
+                            stageText: "",
+                            cvAccepter: "Un CV a été accepté.",
+                            cvRefuser: "Un CV a été réfusé.",
+                            studentApplyOnOffer: "",
+                            revueCv: "A CV is available for review.",
+                            youAreAcceptedForStage: "You have been accepted for an internship.",
+                            newOfferSavedByEmployeur: "An Offer is available for review.",
+                            contractSignedByGS: "Internship Manager has signed a Contract.",
+                            newContractAsBeenCreated: "A new contract is available.",
+                            contractAsBeenSignedByThreeParties: "A contract has been sgined by everyone.",
+                            offerAsBeenAccpeted: "",
+                            offerAsBeenDeclined: "",
+                            newStageAsBeenCreated: ""
+                        },
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",

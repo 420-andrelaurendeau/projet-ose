@@ -21,22 +21,19 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
         navigate(link);
     }
 
-    return props.messages.length > 0
-        ? <div className="shadow-md z-50 min-w-[320px] max-w-[400px] max-h-[240px] overflow-y-auto rounded-b-md absolute right-[calc(100%-1.5rem)] bg-neutral-50 dark:bg-stone-800 dark:text-white">
-                {
-                    props.messages.map(header =>
-                            <a  key={header.id}
-                                className={"block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0"
-                                + (header.read
-                                    ? " bg-neutral-200 dark:bg-stone-700"
-                                    : "")}
-                                onClick={_ => handleClick(header)}>
-                                {t(header.message)}
-                            </a>
-                    )
-                }
-            </div>
-        : <></>;
+    return  <div className="shadow-md z-50 min-w-[320px] max-w-[400px] max-h-[240px] overflow-y-auto rounded-b-md absolute right-[calc(100%-1.5rem)] bg-neutral-50 dark:bg-stone-800 dark:text-white">
+                {(props.messages.length > 0)
+                    ? props.messages.map(header =>
+                        <a  key={header.id}
+                            className={"block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0"
+                            + (header.read
+                                ? " bg-neutral-200 dark:bg-stone-700"
+                                : "")}
+                            onClick={_ => handleClick(header)}>
+                            {t(header.message)}
+                        </a>)
+                    : <p>{t("formField.notifications.noNotification")}</p>}
+            </div>;
 }
 
 export default MessageBox;
