@@ -77,7 +77,6 @@ function StudentInternship() {
             setLoadingCV(false);
         } catch (error) {
             console.log("Error fetching user data:", error);
-            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } finally {
         }
     }
