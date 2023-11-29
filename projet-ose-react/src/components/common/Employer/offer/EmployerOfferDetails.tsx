@@ -92,12 +92,6 @@ const EmployerOfferDetails: React.FC<any> = () => {
                             >
                                 {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                             </button>
-                            <button
-                                type="button"
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-orange dark:bg-white dark:text-black dark:hover:text-white dark:hover:bg-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                            >
-                                {fields.edit.text}
-                            </button>
                         </div>
                         <h2 className="text-lg font-bold">
                             <span
