@@ -81,7 +81,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     };
 
     if (loading) {
-        return <p>FONCTIONNEMENT </p>;
+        return <p></p>;
     }
 
     return (

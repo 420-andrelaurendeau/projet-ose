@@ -72,8 +72,8 @@ public class ContractService {
 
             signatureTroisPartie(contract.getId());
 
-            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByGS);
-            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByGSForStudent);
+            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByGSForEmployer);
 
             return new ContractDto(contract);
         } catch (Exception e) {
@@ -97,8 +97,8 @@ public class ContractService {
 
             signatureTroisPartie(contract.getId());
 
-            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByGS);
-            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByStudentForGS);
+            notificationService.saveNotificationByUser(contract.employeur.getId(),Notificationsi18n.contractSignedByStudentForEmployer);
 
             return new ContractDto(contract);
         } catch (Exception e) {
@@ -121,8 +121,8 @@ public class ContractService {
 
             signatureTroisPartie(contract.getId());
 
-            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByGS);
-            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByGS);
+            notificationService.saveNotificationForAllManagers(Notificationsi18n.contractSignedByEmployerForGS);
+            notificationService.saveNotificationByUser(contract.student.getId(),Notificationsi18n.contractSignedByEmployerForStudent);
 
             return new ContractDto(contract);
         } catch (Exception e) {

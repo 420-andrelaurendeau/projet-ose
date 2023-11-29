@@ -826,9 +826,12 @@ i18n
                             name: 'ReturnButton',
                             text: 'Return',
                         },
+                    },
+                    PDFoptions : {
+                        download : "Download",
+                        sign : "Sign",
+                        cursor : "Cursor"
                     }
-
-
                 },
             },
             fr: {
@@ -1622,6 +1625,11 @@ i18n
                             name: 'ReturnButton',
                             text: 'Retour',
                         },
+                    },
+                    PDFoptions : {
+                        download : "Télécharger",
+                        sign : "Signer",
+                        cursor : "Curseur"
                     }
                 }
             }
