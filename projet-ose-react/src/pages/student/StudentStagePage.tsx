@@ -103,7 +103,7 @@ function StudentStagePage(){
                                      </th>
                                  </tr>
                                  </thead>
-                                 <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                                 <tbody className="bg-white text-black divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                                  {stages && stages.length > 0 ? (
                                      stages.map((stage) => (
                                          <tr key={stage.id}>

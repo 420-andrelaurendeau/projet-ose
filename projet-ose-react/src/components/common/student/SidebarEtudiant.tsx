@@ -6,8 +6,9 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../authentication/AuthContext";
 
 export default function SidebarEtudiant(props: any) {
-    const {i18n} = useTranslation();
+    const {i18n,t } = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEtudiant");
+
     const option = window.location.pathname.split("/").pop();
     const { userRole, logoutUser } = useAuth();
 

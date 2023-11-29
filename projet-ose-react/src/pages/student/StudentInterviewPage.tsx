@@ -187,7 +187,7 @@ export default function StudentInterviewPage() {
                                 </th>
                             </tr>
                             </thead>
-                            <tbody className="bg-white text-black divide-y divide-gray dark:bg-darkgray dark:divide-darkgray">
+                            <tbody className="bg-white text-black divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                             {interviews.length === 0 && (
                                 <tr>
                                     <td colSpan={5} className="text-center bg-red text-white">

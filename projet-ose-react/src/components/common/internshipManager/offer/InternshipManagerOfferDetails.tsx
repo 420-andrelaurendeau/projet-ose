@@ -91,7 +91,7 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md bg-red hover:bg-rose-950 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                         onClick={() => navigate("/internshipmanager/home/offers")}
                     >
-                        {t("Shared.ReturnButton.text")}<Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                        {t("Shared.ReturnButton.text")} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
                     </button>
                 </div>
                 <div role="cell" className="md:w-1/5 w-1/3 2 whitespace-nowrap truncate mt-3 items-center">
@@ -105,15 +105,6 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                                             >
                                                 {fields.table[internshipOffer.state!]}
                                             </span>
-                </div>
-                <div className="">
-                    <button
-                        type="button"
-                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
-                        onClick={() => navigate("/internshipmanager/home/offers")}
-                    >
-                        {fields.header.back} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
-                    </button>
                 </div>
             </div>
 
