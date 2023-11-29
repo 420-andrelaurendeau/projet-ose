@@ -88,12 +88,6 @@ const ConnectForm = (props: any): ReactElement => {
                                        className="block text-sm font-medium leading-6 text-black dark:text-white">
                                     {fields.password.text}
                                 </label>
-                                <div className="text-sm">
-                                    <a href="#"
-                                       className="block text-sm font-medium leading-6 text-blue dark:text-orange">
-                                        {fields.ForgotPassword.text}
-                                    </a>
-                                </div>
                             </div>
                             <div className="mt-2">
                                 <input

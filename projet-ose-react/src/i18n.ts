@@ -811,6 +811,7 @@ i18n
                     },
                     PDFoptions : {
                         download : "Download",
+                        write : "Write",
                         sign : "Sign",
                         cursor : "Cursor"
                     }
@@ -1592,6 +1593,7 @@ i18n
                     },
                     PDFoptions : {
                         download : "Télécharger",
+                        write : "Écrire",
                         sign : "Signer",
                         cursor : "Curseur"
                     }

@@ -150,7 +150,7 @@ const InternshipContractPage: React.FC<any> = () => {
 
                     <div className=" flex mx-auto w-fit pt-10 gap-x-4">
                         <button
-                            className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-white bg-dark hover:bg-neutral-500 dark:bg-dark dark:text-white dark:hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                            className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-50 dark:bg-dark dark:hover:bg-white dark:hover:text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                             onClick={() => setIsModalOpen(true)}>
                             <p className="text-xl">{fields.viewPDF}</p>
                             <FontAwesomeIcon icon={faMagnifyingGlass} className="ml-2" size="xl"/>
@@ -158,7 +158,7 @@ const InternshipContractPage: React.FC<any> = () => {
                         {
                             userRole === "internshipmanager" && !intershipAggreement.signatureInternShipManager && (
                                 <button
-                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-500 dark:bg-white dark:hover:bg-neutral-50 dark:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-50 dark:bg-dark dark:hover:bg-white dark:hover:text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                     onClick={() => handleNavigation()}>
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
@@ -168,7 +168,7 @@ const InternshipContractPage: React.FC<any> = () => {
                         {
                             userRole === "employer" && !intershipAggreement.signatureEmployer && (
                                 <button
-                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-500 dark:bg-white dark:hover:bg-neutral-50 dark:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-50 dark:bg-dark dark:hover:bg-white dark:hover:text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                     onClick={() => handleNavigation()}>
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
@@ -178,7 +178,7 @@ const InternshipContractPage: React.FC<any> = () => {
                         {
                             userRole === "student" && !intershipAggreement.signatureStudent && (
                                 <button
-                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                                    className="bg-dark text-white inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md hover:bg-neutral-50 dark:bg-dark dark:hover:bg-white dark:hover:text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                     onClick={() => handleNavigation()}>
                                     <p className="text-xl">{fields.signPDF}</p>
                                     <FontAwesomeIcon icon={faPenNib} className="ml-2" size="xl"/>
