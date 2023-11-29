@@ -8,6 +8,7 @@ import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.*;
 import com.sap.ose.projetose.service.auth.AuthenticationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,31 +27,20 @@ import java.util.Date;
 import java.util.List;
 
 
+@RequiredArgsConstructor
 @SpringBootApplication
-public class    ProjetOseApplication implements CommandLineRunner {
-
-    @Autowired
-    private EtudiantService etudiantService;
-    @Autowired
-    private EmployeurService employeurService;
-    @Autowired
-    private UtilisateurService utilisateurService;
-    @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private InternOfferService internOfferService;
-    @Autowired
-    private InterviewService interviewService;
-    @Autowired
-    private InternshipCandidatesService internshipCandidatesService;
-    @Autowired
-    private StageService stageService;
-    @Autowired
-    ProgrammeRepository programmeRepository;
-    @Autowired
-    TemplateContractService templateContractService;
-    @Autowired
-    NotificationService notificationService;
+public class ProjetOseApplication implements CommandLineRunner {
+    private final EtudiantService etudiantService;
+    private final EmployeurService employeurService;
+    private final UtilisateurService utilisateurService;
+    private final AuthenticationService authenticationService;
+    private final InternOfferService internOfferService;
+    private final InterviewService interviewService;
+    private final InternshipCandidatesService internshipCandidatesService;
+    private final StageService stageService;
+    private final ProgrammeRepository programmeRepository;
+    private final TemplateContractService templateContractService;
+    private final NotificationService notificationService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
