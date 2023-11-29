@@ -87,8 +87,8 @@ function HomePage() {
                     </div>
                     {window.location.pathname === `/${userRole}/home/` &&
                         <div className="w-full">
-                            <h1 className="text-white text-center text-3xl xxxs:pt-16 md:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
-                            <p className="text-white text-center text-2xl">{t("formField.Home.text2")}</p>
+                            <h1 className="text-black dark:text-white text-center text-3xl xxxs:pt-16 md:pt-4">{t("formField.Home.text")}{user?.prenom} {user?.nom}</h1>
+                            <p className="text-black dark:text-white text-center text-2xl">{t("formField.Home.text2")}</p>
                         </div>
                     }
                     <div className="w-full h-full">
