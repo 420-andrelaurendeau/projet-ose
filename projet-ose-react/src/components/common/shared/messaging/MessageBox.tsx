@@ -14,10 +14,10 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     const {t} = useTranslation();
     let navigate = useNavigate()
 
-    function handleClick() {
     function handleClick(message: Message) {
         let link = NotificationLinkMap.array[message.message];
 
+        readNotification(message.id);
         navigate(link);
     }
 
