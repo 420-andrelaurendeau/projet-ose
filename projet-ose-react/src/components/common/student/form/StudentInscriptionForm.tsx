@@ -195,7 +195,7 @@ function StudentInscriptionForm(props: any) {
                                 minLength={8}
                                 title={"8 caractères minimum, au moins une lettre et un chiffre"}
                                 className={"block w-full rounded-md py-2 shadow-sm sm:text-sm sm:leading-6 pl-2 dark:text-black"}
-                                type="text"
+                                type="password"
                                 name={"password"}
                                 value={formData.password}
                                 onChange={handleChange}
