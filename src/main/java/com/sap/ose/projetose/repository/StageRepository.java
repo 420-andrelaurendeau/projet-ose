@@ -29,13 +29,14 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
             "ELSE 'ACCEPTED' " +
             "END, COUNT(s) " +
             "FROM Stage s " +
+            "WHERE (:session IS NULL OR :session = '' OR s.offer.session = :session)" +
             "GROUP BY " +
             "CASE " +
             "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN 'DECLINED' " +
             "WHEN (s.stateStudent = 1 OR s.stateEmployeur = 1) THEN 'PENDING' " +
             "ELSE 'ACCEPTED' " +
             "END")
-    List<Object[]> getCountByState();
+    List<Object[]> getCountByState(@Param("session") String session);
 
     @Query("SELECT CASE " +
             "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN 'DECLINED' " +
@@ -86,14 +87,14 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
     @Query("SELECT s FROM Stage s WHERE (s.employeur.id = :id)")
     Page<Stage> findAllByEmployeurId(long id, Pageable pageable);
 
-    @Query("SELECT s FROM Stage s WHERE (s.student.id = :id) AND (s.stateEmployeur = 0)")
-    Page<Stage> findAllByStudentId(long id, Pageable pageable);
+    @Query("SELECT s FROM Stage s WHERE (s.student.id = :id) AND (s.stateEmployeur = 0) AND (:session IS NULL OR :session = '' OR s.offer.session = :session)")
+    Page<Stage> findAllByStudentId(long id, Pageable pageable, @Param("session") String session);
 
     @Query("SELECT s FROM Stage s " +
-            "WHERE ( (:state = 'DECLINED') AND (s.stateStudent = 2 OR s.stateEmployeur = 0)) AND (s.student.id = :id) " +
-            "OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 0) AND (s.stateStudent != 2 AND s.stateEmployeur != 2) AND (s.student.id = :id)))" +
-            "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0) AND (s.student.id = :id) )")
-    Page<Stage> findAllByStateStudent(@Param("state") String state, Pageable pageable, long id);
+            "WHERE ( (:state = 'DECLINED') AND (s.stateStudent = 2 OR s.stateEmployeur = 0)) AND (s.student.id = :id) AND (:session IS NULL OR :session = '' OR s.offer.session = :session)" +
+            "OR (:state = 'PENDING' AND ((s.stateStudent = 1 OR s.stateEmployeur = 0) AND (s.stateStudent != 2 AND s.stateEmployeur != 2) AND (s.student.id = :id))) AND (:session IS NULL OR :session = '' OR s.offer.session = :session)" +
+            "OR (:state = 'ACCEPTED' AND (s.stateStudent = 0 AND s.stateEmployeur = 0) AND (s.student.id = :id) ) AND (:session IS NULL OR :session = '' OR s.offer.session = :session)")
+    Page<Stage> findAllByStateStudent(@Param("state") String state, Pageable pageable, long id, @Param("session") String session);
 
     @Query("SELECT CASE " +
             "WHEN (s.stateStudent = 2 OR s.stateEmployeur = 2) THEN false " + // 'DECLINED'

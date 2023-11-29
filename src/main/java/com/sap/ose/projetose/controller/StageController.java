@@ -47,9 +47,11 @@ public class StageController {
 
     @PreAuthorize("hasAuthority('internshipmanager')")
     @GetMapping("/count")
-    public ResponseEntity<Map<String, Long>> getStageCount() {
+    public ResponseEntity<Map<String, Long>> getStageCount(
+            @RequestParam() String season
+    ) {
         logger.info("Stage count request received");
-        return Optional.of(stageService.getCountByStateGS()).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(stageService.getCountByStateGS(season)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 
@@ -94,11 +96,12 @@ public class StageController {
             @RequestParam(required = false, defaultValue = "10") int size,
             @RequestParam(required = false, defaultValue = "id") String sortField,
             @RequestParam(required = false, defaultValue = "desc") String sortDirection,
-            @RequestParam(required = false) String state
+            @RequestParam(required = false) String state,
+            @RequestParam() String session
     ) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
-        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfStudent(page, size, sort, state, id);
+        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfStudent(page, size, sort, state, id, session);
 
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);

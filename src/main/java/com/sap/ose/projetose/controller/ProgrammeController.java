@@ -28,6 +28,7 @@ public class ProgrammeController {
 
     @GetMapping("/programmes")
     @CrossOrigin(origins = "http://localhost:3000")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student') OR hasAuthority('employer')")
     public List<ProgrammeDto> getProgrammes() {
         return programmeService.getProgrammes();
     }

@@ -35,7 +35,7 @@ i18n
                         internshipAgreement,
                         application: application.en,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.en,
                         contractPage,
                         header,
                         InternshipsAgreementPage: {
@@ -79,6 +79,7 @@ i18n
                                 accepted: "Offers accepted",
                                 declined: "Offers declined",
                                 pending: "Offers pending",
+                                back: "Back"
                             },
                             table: {
                                 title: "Title",
@@ -818,7 +819,7 @@ i18n
                         internshipAgreement,
                         application : application.fr,
                         employerOffer,
-                        studentOffer,
+                        studentOffer:studentOffer.fr,
                         header,
                         contractPage,
                         InternshipsAgreementPage: {
@@ -861,6 +862,7 @@ i18n
                                 accepted: "Offres acceptées",
                                 declined: "Offres refusées",
                                 pending: "Offres en attente",
+                                back: "Retour"
                             },
                             table: {
                                 title: "Titre",

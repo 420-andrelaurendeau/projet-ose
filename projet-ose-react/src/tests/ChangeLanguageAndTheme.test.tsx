@@ -145,6 +145,8 @@ global.ResizeObserver = class ResizeObserver {
     }
 };
 
+//todo A REFAIRE
+
 describe('The profile menu', () => {
 
 

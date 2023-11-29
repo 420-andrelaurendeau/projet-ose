@@ -33,15 +33,12 @@ function UploadCVForm(): ReactElement {
     useEffect(() => {
         getUser(auth.userEmail!).then((res) => {
             setUser(res);
-            console.log(user)
             fetchAllStudentCvs(res['id']).then((res) => {
                 setCvs(res)
-                console.log(cvs)
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
             });
             fetchDefaultCvByStudentId(res['id']).then((res) => {
-                console.log(res);
                 setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error)
@@ -164,7 +161,6 @@ function UploadCVForm(): ReactElement {
     async function setDefaultFile(file: ReviewFile) {
         console.log("fichier a mettre par defaut",file);
         setDefaultCv(user.id, file.id).then(res => {
-            console.log("Retour de la reponse",res);
             toast.success(t('CV par défaut défini avec succès'));
         }).catch(err => {
             console.log(err);
@@ -176,7 +172,6 @@ function UploadCVForm(): ReactElement {
                 console.log("Error fetching user data:", error);
             });
             fetchDefaultCvByStudentId(user.id).then((res) => {
-                console.log(res);
                 setCvDefault(res);
             }).catch((error) => {
                 console.log("Error fetching user data:", error);

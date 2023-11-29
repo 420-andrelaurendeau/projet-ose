@@ -19,16 +19,39 @@ import InternshipManagerInternshipsAgreement
 import {getAllOffers, getAllSeasons, getOffersBySeason} from "../../api/InterOfferJobAPI";
 
 
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
+
+
 const InternshipManagerInternshipsAgreementPage = () => {
     const [internshipsAgreement, setInternshipsAgreement] = useState([]);
 
+
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
 
     const [totalInternshipsAgreement, setTotalInternshipsAgreement] = useState(0);
     const [totalApprouved, setTotalApprouved] = useState(0);
@@ -69,6 +92,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
                 });
                 setInternshipsAgreement(response.content);
                 setTotalPages(response.totalPages);
+                await handleTotalOffersByState();
             } catch (error) {
                 console.log(error);
                 toast.error(fields.toast.errorFetchInternshipsAgreement)
@@ -108,7 +132,7 @@ const InternshipManagerInternshipsAgreementPage = () => {
     };
 
     const handleTotalOffersByState = async () => {
-        const responseTotal = await getStageCountByState();
+        const responseTotal = await getStageCountByState(selectedOption);
         setTotalInternshipsAgreement(0);
         setTotalApprouved(0);
         setTotalPending(0);

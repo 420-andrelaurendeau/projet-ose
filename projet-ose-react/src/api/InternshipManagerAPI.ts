@@ -33,11 +33,14 @@ export const getIntershipOffers = async ({ page, size, state, sortField, sortDir
     }
 };
 
-export const getTotalOfferByState = async () => {
+export const getTotalOfferByState = async (session: string) => {
     try {
         const response = await api.get('internshipManager/count', {
             headers: {
                 //  'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            params: {
+                session: session
             }
         });
         console.log('response', response.data);
@@ -89,9 +92,13 @@ export const declineStudentCv = async (id: number) => {
 }
 
 
-export const getStageCountByState = async () => {
+export const getStageCountByState = async (season: string) => {
     try {
-        const response = await api.get('stage/count');
+        const response = await api.get('stage/count', {
+            params: {
+                season: season
+            }
+        });
         return response.data;
     } catch (error) {
         console.error('Erreur lors de la récupération des offres de stage:', error);
@@ -170,9 +177,9 @@ export const getStageByEmployeurId = async ({page, size, state, sortField, sortD
     }
 }
 
-export const getStageByStudentId = async ({page, size, state, sortField, sortDirection}: GetInternshipOffersParams, id: number) => {
+export const getStageByStudentId = async ({page, size, state, sortField, sortDirection, session}: GetInternshipOffersParams, id: number) => {
     try {
-        const params: any = {page, size, sortField, sortDirection};
+        const params: any = {page, size, sortField, sortDirection, session};
         if (state) {
             params.state = state;
         }

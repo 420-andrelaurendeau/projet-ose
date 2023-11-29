@@ -1,14 +1,14 @@
 import React from 'react';
 import {render, screen, waitFor, act} from '@testing-library/react';
-import StudentAppliedOffers from './StudentAppliedOffers';
-import {getStudentAppliedOffers} from '../../../../api/InterOfferJobAPI';
+import StudentAppliedOffers from '../../components/common/student/offers/StudentAppliedOffers';
+import {getStudentAppliedOffers} from '../../api/InterOfferJobAPI';
 import {MemoryRouter, Route, Routes, useLocation} from 'react-router-dom';
 
-jest.mock('../../../../api/InterOfferJobAPI', () => ({
+jest.mock('../../api/InterOfferJobAPI', () => ({
     getStudentAppliedOffers: jest.fn(),
 }));
 
-function fail(reason:string = "fail was called in a test.") {
+function fail(reason: string = "fail was called in a test.") {
     throw new Error(reason);
 }
 
@@ -40,6 +40,8 @@ jest.mock('react-i18next', () => ({
         },
     }
 }));
+
+//TODO MORE COVERAGE
 
 describe('StudentAppliedOffers Component', () => {
     const mockAppliedOffers = [

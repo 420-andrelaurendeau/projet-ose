@@ -10,7 +10,29 @@ import {useAuth} from "../../authentication/AuthContext";
 import {Interview} from "../../model/Interview";
 import i18n from "i18next";
 import PaginatedList from "../../components/common/shared/paginationList/PaginatedList";
+import {getAllSeasons} from "../../api/InterOfferJobAPI";
 
+
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
+
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
 
 export default function StudentInterviewPage() {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
@@ -20,8 +42,9 @@ export default function StudentInterviewPage() {
     const auth = useAuth();
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
-
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100);
+    const [seasons,setSeasons] = useState([])
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
     const handleOnAccept = (interviewId: number) => {
         acceptInterview(interviewId, user.id).then((res) => {
@@ -64,6 +87,11 @@ export default function StudentInterviewPage() {
         });
     }
 
+    const handleOptionChange = async (event: any) => {
+        const selected = event.target.value;
+        setSelectedOption(selected);
+    };
+
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
@@ -77,6 +105,7 @@ export default function StudentInterviewPage() {
                         size: numberElementByPage,
                         sortField: "id",
                         sortDirection: "desc",
+                        season: selectedOption,
 
                     }).then((res:any) => {
                         setInterviews(res.content);
@@ -90,13 +119,21 @@ export default function StudentInterviewPage() {
                 .finally(() => (isLoading.current = false));
         };
         if (!isLoading.current) fetchUser();
-    }, [totalPages, currentPage, numberElementByPage]);
+    }, [totalPages, currentPage, numberElementByPage, selectedOption]);
 
     useEffect(() => {
         interviews.map((interview) => {
             console.log(interview);
         });
     }, [interviews]);
+
+    useEffect(() => {
+        const fetchSeasons = async () => {
+            let season = await  getAllSeasons();
+            setSeasons(season);
+        }
+        fetchSeasons()
+    }, []);
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -222,9 +259,9 @@ export default function StudentInterviewPage() {
                                            onPageChange={handlePageChange}
                                            numberElement={numberElementByPage}
                                            handleChangeNumberElement={handleChangeNbElement}
-                                           selectedOption=""
-                                           handleOptionChange={() => {}}
-                                           seasons={["",""]}
+                                           selectedOption={selectedOption}
+                                           handleOptionChange={handleOptionChange}
+                                           seasons={seasons}
                             />
                         </div>
                 </div>

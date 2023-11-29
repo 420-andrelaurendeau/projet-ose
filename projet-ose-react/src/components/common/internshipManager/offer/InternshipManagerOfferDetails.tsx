@@ -37,7 +37,6 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toast = useToast();
 
-
     useEffect(() => {
             const loadOfferReview = async () => {
                 try {
@@ -72,6 +71,15 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
         }, []
     )
 
+    const handleChange = (comment: string) => {
+        setFormStateReview(
+            {
+                ...formStateReview,
+                comment: comment
+            }
+        )
+    }
+
 
     return (
         <div className="">
@@ -97,6 +105,15 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                                             >
                                                 {fields.table[internshipOffer.state!]}
                                             </span>
+                </div>
+                <div className="">
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-4 py-2 border hover:border-black border-transparent dark:border-white shadow-sm text-sm font-medium rounded-md text-neutral-900 bg-white hover:bg-neutral-50 dark:bg-dark dark:hover:bg-black dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+                        onClick={() => navigate("/internshipmanager/home/offers")}
+                    >
+                        {fields.header.back} <Icon className="w-5 h-5 fill-current hover:font-bold"/>
+                    </button>
                 </div>
             </div>
 
@@ -186,7 +203,11 @@ const InternshipManagerOfferDetails: React.FC<GSOfferDetailsProps> = ({
                         name='comment'
                         className="mt-1 p-2 w-full border border-gray rounded-md placeholder:text-xs dark:bg-softdark dark:text-offwhite dark:border-0"
                         id="commentary_placeholder"
-                        onChange={(e) => handleFormChange(e)}
+                        onChange={(e) => {
+                                handleFormChange(e)
+                                handleChange(e.target.value)
+                            }
+                        }
                         placeholder={t("formField.InternshipOfferModal.placeholder")}>
 
                     </textarea>

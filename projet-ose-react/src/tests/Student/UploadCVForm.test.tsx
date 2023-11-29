@@ -1,22 +1,22 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import UploadCVForm from "./UploadCVForm";
+import UploadCVForm from "../../components/common/student/form/UploadCVForm";
 import React from "react";
-import {ToastContextProvider} from "../../../../hooks/context/ToastContext";
-import {getUser} from "../../../../api/UtilisateurAPI";
-import {saveCvStudent} from "../../../../api/StudentApi";
+import {ToastContextProvider} from "../../hooks/context/ToastContext";
+import {getUser} from "../../api/UtilisateurAPI";
+import {saveCvStudent} from "../../api/StudentApi";
 import {act} from "react-dom/test-utils";
 
 
 jest.spyOn(console, "error").mockImplementation(() => {
 });
 
-jest.mock("../../../../api/UtilisateurAPI", () => {
+jest.mock("../../api/UtilisateurAPI", () => {
     return {
         getUser: jest.fn(),
     };
 });
 
-jest.mock("../../../../api/StudentApi", () => {
+jest.mock("../../api/StudentApi", () => {
     return {
         saveCvStudent: jest.fn(),
     };
@@ -39,6 +39,8 @@ jest.mock('react-i18next', () => ({
         },
     }
 }));
+
+//TODO more coverage
 
 describe("UploadCV Component", () => {
     beforeEach(() => {

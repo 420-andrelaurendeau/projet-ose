@@ -22,6 +22,7 @@ import {fetchDefaultCvByStudentId} from "../../../api/StudentApi";
 import ListItemCountSelector from "../shared/paginationList/ListItemCountSelector";
 import ListItemPageSelector from "../shared/paginationList/ListItemPageSelector";
 import i18n from "i18next";
+import {log} from "util";
 
 interface Props {
     user: any;
@@ -30,13 +31,31 @@ interface Props {
 
 function StudentInternship() {
     const {t} = useTranslation();
-    const {offers,setOffers, setAppliedOffers, appliedOffers, page, setSortField, onPageChange, setCurrentPage, numberElementByPage, setSortDirection, sortDirection, sortField, totalPages, handleChangeNumberElement, seasons, selectedOption, handleChangeOption} = useProps();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
+    const {
+        offers,
+        setOffers,
+        setAppliedOffers,
+        appliedOffers,
+        page,
+        setSortField,
+        onPageChange,
+        setCurrentPage,
+        numberElementByPage,
+        setSortDirection,
+        sortDirection,
+        sortField,
+        totalPages,
+        handleChangeNumberElement,
+        seasons,
+        selectedOption,
+        handleChangeOption,
+        user
+    } = useProps();
+    // const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.EtudiantStage");
     //const [offers, setOffers] = useState<any[]>([])
     const [cv, setCv] = useState<FileEntity>()
     //const [seasons, setSeasons] = useState([])
     //const [selectedOption, setSelectedOption] = useState('');
-    const [user, setUser] = useState<any>(null)
     const auth = useAuth();
     //const token = localStorage.getItem('token');
     const isloading = useRef(false);
@@ -44,48 +63,40 @@ function StudentInternship() {
     const toast = useToast();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fecth = async () => {
-            setLoadingCV(true);
-            isloading.current = true;
-            try {
-                const userRes = await getUser(auth.userEmail!);
-                setUser(userRes);
 
-                const offersRes = await getStudentAppliedOffers(auth.userId!);
-                // Met à jour l'état et attend que React l'applique
-                setAppliedOffers(offersRes);
+    //TODO ajouter message errure pour CV pas trouver
+    //TODO NO cv NO postulation
 
-                const cvRes = await fetchDefaultCvByStudentId(userRes.id);
-                setCv(cvRes);
-                setLoadingCV(false);
-            } catch (error) {
-                console.log("Error fetching user data:", error);
-            } finally {
-            }
+    const fecthData = async () => {
+        setLoadingCV(true);
+        isloading.current = true;
+        try {
+            const cvRes = await fetchDefaultCvByStudentId(user.id);
+            console.log(typeof cvRes);
+            setCv(cvRes);
+            setLoadingCV(false);
+        } catch (error) {
+            console.log("Error fetching user data:", error);
+            toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
+        } finally {
         }
+    }
 
+    useEffect(() => {
         if (!isloading.current) {
-            fecth().then(r => console.log(appliedOffers));
+            fecthData().then(r => console.log(appliedOffers));
             isloading.current = false;
         }
-    }, []);
-
+    }, [user]);
 
 
     const applyOffer = (offer: any, student: any, cv: any) => {
-        if (cv == null || cv == "" ) {
+        if (cv == "") {
             toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } else {
             saveStudentInternshipOffer(offer, student, cv).then(
                 async res => {
-                    console.log(appliedOffers)
-                    let appliedOffer: AppliedOffers = {
-                        appliedOffer: res.internOfferJob,
-                        appliedFiles: res.files
-                    };
-
-                    await getStudentAppliedOffers(auth.userId!).then((res) => {
+                    await getStudentAppliedOffers(user.id).then((res) => {
                         setAppliedOffers(res)
                     })
                     toast.success(t("formField.EtudiantStage.toast.SuccessOfferApplication") + " " + offer.title)
@@ -93,7 +104,6 @@ function StudentInternship() {
                 }
             ).catch(
                 err => {
-                    console.log(err);
                     toast.error(t("formField.EtudiantStage.toast.ErrorOfferApplication"))
                 }
             )
@@ -101,35 +111,41 @@ function StudentInternship() {
     }
 
     const handleSortClick = (newSortField: any) => {
+
+        console.log(`sortField: ${sortField}, sortDirection: ${sortDirection}`)
         if (newSortField === sortField && sortDirection === "desc") {
             setSortField("");
             setSortDirection("");
-        } else if (newSortField === sortField) {
-            setSortDirection((prevDirection: String) => (prevDirection === "asc" ? "desc" : "asc"));
+        } else if (newSortField === sortField && sortDirection === "asc") {
+            setSortDirection("desc");
         } else {
             setSortField(newSortField);
             setSortDirection("asc");
         }
-        console.log(sortField === "employeurEntreprise" ? "visible" : "hidden")
     };
 
     const handleOfferClick = (id: number) => {
-        navigate(`/student/home/offers/${id}`, {state: context});
+        navigate(`/student/home/offers/${id}`);
     };
 
 
-    const context:Props = {
+    const context: Props = {
         user: user,
         appliedOffers: appliedOffers,
     }
 
+    const shouldButtonBeDisabled = (id: number) => {
+        let returnValue = appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
+        return appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === id) != null || loadingCV
+    }
+//TODO ADD PICTURES AND CHANGE CURSOR FOR SORTING BUTTONS
     return (
         <div className="flex flex-col ">
             <div >
                 <div className="max-md:mt-16">
                     <div className="overflow-x-hidden xxxs:rounded-lg">
                         <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
-                            {fields.titre.text}
+                            {t("formField.EtudiantStage.titre.text")}
                         </h1>
                         {
                             loadingCV ?
@@ -161,11 +177,12 @@ function StudentInternship() {
                                     <thead className="bg-blue dark:bg-orange ">
                                     <tr>
                                         <th
+                                            aria-label={"sort-by-title-button"}
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                             onClick={() => handleSortClick("title")}
                                         >
-                                            {fields.titre.text}
+                                            {t("formField.EtudiantStage.titre.text")}
                                             <div
                                                 className={sortField === "title" ? "visible" : "hidden"}>
                                                 <FontAwesomeIcon
@@ -177,28 +194,31 @@ function StudentInternship() {
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-lg:hidden"
                                         >
-                                            {fields.stage.location.text}
+                                            {t("formField.EtudiantStage.stage.location.text")}
                                         </th>
                                         <th
+                                            aria-label={"sort-by-salary-button"}
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-lg:hidden"
                                             onClick={() => handleSortClick("salaryByHour")}
                                         >
-                                            {fields.stage.salary.text}
+                                            {t("formField.EtudiantStage.stage.salary.text")}
                                         </th>
                                         <th
+                                            aria-label={"sort-by-start-date-button"}
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                                             onClick={() => handleSortClick("startDate")}
                                         >
-                                            {fields.stage.startDate.text}
+                                            {t("formField.EtudiantStage.stage.startDate.text")}
                                         </th>
                                         <th
+                                            aria-label={"sort-by-end-date-button"}
                                             scope="col"
                                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden"
                                             onClick={() => handleSortClick("endDate")}
                                         >
-                                            {fields.stage.endDate.text}
+                                            {t("formField.EtudiantStage.stage.endDate.text")}
                                         </th>
                                         <th
                                             scope="col"
@@ -207,7 +227,7 @@ function StudentInternship() {
                                             Entreprise
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                            <span className="">{fields.options.text}</span>
+                                            <span className="">Options</span>
                                         </th>
                                     </tr>
                                     </thead>
@@ -220,7 +240,7 @@ function StudentInternship() {
                                         <></>
                                     }
                                     {offers.map((offer: any) => (
-                                        <tr key={offer.id}>
+                                        <tr key={offer.id} aria-label={"internship-row"}>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex items-center">
                                                     <div className="ml-4">
@@ -245,21 +265,22 @@ function StudentInternship() {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex space-x-3">
                                                 <div className="flex space-x-1 items-center">
-                                                    <p className="text-black dark:text-white">{fields.stage.view.text}</p>
+                                                    <p className="text-black dark:text-white">{t("formField.EtudiantStage.stage.view.text")}</p>
                                                     <FontAwesomeIcon icon={faEye}
                                                                      className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
                                                                      onClick={() => handleOfferClick(offer.id!)}
                                                     />
                                                 </div>
                                                 <button
+                                                    aria-label={"apply-button"}
                                                     onClick={() => applyOffer(offer, user, cv)}
                                                     type="submit"
                                                     disabled={
-                                                        appliedOffers.find((appliedOffer: AppliedOffers) => appliedOffer.appliedOffer.id === offer.id) != null || loadingCV
+                                                        shouldButtonBeDisabled(offer.id)
                                                     }
                                                     className="w-full flex justify-center py-2 px-4 border border-gray dark:border-darkgray text-sm font-medium rounded-md text-white disabled:bg-gray bg-blue dark:disabled:bg-gray dark:bg-orange disabled:hover:bg-gray dark:disabled:hover:bg-gray hover:bg-cyan-300 dark:hover:bg-amber-400 focus:outline-none focus:shadow-outline-blue active:bg-blue transition duration-150 ease-in-out"
                                                 >
-                                                    {fields.stage.apply.text}
+                                                    {t("formField.EtudiantStage.stage.apply.text")}
                                                 </button>
                                             </td>
 

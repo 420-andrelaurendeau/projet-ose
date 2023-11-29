@@ -35,7 +35,7 @@ function PaginatedList<T>({
             <div className="flex justify-between">
                 <div>
                     <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
-                    <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
+                    <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}  defaultValue={selectedOption}>
                         <option value="">Tout</option>
                         {seasons.map((season: string, index: number) => (
                             <option key={index} value={season}>

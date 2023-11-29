@@ -9,17 +9,36 @@ import toast from "../../components/common/shared/toast/Toast";
 import {useToast} from "../../hooks/state/useToast";
 import {getAllOffers, getAllSeasons, getOffersBySeason} from "../../api/InterOfferJobAPI";
 
+const getActualSeason = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    let session = '';
 
+    if (currentMonth >= 5 && currentMonth <= 8) {
+        session = 'Été';
+    } else if (currentMonth >= 9 || currentMonth <= 1) {
+        session = 'Automne';
+    } else {
+        session = 'Hiver';
+    }
+
+    if (session === 'Été' || session === 'Automne') {
+        return `Hiver${currentYear + 1}`;
+    } else {
+        return `Été${currentYear}`;
+    }
+}
 const InternshipManagerOffersPage = () => {
     const [offers, setOffers] = useState([]);
 
     const [seasons,setSeasons] = useState([])
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [numberElementByPage, setNumberElementByPage] = useState<number>(5)
+    const [numberElementByPage, setNumberElementByPage] = useState<number>(100)
 
     const [totalOffers, setTotalOffers] = useState(0);
     const [totalApprouved, setTotalApprouved] = useState(0);
@@ -48,14 +67,13 @@ const InternshipManagerOffersPage = () => {
         const fetchOffers = async () => {
             try {
                 fetchedOffersRef.current = true
-
                 const response = await getIntershipOffers({
                     page: currentPage,
                     size: numberElementByPage,
                     state: offerState,
                     sortField,
                     sortDirection,
-                    session:selectedOption,
+                    session: selectedOption,
                 });
                 setOffers(response.content);
                 setTotalPages(response.totalPages);
@@ -88,10 +106,11 @@ const InternshipManagerOffersPage = () => {
         };
         if (!fetchedOffersCountRef.current) fetchOffersCount();
 
-    }, [isUpdate]);
+    }, [isUpdate, selectedOption]);
 
     useEffect(() => {
         document.title = fields.title;
+        getActualSeason();
     }, []);
 
     const handlePageChange = (newPage: number) => {
@@ -99,7 +118,7 @@ const InternshipManagerOffersPage = () => {
     };
 
     const handleTotalOffersByState = async () => {
-        const responseTotal = await getTotalOfferByState();
+        const responseTotal = await getTotalOfferByState(selectedOption);
         setTotalOffers(0);
         setTotalApprouved(0);
         setTotalPending(0);
@@ -139,6 +158,8 @@ const InternshipManagerOffersPage = () => {
             setSeasons(res)
         })
     }, []);
+
+
 
 
     const renderOffer = <InternshipManagerOffers user={user} offers={offers} isUpdate={setIsUpdate} sortField={sortField} setOffers={setOffers}
