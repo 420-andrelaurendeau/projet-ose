@@ -77,7 +77,7 @@ function EvaluerCV() {
                             </div>
                             <div className="md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
                                 <button
-                                    className="text-blue-500 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center align-middle h-full w-full"
+                                    className="text-blue-900 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center align-middle h-full w-full"
                                     onClick={() => handleDownloadFile(file)}
                                 >
                                     <p className="dark:text-white">{t("StudentCvEvaluation.button.download")}</p>
