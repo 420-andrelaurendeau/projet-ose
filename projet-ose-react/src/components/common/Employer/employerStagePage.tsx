@@ -174,7 +174,7 @@ export default function EmployerStagePage() {
                                                     "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full bg-red text-white dark:text-offwhite"
                                                     : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING")?
                                                         "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full bg-orange text-white dark:text-offwhite"
-                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-fulljustify-center bg-green text-white dark:text-offwhite"}
+                                                        : "px-2 inline-flex text-xs leading-5 font-semibold rounded-fulljustify-center rounded-full bg-green text-white dark:text-offwhite"}
                                         >
                                             {fields.AgreementTable[
                                                 stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
