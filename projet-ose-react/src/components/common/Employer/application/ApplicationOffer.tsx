@@ -34,7 +34,7 @@ const ApplicationOffer: React.FC<any> = () => {
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
     const {t} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2));
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application");
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
     const updateCandidateRef = useRef(false);

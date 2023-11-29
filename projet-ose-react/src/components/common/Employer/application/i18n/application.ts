@@ -104,6 +104,7 @@ let application = {
                 name: "back",
                 text: "Back",
             },
+            hours : "Hours",
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -264,6 +265,7 @@ let application = {
                 name: "back",
                 text: "Retour",
             },
+            hours : "Heures",
         },
         errorFetchOffer: {
             name: "errorFetchOffer",
@@ -319,7 +321,6 @@ let application = {
                 text: 'Technologie de la comptabilité et de la gestion',
             },
         },
-
     }
 }
 

@@ -14,7 +14,7 @@ export const ReschedulePage = () => {
     const navigate = useNavigate();
     const {t} = useTranslation();
     const {i18n} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application." + i18n.language.slice(0, 2) + ".applicant");
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application.applicant");
     const [description, setDescription] = useState<string>("")
     const [date, setDate] = useState<string>("")
     const [time, setTime] = useState<string>("")
@@ -75,7 +75,7 @@ export const ReschedulePage = () => {
                                className="dark:bg-white mt-1 p-2 w-full border border-black text-blue dark:text-orange rounded-md dark:border-0 "/>
                     </div>
                     <div className="space-y-3">
-                        <label className="dark:text-white" htmlFor="time">Date</label>
+                        <label className="dark:text-white" htmlFor="time">{fields.hours}</label>
                         <input required value={time} onChange={e => setTheTime(e.target.value)}
                                type="time"
                                name={"time"}
