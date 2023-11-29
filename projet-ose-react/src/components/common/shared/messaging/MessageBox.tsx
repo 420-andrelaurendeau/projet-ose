@@ -16,7 +16,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
 
     function handleClick(message: Message) {
         let link = NotificationLinkMap.array[message.message];
-        message.isRead = true;
+        message.read = true;
         readNotification(message.id);
         navigate(link);
     }
@@ -29,6 +29,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                                 className={"block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b last:border-b-0 "
                                 + (header.isRead
                                     ? " bg-neutral-200"
+                                + (header.read
                                     : "")}
                                 onClick={event => handleClick(header)}>
                                 {t(header.message)}
