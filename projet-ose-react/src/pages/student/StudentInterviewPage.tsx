@@ -161,19 +161,19 @@ export default function StudentInterviewPage() {
                             {interviews.map((interview) => (
                                 <tr key={interview.id}>
                                     <td className="px-6 py-4 whitespace-nowrap
-                                                    text-center text-sm font-medium">
+                                                    text-center text-sm font-medium dark:text-white">
                                         {interview.internOffer.title}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap
-                                                    text-center text-sm font-medium">
+                                                    text-center text-sm font-medium dark:text-white">
                                         {interview.internOffer.location}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap
-                                                    text-center text-sm font-medium">
-                                        {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
+                                                    text-center text-sm font-medium dark:text-white">
+                                        {new Date(Date.parse(interview.date)).toISOString().split('T')[0]} {new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[0]}:{new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[1]}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap
-                                                    text-center text-sm font-medium">
+                                                    text-center text-sm font-medium dark:text-white">
                                         {interview.internOffer.employeurEntreprise}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
