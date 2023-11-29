@@ -101,11 +101,11 @@ const Header = (userd: any) => {
                                 </NavLink>
                             </div>
                             <div className="relative my-auto">
-                                <button className="relative" onClick={() => {
+                                <button className="relative text-blue dark:text-orange disabled:text-gray dark:disabled:text-zinc-700" disabled={messages.length == 0} onClick={() => {
                                     setIsMessageBoxOpen(!isMessageBoxOpen)
                                     setIsUserMenuOpen(false)
                                 }}>
-                                    <FontAwesomeIcon icon={faInbox} className="text-blue dark:text-orange" size="xl"/>
+                                    <FontAwesomeIcon icon={faInbox} size="xl"/>
                                     {messages.filter((value) => !value.read).length > 0
                                         ? <div className="w-2 h-2 bg-red rounded-full absolute top-0 right-0"></div>
                                         : <></>}
