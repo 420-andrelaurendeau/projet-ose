@@ -17,3 +17,13 @@ export const fetchInterviewsEmployer = async (userId: number,{page, size, sortFi
         throw err
     }
 }
+
+export const updateInterview = async ({id, studentId, internOfferId, date, description }:any) => {
+    try {
+        const response = await api.put(`interview/update`, {id, studentId, internOfferId, date, description})
+        return response.data
+    } catch (err) {
+        console.log('Error while updating interview' + err)
+        throw err
+    }
+}

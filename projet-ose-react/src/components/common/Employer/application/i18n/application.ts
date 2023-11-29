@@ -92,6 +92,10 @@ let application = {
                 name: "success",
                 text: "Interview scheduled successfully",
             },
+            failed : {
+                name: "failed",
+                text: "Failed to schedule interview",
+            },
             view: {
                 name: "view",
                 text: "View",
@@ -247,6 +251,10 @@ let application = {
             success: {
                 name: "success",
                 text: "Entretien planifié avec succès",
+            },
+            failed : {
+                name: "failed",
+                text: "Échec de la planification de l'entretien",
             },
             view: {
                 name: "view",

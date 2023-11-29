@@ -36,6 +36,13 @@ public class InterviewController {
         return interviewService.saveInterview(interviewRequestInDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/update")
+    @PreAuthorize("hasAuthority('employer')")
+    public ResponseEntity<InterviewDTO> updateInterview(@RequestBody InterviewRequestInDto interviewRequestInDto) {
+        logger.info("Interview update request received");
+        return interviewService.updateInterview(interviewRequestInDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/studentHasInterviewWithInternOffer")
     public ResponseEntity<Boolean> studentHasInterviewWithEmployer(@RequestBody studentHasInterviewWithInternOffer studentHasInterviewWithInternOffer) {
         logger.info("Interview studenthasinterviewwithemployer request received");

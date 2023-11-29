@@ -184,7 +184,17 @@ public class InterviewService {
         return Optional.of(false);
     }
 
-
+    public Optional<InterviewDTO> updateInterview(InterviewRequestInDto interviewRequestInDto) {
+        Interview interview = interviewRepository.findById(interviewRequestInDto.getId()).orElse(null);
+        if (interview != null) {
+            interview.setDate(interviewRequestInDto.getDate());
+            interview.setDescription(interviewRequestInDto.getDescription());
+            interview.setState(State.PENDING);
+            interviewRepository.save(interview);
+            return Optional.of(new InterviewDTO(interview.getId(), new EtudiantDto(interview.getStudent()), new InternOfferDto(interview.getInternshipOffer()), interview.getDate(), interview.getDescription(), interview.getState()));
+        }
+        return Optional.empty();
+    }
 
 
 //    @Transactional

@@ -19,6 +19,7 @@ export default function ApplicationDetails ():ReactElement{
     const navigate = useNavigate()
     const location = useLocation()
     const [date, setDate] = useState<string>("")
+    const [time, setTime] = useState<string>("")
     const {studentId,offerId, isReviewing} = location.state
     const [application, setApplication] = useState<any>(null)
     const [description, setDescription] = useState<string>("")
@@ -113,6 +114,12 @@ export default function ApplicationDetails ():ReactElement{
     function clearInputs(){
         setDate("")
         setDescription("")
+    }
+
+    function setTheTime(value: string) {
+        setTime(value)
+        setDate(date.split("T")[0] + "T" + value + ":00.000Z")
+        console.log(date)
     }
 
     return(
@@ -275,9 +282,16 @@ export default function ApplicationDetails ():ReactElement{
                                                     </div>
                                                     <div className="space-y-3">
                                                         <label className="dark:text-white" htmlFor="date">Date</label>
-                                                        <input required value={date} onChange={e => setDate(e.target.value)}
+                                                        <input required value={date.split("T")[0]} onChange={e => setDate(e.target.value)}
                                                                type="date"
                                                                name={"date"}
+                                                               className="mt-1 p-2 w-full border border-black text-blue dark:text-orange rounded-md dark:bg-softdark dark:border-0 "/>
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        <label className="dark:text-white" htmlFor="time">Date</label>
+                                                        <input required value={time} onChange={e => setTheTime(e.target.value)}
+                                                               type="time"
+                                                               name={"time"}
                                                                className="mt-1 p-2 w-full border border-black text-blue dark:text-orange rounded-md dark:bg-softdark dark:border-0 "/>
                                                     </div>
                                                     <button

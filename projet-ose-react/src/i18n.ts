@@ -778,7 +778,8 @@ i18n
                             },
                             empty: "No interview available",
                             noStage: "No internship available",
-                        }
+                        },
+                        reschedule : "Reschedule",
                     },
                     StudentCvEvaluation: {
                         name: 'StudentCvEvaluation',
@@ -1553,7 +1554,8 @@ i18n
                             },
                             empty: "Aucune entrevue disponible",
                             noStage: "Aucun stage disponible",
-                        }
+                        },
+                        reschedule : "Replanifier",
                     },
                     StudentCvEvaluation: {
                         name: 'StudentCvEvaluation',

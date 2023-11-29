@@ -8,6 +8,7 @@ import PaginatedList from "../shared/paginationList/PaginatedList";
 import {fetchInterviewsEmployer} from "../../../api/InterviewApi";
 import {getAllSeasons} from "../../../api/InterOfferJobAPI";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 export const EmployerInterviewPage = () => {
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
@@ -21,7 +22,7 @@ export const EmployerInterviewPage = () => {
     const [numberElementByPage, setNumberElementByPage] = useState<number>(5);
     const [seasons,setSeasons] = useState([])
     const [selectedOption, setSelectedOption] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchUser = async () => {
             isLoading.current = true;
@@ -120,6 +121,10 @@ export const EmployerInterviewPage = () => {
         });
     }
 
+    const handleReschdule = (id: number) => {
+        navigate(`reschedule/${id}`, {state: {interview: getInterviewFromId(id)}})
+    }
+
     const renderInterviews = (
         <main>
             <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
@@ -157,6 +162,11 @@ export const EmployerInterviewPage = () => {
                             className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                             {fields.table.status_text.text}
                         </th>
+                        <th
+                            scope="col"
+                            className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                            Actions
+                        </th>
                     </tr>
                     </thead>
                     <tbody className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
@@ -176,7 +186,7 @@ export const EmployerInterviewPage = () => {
                             </td>
                             <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
                                             text-left text-sm font-medium">
-                                {new Date(Date.parse(interview.date)).toISOString().split('T')[0]}
+                                {new Date(Date.parse(interview.date)).toISOString().split('T')[0]} {new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[0]}:{new Date(Date.parse(interview.date)).toISOString().split('T')[1].split(':')[1]}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap
                                             text-left text-sm font-medium max-sm:hidden">
@@ -193,6 +203,13 @@ export const EmployerInterviewPage = () => {
                                 >
                                     {fields[interview.state].text}
                                 </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
+                                {interview.state === "DECLINED" && (
+                                    <button onClick={() => handleReschdule(interview.id)}>
+                                        {fields.reschedule}
+                                    </button>
+                                )}
                             </td>
                         </tr>
                     ))}
