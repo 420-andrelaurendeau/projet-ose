@@ -23,39 +23,37 @@ function PDFOptions(props: any) {
         </button>
 
         <div
-            className="bg-white dark:bg-dark flex items-center p-2 rounded shadow-lg space-x-2 divide-x divide-neutral-200 dark:divide-darkgray">
-            <div className="flex space-x-2">
+            className="bg-white dark:bg-dark flex items-center p-2 rounded shadow-lg space-x-6 divide-x divide-neutral-200 dark:divide-darkgray">
+            <div className="flex space-x-4">
                 <div
-                    className={`${props.optionsClassname} ${props.selectedOption === "none" ? "bg-blue dark:bg-orange text-white" : "hover:bg-neutral-200 hover:text-white dark:hover:text-white dark:hover:bg-darkgray"}`}
+                    className={`${props.optionsClassname} ${props.selectedOption === "none" ? "bg-blue dark:bg-orange text-white flex-col" : "hover:bg-neutral-200 hover:text-white dark:hover:text-white dark:hover:bg-darkgray flex-col"}`}
                     onClick={props.onClick}>
                     <FontAwesomeIcon icon={faArrowPointer} size={"lg"}/>
+                    <p>{t("PDFoption.cursor")}</p>
                 </div>
                 {
                     userRole === "internshipmanager" &&
                     <div
-                        className={`${props.optionsClassname} ${props.selectedOption === "write" ? "bg-blue dark:bg-orange text-white" : "hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray"}`}
+                        className={`${props.optionsClassname} ${props.selectedOption === "write" ? "bg-blue dark:bg-orange text-white flex-col" : "hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray flex-col"}`}
                         onClick={props.onClick1}>
                         <FontAwesomeIcon icon={faPenNib} size={"lg"}/>
+                        <p>Write</p>
                     </div>
                 }
 
                 <div
-                    className={`${props.optionsClassname} ${props.selectedOption === "sign" ? "bg-blue dark:bg-orange text-white" : "hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray"}`}
+                    className={`${props.optionsClassname} ${props.selectedOption === "sign" ? "bg-blue dark:bg-orange text-white flex-col" : "hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray flex-col"}`}
                     onClick={props.onClick2}>
                     <FontAwesomeIcon icon={faFileSignature} size={"lg"}/>
+                    <p>Signer</p>
                 </div>
             </div>
             <div className="flex space-x-2">
-                <div
-                    className={`${props.optionsClassname} ${props.selectedOption === "print" ? "bg-blue dark:bg-orange text-white" : "hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray"}`}
-                    onClick={props.onClick3}
-                >
-                    <FontAwesomeIcon icon={faPrint} size={"lg"}/>
-                </div>
-                <div className={`${props.optionsClassname} hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray`}
+                <div className={`${props.optionsClassname} hover:bg-neutral-100 dark:hover:text-white dark:hover:bg-darkgray flex-col`}
                      onClick={props.onClick4}
                 >
                     <FontAwesomeIcon icon={faDownload} size={"lg"}/>
+                    <p>Download</p>
                 </div>
             </div>
         </div>
