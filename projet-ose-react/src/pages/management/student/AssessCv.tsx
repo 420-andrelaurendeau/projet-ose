@@ -68,16 +68,16 @@ function EvaluerCV() {
                 {files.length === 0 && <p className="w-full h-min bg-red text-center text-white">{t("StudentCvEvaluation.noCv")}</p>}
                 {files.map((file) =>
                     <>
-                        <div key={file.id} className="mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl flex flex-col md:flex-row flex-wrap dark:bg-dark">
-                            <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2">
+                        <div key={file.id} className="flex mx-12 my-16 px-7 py-3 bg-slate-50 hover:bg-slate-100 rounded-3xl  flex-col md:flex-row flex-wrap dark:bg-dark">
+                            <div className="flex-item lg:flex-row lg:flex-wrap md:flex-grow overflow-ellipsis pb-2 w-1/4">
                                 <p className="basis-full flex-grow pb-2 lg:pb-0 dark:text-white">{file.etudiant?.nom}, {file.etudiant?.prenom}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.etudiant?.matricule}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.etudiant?.email}</p>
                                 <p className="basis-full flex-grow dark:text-white">{file.fileName}</p>
                             </div>
-                            <div className="md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2">
+                            <div className="md:mx-3 my-4 lg:my-0 text-center lg:flex-grow-0 pb-2 flex xxxs:flex-col md:flex-row ">
                                 <button
-                                    className="text-blue-900 rounded bg-gray py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center align-middle h-full w-full"
+                                    className="text-blue rounded py-2 sm:px-4 lg:px-10 hover:text-blue-700 text-center align-middle h-full w-full"
                                     onClick={() => handleDownloadFile(file)}
                                 >
                                     <p className="dark:text-white">{t("StudentCvEvaluation.button.download")}</p>
