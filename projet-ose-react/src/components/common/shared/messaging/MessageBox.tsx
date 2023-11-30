@@ -1,6 +1,6 @@
 import {Message} from "../../../../model/Message";
 import {useTranslation} from "react-i18next";
-import React, {useState} from "react";
+import React, {MutableRefObject, useEffect, useRef, useState} from "react";
 import NotificationLinkMap from "../../../../model/NotificationLinkMap";
 import {useNavigate} from "react-router-dom";
 import {readNotification} from "../../../../api/NotificationAPI";
@@ -9,7 +9,8 @@ import {useForceUpdate} from "framer-motion";
 
 type MessageBoxProps = {
     messages: Message[],
-    messagesSetter: any
+    messagesSetter: any,
+    openStateSetter: any
 }
 
 type UniqueUnreadMessage = {
@@ -25,9 +26,28 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     let readMessages = props.messages.filter((message) => message.read);
     let uniqueUnreadMessage: UniqueUnreadMessage[] = [];
 
+    const thisRef = useRef(null);
+
+    function useOutsideAlerter(ref: MutableRefObject<any>) {
+        useEffect(() => {
+            function handleClickOutside(event: MouseEvent) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    props.openStateSetter(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+
+    useOutsideAlerter(thisRef);
+
     function handleNotificationClick(message: Message) {
         let link = NotificationLinkMap.array[message.message];
         navigate(link);
+        props.openStateSetter(false);
     }
 
     function handleUniqueNotificationClick(message: UniqueUnreadMessage) {
@@ -43,6 +63,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
 
         props.messagesSetter(props.messages);
         navigate(link);
+        props.openStateSetter(false);
     }
 
     unreadMessages.forEach((message) => {
@@ -59,7 +80,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
         uniqueUnreadMessage[uniqueMessageIndex].ids.push(message.id);
     });
 
-    return  <div className="shadow-md z-50 min-w-[320px] max-w-[400px] max-h-[240px] overflow-y-auto rounded-b-md absolute right-[calc(100%-1.5rem)] bg-neutral-50 dark:bg-stone-800 dark:text-white">
+    return  <div ref={thisRef} className="shadow-md z-50 min-w-[320px] max-w-[400px] max-h-[240px] overflow-y-auto rounded-b-md absolute right-[calc(100%-1.5rem)] bg-neutral-50 dark:bg-stone-800 dark:text-white">
                 {(props.messages.length > 0)
                     ? <>
                         {
