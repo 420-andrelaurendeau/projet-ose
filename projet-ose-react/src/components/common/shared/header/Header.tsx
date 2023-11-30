@@ -112,7 +112,7 @@ const Header = (userd: any) => {
                                 </button>
                                 {
                                     isMessageBoxOpen
-                                        ? <MessageBox messages={messages}></MessageBox>
+                                        ? <MessageBox messages={messages} messagesSetter={setMessages}></MessageBox>
                                         : <></>
                                 }
                                 <button className="md:inline-block hidden ms-8" onClick={openModal} data-testid="profil-button">
