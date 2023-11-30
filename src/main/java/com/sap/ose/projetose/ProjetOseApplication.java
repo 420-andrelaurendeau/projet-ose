@@ -8,6 +8,7 @@ import com.sap.ose.projetose.repository.ProgrammeRepository;
 import com.sap.ose.projetose.service.InternOfferService;
 import com.sap.ose.projetose.service.*;
 import com.sap.ose.projetose.service.auth.AuthenticationService;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,35 +28,15 @@ import java.util.Date;
 import java.util.List;
 
 
+@RequiredArgsConstructor
 @SpringBootApplication
 public class ProjetOseApplication implements CommandLineRunner {
+    private final AuthenticationService authenticationService;
+    private final InternOfferService internOfferService;
+    private final ProgrammeRepository programmeRepository;
+    private final TemplateContractService templateContractService;
+    private final EmailService emailService;
 
-    @Autowired
-    private EtudiantService etudiantService;
-    @Autowired
-    private EmployeurService employeurService;
-
-    @Autowired
-    private UtilisateurService utilisateurService;
-    @Autowired
-    private AuthenticationService authenticationService;
-    @Autowired
-    private InternOfferService internOfferService;
-
-    @Autowired
-    private InterviewService interviewService;
-
-    @Autowired
-    private InternshipCandidatesService internshipCandidatesService;
-
-    @Autowired
-    private StageService stageService;
-
-    @Autowired
-    ProgrammeRepository programmeRepository;
-
-    @Autowired
-    TemplateContractService templateContractService;
     public static void main(String[] args) {
         SpringApplication.run(ProjetOseApplication.class, args);
     }
