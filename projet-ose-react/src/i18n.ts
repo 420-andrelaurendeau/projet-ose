@@ -859,6 +859,13 @@ i18n
                         write : "Write",
                         sign : "Sign",
                         cursor : "Cursor"
+                    },
+                    signDialog : {
+                        text : "Draw your signature above",
+                        button : {
+                            cancel : "Cancel",
+                            confirm : "Confirm",
+                        }
                     }
 
                 },
@@ -1680,6 +1687,13 @@ i18n
                         write : "Écrire",
                         sign : "Signer",
                         cursor : "Curseur"
+                    },
+                    signDialog : {
+                        text : "Dessinez votre signature ci-dessus",
+                        button : {
+                            cancel : "Annuler",
+                            confirm : "Confirmer",
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 import { BigButton } from "./BigButton";
 import React from "react";
+import {useTranslation} from "react-i18next";
 
 export function ConfirmOrCancel({
   onCancel,
@@ -9,6 +10,7 @@ export function ConfirmOrCancel({
   hideCancel,
   disabled
 }:any) {
+    const { t } = useTranslation();
 
   return (
     <div className="flex justify-between">
@@ -16,11 +18,11 @@ export function ConfirmOrCancel({
       <div>
         {!hideCancel ? (
           <BigButton
-              title={"Cancel"}
+              title={t("signDialog.button.cancel")}
               className="mr-8"
               onClick={onCancel}/>
         ) : null}
-        <BigButton title={confirmTitle} inverted={true} onClick={onConfirm} disabled={disabled}/>
+        <BigButton title={t("signDialog.button.confirm")} inverted={true} onClick={onConfirm} disabled={disabled}/>
       </div>
     </div>
   );
