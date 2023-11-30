@@ -18,7 +18,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const {i18n} = useTranslation();
     const {t} = useTranslation();
     //todo bad i18n
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
+    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer");
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
