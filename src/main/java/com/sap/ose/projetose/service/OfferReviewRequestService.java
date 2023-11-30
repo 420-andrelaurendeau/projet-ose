@@ -90,7 +90,7 @@ public class OfferReviewRequestService {
         offerReviewRequestRepository.save(offerReviewRequest);
 
         if (offerReviewRequestDto.getState() == State.ACCEPTED) {
-            notificationService.saveNotificationByUser(internOffer.getEmployeur().getId(), Notificationsi18n.offerAsBeenAccpeted);
+            notificationService.saveNotificationByUser(internOffer.getEmployeur().getId(), Notificationsi18n.offerAsBeenAccepted);
         } else if (offerReviewRequestDto.getState() == State.DECLINED) {
             notificationService.saveNotificationByUser(internOffer.getEmployeur().getId(), Notificationsi18n.offerAsBeenDeclined);
         }

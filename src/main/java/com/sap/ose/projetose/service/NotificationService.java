@@ -6,7 +6,6 @@ import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.NotificationRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ import java.util.List;
 public class NotificationService {
     private final NotificationRepository notificationRepository;
     private final UtilisateurService utilisateurService;
+    private final EmailService emailService;
 
     @Transactional
     public NotificationDto saveNotification(Notifications notifications){
@@ -29,9 +29,17 @@ public class NotificationService {
         Notifications notifications = new Notifications();
         notifications.setMessage(notificationsi18n);
         notifications.setRead(false);
-        notifications.setReceveurs(utilisateurService.getUserById(user_id));
+        Utilisateur userById = utilisateurService.getUserById(user_id);
+        notifications.setReceveurs(userById);
         notificationRepository.save(notifications);
+
+        sendEmailNotification(userById.getEmail(), notifications.getMessage().getBilingualEmail());
+
         return new NotificationDto(notifications);
+    }
+
+    private void sendEmailNotification(String email, String messageBody) {
+        emailService.sendEmail(email, "Vous avez un nouvelle notification sur Projet OSE \\ You have a new notification on Projet OSE.", messageBody);
     }
 
     @Transactional
@@ -48,7 +56,8 @@ public class NotificationService {
     @Transactional
     public List<NotificationDto> saveNotificationForAllStudent(long program_id,Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Etudiant etudiant : utilisateurService.findAllEtudiantByProgram(program_id)){
+        List<Etudiant> allEtudiantByProgram = utilisateurService.findAllEtudiantByProgram(program_id);
+        for(Etudiant etudiant : allEtudiantByProgram){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(etudiant);
@@ -59,13 +68,18 @@ public class NotificationService {
 
             notificationDtoList.add(new NotificationDto(notifications));
         }
+
+        for(Etudiant etudiant : allEtudiantByProgram) {
+            sendEmailNotification(etudiant.getEmail(), message.getBilingualEmail());
+        }
         return notificationDtoList;
     }
 
     @Transactional
     public List<NotificationDto> saveNotificationForAllEmployeur(long program_id,Notificationsi18n message){
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Employeur employeur : utilisateurService.findAllEmployeurByProgram(program_id)){
+        List<Employeur> allEmployeurByProgram = utilisateurService.findAllEmployeurByProgram(program_id);
+        for(Employeur employeur : allEmployeurByProgram){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(employeur);
@@ -76,6 +90,11 @@ public class NotificationService {
 
             notificationDtoList.add(new NotificationDto(notifications));
         }
+
+        for(Employeur employeur : allEmployeurByProgram) {
+            sendEmailNotification(employeur.getEmail(), message.getBilingualEmail());
+        }
+
         return notificationDtoList;
     }
 
@@ -88,9 +107,10 @@ public class NotificationService {
     }
 
     @Transactional
-    public List<NotificationDto> saveNotificationForAllManagers(Notificationsi18n notificationsi18n) {
+    public void saveNotificationForAllManagers(Notificationsi18n notificationsi18n) {
         List<NotificationDto> notificationDtoList = new ArrayList<>();
-        for(Internshipmanager internshipmanager : utilisateurService.findAllManagers()){
+        List<Internshipmanager> allManagers = utilisateurService.findAllManagers();
+        for(Internshipmanager internshipmanager : allManagers){
             Notifications notifications = new Notifications();
 
             notifications.setReceveurs(internshipmanager);
@@ -101,7 +121,11 @@ public class NotificationService {
 
             notificationDtoList.add(new NotificationDto(notifications));
         }
-        return notificationDtoList;
+
+        for (Internshipmanager manager : allManagers) {
+            sendEmailNotification(manager.getEmail(), notificationsi18n.getBilingualEmail());
+        }
+
     }
 
     @Transactional
