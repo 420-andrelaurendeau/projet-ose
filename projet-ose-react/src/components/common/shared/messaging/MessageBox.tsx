@@ -19,6 +19,10 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     const {t} = useTranslation();
     let navigate = useNavigate()
 
+    let unreadMessages = props.messages.filter((message) => !message.read);
+    let readMessages = props.messages.filter((message) => message.read);
+    let uniqueUnreadMessage: UniqueUnreadMessage[] = [];
+
     function handleNotificationClick(message: Message) {
         let link = NotificationLinkMap.array[message.message];
         navigate(link);
@@ -27,17 +31,16 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     function handleUniqueNotificationClick(message: UniqueUnreadMessage) {
         let link = NotificationLinkMap.array[message.messageKey];
 
-        message.ids.forEach(i => readNotification(i) )
+        message.ids.forEach(i => readNotification(i))
+        let messagesToPush = unreadMessages.filter(unreadMessage => unreadMessage.id in message.ids);
+        messagesToPush.forEach(unreadMessage => unreadMessage.read = true);
+        readMessages = [...messagesToPush, ...readMessages];
+
         navigate(link);
     }
 
-    let unreadMessages = props.messages.filter((message) => !message.read);
-    let readMessages = props.messages.filter((message) => message.read);
-    let uniqueUnreadMessage: UniqueUnreadMessage[] = [];
-
     unreadMessages.forEach((message) => {
         let uniqueMessageIndex = uniqueUnreadMessage.findIndex((uniqueMessage) => uniqueMessage.messageKey == message.message)
-
         if (uniqueMessageIndex == -1) {
             uniqueUnreadMessage.push({
                 ids: [message.id],
