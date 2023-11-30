@@ -76,9 +76,9 @@ export default function EmployerStagePage() {
                 <div className="max-md:pt-2 w-full">
                     <div className="flex justify-between">
                         <div>
-                            <label htmlFor="options" className="text-bold dark:text-white">{fields.filter.title}</label>
+                            <label htmlFor="options" className="text-bold dark:text-white">{t("formField.homeEmployeur.filter.title")}</label>
                             <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
-                                <option value="">{fields.filter.All}</option>
+                                <option value="">{t("formField.homeEmployeur.filter.All")}</option>
                                 {seasons.map((season: string, index: number) => (
                                     <option key={index} value={season}>
                                         {t("formField.homeEmployeur.filter."+season.slice(0,-4))+ " " + season.slice(-4)}
