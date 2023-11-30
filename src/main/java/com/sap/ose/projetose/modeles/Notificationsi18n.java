@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.modeles;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -98,5 +99,6 @@ public enum Notificationsi18n {
 
     @JsonValue
     private final String translationKey;
+    @Getter
     private final String bilingualEmail;
 }
