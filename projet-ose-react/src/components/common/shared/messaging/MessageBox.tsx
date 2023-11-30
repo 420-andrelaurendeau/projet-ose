@@ -86,7 +86,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                         {
                             uniqueUnreadMessage.map(message =>
                                 <a key={message.messageKey}
-                                    className="block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0"
+                                    className="block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 dark:bg-stone-700"
                                     onClick={_ => handleUniqueNotificationClick(message)}>
                                     {t(message.messageKey)} ({message.ids.length})
                                 </a>)
@@ -94,7 +94,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                         {
                             readMessages.map(message =>
                                 <a  key={message.id}
-                                    className="block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 bg-neutral-200 dark:bg-stone-700"
+                                    className="block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 bg-neutral-200 dark:bg-inherit"
                                     onClick={_ => handleNotificationClick(message)}>
                                     {t(message.message)}
                                 </a>)
