@@ -20,11 +20,12 @@ DATA {
 }
 
 - Se connecter
+- Expliquer le menu
 - Creer une offre de stage
 
 DATA { 
 
-    titre : Data Scientist,
+    titre : Analyse de donnees,
     lieu : Lachine, MTL
     description : "Nous recherchons un data scientist pour travailler sur un projet de machine learning",
     programme : Technique Informatique,
@@ -33,11 +34,13 @@ DATA {
     date_fin : 2024-06-01,
     file : templateOfferFile
 }
+- Qui va devoir etre accepter par le GS
+- se deconnecter
+
 
 # Etudiant
 
 - Creer un compte
-- Se connecter
 
 DATA {
     
@@ -49,38 +52,70 @@ DATA {
     Matricule : 1239012,
     Programme : Technique Informatique
 }
+- Se connecter
+- Expliquer le menu
+- Upload un CV
+- Pour postuler a une offre de stage il doit avoir un CV approuver par le GS
+- se deconnecter
 
+# GS
+- Se connecter en tant que GS
+- Expliquer le menu
+- Accepter un offre de stage
+- Review un CV d'un etudiant
+
+# Etudiant
+- Se reconnecter
 - Regarder Offres
-- Postuler a une offre de Data scientist
+- Postuler a une offre de Analyse de donnees
+- mettre un cv par defaut
+- regarder les offres de stage
+- postuler a une offre de Analyse de donnees
+- voir que l'offre est appliquer
 
 
 # Employer
 
+- voir notification de candidature
 - Regarder les candidatures recues
+- Expliquer le menu
 - Creer un interview
 
 # Etudiant
 
+- Se rendre sur Interview
+- Expliquer le menu
 - Accepter l'interview d'un employeur
 
-# Employer
+# GS
+- Se rendre sur Entente de stage
+- Expliquer le menu
+- Voir les ententes de stage qui a ete creer
 
+# Employer
+- Se rendre sur stage
+- Expliquer le menu
 - Accepter l'etudiant pour le stage
 
 # Etudiant
-
+- Se rendre sur stage
+- Expliquer le menu
 - Accepter le stage
 
 # GS
-
-- Creer un contrat
-
+- Se rendre sur contrat
+- Expliquer le menu
+- Regarder le contrat de stage
+- Signer le contrat de stage
+- 
+# Employer
+- Se rendre sur contrat
+- Expliquer le menu
 - Accepter le contrat
 
 # Etudiant
-
+- Se rendre sur contrat
+- Expliquer le menu
 - Accepter le contrat
 
-# Employer 
 
-- Accepter le contrat
