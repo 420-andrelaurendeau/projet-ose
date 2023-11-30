@@ -3,9 +3,11 @@ import SignatureCanvas from "react-signature-canvas";
 import { ConfirmOrCancel } from "./ConfirmOrCancel";
 import { primary45 } from "./utils/colors";
 import { useRef } from "react";
+import {useTranslation} from "react-i18next";
 
 export function AddSigDialog({ onConfirm, onClose, autoDate, setAutoDate }:any) {
   const sigRef = useRef<any>(null);
+  const { t } = useTranslation();
 
   return (
     <Dialog
@@ -27,7 +29,7 @@ export function AddSigDialog({ onConfirm, onClose, autoDate, setAutoDate }:any) 
           </div>
           <div className="flex justify-between text-center text-blue dark:text-orange mt-8 w-2/3 self-center">
             <div className="flex justify-center">
-              <div>Draw your signature above</div>
+              <div>{t("signDialog.text")}</div>
             </div>
           </div>
 

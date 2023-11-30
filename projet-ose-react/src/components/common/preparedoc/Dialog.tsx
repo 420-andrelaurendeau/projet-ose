@@ -23,7 +23,7 @@ export function Dialog({
   return (
     <Modal onClose={onClose} isVisible={isVisible} positionTop={positionTop} style={style}>
       <div className="mx-auto">
-        <div className="bg-white dark:bg-dark text-white dark:text-black px-8 py-8 text-xs flex justify-between items-center">
+        <div className="bg-white dark:bg-dark text-white dark:text-black p-1 text-xs flex justify-between items-center">
           <div>{title}</div>
           <FaTimes
             color={'#FFF'}

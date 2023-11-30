@@ -37,7 +37,7 @@ function SignContract(props: any) {
         originalWidth: 0,
     });
     const [selectedOption, setSelectedOption] = useState<string>("none");
-    const optionsClassname = "flex justify-center items-center h-10 w-10 dark:text-white rounded cursor-pointer";
+    const optionsClassname = "flex justify-center items-center h-12 w-20  dark:text-white rounded cursor-pointer";
     const [isLoaded, setIsLoaded] = useState(false);
     const [newContent, setNewContent] = useState<any>(false);
 
