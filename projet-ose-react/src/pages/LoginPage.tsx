@@ -32,11 +32,11 @@ function ConnectPage() {
 
         <div className="min-h-screen h-full w-full bg-white dark:bg-dark">
             <button
-                className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
+                className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray dark:bg-dark"
                 onClick={changeLanguage}
                 data-testid="change-language"
             >
-                <div className="flex w-full space-x-2">
+                <div className="flex w-full space-x-2 dark:bg-dark">
                     {language === "en" ?
                         <LanguageIconFr bounce={isSwitchLanguage}/>
                         : <LanguageIconEn bounce={isSwitchLanguage}/>

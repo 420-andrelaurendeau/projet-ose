@@ -41,7 +41,7 @@ function Registration() {
         <>
             <div className="dark:bg-softdark">
                 <button
-                    className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray"
+                    className="md:pl-14 flex justify-between mt-2.5 w-full hover:bg-white dark:hover:bg-darkgray dark:bg-dark"
                     onClick={changeLanguage}
                     data-testid="change-language"
                 >
