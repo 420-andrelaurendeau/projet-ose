@@ -55,9 +55,9 @@ i18n
                             contractSignedByEmployerForGS: "An employer has signed a contract.",
                             newContractAsBeenCreated: "A new contract is now available.",
                             contractAsBeenSignedByThreeParties: "A contract has been signed by all parties.",
-                            offerAsBeenAccpeted: "A job offer has been approved.",
+                            offerAsBeenAccepted: "A job offer has been approved.",
                             offerAsBeenDeclined: "A job offer has been denied.",
-                            newStageAsBeenCreated: "There`s a new internship application.."
+                            newStageAsBeenCreated: "There`s a new internship application."
                         },
                         InternshipsAgreementPage: {
                             header:{
@@ -864,7 +864,7 @@ i18n
                             contractSignedByEmployerForGS: "Un employeur a signé un contrat.",
                             newContractAsBeenCreated: "Un nouveau contrat est disponible.",
                             contractAsBeenSignedByThreeParties: "Un contrat est signé par les trois parties prenants.",
-                            offerAsBeenAccpeted: "Un offre de stage a été approuvé.",
+                            offerAsBeenAccepted: "Un offre de stage a été approuvé.",
                             offerAsBeenDeclined: "Un offre de stage a été réfusé.",
                             newStageAsBeenCreated: "Il y a une nouvelle application de stage."
                         },
