@@ -911,9 +911,9 @@ i18n
                                 student: "Étudiant",
                                 statut: "Statut",
                                 status: {
-                                    accepted: "Accepted",
-                                    declined: "Declined",
-                                    pending: "Pending",
+                                    accepted: "Accepté",
+                                    declined: "Refusé",
+                                    pending: "Attente",
                                 },
                                 view:{
                                     name: 'view',
