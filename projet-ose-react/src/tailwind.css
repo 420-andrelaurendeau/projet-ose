@@ -2702,11 +2702,6 @@ video {
 
 @media (min-width: 475px) {
 
-  .xs\:-mx-1 {
-    margin-left: -0.25rem;
-    margin-right: -0.25rem;
-  }
-
   .xs\:mx-auto {
     margin-left: auto;
     margin-right: auto;
@@ -2750,11 +2745,6 @@ video {
 
   .xs\:justify-between {
     justify-content: space-between;
-  }
-
-  .xs\:px-6 {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
   }
 
   .xs\:text-end {
@@ -3001,11 +2991,6 @@ video {
 }
 
 @media (min-width: 1024px) {
-
-  .lg\:-mx-2 {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-  }
 
   .lg\:-mx-8 {
     margin-left: -2rem;

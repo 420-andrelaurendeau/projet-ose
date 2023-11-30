@@ -1,5 +1,11 @@
 const contractPage = {
     en:{
+        filter: {
+            title: "Filter by season",
+            winter: "Winter",
+            summer: "Summer",
+            All: "All",
+        },
         toast: {
             errorFetchInternshipsAgreement: "An error occurred while retrieving internship agreements",
             errorFetchNumberStateOfInternshipsAgreement: "An error occurred while retrieving the number of internship agreements",
@@ -41,6 +47,12 @@ const contractPage = {
         empty : "No internship agreement found"
     },
     fr: {
+        filter: {
+            title: "Filtrer par saison: ",
+            Hiver: "Hiver",
+            Été: "Été",
+            All: "Tout",
+        },
         toast: {
             errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
             errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",

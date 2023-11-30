@@ -145,12 +145,17 @@ function StudentInternship() {
 
                         <div className="flex justify-between py-4">
                             <div>
-                                <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                                <label htmlFor="options" className="text-bold dark:text-white">
+                                    {t("formField.EtudiantStage.filter.title")}
+                                </label>
                                 <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleChangeOption}>
-                                    <option value="">Tout</option>
+                                    <option value="">{t("formField.EtudiantStage.filter.All")}</option>
                                     {seasons.map((season: string, index: number) => (
                                         <option key={index} value={season}>
-                                            {season}
+                                            {
+                                                t("formField.EtudiantStage.filter." + season.slice(0,-4)) + " " + season.substring(season.length - 4)
+
+                                            }
                                         </option>
                                     ))}
                                 </select>

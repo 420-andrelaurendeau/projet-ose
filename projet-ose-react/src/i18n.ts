@@ -32,6 +32,12 @@ i18n
             en: {
                 translation: {
                     formField: {
+                        filter: {
+                            title: "Filter by season: ",
+                            Hiver: "Winter",
+                            Été: "Summer",
+                            All: "All",
+                        },
                         internshipAgreement,
                         application: application.en,
                         employerOffer,
@@ -357,6 +363,12 @@ i18n
 
                         },
                         EtudiantStage: {
+                            filter: {
+                                title: "Filter by season: ",
+                                Hiver: "Winter",
+                                Été: "Summer",
+                                All: "All",
+                            },
                             noOffers: {
                                 name: 'noOffers',
                                 text: 'No offers available',
@@ -432,7 +444,13 @@ i18n
                                 },
                                 appliedOffer: {
                                     name: 'appliedOffer',
-                                    text: "Applied offer"
+                                    text: "Applied offer",
+                                    filter: {
+                                        title: "Filter by season: ",
+                                        Hiver: "Winter",
+                                        Été: "Summer",
+                                        All: "All",
+                                    }
                                 },
                                 cv: {
                                     name: 'cv',
@@ -544,6 +562,12 @@ i18n
                             },
                         },
                         homeEmployeur: {
+                            filter: {
+                                title: "Filter by season: ",
+                                Hiver: "Winter",
+                                Été: "Summer",
+                                All: "All",
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Dashboard'
@@ -1152,6 +1176,12 @@ i18n
 
                         },
                         EtudiantStage: {
+                            filter: {
+                                title: "Filtrer par saison: ",
+                                Hiver: "Hiver",
+                                Été: "Été",
+                                All: "Tout"
+                            },
                             noOffers: {
                                 name: 'noOffers',
                                 text: 'Aucune offre disponible',
@@ -1231,7 +1261,13 @@ i18n
                                 },
                                 appliedOffer: {
                                     name: 'appliedOffer',
-                                    text: "Offres appliquées"
+                                    text: "Offres appliquées",
+                                    filter: {
+                                        title: "Filtrer par session: ",
+                                        Hiver: "Hiver",
+                                        Été: "Été",
+                                        All: "Tout"
+                                    }
                                 },
                                 cv: {
                                     name: 'cv',
@@ -1343,6 +1379,12 @@ i18n
                             },
                         },
                         homeEmployeur: {
+                            filter: {
+                                title: "Filtrer par saison: ",
+                                Hiver: "Hiver",
+                                Été: "Été",
+                                All: "Tout"
+                            },
                             titre: {
                                 name: 'titre',
                                 text: 'Tableau de bord'

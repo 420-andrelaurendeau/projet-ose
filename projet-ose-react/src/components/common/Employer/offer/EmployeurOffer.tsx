@@ -57,12 +57,16 @@ export default function EmployeurOffer() {
                 <div className="max-md:pt-2 min-w-full">
                     <div className="flex justify-between">
                         <div>
-                            <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                            <label htmlFor="options" className="text-bold dark:text-white">
+                                {
+                                    fields.filter.title
+                                }
+                            </label>
                             <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
-                                <option value="">Tout</option>
+                                <option value="">{fields.filter.All}</option>
                                 {seasons.map((season: string, index: number) => (
                                     <option key={index} value={season}>
-                                        {season}
+                                        {t("formField.homeEmployeur.filter."+ season.slice(0, -4)) + " " + season.slice(-4)}
                                     </option>
                                 ))}
                             </select>

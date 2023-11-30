@@ -34,12 +34,14 @@ function PaginatedList<T>({
         <div>
             <div className="flex justify-between">
                 <div>
-                    <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
+                    <label htmlFor="options" className="text-bold dark:text-white">
+                        {t("formField.Header.sidebarEtudiant.appliedOffer.filter.title")}
+                    </label>
                     <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}  defaultValue={selectedOption}>
-                        <option value="">Tout</option>
+                        <option value="">{t("formField.Header.sidebarEtudiant.appliedOffer.filter.All")}</option>
                         {seasons.map((season: string, index: number) => (
                             <option key={index} value={season}>
-                                {season}
+                                {t("formField.Header.sidebarEtudiant.appliedOffer.filter."+season.slice(0, -4)) + " " + season.slice(-4)}
                             </option>
                         ))}
                     </select>
