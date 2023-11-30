@@ -162,7 +162,7 @@ function StudentInternshipPage() {
     };
     return (
         <div className="min-h-screen h-full ">
-            <header className="max-md:hidden pt-24 ">
+            <header className="max-md:hidden mt-6 ">
                 <div className="max-w-7xl mx-auto  px-6  lg:px-8">
                     <h1 className="text-3xl dark:text-white font-bold text-gray-900"> {t("StudentInternshipPage.titre.text")}  </h1>
                 </div>

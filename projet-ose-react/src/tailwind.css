@@ -1251,6 +1251,12 @@ video {
   margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
+.space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-y-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1734,6 +1740,10 @@ video {
   padding-left: 1rem;
 }
 
+.pl-5 {
+  padding-left: 1.25rem;
+}
+
 .pr-5 {
   padding-right: 1.25rem;
 }
@@ -2143,11 +2153,6 @@ video {
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-neutral-500:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(115 115 115 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-orange:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(245 122 0 / var(--tw-bg-opacity));
@@ -2425,11 +2430,6 @@ video {
   color: rgb(212 212 212 / var(--tw-text-opacity));
 }
 
-:is(.dark .dark\:text-neutral-900) {
-  --tw-text-opacity: 1;
-  color: rgb(23 23 23 / var(--tw-text-opacity));
-}
-
 :is(.dark .dark\:text-offwhite) {
   --tw-text-opacity: 1;
   color: rgb(251 252 255 / var(--tw-text-opacity));
@@ -2470,11 +2470,6 @@ video {
   background-color: rgb(33 37 58 / var(--tw-bg-opacity));
 }
 
-:is(.dark .dark\:hover\:bg-neutral-50:hover) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
-}
-
 :is(.dark .dark\:hover\:bg-orange:hover) {
   --tw-bg-opacity: 1;
   background-color: rgb(245 122 0 / var(--tw-bg-opacity));
@@ -2500,6 +2495,11 @@ video {
   background-color: rgb(204 92 2 / var(--tw-bg-opacity));
 }
 
+:is(.dark .dark\:hover\:bg-white:hover) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
 :is(.dark .dark\:hover\:text-amber-500:hover) {
   --tw-text-opacity: 1;
   color: rgb(245 158 11 / var(--tw-text-opacity));
@@ -2508,6 +2508,11 @@ video {
 :is(.dark .dark\:hover\:text-amber-800:hover) {
   --tw-text-opacity: 1;
   color: rgb(146 64 14 / var(--tw-text-opacity));
+}
+
+:is(.dark .dark\:hover\:text-black:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 :is(.dark .dark\:hover\:text-white:hover) {

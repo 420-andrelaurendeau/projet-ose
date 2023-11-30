@@ -212,16 +212,46 @@ export const getInterOfferStudent = async (params:{}) => {
 }
 
 
+export const getPageStudentAppliedOffers = async (studentId: number, page: number, size: number, sortField: string, sortDirection: string, session: string ): Promise<AppliedOffers[]> => {
+    try {
+        const params: any = { page, size, sortField, sortDirection, session };
+
+        const response = await api.get('/student/' + studentId + '/offersPageApplied', {
+            params: params
+        });
+
+        console.log(response);
+
+        return response.data.content.map((item: any) => ({
+            appliedOffer: item.appliedOffer,
+            appliedFiles: item.appliedFiles
+        }));
+        /**
+         return response.data.map((item: any) => ({
+         appliedOffer: item.appliedOffer,
+         appliedFiles: item.appliedFiles
+         }));
+         */
+    } catch (error) {
+        console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
+        throw error;
+    }
+}
+
 export const getStudentAppliedOffers = async (studentId: number): Promise<AppliedOffers[]> => {
     try {
+
+
         const response = await api.get('/student/' + studentId + '/offersApplied', {
 
         });
 
-        return response.data.map((item: any) => ({
-                appliedOffer: item.appliedOffer,
-                appliedFiles: item.appliedFiles
-            }));
+
+         return response.data.map((item: any) => ({
+         appliedOffer: item.appliedOffer,
+         appliedFiles: item.appliedFiles
+         }));
+
     } catch (error) {
         console.error('Erreur lors de la récupération des offres auxquelles l\'étudiant a postulé:', error);
         throw error;

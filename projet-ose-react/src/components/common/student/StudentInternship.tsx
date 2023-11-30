@@ -63,10 +63,6 @@ function StudentInternship() {
     const toast = useToast();
     const navigate = useNavigate();
 
-
-    //TODO ajouter message errure pour CV pas trouver
-    //TODO NO cv NO postulation
-
     const fecthData = async () => {
         setLoadingCV(true);
         isloading.current = true;
@@ -146,12 +142,7 @@ function StudentInternship() {
                         <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {t("formField.EtudiantStage.titre.text")}
                         </h1>
-                        {
-                            loadingCV ?
-                                <span className="flex justify-center dark:text-white">{t("formField.EtudiantStage.cv")}</span>
-                                :
-                                <span></span>
-                        }
+
                         <div className="flex justify-between py-4">
                             <div>
                                 <label htmlFor="options" className="text-bold dark:text-white">Filtre par saison: </label>
