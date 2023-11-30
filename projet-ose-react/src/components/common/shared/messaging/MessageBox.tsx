@@ -80,13 +80,13 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
         uniqueUnreadMessage[uniqueMessageIndex].ids.push(message.id);
     });
 
-    return  <div ref={thisRef} className="shadow-md w-[66.6vw] z-50 md:w-auto max-h-[calc(66.6vh)] md:min-w-[320px] md:max-w-[400px] md:max-h-[240px] overflow-y-auto rounded-b-md absolute -translate-x-1/2 md:right-[calc(100%-1.5rem)] bg-neutral-50 dark:bg-stone-800 dark:text-white">
+    return  <div ref={thisRef} className="shadow-md w-[66.6vw] z-50 sm:w-auto max-h-[calc(66.6vh)] sm:min-w-[320px] sm:max-w-[400px] sm:max-h-[240px] overflow-y-auto rounded-b-md absolute -translate-x-1/2 sm:!translate-x-0  sm:right-[calc(100%-1.5rem)] translate-y-5 bg-neutral-50 dark:bg-stone-800 dark:text-white">
                 {(props.messages.length > 0)
                     ? <>
                         {
                             uniqueUnreadMessage.map(message =>
                                 <a key={message.messageKey}
-                                    className="block md:text-ellipsis md:whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 dark:bg-stone-700"
+                                    className="block sm:text-ellipsis sm:whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 dark:bg-stone-700"
                                     onClick={_ => handleUniqueNotificationClick(message)}>
                                     {t(message.messageKey)} ({message.ids.length})
                                 </a>)
@@ -94,7 +94,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                         {
                             readMessages.map(message =>
                                 <a  key={message.id}
-                                    className="block md:text-ellipsis md:whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 bg-neutral-200 dark:bg-inherit"
+                                    className="block sm:text-ellipsis sm:whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0 bg-neutral-200 dark:bg-inherit"
                                     onClick={_ => handleNotificationClick(message)}>
                                     {t(message.message)}
                                 </a>)
