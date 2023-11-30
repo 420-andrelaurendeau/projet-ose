@@ -17,6 +17,6 @@ export default class NotificationLinkMap {
         "formField.notifications.contractAsBeenSignedByThreeParties": "/internshipmanager/home/internshipagreement",
         "formField.notifications.offerAsBeenAccepted": "/employer/home/offers",
         "formField.notifications.offerAsBeenDeclined": "/employer/home/offers",
-        "formField.notifications.newStageAsBeenCreated": "/internshipmanager/home"
+        "formField.notifications.newStageAsBeenCreated": "/internshipmanager/home/internshipagreement"
     }
 }
