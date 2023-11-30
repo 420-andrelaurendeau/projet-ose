@@ -17,6 +17,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
     const [internshipOffer, setinternshipOffer] = useState<any>();
     const {i18n} = useTranslation();
     const {t} = useTranslation();
+    //todo bad i18n
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.employerOffer." + i18n.language.slice(0, 2));
     const fetchedOfferRef = useRef(false);
     const [pdf, setPdf] = useState(null);
@@ -65,7 +66,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                 }else setPdf(null)
 
             } catch (error) {
-                toast.error(fields.errorFetchOffer);
+                toast.error(t("formField.employerOffer.errorFetchOffer"));
             } finally {
                 fetchedOfferRef.current = false;
             }
@@ -102,7 +103,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                             "px-6 py-2 inline-flex text-lg leading-5  justify-center rounded-full bg-red text-white dark:text-offwhite"
                                             : "px-6 py-2 inline-flex text-lg leading-5  rounded-full justify-center bg-green text-white dark:text-offwhite"}
                             >
-                                            {internshipOffer ? fields[internshipOffer.state].text : ""}
+                                            {internshipOffer ? t(`formField.employerOffer.${internshipOffer.state}.text`) : ""}
                                         </span>
                         </h2>
                     </div>
@@ -111,37 +112,47 @@ const EmployerOfferDetails: React.FC<any> = () => {
             <div className="bg-white dark:bg-dark rounded-xl py-5 px-6 shadow">
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base dark:text-white font-semibold leading-7 text-gray-900">
-                        {fields.title.text}
+                        {t(`formField.employerOffer.title.text`)}
                     </h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-neutral-500 dark:text-neutral-300">
-                        {fields.subtitle.text}
+                        {t(`formField.employerOffer.subtitle.text`)}
                     </p>
                 </div>
                 <div className="mt-6 border-t border-neutral-200 dark:border-darkgray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkgray">
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.jobTitle.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.jobTitle.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.title}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.location.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.location.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.location}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.program.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.program.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{getProgrammeName()}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.salary.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.salary.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">${internshipOffer?.salaryByHour}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 dark:text-white">{fields.description.text}</dt>
+                            <dt className="text-sm font-medium leading-6 dark:text-white">
+                                {t(`formField.employerOffer.description.text`)}
+                            </dt>
                             <dd className="mt-1 text-sm leading-6 text-neutral-500 dark:text-neutral-300 sm:col-span-2 sm:mt-0">{internshipOffer?.description}</dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 dark:text-white">
-                                {fields.attachments.text}
+                                {t(`formField.employerOffer.attachments.text`)}
                             </dt>
                             <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                                 <ul role="list" className="divide-y divide-neutral-100 dark:divide-darkergray rounded-md border border-neutral-200 dark:border-darkgray">
@@ -161,7 +172,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                                     setIsModalOpen(true)
                                                 }}
                                             >
-                                                {fields.view.text}
+                                                {t(`formField.employerOffer.view.text`)}
                                             </button>
                                             <button
                                                 type="button"
@@ -170,7 +181,7 @@ const EmployerOfferDetails: React.FC<any> = () => {
                                                     downloadURI( pdf, internshipOffer?.file?.fileName!)
                                                 }}
                                             >
-                                                {fields.download.text}
+                                                {t(`formField.employerOffer.download.text`)}
                                             </button>
                                         </div>
                                     </li>

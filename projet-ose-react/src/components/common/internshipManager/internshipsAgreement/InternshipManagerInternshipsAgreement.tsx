@@ -7,7 +7,7 @@ import {saveEmployerOpinion} from "../../../../api/StageAPI";
 
 export default function InternshipManagerInternshipsAgreement(props: any) {
 
-    const {i18n} = useTranslation();
+    const {i18n,t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.InternshipsAgreementPage.internshipsAgreement");
 
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                             onClick={() => handleSortClick("offer.title")}
                         >
-                            {fields.title}
+                            {t("formField.InternshipsAgreementPage.internshipsAgreement.title")}
                             <div
                                 className={props.sortField === "title" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -52,7 +52,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             className="px-6 py-3 text-left text-xs font-medium max-md:hidden text-white uppercase tracking-wider"
                             onClick={() => handleSortClick("employeur.entreprise")}
                         >
-                            {fields.enterprise}
+                            {t("formField.InternshipsAgreementPage.internshipsAgreement.enterprise")}
                             <div
                                 className={props.sortField === "employeur.entreprise" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -65,7 +65,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden "
                             onClick={() => handleSortClick("student.nom")}
                         >
-                            {fields.student}
+                            {t("formField.InternshipsAgreementPage.internshipsAgreement.student")}
                             <div
                                 className={props.sortField === "student.nom" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -78,7 +78,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                             onClick={() => handleSortClick("state")}
                         >
-                            {fields.statut}
+                            {t("formField.InternshipsAgreementPage.internshipsAgreement.statut")}
                             <div
                                 className={props.sortField === "stateEmployeur" ? "visible" : "hidden"}>
                                 <FontAwesomeIcon
@@ -95,7 +95,7 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                     {props.offers.length === 0 && (
                         <tr>
                             <td colSpan={5} className="text-center bg-red text-white">
-                                {fields.empty}
+                                {t("formField.InternshipsAgreementPage.internshipsAgreement.empty")}
                             </td>
                         </tr>
                     )}
@@ -125,10 +125,10 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                                 : "px-2 xxxs:text-xs sm:text-sm inline-flex leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite ")}
                                 >
                                     {offer.stateEmployeur == "DECLINED" || offer.stateStudent == "DECLINED" ?
-                                        fields.status.declined
+                                        t("formField.InternshipsAgreementPage.internshipsAgreement.status.declined")
                                         : offer.stateEmployeur == "PENDING" || offer.stateStudent == "PENDING" ?
-                                            fields.status.pending
-                                            : fields.status.accepted
+                                            t("formField.InternshipsAgreementPage.internshipsAgreement.status.pending")
+                                            : t("formField.InternshipsAgreementPage.internshipsAgreement.status.accepted")
                                     }
                                 </span>
                             </td>
@@ -137,16 +137,21 @@ export default function InternshipManagerInternshipsAgreement(props: any) {
                                     offer.stateEmployeur == "ACCEPTED" && offer.stateStudent == "ACCEPTED" ?
                                         <div role="cell"
                                             className="flex space-x-2 items-center md:w-10 w-6 px-2 text-center whitespace-nowrap  font-medium hover:cursor-pointer">
-                                            <p>{fields.view.text}</p>
+                                            <p>
+                                                {t("formField.InternshipsAgreementPage.internshipsAgreement.view.text")}
+                                            </p>
                                             <FontAwesomeIcon icon={faEye}
+                                                             aria-label={"nav-to-details"}
                                                              className="text-indigo-600 hover:text-indigo-900 dark:text-orange"
                                                              onClick={() => props.handleOfferClick(offer.contractId!)}/>
                                         </div> : (offer.stateEmployeur == "DECLINED") ?
                                             <div className="px-2 text-start font-medium ">
-                                                <p>{fields.sign.employer}</p>
+                                                <p>{t("formField.InternshipsAgreementPage.internshipsAgreement.sign.employer")}</p>
                                             </div> : ( offer.stateStudent == "DECLINED") ?
                                                 <div className="px-2  text-start  font-medium ">
-                                                    <p>{fields.sign.student}</p>
+                                                    <p>
+                                                        {t("formField.InternshipsAgreementPage.internshipsAgreement.sign.student")}
+                                                    </p>
                                                 </div> :
                                                 <></>
 

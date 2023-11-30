@@ -90,7 +90,7 @@ function StudentInternship() {
 
 
     const applyOffer = (offer: any, student: any, cv: any) => {
-        if (cv == "") {
+        if (cv == "" || cv == null) {
             toast.error(t("formField.EtudiantStage.toast.ErrorNoCv"))
         } else {
             saveStudentInternshipOffer(offer, student, cv).then(
@@ -143,7 +143,9 @@ function StudentInternship() {
             <div >
                 <div className="max-md:mt-16">
                     <div className="overflow-x-hidden xxxs:rounded-lg">
-                        <h1 className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
+                        <h1
+                            aria-label={"component-title"}
+                            className="mt-7 text-start xxxs:text-2xl sm:text-3xl font-bold leading-9 tracking-tight text-black dark:text-white">
                             {t("formField.EtudiantStage.titre.text")}
                         </h1>
                         {

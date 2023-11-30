@@ -33,10 +33,10 @@ i18n
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application: application.en,
-                        employerOffer,
+                        application:application.en,
+                        employerOffer:employerOffer.en,
                         studentOffer:studentOffer.en,
-                        contractPage,
+                        contractPage:contractPage.en,
                         header,
                         InternshipsAgreementPage: {
                             header:{
@@ -815,17 +815,18 @@ i18n
                         sign : "Sign",
                         cursor : "Cursor"
                     }
+
                 },
             },
             fr: {
                 translation: {
                     formField: {
                         internshipAgreement,
-                        application : application.fr,
-                        employerOffer,
+                        application:application.fr,
+                        employerOffer:employerOffer.fr,
                         studentOffer:studentOffer.fr,
                         header,
-                        contractPage,
+                        contractPage:contractPage.fr,
                         InternshipsAgreementPage: {
                             header:{
                                 totalInternshipsAgreement: "Total",

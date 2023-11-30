@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {useAuth} from "../../../authentication/AuthContext";
 
 export default function SidebarEmployeurHome(props: any) {
-    const {i18n} = useTranslation();
+    const {i18n,t} = useTranslation();
     const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEmployeur");
     const option = window.location.pathname.split("/").pop();
     const { userRole, logoutUser } = useAuth();
@@ -33,26 +33,30 @@ export default function SidebarEmployeurHome(props: any) {
                                 <div className={option === "offers" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
+                                    aria-label={"nav-to-offers"}
                                     to={"/" + userRole +"/home/offers"}
                                     className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "offers" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.offre.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">{t("formField.Header.sidebarEmployeur.offre.text")}</p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
                                 <div className={option === "newOffer" ? "w-2 bg-blue dark:bg-orange rounded-lg": "hidden"}>
                                 </div>
                                 <NavLink
+                                    aria-label={"nav-to-newOffer"}
                                     to={"/" + userRole +"/home/newOffer"}
                                     className={"flex items-center p-2 space-x-3 rounded-md w-full" + (option === "newOffer" ? "" : " hover:bg-blue group dark:hover:bg-orange")}
                                     state={props.user}
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faPencil} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.newOffre.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEmployeur.candidature.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -65,7 +69,9 @@ export default function SidebarEmployeurHome(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.interview.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEmployeur.contract.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -78,7 +84,9 @@ export default function SidebarEmployeurHome(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.stage.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEmployeur.fields.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -91,7 +99,9 @@ export default function SidebarEmployeurHome(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.internshipagreement.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEmployeur.newOffre.text")}
+                                    </p>
                                 </NavLink>
                             </li>
 

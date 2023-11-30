@@ -31,7 +31,6 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-//TODO slighthly more coverage
 describe('SidebarEtudiant Component', () => {
     beforeEach(() => {
         (useLocation as jest.Mock).mockImplementation(() => {

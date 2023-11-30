@@ -1,6 +1,6 @@
 // Mock the "api" module
 import api from "../../api/ConfigAPI";
-jest.mock("./ConfigAPI", () => {
+jest.mock("../../api/ConfigAPI", () => {
     return {
         get: jest.fn(),
     };
