@@ -4,10 +4,12 @@ import React, {useState} from "react";
 import NotificationLinkMap from "../../../../model/NotificationLinkMap";
 import {useNavigate} from "react-router-dom";
 import {readNotification} from "../../../../api/NotificationAPI";
+import {useForceUpdate} from "framer-motion";
 
 
 type MessageBoxProps = {
-    messages: Message[]
+    messages: Message[],
+    messagesSetter: any
 }
 
 type UniqueUnreadMessage = {
@@ -31,16 +33,21 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
     function handleUniqueNotificationClick(message: UniqueUnreadMessage) {
         let link = NotificationLinkMap.array[message.messageKey];
 
-        message.ids.forEach(i => readNotification(i))
-        let messagesToPush = unreadMessages.filter(unreadMessage => unreadMessage.id in message.ids);
-        messagesToPush.forEach(unreadMessage => unreadMessage.read = true);
-        readMessages = [...messagesToPush, ...readMessages];
+        unreadMessages
+            .filter(unreadMessage => message.ids
+                .find(value => value == unreadMessage.id))
+            .forEach(message => {
+                message.read = true;
+                readNotification(message.id);
+            });
 
+        props.messagesSetter(props.messages);
         navigate(link);
     }
 
     unreadMessages.forEach((message) => {
         let uniqueMessageIndex = uniqueUnreadMessage.findIndex((uniqueMessage) => uniqueMessage.messageKey == message.message)
+
         if (uniqueMessageIndex == -1) {
             uniqueUnreadMessage.push({
                 ids: [message.id],
@@ -57,7 +64,7 @@ const MessageBox: React.FC<MessageBoxProps> = (props) => {
                     ? <>
                         {
                             uniqueUnreadMessage.map(message =>
-                                <a
+                                <a key={message.messageKey}
                                     className="block text-ellipsis whitespace-nowrap overflow-hidden px-4 py-2 w-full border-b dark:border-b-gray last:border-b-0"
                                     onClick={_ => handleUniqueNotificationClick(message)}>
                                     {t(message.messageKey)} ({message.ids.length})
