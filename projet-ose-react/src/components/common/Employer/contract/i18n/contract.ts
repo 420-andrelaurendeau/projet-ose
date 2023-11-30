@@ -37,7 +37,7 @@ const contractPage = {
             },
             ACCEPTED: {
                 name: 'APPROVED',
-                text: 'Approved'
+                text: 'Accepted'
             },
             DECLINED: {
                 name: 'DECLINED',
