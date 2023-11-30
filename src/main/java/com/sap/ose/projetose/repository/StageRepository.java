@@ -20,6 +20,9 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
     @Query("SELECT i FROM Stage i WHERE i.stateStudent = 1 AND i.student.id = ?1")
     Optional<List<Stage>> findAllStudentPending(long studentId);
 
+    @Query("SELECT i FROM Stage i WHERE i.student.id = :id AND (:session IS NULL OR :session = '' OR i.offer.session = :session)")
+    Page<Stage> findAllByStudentPendingPage(@Param("id") long id, @Param("session") String session,Pageable pageable);
+
     @Query("SELECT i FROM Stage i WHERE i.id = ?1")
     Optional<Stage> findById(long id);
 

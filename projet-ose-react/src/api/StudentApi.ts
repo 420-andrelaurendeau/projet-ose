@@ -71,12 +71,17 @@ export const saveStageStudent = async (stage : any)=>{
     }
 }
 
-export const fetchStagePending = async (studentId: number): Promise<Stage[]> => {
+export const fetchStagePending = async (studentId: number, page: number, size: number, session: string): Promise<Stage[]> => {
     try{
-        const res = await api.get(`stage/pending/`+studentId)
-        console.log("Im here")
-        console.log(res)
-        return res.data.map((item: any) => ({
+        const params = {
+            page: page,
+            size: size,
+            session: session
+        }
+        const res = await api.get(`stage/pending/`+studentId, {
+            params: params
+        })
+        return res.data.content.map((item: any) => ({
             id: item.id,
             student_id: item.student_id,
             offer: item.offer,

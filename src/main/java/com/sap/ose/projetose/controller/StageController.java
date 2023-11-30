@@ -1,6 +1,8 @@
 package com.sap.ose.projetose.controller;
 
-import com.sap.ose.projetose.dto.*;
+import com.sap.ose.projetose.dto.InternshipAgreementDto;
+import com.sap.ose.projetose.dto.OpinionDto;
+import com.sap.ose.projetose.dto.StageDto;
 import com.sap.ose.projetose.service.StageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,10 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,9 +39,12 @@ public class StageController {
 
     @GetMapping("/pending/{studentId}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
-    public ResponseEntity<List<StageDto>> getStagePendingStudent(@PathVariable long studentId) {
+    public ResponseEntity<Page<StageDto>> getStagePendingStudent(@PathVariable long studentId,
+                                                                 @RequestParam(required = false, defaultValue = "0") int page,
+                                                                 @RequestParam(required = false, defaultValue = "10") int size,
+                                                                 @RequestParam(required = false) String session) {
         logger.info("Stage Pending request received");
-        return Optional.of(stageService.getStageStudentPending(studentId)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+        return Optional.of(stageService.getStageStudentPending(studentId, page, size, session)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
 
@@ -82,7 +85,7 @@ public class StageController {
     ) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
-        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfEmployeur(page, size, sort, state, id,session);
+        Page<InternshipAgreementDto> internOfferDtos = stageService.getSortedByPageOfEmployeur(page, size, sort, state, id, session);
 
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
@@ -106,7 +109,6 @@ public class StageController {
         System.out.println(internOfferDtos.get().collect(Collectors.toList()));
         return new ResponseEntity<>(internOfferDtos, HttpStatus.OK);
     }
-
 
 
     @PreAuthorize("hasAuthority('internshipmanager')")
@@ -142,7 +144,7 @@ public class StageController {
 
     @PostMapping("/saveEmployerOpinion")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('employer')")
-    public ResponseEntity<StageDto> saveEmployerOpinion(@RequestBody OpinionDto opinion){
+    public ResponseEntity<StageDto> saveEmployerOpinion(@RequestBody OpinionDto opinion) {
         StageDto updatedStage = stageService.saveEmployerOpinion(opinion.getStageId(), opinion.getOpinion());
         return ResponseEntity.ok(updatedStage);
 
