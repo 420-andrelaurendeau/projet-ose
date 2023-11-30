@@ -40,7 +40,9 @@ export default function SidebarEmployeurHome(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faFileLines} className="group-hover:text-white dark:text-white" size="lg"/>
-                                    <p className="text-black group-hover:text-white dark:text-white">{t("formField.Header.sidebarEmployeur.offre.text")}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEmployeur.offre.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -55,7 +57,7 @@ export default function SidebarEmployeurHome(props: any) {
                                 >
                                     <FontAwesomeIcon icon={faPencil} className="group-hover:text-white dark:text-white" size="lg" />
                                     <p className="text-black group-hover:text-white dark:text-white">
-                                        {t("formField.Header.sidebarEmployeur.candidature.text")}
+                                        {t("formField.Header.sidebarEmployeur.newOffre.text")}
                                     </p>
                                 </NavLink>
                             </li>
@@ -70,7 +72,7 @@ export default function SidebarEmployeurHome(props: any) {
                                 >
                                     <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
                                     <p className="text-black group-hover:text-white dark:text-white">
-                                        {t("formField.Header.sidebarEmployeur.contract.text")}
+                                        {t("formField.Header.sidebarEmployeur.interview.text")}
                                     </p>
                                 </NavLink>
                             </li>
@@ -85,7 +87,7 @@ export default function SidebarEmployeurHome(props: any) {
                                 >
                                     <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
                                     <p className="text-black group-hover:text-white dark:text-white">
-                                        {t("formField.Header.sidebarEmployeur.fields.text")}
+                                        {t("formField.Header.sidebarEmployeur.stage.text")}
                                     </p>
                                 </NavLink>
                             </li>
@@ -100,7 +102,7 @@ export default function SidebarEmployeurHome(props: any) {
                                 >
                                     <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
                                     <p className="text-black group-hover:text-white dark:text-white">
-                                        {t("formField.Header.sidebarEmployeur.newOffre.text")}
+                                        {t("formField.Header.sidebarEmployeur.internshipagreement.text")}
                                     </p>
                                 </NavLink>
                             </li>
