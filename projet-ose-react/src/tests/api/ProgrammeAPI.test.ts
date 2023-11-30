@@ -44,7 +44,7 @@ describe('ProgrammeAPI', () => {
 
             const result = await getProgrammes();
 
-            expect(api.get).toHaveBeenCalledWith('/programmes');
+            expect(api.get).toHaveBeenCalledWith('programme/programmes');
             expect(result).toEqual(mockResponse.data);
         });
 
