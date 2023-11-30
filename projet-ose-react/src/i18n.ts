@@ -73,8 +73,8 @@ i18n
                                 pendingInternshipsAgreement: "Pending",
                             },
                             toast: {
-                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement",
-                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement",
+                                errorFetchInternshipsAgreement: "An error occurred while fetching the internships agreement.",
+                                errorFetchNumberStateOfInternshipsAgreement: "An error occurred while fetching the number of internships agreement.",
                             },
                             title: "Contracts of internship",
                             internshipsAgreement: {
@@ -121,27 +121,27 @@ i18n
                             },
                             title: "Internship offers",
                             toast:{
-                                errorFetchOffers:"An error occurred while fetching the offers",
-                                errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                                errorFetchOffers:"An error occurred while fetching the offers.",
+                                errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers.",
                             },
                             validation : {
-                                required : 'The comment is required',
-                                minLenght : 'The comment must contain at least 10 characters',
-                                maxLenght : 'The comment must contain at most 1000 characters',
-                                badCharactere : 'The comment contains unauthorized characters',
+                                required : 'A comment is required.',
+                                minLenght : 'The comment must contain at least 10 characters.',
+                                maxLenght : 'The comment must contain at most 1000 characters.',
+                                badCharactere : 'The comment contains unauthorized characters.',
                             }
                         },
                         InternshipOfferForm : {
                             titleForm: 'Iternship offer form',
                             title: {
                                 name : 'title',
-                                text : 'Title of the job ',
-                                placeholder : 'developper',
+                                text : 'Job Title ',
+                                placeholder : 'developer',
                                 validation : {
-                                    required : 'The title of the job is required',
-                                    minLenght : 'The title of the job must contain at least 5 characters',
-                                    maxLenght : 'The title of the job must contain at most 20 characters',
-                                    badCharactere : 'The title of the job contains unauthorized characters'
+                                    required : 'The job title is required.',
+                                    minLenght : 'The job title must contain at least 5 characters.',
+                                    maxLenght : 'The job title must contain at most 20 characters.',
+                                    badCharactere : 'The title of the job contains unauthorized characters.'
                                 }
                             },
                             description: {
@@ -149,10 +149,10 @@ i18n
                                 text : 'Description of the job',
                                 placeholder : 'a long description',
                                 validation : {
-                                    required : 'The description of the job is required',
-                                    minLenght : 'The description of the job must contain at least 10 characters',
-                                    maxLenght : 'The description of the job must contain at most 1000 characters',
-                                    badCharactere: "The description of the job contains unauthorized characters",
+                                    required : 'The description of the job is required.',
+                                    minLenght : 'The description of the job must contain at least 10 characters.',
+                                    maxLenght : 'The description of the job must contain at most 1000 characters.',
+                                    badCharactere: "The description of the job contains unauthorized characters.",
                                     scriptDetected: "The description of the job contains a script."
                                 }
                             },
@@ -161,10 +161,10 @@ i18n
                                 text : 'Location',
                                 placeholder : 'Montréal',
                                 validation : {
-                                    required : 'The location is required',
-                                    minLenght : 'The location must contain at least 5 characters',
-                                    maxLenght : 'The location must contain at most 20 characters',
-                                    badCharactere: "The location contains unauthorized characters"
+                                    required : 'The location is required.',
+                                    minLenght : 'The location must contain at least 5 characters.',
+                                    maxLenght : 'The location must contain at most 20 characters.',
+                                    badCharactere: "The location contains unauthorized characters."
                                 }
                             },
                             program: {
@@ -172,8 +172,8 @@ i18n
                                 text : 'Program',
                                 placeholder : 'Choose a program',
                                 validation : {
-                                    required : 'Please select a valid category',
-                                    badSelect: "The selected category is not valid"
+                                    required : 'Please select a valid program',
+                                    badSelect: "The selected program is not valid."
                                 }
                             },
                             salary: {
@@ -181,10 +181,10 @@ i18n
                                 text : 'Salary ($/h)',
                                 placeholder : '18',
                                 validation : {
-                                    required : 'The salary is required',
+                                    required : 'A salary is required.',
                                     numberRequired : 'Please enter a valid number',
-                                    minLenght: 'The salary must be greater than 0',
-                                    maxLenght: "The salary must be less than or equal to 100$ per hour"
+                                    minLenght: 'The salary must be greater than 0$ an hour.',
+                                    maxLenght: "The salary must be less than or equal to 100$ an hour."
                                 }
                             },
                             startDate: {
@@ -192,9 +192,9 @@ i18n
                                 text : 'Start date',
                                 placeholder : 'Start date',
                                 validation : {
-                                    required : 'The start date is required',
-                                    dateNotValid : 'Please enter a valid date',
-                                    dateToLow : "The start date must be today or a future date"
+                                    required : 'A start date is required.',
+                                    dateNotValid : 'Please enter a valid date.',
+                                    dateToLow : "The start date must be today or a future date."
                                 }
                             },
                             endDate: {
@@ -202,10 +202,10 @@ i18n
                                 text : 'End date',
                                 placeholder : 'End date',
                                 validation : {
-                                    required : 'The end date is required',
-                                    dateNotValid: 'Please enter a valid date',
-                                    dateToHigh: 'The end date must be today or a future date' ,
-                                    dateToLow: 'The end date must be after the start date'
+                                    required : 'An end date is required.',
+                                    dateNotValid: 'Please enter a valid date.',
+                                    dateToHigh: 'The end date must be today or a future date.' ,
+                                    dateToLow: 'The end date must be after the start date.'
                                 }
                             },
                             file: {
@@ -215,9 +215,9 @@ i18n
                                 span : 'browse',
                                 placeholder : 'Upload files',
                                 validation : {
-                                    required : 'Files are required',
-                                    toMuchFile: 'You can only upload 5 files maximum',
-                                    BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB',
+                                    required : 'Files are required to be uploaded.',
+                                    toMuchFile: 'You can only upload 5 files maximum.',
+                                    BigSizeFile: 'The file {{name}} exceeds the maximum size of 5 MB.',
                                 }
                             },
                             button: {
@@ -234,14 +234,14 @@ i18n
                         InscriptionFormEtudiant : {
                             title : {
                                 name : 'title',
-                                text : 'Registration for students',
+                                text : 'Student Registration',
                             },
                             firstName: {
                                 name : 'firstName',
                                 text : 'First name :',
                                 placeholder : 'Jack',
                                 validation : {
-                                    required : 'The first name is required',
+                                    required : 'The first name is required.',
                                 }
                             },
                             lastName : {
@@ -249,7 +249,7 @@ i18n
                                 text : 'Last name :',
                                 placeholder : 'Sparrow',
                                 validation : {
-                                    required : 'The last name is required',
+                                    required : 'The last name is required.',
                                 }
                             },
                             email : {
@@ -257,7 +257,7 @@ i18n
                                 text : 'Email :',
                                 placeholder : 'email@email.com',
                                 validation : {
-                                    required : 'The email is required',
+                                    required : 'The email is required.',
                                 }
                             },
                             password : {
@@ -265,7 +265,7 @@ i18n
                                 text : 'Password :',
                                 placeholder : 'abcas123',
                                 validation : {
-                                    required : 'The password is required',
+                                    required : 'The password is required.',
                                 }
                             },
                             phone: {
@@ -273,7 +273,7 @@ i18n
                                 text : 'Phone :',
                                 placeholder : '123-456-7890',
                                 validation : {
-                                    required : 'The phone is required',
+                                    required : 'The phone is required.',
                                     pattern: 'Example: 514-123-4567',
                                 }
                             },
@@ -282,7 +282,7 @@ i18n
                                 text : 'Matricule :',
                                 placeholder : '1236789',
                                 validation : {
-                                    required : 'The matricule is required',
+                                    required : 'The matricule is required.',
                                 }
                             },
                             programme: {
@@ -290,18 +290,18 @@ i18n
                                 text : 'Program :',
                                 placeholder : 'Choose a program',
                                 validation : {
-                                    required : 'The program is required',
+                                    required : 'The program is required.',
                                 }
                             },
                             submitButton: {
                                 text : 'Create account',
                             },
                             reussite: {
-                                name : 'Registration successful',
+                                name : 'Registration successful.',
                                 link: 'You can login here',
                             },
                             error : {
-                                name : 'Registration failed',
+                                name : 'Registration failed.',
                             }
                         },
                         ListItemCounterSelector: {
@@ -315,11 +315,11 @@ i18n
                                 refused: "Refused",
                             },
                             validation: {
-                                minLenght : 'The commentary must contain at least 10 characters',
-                                maxLenght : 'The commentary must contain at most 1000 characters',
-                                badCharactere: "The commentary contains unauthorized characters",
+                                minLenght : 'The commentary must contain at least 10 characters.',
+                                maxLenght : 'The commentary must contain at most 1000 characters.',
+                                badCharactere: "The commentary contains unauthorized characters.",
                                 scriptDetected: "The commentary contains a script.",
-                                required: 'The commentary is required',
+                                required: 'A commentary is required.',
                             }
                         },
                         InscriptionEmployeur:{
@@ -335,7 +335,7 @@ i18n
                             },
                             entreprise:{
                                 name:'nomEntreprise',
-                                text:'Entreprise Name :',
+                                text:'Enterprise Name :',
                                 placeholder:'Your entreprise name ..'
                             },
                             email:{
@@ -356,9 +356,9 @@ i18n
                             },
                             programme: {
                                 name: 'programme',
-                                text: 'Select one programme :',
+                                text: 'Select one program :',
                                 validation: {
-                                    required: 'An error occured, please try again'
+                                    required: 'An error occured. Please try again.'
                                 }
                             },
                             passWordShown: {
@@ -375,11 +375,11 @@ i18n
                             },
                             erreur: {
                                 name: 'erreur',
-                                text: "An error occured, while registering try again"
+                                text: "An error occured, while registering. Please try again."
                             },
                             titre: {
                                 name: 'titre',
-                                text: 'Registration employer'
+                                text: 'Employer Registration'
                             }
 
                         },
@@ -392,8 +392,8 @@ i18n
                             },
                             noOffers: {
                                 name: 'noOffers',
-                                text: 'No offers available',
-                                noAppliedOffers: "No applied offers"
+                                text: 'No offers available.',
+                                noAppliedOffers: "No applied offers."
                             },
                             titre: {
                                 name: 'titre',
@@ -436,19 +436,19 @@ i18n
                             },
                             empty: {
                                 name: 'empty',
-                                text: 'No internship available'
+                                text: 'No internship available.'
                             },
                             toast:{
-                                ErrorNoCv:"You must upload your CV and set it as default before applying for an internship",
-                                ErrorOfferApplication: "An error occurred while applying for the internship",
-                                SuccessOfferApplication: "The internship application has been submitted for",
+                                ErrorNoCv:"You must upload your CV and set it as default before applying for an internship.",
+                                ErrorOfferApplication: "An error occurred while applying for the internship.",
+                                SuccessOfferApplication: "The internship application has been submitted for.",
                             },
                             cv : "CV is loading please wait...",
                         },
                         Header: {
                             stage: {
                                 name: 'stage',
-                                text: 'Intership Offer',
+                                text: 'Internship Offer',
                             },
                             cvReview : {
                                 name: 'CV Review',
@@ -505,11 +505,11 @@ i18n
                                 },
                                 changeTheme: {
                                     name: 'changeTheme',
-                                    text: "Change theme"
+                                    text: "Change Theme"
                                 },
                                 changeLanguage: {
                                     name: 'changeLanguage',
-                                    text: "Change language"
+                                    text: "Change Language"
                                 },
                                 gsProfession: {
                                     name: 'gsProfession',
@@ -519,7 +519,7 @@ i18n
                             sidebarInternshipManager: {
                                 internshipagreement: {
                                     name: 'internshipagreement',
-                                    text: "Internship agreement"
+                                    text: "Internship Agreement"
                                 },
                                 offre: {
                                     name: 'offre',
@@ -664,8 +664,8 @@ i18n
                                 }
                             },
                             toast:{
-                                errorFetchOffers:"An error occurred while fetching the offers",
-                                errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
+                                errorFetchOffers:"An error has occurred while fetching the offers.",
+                                errorFetchNumberStateOfOffers:"An error has occurred while fetching the number of offers.",
                             }
                         },
                         profilMenu : {
@@ -714,12 +714,12 @@ i18n
                         }
                     },
                     GSOfferPage: {
-                        placeholder:"Please enter a comment",
+                        placeholder:"Please enter a comment.",
                         title: "Internship offer",
-                        errorFetchOffer: "An error occurred while fetching the offer",
-                        errorSaveOfferReview: "An error occurred while saving the offer review",
+                        errorFetchOffer: "An error occurred while fetching the offer.",
+                        errorSaveOfferReview: "An error occurred while saving the offer review.",
                         validiation:{
-                            required : 'The comment is required',
+                            required : 'The comment is required.',
                             minLenght : 'The comment must contain at least 10 characters',
                             maxLenght : 'The comment must contain at most 1000 characters',
                             scriptDetected: "The comment contains a script.",
@@ -822,8 +822,8 @@ i18n
                                     declined: "Declined",
                                 }
                             },
-                            empty: "No interview available",
-                            noStage: "No internship available",
+                            empty: "No interview available.",
+                            noStage: "No internship available.",
                         },
                         reschedule : "Reschedule",
                     },
@@ -836,18 +836,18 @@ i18n
                             download: "Download the CV",
                         },
                         toast: {
-                            acceptSuccess: "The CV has been accepted",
-                            acceptError: "An error occurred while accepting the CV",
-                            declineSuccess: "The CV has been declined",
-                            declineError: "An error occurred while declining the CV",
+                            acceptSuccess: "The CV has been accepted.",
+                            acceptError: "An error occurred while accepting the CV.",
+                            declineSuccess: "The CV has been declined.",
+                            declineError: "An error occurred while declining the CV.",
                         },
-                        noCv: "No CV to evaluate",
+                        noCv: "No CV to evaluate.",
                         view: "View CV",
                     },
                     Shared: {
                         FilterBySeason : {
                             name: 'FilterBySeason',
-                            text: 'Filter per season',
+                            text: 'Filter by season',
                         },
                         ReturnButton : {
                             name: 'ReturnButton',
