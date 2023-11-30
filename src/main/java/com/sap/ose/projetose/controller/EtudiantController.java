@@ -1,18 +1,14 @@
 package com.sap.ose.projetose.controller;
 
 import com.sap.ose.projetose.dto.EtudiantDto;
-import com.sap.ose.projetose.dto.EtudiantInscriptionDto;
 import com.sap.ose.projetose.dto.FileDtoAll;
 import com.sap.ose.projetose.dto.StudentAppliedOffersDto;
 import com.sap.ose.projetose.modeles.Etudiant;
+import com.sap.ose.projetose.modeles.File;
 import com.sap.ose.projetose.service.EtudiantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.sap.ose.projetose.modeles.File;
-import com.sap.ose.projetose.service.EtudiantService;
-
-
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +20,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class EtudiantController {
 
-    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
-
     private final EtudiantService etudiantService;
+    Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
     public EtudiantController(EtudiantService etudiantService) {
         this.etudiantService = etudiantService;
@@ -53,10 +48,24 @@ public class EtudiantController {
 
     @PostMapping("/addCv/{matricule}")
     @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
-    public ResponseEntity<EtudiantDto> addCv(@PathVariable String matricule, @RequestBody File cv){
-        logger.info("add cv to " + matricule );
+    public ResponseEntity<EtudiantDto> addCv(@PathVariable String matricule, @RequestBody File cv) {
+        logger.info("add cv to " + matricule);
         EtudiantDto etudiantDto = etudiantService.updateCVByMatricule(matricule, cv);
         return ResponseEntity.ok().body(etudiantDto);
+    }
+
+    @GetMapping("{id}/offersPageApplied")
+    @PreAuthorize("hasAuthority('internshipmanager') OR hasAuthority('student')")
+    public ResponseEntity<Page<StudentAppliedOffersDto>> getPageOffersApplied(
+            @PathVariable long id,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "id") String sortField,
+            @RequestParam(required = false, defaultValue = "desc") String sortDirection,
+            @RequestParam(required = false) String session) {
+
+
+        return ResponseEntity.ok().body(etudiantService.getPageOffersAppliedByEtudiant(id, page, size, sortField, sortDirection, session));
     }
 
     @GetMapping("{id}/offersApplied")

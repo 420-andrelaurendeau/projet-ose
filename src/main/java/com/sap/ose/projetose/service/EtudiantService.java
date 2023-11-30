@@ -9,10 +9,15 @@ import com.sap.ose.projetose.exception.ServiceException;
 import com.sap.ose.projetose.modeles.*;
 import com.sap.ose.projetose.repository.EtudiantRepository;
 import com.sap.ose.projetose.repository.FileEntityRepository;
+import com.sap.ose.projetose.repository.InternshipCandidatesRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,13 +32,19 @@ public class EtudiantService {
 
     private final ProgrammeService programmeService;
     private final NotificationService notificationService;
+
+    private final InternshipCandidatesRepository internshipCandidatesRepository;
+
+
+
     Logger logger = LoggerFactory.getLogger(ReactOseController.class);
 
-    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService, FileEntityRepository fileEntityRepository, NotificationService notificationService) {
+    public EtudiantService(EtudiantRepository etudiantRepository, ProgrammeService programmeService, FileEntityRepository fileEntityRepository, NotificationService notificationService, InternshipCandidatesRepository internshipCandidatesRepository) {
         this.etudiantRepository = etudiantRepository;
         this.programmeService = programmeService;
         this.fileEntityRepository = fileEntityRepository;
         this.notificationService = notificationService;
+        this.internshipCandidatesRepository = internshipCandidatesRepository;
     }
 
     @Transactional
@@ -107,31 +118,65 @@ public class EtudiantService {
     }
 
     @Transactional
+    public Page<StudentAppliedOffersDto> getPageOffersAppliedByEtudiant(long id, int page, int size, String sortField, String sortDirection, String session) {
+        try {
+
+            Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                    Sort.by(sortField).descending();
+
+            Pageable pageable = PageRequest.of(page, size, sort);
+            Page<InternshipCandidates> internshipCandidatesPage = internshipCandidatesRepository.findAllByStudentId(id, session, pageable);
+
+            return internshipCandidatesPage.map(internshipCandidates -> {
+                StudentAppliedOffersDto dto = new StudentAppliedOffersDto();
+                InternOfferDto offerDto = new InternOfferDto(internshipCandidates.getInternOffer());
+                offerDto.setInternshipCandidates(null);
+
+                List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(internshipCandidates.getId())
+                        .orElse(new ArrayList<>())
+                        .stream()
+                        .map(FileDto::new)
+                        .toList();
+                dto.setAppliedOffer(offerDto);
+                dto.setAppliedFiles(fileDtos);
+                return dto;
+            });
+
+
+        } catch (EtudiantNotFoundException e) {
+            logger.error("Etudiant non trouvé avec l'id" + id, e);
+            throw e;
+        } catch (DataAccessException e) {
+            logger.error("Erreur lors de la récupération des offres appliquées par l'étudiant avec l'Id :" + id, e);
+            throw new DatabaseException("Erreur lors de la récupération des offres appliquées par l'étudiant");
+        } catch (Exception e) {
+            logger.error("Erreur inconnue lors de la récupération des offres appliquées par l'étudiant avec l'id :" + id, e);
+            throw new ServiceException("Erreur lors de la récupération des offres appliquées par l'étudiant");
+        }
+    }
+
+    @Transactional
     public List<StudentAppliedOffersDto> getOffersAppliedByEtudiant(long id) {
         try {
+
             Etudiant etudiant = etudiantRepository.findById(id).orElseThrow(EtudiantNotFoundException::new);
-            List<InternshipCandidates> offersApplied = etudiant.getInternshipsCandidate();
+            List<InternshipCandidates> internshipCandidatesPage = etudiant.getInternshipsCandidate();
 
-            if (offersApplied == null)
-                return new ArrayList<>();
+            return internshipCandidatesPage.stream().map(internshipCandidates -> {
 
-            return offersApplied.stream().map(
-                    (offerApplied) -> {
-                        StudentAppliedOffersDto dto = new StudentAppliedOffersDto();
+                StudentAppliedOffersDto dto = new StudentAppliedOffersDto();
+                InternOfferDto offerDto = new InternOfferDto(internshipCandidates.getInternOffer());
+                offerDto.setInternshipCandidates(null);
 
-                        InternOfferDto offerDto = new InternOfferDto(offerApplied.getInternOffer());
-                        offerDto.setInternshipCandidates(null);
-
-                        List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(offerApplied.getId())
-                                .orElse(new ArrayList<>())
-                                .stream()
-                                .map(FileDto::new)
-                                .toList();
-
-                        dto.setAppliedOffer(offerDto);
-                        dto.setAppliedFiles(fileDtos);
-                        return dto;
-                    }).toList();
+                List<FileDto> fileDtos = fileEntityRepository.findAllByInternshipCandidates_IdIs(internshipCandidates.getId())
+                        .orElse(new ArrayList<>())
+                        .stream()
+                        .map(FileDto::new)
+                        .toList();
+                dto.setAppliedOffer(offerDto);
+                dto.setAppliedFiles(fileDtos);
+                return dto;
+            }).toList();
 
         } catch (EtudiantNotFoundException e) {
             logger.error("Etudiant non trouvé avec l'id" + id, e);

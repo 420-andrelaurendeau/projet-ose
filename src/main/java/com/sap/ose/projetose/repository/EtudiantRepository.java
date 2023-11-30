@@ -1,6 +1,7 @@
 package com.sap.ose.projetose.repository;
 
 import com.sap.ose.projetose.modeles.Etudiant;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,6 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
     @Query("SELECT e FROM Etudiant e WHERE e.programme.id = ?1")
     List<Etudiant> findAllEtudiantByProgram(long programId);
+
+
 }
