@@ -33,7 +33,6 @@ const getActualSeason = () => {
     }
 }
 export const EmployerInterviewPage = () => {
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "StudentInterview");
     const {t} = useTranslation();
     const [user, setUser] = useState<any>(null);
     const [interviews, setInterviews] = React.useState<Interview[]>([]);
@@ -46,7 +45,12 @@ export const EmployerInterviewPage = () => {
     //const [seasons,setSeasons] = useState([])
     //const [selectedOption, setSelectedOption] = useState(getActualSeason());
 
-    const { seasons, selectedOption, setSelectedOption, setSeasons } = useProps();
+    const {
+        seasons,
+        selectedOption,
+        setSelectedOption,
+        setSeasons
+    } = useProps();
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -152,7 +156,8 @@ export const EmployerInterviewPage = () => {
 
     const renderInterviews = (
         <main>
-            <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+            <div
+                className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                 <table className=" w-full divide-y divide-gray dark:divide-darkgray">
                     <thead className="bg-blue dark:bg-orange ">
                     <tr>
@@ -160,33 +165,34 @@ export const EmployerInterviewPage = () => {
                             scope="col"
                             className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
-                            {fields.table.title}
+                            {t("StudentInterview.table.title")}
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-md:hidden"
                         >
-                            {fields.table.location}
+                            {t("StudentInterview.table.location")}
                         </th>
                         <th
                             scope="col"
                             className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                         >
 
-                            {fields.table.date}
+                            {t("StudentInterview.table.date")}
                         </th>
                         <th
                             scope="col"
                             className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider max-sm:hidden"
                         >
 
-                            {fields.table.company}
+                            {t("StudentInterview.table.company")}
                         </th>
                         <th
                             scope="col"
                             className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                            {fields.table.status_text.text}
+                            {t("StudentInterview.table.status_text.text")}
                         </th>
+                        {/**TODO FAIR i18n **/}
                         <th
                             scope="col"
                             className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
@@ -194,9 +200,10 @@ export const EmployerInterviewPage = () => {
                         </th>
                     </tr>
                     </thead>
-                    <tbody className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
+                    <tbody
+                        className="bg-white text-black dark:text-white divide-y divide-gray dark:bg-dark dark:divide-darkgray">
                     {interviews.map((interview) => (
-                        <tr key={interview.id} >
+                        <tr key={interview.id}>
                             <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap
                                             min-w-full max-md:max-w-[10rem] max-w-[15rem]">
                                 <div className="flex items-center">
@@ -226,13 +233,13 @@ export const EmployerInterviewPage = () => {
                                                 "px-1 inline-flex text-xs leading-5 font-semibold justify-center rounded-full  bg-red text-white dark:text-offwhite"
                                                 : "px-1 inline-flex text-xs leading-5 font-semibold rounded-full justify-center bg-green text-white dark:text-offwhite"}
                                 >
-                                    {fields[interview.state].text}
+                                     {t(`StudentInterview.${interview.state}.text`)}
                                 </span>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm dark:text-offwhite">
                                 {interview.state === "DECLINED" && (
                                     <button onClick={() => handleReschdule(interview.id)}>
-                                        {fields.reschedule}
+                                        {t("StudentInterview.table.reschedule")}
                                     </button>
                                 )}
                             </td>
@@ -248,7 +255,9 @@ export const EmployerInterviewPage = () => {
     return (<div className="">
         <div className="flex flex-col items-start max-md:pt-24">
             <header className=" pb-4">
-                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">
+                    {t("StudentInterview.title.text")}
+                </h1>
             </header>
             <div className="w-full">
 

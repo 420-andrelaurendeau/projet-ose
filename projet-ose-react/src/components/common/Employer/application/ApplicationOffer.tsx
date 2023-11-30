@@ -32,9 +32,7 @@ const ApplicationOffer: React.FC<any> = () => {
     const [date, setDate] = useState<Date>(new Date());
     const [studentId, setStudentId] = useState<number>(0);
     const [internshipOffer, setinternshipOffer] = useState<any>();
-    const {i18n} = useTranslation();
-    const {t} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.application");
+    const {i18n,t} = useTranslation();
     const fetchedOfferRef = useRef(false);
     const fetchedCandidateRef = useRef(false);
     const updateCandidateRef = useRef(false);
@@ -52,7 +50,7 @@ const ApplicationOffer: React.FC<any> = () => {
             return response;
 
         } catch (error) {
-            toast.error(fields.errorFetchOffer.text);
+            toast.error(t("formField.application.errorFetchOffer.text"));
         } finally {
             fetchedOfferRef.current = false;
         }
@@ -64,8 +62,8 @@ const ApplicationOffer: React.FC<any> = () => {
             const response = await getInterOfferCandidates(ids.join(","));
             setInterOfferCandidates(response);
             return response;
-        }catch (error){
-            toast.error(fields.errorFetchCandidate.text);
+        } catch (error) {
+            toast.error(t("formField.application.errorFetchCandidate.text"))
         } finally {
             fetchedCandidateRef.current = false;
         }
@@ -89,8 +87,8 @@ const ApplicationOffer: React.FC<any> = () => {
                         })
                         candidature.interviewList = interviewList
                     })
-                } ).catch(e => {
-                    toast.error(fields.errorFetchCandidate.text);
+                }).catch(e => {
+                    toast.error(t("formField.application.errorFetchCandidate.text"));
                     console.log(e)
                 }
             )
@@ -106,7 +104,6 @@ const ApplicationOffer: React.FC<any> = () => {
             navigate("/employer/home/offers/"+id+"/application")
         }
     }, [!updateCandidateRef.current,update]);
-
 
 
     function handleAccept(id: string) {
@@ -201,7 +198,9 @@ const ApplicationOffer: React.FC<any> = () => {
             <div className="flex justify-center">
                 <div className="w-full px-12 bg-white dark:bg-dark rounded-xl shadow border border-gray dark:border-darkgray">
                 <div className=" py-8 flex max-sm:justify-center">
-                    <h1 className="text-3xl font-bold text-black dark:text-white">{fields.title.text}</h1>
+                    <h1 className="text-3xl font-bold text-black dark:text-white">
+                        {t("formField.application.title.text")}
+                    </h1>
                 </div>
                 <div className="flex max-md:justify-center border-t border-neutral-200 dark:border-darkergray">
                     <dl className="divide-y divide-neutral-200 dark:divide-darkergray">
@@ -212,7 +211,8 @@ const ApplicationOffer: React.FC<any> = () => {
                                         <div className="space-y-3">
                                             <div>
                                                 <p className="font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.wordName.text}
+                                                    {t("formField.application.wordName.text")}
+
                                                 </p>
                                             </div>
                                             <div className="flex space-x-4 h-10 items-center">
@@ -229,7 +229,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                {fields.contactInfo.text}
+                                                {t("formField.application.contactInfo.text")}
                                             </p>
                                             <div className=" font-medium text-black dark:text-white">
                                                 <p>{candidate.etudiant.phone}</p>
@@ -242,7 +242,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                         <div className="space-y-8 ">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.interview.text}
+                                                    {t("formField.application.interview.text")}
                                                 </p>
                                                 <div className="flex font-medium h-10 items-center text-black dark:text-white">
                                                     {
@@ -254,18 +254,17 @@ const ApplicationOffer: React.FC<any> = () => {
                                                                 year: 'numeric',
 
                                                             })}</p>:
-                                                            <p>{fields.noInterview.text}</p>
+                                                            <p>{t("formField.application.noInterview.text")}</p>
                                                     }
                                                 </div>
                                             </div>
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.status.text}
+                                                    {t("formField.application.status.text")}
                                                 </p>
                                                 <div className="font-medium text-black dark:text-white">
                                                     <span className={"px-6 py-1 leading-5 font-semibold rounded-full w-3/4 text-white dark:text-offwhite" + (candidate.state == "PENDING" ? " bg-orange" : candidate.state === "DECLINED" ? " bg-red" : " bg-green")}>
-
-                                                        {fields[candidate.state].text}
+                                                        {t(`formField.application.${candidate.state}.text`)}
                                                     </span>
                                                 </div>
                                             </div>
@@ -276,7 +275,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                         <div className="space-y-8">
                                             <div className="space-y-3">
                                                 <p className=" font-medium text-neutral-500 dark:text-neutral-300">
-                                                    {fields.actions.text}
+                                                    {t("formField.application.actions.text")}
                                                 </p>
                                                 <div className="flex space-x-4 font-medium h-10 items-center text-black dark:text-white">
                                                     <button
@@ -286,7 +285,7 @@ const ApplicationOffer: React.FC<any> = () => {
                                                         disabled={idApplication == candidate.id}
                                                     >
                                                         <FontAwesomeIcon icon={faMagnifyingGlass} className="mr-2" size="lg"/>
-                                                        {fields.review.text}
+                                                        {t("formField.application.review.text")}
                                                     </button>
                                                 </div>
                                             </div>

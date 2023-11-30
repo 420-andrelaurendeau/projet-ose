@@ -94,10 +94,31 @@ const InternshipOfferForm: React.FC<any> = () => {
             reader.onloadend = () => {
                 const base64String = reader.result?.toString().split(',')[1];
 
+                const updatedFile = {
+                    fileName: file.name,
+                    content: base64String || "",
+                    isAccepted: "PENDING",
+                    uploaderId: user.id,
+                }
+
                 setFormState((prevState: any) => ({
                     ...prevState, file: {
                         fileName: file.name, content: base64String || ""
                     }
+                }));
+
+                const allowedExtensions = [".pdf"];
+                let errorMsg = "";
+                console.log("ValidateFile : ", file)
+                const ext = "." + updatedFile.fileName.split(".").pop();
+
+                console.log(!allowedExtensions.includes(ext.toLowerCase()))
+                if (!allowedExtensions.includes(ext.toLowerCase())) {
+                    errorMsg = t('formField.InternshipOfferForm.file.validation.BadTypeFile', {name: updatedFile.fileName});
+                }
+
+                setErrors(prevErrors => ({
+                    ...prevErrors, ["file"]: errorMsg
                 }));
             };
 

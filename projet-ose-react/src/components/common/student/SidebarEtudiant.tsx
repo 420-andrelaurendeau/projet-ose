@@ -7,8 +7,8 @@ import {useAuth} from "../../../authentication/AuthContext";
 
 export default function SidebarEtudiant(props: any) {
     const {i18n,t } = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEtudiant");
-
+    // const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.Header.sidebarEtudiant");
+    //formField.Header.sidebarEtudiant
     const option = window.location.pathname.split("/").pop();
     const { userRole, logoutUser } = useAuth();
 
@@ -66,7 +66,9 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faUsers} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.cv.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEtudiant.cv.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -79,7 +81,9 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSignature} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.interview.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEtudiant.interview.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -92,7 +96,9 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.stage.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEtudiant.stage.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                             <li className="rounded-sm flex space-x-2">
@@ -105,7 +111,9 @@ export default function SidebarEtudiant(props: any) {
                                     onClick={() => props.setIsOpen(false)}
                                 >
                                     <FontAwesomeIcon icon={faSpinner} className="group-hover:text-white dark:text-white" size="lg" />
-                                    <p className="text-black group-hover:text-white dark:text-white">{fields.contract.text}</p>
+                                    <p className="text-black group-hover:text-white dark:text-white">
+                                        {t("formField.Header.sidebarEtudiant.contract.text")}
+                                    </p>
                                 </NavLink>
                             </li>
                         </ul>

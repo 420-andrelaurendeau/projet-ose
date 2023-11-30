@@ -20,10 +20,26 @@ import {saveEmployerOpinion} from "../../../api/StageAPI";
 export default function EmployerStagePage() {
 
     const navigate = useNavigate();
-    const {i18n} = useTranslation();
-    const {t} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0, 2), "translation", "formField.contractPage." + i18n.language.slice(0, 2));
-    const {stageAgreement,seasons,selectedOption,handleOptionChange, pageAgreement, totalPageAgreement, onPageChangeAgreement, numberElementAgreementByPage, handleChangeNumberElementAgreement, sortAgreementDirection, sortAgreementField, setAgreementSortField, setAgreementSortDirection, setOnChangeAgreement,setAgreementIsUpdate, isLoaded} = useProps();
+    const {i18n,t} = useTranslation();
+    //formField.contractPage
+    const {
+        stageAgreement,
+        seasons,
+        selectedOption,
+        handleOptionChange,
+        pageAgreement,
+        totalPageAgreement,
+        onPageChangeAgreement,
+        numberElementAgreementByPage,
+        handleChangeNumberElementAgreement,
+        sortAgreementDirection,
+        sortAgreementField,
+        setAgreementSortField,
+        setAgreementSortDirection,
+        setOnChangeAgreement,
+        setAgreementIsUpdate,
+        isLoaded
+    } = useProps();
     const [file, setFile] = useState<any>({
         content: "",
     });
@@ -52,7 +68,9 @@ export default function EmployerStagePage() {
         <div className="max-md:pt-24 pb-14">
             <div>
                 <header className=" pb-4">
-                    <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                    <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">
+                        {t("formField.contractPage.title.text")}
+                    </h1>
                 </header>
                 <main>
                 <div className="max-md:pt-2 w-full">
@@ -75,7 +93,8 @@ export default function EmployerStagePage() {
                             />
                         </div>
                     </div>
-                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                    <div
+                        className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
                             <thead className="bg-blue dark:bg-orange ">
                             <tr>
@@ -84,7 +103,7 @@ export default function EmployerStagePage() {
                                     className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
-                                    {fields.AgreementTable.title.text}
+                                    {t("formField.contractPage.AgreementTable.title.text")}
                                     <div
                                         className={sortAgreementField === "title" ? "visible" : "hidden"}>
                                         <FontAwesomeIcon
@@ -98,7 +117,7 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.enterprise.text}
+                                        {t("formField.contractPage.AgreementTable.enterprise.text")}
                                         <div
                                             className={sortAgreementField === "startDate" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -113,7 +132,8 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.student.text}
+
+                                        {t("formField.contractPage.AgreementTable.student.text")}
                                         <div
                                             className={sortAgreementField === "salaryByHour" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -128,7 +148,7 @@ export default function EmployerStagePage() {
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
-                                        {fields.AgreementTable.status.text}
+                                        {t("formField.contractPage.AgreementTable.status.text")}
                                         <div
                                             className={sortAgreementField === "state" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -147,7 +167,7 @@ export default function EmployerStagePage() {
                                 <tr>
                                     <td className="text-center bg-red text-white"
                                         colSpan={5}>
-                                        {fields.empty}
+                                        {t("formField.contractPage.empty")}
                                     </td>
                                 </tr>
                             )}
@@ -176,13 +196,11 @@ export default function EmployerStagePage() {
                                                         "px-2 inline-flex text-xs leading-5 justify-center font-semibold rounded-full bg-orange text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-fulljustify-center rounded-full bg-green text-white dark:text-offwhite"}
                                         >
-                                            {fields.AgreementTable[
-                                                stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
-                                                    "DECLINED"
-                                                    : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
-                                                        "PENDING"
-                                                        : "ACCEPTED"
-                                                ].text}
+                                            {t(`formField.contractPage.AgreementTable.${stage.stateEmployeur == "DECLINED" || stage.stateStudent == "DECLINED" ?
+                                                "DECLINED"
+                                                : (stage.stateEmployeur == "PENDING" || stage.stateStudent == "PENDING") ?
+                                                    "PENDING"
+                                                    : "ACCEPTED"}.text`)}
                                         </span>
                                     </td>
                                     <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -196,6 +214,7 @@ export default function EmployerStagePage() {
                                                     <div className="flex ">
                                                         <div className="flex justify-between xxxs:gap-2 sm:gap-4">
                                                             <button
+                                                                aria-label={"accept-button"}
                                                                 type="button"
                                                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md bg-green hover:bg-emerald-900 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                                                 onClick={() => saveEmployerOpinion(stage.id, "ACCEPTED").then(r => {
@@ -211,6 +230,7 @@ export default function EmployerStagePage() {
                                                                 accept
                                                             </button>
                                                             <button
+                                                                aria-label={"refuse-button"}
                                                                 type="button"
                                                                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red hover:bg-rose-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
                                                                 onClick={() => saveEmployerOpinion(stage.id, "DECLINED").then(r => {
@@ -235,7 +255,7 @@ export default function EmployerStagePage() {
                                                         </div>
 
                                                     :stage.stateStudent == "DECLINED"?
-
+                                                            //todo ajoute i18n
                                                         <div className="flex dark:text-white">
                                                             L'étudiant a refuser
                                                         </div>

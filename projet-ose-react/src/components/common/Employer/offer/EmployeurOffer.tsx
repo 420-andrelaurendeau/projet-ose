@@ -20,8 +20,7 @@ import {
 export default function EmployeurOffer() {
     const {i18n} = useTranslation();
     const {t} = useTranslation();
-    const fields = i18n.getResource(i18n.language.slice(0,2),"translation","formField.homeEmployeur");
-    const {offers,setOffers,handleOptionChange, selectedOption, seasons, user, page , totalPages,onPageChange, setSortField, setSortDirection,  sortField, sortDirection, numberElementByPage,handleChangeNumberElement} = useProps();
+    const {offers, setOffers, handleOptionChange, selectedOption, seasons, user, page, totalPages, onPageChange, setSortField, setSortDirection, sortField, sortDirection, numberElementByPage, handleChangeNumberElement} = useProps();
     const navigate = useNavigate();
 
     const handleSortClick = (newSortField: any) => {
@@ -45,13 +44,16 @@ export default function EmployeurOffer() {
     }
 
     useEffect(() => {
-        console.log("saison:"+seasons)
+        console.log("saison:" + seasons)
     }, [seasons]);
 
     return (
         <div className="flex flex-col justify-center max-md:pt-24 pb-14">
             <header className=" pb-4">
-                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">{fields.title.text}</h1>
+                <h1 className="xxxs:text-2xl sm:text-3xl font-bold text-gray-900 dark:text-offwhite">
+                    {t("formField.homeEmployeur.title.text")}
+
+                </h1>
             </header>
             <div className="">
                 <div className="max-md:pt-2 min-w-full">
@@ -59,11 +61,11 @@ export default function EmployeurOffer() {
                         <div>
                             <label htmlFor="options" className="text-bold dark:text-white">
                                 {
-                                    fields.filter.title
+                                    t("formField.homeEmployeur.filter.title")
                                 }
                             </label>
                             <select className="rounded border border-black dark:border-white dark:bg-dark dark:text-white" id="options" value={selectedOption} onChange={handleOptionChange}>
-                                <option value="">{fields.filter.All}</option>
+                                <option value="">{t("formField.homeEmployeur.filter.All")}</option>
                                 {seasons.map((season: string, index: number) => (
                                     <option key={index} value={season}>
                                         {t("formField.homeEmployeur.filter."+ season.slice(0, -4)) + " " + season.slice(-4)}
@@ -78,7 +80,8 @@ export default function EmployeurOffer() {
                             />
                         </div>
                     </div>
-                    <div className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
+                    <div
+                        className="overflow-x-hidden hover:overflow-auto border border-gray dark:border-darkgray xxxs:rounded-lg">
                         <table className="w-full divide-y divide-gray dark:divide-darkgray">
                             <thead className="bg-blue dark:bg-orange ">
                             <tr>
@@ -87,7 +90,7 @@ export default function EmployeurOffer() {
                                     className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider flex "
                                     onClick={() => handleSortClick("title")}
                                 >
-                                    {fields.offerTable.titre.text}
+                                    {t("formField.homeEmployeur.offerTable.titre.text")}
                                     <div
                                         className={sortField === "title" ? "visible" : "hidden"}>
                                         <FontAwesomeIcon
@@ -101,7 +104,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("startDate")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.startDate.text}
+                                        {t("formField.homeEmployeur.offerTable.startDate.text")}
                                         <div
                                             className={sortField === "startDate" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -116,7 +119,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("salaryByHour")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.salary.text}
+                                        {t("formField.homeEmployeur.offerTable.salary.text")}
                                         <div
                                             className={sortField === "salaryByHour" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -131,7 +134,7 @@ export default function EmployeurOffer() {
                                     onClick={() => handleSortClick("state")}
                                 >
                                     <div className="flex">
-                                        {fields.offerTable.status.text}
+                                        {t("formField.homeEmployeur.offerTable.status.text")}
                                         <div
                                             className={sortField === "state" ? "visible" : "hidden"}>
                                             <FontAwesomeIcon
@@ -140,16 +143,18 @@ export default function EmployeurOffer() {
                                         </div>
                                     </div>
                                 </th>
-                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
-                                    {fields.candidature.text}
+                                <th scope="col"
+                                    className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                    {t("formField.homeEmployeur.candidature.text")}
                                 </th>
-                                <th scope="col" className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
+                                <th scope="col"
+                                    className="xxxs:px-2 sm:px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">
                                     <span className="">Option</span>
                                 </th>
                             </tr>
                             </thead>
                             <tbody className="bg-white dark:bg-dark divide-y divide-gray dark:divide-darkgray">
-                            { offers.map((offer:any) => (
+                            {offers.map((offer: any) => (
                                 <tr key={offer.id}>
                                     <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap min-w-full max-md:max-w-[10rem] max-w-[15rem]  ">
                                         <div className="flex items-center">
@@ -174,7 +179,7 @@ export default function EmployeurOffer() {
                                                         "px-2 inline-flex text-xs leading-5 font-semibold justify-center rounded-full w-3/4 bg-red text-white dark:text-offwhite"
                                                         : "px-2 inline-flex text-xs leading-5 font-semibold rounded-full w-3/4 justify-center bg-green text-white dark:text-offwhite"}
                                         >
-                                            {fields.offerTable[offer.state].text}
+                                            {t(`formField.homeEmployeur.offerTable.${offer.state}.text`)}
                                         </span>
                                     </td>
                                     <td className="xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -200,7 +205,8 @@ export default function EmployeurOffer() {
                                                             )
                                                         }
                                                     })) : (
-                                                    <div className="flex items-center bg-blue dark:bg-orange justify-center text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark text-xs">
+                                                    <div
+                                                        className="flex items-center bg-blue dark:bg-orange justify-center text-white h-6 w-6 rounded-full ring-2 ring-white dark:ring-dark text-xs">
                                                         0
                                                     </div>
                                                 )
@@ -208,10 +214,14 @@ export default function EmployeurOffer() {
                                         </div>
                                     </td>
                                     <td className="flex space-x-2 xxxs:px-2 sm:px-6 py-4 whitespace-nowrap text-right text-sm font-medium items-center dark:text-white">
-                                        <p>{fields.view.text}</p>
-                                        <FontAwesomeIcon icon={faEye}
-                                                         className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
-                                                            onClick={() => handleOfferClick(offer.id!)}
+                                        <p>
+                                            {t("formField.homeEmployeur.view.text")}
+                                        </p>
+                                        <FontAwesomeIcon
+                                            aria-label={"nav-button"}
+                                            icon={faEye}
+                                            className="text-blue hover:text-indigo-900 dark:text-orange cursor-pointer"
+                                            onClick={() => handleOfferClick(offer.id!)}
                                         />
                                     </td>
                                 </tr>

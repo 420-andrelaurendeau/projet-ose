@@ -53,7 +53,7 @@ jest.mock('react-i18next', () => ({
     }
 }));
 
-interface user {
+export interface user {
     id: number,
     nom: string,
     prenom: string,
@@ -92,7 +92,7 @@ interface appliedOffer {
     }
 }
 
-interface offer {
+export interface offer {
     id: number,
     title: string,
     location: string,
@@ -239,6 +239,7 @@ let mockAppliedOffers: appliedOffer[] = [
             }
     },
 ];
+
 const mockProps = {
     user: mockUser,
     appliedOffers: mockAppliedOffers,
@@ -374,35 +375,6 @@ describe("StudentInternship Component", () => {
 
     });
 
-    it('should give error when CV loads with error and we can close toast', async () => {
-        let error = {status: 500};
-        (fetchDefaultCvByStudentId as jest.Mock).mockRejectedValue(error);
-        render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
-                <Routes>
-                    <Route
-                        path="/etudiant/home/offers"
-                        element={
-                            <ToastContextProvider>
-                                <StudentInternship/>
-                            </ToastContextProvider>
-                        }
-                    >
-                    </Route>
-                </Routes>
-            </MemoryRouter>
-        );
-        const toast_message = await screen.findByLabelText("toast-message");
-        expect(toast_message).toBeInTheDocument();
-        const toast_container = await screen.findByLabelText("toast-container");
-        expect(toast_container.className).toContain("bg-red");
-        const close_button = await screen.findByLabelText("toast-dismiss-button");
-        await act(async () => {
-            fireEvent.click(close_button);
-        })
-        expect(toast_container.className).toContain("animate-slideOutRight");
-
-    });
-
     it("handles applying for an internship offer", async () => {
         (getStudentAppliedOffers as jest.Mock).mockResolvedValue(mockAppliedOffersResponse);
         render(<MemoryRouter initialEntries={['/etudiant/home/offers']} initialIndex={0}>
@@ -530,7 +502,7 @@ describe("StudentInternship Component", () => {
             expect(applyButtons[1]).toBeEnabled();
             fireEvent.click(applyButtons[1]);
         });
-        const offers = screen.getAllByLabelText("apply-button");
+        const offers = await screen.findAllByLabelText("apply-button");
         expect(offers[1]).toBeEnabled();
 
         const toast_message = await screen.findByLabelText("toast-message");

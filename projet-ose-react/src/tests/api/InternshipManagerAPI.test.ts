@@ -266,7 +266,7 @@ describe('InternshipManagerAPI', () => {
 
             const result = await getStageCountByState("");
 
-            expect(api.get).toHaveBeenCalledWith('stage/count');
+            expect(api.get).toHaveBeenCalledWith("stage/count", {"params": {"season": ""}});
             expect(result).toEqual(mockData);
         });
 
