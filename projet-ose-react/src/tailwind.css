@@ -2153,11 +2153,6 @@ video {
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-orange:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 122 0 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-rose-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(159 18 57 / var(--tw-bg-opacity));

@@ -125,10 +125,10 @@ i18n
                                 errorFetchNumberStateOfOffers:"An error occurred while fetching the number of offers",
                             },
                             validation : {
-                                required : 'Le titre de l\'offre d\'emploi est requis',
-                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
-                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
-                                badCharactere : 'Le titre contient des caractères non autorisés.'
+                                required : 'The comment is required',
+                                minLenght : 'The comment must contain at least 10 characters',
+                                maxLenght : 'The comment must contain at most 1000 characters',
+                                badCharactere : 'The comment contains unauthorized characters',
                             }
                         },
                         InternshipOfferForm : {
@@ -952,10 +952,10 @@ i18n
                                 errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
                             },
                             validation : {
-                                required : 'Le titre de l\'offre d\'emploi est requis',
-                                minLenght : 'Le titre doit comporter au moins 5 caractères.',
-                                maxLenght : 'Le titre ne doit pas dépasser 20 caractères.',
-                                badCharactere : 'Le titre contient des caractères non autorisés.'
+                                required : 'Le commentaire de la revue de l\'offre d\'emploi est requis',
+                                minLenght : 'Le commentaire de la revue de l\'offre d\'emploie doit comporter au moins 5 caractères.',
+                                maxLenght : 'Le commentaire ne doit pas dépasser 20 caractères.',
+                                badCharactere : 'Le commentaire contient des caractères non autorisés.'
                             }
                         },
                         InternshipOfferForm : {
