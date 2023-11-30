@@ -48,17 +48,17 @@ public class ProjetOseApplication implements CommandLineRunner {
         Programme programme3 = programmeRepository.save(new Programme("Techniques de la logistique", "Programme de formation en techniques de la logistique"));
         Programme programme4 = programmeRepository.save(new Programme("Techniques de la comptabilité et de la gestion", "Programme de formation en techniques de la comptabilité et de la gestion"));
 
-        Etudiant etudiant2 = new Etudiant("Marc", "Max", "4387999889", "marco.shenouda74+max@gmail.com", "popo", "2045888", programme1, null);
-        Etudiant etudiant3 = new Etudiant("Loic", "Lac", "4352996589", "marco.shenouda74+lac@gmail.com", "popo", "2045898", programme1, null);
-        Employeur employeur = new Employeur("Patrique", "Lemieux", "marco.shenouda74+lemieux@gmail.com","4383006589" ,"popo123", "Cisco", programme1);
-        Employeur employeur2 = new Employeur("Pierre", "Lacroix", "marco.shenouda74+lacroix@gmail.com","4387996589","popo123", "Norton", programme2);
+        Etudiant etudiant2 = new Etudiant("Marc", "Max", "4387999889", "max@vaneixus.com", "popo", "2045888", programme1, null);
+        Etudiant etudiant3 = new Etudiant("Loic", "Lac", "4352996589", "lac@vaneixus.com", "popo", "2045898", programme1, null);
+        Employeur employeur = new Employeur("Patrique", "Lemieux", "lemieux@vaneixus.com","4383006589" ,"popo123", "Cisco", programme1);
+        Employeur employeur2 = new Employeur("Pierre", "Lacroix", "lacroix@vaneixus.com","4387996589","popo123", "Norton", programme2);
 
         authenticationService.registerEtudiant(etudiant2);
         authenticationService.registerEtudiant(etudiant3);
         authenticationService.registerEmployeur(employeur);
         authenticationService.registerEmployeur(employeur2);
 
-        Internshipmanager internshipmanager = new Internshipmanager("Jean","Dupont", "4387996589",  "marco.shenouda74+dupont@gmail.com", "popo", programme1);
+        Internshipmanager internshipmanager = new Internshipmanager("Jean","Dupont", "4387996589",  "dupont@vaneixus.com", "popo", programme1);
         authenticationService.registerInternshipManager(new InternshipmanagerAuthDto(internshipmanager));
 
         File file = new File("hello".getBytes(StandardCharsets.UTF_8),"Test",State.PENDING, null, null);
