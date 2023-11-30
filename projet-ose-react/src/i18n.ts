@@ -890,7 +890,7 @@ i18n
                             newContractAsBeenCreated: "Un nouveau contrat est disponible.",
                             contractAsBeenSignedByThreeParties: "Un contrat est signé par les trois parties prenants.",
                             offerAsBeenAccepted: "Un offre de stage a été approuvé.",
-                            offerAsBeenDeclined: "Un offre de stage a été réfusé.",
+                            offerAsBeenDeclined: "Un offre de stage a été refusé.",
                             newStageAsBeenCreated: "Il y a une nouvelle application de stage."
                         },
                         InternshipsAgreementPage: {
@@ -901,8 +901,8 @@ i18n
                                 pendingInternshipsAgreement: "Attente",
                             },
                             toast: {
-                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage",
-                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage",
+                                errorFetchInternshipsAgreement: "Une erreur est survenue lors de la récupération des ententes de stage.",
+                                errorFetchNumberStateOfInternshipsAgreement: "Une erreur est survenue lors de la récupération du nombre d'ententes de stage.",
                             },
                             title: "Contrats de stage",
                             internshipsAgreement: {
@@ -920,8 +920,8 @@ i18n
                                     text: "Voir"
                                 },
                                 sign: {
-                                    student: "Refuser par l'étudiant",
-                                    employer: "Refuser par l'employeur",
+                                    student: "Refusé par l'étudiant",
+                                    employer: "Refusé par l'employeur",
                                 },
                                 empty : "Aucune entente de stage disponible"
                             },
@@ -948,8 +948,8 @@ i18n
                             },
                             title: "Offres de stage",
                             toast:{
-                                errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
-                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
+                                errorFetchOffers:"Une erreur est survenue lors de la récupération des offres.",
+                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres.",
                             },
                             validation : {
                                 required : 'Le commentaire de la revue de l\'offre d\'emploi est requis',
@@ -988,7 +988,7 @@ i18n
                                 text : 'Lieu :',
                                 placeholder : 'Montreal',
                                 validation : {
-                                    required : 'Le lieu est requis',
+                                    required : 'Le lieu est requis.',
                                     minLenght : 'La localisation doit comporter au moins 5 caractères.',
                                     maxLenght : 'La localisation ne doit pas dépasser 20 caractères.',
                                     badCharactere: "La localisation contient des caractères non autorisés."
@@ -997,7 +997,7 @@ i18n
                             program: {
                                 name : 'programme',
                                 text : 'Programmes :',
-                                placeholder : 'Choisi un porgramme',
+                                placeholder : 'Choisir un programme',
                                 validation : {
                                     required : 'Veuillez sélectionner une catégorie valide.',
                                     badSelect: "La catégorie sélectionnée n'est pas valide."
@@ -1008,7 +1008,7 @@ i18n
                                 text: 'Salaire ($/h):',
                                 placeholder: '18',
                                 validation: {
-                                    required: 'Le salaire est requis',
+                                    required: 'Le salaire est requis.',
                                     numberRequired: 'Veuillez entrer un nombre valide.',
                                     minLenght: 'Le salaire doit être supérieur à 0.',
                                     maxLenght: "Le salaire doit être inférieur ou égal à 100$ par heure."
@@ -1019,7 +1019,7 @@ i18n
                                 text: 'Date de début :',
                                 placeholder: 'Date de début',
                                 validation: {
-                                    required: 'La date de début est requise',
+                                    required: 'La date de début est requise.',
                                     dateNotValid: 'Veuillez entrer une date valide.',
                                     dateToLow: "La date de début doit être aujourd'hui ou une date future."
                                 }
@@ -1033,7 +1033,6 @@ i18n
                                     dateNotValid: 'Veuillez entrer une date valide.',
                                     dateToHigh: 'La date de fin doit être aujourd\'hui ou une date future.',
                                     dateToLow: 'La date de fin doit être postérieure à la date de début.'
-
                                 }
                             },
                             file: {
@@ -1072,13 +1071,13 @@ i18n
                                 minLenght : 'Le commentaire doit comporter au moins 10 caractères.',
                                 maxLenght : 'Le commentaire ne doit pas dépasser 1000 caractères.',
                                 badCharactere: "Le commentaire contient des caractères non autorisés.",
-                                scriptDetected: "La commentaire contient un script.",
+                                scriptDetected: "Le commentaire contient un script.",
                                 required: "Le commentaire est requis"
                             }
                         },
                         GSReviewOfferForm: {
                             button:{
-                                refused:"Refuser",
+                                refused:"Réfuser",
                                 approved:"Approuver"
                             }
                         },
@@ -1092,7 +1091,7 @@ i18n
                                 text : 'Prénom :',
                                 placeholder : 'Jean',
                                 validation : {
-                                    required : 'Le prénom est requis',
+                                    required : 'Le prénom est requis.',
                                 }
 
                             },
@@ -1101,7 +1100,7 @@ i18n
                                 text : 'Nom :',
                                 placeholder : 'Pierre',
                                 validation : {
-                                    required : 'Le nom est requis',
+                                    required : 'Le nom est requis.',
                                 }
                             },
                             email: {
@@ -1109,7 +1108,7 @@ i18n
                                 text : 'Courriel :',
                                 placeholder : 'email@email.com',
                                 validation : {
-                                    required : 'Le courriel est requis',
+                                    required : 'Le courriel est requis.',
                                 }
                             },
                             password: {
@@ -1117,7 +1116,7 @@ i18n
                                 text : 'Mot de passe :',
                                 placeholder : 'abc123',
                                 validation : {
-                                    required : 'Le mot de passe est requis',
+                                    required : 'Le mot de passe est requis.',
                                 }
                             },
                             phone: {
@@ -1125,7 +1124,7 @@ i18n
                                 text : 'Téléphone :',
                                 placeholder : '514-123-4567',
                                 validation : {
-                                    required : 'Le téléphone est requis',
+                                    required : 'Le téléphone est requis.',
                                     pattern: 'Exemple: 514-123-4567',
                                 }
                             },
@@ -1134,7 +1133,7 @@ i18n
                                 text : 'Matricule :',
                                 placeholder : '1236789',
                                 validation : {
-                                    pattern : 'Le matricule est compose de 7 chiffres',
+                                    pattern : 'Le matricule est compose de 7 chiffres.',
                                 }
                             },
                             programme: {
@@ -1142,7 +1141,7 @@ i18n
                                 text : 'Programme :',
                                 placeholder : 'Choisir un programme',
                                 validation : {
-                                    required : 'Le programme est requis',
+                                    required : 'Le programme est requis.',
                                 }
                             },
                             submitButton: {
@@ -1193,7 +1192,7 @@ i18n
                                 name: 'programme',
                                 text: 'Selectionner un programme',
                                 validation: {
-                                    required: 'Une erreur est survenu'
+                                    required: 'Une erreur est survenue.'
                                 }
                             },
                             passWordShown: {
@@ -1210,7 +1209,7 @@ i18n
                             },
                             erreur: {
                                 name: 'erreur',
-                                text: "Une erreur c'est produite lors de l'inscription veuillez réessayer"
+                                text: "Une erreur c'est produite lors de l'inscription. Veuillez réessayer."
                             },
                             titre: {
                                 name: 'titre',
@@ -1274,9 +1273,9 @@ i18n
                                 text: 'Aucun stage disponible'
                             },
                             toast: {
-                                ErrorNoCv:"Vous devez télécharger votre CV et le définir comme par défaut avant de postuler à un stage",
-                                ErrorOfferApplication: "Une erreur est survenue lors de la postulation au stage",
-                                SuccessOfferApplication: "Votre postulation au stage a été soumise pour",
+                                ErrorNoCv:"Vous devez télécharger votre CV et le définir comme par défaut avant de postuler à un stage.",
+                                ErrorOfferApplication: "Une erreur est survenue lors de la postulation au stage.",
+                                SuccessOfferApplication: "Votre postulation au stage a été soumise pour.",
                             },
                             cv : "Votre CV est en cours de chargement veuillez patienter...",
                         },
@@ -1475,7 +1474,7 @@ i18n
                                 },
                                 status: {
                                     name: 'status',
-                                    text: 'Etat'
+                                    text: 'État'
                                 },
                                 startDate: {
                                     name: 'startDate',
@@ -1504,7 +1503,7 @@ i18n
                             },
                             toast:{
                                 errorFetchOffers:"Une erreur est survenue lors de la récupération des offres",
-                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres",
+                                errorFetchNumberStateOfOffers:"Une erreur est survenue lors de la récupération du nombre d'offres.",
                             }
                         },
                         sidebarEmployeur : {
@@ -1537,20 +1536,20 @@ i18n
                     GSOfferPage: {
                         placeholder:"Veillez entrer un commentaire",
                         title: "Offre de stage",
-                        errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre",
-                        errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre",
-                        succesSaveOfferReview: "L'offre a été sauvegardée",
+                        errorFetchOffer: "Une erreur est survenue lors de la récupération de l'offre.",
+                        errorSaveOfferReview: "Une erreur est survenue lors de la sauvegarde de l'offre.",
+                        succesSaveOfferReview: "L'offre a été sauvegardée.",
                         validiation:{
                             required : 'Le commentaire est requis',
-                            minLenght : 'Le commentaire doit contenir au moins 10 caractères',
-                            maxLenght : 'Le commentaire doit contenir au plus 1000 caractères',
+                            minLenght : 'Le commentaire doit contenir au moins 10 caractères.',
+                            maxLenght : 'Le commentaire doit contenir au plus 1000 caractères.',
                             scriptDetected: "Le commentaire contient un script.",
                         }
                     },
                     ErrorPage: {
                         errorMessage: {
                             name: 'errorMessage',
-                            text: 'Cette page n\'existe pas',
+                            text: 'Cette page n\'existe pas.',
                         },
                         ReturnButton: {
                             name: 'ReturnButton',
@@ -1580,11 +1579,11 @@ i18n
                         },
                         email: {
                             name: 'email',
-                            text: 'Adresse e-mail',
+                            text: 'Adresse courriel',
                             placeholder: 'saisir@123.com',
                             validation: {
-                                required: 'L\'adresse e-mail est obligatoire',
-                                emailRequired: 'L\'adresse e-mail doit être une adresse e-mail valide',
+                                required: 'L\'adresse courriel est obligatoire.',
+                                emailRequired: 'L\'adresse courriel doit être une adresse courriel valide.',
                             }
                         },
                         password: {
@@ -1597,7 +1596,7 @@ i18n
                             }
                         },
                         error : {
-                            text : "Votre adresse e-mail ou votre mot de passe est incorrect",
+                            text : "Votre adresse courriel ou votre mot de passe est incorrect",
                         }
                     },
                     cv: CV.fr,
@@ -1635,25 +1634,25 @@ i18n
                                 name: 'action',
                                 text: 'Actions',
                                 button : {
-                                    accept: 'Accepter',
-                                    decline: 'Decliner',
+                                    accept: 'Approuver',
+                                    decline: 'Refuser',
                                 },
                                 status:{
-                                    accepted: "Accepté",
-                                    declined: "Decliné",
+                                    accepted: "Approuvé",
+                                    declined: "Refusé",
                                 }
                             },
                             empty: "Aucune entrevue disponible",
                             noStage: "Aucun stage disponible",
                         },
-                        reschedule : "Replanifier",
+                        reschedule : "Réplanifier",
                     },
                     StudentCvEvaluation: {
                         name: 'StudentCvEvaluation',
                         title: 'CV à évaluer',
                         button: {
-                            accept: 'Accepter',
-                            decline: 'Decliner',
+                            accept: 'Approuver',
+                            decline: 'Refuser',
                             download: "Télécharger le CV",
                         },
                         toast: {
